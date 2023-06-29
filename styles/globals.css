@@ -32,6 +32,6 @@ body {
   font-family: Verdana, Geneva, Tahoma, sans-serif !important;
 }
 
-/* .btn {
-    @apply rounded-full;
-  } */
+.btn-nav {
+  @apply hover:text-primary hover:bg-primary/10 focus:bg-primary/10 active:bg-primary/10;
+}

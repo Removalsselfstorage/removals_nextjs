@@ -1,4 +1,4 @@
-import { Rubik, Roboto } from '@next/font/google';
+import { Rubik, Roboto } from 'next/font/google';
 
 export const titleFont = Rubik({
   //   weight: ["500", "600", "700"],
@@ -7,7 +7,7 @@ export const titleFont = Rubik({
 });
 
 export const textFont = Roboto({
-  weight: '400',
+  weight: '500',
   subsets: ['latin'],
   variable: '--font-roboto',
 });

@@ -9,20 +9,21 @@ module.exports = {
     extend: {
       colors: {
         primary: '#008000',
+        secondary: '#F55E1E',
       },
-    //   backgroundImage: {
-    //     'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-    //     'gradient-conic':
-    //       'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
-    //   },
+      //   backgroundImage: {
+      //     'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+      //     'gradient-conic':
+      //       'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+      //   },
       fontFamily: {
-        sans: ['var(--font-roboto)']
-      }
-
+        sans: ['var(--font-roboto)'],
+        sans2: ['var(--font-rubik)'],
+      },
     },
   },
   // add daisyUI plugin
-  plugins: [require("@tailwindcss/typography"), require('daisyui')],
+  plugins: [require('@tailwindcss/typography'), require('daisyui')],
 
   // daisyUI config (optional - here are the default values)
   daisyui: {
@@ -31,8 +32,11 @@ module.exports = {
         light: {
           ...require('daisyui/src/theming/themes')['[data-theme=light]'],
           primary: '#008000',
-          'primary-focus': '#008000',
+          'primary-focus': '#015701',
           'primary-content': 'white',
+          secondary: '#F55E1E',
+          'secondary-focus': '#F55E1E',
+          'secondary-content': 'white',
         },
       },
       'dark',

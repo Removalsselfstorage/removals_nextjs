@@ -7,7 +7,7 @@ export const titleFont = Rubik({
 });
 
 export const textFont = Roboto({
-  weight: '500',
+  weight: '400',
   subsets: ['latin'],
   variable: '--font-roboto',
 });

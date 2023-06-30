@@ -17,13 +17,17 @@ module.exports = {
       //       'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       //   },
       fontFamily: {
-        sans: ['var(--font-roboto)'],
-        sans2: ['var(--font-rubik)'],
+        sans: ['var(--font-inter)'],
+        sans2: ['var(--font-commissioner)'],
       },
     },
   },
   // add daisyUI plugin
-  plugins: [require('@tailwindcss/typography'), require('daisyui')],
+  plugins: [
+    require('@tailwindcss/typography'),
+    require('daisyui'),
+    require('tailwindcss-debug-screens'),
+  ],
 
   // daisyUI config (optional - here are the default values)
   daisyui: {

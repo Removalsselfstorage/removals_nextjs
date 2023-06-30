@@ -2,6 +2,7 @@ import Image from 'next/image';
 import Head from 'next/head';
 import { titleFont } from '@/utils/fonts';
 import Hero from '@/components/Hero';
+import OurServices from '@/components/OurServices';
 
 export default function Home() {
   return (
@@ -16,6 +17,7 @@ export default function Home() {
 
       <main className="">
         <Hero />
+        <OurServices/>
       </main>
     </>
   );

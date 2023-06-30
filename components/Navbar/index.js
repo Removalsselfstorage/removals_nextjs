@@ -31,7 +31,7 @@ const Navbar = () => {
                 <li>
                   <a className="btn-nav ">Home</a>
                 </li>
-                <li className="dropdown dropdown-hover dropdown-end group btn-nav">
+                <li className="dropdown dropdown-hover dropdown-end group">
                   <label tabIndex={0} className="flex items-center btn-nav">
                     <p className="">Our Services</p>
                     <span className="group-hover:rotate-180 duration-100">
@@ -44,6 +44,9 @@ const Navbar = () => {
                   >
                     <li>
                       <a className="btn-nav">UK Home Moving</a>
+                    </li>
+                    <li>
+                      <a className="btn-nav">Man & Van</a>
                     </li>
                     <li>
                       <a className="btn-nav">Storage & Self Storage</a>

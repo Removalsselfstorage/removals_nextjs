@@ -19,7 +19,7 @@ const WhyChooseUs = () => {
         {/* row 1 */}
         <div className="flex items-center flex-col space-y-[30px] md:flex-row md:space-y-[0px] mb-[50px]">
           {/* image */}
-          <div className="flex-[0.5] flex  justify-center">
+          <div className="flex-[0.5] flex  justify-center hover:rotate-[5deg] duration-200">
             <img
               src="/movers1.jpg"
               alt="Album"
@@ -31,7 +31,7 @@ const WhyChooseUs = () => {
             <h2 className="text-3xl font-bold ">
               A better moving experience starts here
             </h2>
-            <p className="text-[16px] lg:text-[18px]">
+            <p className="text-[16px] lg:text-[17px]">
               Let Removal & Selfstorage remove the stress, time and cost from
               finding reliable home removals services. We'll make your move as
               easy as possible with a dedicated move co-ordinator who will take
@@ -46,7 +46,7 @@ const WhyChooseUs = () => {
         {/* row 2 */}
         <div className="flex items-center flex-col space-y-[30px] md:flex-row-reverse md:space-y-[0px]">
           {/* image */}
-          <div className="flex-[0.5] flex  justify-center">
+          <div className="flex-[0.5] flex  justify-center hover:rotate-[5deg] duration-200">
             <img
               src="/movers2.jpg"
               alt="Album"
@@ -58,7 +58,7 @@ const WhyChooseUs = () => {
             <h2 className="text-3xl font-bold ">
               Simple, Upfront Pricing & Customer Support
             </h2>
-            <p className="text-[16px] lg:text-[18px]">
+            <p className="text-[16px] lg:text-[17px]">
               Each long-distance and local mover on Removal & Selfstorage is
               displayed in one sortable list with one price, making it the web's
               easiest place to compare all your local moving company options.

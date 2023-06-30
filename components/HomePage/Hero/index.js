@@ -8,7 +8,7 @@ const Hero = () => {
     <div className=" bg-base-200">
       <div
         className="hero min-h-[80vh]"
-        style={{ backgroundImage: 'url(/hero_bg.png)' }}
+        style={{ backgroundImage: 'url(/hero_bg.jpg)' }}
       >
         <div className="hero-overlay bg-black/80"></div>
         <div className="hero-content flex-col text-white lg:flex-row lg:space-x-[50px] space-y-[20px]  md:max-w-7xl mx-auto">

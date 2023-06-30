@@ -28,8 +28,12 @@ body {
 
 body {
   /* color: rgb(var(--foreground-rgb)); */
-  background-color: #eeeeee;
+  background-color: #f9f9f9;
   font-family: Verdana, Geneva, Tahoma, sans-serif !important;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 .btn-nav {

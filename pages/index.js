@@ -1,8 +1,10 @@
 import Image from 'next/image';
 import Head from 'next/head';
 import { titleFont } from '@/utils/fonts';
-import Hero from '@/components/Hero';
-import OurServices from '@/components/OurServices';
+import Hero from '@/components/HomePage/Hero';
+import OurServices from '@/components/HomePage/OurServices';
+import WhyChooseUs from '@/components/HomePage/WhyChooseUs';
+import AboutUs from '@/components/HomePage/AboutUs';
 
 export default function Home() {
   return (
@@ -17,7 +19,9 @@ export default function Home() {
 
       <main className="">
         <Hero />
-        <OurServices/>
+        <OurServices />
+        <WhyChooseUs />
+        <AboutUs />
       </main>
     </>
   );

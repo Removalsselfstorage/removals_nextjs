@@ -9,25 +9,34 @@ const Navbar = () => {
 
   return (
     <>
-      {/* Top Nav */}
       <div className="flex flex-col items-center bg-primary">
-        <div className="flex items-center  py-[10px]   h-[40px] text-white justify-center">
+        {/* Top Nav */}
+        <div className="flex lg:flex-row flex-col w-full md:max-w-7xl mx-auto px-[20px] items-center  py-[10px] text-[14px] h-[40px] text-white lg:justify-between ">
           <div className="flex  items-center text-[14px]">
             <p className="">Prefer to talk to a person?</p>
             <div className="flex items-center ml-[10px] space-x-[7px]">
               <BiSolidPhoneCall size={20} className="" />
-              <a className="cursor-pointer underline">(800) 995-5003 </a>
+              <a href="tel:(800)-995-5003" className="link link-hover">
+                (800) 995-5003{' '}
+              </a>
             </div>
+          </div>
+          <div className="lg:flex items-center  space-x-[10px] hidden">
+            <p className="link link-hover ">About Us</p>
+            <p className="link link-hover ">|</p>
+            <p className="link link-hover ">Contact Us</p>
+            <p className="link link-hover ">|</p>
+            <p className="link link-hover"> Blog</p>
           </div>
         </div>
         {/* Main Nav */}
         <div className="bg-base-100 w-full">
-          <div className="navbar  md:max-w-7xl mx-auto items-center">
+          <div className="navbar  md:max-w-7xl mx-auto items-center ">
             <div className="navbar-start flex items-center">
               <img src="/rss_logo.svg" alt="" className="h-[40px]" />
             </div>
             <div className="navbar-center hidden lg:flex ">
-              <ul className="menu menu-horizontal  px-1">
+              <ul className="menu menu-horizontal  px-1 text-[16px]">
                 <li>
                   <a className="btn-nav ">Home</a>
                 </li>
@@ -40,7 +49,7 @@ const Navbar = () => {
                   </label>
                   <ul
                     tabIndex={0}
-                    className="dropdown-content z-[1] menu py-[20px] px-[10px] shadow bg-base-100 rounded-box w-52"
+                    className="dropdown-content z-[1] menu py-[20px] px-[10px] shadow bg-base-100 rounded-box w-[250px] text-[16px]"
                   >
                     <li>
                       <a className="btn-nav">UK Home Moving</a>

@@ -34,18 +34,20 @@ const Hero = () => {
             >
               Leave it to us
             </h1>
-            <p className="py-[20px] max-w-[550px] lg:max-w-[670px] text-[18px] lg:text-[20px]">
+            <p className="py-[20px] max-w-[550px] lg:max-w-[670px] text-[16px] lg:text-[18px]">
               A stress-free move day is just a few clicks away. We’ve got you
               covered with easier-than-ever booking, flexible service options,
               friendly and experienced movers, competitive pricing, and the
               industry’s best customer support.
             </p>
-            <p className="lg:pr-[30px] text-[24px] font-medium">
+            <p className="lg:pr-[30px] text-[20px] font-medium">
               We Move - We Store - We Deliver
             </p>
           </div>
           {/* Hero inputs */}
-          <HeroInputBox />
+          <div className="">
+              <HeroInputBox />
+          </div>
         </div>
       </div>
     </div>

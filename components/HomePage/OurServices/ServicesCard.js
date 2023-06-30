@@ -2,7 +2,7 @@ import React from 'react';
 
 const ServicesCard = ({ image, title, subTitle, price, f1, f2, f3, f4 }) => {
   return (
-    <div className="card min-w-[300px] bg-base-100 shadow-xl hover:shadow-2xl hover:scale-[1.02] duration-200">
+    <div className="card min-w-[300px] bg-base-100 shadow-lg hover:shadow-2xl hover:scale-[1.02] duration-200">
       <figure className="px-10 pt-10">
         <img src={image} alt="house" className="h-[100px]" />
       </figure>
@@ -16,7 +16,7 @@ const ServicesCard = ({ image, title, subTitle, price, f1, f2, f3, f4 }) => {
           <li className="">{f3}</li>
           <li className="">{f4}</li>
         </ul>
-        <button className="btn btn-primary mt-[10px]">Get Quotes</button>
+        <button className="btn btn-primary mt-[10px]">Get Quote</button>
       </div>
     </div>
   );

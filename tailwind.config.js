@@ -27,6 +27,9 @@ module.exports = {
     require('@tailwindcss/typography'),
     require('daisyui'),
     require('tailwindcss-debug-screens'),
+    require('@tailwindcss/line-clamp'),
+    require('tailwind-scrollbar-hide'), 
+    require('tailwind-scrollbar'),
   ],
 
   // daisyUI config (optional - here are the default values)

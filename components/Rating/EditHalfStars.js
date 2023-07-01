@@ -1,6 +1,7 @@
-import React from 'react';
+import { BsStarFill, BsStarHalf } from 'react-icons/bs';
 
-const HalfStars = ({color}) => {
+
+const EditHalfStars = ({color}) => {
   return (
     <div className="rating rating-md rating-half">
       <input type="radio" name="rating-10" className="rating-hidden" />
@@ -59,4 +60,7 @@ const HalfStars = ({color}) => {
   );
 };
 
-export default HalfStars;
+export default EditHalfStars;
+
+
+

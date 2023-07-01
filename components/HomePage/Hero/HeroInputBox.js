@@ -1,6 +1,7 @@
 import React from 'react';
 import { FiEdit } from 'react-icons/fi';
-import HalfStars from '../../Rating/HalfStars';
+import FullRating from '../../Rating/FullRating';
+import EditHalfStars from '@/components/Rating/EditHalfStars';
 
 const HeroInputBox = () => {
   return (
@@ -10,7 +11,8 @@ const HeroInputBox = () => {
           <h3 className="text-xl font-bold text-gray-800 uppercase mb-[5px]">
             TRUST<span className="text-gray-500">PILOT</span>
           </h3>
-          <HalfStars color="bg-secondary" />
+          {/* <EditHalfStars color="bg-secondary" /> */}
+          <FullRating value={4} color='text-secondary' />
           <p className="text-gray-400 mt-[8px]">
             TrustScore 4.9 | 4,155 Reviews
           </p>

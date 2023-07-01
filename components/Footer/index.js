@@ -85,7 +85,7 @@ const Footer = () => {
         {/* column 4 */}
         <div className="md:max-w-[300px]">
           <Link href='/' className="">
-            <img src="/rrs_logo_gray.svg" alt="" className="h-[60px]" />
+            <img src="/rrs_logo_gray2.svg" alt="" className="h-[60px]" />
           </Link>
           {/* <p className="">
             A stress-free move day is just a few clicks away. We’ve got you

@@ -32,7 +32,7 @@ const Hero = () => {
             <h1
               className={`${titleFont.variable} font-sans2 text-4xl lg:text-5xl font-bold mb-[10px]`}
             >
-              Leave it to us
+              Let's help you move
             </h1>
             <p className="py-[20px] max-w-[550px] lg:max-w-[670px] text-[16px] lg:text-[18px]">
               A stress-free move day is just a few clicks away. We’ve got you
@@ -40,9 +40,9 @@ const Hero = () => {
               friendly and experienced movers, competitive pricing, and the
               industry’s best customer support.
             </p>
-            <p className="lg:pr-[30px] text-[20px] font-medium">
+            {/* <p className="lg:pr-[30px] text-[20px] font-medium">
               We Move - We Store - We Deliver
-            </p>
+            </p> */}
           </div>
           {/* Hero inputs */}
           <div className="">

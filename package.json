@@ -11,8 +11,12 @@
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
+    "@fortawesome/fontawesome-svg-core": "^6.4.0",
+    "@fortawesome/free-regular-svg-icons": "^6.4.0",
+    "@fortawesome/free-solid-svg-icons": "^6.4.0",
     "@mui/icons-material": "^5.11.16",
     "@mui/material": "^5.13.6",
+    "@tailwindcss/line-clamp": "^0.4.4",
     "autoprefixer": "10.4.14",
     "next": "13.4.7",
     "postcss": "8.4.24",
@@ -20,6 +24,9 @@
     "react-dom": "18.2.0",
     "react-icons": "^4.10.1",
     "react-typed": "^1.2.0",
+    "swiper": "^9.4.1",
+    "tailwind-scrollbar": "^3.0.4",
+    "tailwind-scrollbar-hide": "^1.1.7",
     "tailwindcss": "3.3.2",
     "tailwindcss-debug-screens": "^2.2.1"
   },

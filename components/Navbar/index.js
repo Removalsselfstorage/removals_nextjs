@@ -33,7 +33,7 @@ const Navbar = () => {
         <div className="bg-base-100 w-full">
           <div className="navbar  md:max-w-7xl mx-auto items-center ">
             <div className="navbar-start flex items-center">
-              <img src="/rss_logo.svg" alt="" className="h-[40px]" />
+              <img src="/rss_logo2.svg" alt="" className="h-[40px]" />
             </div>
             <div className="navbar-center hidden lg:flex ">
               <ul className="menu menu-horizontal  px-1 text-[16px]">

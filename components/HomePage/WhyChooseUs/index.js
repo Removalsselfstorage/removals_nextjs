@@ -17,9 +17,9 @@ const WhyChooseUs = () => {
         </div>
 
         {/* row 1 */}
-        <div className="flex items-center flex-col space-y-[30px] md:flex-row md:space-y-[0px] mb-[50px]">
+        <div className="flex  flex-col space-y-[30px] md:flex-row md:items-center  md:space-y-[0px] mb-[50px]">
           {/* image */}
-          <div className="flex-[0.5] flex  justify-center hover:rotate-[5deg] duration-200">
+          <div className="flex-[0.8] flex  justify-center hover:rotate-[5deg] duration-200">
             <img
               src="/movers1.jpg"
               alt="Album"
@@ -27,26 +27,36 @@ const WhyChooseUs = () => {
             />
           </div>
           {/* text */}
-          <div className="flex-[1] flex flex-col max-w-[600px] space-y-[30px] px-[20px]">
-            <h2 className="text-3xl font-bold ">
-              A better moving experience starts here
-            </h2>
-            <p className="text-[16px] lg:text-[17px]">
-              Let Removal & Selfstorage remove the stress, time and cost from
-              finding reliable home removals services. We'll make your move as
-              easy as possible with a dedicated move co-ordinator who will take
-              care of the whole process. We’ve got you covered with
-              easier-than-ever booking, flexible service options, friendly and
-              experienced movers, competitive pricing, and the industry’s best
-              customer support. Get a free estimate today and book with $0 down.
-            </p>
+          <div className="flex-[1] flex flex-col lg:flex-row  space-y-[20px] lg:space-y-[0]">
+            <div className="flex-[1] flex flex-col lg:max-w-[350px] space-y-[30px] px-[40px] lg:px-[10px]">
+              <h2 className="text-2xl font-bold ">High Quality Services</h2>
+              <p className="text-[16px] lg:text-[17px]">
+                We offer a comprehensive range of moving services tailored to
+                meet your specific needs. Whether you require full-service
+                packing, loading and unloading, transportation, or even
+                specialized services such as furniture assembly and disassembly,
+                <b> Removal & Selfstorage</b> have you covered. Our goal is to
+                provide you with a customized moving plan that suits your
+                requirements, making your move effortless and efficient.
+              </p>
+            </div>
+            <div className="flex-[1] flex flex-col lg:max-w-[350px] space-y-[30px] px-[40px]">
+              <h2 className="text-2xl font-bold ">Safe Transportation</h2>
+              <p className="text-[16px] lg:text-[17px]">
+                With <b>Removal & Selfstorage,</b> the safety and security of
+                your belongings are of paramount importance to us. We utilize
+                top-quality packing materials, state-of-the-art equipment, and
+                secure transportation methods to safeguard your items throughout
+                the moving process.
+              </p>
+            </div>
           </div>
         </div>
 
         {/* row 2 */}
-        <div className="flex items-center flex-col space-y-[30px] md:flex-row-reverse md:space-y-[0px]">
+        <div className="flex items-center flex-col space-y-[30px] md:flex-row-reverse md:items-center md:space-y-[0px]">
           {/* image */}
-          <div className="flex-[0.5] flex  justify-center hover:rotate-[5deg] duration-200">
+          <div className="flex-[0.8] flex  justify-center hover:rotate-[5deg] duration-200">
             <img
               src="/movers2.jpg"
               alt="Album"
@@ -54,19 +64,31 @@ const WhyChooseUs = () => {
             />
           </div>
           {/* text */}
-          <div className="flex-[1] flex flex-col max-w-[600px] space-y-[30px] px-[20px]">
-            <h2 className="text-3xl font-bold ">
-              Simple, Upfront Pricing & Customer Support
-            </h2>
-            <p className="text-[16px] lg:text-[17px]">
-              Each long-distance and local mover on Removal & Selfstorage is
-              displayed in one sortable list with one price, making it the web's
-              easiest place to compare all your local moving company options.
-              We're here watching the phones, and we're ready for your local or
-              long-distance moving questions. Our in-house team of moving
-              experts are ready 7 days a week to spring into action and make
-              your moving day as carefree as possible.
-            </p>
+          <div className="flex-[1] flex flex-col lg:flex-row  space-y-[20px] lg:space-y-[0]">
+            <div className="flex-[1] flex flex-col lg:max-w-[350px] space-y-[30px] px-[40px] lg:px-[10px]">
+              <h2 className="text-2xl font-bold ">Transparent Pricing</h2>
+              <p className="text-[16px] lg:text-[17px]">
+                At <b>Removal & Selfstorage,</b> we believe in transparency when
+                it comes to pricing. We provide upfront and detailed cost
+                estimates, free of any hidden charges or surprises. Our pricing
+                is competitive and reflects the value of the services we offer.
+                With us, you can have peace of mind knowing that you are
+                receiving excellent service at a fair and reasonable price.
+              </p>
+            </div>
+            <div className="flex-[1] flex flex-col lg:max-w-[350px] space-y-[30px] px-[40px]">
+              <h2 className="text-2xl font-bold ">
+                Excellent Customer Service
+              </h2>
+              <p className="text-[16px] lg:text-[17px]">
+                We prioritize your satisfaction above all else. Our dedicated
+                customer support team is available to address any questions or
+                concerns you may have before, during, and after your move. We
+                believe in open communication and strive to provide prompt and
+                helpful responses to ensure your experience with us is nothing
+                short of exceptional.
+              </p>
+            </div>
           </div>
         </div>
       </div>

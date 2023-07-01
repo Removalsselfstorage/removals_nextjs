@@ -2,7 +2,7 @@ import { titleFont } from '@/utils/fonts';
 import React, { useEffect, useState } from 'react';
 import { CgChevronRight, CgChevronLeft } from 'react-icons/cg';
 import ReviewCard from './ReviewCard';
-import { reviews } from '@/dummyData';
+import { reviews } from '@/dummyData/dummyData';
 
 const OurReviews = () => {
   //   const [review, setReview] = useState(reviews);

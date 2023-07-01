@@ -10,7 +10,7 @@ const OurServices = () => {
         <div className="w-full flex justify-center py-[50px]">
           {/* <h3 className="text-4xl font-extrabold">Our Services</h3> */}
           <h3
-            className={`${titleFont.variable} font-sans2 text-4xl font-extrabold flex-col items-center justify-center`}
+            className={`${titleFont.variable} font-sans2 text-3xl lg:text-4xl font-extrabold flex-col items-center justify-center`}
           >
             <p className="">Our Services</p>{' '}
             <div className="w-full bg-primary/20 h-[20px] mt-[-12px] "></div>

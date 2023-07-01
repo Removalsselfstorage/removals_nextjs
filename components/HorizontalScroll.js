@@ -17,8 +17,8 @@ const HorizontalScroll = ({ children }) => {
     };
 
     const scrollInterval = setInterval(() => {
-      container.scrollLeft += 1; // Increment scroll position
-    }, 30);
+      container.scrollLeft += 2; // Increment scroll position
+    }, 40);
 
     container.addEventListener('scroll', handleScroll);
 

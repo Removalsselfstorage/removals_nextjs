@@ -29,7 +29,7 @@ const Hero = () => {
               />
             </p>
             <h1
-              className={`${titleFont.variable} font-sans2 text-4xl lg:text-5xl font-bold mb-[10px]`}
+              className={`${titleFont.variable} font-sans2 text-3xl lg:text-4xl lg:text-5xl font-bold mb-[10px]`}
             >
               Let's help you move
             </h1>

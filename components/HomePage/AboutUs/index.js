@@ -35,8 +35,8 @@ const AboutUs = () => {
             </div>
           </div>
           {/* text */}
-          <div className="flex-[1] flex flex-col max-w-[600px] space-y-[30px] px-[20px]">
-            <h2 className="text-3xl font-bold ">About Removal & Selfstorage</h2>
+          <div className="flex-[1] flex flex-col max-w-[600px] space-y-[30px] px-[30px]">
+            <h2 className="text-2xl font-bold ">About Removal & Selfstorage</h2>
             <p className="text-[16px] lg:text-[17px]">
               By choosing Removal & Selfstorage, you’re guaranteeing a great
               moving day. All customers receive transparent pricing, flexible

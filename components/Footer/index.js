@@ -9,7 +9,7 @@ import Link from 'next/link';
 const Footer = () => {
   return (
     <div className="bg-[#1C1C1C] text-neutral-content">
-      <footer className="px-[80px] footer p-10 bg-[#1C1C1C] text-neutral-content w-full  md:max-w-7xl mx-auto">
+      <footer className="md:px-[80px] footer py-[50px] px-[30px] bg-[#1C1C1C] text-neutral-content w-full  md:max-w-7xl mx-auto">
         {/* column 1 */}
         <div className="md:max-w-[350px]">
           <span className="footer-title">Contact Us</span>
@@ -139,7 +139,7 @@ const Footer = () => {
         </div>
       </footer>
       <footer className="px-[80px] footer p-10 bg-[#1C1C1C] text-neutral-content w-full justify-center md:max-w-7xl mx-auto border-t border-gray-400/50">
-        <p className="">Copyright © 2023 by Removals & Selfstorage</p>
+        <p className="text-center">Copyright © 2023 by Removals & Selfstorage</p>
       </footer>
     </div>
   );

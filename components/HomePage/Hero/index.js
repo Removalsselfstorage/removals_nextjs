@@ -7,11 +7,11 @@ const Hero = () => {
   return (
     <div className=" bg-base-200">
       <div
-        className="hero min-h-[80vh]"
+        className="hero  min-h-[80vh] bg-black/80"
         style={{ backgroundImage: 'url(/hero_bg.jpg)' }}
       >
         <div className="hero-overlay bg-black/80"></div>
-        <div className="hero-content flex-col text-white lg:flex-row lg:space-x-[50px] space-y-[20px]  md:max-w-7xl mx-auto">
+        <div className="hero-content flex-col text-white lg:flex-row lg:space-x-[50px] space-y-[0px]  md:max-w-7xl mx-auto">
           {/* Hero Text */}
           <div className="text-center lg:text-left">
             <p className="py-[20px]  text-[20px] lg:text-[30px] max-w-[550px] lg:max-w-[700px]">
@@ -28,7 +28,6 @@ const Hero = () => {
                 className="text-[#ff7338] tracking-[-1px]"
               />
             </p>
-            {/* <h1 className="text-4xl lg:text-5xl font-bold">Leave it to us</h1> */}
             <h1
               className={`${titleFont.variable} font-sans2 text-4xl lg:text-5xl font-bold mb-[10px]`}
             >
@@ -40,13 +39,10 @@ const Hero = () => {
               friendly and experienced movers, competitive pricing, and the
               industry’s best customer support.
             </p>
-            {/* <p className="lg:pr-[30px] text-[20px] font-medium">
-              We Move - We Store - We Deliver
-            </p> */}
           </div>
           {/* Hero inputs */}
           <div className="">
-              <HeroInputBox />
+            <HeroInputBox />
           </div>
         </div>
       </div>

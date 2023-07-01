@@ -9,7 +9,7 @@ const AboutUs = () => {
         {/* row 1 */}
         <div className="flex items-center flex-col space-y-[30px] md:flex-row md:space-y-[0px] mb-[0px]">
           {/* video */}
-          <div className="flex-[0.5] flex  justify-center">
+          <div className="flex-[0.5] flex px-[20px] md:px-[0px] justify-center">
             <div className="rounded-lg overflow-hidden cursor-pointer relative group">
               {/* play button */}
               <div
@@ -44,7 +44,7 @@ const AboutUs = () => {
               support, and an easy-to-access online dashboard.
             </p>
             <div className="">
-              <button className="btn btn-wide btn-primary flex items-center space-x-[5px]">
+              <button className="btn btn-block md:btn-wide btn-primary flex items-center space-x-[5px]">
                 <span className="">Book A Move</span>
                 {/* <span className="">
                   <FiEdit className="text-[20px]" />

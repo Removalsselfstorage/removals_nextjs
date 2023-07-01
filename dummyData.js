@@ -5,7 +5,7 @@ export const reviews = [
     location: "London",
     date: "June 15, 2023",
     rating: 4,
-    comment: "Great service! The team arrived on time, packed everything efficiently, and handled fragile items with care. Only minor delay with unloading at the new place, but overall, I'm satisfied with their professionalism."
+    comment: "Great service! The team arrived on time, packed everything efficiently, and handled fragile items with care. Only minor delay with unloading at the new place, but overall, I'm satisfied with their professionalism. Great service! The team arrived on time, packed everything efficiently, and handled fragile items with care. Only minor delay with unloading at the new place, but overall, I'm satisfied with their professionalism."
   },
   {
     id: 2,
@@ -62,5 +62,13 @@ export const reviews = [
     date: "October 12, 2022",
     rating: 5,
     comment: "Outstanding service! The movers were skilled, organized, and handled my fragile items with extreme care. They made my move stress-free, and everything arrived in perfect condition. Highly recommended!"
-  }
+  },
+  {
+    id: 9,
+    name: "Will Smith",
+    location: "Portsmouth",
+    date: "October 11, 2022",
+    rating: 5,
+    comment: "Average experience. The team was professional, but a couple of items suffered minor damage during transportation. The customer service was responsive, though, and they compensated me for the inconvenience."
+  },
 ];

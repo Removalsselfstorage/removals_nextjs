@@ -52,11 +52,11 @@ const OurReviews = () => {
         </div>
 
         {/* reviews */}
-        <div className="w-[100%] overflow-auto scrollbar-thin scrollbar-track-gray-200 scrollbar-thumb-primary scrollbar-default py-[20px] pl-[20px] lg:pl-0">
-          <div className="carousel ">
+        <div className="h-[600px] overflow-auto scrollbar-thin scrollbar-track-gray-200 scrollbar-thumb-primary scrollbar-default bg-primary/10 pl-[20px]">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 justify-center">
             {reviews.map((review, index) => {
               return (
-                <div className={`px-[10px] pb-[30px] carousel-item`} key={review.id}>
+                <div className='py-[10px]' key={review.id}>
                   <ReviewCard
                     name={review.name}
                     location={review.location}

@@ -17,7 +17,7 @@ const WhyChooseUs = () => {
         </div>
 
         {/* row 1 */}
-        <div className="flex  flex-col space-y-[30px] md:flex-row md:items-center  md:space-y-[0px] mb-[50px]">
+        <div className="flex  flex-col space-y-[30px] md:flex-row md:px-[20px] lg:px-0 md:items-center  md:space-y-[0px] mb-[50px]">
           {/* image */}
           <div className="flex-[0.8] flex  justify-center hover:rotate-[5deg] duration-200">
             <img
@@ -54,7 +54,7 @@ const WhyChooseUs = () => {
         </div>
 
         {/* row 2 */}
-        <div className="flex items-center flex-col space-y-[30px] md:flex-row-reverse md:items-center md:space-y-[0px]">
+        <div className="flex items-center flex-col space-y-[30px] md:flex-row-reverse md:px-[20px] lg:pl-[50px] md:items-center md:space-y-[0px]">
           {/* image */}
           <div className="flex-[0.8] flex  justify-center hover:rotate-[5deg] duration-200">
             <img

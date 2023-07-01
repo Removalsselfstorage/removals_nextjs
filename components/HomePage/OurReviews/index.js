@@ -52,7 +52,7 @@ const OurReviews = () => {
         </div>
 
         {/* reviews */}
-        <div className="h-[600px] overflow-auto scrollbar-thin scrollbar-track-gray-200 scrollbar-thumb-primary scrollbar-default bg-primary/10 pl-[20px]">
+        <div className="h-[500px] lg:h-[600px] overflow-auto scrollbar-thin scrollbar-track-gray-200 scrollbar-thumb-primary scrollbar-default rounded-[30px] bg-primary/10 pl-[20px] py-[10px]">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 justify-center">
             {reviews.map((review, index) => {
               return (

@@ -13,7 +13,7 @@ const Navbar = () => {
         {/* Top Nav */}
         <div className="flex lg:flex-row flex-col w-full md:max-w-7xl mx-auto px-[20px] items-center  py-[10px] text-[14px] h-[40px] text-white lg:justify-between ">
           <div className="flex  items-center text-[14px]">
-            <p className="">Prefer to talk to a person?</p>
+            <p className="hidden lg:flex">Prefer to talk to a person?</p>
             <div className="flex items-center ml-[10px] space-x-[7px]">
               <BiSolidPhoneCall size={20} className="" />
               <a href="tel:(800)-995-5003" className="link link-hover">

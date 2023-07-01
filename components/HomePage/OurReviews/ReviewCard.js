@@ -22,7 +22,7 @@ const ReviewCard = ({ name, location, date, rating, comment }) => {
         </div>
         <div className="flex flex-col">
           <p className="font-semibold">
-            {name}, {location}{' '}
+            {name}, ({location})
           </p>
           <p className="text-[14px] text-gray-500">{date}</p>
         </div>

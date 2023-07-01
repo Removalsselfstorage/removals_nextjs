@@ -7,6 +7,7 @@ import WhyChooseUs from '@/components/HomePage/WhyChooseUs';
 import AboutUs from '@/components/HomePage/AboutUs';
 import OurReviews from '@/components/HomePage/OurReviews';
 import FAQ from '@/components/HomePage/FAQ';
+import FeaturedCompanies from '@/components/HomePage/FeatureCompanies';
 
 export default function Home() {
   return (
@@ -25,6 +26,7 @@ export default function Home() {
         <WhyChooseUs />
         <AboutUs />
         <OurReviews />
+        <FeaturedCompanies />
         <FAQ />
       </main>
     </>

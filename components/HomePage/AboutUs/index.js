@@ -82,14 +82,18 @@ const AboutUs = () => {
       </dialog> */}
       {showModal && (
         <Modal closeModal={() => setShowModal(false)}>
-          <iframe
-            src="https://player.vimeo.com/video/464246309?autoplay=1&loop=1"
-            width="640"
-            height="360"
-            frameborder="0"
-            allow="autoplay; fullscreen; picture-in-picture"
-            allowfullscreen
-          ></iframe>
+          <div className="px-[30px] md:px-[0]">
+              <iframe
+                src="https://player.vimeo.com/video/464246309?autoplay=1&loop=1"
+                // width="640"
+                // height="360"
+                frameborder="0"
+                allow="autoplay; fullscreen; picture-in-picture"
+                // allow="autoplay; fullscreen;"
+                allowfullscreen
+                className=' w-[400px] h-[300px] md:w-[640px] md:h-[360px] lg:w-[853px] lg:h-[505px]'
+              ></iframe>
+          </div>
         </Modal>
       )}
     </div>

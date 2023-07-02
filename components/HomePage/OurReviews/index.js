@@ -56,7 +56,7 @@ const OurReviews = () => {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 justify-center">
             {reviews.map((review, index) => {
               return (
-                <div className='py-[10px]' key={review.id}>
+                <div className="py-[10px]" key={review.id}>
                   <ReviewCard
                     name={review.name}
                     location={review.location}

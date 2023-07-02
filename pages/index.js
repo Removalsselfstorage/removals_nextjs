@@ -8,6 +8,7 @@ import AboutUs from '@/components/HomePage/AboutUs';
 import OurReviews from '@/components/HomePage/OurReviews';
 import FAQ from '@/components/HomePage/FAQ';
 import FeaturedCompanies from '@/components/HomePage/FeatureCompanies';
+import InputSearch from '@/components/InputSearch';
 
 export default function Home() {
   return (

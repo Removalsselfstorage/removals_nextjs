@@ -12,7 +12,7 @@ const HeroInputBox = () => {
             TRUST<span className="text-gray-500">PILOT</span>
           </h3>
           <FullRating value={4} color='text-secondary' />
-          <p className="text-gray-400 mt-[0px]">
+          <p className="text-gray-400 mt-[0px] text-[14px]">
             TrustScore 4.9 | 4,155 Reviews
           </p>
         </div>

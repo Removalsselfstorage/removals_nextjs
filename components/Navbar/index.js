@@ -9,7 +9,7 @@ const Navbar = () => {
 
   return (
     <>
-      <div className="flex flex-col items-center bg-primary">
+      <div className="flex flex-col items-center bg-primary ">
         {/* Top Nav */}
         <div className="flex lg:flex-row flex-col w-full md:max-w-7xl mx-auto px-[20px] items-center  py-[10px] text-[14px] h-[40px] text-white lg:justify-between ">
           <div className="flex  items-center text-[14px]">
@@ -31,7 +31,7 @@ const Navbar = () => {
         </div>
         {/* Main Nav */}
         <div className="bg-white w-full">
-          <div className="drawer z-[1000]">
+          <div className="drawer z-[900]">
             <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
             <div className="drawer-content flex flex-col">
               {/* Navbar */}
@@ -124,9 +124,7 @@ const Navbar = () => {
                   <a>Sidebar Item 2</a>
                 </li>
               </ul> */}
-              <ul
-                className="menu p-4 w-[250px] md:w-[400px] h-full bg-base-100 md:text-[16px] flex flex-col space-y-[10px] md:space-y-[20px]"
-              >
+              <ul className="menu p-4 w-[250px] md:w-[400px] h-full bg-base-100 md:text-[16px] flex flex-col space-y-[10px] md:space-y-[20px]">
                 <li>
                   <a className="btn-nav">Home</a>
                 </li>
@@ -142,13 +140,13 @@ const Navbar = () => {
                 <li>
                   <a className="btn-nav">Moving Your Employees</a>
                 </li>
-                <li>
+                <li className="border-b-[1.5px]">
                   <a className="btn-nav">Moving Your Business</a>
                 </li>
                 <li>
                   <a className="btn-nav">Moving Tips</a>
                 </li>
-                <li>
+                <li className="border-b-[1.5px]">
                   <a className="btn-nav">Become a Mover</a>
                 </li>
                 <li>
@@ -157,7 +155,7 @@ const Navbar = () => {
                 <li>
                   <a className="btn-nav">Contact Us</a>
                 </li>
-                <li>
+                <li className="border-b-[1.5px]">
                   <a className="btn-nav">Blog</a>
                 </li>
                 <li>

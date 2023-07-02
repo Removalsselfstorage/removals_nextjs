@@ -7,16 +7,16 @@ const HeroInputBox = () => {
   return (
     <div className="card shadow-2xl bg-base-100 overflow-hidden text-black">
       <div className="card-body">
-        <div className="flex flex-col items-center justify-center mb-[20px] bg-gray-200/50 mx-[-50px] mt-[-35px] py-[20px]">
-          <h3 className="text-xl font-bold text-gray-800 uppercase mb-[5px]">
+        <div className="flex flex-col items-center justify-center mb-[0px] bg-gray-200/50 mx-[-50px] mt-[-35px] py-[15px]">
+          <h3 className="text-xl font-bold text-gray-800 uppercase mb-[0px]">
             TRUST<span className="text-gray-500">PILOT</span>
           </h3>
           <FullRating value={4} color='text-secondary' />
-          <p className="text-gray-400 mt-[8px]">
+          <p className="text-gray-400 mt-[0px]">
             TrustScore 4.9 | 4,155 Reviews
           </p>
         </div>
-        <h3 className="text-2xl font-bold text-primary uppercase mb-[10px]">
+        <h3 className="text-2xl font-bold text-primary uppercase mt-[10px]">
           What are you moving?
         </h3>
         <div className="w-full">

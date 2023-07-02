@@ -1,8 +1,11 @@
-import React from 'react';
+import Modal from '@/components/Modal';
+import React, { useState } from 'react';
 import { BsFillPlayFill } from 'react-icons/bs';
 import { FiEdit } from 'react-icons/fi';
 
 const AboutUs = () => {
+  const [showModal, setShowModal] = useState(false);
+
   return (
     <div className="mb-[50px] bg-primary/10 py-[50px]">
       <div className="md:max-w-7xl mx-auto">
@@ -14,7 +17,7 @@ const AboutUs = () => {
               {/* play button */}
               <div
                 onClick={() => {
-                  //   setShowModal(true);
+                  setShowModal(true);
                 }}
                 className="bg-black/60 hover:bg-black/90 w-[70px] h-[70px] absolute left-[43%] top-[40%] flex justify-center items-center rounded-full hover:scale-[1.2] duration-200"
               >
@@ -54,6 +57,41 @@ const AboutUs = () => {
           </div>
         </div>
       </div>
+
+      {/* Video Modal */}
+      {/* <button className="btn" onClick={() => window.my_modal_3.showModal()}>
+        open modal
+      </button> */}
+      {/* <dialog id="my_modal_3" className="modal w-[800px] h-[500px]">
+        <form method="dialog" className="modal-box">
+          <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+            ✕
+          </button>
+          <div className="">
+            <iframe
+              width="560"
+              height="315"
+              src="https://www.youtube.com/embed/FTwlgqRYlwU"
+              title="YouTube video player"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen
+            ></iframe>
+          </div>
+        </form>
+      </dialog> */}
+      {showModal && (
+        <Modal closeModal={() => setShowModal(false)}>
+          <iframe
+            src="https://player.vimeo.com/video/464246309?autoplay=1&loop=1"
+            width="640"
+            height="360"
+            frameborder="0"
+            allow="autoplay; fullscreen; picture-in-picture"
+            allowfullscreen
+          ></iframe>
+        </Modal>
+      )}
     </div>
   );
 };

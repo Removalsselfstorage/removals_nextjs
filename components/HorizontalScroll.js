@@ -29,7 +29,7 @@ const HorizontalScroll = ({ children }) => {
   }, []);
 
   return (
-    <div className="flex overflow-x-hidden w-full" ref={containerRef}>
+    <div className="flex  w-full overflow-x-hidden overflow-auto scrollbar-thin scrollbar-track-gray-200 scrollbar-thumb-gray-400 scrollbar-default " ref={containerRef}>
       {children}
     </div>
   );

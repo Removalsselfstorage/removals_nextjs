@@ -5,7 +5,7 @@ import { titleFont } from '@/utils/fonts';
 
 const Hero = () => {
   return (
-    <div className=" bg-base-200">
+    <div className=" bg-base-200 mt-[100px]">
       <div
         className="hero  min-h-[80vh] bg-black/80"
         style={{ backgroundImage: 'url(/hero_bg.jpg)' }}

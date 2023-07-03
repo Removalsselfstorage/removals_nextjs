@@ -52,7 +52,7 @@ const OurReviews = () => {
             </h3>
           </div>
           <div className="mt-[10px] flex text-gray-600 text-center">
-            <p className="font-semibold px-[50px] text-[16px] lg:text-[18px]">
+            <p className="font-semibold px-[50px] text-[16px] lg:text-[18px] leading-[22px]">
               <span className="text-[20px] mr-[5px] italic">"</span>Rated 4.8
               out of 5 based on 7,203 reviews
               <span className="text-[20px] ml-[0px] italic">"</span>

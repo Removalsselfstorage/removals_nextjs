@@ -3,7 +3,7 @@ import React from 'react';
 
 const WhyChooseUs = () => {
   return (
-    <div className="mb-[50px]">
+    <div className="mb-[30px] lg:mb-[50px]">
       <div className="md:max-w-7xl mx-auto">
         {/* Title */}
         <div className="w-full flex justify-center py-[50px]">

@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 
 const Navbar = () => {
   const [shadow, setShadow] = useState(false);
-  const [showNav, setShowNav] = useState(false);
+  const [showNav, setShowNav] = useState(true);
 
   useEffect(() => {
     const handleShadow = () => {
@@ -31,18 +31,6 @@ const Navbar = () => {
     };
     window.addEventListener('scroll', showNavbar);
   }, [showNav]);
-
-  //   useEffect(() => {
-  //     let oldScrollY = window.scrollY;
-  //     const showNavbar2 = (e) => {
-  //       if (oldScrollY > window.scrollY) {
-  //         setShowNav(true);
-  //       } else {
-  //         setShowNav(false);
-  //       }
-  //     };
-  //     window.addEventListener('scroll', showNavbar2);
-  //   }, [showNav]);
 
   return (
     <>
@@ -124,6 +112,9 @@ const Navbar = () => {
                       </ul>
                     </li>
                     <li>
+                      <a className="btn-nav">Locations</a>
+                    </li>
+                    <li>
                       <a className="btn-nav">Moving Tips</a>
                     </li>
                     <li>
@@ -189,6 +180,9 @@ const Navbar = () => {
                 </li>
                 <li className="border-b-[1.5px]">
                   <a className="btn-nav">Moving Your Business</a>
+                </li>
+                <li>
+                  <a className="btn-nav">Locations</a>
                 </li>
                 <li>
                   <a className="btn-nav">Moving Tips</a>

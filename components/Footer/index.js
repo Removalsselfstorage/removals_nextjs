@@ -75,9 +75,9 @@ const Footer = () => {
         <div>
           <span className="footer-title">Company</span>
           <a className="link link-hover">About Us</a>
-          <a className="link link-hover my-[5px]">Reviews</a>
-          <a className="link link-hover">Blog</a>
-          <a className="link link-hover my-[5px]">Careers</a>
+          <a className="link link-hover my-[5px]">Locations</a>
+          <a className="link link-hover ">Reviews</a>
+          <a className="link link-hover my-[5px]">Blog</a>
           <a className="link link-hover">Terms & Conditions</a>
           <a className="link link-hover my-[5px]">Privacy Policy</a>
         </div>

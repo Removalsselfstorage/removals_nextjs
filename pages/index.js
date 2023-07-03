@@ -9,6 +9,8 @@ import OurReviews from '@/components/HomePage/OurReviews';
 import FAQ from '@/components/HomePage/FAQ';
 import FeaturedCompanies from '@/components/HomePage/FeatureCompanies';
 import InputSearch from '@/components/InputSearch';
+import Features from '@/components/HomePage/Features';
+import HowItWorks from '@/components/HomePage/HowItWorks';
 
 export default function Home() {
   return (
@@ -23,7 +25,9 @@ export default function Home() {
 
       <main className="">
         <Hero />
+        <Features />
         <OurServices />
+        <HowItWorks />
         <WhyChooseUs />
         <AboutUs />
         <OurReviews />

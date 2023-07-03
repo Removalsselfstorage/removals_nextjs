@@ -127,7 +127,7 @@ const HeroInputBox = () => {
   return (
     <div className="card shadow-2xl bg-base-100  text-black w-full md:w-[400px]">
       <div className="card-body ">
-        <div className="flex flex-col items-center justify-center mb-[0px] bg-gray-200 rounded-tl-[18px] rounded-tr-[18px] mx-[-32px] mt-[-32px] pt-[20px] pb-[20px] px-[50px]">
+        <div className="flex flex-col items-center justify-center mb-[0px] bg-gray-200 rounded-tl-[18px] rounded-tr-[18px] mx-[-32px] mt-[-32px] pt-[20px] pb-[20px] md:px-[50px]">
           <h3 className="text-xl font-bold text-gray-800 uppercase mb-[-10px]">
             TRUST<span className="text-gray-500">PILOT</span>
           </h3>
@@ -144,18 +144,20 @@ const HeroInputBox = () => {
             <label className="label">
               <span className="font-semibold">What are you moving?</span>
             </label>
-            <Select
-              className="basic-single"
-              classNamePrefix="select"
-              //   defaultValue={colourOptions[0]}
-              //   isDisabled={isDisabled}
-              //   isLoading={isLoading}
-              //   isClearable={true}
-              //   isRtl={isRtl}
-              isSearchable={true}
-              name="color"
-              options={colourOptions}
-            />
+            <div className="w-full">
+                <Select
+                  className="basic-single"
+                  classNamePrefix="select"
+                  //   defaultValue={colourOptions[0]}
+                  //   isDisabled={isDisabled}
+                  //   isLoading={isLoading}
+                  //   isClearable={true}
+                  //   isRtl={isRtl}
+                  isSearchable={true}
+                  name="color"
+                  options={colourOptions}
+                />
+            </div>
           </div>
           <div className="form-control">
             <label className="label">

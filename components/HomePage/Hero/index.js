@@ -6,13 +6,13 @@ import { RiCustomerService2Fill } from 'react-icons/ri';
 
 const Hero = () => {
   return (
-    <div className=" bg-base-200 mt-[100px] ">
+    <div className=" bg-base-200 mt-[50px]  md:mt-[0px] md:pt-[100px]">
       <div
         className="hero  min-h-[90vh] bg-black/80"
         style={{ backgroundImage: 'url(/hero_bg.jpg)' }}
       >
         <div className="hero-overlay bg-black/80 "></div>
-        <div className="hero-content flex-col text-white md:flex-row md:space-x-[50px] space-y-[0px] px-[50px] md:max-w-7xl mx-auto">
+        <div className="hero-content  flex-col text-white md:flex-row md:space-x-[50px] space-y-[0px] md:px-[50px] md:max-w-7xl mx-auto">
           {/* Hero Text */}
           <div className=" hidden md:flex md:flex-col md:justify-between h-full">
             {/* need help */}

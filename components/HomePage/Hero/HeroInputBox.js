@@ -125,46 +125,29 @@ const colourStyles = {
 
 const HeroInputBox = () => {
   return (
-    <div className="card shadow-2xl bg-base-100  text-black">
-      <div className="card-body">
-        <div className="flex flex-col items-center justify-center mb-[0px]">
-          <h3 className="text-xl font-bold text-gray-800 uppercase mb-[0px]">
+    <div className="card shadow-2xl bg-base-100  text-black w-full md:w-[400px]">
+      <div className="card-body ">
+        <div className="flex flex-col items-center justify-center mb-[0px] bg-gray-200 rounded-tl-[18px] rounded-tr-[18px] mx-[-32px] mt-[-32px] pt-[20px] pb-[20px] px-[50px]">
+          <h3 className="text-xl font-bold text-gray-800 uppercase mb-[-10px]">
             TRUST<span className="text-gray-500">PILOT</span>
           </h3>
           <FullRating value={4} color="text-secondary" />
-          <p className="text-gray-400 mt-[0px] text-[14px]">
+          <p className="text-gray-400 text-[14px] mt-[-5px] text-center">
             TrustScore 4.9 | 4,155 Reviews
           </p>
         </div>
-        <h3 className="text-2xl font-bold text-primary uppercase my-[10px] ">
-          What are you moving?
+        <h3 className="text-2xl font-bold text-primary uppercase mt-[10px] text-center">
+          Get a Free Quote
         </h3>
         <div className="w-full">
-          {/* <div className="form-control w-full max-w-xs">
+          <div className="mb-[0px]">
             <label className="label">
-              <span className="label-text">
-                Pick the best fantasy franchise
-              </span>
-            </label>
-            <select className="select slect-md select-bordered">
-              <option disabled selected>
-                Select
-              </option>
-              <option>Star Wars</option>
-              <option>Harry Potter</option>
-              <option>Lord of the Rings</option>
-              <option>Planet of the Apes</option>
-              <option>Star Trek</option>
-            </select>
-          </div> */}
-          <div className="mb-[20px]">
-            <label className="label">
-              <span className="">What are you moving?</span>
+              <span className="font-semibold">What are you moving?</span>
             </label>
             <Select
               className="basic-single"
               classNamePrefix="select"
-            //   defaultValue={colourOptions[0]}
+              //   defaultValue={colourOptions[0]}
               //   isDisabled={isDisabled}
               //   isLoading={isLoading}
               //   isClearable={true}
@@ -176,12 +159,29 @@ const HeroInputBox = () => {
           </div>
           <div className="form-control">
             <label className="label">
-              <span className="">Where are you moving to?</span>
+              <span className="font-semibold">Where are you moving from?</span>
             </label>
             <Select
               className="basic-single"
               classNamePrefix="select"
-            //   defaultValue={citiesOptions[0]}
+              //   defaultValue={citiesOptions[0]}
+              //   isDisabled={isDisabled}
+              //   isLoading={isLoading}
+              //   isClearable={true}
+              //   isRtl={isRtl}
+              isSearchable={true}
+              name="color"
+              options={citiesOptions}
+            />
+          </div>
+          <div className="form-control">
+            <label className="label">
+              <span className="font-semibold">Where are you moving to?</span>
+            </label>
+            <Select
+              className="basic-single"
+              classNamePrefix="select"
+              //   defaultValue={citiesOptions[0]}
               //   isDisabled={isDisabled}
               //   isLoading={isLoading}
               //   isClearable={true}
@@ -193,7 +193,7 @@ const HeroInputBox = () => {
           </div>
           <div className="form-control mt-6">
             <button className="btn btn-primary flex items-center space-x-[5px]">
-              <span className="">Get a Quote</span>
+              <span className="">Get Quote</span>
               <span className="">
                 <FiEdit className="text-[20px]" />
               </span>

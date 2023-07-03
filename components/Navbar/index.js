@@ -2,6 +2,7 @@ import { BiSolidPhoneCall } from 'react-icons/bi';
 import { BiMenu } from 'react-icons/bi';
 import { IoClose } from 'react-icons/io5';
 import { BsChevronDown } from 'react-icons/bs';
+import { RiCustomerService2Fill } from 'react-icons/ri';
 import { useEffect, useState } from 'react';
 
 const Navbar = () => {
@@ -44,9 +45,19 @@ const Navbar = () => {
         {/* Top Nav */}
         {showNav && (
           <div className="bg-primary w-full">
-            <div className="flex lg:flex-row flex-col w-full md:max-w-7xl mx-auto px-[20px] items-center  py-[10px] text-[14px] h-[40px] text-white lg:justify-between ">
-              <div className="flex  items-center text-[14px]">
-                <p className="hidden lg:flex">Prefer to talk to a person?</p>
+            <div className="flex lg:flex-row flex-col w-full md:max-w-7xl mx-auto px-[0px] items-center  py-[10px] text-[13px] h-[40px] text-white lg:justify-between ">
+              <div className="flex  items-center">
+                <div className="flex md:hidden">
+                    <p className="hidden lg:flex">Need help?</p>
+                    <div className="flex items-center ml-[10px] space-x-[7px]">
+                      <RiCustomerService2Fill size={20} className="" />
+                      <a href="tel:07869116203" className="link link-hover">
+                        07869116203{' '}
+                      </a>
+                      <p className="">|</p>
+                    </div>
+                </div>
+
                 <div className="flex items-center ml-[10px] space-x-[7px]">
                   <BiSolidPhoneCall size={20} className="" />
                   <a href="tel:(800)-995-5003" className="link link-hover">
@@ -56,9 +67,9 @@ const Navbar = () => {
               </div>
               <div className="lg:flex items-center  space-x-[10px] hidden">
                 <p className="link link-hover ">About Us</p>
-                <p className="link link-hover ">|</p>
+                <p className="">|</p>
                 <p className="link link-hover ">Contact Us</p>
-                <p className="link link-hover ">|</p>
+                <p className="">|</p>
                 <p className="link link-hover"> Blog</p>
               </div>
             </div>

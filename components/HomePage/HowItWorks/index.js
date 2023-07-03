@@ -5,6 +5,7 @@ import { RiCustomerService2Fill } from 'react-icons/ri';
 import { FaArrowRightLong } from 'react-icons/fa6';
 import { IoMailUnreadOutline } from 'react-icons/io5';
 import { FaFileSignature } from 'react-icons/fa';
+import { IoIosSend } from 'react-icons/io';
 
 const HowItWorks = () => {
   return (
@@ -62,7 +63,7 @@ const HowItWorks = () => {
           <div className="flex flex-col space-y-[10px] items-center group relative">
             {/* <FaArrowRightLong className="text-[40px] md:text-[50px] text-secondary absolute right-[-35px] top-[20%] animate-bounce" /> */}
             <div className="bg-secondary w-[100px] h-[100px] rounded-full flex justify-center items-center relative group-hover:scale-[1.15] duration-200">
-              <IoMailUnreadOutline className="text-[40px] md:text-[50px] text-white" />
+              <IoIosSend className="text-[40px] md:text-[50px]" color="white" />
               <div className="flex justify-center items-center bg-primary rounded-full h-[50px] w-[50px] absolute top-[-10px] left-[-10px]">
                 <p className="text-white text-[20px]">4</p>
               </div>

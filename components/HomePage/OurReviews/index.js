@@ -41,14 +41,24 @@ const OurReviews = () => {
     <div className="mb-[30px] lg:mb-[50px]">
       <div className="md:max-w-7xl mx-auto">
         {/* Title */}
-        <div className="w-full flex justify-center py-[50px]">
-          {/* <h3 className="text-4xl font-extrabold">Our Services</h3> */}
-          <h3
-            className={`${titleFont.variable} font-sans2 text-3xl lg:text-4xl font-extrabold flex-col items-center justify-center`}
-          >
-            <p className="">Customers Reviews</p>{' '}
-            <div className="w-full bg-primary/20 h-[20px] mt-[-12px] "></div>
-          </h3>
+        <div className="flex flex-col items-center py-[50px]">
+          <div className="w-full flex justify-center ">
+            {/* <h3 className="text-4xl font-extrabold">Our Services</h3> */}
+            <h3
+              className={`${titleFont.variable} font-sans2 text-3xl lg:text-4xl font-extrabold flex-col items-center justify-center`}
+            >
+              <p className="">Customers Reviews</p>
+              <div className="w-full bg-primary/20 h-[20px] mt-[-12px] "></div>
+            </h3>
+          </div>
+          <div className="mt-[10px] flex text-gray-600 text-center">
+            <p className="font-semibold px-[50px] text-[16px] lg:text-[18px]">
+              <span className="text-[20px] mr-[5px] italic">"</span>Rated 4.8
+              out of 5 based on 7,203 reviews
+              <span className="text-[20px] ml-[0px] italic">"</span>
+            </p>
+            {/* <img src="/svg/trustpilot.svg" alt="" className='h-[25px] w-fit'/> */}
+          </div>
         </div>
 
         {/* reviews */}

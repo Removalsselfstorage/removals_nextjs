@@ -17,7 +17,7 @@ const HorizontalScroll = ({ children }) => {
     };
 
     const scrollInterval = setInterval(() => {
-      container.scrollLeft += 2; // Increment scroll position
+      container.scrollLeft += 3; // Increment scroll position
     }, 40);
 
     container.addEventListener('scroll', handleScroll);
@@ -29,7 +29,7 @@ const HorizontalScroll = ({ children }) => {
   }, []);
 
   return (
-    <div className="flex  w-full overflow-x-hidden overflow-auto scrollbar-thin scrollbar-track-gray-200 scrollbar-thumb-gray-400 scrollbar-default " ref={containerRef}>
+    <div className="flex  w-full justify-center items-center overflow-x-hidden overflow-auto scrollbar-thin scrollbar-track-gray-200 scrollbar-thumb-gray-400 scrollbar-default " ref={containerRef}>
       {children}
     </div>
   );

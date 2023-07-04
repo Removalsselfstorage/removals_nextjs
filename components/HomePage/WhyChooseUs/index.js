@@ -28,7 +28,7 @@ const WhyChooseUs = () => {
           </div>
           {/* text */}
           <div className="flex-[1] flex flex-col lg:flex-row  space-y-[20px] lg:space-y-[0]">
-            <div className="flex-[1] flex flex-col lg:max-w-[350px] space-y-[30px] px-[40px] lg:px-[10px]">
+            <div className="flex-[1] flex flex-col lg:max-w-[350px] space-y-[10px] md:space-y-[30px] px-[40px] lg:px-[10px]">
               <h2 className="text-2xl font-bold ">High Quality Services</h2>
               <p className="text-[16px] lg:text-[17px]">
                 We offer a comprehensive range of moving services tailored to
@@ -40,7 +40,7 @@ const WhyChooseUs = () => {
                 requirements, making your move effortless and efficient.
               </p>
             </div>
-            <div className="flex-[1] flex flex-col lg:max-w-[350px] space-y-[30px] px-[40px]">
+            <div className="flex-[1] flex flex-col lg:max-w-[350px] space-y-[10px] md:space-y-[30px] px-[40px]">
               <h2 className="text-2xl font-bold ">Safe Transportation</h2>
               <p className="text-[16px] lg:text-[17px]">
                 With <b>Removal & Selfstorage,</b> the safety and security of
@@ -65,7 +65,7 @@ const WhyChooseUs = () => {
           </div>
           {/* text */}
           <div className="flex-[1] flex flex-col lg:flex-row  space-y-[20px] lg:space-y-[0]">
-            <div className="flex-[1] flex flex-col lg:max-w-[350px] space-y-[30px] px-[40px] lg:px-[10px]">
+            <div className="flex-[1] flex flex-col lg:max-w-[350px] space-y-[10px] md:space-y-[30px] px-[40px] lg:px-[10px]">
               <h2 className="text-2xl font-bold ">Transparent Pricing</h2>
               <p className="text-[16px] lg:text-[17px]">
                 At <b>Removal & Selfstorage,</b> we believe in transparency when
@@ -76,7 +76,7 @@ const WhyChooseUs = () => {
                 receiving excellent service at a fair and reasonable price.
               </p>
             </div>
-            <div className="flex-[1] flex flex-col lg:max-w-[350px] space-y-[30px] px-[40px]">
+            <div className="flex-[1] flex flex-col lg:max-w-[350px] space-y-[10px] md:space-y-[30px] px-[40px] lg:px-[10px]">
               <h2 className="text-2xl font-bold ">
                 Excellent Customer Service
               </h2>

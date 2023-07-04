@@ -44,7 +44,7 @@ const HowItWorks = () => {
               <FaFileSignature className="text-[40px] md:text-[50px] text-white" />
 
               <div className="flex justify-center items-center bg-primary rounded-full h-[30px] md:h-[50px] w-[30px] md:w-[50px] absolute top-[-5px] left-[-10px] md:top-[-10px] md:left-[-10px]">
-                <p className="text-white text-[20px]">2</p>
+                <p className="text-white text-[16px] md:text-[20px]">2</p>
               </div>
             </div>
             <p className="md:text-center md:text-[18px] px-[20px] md:px-[30px] lg:px-[0px] w-[270px] md:w-full">
@@ -57,7 +57,7 @@ const HowItWorks = () => {
             <div className="bg-secondary w-[70px] md:w-[100px] h-[70px] md:h-[100px] rounded-full flex justify-center items-center relative group-hover:scale-[1.15] duration-200">
             <IoMailUnreadOutline className="text-[40px] md:text-[50px] text-white" />
               <div className="flex justify-center items-center bg-primary rounded-full h-[30px] md:h-[50px] w-[30px] md:w-[50px] absolute top-[-5px] left-[-10px] md:top-[-10px] md:left-[-10px]">
-                <p className="text-white text-[20px]">3</p>
+                <p className="text-white text-[16px] md:text-[20px]">3</p>
               </div>
             </div>
             <p className="md:text-center md:text-[18px] px-[20px] md:px-[30px] lg:px-[0px] w-[270px] md:w-full">
@@ -69,7 +69,7 @@ const HowItWorks = () => {
             <div className="bg-secondary w-[70px] md:w-[100px] h-[70px] md:h-[100px] rounded-full flex justify-center items-center relative group-hover:scale-[1.15] duration-200">
               <IoIosSend className="text-[40px] md:text-[50px]" color="white" />
               <div className="flex justify-center items-center bg-primary rounded-full h-[30px] md:h-[50px] w-[30px] md:w-[50px] absolute top-[-5px] left-[-10px] md:top-[-10px] md:left-[-10px]">
-                <p className="text-white text-[20px]">4</p>
+                <p className="text-white text-[16px] md:text-[20px]">4</p>
               </div>
             </div>
             <p className="md:text-center md:text-[18px] px-[20px] md:px-[30px] lg:px-[0px] w-[270px] md:w-full">

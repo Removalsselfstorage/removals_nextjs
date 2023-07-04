@@ -12,7 +12,7 @@ const FeaturedCompanies = () => {
           <h3
             className={`${titleFont.variable} font-sans2 text-3xl lg:text-4xl font-extrabold flex-col items-center justify-center`}
           >
-            <p className="">Featured Companies</p>{' '}
+            <p className="">Local Movers</p>{' '}
             <div className="w-full bg-primary/20 h-[20px] mt-[-12px] "></div>
           </h3>
         </div>
@@ -27,46 +27,83 @@ const FeaturedCompanies = () => {
             <img src="/FAIM-2021.webp" alt="" className='h-[60px] lg:h-[80px] mix-blend-multiply'/>
         </div> */}
         <HorizontalScroll>
-          <img
-            src="/ISO-9001.webp"
-            alt=""
-            className="h-[60px] lg:h-[80px] mix-blend-multiply grayscale hover:grayscale-0 duration-200"
-          />
-          <img
-            src="/fhio.webp"
-            alt=""
-            className="h-[60px] lg:h-[80px] mix-blend-multiply grayscale hover:grayscale-0 duration-200"
-          />
-          <img
-            src="/FAIM-2021.webp"
-            alt=""
-            className="h-[60px] lg:h-[80px] mix-blend-multiply grayscale hover:grayscale-0 duration-200"
-          />
-          <img
-            src="/MTC-Ltd-logo_resized2-190x80.webp"
-            alt=""
-            className="h-[60px] lg:h-[80px] mix-blend-multiply grayscale hover:grayscale-0 duration-200"
-          />
-          <img
-            src="/logo-fidi_0-190x80.webp"
-            alt=""
-            className="h-[60px] lg:h-[80px] mix-blend-multiply grayscale hover:grayscale-0 duration-200"
-          />
-          <img
-            src="/iam-logo-190x80.webp"
-            alt=""
-            className="h-[60px] lg:h-[80px] mix-blend-multiply grayscale hover:grayscale-0 duration-200"
-          />
-          <img
-            src="/FAIM-2021.webp"
-            alt=""
-            className="h-[60px] lg:h-[80px] mix-blend-multiply grayscale hover:grayscale-0 duration-200"
-          />
-          <img
-            src="/FAIM-2021.webp"
-            alt=""
-            className="h-[60px] lg:h-[80px] mix-blend-multiply grayscale hover:grayscale-0 duration-200"
-          />
+          <div className="flex items-center">
+            <img
+              src="/mover1.png"
+              alt=""
+              className="h-[60px] mix-blend-multiply grayscale hover:grayscale-0 duration-200 mx-[20px]"
+            />
+            <img
+              src="/mover2.png"
+              alt=""
+              className="h-[60px] w-fit mix-blend-multiply grayscale hover:grayscale-0 duration-200 mx-[20px] bg-blend-multiply"
+            />
+            <img
+              src="/mover3.png"
+              alt=""
+              className="h-[60px] mix-blend-multiply grayscale hover:grayscale-0 duration-200 mx-[20px]"
+            />
+            <img
+              src="/mover4.png"
+              alt=""
+              className="h-[60px] lg:h-[80px] mix-blend-multiply grayscale hover:grayscale-0 duration-200 mx-[20px]"
+            />
+            <img
+              src="/mover5.png"
+              alt=""
+              className="h-[30px] mix-blend-multiply grayscale hover:grayscale-0 duration-200 mx-[20px]"
+            />
+            <img
+              src="/mover1.png"
+              alt=""
+              className="h-[60px] lg:h-[80px] mix-blend-multiply grayscale hover:grayscale-0 duration-200 mx-[10px]"
+            />
+            <img
+              src="/mover2.png"
+              alt=""
+              className="h-[60px] lg:h-[80px] mix-blend-multiply grayscale hover:grayscale-0 duration-200 mx-[10px]"
+            />
+            <img
+              src="/mover3.png"
+              alt=""
+              className="h-[60px] lg:h-[80px] mix-blend-multiply grayscale hover:grayscale-0 duration-200 mx-[10px]"
+            />
+            <img
+              src="/mover4.png"
+              alt=""
+              className="h-[60px] lg:h-[80px] mix-blend-multiply grayscale hover:grayscale-0 duration-200 mx-[20px]"
+            />
+            <img
+              src="/mover5.png"
+              alt=""
+              className="h-[30px] mix-blend-multiply grayscale hover:grayscale-0 duration-200 mx-[20px]"
+            />
+            <img
+              src="/mover1.png"
+              alt=""
+              className="h-[60px] lg:h-[80px] mix-blend-multiply grayscale hover:grayscale-0 duration-200 mx-[20px]"
+            />
+            <img
+              src="/mover2.png"
+              alt=""
+              className="h-[60px]  w-fit mix-blend-multiply grayscale hover:grayscale-0 duration-200 mx-[20px]"
+            />
+            <img
+              src="/mover3.png"
+              alt=""
+              className="h-[60px] mix-blend-multiply grayscale hover:grayscale-0 duration-200 mx-[20px]"
+            />
+            <img
+              src="/mover4.png"
+              alt=""
+              className="h-[60px] mix-blend-multiply grayscale hover:grayscale-0 duration-200 mx-[20px]"
+            />
+            <img
+              src="/mover5.png"
+              alt=""
+              className="h-[30px] mix-blend-multiply grayscale hover:grayscale-0 duration-200 mx-[20px]"
+            />
+          </div>
         </HorizontalScroll>
       </div>
     </div>

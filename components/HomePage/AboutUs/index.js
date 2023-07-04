@@ -7,7 +7,7 @@ const AboutUs = () => {
   const [showModal, setShowModal] = useState(false);
 
   return (
-    <div className="mb-[50px] bg-primary/10 py-[50px]">
+    <div className="mb-[10px] lg:mb-[50px] bg-primary/10 py-[50px]">
       <div className="md:max-w-7xl mx-auto">
         {/* row 1 */}
         <div className="flex items-center flex-col space-y-[30px] md:flex-row md:space-y-[0px] mb-[0px]">

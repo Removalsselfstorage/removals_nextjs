@@ -13,7 +13,7 @@ const Features = () => {
           <div className=" py-[20px] md:py-[30px] px-[20px] lg:px-[100px] xl:px-[20px] grid md:grid-cols-2  lg:grid-cols-2 xl:grid-cols-4 justify-center  gap-x-[20px] gap-y-[20px] md:gap-[30px]">
             <div className="flex space-x-[20px]">
               <MdPayments className="text-[40px] md:text-[50px] text-secondary" />
-              <div className="flex flex-col">
+              <div className="flex flex-col space-y-[5px] md:space-y-[10px]">
                 <h3 className="text-[18px] md:text-[23px] font-bold leading-[25px]">
                   Multiple Payment Options.
                 </h3>
@@ -27,7 +27,7 @@ const Features = () => {
             </div>
             <div className="flex space-x-[20px]">
               <BiTask className="text-[40px] md:text-[50px] text-secondary" />
-              <div className="flex flex-col">
+              <div className="flex flex-col space-y-[5px] md:space-y-[10px]">
                 <h3 className="text-[18px] md:text-[23px] font-bold leading-[25px]">
                   Same & next day bookings
                 </h3>
@@ -35,9 +35,9 @@ const Features = () => {
               </div>
             </div>
             <div className="flex space-x-[20px]">
-              <MdFreeCancellation className="text-[70px]  md:text-[90px] text-secondary md:mt-[-20px]" />
-              <div className="flex flex-col">
-                <h3 className="text-[18px] md:text-[23px] font-bold leading-[25px]">
+              <MdFreeCancellation className="text-[55px] md:text-[80px] text-secondary md:mt-[-20px]" />
+              <div className="flex flex-col space-y-[5px] md:space-y-[10px]">
+                <h3 className="text-[18px] md:text-[23px] font-bold leading-[25px] xl:w-[100px]">
                   Free cancellation
                 </h3>
                 <p className="">
@@ -48,7 +48,7 @@ const Features = () => {
             </div>
             <div className="flex space-x-[20px]">
               <BiWorld className="text-[40px] md:text-[50px] text-secondary" />
-              <div className="flex flex-col">
+              <div className="flex flex-col space-y-[5px] md:space-y-[10px]">
                 <h3 className="text-[18px] md:text-[23px] font-bold leading-[25px]">
                   Nationwide coverage
                 </h3>

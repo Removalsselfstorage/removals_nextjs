@@ -123,6 +123,59 @@ const colourStyles = {
   }),
 };
 
+const fontStyles = {
+  control: (styles) => ({ ...styles, backgroundColor: 'white' }),
+  option: (styles, { data, isDisabled, isFocused, isSelected }) => {
+    const color = chroma(data.color);
+    return {
+      ...styles,
+      backgroundColor: isDisabled
+        ? undefined
+        : isSelected
+        ? data.color
+        : isFocused
+        ? color.alpha(0.1).css()
+        : undefined,
+      color: isDisabled
+        ? '#ccc'
+        : isSelected
+        ? chroma.contrast(color, 'white') > 2
+          ? 'white'
+          : 'black'
+        : data.color,
+      cursor: isDisabled ? 'not-allowed' : 'default',
+
+      ':active': {
+        ...styles[':active'],
+        backgroundColor: !isDisabled
+          ? isSelected
+            ? data.color
+            : color.alpha(0.3).css()
+          : undefined,
+      },
+    };
+  },
+  multiValue: (styles, { data }) => {
+    const color = chroma(data.color);
+    return {
+      ...styles,
+      backgroundColor: color.alpha(0.1).css(),
+    };
+  },
+  multiValueLabel: (styles, { data }) => ({
+    ...styles,
+    color: data.color,
+  }),
+  multiValueRemove: (styles, { data }) => ({
+    ...styles,
+    color: data.color,
+    ':hover': {
+      backgroundColor: data.color,
+      color: 'white',
+    },
+  }),
+};
+
 const HeroInputBox = () => {
   return (
     <div className="card shadow-2xl bg-base-100  text-black w-full md:w-[400px]">
@@ -145,18 +198,26 @@ const HeroInputBox = () => {
               <span className="font-semibold">What are you moving?</span>
             </label>
             <div className="w-full">
-                <Select
-                  className="basic-single"
-                  classNamePrefix="select"
-                  //   defaultValue={colourOptions[0]}
-                  //   isDisabled={isDisabled}
-                  //   isLoading={isLoading}
-                  //   isClearable={true}
-                  //   isRtl={isRtl}
-                  isSearchable={true}
-                  name="color"
-                  options={colourOptions}
-                />
+              <Select
+                className="basic-single"
+                classNamePrefix="select"
+                styles={{
+                  control: (baseStyles, state) => ({
+                    ...baseStyles,
+                    borderColor: state.isFocused ? 'green' : 'gray',
+                    backgroundColor: 'white',
+                    fontSize: '14px'
+                  }),
+                }}
+                //   defaultValue={colourOptions[0]}
+                //   isDisabled={isDisabled}
+                //   isLoading={isLoading}
+                //   isClearable={true}
+                //   isRtl={isRtl}
+                isSearchable={true}
+                name="color"
+                options={colourOptions}
+              />
             </div>
           </div>
           <div className="form-control">

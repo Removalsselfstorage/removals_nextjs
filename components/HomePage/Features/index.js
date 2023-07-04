@@ -15,7 +15,7 @@ const Features = () => {
               <MdPayments className="text-[40px] md:text-[50px] text-secondary" />
               <div className="flex flex-col space-y-[5px] md:space-y-[10px]">
                 <h3 className="text-[18px] md:text-[23px] font-bold leading-[25px]">
-                  Multiple Payment Options.
+                  Multiple payment options.
                 </h3>
                 <p className="">Cash payment on-site or</p>
                 <img
@@ -38,22 +38,16 @@ const Features = () => {
               <MdFreeCancellation className="text-[40px] md:text-[50px] text-secondary" />
               <div className="flex flex-col space-y-[5px] md:space-y-[10px]">
                 <h3 className="text-[18px] md:text-[23px] font-bold leading-[25px]">
-                Free cancellation
-                </h3>
-                <p className="w-[210px]"> Cancel your booking for free or reschedule it for another time.</p>
-              </div>
-            </div>
-            {/* <div className="flex space-x-[20px]">
-              <BiTask className="text-[40px] md:text-[50px] text-secondary" />
-              <div className="flex flex-col space-y-[5px] md:space-y-[10px]">
-                <h3 className="text-[18px] md:text-[23px] font-bold leading-[25px] xl:w-[100px]">
                   Free cancellation
                 </h3>
-                <p className="">
-                  Cancel your booking for free or reschedule it for another time.
+                <p className="w-[210px]">
+                  {' '}
+                  Cancel your booking for free or reschedule it for another
+                  time.
                 </p>
               </div>
-            </div> */}
+            </div>
+
             <div className="flex space-x-[20px]">
               <BiWorld className="text-[40px] md:text-[50px] text-secondary" />
               <div className="flex flex-col space-y-[5px] md:space-y-[10px]">

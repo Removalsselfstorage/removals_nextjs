@@ -39,7 +39,7 @@ const HeroInputBox = () => {
               <span className="font-semibold">What are you moving?</span>
             </label>
             <div className="w-full">
-              <SelectSearch placeholder='Removal category' options={serviceOptions} isSearchable={true} name='service' />
+              <SelectSearch placeholder='Removal category' options={serviceOptions} isSearchable={false} name='service' />
             </div>
           </div>
           <div className="form-control">

@@ -8,7 +8,7 @@ const Hero = () => {
   return (
     <div className=" bg-base-200 mt-[50px]  md:mt-[0px] md:pt-[100px]">
       <div
-        className="hero min-h-[90vh] md:min-h-[80vh] lg:min-h-[90vh] 2xl:min-h-[80vh] bg-black/80"
+        className="hero min-h-[95vh] md:min-h-[80vh] lg:min-h-[90vh] 2xl:min-h-[80vh] bg-black/80"
         style={{ backgroundImage: 'url(/hero_bg.jpg)' }}
       >
         <div className="hero-overlay bg-black/80 "></div>

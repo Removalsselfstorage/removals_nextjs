@@ -11,10 +11,11 @@ import FeaturedCompanies from '@/components/HomePage/FeatureCompanies';
 import InputSearch from '@/components/InputSearch';
 import Features from '@/components/HomePage/Features';
 import HowItWorks from '@/components/HomePage/HowItWorks';
+import NormalLayout from '@/layouts/NormalLayout';
 
 export default function Home() {
   return (
-    <>
+    <NormalLayout>
       <Head>
         <title>
           Removals and Selfstorage - Book Movers & Moving Help Online
@@ -34,6 +35,6 @@ export default function Home() {
         <FeaturedCompanies />
         <FAQ />
       </main>
-    </>
+    </NormalLayout>
   );
 }

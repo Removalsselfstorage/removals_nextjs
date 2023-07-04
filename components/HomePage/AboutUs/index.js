@@ -1,4 +1,5 @@
 import Modal from '@/components/Modal';
+import Link from 'next/link';
 import React, { useState } from 'react';
 import { BsFillPlayFill } from 'react-icons/bs';
 import { FiEdit } from 'react-icons/fi';
@@ -46,14 +47,14 @@ const AboutUs = () => {
               service options, background-checked movers, industry-best customer
               support, and an easy-to-access online dashboard.
             </p>
-            <div className="">
+            <Link href="/book" className="">
               <button className="btn btn-block md:btn-wide btn-primary flex items-center space-x-[5px]">
                 <span className="">Book A Move</span>
                 {/* <span className="">
                   <FiEdit className="text-[20px]" />
                 </span> */}
               </button>
-            </div>
+            </Link>
           </div>
         </div>
       </div>

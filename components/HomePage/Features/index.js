@@ -35,17 +35,25 @@ const Features = () => {
               </div>
             </div>
             <div className="flex space-x-[20px]">
-              <MdFreeCancellation className="text-[55px] md:text-[80px] text-secondary md:mt-[-20px]" />
+              <MdFreeCancellation className="text-[40px] md:text-[50px] text-secondary" />
+              <div className="flex flex-col space-y-[5px] md:space-y-[10px]">
+                <h3 className="text-[18px] md:text-[23px] font-bold leading-[25px]">
+                Free cancellation
+                </h3>
+                <p className="w-[210px]"> Cancel your booking for free or reschedule it for another time.</p>
+              </div>
+            </div>
+            {/* <div className="flex space-x-[20px]">
+              <BiTask className="text-[40px] md:text-[50px] text-secondary" />
               <div className="flex flex-col space-y-[5px] md:space-y-[10px]">
                 <h3 className="text-[18px] md:text-[23px] font-bold leading-[25px] xl:w-[100px]">
                   Free cancellation
                 </h3>
                 <p className="">
-                  Cancel your booking for free or reschedule it for another
-                  time.
+                  Cancel your booking for free or reschedule it for another time.
                 </p>
               </div>
-            </div>
+            </div> */}
             <div className="flex space-x-[20px]">
               <BiWorld className="text-[40px] md:text-[50px] text-secondary" />
               <div className="flex flex-col space-y-[5px] md:space-y-[10px]">

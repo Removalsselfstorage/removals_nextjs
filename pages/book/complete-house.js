@@ -448,7 +448,7 @@ const CompleteHouse = () => {
               </div>
               {/* submit button */}
               <div className=" mt-6 w-full flex justify-center">
-                <button className="btn btn-primary btn-wide flex items-center space-x-[5px]">
+                <button className="btn btn-primary btn-wide flex items-center space-x-[5px] h-[60px]">
                   <span className="">Get Prices</span>
                   <span className="">
                     <FiEdit className="text-[20px]" />

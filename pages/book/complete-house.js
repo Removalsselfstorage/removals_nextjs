@@ -33,7 +33,7 @@ const CompleteHouse = () => {
       </Head>
 
       <main>
-        <div className="mb-[70px] lg:mb-[100px] pt-[100px]">
+        <div className="mb-[70px] lg:mb-[100px] pt-[70px]">
           <div className="md:max-w-7xl mx-auto">
             {/* links */}
             {/* <div className="flex items-center space-x-[5px] px-[30px] text-[13px] leading-[16px] md:text-[16px]">
@@ -388,7 +388,7 @@ const CompleteHouse = () => {
                   </div>
                   {/* middle */}
                   <div className="flex w-full flex-[1] flex-col items-center md:flex-row md:space-x-[30px] space-y-[10px] md:space-y-0 md:justify-center">
-                    {/* estimated move date */}
+                    {/* mileage */}
                     <div className="form-control w-full ">
                       <label className="label">
                         <span className="label-text font-semibold">

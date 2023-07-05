@@ -27,7 +27,7 @@ const ManAndVan = () => {
       </Head>
 
       <main>
-        <div className="mb-[70px] lg:mb-[100px] pt-[100px]">
+        <div className="mb-[70px] lg:mb-[100px] pt-[70px]">
           <div className="md:max-w-7xl mx-auto">
             {/* links */}
             {/* <div className="flex items-center space-x-[5px] px-[30px] text-[13px] leading-[16px] md:text-[16px]">
@@ -340,23 +340,53 @@ const ManAndVan = () => {
                     </div>
                   </div>
 
-                  {/* right */}
-                  <div className="flex w-full flex-[1] flex-col items-center md:flex-row md:space-x-[30px] space-y-[10px] md:space-y-0 md:justify-center">
-                    {/* estimated move date */}
-                    <div className="form-control w-full ">
-                      <label className="label">
-                        <span className="label-text font-semibold">
-                          Number of Movers*
-                        </span>
-                      </label>
-                      <select className="select select-primary w-full font-normal">
-                        <option disabled selected>
-                          - Select -
-                        </option>
-                        <option>1 Man</option>
-                        <option>2 Men</option>
-                        <option>3 Men</option>
-                      </select>
+                  <div className="flex-[1] w-full flex flex-col md:flex-row md:items-center md:space-x-[20px] space-y-[10px] md:space-y-0">
+                    {/* movers */}
+                    <div className="flex w-full flex-[1] flex-col items-center md:flex-row md:space-x-[30px] space-y-[10px] md:space-y-0 md:justify-center">
+                      {/* estimated move date */}
+                      <div className="form-control w-full ">
+                        <label className="label">
+                          <span className="label-text font-semibold">
+                            Number of Movers*
+                          </span>
+                        </label>
+                        <select className="select select-primary w-full font-normal">
+                          <option disabled selected>
+                            - Select -
+                          </option>
+                          <option>1 Man</option>
+                          <option>2 Men</option>
+                          <option>3 Men</option>
+                        </select>
+                      </div>
+                    </div>
+                    {/* mileage */}
+                    <div className="flex w-full flex-[1] flex-col items-center md:flex-row md:space-x-[30px] space-y-[10px] md:space-y-0 md:justify-center">
+                      {/* mileage */}
+                      <div className="form-control w-full ">
+                        <label className="label">
+                          <span className="label-text font-semibold">
+                            Mileage*
+                          </span>
+                        </label>
+                        <select className="select select-primary w-full font-normal">
+                          <option disabled selected>
+                            - Select -
+                          </option>
+                          <option>0 - 25</option>
+                          <option>26 - 75</option>
+                          <option>76 - 150</option>
+                          <option>151 - 200</option>
+                          <option>201 - 250</option>
+                          <option>251 - 300</option>
+                          <option>301 - 350</option>
+                          <option>351 - 400</option>
+                          <option>401 - 450</option>
+                          <option>451 - 500</option>
+                          <option>501 - 550</option>
+                          <option>551 - 600</option>
+                        </select>
+                      </div>
                     </div>
                   </div>
                 </div>

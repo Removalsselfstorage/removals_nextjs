@@ -28,6 +28,7 @@ const OurServices = () => {
             f2="1 bed Flat from ₤190"
             f3="2 Bed Flat/House from ₤295"
             f4="3 Bed House from ₤450"
+            link='complete-house'
           />
           <ServicesCard
             image="/svg/man_van.svg"
@@ -38,6 +39,7 @@ const OurServices = () => {
             f2="₤65 - 2 Men and Van"
             f3="₤80 - 3 Men and Van"
             f4="Daily rate Man Van - ₤330"
+            link='man-and-van'
           />
           <ServicesCard
             image="/svg/store.svg"

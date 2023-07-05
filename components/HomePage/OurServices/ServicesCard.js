@@ -1,6 +1,17 @@
+import Link from 'next/link';
 import React from 'react';
 
-const ServicesCard = ({ image, title, subTitle, price, f1, f2, f3, f4 }) => {
+const ServicesCard = ({
+  image,
+  title,
+  subTitle,
+  price,
+  f1,
+  f2,
+  f3,
+  f4,
+  link,
+}) => {
   return (
     <div className="card min-w-[300px] bg-base-100 shadow-lg hover:shadow-2xl hover:scale-[1.02] duration-200">
       <figure className="px-10 pt-10">
@@ -16,7 +27,9 @@ const ServicesCard = ({ image, title, subTitle, price, f1, f2, f3, f4 }) => {
           <li className="">{f3}</li>
           <li className="">{f4}</li>
         </ul>
-        <button className="btn btn-primary mt-[10px]">Get Quote</button>
+        <Link href={`/book/${link}`}>
+          <button className="btn btn-primary mt-[10px]">Get Quote</button>
+        </Link>
       </div>
     </div>
   );

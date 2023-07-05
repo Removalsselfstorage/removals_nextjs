@@ -21,29 +21,29 @@ const OurServices = () => {
         <div className="py-[0px] px-[20px] lg:px-[100px] xl:px-[20px] grid md:grid-cols-2  lg:grid-cols-2 xl:grid-cols-4 justify-center gap-[20px]">
           <ServicesCard
             image="/svg/house_removal.svg"
-            title="Complete House Moving"
+            title="Home Removals"
             subTitle="Prices are estimated"
             price="115"
             f1="Studio Flat from ₤130"
             f2="1 bed Flat from ₤190"
             f3="2 Bed Flat/House from ₤295"
             f4="3 Bed House from ₤450"
-            link='complete-house'
+            link="home-removals"
           />
           <ServicesCard
             image="/svg/man_van.svg"
-            title="Man with a Van"
+            title="Man and Van"
             subTitle="Price per hour"
             price="45"
             f1="₤45 - 1 Man and Van"
             f2="₤65 - 2 Men and Van"
             f3="₤80 - 3 Men and Van"
             f4="Daily rate Man Van - ₤330"
-            link='man-and-van'
+            link="man-and-van"
           />
           <ServicesCard
             image="/svg/store.svg"
-            title="Storage"
+            title="Storage and Self Storage"
             subTitle="Prices per hour"
             price="45"
             f1="₤25 for 50 Square Feet"

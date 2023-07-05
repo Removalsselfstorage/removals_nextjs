@@ -60,8 +60,18 @@ const Hero = () => {
                 industry’s best customer support.
               </p>
               <div className="flex space-x-[20px] mt-[20px]">
-                <Link href='/book/man-and-van' className="btn btn-secondary btn-wide">Man & van</Link>
-                <Link href='/book/complete-house' className="btn btn-secondary btn-wide">Complete House Removal</Link>
+                <Link
+                  href="/book/man-and-van"
+                  className="btn btn-secondary btn-wide"
+                >
+                  Man and van
+                </Link>
+                <Link
+                  href="/book/home-removals"
+                  className="btn btn-secondary btn-wide"
+                >
+                  Home Removals
+                </Link>
                 {/* <a className="btn btn-secondary btn-wide">
                   Complete House Removal
                 </a> */}

@@ -211,7 +211,7 @@ const ManAndVan = () => {
                   {/* left */}
                   <div className="flex w-full flex-[1] flex-col items-center md:flex-row md:space-x-[30px] space-y-[10px] md:space-y-0 md:justify-center">
                     {/* title */}
-                    <div className="flex flex-col w-full flex-[1]">
+                    {/* <div className="flex flex-col w-full flex-[1]">
                       <label className="label">
                         <span className="label-text font-semibold">Title*</span>
                       </label>
@@ -228,7 +228,7 @@ const ManAndVan = () => {
                         <option>Lord</option>
                         <option>Sir</option>
                       </select>
-                    </div>
+                    </div> */}
                     {/* first name */}
                     <div className="form-control w-full flex-[3]">
                       <label className="label">
@@ -331,11 +331,12 @@ const ManAndVan = () => {
                         <option disabled selected>
                           - Select -
                         </option>
-                        <option>Studio</option>
-                        <option>1 Bedroom Apartment</option>
-                        <option>2 Bedroom Apartment</option>
-                        <option>3 Bedroom Apartment</option>
-                        <option>4 Bedroom Apartment</option>
+                        <option>Studio flat</option>
+                        <option>1 bed property</option>
+                        <option>2 bed property</option>
+                        <option>3 bed property</option>
+                        <option>4 bed property</option>
+                        <option>Storage</option>
                       </select>
                     </div>
                   </div>
@@ -343,7 +344,7 @@ const ManAndVan = () => {
                   <div className="flex-[1] w-full flex flex-col md:flex-row md:items-center md:space-x-[20px] space-y-[10px] md:space-y-0">
                     {/* movers */}
                     <div className="flex w-full flex-[1] flex-col items-center md:flex-row md:space-x-[30px] space-y-[10px] md:space-y-0 md:justify-center">
-                      {/* estimated move date */}
+                      {/* Move Date */}
                       <div className="form-control w-full ">
                         <label className="label">
                           <span className="label-text font-semibold">
@@ -430,7 +431,7 @@ const ManAndVan = () => {
                       <div className="flex flex-col w-full">
                         <label className="label">
                           <span className="label-text font-semibold">
-                            Volume: CU/FT*
+                            Volume: CU/FT
                           </span>
                         </label>
                         <input
@@ -445,7 +446,7 @@ const ManAndVan = () => {
                       <div className="form-control">
                         <label className="label">
                           <span className="label-text font-semibold">
-                            Estimated Move Date*
+                            Move Date*
                           </span>
                         </label>
                         <div className="bg-white border rounded-[8px] border-primary">

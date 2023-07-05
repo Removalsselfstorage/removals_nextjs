@@ -14,9 +14,7 @@ const Booking = () => {
   return (
     <BookingLayout>
       <Head>
-        <title>
-          Get a quote - Removals and Selfstorage
-        </title>
+        <title>Get a quote - Removals and Selfstorage</title>
         <meta name="description" content="Rss removal and storage website" />
         <link rel="icon" href="/rrs_favicon.svg" />
       </Head>
@@ -51,8 +49,8 @@ const Booking = () => {
             <div className="py-[0px] px-[20px] flex flex-col md:flex-row justify-center items-center space-y-[20px] md:space-y-0 md:space-x-[20px] lg:space-x-[30px]">
               <QuoteCard
                 image="/svg/house_removal.svg"
-                title="Complete House Moving"
-                link="complete-house"
+                title="Home Removals"
+                link="home-removals"
               />
               <QuoteCard
                 image="/svg/man_van.svg"

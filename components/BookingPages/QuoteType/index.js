@@ -36,7 +36,7 @@ const QuoteType = () => {
           <QuoteCard
             image="/svg/house_removal.svg"
             title="Complete House Moving"
-            link="complete-house"
+            link="home-removals"
           />
           <QuoteCard
             image="/svg/man_van.svg"

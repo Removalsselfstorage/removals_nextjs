@@ -7,6 +7,7 @@ const SelectSearch = ({
   name,
   defaultValue,
   placeholder,
+  large,
 }) => {
   return (
     <Select
@@ -35,8 +36,10 @@ const SelectSearch = ({
         control: (baseStyles, state) => ({
           ...baseStyles,
           borderRadius: '10px',
-          fontSize: '15px'
-        //   borderColor: state.isFocused ? '#F55E1E' : '#008000',
+          fontSize: '15px',
+          borderColor: state.isFocused ? '#008000' : '#008000',
+          //   padding: '7px 7px',
+          padding: large ? '7px 7px' : '3px',
         }),
       }}
     />

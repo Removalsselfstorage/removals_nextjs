@@ -3,6 +3,7 @@ import HeroInputBox from './HeroInputBox';
 import Typed from 'react-typed';
 import { titleFont } from '@/utils/fonts';
 import { RiCustomerService2Fill } from 'react-icons/ri';
+import Link from 'next/link';
 
 const Hero = () => {
   return (
@@ -59,10 +60,11 @@ const Hero = () => {
                 industry’s best customer support.
               </p>
               <div className="flex space-x-[20px] mt-[20px]">
-                <a className="btn btn-secondary btn-wide">Man & van</a>
-                <a className="btn btn-secondary btn-wide">
+                <Link href='/book/man-and-van' className="btn btn-secondary btn-wide">Man & van</Link>
+                <Link href='/book/complete-house' className="btn btn-secondary btn-wide">Complete House Removal</Link>
+                {/* <a className="btn btn-secondary btn-wide">
                   Complete House Removal
-                </a>
+                </a> */}
               </div>
             </div>
           </div>

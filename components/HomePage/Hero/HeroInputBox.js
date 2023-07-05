@@ -5,17 +5,8 @@ import EditHalfStars from '@/components/Rating/EditHalfStars';
 import InputSearch from '@/components/InputSearch';
 import chroma from 'chroma-js';
 
-
 import SelectSearch from '@/components/SelectSearch';
 import { citiesOptions, serviceOptions } from '@/dummyData/inputData';
-
-
-
-
-
-
-
-
 
 const HeroInputBox = () => {
   return (
@@ -39,20 +30,36 @@ const HeroInputBox = () => {
               <span className="font-semibold">What are you moving?</span>
             </label>
             <div className="w-full">
-              <SelectSearch placeholder='Removal category' options={serviceOptions} isSearchable={false} name='service' />
+              <SelectSearch
+                placeholder="Select"
+                options={serviceOptions}
+                isSearchable={false}
+                name="service"
+                defaultValue={serviceOptions[0]}
+              />
             </div>
           </div>
           <div className="form-control">
             <label className="label">
               <span className="font-semibold">Where are you moving from?</span>
             </label>
-            <SelectSearch placeholder='City' options={citiesOptions} isSearchable={true} name='location1' />
+            <SelectSearch
+              placeholder="Location"
+              options={citiesOptions}
+              isSearchable={true}
+              name="location1"
+            />
           </div>
           <div className="form-control">
             <label className="label">
               <span className="font-semibold">Where are you moving to?</span>
             </label>
-            <SelectSearch placeholder='City' options={citiesOptions} isSearchable={true} name='location2' />
+            <SelectSearch
+              placeholder="Location"
+              options={citiesOptions}
+              isSearchable={true}
+              name="location2"
+            />
           </div>
           <div className="form-control mt-6">
             <button className="btn btn-primary flex items-center space-x-[5px]">

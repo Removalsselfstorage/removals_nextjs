@@ -1,6 +1,6 @@
 export const serviceOptions = [
-    { value: 'ocean', label: 'Complete house removal', color: '#015701' },
-    { value: 'blue', label: 'Man and Van' },
+    // { value: 'ocean', label: 'Complete house removal', color: '#015701' },
+    { value: 'blue', label: 'Select' },
     { value: 'purple', label: 'Studio flat' },
     { value: 'red', label: '1 bedroom apartment' },
     { value: 'orange', label: '2 bedroom apartment' },

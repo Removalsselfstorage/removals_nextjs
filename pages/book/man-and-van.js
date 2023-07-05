@@ -80,7 +80,7 @@ const ManAndVan = () => {
                         options={citiesOptions}
                         isSearchable={true}
                         name="location1"
-                        defaultValue={citiesOptions[0]}
+                        // defaultValue={citiesOptions[0]}
                         large
                       />
                     </div>
@@ -151,7 +151,7 @@ const ManAndVan = () => {
                         options={citiesOptions}
                         isSearchable={true}
                         name="location1"
-                        defaultValue={citiesOptions[1]}
+                        // defaultValue={citiesOptions[1]}
                         large
                       />
                     </div>

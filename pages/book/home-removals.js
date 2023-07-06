@@ -424,9 +424,10 @@ const CompleteHouse = () => {
                           Move Date*
                         </span>
                       </label>
-                      <div className="bg-white border rounded-[8px] border-primary">
+                      <BasicDatePicker />
+                      {/* <div className="bg-white border rounded-[8px] border-primary">
                         <BasicDatePicker />
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                 </div>

@@ -23,7 +23,7 @@ const Booking = () => {
         <div className="mb-[70px] lg:mb-[100px] pt-[100px]">
           <div className="md:max-w-7xl mx-auto">
             {/* links */}
-            <div className="flex items-center px-[30px] text-[16px]">
+            {/* <div className="flex items-center px-[30px] text-[16px]">
               <Link href="/">
                 <p className="text-primary link link-hover font-semibold">
                   Home
@@ -31,8 +31,7 @@ const Booking = () => {
               </Link>
               <MdKeyboardArrowRight size={20} className="text-primary" />
               <p className="text-primary font-semibold">Choose Quote Type</p>
-              {/* <MdKeyboardArrowRight size={20}/> */}
-            </div>
+            </div> */}
 
             {/* Title */}
             <div className="w-full flex justify-center py-[30px] md:py-[40px]">

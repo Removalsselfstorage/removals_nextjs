@@ -8,6 +8,7 @@ const SelectSearch = ({
   defaultValue,
   placeholder,
   large,
+  blue,
 }) => {
   return (
     <Select
@@ -26,10 +27,10 @@ const SelectSearch = ({
         borderRadius: 0,
         colors: {
           ...theme.colors,
-          primary: '#008000',
-          primary25: '#E0EDE0',
-          primary50: '#E0EDE0',
-          primary75: '#E0EDE0',
+          primary: blue ? '#1976D2' : '#008000',
+          primary25: blue ? '#d4e8fc' : '#E0EDE0',
+          primary50: blue ? '#d4e8fc' : '#E0EDE0',
+          primary75: blue ? '#d4e8fc' : '#E0EDE0',
         },
       })}
       styles={{

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 // import './HorizontalScroll.css'; // Import CSS file for styling
 
-const HorizontalScroll = ({ children }) => {
+const HorizontalScroll = ({ children, speed }) => {
   const containerRef = useRef(null);
 
   useEffect(() => {
@@ -18,7 +18,7 @@ const HorizontalScroll = ({ children }) => {
 
     const scrollInterval = setInterval(() => {
       container.scrollLeft += 3; // Increment scroll position
-    }, 40);
+    }, speed);
 
     container.addEventListener('scroll', handleScroll);
 

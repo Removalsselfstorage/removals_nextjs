@@ -82,6 +82,7 @@ const ManAndVan = () => {
                         name="location1"
                         // defaultValue={citiesOptions[0]}
                         large
+                        blue
                       />
                     </div>
                   </div>
@@ -153,6 +154,7 @@ const ManAndVan = () => {
                         name="location1"
                         // defaultValue={citiesOptions[1]}
                         large
+                        blue
                       />
                     </div>
                   </div>
@@ -327,7 +329,7 @@ const ManAndVan = () => {
                           Property Type*
                         </span>
                       </label>
-                      <select className="select select-primary w-full font-normal">
+                      <select className=" select select-primary w-full font-normal">
                         <option disabled selected>
                           - Select -
                         </option>
@@ -475,12 +477,14 @@ const ManAndVan = () => {
               </div>
               {/* submit button */}
               <div className=" mt-6 w-full flex justify-center">
-                <button className="btn btn-primary btn-wide flex items-center space-x-[5px] h-[60px]">
-                  <span className="">Get Prices</span>
-                  <span className="">
-                    <FiEdit className="text-[20px]" />
-                  </span>
-                </button>
+                <Link href="/book/move-package">
+                  <button className="btn btn-primary btn-wide flex items-center space-x-[5px] h-[60px]">
+                    <span className="">Get Prices</span>
+                    <span className="">
+                      <FiEdit className="text-[20px]" />
+                    </span>
+                  </button>
+                </Link>
               </div>
             </div>
           </div>

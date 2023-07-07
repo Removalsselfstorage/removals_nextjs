@@ -41,7 +41,7 @@ module.exports = {
           'primary-focus': '#015701',
           'primary-content': 'white',
           secondary: '#F55E1E',
-          'secondary-focus': '#F55E1E',
+          'secondary-focus': '#de4707',
           'secondary-content': 'white',
         },
       },

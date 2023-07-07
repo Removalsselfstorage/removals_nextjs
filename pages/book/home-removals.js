@@ -90,6 +90,7 @@ const CompleteHouse = () => {
                         name="location1"
                         defaultValue={citiesOptions[0]}
                         large
+                        blue
                       />
                     </div>
                   </div>
@@ -161,6 +162,7 @@ const CompleteHouse = () => {
                         name="location1"
                         defaultValue={citiesOptions[1]}
                         large
+                        blue
                       />
                     </div>
                   </div>

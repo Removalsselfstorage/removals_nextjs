@@ -25,7 +25,7 @@ export default function BasicDatePicker() {
           border: 1,
         //   borderColor: 'red',
           // p: 0,
-          minWidth: 300,
+        //   minWidth: 300,
           color: colors.primary,
           height: 56,
           '&:hover': {

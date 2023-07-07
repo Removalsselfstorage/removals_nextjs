@@ -26,7 +26,7 @@ const FeaturedCompanies = () => {
             <img src="/iam-logo-190x80.webp" alt="" className='h-[60px] lg:h-[80px] mix-blend-multiply'/>
             <img src="/FAIM-2021.webp" alt="" className='h-[60px] lg:h-[80px] mix-blend-multiply'/>
         </div> */}
-        <HorizontalScroll>
+        <HorizontalScroll speed={40}>
           <div className="flex items-center">
             <img
               src="/mover1.png"

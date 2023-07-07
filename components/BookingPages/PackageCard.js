@@ -60,13 +60,15 @@ const PackageCard = ({
         </div>
         
       </div>
-      <button
-        className={`btn ${
-          preferred ? 'btn-secondary ' : 'btn-primary btn-outline'
-        }  px-[30px] mb-[50px]`}
-      >
-        Book Now
-      </button>
+      <Link href={`/book/${link}`}>
+          <button
+            className={`btn ${
+              preferred ? 'btn-secondary ' : 'btn-primary btn-outline'
+            }  px-[30px] mb-[50px]`}
+          >
+            Book Now
+          </button>
+      </Link>
     </div>
   );
 };

@@ -4,6 +4,7 @@ import { IoClose } from 'react-icons/io5';
 import { BsChevronDown } from 'react-icons/bs';
 import { RiCustomerService2Fill } from 'react-icons/ri';
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
 
 const Navbar = () => {
   const [shadow, setShadow] = useState(false);
@@ -65,7 +66,7 @@ const Navbar = () => {
                   </a>
                 </div>
               </div>
-              <div className="lg:flex items-center  space-x-[10px] hidden">
+              <div className="lg:flex items-center  space-x-[10px] hidden pr-[10px]">
                 <p className="link link-hover ">About Us</p>
                 <p className="">|</p>
                 <p className="link link-hover ">Contact Us</p>
@@ -82,14 +83,16 @@ const Navbar = () => {
             <div className="drawer-content flex flex-col">
               {/* Navbar */}
               <div className="w-full navbar  md:max-w-7xl mx-auto items-center ">
-                <div className="navbar-start flex items-center">
-                  <img
-                    src="/rss_logo2.svg"
-                    alt=""
-                    className="h-[30px] md:h-[40px]"
-                  />
+                <div className="navbar-start flex flex-[1] items-center">
+                  <Link href='/'>
+                      <img
+                        src="/rss_logo2.svg"
+                        alt=""
+                        className="h-[30px] md:h-[40px]"
+                      />
+                  </Link>
                 </div>
-                <div className="navbar-center hidden lg:flex ">
+                <div className="navbar-center hidden lg:flex flex-[2]">
                   <ul className="menu menu-horizontal  px-1 text-[16px]">
                     <li>
                       <a className="btn-nav ">Home</a>
@@ -128,13 +131,10 @@ const Navbar = () => {
                     <li>
                       <a className="btn-nav">Moving Tips</a>
                     </li>
-                    <li>
-                      <a className="btn-nav">Become a Mover</a>
-                    </li>
                   </ul>
                 </div>
 
-                <div className="navbar-end flex space-x-[10px]">
+                <div className="navbar-end flex flex-[1] space-x-[10px]">
                   <div className="flex-none lg:hidden">
                     <label
                       htmlFor="my-drawer-3"
@@ -156,8 +156,10 @@ const Navbar = () => {
                     </label>
                   </div>
                   <div className=" lg:space-x-[10px] hidden lg:flex">
-                    <a className="btn btn-outline btn-primary">Join Us</a>
-                    <a className="btn btn-primary">Login</a>
+                    <a className="btn btn-outline btn-primary">
+                      Become a Mover
+                    </a>
+                    <a className="btn btn-primary">Mover Login</a>
                   </div>
                 </div>
               </div>
@@ -173,7 +175,7 @@ const Navbar = () => {
                   <a>Sidebar Item 2</a>
                 </li>
               </ul> */}
-              <ul className="menu p-4 w-[250px] md:w-[400px] h-full bg-base-100 md:text-[16px] flex flex-col space-y-[10px] md:space-y-[20px]">
+              <ul className="menu p-4 w-[250px] md:w-[400px] h-full bg-base-100 md:text-[16px] flex flex-col space-y-[10px] md:space-y-[15px]">
                 <li>
                   <a className="btn-nav">Home</a>
                 </li>
@@ -186,7 +188,7 @@ const Navbar = () => {
                 <li>
                   <a className="btn-nav">Storage & Self Storage</a>
                 </li>
-                <li className="border-b-[1.5px]">
+                <li className="border-b-[2px] pb-[10px]">
                   <a className="btn-nav">Handy Man / Packing</a>
                 </li>
                 <li>
@@ -195,23 +197,21 @@ const Navbar = () => {
                 <li>
                   <a className="btn-nav">Moving Tips</a>
                 </li>
-                <li className="border-b-[1.5px]">
-                  <a className="btn-nav">Become a Mover</a>
-                </li>
+
                 <li>
                   <a className="btn-nav">About Us</a>
                 </li>
                 <li>
                   <a className="btn-nav">Contact Us</a>
                 </li>
-                <li className="border-b-[1.5px]">
+                <li className="border-b-[2px] pb-[10px]">
                   <a className="btn-nav">Blog</a>
                 </li>
                 <li>
-                  <a className="btn-nav">Join Us</a>
+                  <a className="btn-nav">Become a Mover</a>
                 </li>
                 <li>
-                  <a className="btn-nav">Login</a>
+                  <a className="btn-nav">Mover Login</a>
                 </li>
               </ul>
             </div>

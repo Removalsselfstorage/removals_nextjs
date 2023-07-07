@@ -10,6 +10,7 @@ import React, { useState } from 'react';
 import { FiEdit } from 'react-icons/fi';
 import { MdKeyboardArrowRight } from 'react-icons/md';
 import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai';
+
 import PackageCard from '@/components/BookingPages/PackageCard';
 
 const MovePackage = () => {

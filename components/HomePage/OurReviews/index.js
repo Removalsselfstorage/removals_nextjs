@@ -53,10 +53,10 @@ const OurReviews = () => {
             </h3>
           </div>
           <div className="mt-[10px] flex flex-col items-center text-gray-600 text-center">
-          <div className="flex items-center space-x-[10px]">
-            <p className="text-[24px] font-semibold pt-[3px]">Excellent</p>
+            <div className="flex items-center space-x-[10px]">
+              <p className="text-[24px] font-semibold pt-[3px]">Excellent</p>
               <FullRating value={5} color="text-secondary" />
-          </div>
+            </div>
             <p className="px-[50px] text-[16px] lg:text-[18px] leading-[22px]">
               <span className="text-[18px] mr-[5px] italic">"</span>Rated 4.8
               out of 5 based on 7,203 reviews

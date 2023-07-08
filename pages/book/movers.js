@@ -38,7 +38,7 @@ const movers = () => {
               <div className="bg-white rounded-[30px] lg:flex-[3] py-[30px] md:px-[30px] w-full">
                 <h1 className="text-2xl font-bold mb-[30px] px-[20px]">
                   You've been matched with{' '}
-                  <span className="text-primary">6 verified movers.</span>
+                  <span className="text-primary">4 verified movers.</span>
                 </h1>
                 <div className="mx-[10px] flex-col space-y-[20px]">
                   {/* mover 1 */}

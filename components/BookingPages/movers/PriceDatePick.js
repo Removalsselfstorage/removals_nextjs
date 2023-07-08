@@ -52,9 +52,9 @@ const PriceDatePick = () => {
                 onClick={() => setSelectedPrice(pr.id)}
                 className={`${
                   isActive
-                    ? 'border-secondary text-secondary'
+                    ? 'border-secondary text-secondary bg-white'
                     : 'text-primary hover:border-secondary border-primary'
-                } flex flex-col py-[10px] md:py-[15px] px-[10px] md:px-[15px] hover:cursor-pointer rounded-[20px] items-center justify-center border-[2px] group hover:scale-[1.07] duration-150 transition-transform`}
+                } flex flex-col py-[10px] md:py-[15px] px-[10px] md:px-[15px] hover:cursor-pointer rounded-[20px] items-center justify-center border-[2px] group hover:scale-[1.07] duration-150 transition-transform bg-white`}
               >
                 <p className="font-semibold text-[14px] md:text-[15px]  whitespace-nowrap duration-150">
                   {pr.date}

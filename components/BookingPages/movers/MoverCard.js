@@ -35,7 +35,7 @@ const MoverCard = ({image, name, phone, email, loadArea, rating, reviewCount, pr
               <img
                 src={image}
                 alt=""
-                className="h-[150px] md:h-[220px] lg:h-[140px] rounded-[30px]"
+                className="h-[150px] w-[200px] object-cover md:h-[220px] lg:h-[140px] rounded-[30px]"
               />
             </div>
             {/* mover details */}

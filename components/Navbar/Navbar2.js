@@ -130,36 +130,43 @@ const Navbar2 = () => {
             <div className="drawer-side">
               <label htmlFor="my-drawer-3" className="drawer-overlay"></label>
 
-              <ul className="menu p-4 w-[250px] md:w-[400px] h-full bg-base-100 md:text-[16px] flex flex-col space-y-[10px] md:space-y-[20px]">
+              <ul className="menu p-4 w-[250px] md:w-[400px] h-full bg-base-100 md:text-[16px] flex flex-col space-y-[10px] md:space-y-[15px]">
                 <li>
                   <a className="btn-nav">Home</a>
                 </li>
                 <li>
-                  <a className="btn-nav">UK Home Moving</a>
+                  <a className="btn-nav">Home Removals</a>
                 </li>
                 <li>
-                  <a className="btn-nav">Man & Van</a>
+                  <a className="btn-nav">Man and Van</a>
                 </li>
                 <li>
                   <a className="btn-nav">Storage & Self Storage</a>
                 </li>
-                <li>
-                  <a className="btn-nav">Moving Your Employees</a>
+                <li className="border-b-[2px] pb-[10px]">
+                  <a className="btn-nav">Handy Man / Packing</a>
                 </li>
-                <li className="border-b-[1.5px]">
-                  <a className="btn-nav">Moving Your Business</a>
+                <li>
+                  <a className="btn-nav">Locations</a>
                 </li>
                 <li>
                   <a className="btn-nav">Moving Tips</a>
                 </li>
-                <li className="border-b-[1.5px]">
+
+                <li>
+                  <a className="btn-nav">About Us</a>
+                </li>
+                <li>
+                  <a className="btn-nav">Contact Us</a>
+                </li>
+                <li className="border-b-[2px] pb-[10px]">
+                  <a className="btn-nav">Blog</a>
+                </li>
+                <li>
                   <a className="btn-nav">Become a Mover</a>
                 </li>
                 <li>
-                  <a className="btn-nav">Join Us</a>
-                </li>
-                <li>
-                  <a className="btn-nav">Login</a>
+                  <a className="btn-nav">Mover Login</a>
                 </li>
               </ul>
             </div>

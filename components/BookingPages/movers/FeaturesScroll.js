@@ -22,7 +22,7 @@ const FeaturesScroll = () => {
   return (
     <div className="pl-[0px] mx-[10px]">
               <div className=" py-[0px] md:py-[0px] px-[0px] lg:px-[100px] xl:px-[0px] hidden xl:grid grid-cols-2   md:grid-cols-3 xl:grid-cols-6 justify-center gap-x-[10px] gap-y-[10px] ">
-                <div className="flex space-x-[5px] items-center md:justify-center bg-primary/10 py-[8px] px-[20px] rounded-[10px]">
+                <div className="flex space-x-[10px] items-center md:justify-center bg-primary/10 py-[8px] px-[20px] rounded-[10px]">
                   <MdCancel className="text-[30px] xl:text-[20px] text-primary" />
                   <p className="text-primary text-[14px] leading-[16px]">
                     Free Cancellation

@@ -1,10 +1,10 @@
 import { BsStarFill, BsStarHalf } from 'react-icons/bs';
 
-const FullRating = ({ value, color }) => {
+const FullRating = ({ value, color, small }) => {
   const renderStar = (index) => {
     if (index <= value) {
       return (
-        <span role="img" aria-label="star" className={`${color} text-[30px] `}>
+        <span role="img" aria-label="star" className={`${color} ${small ? 'text-[20px]': 'text-[30px]'} `}>
           &#9733;
         </span>
       );
@@ -13,7 +13,7 @@ const FullRating = ({ value, color }) => {
         <span
           role="img"
           aria-label="half-star"
-          className={`${color} text-[30px] `}
+          className={`${color} ${small ? 'text-[20px]': 'text-[30px]'} `}
         >
           &#9733;&#189;
         </span>
@@ -23,7 +23,7 @@ const FullRating = ({ value, color }) => {
         <span
           role="img"
           aria-label="empty-star"
-          className={`${color} text-[30px] `}
+          className={`${color} ${small ? 'text-[20px]': 'text-[30px]'} `}
         >
           &#9734;
         </span>

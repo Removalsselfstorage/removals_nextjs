@@ -42,7 +42,7 @@ const OurReviews = () => {
     <div className="mb-[30px] lg:mb-[50px]">
       <div className="md:max-w-7xl mx-auto">
         {/* Title */}
-        <div className="flex flex-col items-center py-[50px]">
+        <div className="flex flex-col items-center pt-[50px] pb-[20px] md:pb-[40px]">
           <div className="w-full flex justify-center ">
             {/* <h3 className="text-4xl font-extrabold">Our Services</h3> */}
             <h3
@@ -67,8 +67,8 @@ const OurReviews = () => {
         </div>
 
         {/* reviews */}
-        <div className="h-[500px] lg:h-[600px] overflow-auto scrollbar-thin scrollbar-track-gray-200 scrollbar-thumb-primary scrollbar-default rounded-[30px] bg-primary/10  px-[20px] py-[10px]">
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 justify-center">
+        <div className="h-[500px] lg:h-[600px] overflow-auto scrollbar-thin scrollbar-track-gray-200 scrollbar-thumb-primary scrollbar-default rounded-[30px] bg-primary/10  px-[20px] py-[10px] mx-[10px] md:mx-[100px] xl:mx-[0px]">
+          <div className="grid lg:grid-cols-2 xl:grid-cols-3 justify-center">
             {reviews.map((review, index) => {
               return (
                 <div className="py-[10px]" key={review.id}>

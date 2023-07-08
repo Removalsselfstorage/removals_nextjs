@@ -65,7 +65,7 @@ const MoverCard = ({image, name, phone, email, loadArea, rating, reviewCount, pr
                 </div>
               </div>
               {/* loading area */}
-              <div className="flex items-center space-x-[5px] lg:space-x-[20px]  sm:items-start  space-y-[0px] lg:space-y-[0px] lg:flex-row lg:items-center mb-[5px] sm:mb-[10px] lg:mb-[10px] text-[15px]">
+              <div className="flex items-center space-x-[5px]  sm:items-start  space-y-[0px] lg:space-y-[0px] lg:flex-row lg:items-center mb-[5px] sm:mb-[10px] lg:mb-[10px] text-[15px]">
                 <div className="flex items-center space-x-[5px]">
                   <FaTruckMoving className="text-[20px] text-primary" />
                   <p className="text-primary font-semibold">Load area:</p>

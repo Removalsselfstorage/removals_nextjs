@@ -1,136 +1,266 @@
-import React, { useRef, useState } from 'react';
-import { BiSolidChevronLeft, BiSolidChevronRight } from 'react-icons/bi';
-
-const PriceDatePick = () => {
-  const rowRef = useRef(null);
-  const [isMoved, setIsMoved] = useState(false);
-  const [selectedPrice, setSelectedPrice] = useState(null);
-
-  const handleClick = (direction) => {
-    setIsMoved(true);
-    if (rowRef.current) {
-      const { scrollLeft, clientWidth } = rowRef.current;
-
-      const scrollTo =
-        direction === 'left'
-          ? scrollLeft - clientWidth
-          : scrollLeft + clientWidth;
-      rowRef.current.scrollTo({ left: scrollTo, behavior: 'smooth' });
+.btn {
+    display: inline-flex;
+    flex-shrink: 0;
+    cursor: pointer;
+    user-select: none;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    border-color: transparent;
+    border-color: hsl(var(--b2) / var(--tw-border-opacity));
+    text-align: center;
+    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+    transition-duration: 200ms;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: var(--rounded-btn, 0.5rem);
+    height: 3rem/* 48px */;
+    padding-left: 1rem/* 16px */;
+    padding-right: 1rem/* 16px */;
+    font-size: 0.875rem/* 14px */;
+    line-height: 1.25rem/* 20px */;
+    line-height: 1em;
+    min-height: 3rem/* 48px */;
+    gap: 0.5rem/* 8px */;
+    font-weight: 600;
+    text-decoration-line: none;
+    text-decoration-line: none;
+    border-width: var(--border-btn, 1px);
+    animation: button-pop var(--animation-btn, 0.25s) ease-out;
+    text-transform: var(--btn-text-case, uppercase);
+    --tw-border-opacity: 1;
+    --tw-bg-opacity: 1;
+    background-color: hsl(var(--b2) / var(--tw-bg-opacity));
+    --tw-text-opacity: 1;
+    color: hsl(var(--bc) / var(--tw-text-opacity));
+    outline-color: hsl(var(--bc) / 1);
+}
+.btn-disabled,
+  .btn[disabled],
+  .btn:disabled {
+    pointer-events: none;
+}
+.btn-disabled,
+  .btn[disabled],
+  .btn:disabled {
+    pointer-events: none;
+}
+.btn-group > input[type="radio"].btn {
+    appearance: none;
+}
+.btn-group > input[type="radio"].btn:before {
+    content: attr(data-title);
+}
+.btn:is(input[type="checkbox"]),
+.btn:is(input[type="radio"]) {
+    appearance: none;
+}
+.btn:is(input[type="checkbox"]),
+.btn:is(input[type="radio"]) {
+    appearance: none;
+}
+.btn:is(input[type="checkbox"]):after,
+.btn:is(input[type="radio"]):after {
+    --tw-content: attr(aria-label);
+    content: var(--tw-content);
+}
+.btn:is(input[type="checkbox"]):after,
+.btn:is(input[type="radio"]):after {
+    --tw-content: attr(aria-label);
+    content: var(--tw-content);
+}
+@media (hover: hover) {
+    .btn:hover {
+        --tw-border-opacity: 1;
+        border-color: hsl(var(--b3) / var(--tw-border-opacity));
+        --tw-bg-opacity: 1;
+        background-color: hsl(var(--b3) / var(--tw-bg-opacity));
     }
-
-    const allDatePrice = [
-      { id: 'Thu, sept 7', date: 'Thu, sept 7', price: '456.68' },
-      { id: 'Fri, sept 8', date: 'Fri, sept 8', price: '454.63' },
-      { id: 'Sat, sept 9', date: 'Sat, sept 9', price: '452.18' },
-      { id: 'Sun, sept 10', date: 'Sun, sept 10', price: '456.22' },
-      { id: 'Mon, sept 11', date: 'Mon, sept 11', price: '450.38' },
-      { id: 'Tue, sept 12', date: 'Tue, sept 12', price: '450.07' },
-      { id: 'Wed, sept 13', date: 'Wed, sept 13', price: '448.88' },
-      { id: 'Thu, sept 14', date: 'Thu, sept 14', price: '447.74' },
-      { id: 'Fri, sept 15', date: 'Fri, sept 15', price: '446.46' },
-      { id: 'Sat, sept 16', date: 'Sat, sept 16', price: '443.68' },
-      { id: 'Sun, sept 17', date: 'Sun, sept 17', price: '451.63' },
-    ];
-  };
-  return (
-    <div className="group mr-[20px] ml-[5px] relative border-b border-white/20 pb-[30px]  md:pb-[40px] mt-[10px] ">
-      <BiSolidChevronLeft
-        className={`absolute top-[28%] left-[0px] z-40 h-10 w-10 cursor-pointer text-white  opacity-100 transition hover:scale-125 group-hover:opacity-100 hover:bg-green-700/60 hover:text-white rounded-full bg-primary/70
-                    ${!isMoved && 'hidden'}
-                    `}
-        onClick={() => handleClick('left')}
-      />
-      <div
-        className="flex items-center space-x-[10px] overflow-x-scroll scrollbar-hide px-[20px]  py-[20px]"
-        ref={rowRef}
-      >
-        <div className="flex flex-col py-[20px] px-[20px] hover:cursor-pointer hover:border-secondary rounded-[20px] items-center justify-center border-[2px] group border-primary hover:scale-[1.07] duration-150">
-          <p className="font-semibold text-primary whitespace-nowrap duration-150">
-            Thu, sept 7
-          </p>
-          <p className="font-bold text-primary text-[24px] whitespace-nowrap">
-            ₤ 456.68
-          </p>
-        </div>
-        <div className="flex flex-col py-[20px] px-[20px] hover:cursor-pointer hover:border-secondary rounded-[20px] items-center justify-center border-[2px] border-primary hover:scale-[1.07] duration-150">
-          <p className="font-semibold text-primary whitespace-nowrap">
-            Fri, sept 8
-          </p>
-          <p className="font-bold text-primary text-[24px] whitespace-nowrap">
-            ₤ 454.63
-          </p>
-        </div>
-        <div className="flex flex-col py-[20px] px-[20px] hover:cursor-pointer hover:border-secondary rounded-[20px] items-center justify-center border-[2px] border-primary hover:scale-[1.07] duration-150">
-          <p className="font-semibold text-primary whitespace-nowrap">
-            Sat, sept 9
-          </p>
-          <p className="font-bold text-primary text-[24px] whitespace-nowrap">
-            ₤ 452.18
-          </p>
-        </div>
-        <div className="flex flex-col py-[20px] px-[20px] hover:cursor-pointer hover:border-secondary rounded-[20px] items-center justify-center border-[2px] border-primary hover:scale-[1.07] duration-150">
-          <p className="font-semibold text-primary whitespace-nowrap">
-            Sun, sept 10
-          </p>
-          <p className="font-bold text-primary text-[24px] whitespace-nowrap">
-            ₤ 456.22
-          </p>
-        </div>
-        <div className="flex flex-col py-[20px] px-[20px] hover:cursor-pointer hover:border-secondary rounded-[20px] items-center justify-center border-[2px] border-primary hover:scale-[1.07] duration-150">
-          <p className="font-semibold text-primary whitespace-nowrap">
-            Mon, sept 11
-          </p>
-          <p className="font-bold text-primary text-[24px] whitespace-nowrap">
-            ₤ 450.38
-          </p>
-        </div>
-        <div className="flex flex-col py-[20px] px-[20px] hover:cursor-pointer hover:border-secondary rounded-[20px] items-center justify-center border-[2px] border-primary hover:scale-[1.07] duration-150">
-          <p className="font-semibold text-primary whitespace-nowrap">
-            Tue, sept 12
-          </p>
-          <p className="font-bold text-primary text-[24px] whitespace-nowrap">
-            ₤ 450.07
-          </p>
-        </div>
-        <div className="flex flex-col py-[20px] px-[20px] hover:cursor-pointer hover:border-secondary rounded-[20px] items-center justify-center border-[2px] border-primary hover:scale-[1.07] duration-150">
-          <p className="font-semibold text-primary whitespace-nowrap">
-            Wed, sept 13
-          </p>
-          <p className="font-bold text-primary text-[24px] whitespace-nowrap">
-            ₤ 448.88
-          </p>
-        </div>
-        <div className="flex flex-col py-[20px] px-[20px] hover:cursor-pointer hover:border-secondary rounded-[20px] items-center justify-center border-[2px] border-primary hover:scale-[1.07] duration-150">
-          <p className="font-semibold text-primary whitespace-nowrap">
-            Thu, sept 14
-          </p>
-          <p className="font-bold text-primary text-[24px] whitespace-nowrap">
-            ₤ 447.74
-          </p>
-        </div>
-        <div className="flex flex-col py-[20px] px-[20px] hover:cursor-pointer hover:border-secondary rounded-[20px] items-center justify-center border-[2px] border-primary hover:scale-[1.07] duration-150">
-          <p className="font-semibold text-primary whitespace-nowrap">
-            Fri, sept 15
-          </p>
-          <p className="font-bold text-primary text-[24px] whitespace-nowrap">
-            ₤ 446.46
-          </p>
-        </div>
-        <div className="flex flex-col py-[20px] px-[20px] hover:cursor-pointer hover:border-secondary rounded-[20px] items-center justify-center border-[2px] border-primary hover:scale-[1.07] duration-150">
-          <p className="font-semibold text-primary whitespace-nowrap">
-            Sat, sept 7
-          </p>
-          <p className="font-bold text-primary text-[24px] whitespace-nowrap">
-            ₤ 443.68
-          </p>
-        </div>
-      </div>
-      <BiSolidChevronRight
-        className="absolute top-[28%] right-[-10px]  z-40 h-10 w-10 cursor-pointer text-white opacity-100 transition hover:scale-125 group-hover:opacity-100 hover:bg-green-700/60 hover:text-white rounded-full bg-primary/70"
-        onClick={() => handleClick('right')}
-      />
-    </div>
-  );
-};
-
-export default PriceDatePick;
+}
+@media (hover: hover) {
+    .btn.glass:hover {
+        --glass-opacity: 25%;
+        --glass-border-opacity: 15%;
+    }
+}
+@media (hover: hover) {
+    .btn-disabled:hover,
+    .btn[disabled]:hover,
+    .btn:disabled:hover {
+        --tw-border-opacity: 0;
+        background-color: hsl(var(--n) / var(--tw-bg-opacity));
+        --tw-bg-opacity: 0.2;
+        color: hsl(var(--bc) / var(--tw-text-opacity));
+        --tw-text-opacity: 0.2;
+    }
+}
+@media (hover: hover) {
+    .btn-disabled:hover,
+    .btn[disabled]:hover,
+    .btn:disabled:hover {
+        --tw-border-opacity: 0;
+        background-color: hsl(var(--n) / var(--tw-bg-opacity));
+        --tw-bg-opacity: 0.2;
+        color: hsl(var(--bc) / var(--tw-text-opacity));
+        --tw-text-opacity: 0.2;
+    }
+}
+@media (hover: hover) {
+    .btn:is(input[type="checkbox"]:checked):hover, .btn:is(input[type="radio"]:checked):hover {
+        --tw-border-opacity: 1;
+        border-color: hsl(var(--pf) / var(--tw-border-opacity));
+        --tw-bg-opacity: 1;
+        background-color: hsl(var(--pf) / var(--tw-bg-opacity));
+    }
+}
+@media (hover: hover) {
+    .btn:is(input[type="checkbox"]:checked):hover, .btn:is(input[type="radio"]:checked):hover {
+        --tw-border-opacity: 1;
+        border-color: hsl(var(--pf) / var(--tw-border-opacity));
+        --tw-bg-opacity: 1;
+        background-color: hsl(var(--pf) / var(--tw-bg-opacity));
+    }
+}
+.btn:active:hover,
+  .btn:active:focus {
+    animation: button-pop 0s ease-out;
+    transform: scale(var(--btn-focus-scale, 0.97));
+}
+.btn:active:hover,
+  .btn:active:focus {
+    animation: button-pop 0s ease-out;
+    transform: scale(var(--btn-focus-scale, 0.97));
+}
+.btn:focus-visible {
+    outline-style: solid;
+    outline-width: 2px;
+    outline-offset: 2px;
+}
+.btn.glass {
+    --tw-shadow: 0 0 #0000;
+    --tw-shadow-colored: 0 0 #0000;
+    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+    outline-color: currentColor;
+}
+.btn.glass.btn-active {
+    --glass-opacity: 25%;
+    --glass-border-opacity: 15%;
+}
+.btn.btn-disabled,
+  .btn[disabled],
+  .btn:disabled {
+    --tw-border-opacity: 0;
+    background-color: hsl(var(--n) / var(--tw-bg-opacity));
+    --tw-bg-opacity: 0.2;
+    color: hsl(var(--bc) / var(--tw-text-opacity));
+    --tw-text-opacity: 0.2;
+}
+.btn.btn-disabled,
+  .btn[disabled],
+  .btn:disabled {
+    --tw-border-opacity: 0;
+    background-color: hsl(var(--n) / var(--tw-bg-opacity));
+    --tw-bg-opacity: 0.2;
+    color: hsl(var(--bc) / var(--tw-text-opacity));
+    --tw-text-opacity: 0.2;
+}
+.btn.btn-disabled,
+  .btn[disabled],
+  .btn:disabled {
+    --tw-border-opacity: 0;
+    background-color: hsl(var(--n) / var(--tw-bg-opacity));
+    --tw-bg-opacity: 0.2;
+    color: hsl(var(--bc) / var(--tw-text-opacity));
+    --tw-text-opacity: 0.2;
+}
+.btn-group > input[type="radio"]:checked.btn,
+  .btn-group > .btn-active {
+    --tw-border-opacity: 1;
+    border-color: hsl(var(--p) / var(--tw-border-opacity));
+    --tw-bg-opacity: 1;
+    background-color: hsl(var(--p) / var(--tw-bg-opacity));
+    --tw-text-opacity: 1;
+    color: hsl(var(--pc) / var(--tw-text-opacity));
+}
+.btn-group > input[type="radio"]:checked.btn:focus-visible, .btn-group > .btn-active:focus-visible {
+    outline-style: solid;
+    outline-width: 2px;
+    outline-color: hsl(var(--p) / 1);
+}
+.btn:is(input[type="checkbox"]:checked),
+.btn:is(input[type="radio"]:checked) {
+    --tw-border-opacity: 1;
+    border-color: hsl(var(--p) / var(--tw-border-opacity));
+    --tw-bg-opacity: 1;
+    background-color: hsl(var(--p) / var(--tw-bg-opacity));
+    --tw-text-opacity: 1;
+    color: hsl(var(--pc) / var(--tw-text-opacity));
+}
+.btn:is(input[type="checkbox"]:checked),
+.btn:is(input[type="radio"]:checked) {
+    --tw-border-opacity: 1;
+    border-color: hsl(var(--p) / var(--tw-border-opacity));
+    --tw-bg-opacity: 1;
+    background-color: hsl(var(--p) / var(--tw-bg-opacity));
+    --tw-text-opacity: 1;
+    color: hsl(var(--pc) / var(--tw-text-opacity));
+}
+.btn:is(input[type="checkbox"]:checked):focus-visible, .btn:is(input[type="radio"]:checked):focus-visible {
+    outline-color: hsl(var(--p) / 1);
+}
+.btn:is(input[type="checkbox"]:checked):focus-visible, .btn:is(input[type="radio"]:checked):focus-visible {
+    outline-color: hsl(var(--p) / 1);
+}
+.btn-group .btn:not(:first-child):not(:last-child) {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+.btn-group .btn:first-child:not(:last-child) {
+    margin-top: -0px;
+    margin-left: -1px;
+    border-top-left-radius: var(--rounded-btn, 0.5rem);
+    border-top-right-radius: 0;
+    border-bottom-left-radius: var(--rounded-btn, 0.5rem);
+    border-bottom-right-radius: 0;
+}
+.btn-group .btn:last-child:not(:first-child) {
+    border-top-left-radius: 0;
+    border-top-right-radius: var(--rounded-btn, 0.5rem);
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: var(--rounded-btn, 0.5rem);
+}
+.btn-group-horizontal .btn:not(:first-child):not(:last-child) {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+.btn-group-horizontal .btn:first-child:not(:last-child) {
+    margin-top: -0px;
+    margin-left: -1px;
+    border-top-left-radius: var(--rounded-btn, 0.5rem);
+    border-top-right-radius: 0;
+    border-bottom-left-radius: var(--rounded-btn, 0.5rem);
+    border-bottom-right-radius: 0;
+}
+.btn-group-horizontal .btn:last-child:not(:first-child) {
+    border-top-left-radius: 0;
+    border-top-right-radius: var(--rounded-btn, 0.5rem);
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: var(--rounded-btn, 0.5rem);
+}
+.btn-group-vertical .btn:first-child:not(:last-child) {
+    margin-top: -1px;
+    margin-left: -0px;
+    border-top-left-radius: var(--rounded-btn, 0.5rem);
+    border-top-right-radius: var(--rounded-btn, 0.5rem);
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+.btn-group-vertical .btn:last-child:not(:first-child) {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: var(--rounded-btn, 0.5rem);
+    border-bottom-right-radius: var(--rounded-btn, 0.5rem);
+}

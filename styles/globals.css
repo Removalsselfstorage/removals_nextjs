@@ -25,6 +25,9 @@ body {
     )
     rgb(var(--background-start-rgb));
 } */
+* {
+    animation-duration: 0s !important;
+}
 
 body {
   /* color: rgb(var(--foreground-rgb)); */
@@ -39,3 +42,12 @@ html {
 .btn-nav {
   @apply hover:text-primary hover:bg-primary/10 focus:bg-primary/10 active:bg-primary/10 font-semibold;
 }
+
+.btn {
+  @apply animate-none hover:animate-none active:animate-none active:scale-100  focus:animate-none focus:scale-100 hover:scale-100 hover:transform-none active:transform-none focus:transform-none;
+}
+
+/* //////Btn Classes */
+/* .btn {
+  @apply animate-none;
+} */

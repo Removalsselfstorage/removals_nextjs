@@ -5,6 +5,7 @@ import { BsChevronDown } from 'react-icons/bs';
 import { RiCustomerService2Fill } from 'react-icons/ri';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import ScrollUpMenuNav from '../ScrollUpMenuNav';
 
 const Navbar2 = () => {
   const [shadow, setShadow] = useState(false);
@@ -173,6 +174,9 @@ const Navbar2 = () => {
           </div>
         </div>
       </div>
+
+      {/* scrollup */}
+      <ScrollUpMenuNav />
     </>
   );
 };

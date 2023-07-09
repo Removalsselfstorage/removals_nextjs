@@ -38,7 +38,7 @@ const ScrollUpMenuNav = () => {
         className={
           isVisible
             ? 'lg:flex cursor-pointer fixed flex-col z-50 right-[20px] bottom-[20px] md:right-0 xs:mr-[20px] md:mr-[40px] duration-300 opacity-[80%]'
-            : 'lg:flex fixed flex-col z-50 top-[90%] right-0 xs:mr-[20px] md:mr-[40px] opacity-[0%] duration-300'
+            : 'lg:flex fixed flex-col z-50 right-[20px] bottom-[20px] md:right-0 xs:mr-[20px] md:mr-[40px] opacity-[0%] duration-300'
         }
       >
         <div className="text-[40px] rounded-[50%] shadow-lg outline outline-white/[0.1] outline-[0.5px] hover:scale-[1.2] hover:outline-white/[2] hover:text-royal/70 duration-300 bg-primary p-[5px] text-white md:p-[5px] mb-[20px]">

@@ -11,7 +11,9 @@ import MoverCard from '@/components/BookingPages/movers/MoverCard';
 import { BiSolidPhoneCall } from 'react-icons/bi';
 import MoveDetails from '@/components/BookingPages/movers/MoveDetails';
 
-const movers = () => {
+const Movers = () => {
+  const [showModal, setShowModal] = useState(false);
+
   return (
     <BookingLayout>
       <Head>
@@ -21,7 +23,7 @@ const movers = () => {
       </Head>
 
       <main className="">
-        <div className="mb-[70px] lg:mb-[100px] pt-[80px] md:pt-[100px] h-full">
+        <div className="mb-[70px] lg:mb-[100px] pt-[80px] md:pt-[100px] ">
           <div className="md:max-w-7xl mx-auto">
             {/* features links */}
             <FeaturesScroll />
@@ -35,7 +37,7 @@ const movers = () => {
               </div>
 
               {/* right section */}
-              <div className="bg-white rounded-[30px] lg:flex-[3] py-[30px] md:px-[30px] w-full">
+              <div className="bg-white shadow-lg rounded-[30px] lg:flex-[3] py-[30px] md:px-[30px] w-full">
                 <h1 className="text-2xl font-bold mb-[30px] px-[20px]">
                   You've been matched with{' '}
                   <span className="text-primary">4 verified movers.</span>
@@ -101,9 +103,13 @@ const movers = () => {
             </div>
           </div>
         </div>
+        {/* <div className="w-[20vw] h-[100%] z-[2000] absolute top-0 right-0 bg-white">
+            <p className="text-3xl font-bold">Side bar</p>
+        </div> */}
+        
       </main>
     </BookingLayout>
   );
 };
 
-export default movers;
+export default Movers;

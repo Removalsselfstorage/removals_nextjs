@@ -1,4 +1,4 @@
-import Modal from '@/components/Modal';
+import Modal from '@/components/Modal/Modal';
 import Link from 'next/link';
 import React, { useState } from 'react';
 import { BsFillPlayFill } from 'react-icons/bs';
@@ -82,7 +82,7 @@ const AboutUs = () => {
         </form>
       </dialog> */}
       {showModal && (
-        <Modal closeModal={() => setShowModal(false)}>
+        <Modal showCloseIcon blur closeModal={() => setShowModal(false)}>
           <div className="px-[30px] md:px-[0]">
               <iframe
                 src="https://player.vimeo.com/video/464246309?autoplay=1&loop=1"

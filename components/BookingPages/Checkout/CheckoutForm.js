@@ -201,7 +201,7 @@ const CheckoutForm = () => {
                   //   checked="checked"
                   className="checkbox checkbox-primary"
                 />
-                <span className="leading-[20px] text-[13px] md:text-[15px]">
+                <span className="leading-[20px] text-[14px] md:text-[15px]">
                   I agree to the terms and conditions outlined in the privacy
                   policy.
                 </span>
@@ -216,7 +216,7 @@ const CheckoutForm = () => {
                   //   checked="checked"
                   className="checkbox checkbox-primary"
                 />
-                <span className="leading-[20px] text-[13px] md:text-[15px]">
+                <span className="leading-[20px] text-[14px] md:text-[15px]">
                   Create account to manage your appointments.
                 </span>
               </label>

@@ -64,11 +64,10 @@ const Footer = () => {
         {/* column 2 */}
         <div>
           <span className="footer-title">Services</span>
-          <a className="link link-hover">Man and Van</a>
-          <a className="link link-hover my-[5px]">Storage & Self Storage</a>
-          <a className="link link-hover">Moving Your Employees</a>
-          <a className="link link-hover my-[5px]">Moving Your Business</a>
-          <a className="link link-hover">UK Home Moving</a>
+          <a className="link link-hover">Home Removals</a>
+          <a className="link link-hover my-[5px]">Man and Van</a>
+          <a className="link link-hover">Storage & Self Storage</a>
+          <a className="link link-hover my-[5px]">Handy man / Packing</a>
         </div>
 
         {/* column 3 */}
@@ -77,7 +76,7 @@ const Footer = () => {
           <a className="link link-hover">About Us</a>
           <a className="link link-hover my-[5px]">Locations</a>
           <a className="link link-hover ">Reviews</a>
-          <a className="link link-hover my-[5px]">Blog</a>
+          {/* <a className="link link-hover my-[5px]">Blog</a> */}
           <a className="link link-hover">Terms & Conditions</a>
           <a className="link link-hover my-[5px]">Privacy Policy</a>
         </div>

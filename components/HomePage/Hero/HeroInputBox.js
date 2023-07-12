@@ -33,24 +33,26 @@ const HeroInputBox = () => {
   const [error, setError] = useState(false);
 
   const setSubmitLink = () => {
-    setSubmitLoading(true);
     setError(false);
     if (selectValue == '' || !address || !address2) {
       setError(true);
       return;
     }
     if (selectValue == '') {
+      setSubmitLoading(true);
       router.push('/book');
-      setSubmitLoading(false);
+      //   setSubmitLoading(false);
     } else if (selectValue == 'Home removals') {
+      setSubmitLoading(true);
       router.push('/book/home-removals');
-      setSubmitLoading(false);
+      //   setSubmitLoading(false);
     } else {
+      setSubmitLoading(true);
       router.push('/book/man-and-van');
-      setSubmitLoading(false);
+      //   setSubmitLoading(false);
     }
     dispatch(
-        updateQuote({
+      updateQuote({
         moveService: { selectValue },
         location1: { address },
         location2: { address2 },
@@ -58,15 +60,15 @@ const HeroInputBox = () => {
     );
   };
 
-//   const enterQuotes = () => {
-//     dispatch(
-//       addToQuote({
-//         moveService: { selectValue },
-//         location1: { address },
-//         location2: { address2 },
-//       })
-//     );
-//   };
+  //   const enterQuotes = () => {
+  //     dispatch(
+  //       addToQuote({
+  //         moveService: { selectValue },
+  //         location1: { address },
+  //         location2: { address2 },
+  //       })
+  //     );
+  //   };
 
   //   console.log(address);
   //   console.log(addressDetails)

@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import Select, { StylesConfig } from 'react-select';
+
 
 const SelectSearch = ({
   options,
@@ -9,7 +10,9 @@ const SelectSearch = ({
   placeholder,
   large,
   blue,
+  setValue
 }) => {
+    // const selectInput = useRef(null);
   return (
     <Select
       defaultValue={defaultValue}
@@ -17,7 +20,7 @@ const SelectSearch = ({
       name={name}
       options={options}
       placeholder={placeholder}
-      isClearable={true}
+      isClearable={false}
       //   isDisabled={isDisabled}
       //   isLoading={isLoading}
       //   isRtl={isRtl}
@@ -43,6 +46,7 @@ const SelectSearch = ({
           padding: large ? '7px 7px' : '3px',
         }),
       }}
+      onChange={(e)=> setValue(e.value)}
     />
   );
 };

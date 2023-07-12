@@ -12,7 +12,6 @@ const SelectSearch = ({
   blue,
   setValue
 }) => {
-    // const selectInput = useRef(null);
   return (
     <Select
       defaultValue={defaultValue}

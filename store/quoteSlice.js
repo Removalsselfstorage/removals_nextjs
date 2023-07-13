@@ -4,7 +4,7 @@ const initialState = {
   isAMover: false,
   // LocationDetails
   serviceLocation: {
-    moveService: 'Select',
+    moveService: '',
     locationFrom: {
       name: '',
       postCode: '',

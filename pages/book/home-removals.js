@@ -1,26 +1,33 @@
 import QuoteType from '@/components/BookingPages/QuoteType';
 import BasicDatePicker from '@/components/DatePicker';
 import SelectSearch from '@/components/Inputs/SelectSearch';
-import { citiesOptions } from '@/dummyData/inputData';
+import { citiesOptions, serviceOptions } from '@/dummyData/inputData';
 import BookingLayout from '@/layouts/BookingLayout';
 import { titleFont } from '@/utils/fonts';
 import Head from 'next/head';
 import Link from 'next/link';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FiEdit } from 'react-icons/fi';
 import { MdKeyboardArrowRight } from 'react-icons/md';
 import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai';
 import GoogleSearchInput from '@/components/Inputs/GoogleSearchInput';
 import { useDispatch, useSelector } from 'react-redux';
-import { getLatestQuote } from '@/store/quoteSlice';
+import { getAllDetails } from '@/store/quoteSlice';
 
 const CompleteHouse = () => {
+  const details = useSelector(getAllDetails);
+
   const [floorCount, setFloorCount] = useState(0);
   const [floorCount2, setFloorCount2] = useState(0);
   const [address, setAddress] = useState({});
   const [addressDetails, setAddressDetails] = useState({});
+  const [address2, setAddress2] = useState({});
+  const [addressDetails2, setAddressDetails2] = useState({});
+  const [selectValue, setSelectValue] = useState('');
 
-  const quotes = useSelector(getLatestQuote);
+  //   useEffect(() => {
+  //     setAddress;
+  //   }, []);
 
   const increaseFloorCount = () => {
     setFloorCount((prev) => prev + 1);
@@ -30,8 +37,14 @@ const CompleteHouse = () => {
       setFloorCount((prev) => prev - 1);
     }
   };
+  const selectDefaultValue = () => {
+    const option = serviceOptions.filter(
+      (opt) => opt.value == details.serviceLocation.moveService
+    );
+    return option;
+  };
 
-  console.log(quotes);
+  //   console.log(details.serviceLocation);
 
   return (
     <BookingLayout>
@@ -98,7 +111,7 @@ const CompleteHouse = () => {
                         addressDetails={addressDetails}
                         setAddressDetails={setAddressDetails}
                         placeholder="Search location..."
-                        defaultValue={quotes?.location1}
+                        defaultValue={details.serviceLocation.locationFrom.name}
                       />
                     </div>
                   </div>
@@ -163,14 +176,13 @@ const CompleteHouse = () => {
                           Location TO*
                         </span>
                       </label>
-                      <SelectSearch
-                        placeholder="Location"
-                        options={citiesOptions}
-                        isSearchable={true}
-                        name="location1"
-                        defaultValue={citiesOptions[1]}
-                        large
-                        blue
+                      <GoogleSearchInput
+                        styles="py-[10px] px-[10px]"
+                        setAddress={setAddress2}
+                        addressDetails={addressDetails2}
+                        setAddressDetails={setAddressDetails2}
+                        placeholder="Search location..."
+                        defaultValue={details.serviceLocation.locationTo.name}
                       />
                     </div>
                   </div>
@@ -345,17 +357,17 @@ const CompleteHouse = () => {
                           Property Type*
                         </span>
                       </label>
-                      <select className="select select-primary w-full font-normal">
-                        <option disabled selected>
-                          - Select -
-                        </option>
-                        <option>Studio flat</option>
-                        <option>1 bed property</option>
-                        <option>2 bed property</option>
-                        <option>3 bed property</option>
-                        <option>4 bed property</option>
-                        <option>Storage</option>
-                      </select>
+                      <div className="w-full">
+                        <SelectSearch
+                          placeholder="Select"
+                          options={serviceOptions}
+                          isSearchable={false}
+                          name="service2"
+                          // defaultValue={serviceOptions[2]}
+                          defaultValue={selectDefaultValue()}
+                          setValue={setSelectValue}
+                        />
+                      </div>
                     </div>
                   </div>
 

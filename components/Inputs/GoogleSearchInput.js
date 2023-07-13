@@ -1,4 +1,4 @@
-import { getAllQuotes, getLatestQuote } from '@/store/quoteSlice';
+import { getAllDetails } from '@/store/quoteSlice';
 import React, { useEffect, useRef, useState } from 'react';
 
 const apiKey = process.env.NEXT_PUBLIC_GMAP_API_KEY;
@@ -69,11 +69,11 @@ const GoogleSearchInput = ({
   setAddressDetails,
   styles,
   placeholder,
-  defaultValue
+  defaultValue,
 }) => {
   const searchInput = useRef(null);
 
-  const quotes = useSelector(getLatestQuote);
+  const quotes = useSelector(getAllDetails);
 
   // init gmap script
   const initMapScript = () => {
@@ -104,7 +104,7 @@ const GoogleSearchInput = ({
       onChangeAddress(autocomplete)
     );
     // console.log(autocomplete);
-    setAddress(searchInput.current.value)
+    setAddress(searchInput.current.value);
   };
 
   //   const reverseGeocode = ({ latitude: lat, longitude: lng }) => {

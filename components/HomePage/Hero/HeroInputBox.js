@@ -7,7 +7,7 @@ import SelectSearch from '@/components/Inputs/SelectSearch';
 import { citiesOptions, serviceOptions } from '@/dummyData/inputData';
 import GoogleSearchInput from '@/components/Inputs/GoogleSearchInput';
 import useGoogleSearch from '@/utils/useGoogleSearch';
-import { addToQuote, getAllQuotes, updateQuote } from '@/store/quoteSlice';
+import { getAllDetails, updateLocationDetails } from '@/store/quoteSlice';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
@@ -18,7 +18,7 @@ const HeroInputBox = () => {
   //     useGoogleSearch();
   const dispatch = useDispatch();
 
-  const quotes = useSelector(getAllQuotes);
+  const details = useSelector(getAllDetails);
 
   const [address, setAddress] = useState({});
   const [addressDetails, setAddressDetails] = useState({});
@@ -82,12 +82,33 @@ const HeroInputBox = () => {
         break;
     }
     dispatch(
-      updateQuote({
-        moveService: { selectValue },
-        location1: { address },
-        location2: { address2 },
+      updateLocationDetails({
+        moveService: selectValue,
+        locationFrom: {
+          name: address,
+          postCode: addressDetails.zip,
+          city: addressDetails.city,
+          country: addressDetails.country,
+          floor: 1,
+          liftAvailable: false,
+        },
+        locationTo: {
+          name: address2,
+          postCode: addressDetails2.zip,
+          city: addressDetails2.city,
+          country: addressDetails2.country,
+          floor: 3,
+          liftAvailable: true,
+        },
       })
     );
+  };
+
+  const selectDefaultValue = () => {
+    const option = serviceOptions.filter(
+      (opt) => opt.value == details.serviceLocation.moveService
+    );
+    return option
   };
 
   //   console.log(address);
@@ -95,7 +116,7 @@ const HeroInputBox = () => {
   //   console.log(address2)
   //   console.log(addressDetails2)
   //   console.log(selectValue);
-  console.log(selectValue);
+  //   console.log(addressDetails);
 
   return (
     <div className="card shadow-2xl bg-base-100  text-black w-full md:w-[400px]">
@@ -123,7 +144,8 @@ const HeroInputBox = () => {
                 options={serviceOptions}
                 isSearchable={false}
                 name="service"
-                defaultValue={serviceOptions[0]}
+                // defaultValue={serviceOptions[2]}
+                defaultValue={selectDefaultValue()}
                 setValue={setSelectValue}
               />
             </div>
@@ -146,6 +168,7 @@ const HeroInputBox = () => {
               addressDetails={addressDetails}
               setAddressDetails={setAddressDetails}
               placeholder="Search location..."
+              defaultValue={details.serviceLocation.locationFrom.name}
             />
             {/* <input
               ref={searchInput}
@@ -176,6 +199,7 @@ const HeroInputBox = () => {
               addressDetails={addressDetails2}
               setAddressDetails={setAddressDetails2}
               placeholder="Search location..."
+              defaultValue={details.serviceLocation.locationTo.name}
             />
           </div>
           <div className="form-control mt-6">

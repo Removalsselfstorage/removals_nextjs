@@ -128,11 +128,11 @@ const CompleteHouse = () => {
                           onClick={() =>
                             floorCount && setFloorCount((prev) => prev - 1)
                           }
-                          className="flex justify-center items-center btn btn-primary w-[55px] p-[5px] h-[55px] rounded-[5px]"
+                          className="flex justify-center items-center btn btn-primary w-[50px] p-[5px] h-[50px] rounded-[5px]"
                         >
                           <AiOutlineMinus className="text-white font-bold text-[18px]" />
                         </div>
-                        <div className="flex justify-center items-center h-[55px] rounded-[10px] w-[60px] border border-primary font-semibold">
+                        <div className="flex justify-center items-center h-[50px] rounded-[10px] w-[60px] border border-primary font-semibold">
                           {floorCount}
                         </div>
                         <div
@@ -199,11 +199,11 @@ const CompleteHouse = () => {
                           onClick={() =>
                             floorCount2 && setFloorCount2((prev) => prev - 1)
                           }
-                          className="flex justify-center items-center btn btn-primary w-[55px] p-[5px] h-[55px] rounded-[5px]"
+                          className="flex justify-center items-center btn btn-primary w-[50px] p-[5px] h-[50px] rounded-[5px]"
                         >
                           <AiOutlineMinus className="text-white font-bold text-[18px]" />
                         </div>
-                        <div className="flex justify-center items-center h-[55px] rounded-[10px] w-[60px] border border-primary font-semibold">
+                        <div className="flex justify-center items-center h-[50px] rounded-[10px] w-[60px] border border-primary font-semibold">
                           {floorCount2}
                         </div>
                         <div

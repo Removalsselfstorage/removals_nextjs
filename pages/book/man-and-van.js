@@ -1,7 +1,7 @@
 import QuoteType from '@/components/BookingPages/QuoteType';
 import BasicDatePicker from '@/components/DatePicker';
 import SelectSearch from '@/components/Inputs/SelectSearch';
-import { citiesOptions } from '@/dummyData/inputData';
+import { citiesOptions, serviceOptions } from '@/dummyData/inputData';
 import BookingLayout from '@/layouts/BookingLayout';
 import { titleFont } from '@/utils/fonts';
 import Head from 'next/head';
@@ -10,13 +10,30 @@ import React, { useState } from 'react';
 import { FiEdit } from 'react-icons/fi';
 import { MdKeyboardArrowRight } from 'react-icons/md';
 import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai';
+import GoogleSearchInput from '@/components/Inputs/GoogleSearchInput';
+import { useSelector } from 'react-redux';
+import { getAllDetails } from '@/store/quoteSlice';
 
 const ManAndVan = () => {
+  const details = useSelector(getAllDetails);
+
   const [floorCount, setFloorCount] = useState(0);
   const [floorCount2, setFloorCount2] = useState(0);
   const [durationCount, setDurationCount] = useState(0);
+  const [address, setAddress] = useState({});
+  const [addressDetails, setAddressDetails] = useState({});
+  const [address2, setAddress2] = useState({});
+  const [addressDetails2, setAddressDetails2] = useState({});
+  const [selectValue, setSelectValue] = useState('');
 
   const hourValue = durationCount <= 1 ? 'hour' : 'hours';
+
+  const selectDefaultValue = () => {
+    const option = serviceOptions.filter(
+      (opt) => opt.value == details.serviceLocation.moveService
+    );
+    return option;
+  };
 
   return (
     <BookingLayout>
@@ -75,14 +92,13 @@ const ManAndVan = () => {
                           Location FROM*
                         </span>
                       </label>
-                      <SelectSearch
-                        placeholder="Location"
-                        options={citiesOptions}
-                        isSearchable={true}
-                        name="location1"
-                        // defaultValue={citiesOptions[0]}
-                        large
-                        blue
+                      <GoogleSearchInput
+                        styles="py-[10px] px-[10px]"
+                        setAddress={setAddress}
+                        addressDetails={addressDetails}
+                        setAddressDetails={setAddressDetails}
+                        placeholder="Search location..."
+                        defaultValue={details.serviceLocation.locationFrom.name}
                       />
                     </div>
                   </div>
@@ -99,16 +115,16 @@ const ManAndVan = () => {
                           onClick={() =>
                             floorCount && setFloorCount((prev) => prev - 1)
                           }
-                          className="flex justify-center items-center btn btn-primary w-[55px] p-[5px] h-[55px] rounded-[5px]"
+                          className="flex justify-center items-center btn btn-primary w-[50px] p-[5px] h-[50px] rounded-[5px]"
                         >
                           <AiOutlineMinus className="text-white font-bold text-[18px]" />
                         </div>
-                        <div className="flex justify-center items-center h-[55px] rounded-[10px] w-[60px] border border-primary font-semibold">
+                        <div className="flex justify-center items-center h-[50px] rounded-[10px] w-[60px] border border-primary font-semibold">
                           {floorCount}
                         </div>
                         <div
                           onClick={() => setFloorCount((prev) => prev + 1)}
-                          className="flex justify-center items-center btn btn-primary w-[55px] p-[5px] h-[55px] rounded-[5px]"
+                          className="flex justify-center items-center btn btn-primary w-[50px] p-[5px] h-[50px] rounded-[5px]"
                         >
                           <AiOutlinePlus className="text-white font-bold text-[18px]" />
                         </div>
@@ -147,14 +163,13 @@ const ManAndVan = () => {
                           Location TO*
                         </span>
                       </label>
-                      <SelectSearch
-                        placeholder="Location"
-                        options={citiesOptions}
-                        isSearchable={true}
-                        name="location1"
-                        // defaultValue={citiesOptions[1]}
-                        large
-                        blue
+                      <GoogleSearchInput
+                        styles="py-[10px] px-[10px]"
+                        setAddress={setAddress2}
+                        addressDetails={addressDetails2}
+                        setAddressDetails={setAddressDetails2}
+                        placeholder="Search location..."
+                        defaultValue={details.serviceLocation.locationTo.name}
                       />
                     </div>
                   </div>
@@ -171,16 +186,16 @@ const ManAndVan = () => {
                           onClick={() =>
                             floorCount2 && setFloorCount2((prev) => prev - 1)
                           }
-                          className="flex justify-center items-center btn btn-primary w-[55px] p-[5px] h-[55px] rounded-[5px]"
+                          className="flex justify-center items-center btn btn-primary w-[50px] p-[5px] h-[50px] rounded-[5px]"
                         >
                           <AiOutlineMinus className="text-white font-bold text-[18px]" />
                         </div>
-                        <div className="flex justify-center items-center h-[55px] rounded-[10px] w-[60px] border border-primary font-semibold">
+                        <div className="flex justify-center items-center h-[50px] rounded-[10px] w-[60px] border border-primary font-semibold">
                           {floorCount2}
                         </div>
                         <div
                           onClick={() => setFloorCount2((prev) => prev + 1)}
-                          className="flex justify-center items-center btn btn-primary w-[55px] p-[5px] h-[55px] rounded-[5px]"
+                          className="flex justify-center items-center btn btn-primary w-[50px] p-[5px] h-[50px] rounded-[5px]"
                         >
                           <AiOutlinePlus className="text-white font-bold text-[18px]" />
                         </div>
@@ -329,17 +344,17 @@ const ManAndVan = () => {
                           Property Type*
                         </span>
                       </label>
-                      <select className=" select select-primary w-full font-normal">
-                        <option disabled selected>
-                          - Select -
-                        </option>
-                        <option>Studio flat</option>
-                        <option>1 bed property</option>
-                        <option>2 bed property</option>
-                        <option>3 bed property</option>
-                        <option>4 bed property</option>
-                        <option>Storage</option>
-                      </select>
+                      <div className="w-full">
+                        <SelectSearch
+                          placeholder="Select"
+                          options={serviceOptions}
+                          isSearchable={false}
+                          name="service2"
+                          // defaultValue={serviceOptions[2]}
+                          defaultValue={selectDefaultValue()}
+                          setValue={setSelectValue}
+                        />
+                      </div>
                     </div>
                   </div>
 

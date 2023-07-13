@@ -6,7 +6,7 @@ const initialState = {
   serviceLocation: {
     moveService: 'Select',
     locationFrom: {
-      name: 'Search location...',
+      name: '',
       postCode: '',
       city: '',
       state: '',
@@ -15,7 +15,7 @@ const initialState = {
       liftAvailable: false,
     },
     locationTo: {
-      name: 'Search location...',
+      name: '',
       postCode: '',
       city: '',
       state: '',

@@ -4,9 +4,9 @@ const initialState = {
   isAMover: false,
   // LocationDetails
   serviceLocation: {
-    moveService: 'Home removals',
+    moveService: 'Select',
     locationFrom: {
-      name: 'Lagos',
+      name: 'Search location...',
       postCode: '1001',
       city: 'Lagos island',
       state: 'Lagos',
@@ -15,7 +15,7 @@ const initialState = {
       liftAvailable: false,
     },
     locationTo: {
-      name: 'Abuja',
+      name: 'Search location...',
       postCode: '1003',
       city: 'Gusse',
       state: 'Abuja',

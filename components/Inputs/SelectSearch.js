@@ -39,7 +39,7 @@ const SelectSearch = ({
         control: (baseStyles, state) => ({
           ...baseStyles,
           borderRadius: '10px',
-          fontSize: '15px',
+          fontSize: '14px',
           borderColor: state.isFocused ? '#008000' : '#008000',
           //   padding: '7px 7px',
           padding: large ? '7px 7px' : '3px',

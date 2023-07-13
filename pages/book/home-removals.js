@@ -1,6 +1,6 @@
 import QuoteType from '@/components/BookingPages/QuoteType';
 import BasicDatePicker from '@/components/DatePicker';
-import SelectSearch from '@/components/SelectSearch';
+import SelectSearch from '@/components/Inputs/SelectSearch';
 import { citiesOptions } from '@/dummyData/inputData';
 import BookingLayout from '@/layouts/BookingLayout';
 import { titleFont } from '@/utils/fonts';
@@ -10,10 +10,17 @@ import React, { useState } from 'react';
 import { FiEdit } from 'react-icons/fi';
 import { MdKeyboardArrowRight } from 'react-icons/md';
 import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai';
+import GoogleSearchInput from '@/components/Inputs/GoogleSearchInput';
+import { useDispatch, useSelector } from 'react-redux';
+import { getLatestQuote } from '@/store/quoteSlice';
 
 const CompleteHouse = () => {
   const [floorCount, setFloorCount] = useState(0);
   const [floorCount2, setFloorCount2] = useState(0);
+  const [address, setAddress] = useState({});
+  const [addressDetails, setAddressDetails] = useState({});
+
+  const quotes = useSelector(getLatestQuote);
 
   const increaseFloorCount = () => {
     setFloorCount((prev) => prev + 1);
@@ -23,6 +30,8 @@ const CompleteHouse = () => {
       setFloorCount((prev) => prev - 1);
     }
   };
+
+  console.log(quotes);
 
   return (
     <BookingLayout>
@@ -83,14 +92,13 @@ const CompleteHouse = () => {
                           Location FROM*
                         </span>
                       </label>
-                      <SelectSearch
-                        placeholder="Location"
-                        options={citiesOptions}
-                        isSearchable={true}
-                        name="location1"
-                        defaultValue={citiesOptions[0]}
-                        large
-                        blue
+                      <GoogleSearchInput
+                        styles="py-[10px] px-[10px]"
+                        setAddress={setAddress}
+                        addressDetails={addressDetails}
+                        setAddressDetails={setAddressDetails}
+                        placeholder="Search location..."
+                        defaultValue={quotes?.location1}
                       />
                     </div>
                   </div>
@@ -452,13 +460,13 @@ const CompleteHouse = () => {
               </div>
               {/* submit button */}
               <div className=" mt-6 w-full flex justify-center">
-                <Link href='/book/move-package'>
-                    <button className="btn btn-primary btn-wide flex items-center space-x-[5px] h-[60px]">
-                      <span className="">Get Prices</span>
-                      <span className="">
-                        <FiEdit className="text-[20px]" />
-                      </span>
-                    </button>
+                <Link href="/book/move-package">
+                  <button className="btn btn-primary btn-wide flex items-center space-x-[5px] h-[60px]">
+                    <span className="">Get Prices</span>
+                    <span className="">
+                      <FiEdit className="text-[20px]" />
+                    </span>
+                  </button>
                 </Link>
               </div>
             </div>

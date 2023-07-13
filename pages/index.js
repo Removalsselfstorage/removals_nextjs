@@ -8,7 +8,7 @@ import AboutUs from '@/components/HomePage/AboutUs';
 import OurReviews from '@/components/HomePage/OurReviews';
 import FAQ from '@/components/HomePage/FAQ';
 import FeaturedCompanies from '@/components/HomePage/FeatureCompanies';
-import InputSearch from '@/components/InputSearch';
+import InputSearch from '@/components/Inputs/InputSearch';
 import Features from '@/components/HomePage/Features';
 import HowItWorks from '@/components/HomePage/HowItWorks';
 import NormalLayout from '@/layouts/NormalLayout';

@@ -8,6 +8,7 @@ export const serviceOptions = [
   { value: '2-bed property', label: '2 bed property' },
   { value: '3-bed property', label: '3 bed property' },
   { value: '4-bed property', label: '4 bed property' },
+  { value: 'Furniture & Appliances', label: 'Furniture & Appliances' },
   { value: 'Storage', label: 'Storage' },
   //   { value: 'slate', label: 'Slate', color: '#253858' },
   //   { value: 'silver', label: 'Silver', color: '#666666' },
@@ -62,109 +63,3 @@ export const citiesOptions = [
   { value: 'edinburgh', label: 'Edinburgh' },
   { value: 'dundee', label: 'Dundee' },
 ];
-
-//   const fontStyles = {
-//     control: (styles) => ({ ...styles, backgroundColor: 'white' }),
-//     option: (styles, { data, isDisabled, isFocused, isSelected }) => {
-//       const color = chroma(data.color);
-//       return {
-//         ...styles,
-//         backgroundColor: isDisabled
-//           ? undefined
-//           : isSelected
-//           ? data.color
-//           : isFocused
-//           ? color.alpha(0.1).css()
-//           : undefined,
-//         color: isDisabled
-//           ? '#ccc'
-//           : isSelected
-//           ? chroma.contrast(color, 'white') > 2
-//             ? 'white'
-//             : 'black'
-//           : data.color,
-//         cursor: isDisabled ? 'not-allowed' : 'default',
-
-//         ':active': {
-//           ...styles[':active'],
-//           backgroundColor: !isDisabled
-//             ? isSelected
-//               ? data.color
-//               : color.alpha(0.3).css()
-//             : undefined,
-//         },
-//       };
-//     },
-//     multiValue: (styles, { data }) => {
-//       const color = chroma(data.color);
-//       return {
-//         ...styles,
-//         backgroundColor: color.alpha(0.1).css(),
-//       };
-//     },
-//     multiValueLabel: (styles, { data }) => ({
-//       ...styles,
-//       color: data.color,
-//     }),
-//     multiValueRemove: (styles, { data }) => ({
-//       ...styles,
-//       color: data.color,
-//       ':hover': {
-//         backgroundColor: data.color,
-//         color: 'white',
-//       },
-//     }),
-//   };
-
-//   const colourStyles = {
-//     control: (styles) => ({ ...styles, backgroundColor: 'white' }),
-//     option: (styles, { data, isDisabled, isFocused, isSelected }) => {
-//       const color = chroma(data.color);
-//       return {
-//         ...styles,
-//         backgroundColor: isDisabled
-//           ? undefined
-//           : isSelected
-//           ? data.color
-//           : isFocused
-//           ? color.alpha(0.1).css()
-//           : undefined,
-//         color: isDisabled
-//           ? '#ccc'
-//           : isSelected
-//           ? chroma.contrast(color, 'white') > 2
-//             ? 'white'
-//             : 'black'
-//           : data.color,
-//         cursor: isDisabled ? 'not-allowed' : 'default',
-
-//         ':active': {
-//           ...styles[':active'],
-//           backgroundColor: !isDisabled
-//             ? isSelected
-//               ? data.color
-//               : color.alpha(0.3).css()
-//             : undefined,
-//         },
-//       };
-//     },
-//     multiValue: (styles, { data }) => {
-//       const color = chroma(data.color);
-//       return {
-//         ...styles,
-//         backgroundColor: color.alpha(0.1).css(),
-//       };
-//     },
-//     multiValueLabel: (styles, { data }) => ({
-//       ...styles,
-//       color: data.color,
-//     }),
-//     multiValueRemove: (styles, { data }) => ({
-//       ...styles,
-//       color: data.color,
-//       ':hover': {
-//         backgroundColor: data.color,
-//         color: 'white',
-//       },
-//     }),
-//   };

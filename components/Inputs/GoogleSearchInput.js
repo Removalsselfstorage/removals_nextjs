@@ -1,8 +1,10 @@
+import { getAllQuotes, getLatestQuote } from '@/store/quoteSlice';
 import React, { useEffect, useRef, useState } from 'react';
 
 const apiKey = process.env.NEXT_PUBLIC_GMAP_API_KEY;
 const mapApiJs = 'https://maps.googleapis.com/maps/api/js';
 const geocodeJson = 'https://maps.googleapis.com/maps/api/geocode/json';
+import { useDispatch, useSelector } from 'react-redux';
 
 // load google map api js
 
@@ -67,8 +69,11 @@ const GoogleSearchInput = ({
   setAddressDetails,
   styles,
   placeholder,
+  defaultValue
 }) => {
   const searchInput = useRef(null);
+
+  const quotes = useSelector(getLatestQuote);
 
   // init gmap script
   const initMapScript = () => {
@@ -136,6 +141,7 @@ const GoogleSearchInput = ({
       placeholder={placeholder}
       className={`${styles} placeholder:text-[14px] text-[15px] border-primary border rounded-[10px] outline-none focus:border-[2px] active:border-[2px]`}
       onChange={() => setAddress(searchInput.current.value)}
+      defaultValue={defaultValue}
     />
   );
 };

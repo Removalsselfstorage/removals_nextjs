@@ -1,6 +1,6 @@
 import QuoteType from '@/components/BookingPages/QuoteType';
 import BasicDatePicker from '@/components/DatePicker';
-import SelectSearch from '@/components/SelectSearch';
+import SelectSearch from '@/components/Inputs/SelectSearch';
 import { citiesOptions } from '@/dummyData/inputData';
 import BookingLayout from '@/layouts/BookingLayout';
 import { titleFont } from '@/utils/fonts';
@@ -64,7 +64,7 @@ const MovePackage = () => {
                 f5="Free local mileage, waiting time"
                 f6="Standard insurance cover"
                 f7="600 cubic ft loading capacity"
-                link='/movers'
+                link="/movers"
               />
               <PackageCard
                 image="/svg/man_van.svg"
@@ -81,7 +81,7 @@ const MovePackage = () => {
                 f8="600 cubic ft loading capacity"
                 link="man-and-van"
                 preferred
-                link='/movers'
+                link="/movers"
               />
               <PackageCard
                 image="/svg/store.svg"
@@ -99,7 +99,7 @@ const MovePackage = () => {
                 f9="1 item dismantling / assembly"
                 f10="Free ₤50 packing material"
                 f11="600 cubic ft loading capacity"
-                link='/movers'
+                link="/movers"
               />
               <PackageCard
                 image="/svg/hand_packing.svg"
@@ -117,9 +117,8 @@ const MovePackage = () => {
                 f9="1 item dismantling / assembly"
                 f10="Free ₤75 packing material"
                 f11="600 cubic ft loading capacity"
-                link='/movers'
+                link="/movers"
               />
-              
             </div>
           </div>
         </div>

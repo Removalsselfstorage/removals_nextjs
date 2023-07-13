@@ -9,11 +9,11 @@ const Hero = () => {
   return (
     <div className=" bg-base-200 mt-[50px]  md:mt-[0px] md:pt-[100px]">
       <div
-        className="hero min-h-[95vh] md:min-h-[80vh] lg:min-h-[90vh] 2xl:min-h-[80vh] bg-black/80"
+        className="hero min-h-[95vh] md:min-h-[85vh] lg:min-h-[95vh] 2xl:min-h-[80vh] bg-black/80"
         style={{ backgroundImage: 'url(/hero_bg.jpg)' }}
       >
         <div className="hero-overlay bg-black/80 "></div>
-        <div className="hero-content  flex-col text-white lg:flex-row md:space-x-[50px] space-y-[0px] md:px-[50px] md:max-w-7xl mx-auto">
+        <div className="hero-content flex-col text-white lg:flex-row md:space-x-[50px] space-y-[0px] md:px-[50px] md:max-w-7xl mx-auto">
           {/* Hero Text */}
           <div className=" hidden lg:flex lg:flex-col md:justify-between h-full">
             {/* need help */}

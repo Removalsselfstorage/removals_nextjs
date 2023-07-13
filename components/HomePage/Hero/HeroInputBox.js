@@ -1,14 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { FiEdit } from 'react-icons/fi';
 import FullRating from '../../Rating/FullRating';
-import EditHalfStars from '@/components/Rating/EditHalfStars';
-import InputSearch from '@/components/InputSearch';
-import chroma from 'chroma-js';
 import { useDispatch, useSelector } from 'react-redux';
 
-import SelectSearch from '@/components/SelectSearch';
+import SelectSearch from '@/components/Inputs/SelectSearch';
 import { citiesOptions, serviceOptions } from '@/dummyData/inputData';
-import GoogleSearchInput from '@/components/GoogleSearchInput';
+import GoogleSearchInput from '@/components/Inputs/GoogleSearchInput';
 import useGoogleSearch from '@/utils/useGoogleSearch';
 import { addToQuote, getAllQuotes, updateQuote } from '@/store/quoteSlice';
 import Link from 'next/link';
@@ -32,24 +29,57 @@ const HeroInputBox = () => {
   const [selectValue, setSelectValue] = useState('');
   const [error, setError] = useState(false);
 
-  const setSubmitLink = () => {
+  const heroFormSubmit = () => {
     setError(false);
     if (selectValue == '' || !address || !address2) {
       setError(true);
       return;
     }
-    if (selectValue == '') {
-      setSubmitLoading(true);
-      router.push('/book');
-      //   setSubmitLoading(false);
-    } else if (selectValue == 'Home removals') {
-      setSubmitLoading(true);
-      router.push('/book/home-removals');
-      //   setSubmitLoading(false);
-    } else {
-      setSubmitLoading(true);
-      router.push('/book/man-and-van');
-      //   setSubmitLoading(false);
+    switch (selectValue) {
+      case 'Office removals':
+        setSubmitLoading(true);
+        router.push('/book/man-and-van');
+        break;
+      case 'Man and van':
+        setSubmitLoading(true);
+        router.push('/book/man-and-van');
+        break;
+      case 'Studio flat':
+        setSubmitLoading(true);
+        router.push('/book/man-and-van');
+        break;
+      case 'Furniture & Appliances':
+        setSubmitLoading(true);
+        router.push('/book/man-and-van');
+        break;
+      case 'Storage':
+        setSubmitLoading(true);
+        router.push('/book/man-and-van');
+        break;
+      case 'Home removals':
+        setSubmitLoading(true);
+        router.push('/book/home-removals');
+        break;
+      case '1 bed property':
+        setSubmitLoading(true);
+        router.push('/book/home-removals');
+        break;
+      case '2 bed property':
+        setSubmitLoading(true);
+        router.push('/book/home-removals');
+        break;
+      case '3 bed property':
+        setSubmitLoading(true);
+        router.push('/book/home-removals');
+        break;
+      case '4 bed property':
+        setSubmitLoading(true);
+        router.push('/book/home-removals');
+        break;
+
+      default:
+        router.push('/book');
+        break;
     }
     dispatch(
       updateQuote({
@@ -60,22 +90,12 @@ const HeroInputBox = () => {
     );
   };
 
-  //   const enterQuotes = () => {
-  //     dispatch(
-  //       addToQuote({
-  //         moveService: { selectValue },
-  //         location1: { address },
-  //         location2: { address2 },
-  //       })
-  //     );
-  //   };
-
   //   console.log(address);
   //   console.log(addressDetails)
   //   console.log(address2)
   //   console.log(addressDetails2)
   //   console.log(selectValue);
-  console.log(quotes);
+  console.log(selectValue);
 
   return (
     <div className="card shadow-2xl bg-base-100  text-black w-full md:w-[400px]">
@@ -160,7 +180,7 @@ const HeroInputBox = () => {
           </div>
           <div className="form-control mt-6">
             <button
-              onClick={setSubmitLink}
+              onClick={heroFormSubmit}
               className="btn btn-primary flex items-center space-x-[5px]"
             >
               {!submitLoading && <span className="">Get Quote</span>}

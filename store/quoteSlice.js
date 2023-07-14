@@ -11,7 +11,7 @@ const initialState = {
       city: '',
       state: '',
       country: '',
-      floor: 1,
+      floor: 0,
       liftAvailable: false,
     },
     locationTo: {
@@ -20,7 +20,7 @@ const initialState = {
       city: '',
       state: '',
       country: '',
-      floor: 1,
+      floor: 0,
       liftAvailable: false,
     },
   },
@@ -29,7 +29,7 @@ const initialState = {
   personalDetails: {
     firstName: '',
     lastName: '',
-    Email: '',
+    email: '',
     countryCode: '',
     telephone: '',
   },

@@ -1,5 +1,5 @@
 import QuoteType from '@/components/BookingPages/QuoteType';
-import BasicDatePicker from '@/components/DatePicker';
+import BasicDatePicker from '@/components/DatePicker/DatePicker';
 import SelectSearch from '@/components/Inputs/SelectSearch';
 import { citiesOptions } from '@/dummyData/inputData';
 import BookingLayout from '@/layouts/BookingLayout';

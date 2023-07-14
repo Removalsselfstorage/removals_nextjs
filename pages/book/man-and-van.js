@@ -1,7 +1,13 @@
 import QuoteType from '@/components/BookingPages/QuoteType';
-import BasicDatePicker from '@/components/DatePicker';
+import BasicDatePicker from '@/components/DatePicker/DatePicker';
 import SelectSearch from '@/components/Inputs/SelectSearch';
-import { citiesOptions, serviceOptions } from '@/dummyData/inputData';
+import {
+  citiesOptions,
+  menOptions,
+  mileageOptions,
+  phoneCodesOptions,
+  serviceOptions,
+} from '@/dummyData/inputData';
 import BookingLayout from '@/layouts/BookingLayout';
 import { titleFont } from '@/utils/fonts';
 import Head from 'next/head';
@@ -11,28 +17,95 @@ import { FiEdit } from 'react-icons/fi';
 import { MdKeyboardArrowRight } from 'react-icons/md';
 import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai';
 import GoogleSearchInput from '@/components/Inputs/GoogleSearchInput';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getAllDetails } from '@/store/quoteSlice';
+import dayjs from 'dayjs';
+import { useRouter } from 'next/navigation';
 
 const ManAndVan = () => {
+  const router = useRouter();
+
+  const dispatch = useDispatch();
   const details = useSelector(getAllDetails);
 
   const [floorCount, setFloorCount] = useState(0);
   const [floorCount2, setFloorCount2] = useState(0);
+  const [lift, setLift] = useState(false);
+  const [lift2, setLift2] = useState(false);
   const [durationCount, setDurationCount] = useState(0);
   const [address, setAddress] = useState({});
   const [addressDetails, setAddressDetails] = useState({});
   const [address2, setAddress2] = useState({});
   const [addressDetails2, setAddressDetails2] = useState({});
-  const [selectValue, setSelectValue] = useState('');
+  const [propertyValue, setPropertyValue] = useState('');
+  const [phoneValue, setPhoneValue] = useState('');
+  const [menValue, setMenValue] = useState('');
+  const [agreeTermsValue, setAgreeTermsValue] = useState(false);
+  const [mileageValue, setMileageValue] = useState('');
+  const [dateValue, setDateValue] = useState(dayjs(''));
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState({ value: '', error: true });
+  const [volume, setVolume] = useState('');
+  const [phone, setPhone] = useState('');
+  const [submitError, setSubmitError] = useState(false);
 
   const hourValue = durationCount <= 1 ? 'hour' : 'hours';
+
+  const handleEmailChange = (e) => {
+    // const inputValue = e.target.value;
+    setEmail({ ...email, value: e.target.value });
+
+    // Regular expression to validate email format
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    // setIsValid(emailPattern.test(inputValue));
+    setEmail({ ...email, error: emailPattern.test(e.target.value) });
+  };
+
+  const defaultPhoneValue = () => {
+    const option = phoneCodesOptions.filter(
+      (opt) => opt.value == 'United Kingdom (+44)'
+    );
+    return option;
+  };
+
+  const date = dayjs(dateValue).format('DD/MM/YYYY');
 
   const selectDefaultValue = () => {
     const option = serviceOptions.filter(
       (opt) => opt.value == details.serviceLocation.moveService
     );
     return option;
+  };
+
+  const FormSubmit = () => {
+    setSubmitError(false);
+    if (
+      !floorCount ||
+      !lift ||
+      !lift2 ||
+      !floorCount2 ||
+      propertyValue == '' ||
+      propertyValue == 'Select' ||
+      !address ||
+      !address2 ||
+      !firstName ||
+      !lastName ||
+    //   !phoneValue ||
+      !phone ||
+      !menValue ||
+      menValue == 'Select' ||
+      !durationCount ||
+      !volume ||
+      !mileageValue ||
+      mileageValue == 'Select' ||
+      date == 'Invalid Date' ||
+      !agreeTermsValue
+    ) {
+      setSubmitError(true);
+    } else {
+      router.push('/book/move-package');
+    }
   };
 
   return (
@@ -77,7 +150,7 @@ const ManAndVan = () => {
             {/* form */}
             <div className="flex flex-col  px-[20px] lg:px-[100px] py-[30px] bg-white rounded-[20px] mx-[10px] md:mx-[100px]">
               {/* mandatory text */}
-              <div className="flex justify-center text-red-600 mb-[10px] md:mb-[20px] text-[14px] md:text-[16px]">
+              <div className="flex justify-center text-secondary mb-[10px] md:mb-[20px] text-[14px] md:text-[16px]">
                 <p className="">Fields marked with * are mandatory</p>
               </div>
               <div className="flex flex-col space-y-[20px]">
@@ -143,6 +216,7 @@ const ManAndVan = () => {
                             type="checkbox"
                             //   checked="checked"
                             className="checkbox checkbox-primary"
+                            onChange={(e) => setLift(e.target.checked)}
                           />
                           <span className="leading-[20px] text-[14px] text-gray-400 md:text-[16px]">
                             Check if available
@@ -214,6 +288,7 @@ const ManAndVan = () => {
                             type="checkbox"
                             //   checked="checked"
                             className="checkbox checkbox-primary"
+                            onChange={(e) => setLift2(e.target.checked)}
                           />
                           <span className="leading-[20px] text-[14px] text-gray-400 md:text-[16px]">
                             Check if available
@@ -227,27 +302,8 @@ const ManAndVan = () => {
                 <div className="flex flex-col items-center justify-center space-y-[10px] lg:space-y-0 lg:flex-row lg:items-center lg:space-x-[50px]">
                   {/* left */}
                   <div className="flex w-full flex-[1] flex-col items-center md:flex-row md:space-x-[30px] space-y-[10px] md:space-y-0 md:justify-center">
-                    {/* title */}
-                    {/* <div className="flex flex-col w-full flex-[1]">
-                      <label className="label">
-                        <span className="label-text font-semibold">Title*</span>
-                      </label>
-                      <select className="select select-primary w-full max-w-xs font-normal">
-                        <option disabled selected>
-                          - Select -
-                        </option>
-                        <option>Mr</option>
-                        <option>Mrs</option>
-                        <option>Ms</option>
-                        <option>Miss</option>
-                        <option>Dr</option>
-                        <option>Lady</option>
-                        <option>Lord</option>
-                        <option>Sir</option>
-                      </select>
-                    </div> */}
                     {/* first name */}
-                    <div className="form-control w-full flex-[3]">
+                    <div className="form-control w-full">
                       <label className="label">
                         <span className="label-text font-semibold">
                           First Name*
@@ -256,7 +312,8 @@ const ManAndVan = () => {
                       <input
                         type="text"
                         placeholder="Type here"
-                        className="input input-primary w-full"
+                        className="input input-primary w-full h-[43px]"
+                        onChange={(e) => setFirstName(e.target.value)}
                       />
                     </div>
                   </div>
@@ -272,7 +329,8 @@ const ManAndVan = () => {
                       <input
                         type="text"
                         placeholder="Type here"
-                        className="input input-primary w-full"
+                        className="input input-primary w-full h-[43px]"
+                        onChange={(e) => setLastName(e.target.value)}
                       />
                     </div>
                   </div>
@@ -287,10 +345,16 @@ const ManAndVan = () => {
                         <span className="label-text font-semibold">Email*</span>
                       </label>
                       <input
-                        type="text"
+                        type="email"
                         placeholder="Type here"
-                        className="input input-primary w-full"
+                        className="input input-primary w-full h-[43px]"
+                        onChange={handleEmailChange}
                       />
+                      {!email.error && (
+                        <p className="text-[14px] text-secondary mt-[5px]">
+                          Please enter a valid email
+                        </p>
+                      )}
                     </div>
                   </div>
 
@@ -303,19 +367,15 @@ const ManAndVan = () => {
                           Country Code*
                         </span>
                       </label>
-                      <select className="select select-primary w-full max-w-xs my-[0px] font-normal">
-                        {/* <option disabled selected>
-                          - Select -
-                        </option> */}
-                        <option selected>United Kingdom (+44)</option>
-                        <option>USA (+1)</option>
-                        <option>France (+33)</option>
-                        <option>Russia (+7)</option>
-                        <option>Switzerland (+41)</option>
-                        <option>Romania (+40)</option>
-                        <option>Sweden (+46)</option>
-                        <option>South Africa (+27)</option>
-                      </select>
+                      <SelectSearch
+                        placeholder="Select"
+                        options={phoneCodesOptions}
+                        isSearchable={true}
+                        name="service2"
+                        // defaultValue={serviceOptions[2]}
+                        defaultValue={defaultPhoneValue()}
+                        setValue={setPhoneValue}
+                      />
                     </div>
                     {/* Telephone* */}
                     <div className="form-control w-full flex-[1]">
@@ -325,9 +385,10 @@ const ManAndVan = () => {
                         </span>
                       </label>
                       <input
-                        type="text"
+                        type="tel"
                         placeholder="Type here"
-                        className="input input-primary w-full"
+                        className="input input-primary w-full h-[43px]"
+                        onChange={(e) => setPhone(e.target.value)}
                       />
                     </div>
                   </div>
@@ -349,10 +410,10 @@ const ManAndVan = () => {
                           placeholder="Select"
                           options={serviceOptions}
                           isSearchable={false}
-                          name="service2"
+                          //   name="service2"
                           // defaultValue={serviceOptions[2]}
                           defaultValue={selectDefaultValue()}
-                          setValue={setSelectValue}
+                          setValue={setPropertyValue}
                         />
                       </div>
                     </div>
@@ -361,21 +422,24 @@ const ManAndVan = () => {
                   <div className="flex-[1] w-full flex flex-col md:flex-row md:items-center md:space-x-[20px] space-y-[10px] md:space-y-0">
                     {/* movers */}
                     <div className="flex w-full flex-[1] flex-col items-center md:flex-row md:space-x-[30px] space-y-[10px] md:space-y-0 md:justify-center">
-                      {/* Move Date */}
+                      {/* Number of movers */}
                       <div className="form-control w-full ">
                         <label className="label">
                           <span className="label-text font-semibold">
                             Number of Movers*
                           </span>
                         </label>
-                        <select className="select select-primary w-full font-normal">
-                          <option disabled selected>
-                            - Select -
-                          </option>
-                          <option>1 Man</option>
-                          <option>2 Men</option>
-                          <option>3 Men</option>
-                        </select>
+                        <div className="w-full">
+                          <SelectSearch
+                            placeholder="Select"
+                            options={menOptions}
+                            isSearchable={false}
+                            //   name="service3"
+                            // defaultValue={serviceOptions[2]}
+                            defaultValue={menOptions[0]}
+                            setValue={setMenValue}
+                          />
+                        </div>
                       </div>
                     </div>
                     {/* mileage */}
@@ -387,23 +451,17 @@ const ManAndVan = () => {
                             Mileage*
                           </span>
                         </label>
-                        <select className="select select-primary w-full font-normal">
-                          <option disabled selected>
-                            - Select -
-                          </option>
-                          <option>0 - 25</option>
-                          <option>26 - 75</option>
-                          <option>76 - 150</option>
-                          <option>151 - 200</option>
-                          <option>201 - 250</option>
-                          <option>251 - 300</option>
-                          <option>301 - 350</option>
-                          <option>351 - 400</option>
-                          <option>401 - 450</option>
-                          <option>451 - 500</option>
-                          <option>501 - 550</option>
-                          <option>551 - 600</option>
-                        </select>
+                        <div className="w-full">
+                          <SelectSearch
+                            placeholder="Select"
+                            options={mileageOptions}
+                            isSearchable={false}
+                            //   name="service3"
+                            // defaultValue={serviceOptions[2]}
+                            defaultValue={mileageOptions[0]}
+                            setValue={setMileageValue}
+                          />
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -425,16 +483,16 @@ const ManAndVan = () => {
                             durationCount &&
                             setDurationCount((prev) => prev - 1)
                           }
-                          className="flex justify-center items-center btn btn-primary w-[55px] p-[5px] h-[55px] rounded-[5px]"
+                          className="flex justify-center items-center btn btn-primary w-[45px] p-[5px] h-[45px] rounded-[5px]"
                         >
                           <AiOutlineMinus className="text-white font-bold text-[18px]" />
                         </div>
-                        <div className="flex justify-center items-center h-[55px] rounded-[10px] w-full border border-primary font-semibold">
+                        <div className="flex justify-center items-center h-[48px] rounded-[10px] w-full border border-primary font-semibold">
                           {durationCount} {hourValue}
                         </div>
                         <div
                           onClick={() => setDurationCount((prev) => prev + 1)}
-                          className="flex justify-center items-center btn btn-primary w-[55px] p-[5px] h-[55px] rounded-[5px]"
+                          className="flex justify-center items-center btn btn-primary w-[45px] p-[5px] h-[45px] rounded-[5px]"
                         >
                           <AiOutlinePlus className="text-white font-bold text-[18px]" />
                         </div>
@@ -448,27 +506,39 @@ const ManAndVan = () => {
                       <div className="flex flex-col w-full">
                         <label className="label">
                           <span className="label-text font-semibold">
-                            Volume: CU/FT
+                            Volume: CU/FT*
                           </span>
                         </label>
                         <input
-                          type="text"
+                          type="number"
+                          min="0"
                           placeholder="Type here"
-                          className="input input-primary w-full h-[55px]"
+                          className="input input-primary w-full h-[43px]"
+                          onChange={(e) => setVolume(e.target.value)}
                         />
                       </div>
                     </div>
                     <div className="flex flex-[1]">
-                      {/* date*/}
+                      {/* move date*/}
                       <div className="form-control">
                         <label className="label">
                           <span className="label-text font-semibold">
                             Move Date*
                           </span>
                         </label>
-                        <div className="bg-white border rounded-[8px] border-primary">
-                          <BasicDatePicker />
-                        </div>
+                        <button className="flex justify-center items-center bg-white border-[1.4px] rounded-[8px] border-primary cursor-pointer overflow-hidden py-[4px] focus:ring-[2px] active:ring-[2px] ring-primary">
+                          <div className="opacity-[0.9] mt-[-10px] cursor-pointer">
+                            <BasicDatePicker
+                              setDateValue={setDateValue}
+                              dateValue={dateValue}
+                            />
+                          </div>
+                        </button>
+                        {/* <p className="">{dateValue}</p> */}
+                        {/* <DatePicker2 /> */}
+                        {/* <div className="bg-white border rounded-[8px] border-primary">
+                        <BasicDatePicker />
+                      </div> */}
                       </div>
                     </div>
                   </div>
@@ -482,6 +552,7 @@ const ManAndVan = () => {
                       type="checkbox"
                       //   checked="checked"
                       className="checkbox checkbox-primary"
+                      onChange={(e) => setAgreeTermsValue(e.target.checked)}
                     />
                     <span className="leading-[20px] text-[14px] md:text-[16px]">
                       I agree to the terms and conditions outlined in the
@@ -492,14 +563,22 @@ const ManAndVan = () => {
               </div>
               {/* submit button */}
               <div className=" mt-6 w-full flex justify-center">
-                <Link href="/book/move-package">
-                  <button className="btn btn-primary btn-wide flex items-center space-x-[5px] h-[60px]">
+                <div className="flex flex-col items-center justify-center">
+                  <button
+                    onClick={FormSubmit}
+                    className="btn btn-primary btn-wide flex items-center space-x-[5px] h-[60px]"
+                  >
                     <span className="">Get Prices</span>
                     <span className="">
                       <FiEdit className="text-[20px]" />
                     </span>
                   </button>
-                </Link>
+                  {submitError && (
+                    <p className="text-[16px] text-secondary mt-[15px]">
+                      Please completely fill all mandatory fields
+                    </p>
+                  )}
+                </div>
               </div>
             </div>
           </div>

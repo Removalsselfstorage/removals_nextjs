@@ -145,7 +145,7 @@ const HeroInputBox = () => {
                 isSearchable={false}
                 name="service"
                 // defaultValue={serviceOptions[2]}
-                defaultValue={selectDefaultValue()}
+                defaultValue={selectDefaultValue() || serviceOptions(0)}
                 setValue={setSelectValue}
               />
             </div>
@@ -168,7 +168,7 @@ const HeroInputBox = () => {
               addressDetails={addressDetails}
               setAddressDetails={setAddressDetails}
               placeholder="Search location..."
-              defaultValue={details.serviceLocation.locationFrom.name}
+              defaultValue={details.serviceLocation.locationFrom.name || null}
             />
             {/* <input
               ref={searchInput}
@@ -199,7 +199,7 @@ const HeroInputBox = () => {
               addressDetails={addressDetails2}
               setAddressDetails={setAddressDetails2}
               placeholder="Search location..."
-              defaultValue={details.serviceLocation.locationTo.name}
+              defaultValue={details.serviceLocation.locationTo.name || null}
             />
           </div>
           <div className="form-control mt-6">

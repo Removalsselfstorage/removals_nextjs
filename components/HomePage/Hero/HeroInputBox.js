@@ -26,7 +26,9 @@ const HeroInputBox = () => {
   const [addressDetails2, setAddressDetails2] = useState({});
   const [submitLoading, setSubmitLoading] = useState(false);
 
-  const [selectValue, setSelectValue] = useState('');
+  const [selectValue, setSelectValue] = useState(
+    details.serviceLocation.moveService || ''
+  );
   const [error, setError] = useState(false);
 
   const heroFormSubmit = () => {
@@ -108,7 +110,7 @@ const HeroInputBox = () => {
     const option = serviceOptions.filter(
       (opt) => opt.value == details.serviceLocation.moveService
     );
-    return option
+    return option;
   };
 
   //   console.log(address);

@@ -18,7 +18,7 @@ import { MdKeyboardArrowRight } from 'react-icons/md';
 import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai';
 import GoogleSearchInput from '@/components/Inputs/GoogleSearchInput';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllDetails } from '@/store/quoteSlice';
+import { getAllDetails, updateLocationDetails, updateMoveDetails, updatePersonalDetails } from '@/store/quoteSlice';
 import dayjs from 'dayjs';
 import { useRouter } from 'next/navigation';
 
@@ -28,45 +28,65 @@ const ManAndVan = () => {
   const dispatch = useDispatch();
   const details = useSelector(getAllDetails);
 
-  const [floorCount, setFloorCount] = useState(0);
-  const [floorCount2, setFloorCount2] = useState(0);
-  const [lift, setLift] = useState(false);
-  const [lift2, setLift2] = useState(false);
-  const [durationCount, setDurationCount] = useState(0);
+  const [floorCount, setFloorCount] = useState(
+    details.serviceLocation.locationFrom.floor || 0
+  );
+  const [floorCount2, setFloorCount2] = useState(
+    details.serviceLocation.locationTo.floor || 0
+  );
+  const [lift, setLift] = useState(
+    details.serviceLocation.locationFrom.liftAvailable || false
+  );
+  const [lift2, setLift2] = useState(
+    details.serviceLocation.locationTo.liftAvailable || false
+  );
+  const [durationCount, setDurationCount] = useState(
+    details.moveDetails.duration || 0
+  );
   const [address, setAddress] = useState({});
   const [addressDetails, setAddressDetails] = useState({});
   const [address2, setAddress2] = useState({});
   const [addressDetails2, setAddressDetails2] = useState({});
-  const [propertyValue, setPropertyValue] = useState('');
-  const [phoneValue, setPhoneValue] = useState('');
-  const [menValue, setMenValue] = useState('');
+  const [propertyValue, setPropertyValue] = useState(
+    details.serviceLocation.moveService || ''
+  );
+  const [phoneValue, setPhoneValue] = useState(
+    details.personalDetails.countryCode || ''
+  );
+  const [menValue, setMenValue] = useState(
+    details.moveDetails.numberOfMovers || ''
+  );
   const [agreeTermsValue, setAgreeTermsValue] = useState(false);
-  const [mileageValue, setMileageValue] = useState('');
-  const [dateValue, setDateValue] = useState(dayjs(''));
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState({ value: '', error: true });
-  const [volume, setVolume] = useState('');
-  const [phone, setPhone] = useState('');
+  const [mileageValue, setMileageValue] = useState(
+    details.moveDetails.mileage || ''
+  );
+  const [dateValue, setDateValue] = useState(
+    dayjs(details.moveDetails.moveDate || '')
+  );
+  const [firstName, setFirstName] = useState(
+    details.personalDetails.firstName || ''
+  );
+  const [lastName, setLastName] = useState(
+    details.personalDetails.lastName || ''
+  );
+  const [email, setEmail] = useState(details.personalDetails.email || '');
+  const [emailError, setEmailError] = useState(true);
+  const [volume, setVolume] = useState(details.moveDetails.volume || '');
+  const [phone, setPhone] = useState(details.personalDetails.telephone || '');
   const [submitError, setSubmitError] = useState(false);
+
+  const [submitLoading, setSubmitLoading] = useState(false);
 
   const hourValue = durationCount <= 1 ? 'hour' : 'hours';
 
   const handleEmailChange = (e) => {
     // const inputValue = e.target.value;
-    setEmail({ ...email, value: e.target.value });
+    setEmail(e.target.value);
 
     // Regular expression to validate email format
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     // setIsValid(emailPattern.test(inputValue));
-    setEmail({ ...email, error: emailPattern.test(e.target.value) });
-  };
-
-  const defaultPhoneValue = () => {
-    const option = phoneCodesOptions.filter(
-      (opt) => opt.value == 'United Kingdom (+44)'
-    );
-    return option;
+    setEmailError(emailPattern.test(e.target.value));
   };
 
   const date = dayjs(dateValue).format('DD/MM/YYYY');
@@ -74,6 +94,28 @@ const ManAndVan = () => {
   const selectDefaultValue = () => {
     const option = serviceOptions.filter(
       (opt) => opt.value == details.serviceLocation.moveService
+    );
+    return option;
+  };
+
+  const defaultMenValue = () => {
+    const option = menOptions.filter(
+      (opt) => opt.value == details.moveDetails.numberOfMovers
+    );
+    return option;
+  };
+  const defaultMileageValue = () => {
+    const option = mileageOptions.filter(
+      (opt) => opt.value == details.moveDetails.mileage
+    );
+    return option;
+  };
+
+  const defaultPhoneValue = () => {
+    const option = phoneCodesOptions.filter(
+      (opt) =>
+        opt.value == details.personalDetails.countryCode ||
+        'United Kingdom (+44)'
     );
     return option;
   };
@@ -91,7 +133,7 @@ const ManAndVan = () => {
       !address2 ||
       !firstName ||
       !lastName ||
-    //   !phoneValue ||
+      //   !phoneValue ||
       !phone ||
       !menValue ||
       menValue == 'Select' ||
@@ -106,6 +148,47 @@ const ManAndVan = () => {
     } else {
       router.push('/book/move-package');
     }
+    dispatch(
+      updateLocationDetails({
+        moveService: propertyValue,
+        locationFrom: {
+          name: address,
+          postCode: addressDetails.zip,
+          city: addressDetails.city,
+          country: addressDetails.country,
+          floor: floorCount,
+          liftAvailable: lift,
+        },
+        locationTo: {
+          name: address2,
+          postCode: addressDetails2.zip,
+          city: addressDetails2.city,
+          country: addressDetails2.country,
+          floor: floorCount2,
+          liftAvailable: lift2,
+        },
+      })
+    );
+    dispatch(
+      updatePersonalDetails({
+        firstName,
+        lastName,
+        email,
+        countryCode: phoneValue,
+        telephone: phone,
+      })
+    );
+    dispatch(
+      updateMoveDetails({
+        propertyType: propertyValue,
+        numberOfMovers: menValue,
+        mileage: mileageValue,
+        volume: volume,
+        duration: durationCount,
+        moveDate: dateValue,
+        // movePackage: '',
+      })
+    );
   };
 
   return (
@@ -217,6 +300,7 @@ const ManAndVan = () => {
                             //   checked="checked"
                             className="checkbox checkbox-primary"
                             onChange={(e) => setLift(e.target.checked)}
+                            checked={lift}
                           />
                           <span className="leading-[20px] text-[14px] text-gray-400 md:text-[16px]">
                             Check if available
@@ -289,6 +373,7 @@ const ManAndVan = () => {
                             //   checked="checked"
                             className="checkbox checkbox-primary"
                             onChange={(e) => setLift2(e.target.checked)}
+                            checked={lift2}
                           />
                           <span className="leading-[20px] text-[14px] text-gray-400 md:text-[16px]">
                             Check if available
@@ -314,6 +399,7 @@ const ManAndVan = () => {
                         placeholder="Type here"
                         className="input input-primary w-full h-[43px]"
                         onChange={(e) => setFirstName(e.target.value)}
+                        defaultValue={firstName}
                       />
                     </div>
                   </div>
@@ -331,6 +417,7 @@ const ManAndVan = () => {
                         placeholder="Type here"
                         className="input input-primary w-full h-[43px]"
                         onChange={(e) => setLastName(e.target.value)}
+                        defaultValue={lastName}
                       />
                     </div>
                   </div>
@@ -349,8 +436,10 @@ const ManAndVan = () => {
                         placeholder="Type here"
                         className="input input-primary w-full h-[43px]"
                         onChange={handleEmailChange}
+                        //
+                        defaultValue={email}
                       />
-                      {!email.error && (
+                      {!emailError && (
                         <p className="text-[14px] text-secondary mt-[5px]">
                           Please enter a valid email
                         </p>
@@ -389,6 +478,7 @@ const ManAndVan = () => {
                         placeholder="Type here"
                         className="input input-primary w-full h-[43px]"
                         onChange={(e) => setPhone(e.target.value)}
+                        defaultValue={phone}
                       />
                     </div>
                   </div>
@@ -412,7 +502,9 @@ const ManAndVan = () => {
                           isSearchable={false}
                           //   name="service2"
                           // defaultValue={serviceOptions[2]}
-                          defaultValue={selectDefaultValue()}
+                          defaultValue={
+                            selectDefaultValue() || serviceOptions[0]
+                          }
                           setValue={setPropertyValue}
                         />
                       </div>
@@ -435,8 +527,8 @@ const ManAndVan = () => {
                             options={menOptions}
                             isSearchable={false}
                             //   name="service3"
-                            // defaultValue={serviceOptions[2]}
-                            defaultValue={menOptions[0]}
+                            defaultValue={defaultMenValue()}
+                            //   defaultValue={menOptions[0]}
                             setValue={setMenValue}
                           />
                         </div>
@@ -458,7 +550,7 @@ const ManAndVan = () => {
                             isSearchable={false}
                             //   name="service3"
                             // defaultValue={serviceOptions[2]}
-                            defaultValue={mileageOptions[0]}
+                            defaultValue={defaultMileageValue()}
                             setValue={setMileageValue}
                           />
                         </div>
@@ -470,7 +562,7 @@ const ManAndVan = () => {
                 <div className="flex flex-col  justify-center space-y-[10px] lg:space-y-0 lg:flex-row lg:items-center lg:space-x-[50px]">
                   {/* left */}
                   <div className="flex flex-[1]">
-                    {/* property type */}
+                    {/* duration */}
                     <div className="flex flex-col w-full">
                       <label className="label">
                         <span className="label-text font-semibold">
@@ -515,6 +607,7 @@ const ManAndVan = () => {
                           placeholder="Type here"
                           className="input input-primary w-full h-[43px]"
                           onChange={(e) => setVolume(e.target.value)}
+                          defaultValue={volume}
                         />
                       </div>
                     </div>

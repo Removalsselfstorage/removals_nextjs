@@ -36,29 +36,37 @@ const CompleteHouse = () => {
   const details = useSelector(getAllDetails);
 
   const [floorCount, setFloorCount] = useState(
-    0 || details.serviceLocation.locationFrom.floor
+    details.serviceLocation.locationFrom.floor || 0
   );
   const [floorCount2, setFloorCount2] = useState(
-    0 || details.serviceLocation.locationTo.floor
+    details.serviceLocation.locationTo.floor || 0
   );
   const [lift, setLift] = useState(
-    false || details.serviceLocation.locationFrom.liftAvailable
+    details.serviceLocation.locationFrom.liftAvailable || false
   );
   const [lift2, setLift2] = useState(
-    false || details.serviceLocation.locationTo.liftAvailable
+    details.serviceLocation.locationTo.liftAvailable || false
   );
   const [address, setAddress] = useState({});
   const [addressDetails, setAddressDetails] = useState({});
   const [address2, setAddress2] = useState({});
   const [addressDetails2, setAddressDetails2] = useState({});
-  const [propertyValue, setPropertyValue] = useState('');
+  const [propertyValue, setPropertyValue] = useState(
+    details.serviceLocation.moveService || ''
+  );
   const [phoneValue, setPhoneValue] = useState(
     details.personalDetails.countryCode || ''
   );
-  const [menValue, setMenValue] = useState('');
+  const [menValue, setMenValue] = useState(
+    details.moveDetails.numberOfMovers || ''
+  );
   const [agreeTermsValue, setAgreeTermsValue] = useState(false);
-  const [mileageValue, setMileageValue] = useState('');
-  const [dateValue, setDateValue] = useState(dayjs(details.moveDetails.moveDate || ''));
+  const [mileageValue, setMileageValue] = useState(
+    details.moveDetails.mileage || ''
+  );
+  const [dateValue, setDateValue] = useState(
+    dayjs(details.moveDetails.moveDate || '')
+  );
   const [firstName, setFirstName] = useState(
     details.personalDetails.firstName || ''
   );
@@ -114,7 +122,7 @@ const CompleteHouse = () => {
 
   const defaultPhoneValue = () => {
     const option = phoneCodesOptions.filter(
-      (opt) => opt.value == details.personalDetails.countryCode
+      (opt) => opt.value == details.personalDetails.countryCode || 'United Kingdom (+44)'
     );
     return option;
   };
@@ -240,6 +248,7 @@ const CompleteHouse = () => {
                 <p className="">Fields marked with * are mandatory</p>
               </div>
               <div className="flex flex-col space-y-[20px]">
+
                 {/* row 1 */}
                 <div className="flex flex-col items-center justify-center space-y-[10px] lg:space-y-0 lg:flex-row lg:items-center lg:space-x-[50px]">
                   {/* left */}
@@ -313,6 +322,7 @@ const CompleteHouse = () => {
                     )}
                   </div>
                 </div>
+
                 {/* row 2 */}
                 <div className="flex flex-col items-center justify-center space-y-[10px] lg:space-y-0 lg:flex-row lg:items-center lg:space-x-[50px]">
                   {/* left */}
@@ -386,6 +396,7 @@ const CompleteHouse = () => {
                     )}
                   </div>
                 </div>
+
                 {/* row 3 */}
                 <div className="flex flex-col items-center justify-center space-y-[10px] lg:space-y-0 lg:flex-row lg:items-center lg:space-x-[50px]">
                   {/* left */}
@@ -425,6 +436,7 @@ const CompleteHouse = () => {
                     </div>
                   </div>
                 </div>
+
                 {/* row 4*/}
                 <div className="flex flex-col items-center justify-center space-y-[10px] lg:space-y-0 lg:flex-row lg:items-center lg:space-x-[50px]">
                   {/* left */}
@@ -505,7 +517,9 @@ const CompleteHouse = () => {
                           isSearchable={false}
                           //   name="service2"
                           // defaultValue={serviceOptions[2]}
-                          defaultValue={selectDefaultValue()}
+                          defaultValue={
+                            selectDefaultValue() || serviceOptions[0]
+                          }
                           setValue={setPropertyValue}
                         />
                       </div>
@@ -535,6 +549,7 @@ const CompleteHouse = () => {
                     </div>
                   </div>
                 </div>
+                
                 {/* row 6 */}
                 <div className="flex flex-col  justify-center space-y-[10px] lg:space-y-0 lg:flex-row lg:items-center lg:space-x-[50px]">
                   {/* left */}

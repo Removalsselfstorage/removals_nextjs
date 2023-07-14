@@ -10,10 +10,21 @@ import React, { useState } from 'react';
 import { FiEdit } from 'react-icons/fi';
 import { MdKeyboardArrowRight } from 'react-icons/md';
 import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai';
+import {
+  getAllDetails,
+  updateLocationDetails,
+  updateMoveDetails,
+  updatePersonalDetails,
+} from '@/store/quoteSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
 import PackageCard from '@/components/BookingPages/PackageCard';
 
 const MovePackage = () => {
+    
+  const dispatch = useDispatch();
+  const details = useSelector(getAllDetails);
+
   return (
     <BookingLayout>
       <Head>

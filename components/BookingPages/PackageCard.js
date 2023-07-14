@@ -1,5 +1,12 @@
 import Link from 'next/link';
 import React from 'react';
+import {
+  getAllDetails,
+  updateLocationDetails,
+  updateMoveDetails,
+  updatePersonalDetails,
+} from '@/store/quoteSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
 const PackageCard = ({
   image,
@@ -17,6 +24,9 @@ const PackageCard = ({
   link,
   preferred,
 }) => {
+  const dispatch = useDispatch();
+  const details = useSelector(getAllDetails);
+
   return (
     <div
       className={`card min-w-[300px] border-2 ${
@@ -44,8 +54,12 @@ const PackageCard = ({
           </p>
           {/* <p className="">₤{price}</p> */}
           <div className="flex flex-col space-y-[5px] ">
-            <p className="font-semibold">1 Bed Apartment</p>
-            <p className="font-semibold">1 man and Jumbo Van</p>
+            <p className="font-semibold">
+              {details.serviceLocation.moveService}
+            </p>
+            <p className="font-semibold">
+              {details.moveDetails.numberOfMovers} and Jumbo Van
+            </p>
           </div>
           <ul className="text-gray-500 mt-[15px] md:mt-[20px] text-start text-[13px]">
             <li className="border-b  py-[5px]">* {f1}</li>
@@ -58,16 +72,15 @@ const PackageCard = ({
             {f8 && <li className="border-b py-[5px]">* {f8}</li>}
           </ul>
         </div>
-        
       </div>
       <Link href={`/book/${link}`}>
-          <button
-            className={`btn ${
-              preferred ? 'btn-secondary ' : 'btn-primary btn-outline'
-            }  px-[30px] mb-[50px]`}
-          >
-            Book Now
-          </button>
+        <button
+          className={`btn ${
+            preferred ? 'btn-secondary ' : 'btn-primary btn-outline'
+          }  px-[30px] mb-[50px]`}
+        >
+          Book Now
+        </button>
       </Link>
     </div>
   );

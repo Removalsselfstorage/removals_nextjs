@@ -7,6 +7,7 @@ import {
   mileageOptions,
   phoneCodesOptions,
   serviceOptions,
+  serviceOptions2,
 } from '@/dummyData/inputData';
 import BookingLayout from '@/layouts/BookingLayout';
 import { titleFont } from '@/utils/fonts';
@@ -97,7 +98,7 @@ const ManAndVan = () => {
   const date = dayjs(dateValue).format('DD/MM/YYYY');
 
   const selectDefaultValue = () => {
-    const option = serviceOptions.filter(
+    const option = serviceOptions2.filter(
       (opt) => opt.value == details.serviceLocation.moveService
     );
     return option;
@@ -532,12 +533,12 @@ const ManAndVan = () => {
                       <div className="w-full">
                         <SelectSearch
                           placeholder="Select"
-                          options={serviceOptions}
+                          options={serviceOptions2}
                           isSearchable={false}
                           //   name="service2"
                           // defaultValue={serviceOptions[2]}
                           defaultValue={
-                            selectDefaultValue() || serviceOptions[0]
+                            selectDefaultValue() || serviceOptions2[0]
                           }
                           setValue={setPropertyValue}
                           errorCheck={

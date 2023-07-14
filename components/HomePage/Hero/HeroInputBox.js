@@ -39,7 +39,7 @@ const HeroInputBox = () => {
       setSubmitLoading(true);
       dispatch(
         updateLocationDetails({
-          moveService: selectValue,
+          moveService: details.serviceLocation.moveService,
           locationFrom: {
             name: address,
             postCode: addressDetails.zip,

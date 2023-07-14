@@ -70,6 +70,7 @@ const GoogleSearchInput = ({
   styles,
   placeholder,
   defaultValue,
+  errorCheck,
 }) => {
   const searchInput = useRef(null);
 
@@ -107,29 +108,6 @@ const GoogleSearchInput = ({
     setAddress(searchInput.current.value);
   };
 
-  //   const reverseGeocode = ({ latitude: lat, longitude: lng }) => {
-  //     const url = `${geocodeJson}?key=${apiKey}&latlng=${lat},${lng}`;
-  //     searchInput.current.value = 'Getting your location...';
-  //     fetch(url)
-  //       .then((response) => response.json())
-  //       .then((location) => {
-  //         const place = location.results[0];
-  //         const _address = extractAddress(place);
-  //         setAddressDetails(_address);
-  //         searchInput.current.value = _address.plain();
-  //       });
-  //   };
-
-  //   const findMyLocation = () => {
-  //     if (navigator.geolocation) {
-  //       navigator.geolocation.getCurrentPosition((position) => {
-  //         reverseGeocode(position.coords);
-  //       });
-  //     }
-  //   };
-
-  // load map script after mounted
-
   useEffect(() => {
     initMapScript().then(() => initAutocomplete());
   });
@@ -139,7 +117,9 @@ const GoogleSearchInput = ({
       ref={searchInput}
       type="text"
       placeholder={placeholder}
-      className={`${styles} placeholder:text-[14px] text-[15px] border-primary border rounded-[10px] outline-none focus:border-[2px] active:border-[2px]`}
+      className={`${
+        errorCheck ? 'ring-secondary ring' : ''
+      } ${styles} placeholder:text-[14px] text-[15px] border-primary border rounded-[10px] outline-none focus:border-[2px] active:border-[2px]`}
       onChange={() => setAddress(searchInput.current.value)}
       defaultValue={defaultValue}
     />

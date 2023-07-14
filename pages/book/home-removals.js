@@ -35,6 +35,7 @@ const CompleteHouse = () => {
   const dispatch = useDispatch();
   const details = useSelector(getAllDetails);
 
+  //   states
   const [floorCount, setFloorCount] = useState(
     details.serviceLocation.locationFrom.floor || 0
   );
@@ -65,7 +66,7 @@ const CompleteHouse = () => {
     details.moveDetails.mileage || ''
   );
   const [dateValue, setDateValue] = useState(
-    dayjs(details.moveDetails.moveDate || '')
+    dayjs(details.moveDetails.moveDate) || ''
   );
   const [firstName, setFirstName] = useState(
     details.personalDetails.firstName || ''
@@ -78,8 +79,8 @@ const CompleteHouse = () => {
   const [volume, setVolume] = useState(details.moveDetails.volume || '');
   const [phone, setPhone] = useState(details.personalDetails.telephone || '');
   const [submitError, setSubmitError] = useState(false);
-
   const [submitLoading, setSubmitLoading] = useState(false);
+  const [activateError, setActivateError] = useState(false);
 
   const handleEmailChange = (e) => {
     // const inputValue = e.target.value;
@@ -130,11 +131,10 @@ const CompleteHouse = () => {
   };
 
   const removalFormSubmit = () => {
+    setActivateError(true);
     setSubmitError(false);
     if (
       !floorCount ||
-      !lift ||
-      !lift2 ||
       !floorCount2 ||
       propertyValue == '' ||
       propertyValue == 'Select' ||
@@ -155,52 +155,52 @@ const CompleteHouse = () => {
       setSubmitError(true);
     } else {
       setSubmitLoading(true);
+      dispatch(
+        updateLocationDetails({
+          moveService: propertyValue,
+          locationFrom: {
+            name: address,
+            postCode: addressDetails.zip,
+            city: addressDetails.city,
+            country: addressDetails.country,
+            floor: floorCount,
+            liftAvailable: lift,
+          },
+          locationTo: {
+            name: address2,
+            postCode: addressDetails2.zip,
+            city: addressDetails2.city,
+            country: addressDetails2.country,
+            floor: floorCount2,
+            liftAvailable: lift2,
+          },
+        })
+      );
+      dispatch(
+        updatePersonalDetails({
+          firstName,
+          lastName,
+          email,
+          countryCode: phoneValue,
+          telephone: phone,
+        })
+      );
+      dispatch(
+        updateMoveDetails({
+          propertyType: propertyValue,
+          numberOfMovers: menValue,
+          mileage: mileageValue,
+          volume: volume,
+          // duration: '',
+          moveDate: dateValue,
+          // movePackage: '',
+        })
+      );
       router.push('/book/move-package');
     }
-    dispatch(
-      updateLocationDetails({
-        moveService: propertyValue,
-        locationFrom: {
-          name: address,
-          postCode: addressDetails.zip,
-          city: addressDetails.city,
-          country: addressDetails.country,
-          floor: floorCount,
-          liftAvailable: lift,
-        },
-        locationTo: {
-          name: address2,
-          postCode: addressDetails2.zip,
-          city: addressDetails2.city,
-          country: addressDetails2.country,
-          floor: floorCount2,
-          liftAvailable: lift2,
-        },
-      })
-    );
-    dispatch(
-      updatePersonalDetails({
-        firstName,
-        lastName,
-        email,
-        countryCode: phoneValue,
-        telephone: phone,
-      })
-    );
-    dispatch(
-      updateMoveDetails({
-        propertyType: propertyValue,
-        numberOfMovers: menValue,
-        mileage: mileageValue,
-        volume: volume,
-        // duration: '',
-        moveDate: dateValue,
-        // movePackage: '',
-      })
-    );
   };
 
-  console.log(details);
+  console.log(dateValue);
 
   return (
     <BookingLayout>
@@ -268,6 +268,7 @@ const CompleteHouse = () => {
                         setAddressDetails={setAddressDetails}
                         placeholder="Search location..."
                         defaultValue={details.serviceLocation.locationFrom.name}
+                        errorCheck={activateError && !address}
                       />
                     </div>
                   </div>
@@ -288,7 +289,13 @@ const CompleteHouse = () => {
                         >
                           <AiOutlineMinus className="text-white font-bold text-[18px]" />
                         </div>
-                        <div className="flex justify-center items-center h-[50px] rounded-[10px] w-[60px] border border-primary font-semibold">
+                        <div
+                          className={`${
+                            activateError && !floorCount
+                              ? 'flex justify-center items-center ring ring-secondary h-[50px] rounded-[10px] w-[60px]'
+                              : 'flex justify-center items-center h-[50px] rounded-[10px] w-[60px] border border-primary font-semibold'
+                          }`}
+                        >
                           {floorCount}
                         </div>
                         <div
@@ -304,7 +311,7 @@ const CompleteHouse = () => {
                       <div className="flex flex-col w-full flex-[2] ">
                         <label className="label">
                           <span className="label-text font-semibold">
-                            Lift Available*
+                            Lift Available
                           </span>
                         </label>
                         <label className="flex items-center cursor-pointer space-x-[10px]">
@@ -342,6 +349,7 @@ const CompleteHouse = () => {
                         setAddressDetails={setAddressDetails2}
                         placeholder="Search location..."
                         defaultValue={details.serviceLocation.locationTo.name}
+                        errorCheck={activateError && !address2}
                       />
                     </div>
                   </div>
@@ -362,7 +370,13 @@ const CompleteHouse = () => {
                         >
                           <AiOutlineMinus className="text-white font-bold text-[18px]" />
                         </div>
-                        <div className="flex justify-center items-center h-[50px] rounded-[10px] w-[60px] border border-primary font-semibold">
+                        <div
+                          className={`${
+                            activateError && !floorCount2
+                              ? 'flex justify-center items-center ring ring-secondary h-[50px] rounded-[10px] w-[60px]'
+                              : 'flex justify-center items-center h-[50px] rounded-[10px] w-[60px] border border-primary font-semibold'
+                          }`}
+                        >
                           {floorCount2}
                         </div>
                         <div
@@ -378,7 +392,7 @@ const CompleteHouse = () => {
                       <div className="flex flex-col w-full flex-[2] ">
                         <label className="label">
                           <span className="label-text font-semibold">
-                            Lift Available*
+                            Lift Available
                           </span>
                         </label>
                         <label className="flex items-center cursor-pointer space-x-[10px]">
@@ -412,7 +426,11 @@ const CompleteHouse = () => {
                       <input
                         type="text"
                         placeholder="Type here"
-                        className="input input-primary w-full h-[43px]"
+                        className={`${
+                          activateError && !firstName
+                            ? 'ring ring-secondary'
+                            : ''
+                        } input input-primary w-full h-[43px]`}
                         onChange={(e) => setFirstName(e.target.value)}
                         defaultValue={firstName}
                       />
@@ -430,7 +448,11 @@ const CompleteHouse = () => {
                       <input
                         type="text"
                         placeholder="Type here"
-                        className="input input-primary w-full h-[43px]"
+                        className={`${
+                          activateError && !lastName
+                            ? 'ring ring-secondary'
+                            : ''
+                        } input input-primary w-full h-[43px]`}
                         onChange={(e) => setLastName(e.target.value)}
                         defaultValue={lastName}
                       />
@@ -450,7 +472,9 @@ const CompleteHouse = () => {
                       <input
                         type="email"
                         placeholder="Type here"
-                        className="input input-primary w-full h-[43px]"
+                        className={`${
+                          activateError && !email ? 'ring ring-secondary' : ''
+                        } input input-primary w-full h-[43px]`}
                         onChange={handleEmailChange}
                         //
                         defaultValue={email}
@@ -480,6 +504,7 @@ const CompleteHouse = () => {
                         // defaultValue={serviceOptions[2]}
                         defaultValue={defaultPhoneValue()}
                         setValue={setPhoneValue}
+                        // errorCheck={activateError && !phoneValue}
                       />
                     </div>
                     {/* Telephone* */}
@@ -492,7 +517,9 @@ const CompleteHouse = () => {
                       <input
                         type="tel"
                         placeholder="Type here"
-                        className="input input-primary w-full h-[43px]"
+                        className={`${
+                          activateError && !phone ? 'ring ring-secondary' : ''
+                        } input input-primary w-full h-[43px]`}
                         onChange={(e) => setPhone(e.target.value)}
                         defaultValue={phone}
                       />
@@ -522,6 +549,10 @@ const CompleteHouse = () => {
                             selectDefaultValue() || serviceOptions[0]
                           }
                           setValue={setPropertyValue}
+                          errorCheck={
+                            activateError &&
+                            (propertyValue == 'Select' || propertyValue == '')
+                          }
                         />
                       </div>
                     </div>
@@ -542,9 +573,13 @@ const CompleteHouse = () => {
                           options={menOptions}
                           isSearchable={false}
                           //   name="service3"
-                          defaultValue={defaultMenValue()}
+                          defaultValue={defaultMenValue() || menOptions[0]}
                           //   defaultValue={menOptions[0]}
                           setValue={setMenValue}
+                          errorCheck={
+                            activateError &&
+                            (menValue == 'Select' || menValue == '')
+                          }
                         />
                       </div>
                     </div>
@@ -566,7 +601,9 @@ const CompleteHouse = () => {
                         type="number"
                         min="0"
                         placeholder="Type here"
-                        className="input input-primary w-full h-[43px]"
+                        className={`${
+                          activateError && !volume ? 'ring ring-secondary' : ''
+                        } input input-primary w-full h-[43px]`}
                         onChange={(e) => setVolume(e.target.value)}
                         defaultValue={volume}
                       />
@@ -588,8 +625,14 @@ const CompleteHouse = () => {
                           isSearchable={false}
                           //   name="service3"
                           // defaultValue={serviceOptions[2]}
-                          defaultValue={defaultMileageValue()}
+                          defaultValue={
+                            defaultMileageValue() || mileageOptions[0]
+                          }
                           setValue={setMileageValue}
+                          errorCheck={
+                            activateError &&
+                            (mileageValue == 'Select' || mileageValue == '')
+                          }
                         />
                       </div>
                     </div>
@@ -603,7 +646,13 @@ const CompleteHouse = () => {
                           Move Date*
                         </span>
                       </label>
-                      <button className="flex justify-center items-center bg-white border-[1.4px] rounded-[8px] border-primary cursor-pointer overflow-hidden py-[4px] focus:ring-[2px] active:ring-[2px] ring-primary">
+                      <button
+                        className={`${
+                          activateError && date == 'Invalid Date'
+                            ? 'ring ring-secondary'
+                            : ''
+                        } flex justify-center items-center bg-white border-[1.4px] rounded-[8px] border-primary cursor-pointer overflow-hidden py-[4px] focus:ring-[2px] active:ring-[2px] ring-primary`}
+                      >
                         <div className="opacity-[0.9] mt-[-10px] cursor-pointer">
                           <BasicDatePicker
                             setDateValue={setDateValue}
@@ -627,7 +676,9 @@ const CompleteHouse = () => {
                     <input
                       type="checkbox"
                       //   checked="checked"
-                      className="checkbox checkbox-primary"
+                      className={`${
+                        activateError && !agreeTermsValue ? 'ring ring-secondary' : ''
+                      } checkbox checkbox-primary`}
                       onChange={(e) => setAgreeTermsValue(e.target.checked)}
                     />
                     <span className="leading-[20px] text-[14px] md:text-[16px]">
@@ -644,7 +695,7 @@ const CompleteHouse = () => {
                     onClick={removalFormSubmit}
                     className="btn btn-primary btn-wide flex items-center space-x-[5px] h-[60px]"
                   >
-                    {!submitLoading && <span className="">Get Quote</span>}
+                    {!submitLoading && <span className="">Get Prices</span>}
                     {submitLoading && (
                       <span className="loading loading-dots loading-md text-white"></span>
                     )}

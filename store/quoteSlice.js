@@ -37,7 +37,7 @@ const initialState = {
   // moveDetails
   moveDetails: {
     propertyType: '',
-    numberOfMovers: 1,
+    numberOfMovers: '',
     mileage: '',
     volume: '',
     duration: '',

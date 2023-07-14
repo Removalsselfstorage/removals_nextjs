@@ -35,75 +35,66 @@ const HeroInputBox = () => {
     setError(false);
     if (selectValue == '' || !address || !address2) {
       setError(true);
-      return;
-    }
-    switch (selectValue) {
-      case 'Office removals':
-        setSubmitLoading(true);
-        router.push('/book/man-and-van');
-        break;
-      case 'Man and van':
-        setSubmitLoading(true);
-        router.push('/book/man-and-van');
-        break;
-      case 'Studio flat':
-        setSubmitLoading(true);
-        router.push('/book/man-and-van');
-        break;
-      case 'Furniture & Appliances':
-        setSubmitLoading(true);
-        router.push('/book/man-and-van');
-        break;
-      case 'Storage':
-        setSubmitLoading(true);
-        router.push('/book/man-and-van');
-        break;
-      case 'Home removals':
-        setSubmitLoading(true);
-        router.push('/book/home-removals');
-        break;
-      case '1 bed property':
-        setSubmitLoading(true);
-        router.push('/book/home-removals');
-        break;
-      case '2 bed property':
-        setSubmitLoading(true);
-        router.push('/book/home-removals');
-        break;
-      case '3 bed property':
-        setSubmitLoading(true);
-        router.push('/book/home-removals');
-        break;
-      case '4 bed property':
-        setSubmitLoading(true);
-        router.push('/book/home-removals');
-        break;
+    } else {
+      setSubmitLoading(true);
+      dispatch(
+        updateLocationDetails({
+          moveService: selectValue,
+          locationFrom: {
+            name: address,
+            postCode: addressDetails.zip,
+            city: addressDetails.city,
+            country: addressDetails.country,
+            //   floor: 1,
+            //   liftAvailable: false,
+          },
+          locationTo: {
+            name: address2,
+            postCode: addressDetails2.zip,
+            city: addressDetails2.city,
+            country: addressDetails2.country,
+            //   floor: 3,
+            //   liftAvailable: false,
+          },
+        })
+      );
+      switch (selectValue) {
+        case 'Office removals':
+          router.push('/book/man-and-van');
+          break;
+        case 'Man and van':
+          router.push('/book/man-and-van');
+          break;
+        case 'Studio flat':
+          router.push('/book/man-and-van');
+          break;
+        case 'Furniture & Appliances':
+          router.push('/book/man-and-van');
+          break;
+        case 'Storage':
+          router.push('/book/man-and-van');
+          break;
+        case 'Home removals':
+          router.push('/book/home-removals');
+          break;
+        case '1 bed property':
+          router.push('/book/home-removals');
+          break;
+        case '2 bed property':
+          router.push('/book/home-removals');
+          break;
+        case '3 bed property':
+          router.push('/book/home-removals');
+          break;
+        case '4 bed property':
+          router.push('/book/home-removals');
+          break;
 
-      default:
-        router.push('/book');
-        break;
+        default:
+          router.push('/book');
+          break;
+      }
     }
-    dispatch(
-      updateLocationDetails({
-        moveService: selectValue,
-        locationFrom: {
-          name: address,
-          postCode: addressDetails.zip,
-          city: addressDetails.city,
-          country: addressDetails.country,
-          //   floor: 1,
-          //   liftAvailable: false,
-        },
-        locationTo: {
-          name: address2,
-          postCode: addressDetails2.zip,
-          city: addressDetails2.city,
-          country: addressDetails2.country,
-          //   floor: 3,
-          //   liftAvailable: false,
-        },
-      })
-    );
   };
 
   const selectDefaultValue = () => {

@@ -45,16 +45,16 @@ const HeroInputBox = () => {
             postCode: addressDetails.zip,
             city: addressDetails.city,
             country: addressDetails.country,
-            //   floor: 1,
-            //   liftAvailable: false,
+            floor: details.serviceLocation.locationFrom.floor,
+            liftAvailable: details.serviceLocation.locationFrom.liftAvailable,
           },
           locationTo: {
             name: address2,
             postCode: addressDetails2.zip,
             city: addressDetails2.city,
             country: addressDetails2.country,
-            //   floor: 3,
-            //   liftAvailable: false,
+            floor: details.serviceLocation.locationTo.floor,
+            liftAvailable: details.serviceLocation.locationTo.liftAvailable,
           },
         })
       );

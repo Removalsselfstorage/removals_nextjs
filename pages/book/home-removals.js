@@ -707,7 +707,7 @@ const CompleteHouse = () => {
                   </button>
                   {submitError && (
                     <p className="text-[16px] text-secondary mt-[15px]">
-                      Please completely fill all mandatory fields
+                      Please fill all mandatory fields
                     </p>
                   )}
                 </div>

@@ -18,7 +18,12 @@ import { MdKeyboardArrowRight } from 'react-icons/md';
 import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai';
 import GoogleSearchInput from '@/components/Inputs/GoogleSearchInput';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllDetails, updateLocationDetails, updateMoveDetails, updatePersonalDetails } from '@/store/quoteSlice';
+import {
+  getAllDetails,
+  updateLocationDetails,
+  updateMoveDetails,
+  updatePersonalDetails,
+} from '@/store/quoteSlice';
 import dayjs from 'dayjs';
 import { useRouter } from 'next/navigation';
 
@@ -114,8 +119,8 @@ const ManAndVan = () => {
   const defaultPhoneValue = () => {
     const option = phoneCodesOptions.filter(
       (opt) =>
-        opt.value == details.personalDetails.countryCode ||
-        'United Kingdom (+44)'
+        opt.value == 'United Kingdom (+44)' ||
+        details.personalDetails.countryCode
     );
     return option;
   };

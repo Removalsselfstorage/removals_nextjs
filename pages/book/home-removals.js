@@ -122,7 +122,9 @@ const CompleteHouse = () => {
 
   const defaultPhoneValue = () => {
     const option = phoneCodesOptions.filter(
-      (opt) => opt.value == details.personalDetails.countryCode || 'United Kingdom (+44)'
+      (opt) =>
+        opt.value == 'United Kingdom (+44)' ||
+        details.personalDetails.countryCode
     );
     return option;
   };
@@ -248,7 +250,6 @@ const CompleteHouse = () => {
                 <p className="">Fields marked with * are mandatory</p>
               </div>
               <div className="flex flex-col space-y-[20px]">
-
                 {/* row 1 */}
                 <div className="flex flex-col items-center justify-center space-y-[10px] lg:space-y-0 lg:flex-row lg:items-center lg:space-x-[50px]">
                   {/* left */}
@@ -549,7 +550,7 @@ const CompleteHouse = () => {
                     </div>
                   </div>
                 </div>
-                
+
                 {/* row 6 */}
                 <div className="flex flex-col  justify-center space-y-[10px] lg:space-y-0 lg:flex-row lg:items-center lg:space-x-[50px]">
                   {/* left */}

@@ -6,6 +6,7 @@ import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { colors } from '@/utils/theme';
 import { NonceProvider } from 'react-select';
+import dayjs from 'dayjs';
 
 export default function BasicDatePicker({setDateValue, dateValue}) {
   return (
@@ -41,6 +42,7 @@ export default function BasicDatePicker({setDateValue, dateValue}) {
         }}
         value={dateValue}
         onChange={(newValue) => setDateValue(newValue)}
+        // defaultValue={dayjs('2023-07-20')}
       />
     </LocalizationProvider>
   );

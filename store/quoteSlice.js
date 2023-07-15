@@ -4,7 +4,7 @@ const initialState = {
   isAMover: false,
   // LocationDetails
   serviceLocation: {
-    moveService: '',
+    // moveService: '',
     locationFrom: {
       name: '',
       postCode: '',
@@ -43,6 +43,7 @@ const initialState = {
     duration: '',
     moveDate: '',
     movePackage: '',
+    quoteRef: '',
   },
 
   // moverDetails

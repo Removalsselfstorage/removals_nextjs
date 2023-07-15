@@ -16,18 +16,17 @@ export const serviceOptions = [
 
 export const serviceOptions2 = [
   { value: 'Select', label: 'Select' },
-  //   { value: 'Home removals', label: 'Home removals' },
-  { value: 'Office removals', label: 'Office removals' },
-  //   { value: 'Man and van', label: 'Man and van' },
-  { value: 'Studio flat', label: 'Studio flat' },
   { value: '1 bed property', label: '1 bed property' },
   { value: '2 bed property', label: '2 bed property' },
   { value: '3 bed property', label: '3 bed property' },
   { value: '4 bed property', label: '4 bed property' },
+];
+
+export const serviceOptions3 = [
+  { value: 'Select', label: 'Select' },
+  { value: 'Office removals', label: 'Office removals' },
+  { value: 'Studio flat', label: 'Studio flat' },
   { value: 'Furniture & Appliances', label: 'Furniture & Appliances' },
-  //   { value: 'Storage', label: 'Storage' },
-  //   { value: 'slate', label: 'Slate', color: '#253858' },
-  //   { value: 'silver', label: 'Silver', color: '#666666' },
 ];
 
 export const citiesOptions = [

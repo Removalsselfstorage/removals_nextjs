@@ -21,7 +21,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import PackageCard from '@/components/BookingPages/PackageCard';
 
 const MovePackage = () => {
-    
   const dispatch = useDispatch();
   const details = useSelector(getAllDetails);
 

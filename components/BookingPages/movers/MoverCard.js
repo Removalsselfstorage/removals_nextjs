@@ -14,6 +14,8 @@ import FullRating from '@/components/Rating/FullRating';
 import Modal from '@/components/Modal/Modal';
 import SideModal from '@/components/Modal/SideModal';
 import Link from 'next/link';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllDetails } from '@/store/quoteSlice';
 
 const MoverCard = ({
   image,
@@ -27,6 +29,8 @@ const MoverCard = ({
   hiresCount,
   description,
 }) => {
+  const details = useSelector(getAllDetails);
+
   const [selectedTime, setSelectedTime] = useState(null);
   const [showMore, setShowMore] = useState(true);
   const [showModal, setShowModal] = useState(true);
@@ -111,7 +115,9 @@ const MoverCard = ({
                 </div>
                 {/* package type */}
                 <div className="flex justify-center items-center py-[3px] px-[10px] bg-secondary/20 rounded-[10px] max-w-[200px]">
-                  <p className="text-secondary font-semibold">Gold Package</p>
+                  <p className="text-secondary font-semibold">
+                    {details.moveDetails.movePackage} Package
+                  </p>
                 </div>
               </div>
             </div>
@@ -191,8 +197,8 @@ const MoverCard = ({
               </div>
             </div>
             {/* check out */}
-            <Link href='/book/checkout' className="btn btn-primary w-auto">
-                <div >Check Out</div>
+            <Link href="/book/checkout" className="btn btn-primary w-auto">
+              <div>Check Out</div>
             </Link>
           </div>
         </div>

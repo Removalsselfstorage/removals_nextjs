@@ -7,7 +7,11 @@ import SelectSearch from '@/components/Inputs/SelectSearch';
 import { citiesOptions, serviceOptions } from '@/dummyData/inputData';
 import GoogleSearchInput from '@/components/Inputs/GoogleSearchInput';
 import useGoogleSearch from '@/utils/useGoogleSearch';
-import { getAllDetails, updateLocationDetails } from '@/store/quoteSlice';
+import {
+  getAllDetails,
+  updateLocationDetails,
+  updateMoveDetails,
+} from '@/store/quoteSlice';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
@@ -27,7 +31,7 @@ const HeroInputBox = () => {
   const [submitLoading, setSubmitLoading] = useState(false);
 
   const [selectValue, setSelectValue] = useState(
-    details.serviceLocation.moveService || ''
+    details.moveDetails.propertyType || ''
   );
   const [error, setError] = useState(false);
 
@@ -39,7 +43,7 @@ const HeroInputBox = () => {
       setSubmitLoading(true);
       dispatch(
         updateLocationDetails({
-          moveService: details.serviceLocation.moveService,
+          //   moveService: details.serviceLocation.moveService,
           locationFrom: {
             name: address,
             postCode: addressDetails.zip,
@@ -60,15 +64,51 @@ const HeroInputBox = () => {
       );
       switch (selectValue) {
         case 'Office removals':
+          dispatch(
+            updateMoveDetails({
+              propertyType: selectValue,
+              numberOfMovers: details.moveDetails.numberOfMovers,
+              mileage: details.moveDetails.mileage,
+              volume: details.moveDetails.volume,
+              duration: details.moveDetails.duration,
+              moveDate: details.moveDetails.moveDate,
+              movePackage: details.moveDetails.movePackage,
+              quoteRef: details.moveDetails.quoteRef,
+            })
+          );
           router.push('/book/man-and-van');
           break;
         case 'Man and van':
           router.push('/book/man-and-van');
           break;
         case 'Studio flat':
+          dispatch(
+            updateMoveDetails({
+              propertyType: selectValue,
+              numberOfMovers: details.moveDetails.numberOfMovers,
+              mileage: details.moveDetails.mileage,
+              volume: details.moveDetails.volume,
+              duration: details.moveDetails.duration,
+              moveDate: details.moveDetails.moveDate,
+              movePackage: details.moveDetails.movePackage,
+              quoteRef: details.moveDetails.quoteRef,
+            })
+          );
           router.push('/book/man-and-van');
           break;
         case 'Furniture & Appliances':
+          dispatch(
+            updateMoveDetails({
+              propertyType: selectValue,
+              numberOfMovers: details.moveDetails.numberOfMovers,
+              mileage: details.moveDetails.mileage,
+              volume: details.moveDetails.volume,
+              duration: details.moveDetails.duration,
+              moveDate: details.moveDetails.moveDate,
+              movePackage: details.moveDetails.movePackage,
+              quoteRef: details.moveDetails.quoteRef,
+            })
+          );
           router.push('/book/man-and-van');
           break;
         case 'Storage':
@@ -78,15 +118,63 @@ const HeroInputBox = () => {
           router.push('/book/home-removals');
           break;
         case '1 bed property':
+          dispatch(
+            updateMoveDetails({
+              propertyType: selectValue,
+              numberOfMovers: details.moveDetails.numberOfMovers,
+              mileage: details.moveDetails.mileage,
+              volume: details.moveDetails.volume,
+              duration: details.moveDetails.duration,
+              moveDate: details.moveDetails.moveDate,
+              movePackage: details.moveDetails.movePackage,
+              quoteRef: details.moveDetails.quoteRef,
+            })
+          );
           router.push('/book/home-removals');
           break;
         case '2 bed property':
+          dispatch(
+            updateMoveDetails({
+              propertyType: selectValue,
+              numberOfMovers: details.moveDetails.numberOfMovers,
+              mileage: details.moveDetails.mileage,
+              volume: details.moveDetails.volume,
+              duration: details.moveDetails.duration,
+              moveDate: details.moveDetails.moveDate,
+              movePackage: details.moveDetails.movePackage,
+              quoteRef: details.moveDetails.quoteRef,
+            })
+          );
           router.push('/book/home-removals');
           break;
         case '3 bed property':
+          dispatch(
+            updateMoveDetails({
+              propertyType: selectValue,
+              numberOfMovers: details.moveDetails.numberOfMovers,
+              mileage: details.moveDetails.mileage,
+              volume: details.moveDetails.volume,
+              duration: details.moveDetails.duration,
+              moveDate: details.moveDetails.moveDate,
+              movePackage: details.moveDetails.movePackage,
+              quoteRef: details.moveDetails.quoteRef,
+            })
+          );
           router.push('/book/home-removals');
           break;
         case '4 bed property':
+          dispatch(
+            updateMoveDetails({
+              propertyType: selectValue,
+              numberOfMovers: details.moveDetails.numberOfMovers,
+              mileage: details.moveDetails.mileage,
+              volume: details.moveDetails.volume,
+              duration: details.moveDetails.duration,
+              moveDate: details.moveDetails.moveDate,
+              movePackage: details.moveDetails.movePackage,
+              quoteRef: details.moveDetails.quoteRef,
+            })
+          );
           router.push('/book/home-removals');
           break;
 
@@ -99,7 +187,7 @@ const HeroInputBox = () => {
 
   const selectDefaultValue = () => {
     const option = serviceOptions.filter(
-      (opt) => opt.value == details.serviceLocation.moveService
+      (opt) => opt.value == details.moveDetails.propertyType
     );
     return option;
   };
@@ -110,6 +198,7 @@ const HeroInputBox = () => {
   //   console.log(addressDetails2)
   //   console.log(selectValue);
   //   console.log(addressDetails);
+//   console.log(details.moveDetails.moveDate);
 
   return (
     <div className="card shadow-2xl bg-base-100  text-black w-full md:w-[400px]">

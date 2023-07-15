@@ -7,6 +7,8 @@ import {
   updatePersonalDetails,
 } from '@/store/quoteSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import { useRouter } from 'next/navigation';
+import { convertToSentenceCase, generateRandomValues } from '@/utils/logics';
 
 const PackageCard = ({
   image,
@@ -24,8 +26,27 @@ const PackageCard = ({
   link,
   preferred,
 }) => {
+  const router = useRouter();
   const dispatch = useDispatch();
   const details = useSelector(getAllDetails);
+
+  const randomRefValue = generateRandomValues();
+
+  const onBookNow = () => {5
+    dispatch(
+      updateMoveDetails({
+        propertyType: details.moveDetails.propertyType,
+        numberOfMovers: details.moveDetails.numberOfMovers,
+        mileage: details.moveDetails.mileage,
+        volume: details.moveDetails.volume,
+        duration: details.moveDetails.duration,
+        moveDate: details.moveDetails.moveDate,
+        movePackage: convertToSentenceCase(title),
+        quoteRef: randomRefValue,
+      })
+    );
+    router.push(`/book/${link}`);
+  };
 
   return (
     <div
@@ -33,6 +54,7 @@ const PackageCard = ({
         preferred ? 'border-secondary' : 'border-black/10'
       } justify-center items-center  bg-base-100 shadow-lg hover:shadow-2xl hover:scale-[1.02] duration-200`}
     >
+      {/* title */}
       <div
         className={`${
           preferred ? 'bg-secondary' : 'bg-primary'
@@ -54,9 +76,7 @@ const PackageCard = ({
           </p>
           {/* <p className="">₤{price}</p> */}
           <div className="flex flex-col space-y-[5px] ">
-            <p className="font-semibold">
-              {details.serviceLocation.moveService}
-            </p>
+            <p className="font-semibold">{details.moveDetails.propertyType}</p>
             <p className="font-semibold">
               {details.moveDetails.numberOfMovers} and Jumbo Van
             </p>
@@ -73,15 +93,14 @@ const PackageCard = ({
           </ul>
         </div>
       </div>
-      <Link href={`/book/${link}`}>
-        <button
-          className={`btn ${
-            preferred ? 'btn-secondary ' : 'btn-primary btn-outline'
-          }  px-[30px] mb-[50px]`}
-        >
-          Book Now
-        </button>
-      </Link>
+      <button
+        onClick={onBookNow}
+        className={`btn ${
+          preferred ? 'btn-secondary ' : 'btn-primary btn-outline'
+        }  px-[30px] mb-[50px]`}
+      >
+        Book Now
+      </button>
     </div>
   );
 };

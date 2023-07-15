@@ -119,7 +119,7 @@ const GoogleSearchInput = ({
       placeholder={placeholder}
       className={`${
         errorCheck ? 'ring-secondary ring' : ''
-      } ${styles} placeholder:text-[14px] text-[15px] border-primary border rounded-[10px] outline-none focus:border-[2px] active:border-[2px]`}
+      } ${styles} placeholder:text-[14px] text-[14px] border-primary border rounded-[10px] outline-none focus:border-[2px] active:border-[2px]`}
       onChange={() => setAddress(searchInput.current.value)}
       defaultValue={defaultValue}
     />

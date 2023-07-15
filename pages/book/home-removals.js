@@ -54,7 +54,7 @@ const CompleteHouse = () => {
   const [address2, setAddress2] = useState({});
   const [addressDetails2, setAddressDetails2] = useState({});
   const [propertyValue, setPropertyValue] = useState(
-    details.serviceLocation.moveService || ''
+    details.moveDetails.propertyType || ''
   );
   const [phoneValue, setPhoneValue] = useState(
     details.personalDetails.countryCode || ''
@@ -67,7 +67,7 @@ const CompleteHouse = () => {
     details.moveDetails.mileage || ''
   );
   const [dateValue, setDateValue] = useState(
-    dayjs(details.moveDetails.moveDate) || ''
+    dayjs(`'${details.moveDetails.moveDate}'`)
   );
   const [firstName, setFirstName] = useState(
     details.personalDetails.firstName || ''
@@ -93,7 +93,8 @@ const CompleteHouse = () => {
     setEmailError(emailPattern.test(e.target.value));
   };
 
-  const date = dayjs(dateValue).format('DD/MM/YYYY');
+  //Date
+  const date = dayjs(dateValue).format('YYYY/MM/DD');
 
   const increaseFloorCount = () => {
     setFloorCount((prev) => prev + 1);
@@ -105,7 +106,7 @@ const CompleteHouse = () => {
   };
   const selectDefaultValue = () => {
     const option = serviceOptions2.filter(
-      (opt) => opt.value == details.serviceLocation.moveService
+      (opt) => opt.value == details.moveDetails.propertyType
     );
     return option;
   };
@@ -125,8 +126,10 @@ const CompleteHouse = () => {
   const defaultPhoneValue = () => {
     const option = phoneCodesOptions.filter(
       (opt) =>
-        opt.value == 'United Kingdom (+44)' ||
-        details.personalDetails.countryCode
+        opt.value ==
+        (details.personalDetails.countryCode || 'United Kingdom (+44)')
+      // opt.value == details.personalDetails.countryCode ||
+      // 'United Kingdom (+44)'
     );
     return option;
   };
@@ -143,6 +146,8 @@ const CompleteHouse = () => {
       !address2 ||
       !firstName ||
       !lastName ||
+      !email ||
+      !emailError ||
       //   !phoneValue ||
       !phone ||
       !menValue ||
@@ -192,16 +197,18 @@ const CompleteHouse = () => {
           numberOfMovers: menValue,
           mileage: mileageValue,
           volume: volume,
-          // duration: '',
-          moveDate: dateValue,
-          // movePackage: '',
+          duration: details.moveDetails.duration,
+          moveDate: date,
+          movePackage: details.moveDetails.movePackage,
+          quoteRef: details.moveDetails.quoteRef,
         })
       );
       router.push('/book/move-package');
     }
   };
 
-  console.log(dateValue);
+  console.log(details.moveDetails.moveDate);
+  //   console.log(dateValue);
 
   return (
     <BookingLayout>
@@ -474,7 +481,9 @@ const CompleteHouse = () => {
                         type="email"
                         placeholder="Type here"
                         className={`${
-                          activateError && !email ? 'ring ring-secondary' : ''
+                          activateError && (!email || !emailError)
+                            ? 'ring ring-secondary'
+                            : ''
                         } input input-primary w-full h-[43px]`}
                         onChange={handleEmailChange}
                         //

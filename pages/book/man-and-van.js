@@ -7,7 +7,7 @@ import {
   mileageOptions,
   phoneCodesOptions,
   serviceOptions,
-  serviceOptions2,
+  serviceOptions3,
 } from '@/dummyData/inputData';
 import BookingLayout from '@/layouts/BookingLayout';
 import { titleFont } from '@/utils/fonts';
@@ -54,7 +54,7 @@ const ManAndVan = () => {
   const [address2, setAddress2] = useState({});
   const [addressDetails2, setAddressDetails2] = useState({});
   const [propertyValue, setPropertyValue] = useState(
-    details.serviceLocation.moveService || ''
+    details.moveDetails.propertyType || ''
   );
   const [phoneValue, setPhoneValue] = useState(
     details.personalDetails.countryCode || ''
@@ -67,7 +67,7 @@ const ManAndVan = () => {
     details.moveDetails.mileage || ''
   );
   const [dateValue, setDateValue] = useState(
-    dayjs(details.moveDetails.moveDate || '')
+    dayjs(`'${details.moveDetails.moveDate}'`)
   );
   const [firstName, setFirstName] = useState(
     details.personalDetails.firstName || ''
@@ -95,11 +95,12 @@ const ManAndVan = () => {
     setEmailError(emailPattern.test(e.target.value));
   };
 
-  const date = dayjs(dateValue).format('DD/MM/YYYY');
+  //Date
+  const date = dayjs(dateValue).format('YYYY/MM/DD');
 
   const selectDefaultValue = () => {
-    const option = serviceOptions2.filter(
-      (opt) => opt.value == details.serviceLocation.moveService
+    const option = serviceOptions3.filter(
+      (opt) => opt.value == details.moveDetails.propertyType
     );
     return option;
   };
@@ -154,7 +155,7 @@ const ManAndVan = () => {
       setSubmitLoading(true);
       dispatch(
         updateLocationDetails({
-          moveService: propertyValue,
+          //   moveService: propertyValue,
           locationFrom: {
             name: address,
             postCode: addressDetails.zip,
@@ -189,8 +190,9 @@ const ManAndVan = () => {
           mileage: mileageValue,
           volume: volume,
           duration: durationCount,
-          moveDate: dateValue,
-          // movePackage: '',
+          moveDate: date,
+          movePackage: details.moveDetails.movePackage,
+          quoteRef: details.moveDetails.quoteRef,
         })
       );
       router.push('/book/move-package');
@@ -533,12 +535,12 @@ const ManAndVan = () => {
                       <div className="w-full">
                         <SelectSearch
                           placeholder="Select"
-                          options={serviceOptions2}
+                          options={serviceOptions3}
                           isSearchable={false}
                           //   name="service2"
                           // defaultValue={serviceOptions[2]}
                           defaultValue={
-                            selectDefaultValue() || serviceOptions2[0]
+                            selectDefaultValue() || serviceOptions3[0]
                           }
                           setValue={setPropertyValue}
                           errorCheck={

@@ -10,9 +10,14 @@ import FullRating from '@/components/Rating/FullRating';
 import MoverCard from '@/components/BookingPages/movers/MoverCard';
 import { BiSolidPhoneCall } from 'react-icons/bi';
 import MoveDetails from '@/components/BookingPages/movers/MoveDetails';
+import { getAllDetails } from '@/store/quoteSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Movers = () => {
+  const details = useSelector(getAllDetails);
+
   const [showModal, setShowModal] = useState(false);
+//   console.log(details.moveDetails.movePackage);
 
   return (
     <BookingLayout>
@@ -106,7 +111,6 @@ const Movers = () => {
         {/* <div className="w-[20vw] h-[100%] z-[2000] absolute top-0 right-0 bg-white">
             <p className="text-3xl font-bold">Side bar</p>
         </div> */}
-        
       </main>
     </BookingLayout>
   );

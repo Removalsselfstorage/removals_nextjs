@@ -49,10 +49,10 @@ const ManAndVan = () => {
   const [durationCount, setDurationCount] = useState(
     details.moveDetails.duration || 0
   );
-  const [address, setAddress] = useState({});
-  const [addressDetails, setAddressDetails] = useState({});
-  const [address2, setAddress2] = useState({});
-  const [addressDetails2, setAddressDetails2] = useState({});
+  const [address, setAddress] = useState('');
+  const [addressDetails, setAddressDetails] = useState('');
+  const [address2, setAddress2] = useState('');
+  const [addressDetails2, setAddressDetails2] = useState('');
   const [propertyValue, setPropertyValue] = useState(
     details.moveDetails.propertyType || ''
   );
@@ -97,6 +97,7 @@ const ManAndVan = () => {
 
   //Date
   const date = dayjs(dateValue).format('YYYY/MM/DD');
+  const date2 = dayjs(dateValue).format('dddd, MMMM D, YYYY');
 
   const selectDefaultValue = () => {
     const option = serviceOptions3.filter(
@@ -155,20 +156,31 @@ const ManAndVan = () => {
       setSubmitLoading(true);
       dispatch(
         updateLocationDetails({
-          //   moveService: propertyValue,
           locationFrom: {
             name: address,
-            postCode: addressDetails.zip,
-            city: addressDetails.city,
-            country: addressDetails.country,
+            postCode: addressDetails
+              ? addressDetails.zip
+              : details.serviceLocation.locationFrom.postCode,
+            city: addressDetails
+              ? addressDetails.city
+              : details.serviceLocation.locationTo.city,
+            country: addressDetails
+              ? addressDetails.country
+              : details.serviceLocation.locationTo.country,
             floor: floorCount,
             liftAvailable: lift,
           },
           locationTo: {
             name: address2,
-            postCode: addressDetails2.zip,
-            city: addressDetails2.city,
-            country: addressDetails2.country,
+            postCode: addressDetails2
+              ? addressDetails2.zip
+              : details.serviceLocation.locationTo.postCode,
+            city: addressDetails2
+              ? addressDetails2.city
+              : details.serviceLocation.locationTo.city,
+            country: addressDetails2
+              ? addressDetails2.country
+              : details.serviceLocation.locationTo.country,
             floor: floorCount2,
             liftAvailable: lift2,
           },
@@ -191,6 +203,7 @@ const ManAndVan = () => {
           volume: volume,
           duration: durationCount,
           moveDate: date,
+          moveDateRaw: date2,
           movePackage: details.moveDetails.movePackage,
           quoteRef: details.moveDetails.quoteRef,
         })

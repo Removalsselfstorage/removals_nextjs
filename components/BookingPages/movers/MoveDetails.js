@@ -9,8 +9,13 @@ import FeaturesScroll from '@/components/BookingPages/movers/FeaturesScroll';
 import FullRating from '@/components/Rating/FullRating';
 import MoverCard from '@/components/BookingPages/movers/MoverCard';
 import { BiSolidPhoneCall } from 'react-icons/bi';
+import { getAllDetails } from '@/store/quoteSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
 const MoveDetails = () => {
+  const details = useSelector(getAllDetails);
+
+  //   console.log(details);
   return (
     <div className="bg-white shadow-lg rounded-[30px] py-[30px] px-[20px] md:px-[30px] w-full lg:sticky lg:top-[80px]">
       <div className="">
@@ -20,43 +25,66 @@ const MoveDetails = () => {
         <div className="grid md:grid-cols-3 lg:grid-cols-1 gap-y-[10px] gap-x-[10px] overflow-auto scrollbar-thin scrollbar-track-gray-200/50 scrollbar-thumb-gray-500/20 scrollbar-default h-[200px] md:h-full">
           <div className="flex flex-col space-y-[5px]">
             <p className="text-primary font-semibold text-[18px]">Quote Ref:</p>
-            <p className="font-semibold text-[14px] ">RS-14523</p>
+            <p className="font-semibold text-[14px] ">
+              rs{details.moveDetails.quoteRef}
+            </p>
           </div>
           <div className="flex flex-col space-y-[5px]">
             <p className="text-primary font-semibold text-[18px]">Package:</p>
             <p className="font-semibold text-[14px] ">
-              1 bed Apartment - (Standard)
+              {details.moveDetails.propertyType} - (
+              {details.moveDetails.movePackage})
             </p>
           </div>
           <div className="flex flex-col space-y-[5px]">
             <p className="text-primary font-semibold text-[18px]">
-              Pick-up Postcode:
+              Pick-up Location:
             </p>
             <p className="font-semibold text-[14px] ">
-              58 Wade Lane, Saltley, United Kingdom (B8 1YG)
+              {details.serviceLocation.locationFrom.name}{' '}
+              {details.serviceLocation.locationFrom.postCode &&
+                `(${details.serviceLocation.locationFrom.postCode})`}
             </p>
           </div>
           <div className="flex flex-col space-y-[5px]">
             <p className="text-primary font-semibold text-[18px]">
-              Drop-off Postcode:
+              Drop-off Location:
             </p>
             <p className="font-semibold text-[14px] ">
-              223 Sutton Wick Lane, Brigehaugh, United Kingdom (AB55 4BQ)
+              {details.serviceLocation.locationTo.name}{' '}
+              {details.serviceLocation.locationTo.postCode &&
+                `(${details.serviceLocation.locationTo.postCode})`}
             </p>
           </div>
           <div className="flex flex-col space-y-[5px]">
             <p className="text-primary font-semibold text-[18px]">
               Travel Distance:
             </p>
-            <p className="font-semibold text-[14px] ">151 - 200 Miles</p>
+            <p className="font-semibold text-[14px] ">
+              {details.moveDetails.mileage} miles
+            </p>
           </div>
           <div className="flex flex-col space-y-[5px]">
             <p className="text-primary font-semibold text-[18px]">Volume:</p>
-            <p className="font-semibold text-[14px] ">550 CU/FT</p>
+            <p className="font-semibold text-[14px] ">
+              {details.moveDetails.volume} CU/FT
+            </p>
           </div>
+          {details.moveDetails.duration && (
+            <div className="flex flex-col space-y-[5px]">
+              <p className="text-primary font-semibold text-[18px]">
+                Duration:
+              </p>
+              <p className="font-semibold text-[14px] ">
+                {details.moveDetails.duration} hours
+              </p>
+            </div>
+          )}
           <div className="flex flex-col space-y-[5px]">
             <p className="text-primary font-semibold text-[18px]">Move date:</p>
-            <p className="font-semibold text-[14px] ">18-7-2023</p>
+            <p className="font-semibold text-[14px] ">
+              {details.moveDetails.moveDateRaw}
+            </p>
           </div>
         </div>
       </div>

@@ -49,10 +49,10 @@ const CompleteHouse = () => {
   const [lift2, setLift2] = useState(
     details.serviceLocation.locationTo.liftAvailable || false
   );
-  const [address, setAddress] = useState({});
-  const [addressDetails, setAddressDetails] = useState({});
-  const [address2, setAddress2] = useState({});
-  const [addressDetails2, setAddressDetails2] = useState({});
+  const [address, setAddress] = useState('');
+  const [addressDetails, setAddressDetails] = useState('');
+  const [address2, setAddress2] = useState('');
+  const [addressDetails2, setAddressDetails2] = useState('');
   const [propertyValue, setPropertyValue] = useState(
     details.moveDetails.propertyType || ''
   );
@@ -95,6 +95,7 @@ const CompleteHouse = () => {
 
   //Date
   const date = dayjs(dateValue).format('YYYY/MM/DD');
+  const date2 = dayjs(dateValue).format('dddd, MMMM D, YYYY');
 
   const increaseFloorCount = () => {
     setFloorCount((prev) => prev + 1);
@@ -134,6 +135,11 @@ const CompleteHouse = () => {
     return option;
   };
 
+  // const postCode1 = addressDetails
+  //   ? addressDetails.zip
+  //   : details.serviceLocation.locationFrom.postCode;
+  //   const postCode1 = details.serviceLocation.locationFrom.postCode;
+
   const removalFormSubmit = () => {
     setActivateError(true);
     setSubmitError(false);
@@ -161,22 +167,34 @@ const CompleteHouse = () => {
       setSubmitError(true);
     } else {
       setSubmitLoading(true);
+
       dispatch(
         updateLocationDetails({
-          moveService: propertyValue,
           locationFrom: {
             name: address,
-            postCode: addressDetails.zip,
-            city: addressDetails.city,
-            country: addressDetails.country,
+            postCode: addressDetails
+              ? addressDetails.zip
+              : details.serviceLocation.locationFrom.postCode,
+            city: addressDetails
+              ? addressDetails.city
+              : details.serviceLocation.locationTo.city,
+            country: addressDetails
+              ? addressDetails.country
+              : details.serviceLocation.locationTo.country,
             floor: floorCount,
             liftAvailable: lift,
           },
           locationTo: {
             name: address2,
-            postCode: addressDetails2.zip,
-            city: addressDetails2.city,
-            country: addressDetails2.country,
+            postCode: addressDetails2
+              ? addressDetails2.zip
+              : details.serviceLocation.locationTo.postCode,
+            city: addressDetails2
+              ? addressDetails2.city
+              : details.serviceLocation.locationTo.city,
+            country: addressDetails2
+              ? addressDetails2.country
+              : details.serviceLocation.locationTo.country,
             floor: floorCount2,
             liftAvailable: lift2,
           },
@@ -199,6 +217,7 @@ const CompleteHouse = () => {
           volume: volume,
           duration: details.moveDetails.duration,
           moveDate: date,
+          moveDateRaw: date2,
           movePackage: details.moveDetails.movePackage,
           quoteRef: details.moveDetails.quoteRef,
         })
@@ -207,8 +226,10 @@ const CompleteHouse = () => {
     }
   };
 
-  console.log(details.moveDetails.moveDate);
+  //   console.log(details.moveDetails.moveDate);
   //   console.log(dateValue);
+  console.log(details);
+  //   console.log(postCode1);
 
   return (
     <BookingLayout>
@@ -242,7 +263,6 @@ const CompleteHouse = () => {
 
             {/* Title */}
             <div className="w-full flex justify-center py-[30px] md:py-[40px]">
-              {/* <h3 className="text-4xl font-extrabold">Our Services</h3> */}
               <h3
                 className={`${titleFont.variable} font-sans2 text-3xl lg:text-4xl font-extrabold flex-col items-center justify-center`}
               >

@@ -42,6 +42,7 @@ const initialState = {
     volume: '',
     duration: '',
     moveDate: '',
+    moveDateRaw: '',
     movePackage: '',
     quoteRef: '',
   },

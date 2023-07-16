@@ -18,21 +18,21 @@ export function generateRandomValues() {
   const characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
   const numbers = '0123456789';
 
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 8; i++) {
     const randomType = Math.random() < 0.5 ? 'string' : 'number';
 
     if (randomType === 'string') {
-      let randomString = 'rs-';
-      for (let j = 0; j < 5; j++) {
-        const randomChar = characters.charAt(
+        let randomChar;
+      for (let j = 0; j < 2; j++) {
+         randomChar = characters.charAt(
           Math.floor(Math.random() * characters.length)
         );
-        randomString += randomChar;
+        // randomString += randomChar;
       }
-      values.push(randomString);
+      values.push(randomChar);
     } else {
       const randomNumber = Math.floor(Math.random() * 100);
-      values.push(`rs-${randomNumber}`);
+      values.push(`${randomNumber}`);
     }
   }
 

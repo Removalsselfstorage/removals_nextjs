@@ -41,12 +41,15 @@ const PackageCard = ({
         volume: details.moveDetails.volume,
         duration: details.moveDetails.duration,
         moveDate: details.moveDetails.moveDate,
+        moveDateRaw: details.moveDetails.moveDateRaw,
         movePackage: convertToSentenceCase(title),
         quoteRef: randomRefValue,
       })
     );
     router.push(`/book/${link}`);
   };
+
+  console.log(details)
 
   return (
     <div

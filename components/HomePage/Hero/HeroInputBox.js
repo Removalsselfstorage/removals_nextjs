@@ -72,6 +72,7 @@ const HeroInputBox = () => {
               volume: details.moveDetails.volume,
               duration: details.moveDetails.duration,
               moveDate: details.moveDetails.moveDate,
+              moveDateRaw: details.moveDetails.moveDateRaw,
               movePackage: details.moveDetails.movePackage,
               quoteRef: details.moveDetails.quoteRef,
             })
@@ -90,6 +91,7 @@ const HeroInputBox = () => {
               volume: details.moveDetails.volume,
               duration: details.moveDetails.duration,
               moveDate: details.moveDetails.moveDate,
+              moveDateRaw: details.moveDetails.moveDateRaw,
               movePackage: details.moveDetails.movePackage,
               quoteRef: details.moveDetails.quoteRef,
             })
@@ -105,6 +107,7 @@ const HeroInputBox = () => {
               volume: details.moveDetails.volume,
               duration: details.moveDetails.duration,
               moveDate: details.moveDetails.moveDate,
+              moveDateRaw: details.moveDetails.moveDateRaw,
               movePackage: details.moveDetails.movePackage,
               quoteRef: details.moveDetails.quoteRef,
             })
@@ -126,6 +129,7 @@ const HeroInputBox = () => {
               volume: details.moveDetails.volume,
               duration: details.moveDetails.duration,
               moveDate: details.moveDetails.moveDate,
+              moveDateRaw: details.moveDetails.moveDateRaw,
               movePackage: details.moveDetails.movePackage,
               quoteRef: details.moveDetails.quoteRef,
             })
@@ -141,6 +145,7 @@ const HeroInputBox = () => {
               volume: details.moveDetails.volume,
               duration: details.moveDetails.duration,
               moveDate: details.moveDetails.moveDate,
+              moveDateRaw: details.moveDetails.moveDateRaw,
               movePackage: details.moveDetails.movePackage,
               quoteRef: details.moveDetails.quoteRef,
             })
@@ -156,6 +161,7 @@ const HeroInputBox = () => {
               volume: details.moveDetails.volume,
               duration: details.moveDetails.duration,
               moveDate: details.moveDetails.moveDate,
+              moveDateRaw: details.moveDetails.moveDateRaw,
               movePackage: details.moveDetails.movePackage,
               quoteRef: details.moveDetails.quoteRef,
             })
@@ -171,6 +177,7 @@ const HeroInputBox = () => {
               volume: details.moveDetails.volume,
               duration: details.moveDetails.duration,
               moveDate: details.moveDetails.moveDate,
+              moveDateRaw: details.moveDetails.moveDateRaw,
               movePackage: details.moveDetails.movePackage,
               quoteRef: details.moveDetails.quoteRef,
             })
@@ -198,7 +205,8 @@ const HeroInputBox = () => {
   //   console.log(addressDetails2)
   //   console.log(selectValue);
   //   console.log(addressDetails);
-//   console.log(details.moveDetails.moveDate);
+//   console.log(addressDetails);
+    console.log(details);
 
   return (
     <div className="card shadow-2xl bg-base-100  text-black w-full md:w-[400px]">

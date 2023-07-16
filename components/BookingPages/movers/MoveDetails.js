@@ -11,6 +11,7 @@ import MoverCard from '@/components/BookingPages/movers/MoverCard';
 import { BiSolidPhoneCall } from 'react-icons/bi';
 import { getAllDetails } from '@/store/quoteSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import dayjs from 'dayjs';
 
 const MoveDetails = () => {
   const details = useSelector(getAllDetails);
@@ -83,7 +84,9 @@ const MoveDetails = () => {
           <div className="flex flex-col space-y-[5px]">
             <p className="text-primary font-semibold text-[18px]">Move date:</p>
             <p className="font-semibold text-[14px] ">
-              {details.moveDetails.moveDateRaw}
+              {dayjs(details.moveDetails.moveDateRaw).format(
+                'dddd, MMMM D, YYYY'
+              )}
             </p>
           </div>
         </div>

@@ -217,7 +217,7 @@ const CompleteHouse = () => {
           volume: volume,
           duration: details.moveDetails.duration,
           moveDate: date,
-          moveDateRaw: date2,
+          moveDateRaw: dateValue,
           movePackage: details.moveDetails.movePackage,
           quoteRef: details.moveDetails.quoteRef,
         })

@@ -24,10 +24,10 @@ const HeroInputBox = () => {
 
   const details = useSelector(getAllDetails);
 
-  const [address, setAddress] = useState({});
-  const [addressDetails, setAddressDetails] = useState({});
-  const [address2, setAddress2] = useState({});
-  const [addressDetails2, setAddressDetails2] = useState({});
+  const [address, setAddress] = useState('');
+  const [addressDetails, setAddressDetails] = useState('');
+  const [address2, setAddress2] = useState('');
+  const [addressDetails2, setAddressDetails2] = useState('');
   const [submitLoading, setSubmitLoading] = useState(false);
 
   const [selectValue, setSelectValue] = useState(
@@ -46,9 +46,15 @@ const HeroInputBox = () => {
           //   moveService: details.serviceLocation.moveService,
           locationFrom: {
             name: address,
-            postCode: addressDetails.zip,
-            city: addressDetails.city,
-            country: addressDetails.country,
+            postCode: addressDetails
+              ? addressDetails.zip
+              : details.serviceLocation.locationFrom.postCode,
+            city: addressDetails
+              ? addressDetails.city
+              : details.serviceLocation.locationTo.city,
+            country: addressDetails
+              ? addressDetails.country
+              : details.serviceLocation.locationTo.country,
             floor: details.serviceLocation.locationFrom.floor,
             liftAvailable: details.serviceLocation.locationFrom.liftAvailable,
           },
@@ -205,8 +211,8 @@ const HeroInputBox = () => {
   //   console.log(addressDetails2)
   //   console.log(selectValue);
   //   console.log(addressDetails);
-//   console.log(addressDetails);
-    console.log(details);
+  //   console.log(addressDetails);
+  console.log(details);
 
   return (
     <div className="card shadow-2xl bg-base-100  text-black w-full md:w-[400px]">

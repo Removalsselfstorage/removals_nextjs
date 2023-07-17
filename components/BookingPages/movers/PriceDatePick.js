@@ -9,11 +9,10 @@ import {
 } from '@/store/quoteSlice';
 import dayjs from 'dayjs';
 import {
-    calculatePrice,
+  calculatePrice,
+  calculatePriceChange,
   calculatePriceDecrease,
-  calculatePriceDecrease2,
-  calculatePriceDecrease3,
-  increaseDateByThreeMonths,
+  generatePriceList,
   trimDate,
 } from '@/utils/logics';
 
@@ -24,54 +23,41 @@ const PriceDatePick = () => {
   const dayNumber = dayjs(details.moveDetails.moveDateRaw).format('D');
   const year = dayjs(details.moveDetails.moveDateRaw).format('YYYY');
 
-  const price = 100;
-  const generalDecrement = 0.01; // 2% decrement
-  const decrementPercentages = {
-    Sun: 0.01,
-    Mon: 0.02,
-    Tue: 0.03,
-    Wed: 0.04,
-    Thu: 0.05,
-    Fri: 0.06,
-    Sat: 0.07,
-  };
+  //   const price = 456;
 
-  const startingPrice = 100;
-  const generalDecrementPercentage = 2;
-  const dailyDecrementPercentages = [-1, -1, 0, 1, 1, 0, 3];
+  //   const generalDecrement = 0.001;
+  //   const sundayIncrement = 2;
 
-  const updatedPrices = calculatePrice(startingPrice, generalDecrementPercentage, dailyDecrementPercentages);
-  console.log(updatedPrices);
-
-  //   const dayOfWeek = "Mon";
-  //   const dayNumber = 15;
-  //   const month = "Apr";
-  //   const year = 2023;
-
-  //   const result = increaseDateByThreeMonths(dayOfWeek, dayNumber, month, year);
+  //   const result = calculatePriceChange(dayOfWeek, dayNumber, month, year, price, generalDecrement, sundayIncrement);
   //   console.log(result);
+  //   const priceFirstDay = 456;
+  //   const priceSecondDay = 382;
+  //   const priceThirdDay = 275;
+  //   const priceSaturday = 230;
+  //   const priceSunday = 215;
+  //   const priceOtherDays = 207;
+  const price = details.moveDetails.initialPackagePrice;
 
-  //   const result = calculatePriceDecrease2(
-  //     dayOfWeek,
-  //     dayNumber,
-  //     month,
-  //     year,
-  //     price,
-  //     generalDecrement,
-  //     decrementPercentages
-  //   );
-  //   console.log(result);
+  const priceFirstDay = price;
+  const priceSecondDay = price - 74; //74
+  const priceThirdDay = priceSecondDay - 107; //107
+  const priceSaturdays = priceThirdDay - 60; //60
+  const priceSundays = priceThirdDay - 60; //8
+  const priceOtherDays = priceSundays - 8;
 
-  const result = calculatePriceDecrease3(
+  const result = generatePriceList(
     dayOfWeek,
     dayNumber,
     month,
     year,
-    price,
-    generalDecrement,
-    decrementPercentages
+    priceFirstDay,
+    priceSecondDay,
+    priceThirdDay,
+    priceSaturdays,
+    priceSundays,
+    priceOtherDays
   );
-//   console.log(result);
+  console.log(result);
 
   const allDatePrice = [
     { id: 'Thu, sept 7', date: 'Fri, sept 8', price: '456.68' },

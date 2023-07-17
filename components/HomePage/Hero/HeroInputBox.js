@@ -81,6 +81,8 @@ const HeroInputBox = () => {
               moveDateRaw: details.moveDetails.moveDateRaw,
               movePackage: details.moveDetails.movePackage,
               quoteRef: details.moveDetails.quoteRef,
+              initialPackagePrice: details.moveDetails.initialPackagePrice,
+
             })
           );
           router.push('/book/man-and-van');
@@ -100,6 +102,8 @@ const HeroInputBox = () => {
               moveDateRaw: details.moveDetails.moveDateRaw,
               movePackage: details.moveDetails.movePackage,
               quoteRef: details.moveDetails.quoteRef,
+              initialPackagePrice: details.moveDetails.initialPackagePrice,
+
             })
           );
           router.push('/book/man-and-van');
@@ -116,6 +120,8 @@ const HeroInputBox = () => {
               moveDateRaw: details.moveDetails.moveDateRaw,
               movePackage: details.moveDetails.movePackage,
               quoteRef: details.moveDetails.quoteRef,
+              initialPackagePrice: details.moveDetails.initialPackagePrice,
+
             })
           );
           router.push('/book/man-and-van');
@@ -138,6 +144,8 @@ const HeroInputBox = () => {
               moveDateRaw: details.moveDetails.moveDateRaw,
               movePackage: details.moveDetails.movePackage,
               quoteRef: details.moveDetails.quoteRef,
+              initialPackagePrice: details.moveDetails.initialPackagePrice,
+
             })
           );
           router.push('/book/home-removals');
@@ -154,6 +162,8 @@ const HeroInputBox = () => {
               moveDateRaw: details.moveDetails.moveDateRaw,
               movePackage: details.moveDetails.movePackage,
               quoteRef: details.moveDetails.quoteRef,
+              initialPackagePrice: details.moveDetails.initialPackagePrice,
+
             })
           );
           router.push('/book/home-removals');
@@ -170,6 +180,8 @@ const HeroInputBox = () => {
               moveDateRaw: details.moveDetails.moveDateRaw,
               movePackage: details.moveDetails.movePackage,
               quoteRef: details.moveDetails.quoteRef,
+              initialPackagePrice: details.moveDetails.initialPackagePrice,
+
             })
           );
           router.push('/book/home-removals');
@@ -186,6 +198,8 @@ const HeroInputBox = () => {
               moveDateRaw: details.moveDetails.moveDateRaw,
               movePackage: details.moveDetails.movePackage,
               quoteRef: details.moveDetails.quoteRef,
+              initialPackagePrice: details.moveDetails.initialPackagePrice,
+
             })
           );
           router.push('/book/home-removals');

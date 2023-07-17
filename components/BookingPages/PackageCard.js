@@ -32,7 +32,7 @@ const PackageCard = ({
 
   const randomRefValue = generateRandomValues();
 
-  const onBookNow = () => {5
+  const onBookNow = () => {
     dispatch(
       updateMoveDetails({
         propertyType: details.moveDetails.propertyType,
@@ -44,6 +44,7 @@ const PackageCard = ({
         moveDateRaw: details.moveDetails.moveDateRaw,
         movePackage: convertToSentenceCase(title),
         quoteRef: randomRefValue,
+        initialPackagePrice: price,
       })
     );
     router.push(`/book/${link}`);

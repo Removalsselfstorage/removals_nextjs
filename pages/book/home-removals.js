@@ -144,8 +144,8 @@ const CompleteHouse = () => {
     setActivateError(true);
     setSubmitError(false);
     if (
-      !floorCount ||
-      !floorCount2 ||
+      //   floorCount < 0 ||
+      //   !floorCount2 ||
       propertyValue == '' ||
       propertyValue == 'Select' ||
       !address ||
@@ -220,6 +220,7 @@ const CompleteHouse = () => {
           moveDateRaw: dateValue,
           movePackage: details.moveDetails.movePackage,
           quoteRef: details.moveDetails.quoteRef,
+          initialPackagePrice: details.moveDetails.initialPackagePrice,
         })
       );
       router.push('/book/move-package');
@@ -319,9 +320,10 @@ const CompleteHouse = () => {
                         </div>
                         <div
                           className={`${
-                            activateError && !floorCount
-                              ? 'flex justify-center items-center ring ring-secondary h-[50px] rounded-[10px] w-[60px]'
-                              : 'flex justify-center items-center h-[50px] rounded-[10px] w-[60px] border border-primary font-semibold'
+                            // activateError && !floorCount
+                            //   ? 'flex justify-center items-center ring ring-secondary h-[50px] rounded-[10px] w-[60px]'
+                            //   : 'flex justify-center items-center h-[50px] rounded-[10px] w-[60px] border border-primary font-semibold'
+                            'flex justify-center items-center h-[50px] rounded-[10px] w-[60px] border border-primary font-semibold'
                           }`}
                         >
                           {floorCount}
@@ -400,9 +402,10 @@ const CompleteHouse = () => {
                         </div>
                         <div
                           className={`${
-                            activateError && !floorCount2
-                              ? 'flex justify-center items-center ring ring-secondary h-[50px] rounded-[10px] w-[60px]'
-                              : 'flex justify-center items-center h-[50px] rounded-[10px] w-[60px] border border-primary font-semibold'
+                            // activateError && !floorCount2
+                            //   ? 'flex justify-center items-center ring ring-secondary h-[50px] rounded-[10px] w-[60px]'
+                            //   : 'flex justify-center items-center h-[50px] rounded-[10px] w-[60px] border border-primary font-semibold'
+                            'flex justify-center items-center h-[50px] rounded-[10px] w-[60px] border border-primary font-semibold'
                           }`}
                         >
                           {floorCount2}

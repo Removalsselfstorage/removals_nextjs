@@ -45,12 +45,14 @@ const initialState = {
     moveDateRaw: '',
     movePackage: '',
     quoteRef: '',
+    initialPackagePrice: '',
   },
 
   // moverDetails
   moverDetails: {
     moverName: '',
-    moveTime: '',
+    moverTime: '',
+    moverPrice: '',
   },
   // paymentDetails
   paymentDetails: {

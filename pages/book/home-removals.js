@@ -79,10 +79,12 @@ const CompleteHouse = () => {
   const [emailError, setEmailError] = useState(true);
   const [volume, setVolume] = useState(details.moveDetails.volume || '');
   const [phone, setPhone] = useState(details.personalDetails.telephone || '');
+  const [phoneError, setPhoneError] = useState(true);
   const [submitError, setSubmitError] = useState(false);
   const [submitLoading, setSubmitLoading] = useState(false);
   const [activateError, setActivateError] = useState(false);
 
+  //   Email validation
   const handleEmailChange = (e) => {
     // const inputValue = e.target.value;
     setEmail(e.target.value);
@@ -91,6 +93,21 @@ const CompleteHouse = () => {
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     // setIsValid(emailPattern.test(inputValue));
     setEmailError(emailPattern.test(e.target.value));
+  };
+
+  //phone number validation
+  const handlePhoneNumberChange = (event) => {
+    const inputValue = event.target.value;
+
+    // Remove any non-digit characters from the input
+    const strippedNumber = inputValue.replace(/\D/g, '');
+
+    // Check if the stripped number is either 10 or 11 digits long
+    const isValidPhoneNumber =
+      strippedNumber.length === 10 || strippedNumber.length === 11;
+
+    setPhone(strippedNumber);
+    setPhoneError(isValidPhoneNumber);
   };
 
   //Date
@@ -143,6 +160,7 @@ const CompleteHouse = () => {
   const removalFormSubmit = () => {
     setActivateError(true);
     setSubmitError(false);
+
     if (
       //   floorCount < 0 ||
       //   !floorCount2 ||
@@ -154,7 +172,7 @@ const CompleteHouse = () => {
       !lastName ||
       !email ||
       !emailError ||
-      //   !phoneValue ||
+      !phoneError ||
       !phone ||
       !menValue ||
       menValue == 'Select' ||
@@ -492,7 +510,7 @@ const CompleteHouse = () => {
                 </div>
 
                 {/* row 4*/}
-                <div className="flex flex-col items-center justify-center space-y-[10px] lg:space-y-0 lg:flex-row lg:items-center lg:space-x-[50px]">
+                <div className="flex flex-col items-center justify-center space-y-[10px] lg:space-y-0 lg:flex-row lg:items-start  lg:space-x-[50px]">
                   {/* left */}
                   <div className="flex flex-[1] w-full flex-col md:flex-row md:space-x-[10px] space-y-[10px] md:space-y-0 md:justify-center">
                     {/* email */}
@@ -521,7 +539,7 @@ const CompleteHouse = () => {
                   </div>
 
                   {/* right */}
-                  <div className="flex w-full flex-[1] flex-col items-center md:flex-row md:space-x-[30px] space-y-[10px] md:space-y-0 md:justify-center">
+                  <div className="flex w-full flex-[1] flex-col items-center md:flex-row md:space-x-[30px] space-y-[10px] md:space-y-0 md:justify-center md:items-start">
                     {/* country code */}
                     <div className="flex flex-col w-full flex-[1]">
                       <label className="label">
@@ -551,11 +569,18 @@ const CompleteHouse = () => {
                         type="tel"
                         placeholder="Type here"
                         className={`${
-                          activateError && !phone ? 'ring ring-secondary' : ''
+                          activateError && (!phone || !phoneError)
+                            ? 'ring ring-secondary'
+                            : ''
                         } input input-primary w-full h-[43px]`}
-                        onChange={(e) => setPhone(e.target.value)}
+                        onChange={handlePhoneNumberChange}
                         defaultValue={phone}
                       />
+                      {!phoneError && (
+                        <p className="text-[14px] text-secondary mt-[5px]">
+                          Please enter a valid number
+                        </p>
+                      )}
                     </div>
                   </div>
                 </div>

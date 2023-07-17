@@ -79,12 +79,14 @@ const ManAndVan = () => {
   const [emailError, setEmailError] = useState(true);
   const [volume, setVolume] = useState(details.moveDetails.volume || '');
   const [phone, setPhone] = useState(details.personalDetails.telephone || '');
+  const [phoneError, setPhoneError] = useState(true);
   const [submitError, setSubmitError] = useState(false);
   const [submitLoading, setSubmitLoading] = useState(false);
   const [activateError, setActivateError] = useState(false);
 
   const hourValue = durationCount <= 1 ? 'hour' : 'hours';
 
+  //   Email validation
   const handleEmailChange = (e) => {
     // const inputValue = e.target.value;
     setEmail(e.target.value);
@@ -93,6 +95,21 @@ const ManAndVan = () => {
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     // setIsValid(emailPattern.test(inputValue));
     setEmailError(emailPattern.test(e.target.value));
+  };
+
+  //phone number validation
+  const handlePhoneNumberChange = (event) => {
+    const inputValue = event.target.value;
+
+    // Remove any non-digit characters from the input
+    const strippedNumber = inputValue.replace(/\D/g, '');
+
+    // Check if the stripped number is either 10 or 11 digits long
+    const isValidPhoneNumber =
+      strippedNumber.length === 10 || strippedNumber.length === 11;
+
+    setPhone(strippedNumber);
+    setPhoneError(isValidPhoneNumber);
   };
 
   //Date
@@ -140,7 +157,9 @@ const ManAndVan = () => {
       !address2 ||
       !firstName ||
       !lastName ||
-      //   !phoneValue ||
+      !email ||
+      !emailError ||
+      !phoneError ||
       !phone ||
       !menValue ||
       menValue == 'Select' ||
@@ -528,9 +547,11 @@ const ManAndVan = () => {
                         type="tel"
                         placeholder="Type here"
                         className={`${
-                          activateError && !phone ? 'ring ring-secondary' : ''
+                          activateError && (!phone || !phoneError)
+                            ? 'ring ring-secondary'
+                            : ''
                         } input input-primary w-full h-[43px]`}
-                        onChange={(e) => setPhone(e.target.value)}
+                        onChange={handlePhoneNumberChange}
                         defaultValue={phone}
                       />
                     </div>

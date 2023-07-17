@@ -326,27 +326,48 @@ export function generatePriceList(
 }
 
 // Example usage
-const dayOfWeek = 'Tue';
-const dayNumber = 1;
-const month = 'Jul';
-const year = 2023;
-const priceFirstDay = 100;
-const priceSecondDay = 150;
-const priceThirdDay = 200;
-const priceSaturdays = 120;
-const priceSundays = 130;
-const priceOtherDays = 80;
+// const dayOfWeek = 'Tue';
+// const dayNumber = 1;
+// const month = 'Jul';
+// const year = 2023;
+// const priceFirstDay = 100;
+// const priceSecondDay = 150;
+// const priceThirdDay = 200;
+// const priceSaturdays = 120;
+// const priceSundays = 130;
+// const priceOtherDays = 80;
 
-const result = generatePriceList(
-  dayOfWeek,
-  dayNumber,
-  month,
-  year,
-  priceFirstDay,
-  priceSecondDay,
-  priceThirdDay,
-  priceSaturdays,
-  priceSundays,
-  priceOtherDays
-);
-console.log(result);
+// const result = generatePriceList(
+//   dayOfWeek,
+//   dayNumber,
+//   month,
+//   year,
+//   priceFirstDay,
+//   priceSecondDay,
+//   priceThirdDay,
+//   priceSaturdays,
+//   priceSundays,
+//   priceOtherDays
+// );
+// console.log(result);
+
+
+
+export function validatePhoneNumber(phoneNumber) {
+    // Remove any non-digit characters from the input
+    const cleanedNumber = phoneNumber.replace(/\D/g, "");
+  
+    // Check if the cleaned number contains 10 digits
+    if (cleanedNumber.length !== 10) {
+      return false;
+    }
+  
+    // Check if the first digit is between 2 and 9
+    if (cleanedNumber.charAt(0) < "2" || cleanedNumber.charAt(0) > "9") {
+      return false;
+    }
+  
+    // All checks pass, the number is valid
+    return true;
+  }
+  

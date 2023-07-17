@@ -14,6 +14,7 @@ import {
 } from '@/store/quoteSlice';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import StarRating from '@/components/Rating/EditHalfStars2';
 
 const HeroInputBox = () => {
   const router = useRouter();
@@ -82,7 +83,6 @@ const HeroInputBox = () => {
               movePackage: details.moveDetails.movePackage,
               quoteRef: details.moveDetails.quoteRef,
               initialPackagePrice: details.moveDetails.initialPackagePrice,
-
             })
           );
           router.push('/book/man-and-van');
@@ -103,7 +103,6 @@ const HeroInputBox = () => {
               movePackage: details.moveDetails.movePackage,
               quoteRef: details.moveDetails.quoteRef,
               initialPackagePrice: details.moveDetails.initialPackagePrice,
-
             })
           );
           router.push('/book/man-and-van');
@@ -121,7 +120,6 @@ const HeroInputBox = () => {
               movePackage: details.moveDetails.movePackage,
               quoteRef: details.moveDetails.quoteRef,
               initialPackagePrice: details.moveDetails.initialPackagePrice,
-
             })
           );
           router.push('/book/man-and-van');
@@ -145,7 +143,6 @@ const HeroInputBox = () => {
               movePackage: details.moveDetails.movePackage,
               quoteRef: details.moveDetails.quoteRef,
               initialPackagePrice: details.moveDetails.initialPackagePrice,
-
             })
           );
           router.push('/book/home-removals');
@@ -163,7 +160,6 @@ const HeroInputBox = () => {
               movePackage: details.moveDetails.movePackage,
               quoteRef: details.moveDetails.quoteRef,
               initialPackagePrice: details.moveDetails.initialPackagePrice,
-
             })
           );
           router.push('/book/home-removals');
@@ -181,7 +177,6 @@ const HeroInputBox = () => {
               movePackage: details.moveDetails.movePackage,
               quoteRef: details.moveDetails.quoteRef,
               initialPackagePrice: details.moveDetails.initialPackagePrice,
-
             })
           );
           router.push('/book/home-removals');
@@ -199,7 +194,6 @@ const HeroInputBox = () => {
               movePackage: details.moveDetails.movePackage,
               quoteRef: details.moveDetails.quoteRef,
               initialPackagePrice: details.moveDetails.initialPackagePrice,
-
             })
           );
           router.push('/book/home-removals');
@@ -235,7 +229,9 @@ const HeroInputBox = () => {
           <h3 className="text-xl font-bold text-gray-800 uppercase mb-[-10px]">
             TRUST<span className="text-gray-500">PILOT</span>
           </h3>
-          <FullRating value={4} color="text-secondary" />
+          <div className="my-[12px]">
+              <StarRating rating={4.9} size="text-[20px]" />
+          </div>
           <p className="text-gray-400 text-[14px] mt-[-5px] text-center">
             TrustScore 4.9 | 4,155 Reviews
           </p>

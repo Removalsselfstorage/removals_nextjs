@@ -12,12 +12,20 @@ import { BiSolidPhoneCall } from 'react-icons/bi';
 import MoveDetails from '@/components/BookingPages/movers/MoveDetails';
 import { getAllDetails } from '@/store/quoteSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import { homeMovers } from '@/dummyData/dummyData';
 
 const Movers = () => {
   const details = useSelector(getAllDetails);
 
+  const priceFirstDay = details.moveDetails.initialPackagePrice;
+  const priceSecondDay = priceFirstDay - 74; //74
+  const priceThirdDay = priceSecondDay - 107; //107
+  const priceSaturdays = priceThirdDay - 60; //60
+  const priceSundays = priceThirdDay - 60; //8
+  const priceOtherDays = priceSundays - 8;
+
   const [showModal, setShowModal] = useState(false);
-//   console.log(details.moveDetails.movePackage);
+  //   console.log(details.moveDetails.movePackage);
 
   return (
     <BookingLayout>
@@ -47,63 +55,35 @@ const Movers = () => {
                   You've been matched with{' '}
                   <span className="text-primary">4 verified movers.</span>
                 </h1>
-                <div className="mx-[10px] flex-col space-y-[20px]">
-                  {/* mover 1 */}
-                  <MoverCard
-                    image="/van1.png"
-                    name="Plaza Removals"
-                    phone="020 8874 0090"
-                    email="enquiries@plazaremovals.co.uk"
-                    loadArea="H-2.0m, L-3.1m, W-2.0m"
-                    rating={4.2}
-                    reviewCount={14}
-                    price={456.68}
-                    hiresCount={45}
-                    description="Plaza Removals offers residential and commercial removal services. We provide full goods in transit insurance as well as the right materials and tools required for the jobs. We also offer man and Van service. Our Expertise in different areas of the Removal department makes sure the company meets the customer’s needs and pays special attention to details. Your move is in safe hands with us. Have your move done safely securely and sound with All Seasons Removal & Storage Ltd."
-                  />
+                {homeMovers.map((mv, index) => {
+                    // const price2 = ()=>{
+                    //     let
+                    //     if (index==0) {
+                    //         mv.price = priceFirstDay
+                    //     }
 
-                  {/* mover 2 */}
-                  <MoverCard
-                    image="/van2.png"
-                    name="ZEDZ Removals"
-                    phone="011 9874 2090"
-                    email="enquiries@zedzremovals.com"
-                    loadArea="H-2.2m, L-3.5m, W-2.5m"
-                    rating={4.5}
-                    reviewCount={30}
-                    price={466.68}
-                    hiresCount={49}
-                    description="ZEDZ Removals are a family-run removal company based in Croydon, South London. We operate throughout the UK, undertaking house moves, in addition to providing storage for those who require it. Our experienced team are equipped to move your belongings in a professional manner, be it from a small flat or a house with multiple bedrooms. We proudly offer personalised services and strive to exceed the expectations of our customers. We have both Goods in Transit and Public Liability insurances in place, so you have peace of mind your goods are in safe hands."
-                  />
-
-                  {/* mover 3 */}
-                  <MoverCard
-                    image="/van3.png"
-                    name="Cos Freight"
-                    phone="555 6142 7624"
-                    email="info@cosfreight.co.uk"
-                    loadArea="H-2.2m, L-3.5m, W-2.5m"
-                    rating={4.1}
-                    reviewCount={10}
-                    price={476.18}
-                    hiresCount={12}
-                    description="With a global network of branches, Cos Freight is a well-respected London removal company in the UK and international removals industry. With UK bases in London and Luton, we have expanded our operations globally, helping you move to anywhere in the world. Covering London and surrounding areas such as High Wycombe, St Albans, to global international moves. We have the expertise, knowledge, capability and service to complete your move. Our team are hard-working and go above and beyond to ensure a first-class moving house experience. We ensure your move is as stress-free as possible – we will arrive on time, handle your belongings carefully during loading, transport and unloading, and will help you through any step of the process to make it that bit easier."
-                  />
-
-                  {/* mover 4 */}
-                  <MoverCard
-                    image="/van4.png"
-                    name="DBM Express"
-                    phone="020 3621 3141"
-                    email="info@dbmexpress.co.uk"
-                    loadArea="H-2.2m, L-3.5m, W-2.5m"
-                    rating={4.7}
-                    reviewCount={50}
-                    price={462.21}
-                    hiresCount={35}
-                    description="Welcome to DBM Express, we are ‘Devoted Boundless Movers’; we pride ourselves on delivering a quality service that exceeds the standards set by our competitors. We are a medium-sized business and we have a committed team of removals experts who have spent many years working in the removals industry. We are one of the best North London removal companies and we offer a stress-free, smooth, punctual and reliable service to all our clients, however big or small."
-                  />
-                </div>
+                    // }
+                  return (
+                    <div
+                      className="mx-[10px] flex-col space-y-[20px]"
+                      key={index}
+                    >
+                      {/* mover 1 */}
+                      <MoverCard
+                        image={mv.imageUrl}
+                        name={mv.name}
+                        phone={mv.phone}
+                        email={mv.email}
+                        loadArea={mv.loadArea}
+                        rating={mv.rating}
+                        reviewCount={mv.reviewCount}
+                        price={index == 0 ? priceFirstDay : mv.price}
+                        hiresCount={mv.hireCount}
+                        description={mv.companyDescription}
+                      />
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </div>

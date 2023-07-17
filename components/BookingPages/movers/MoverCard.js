@@ -16,6 +16,7 @@ import SideModal from '@/components/Modal/SideModal';
 import Link from 'next/link';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllDetails } from '@/store/quoteSlice';
+import StarRating from '@/components/Rating/EditHalfStars2';
 
 const MoverCard = ({
   image,
@@ -30,6 +31,13 @@ const MoverCard = ({
   description,
 }) => {
   const details = useSelector(getAllDetails);
+
+  const priceFirstDay = details.moveDetails.initialPackagePrice;
+  const priceSecondDay = priceFirstDay - 74; //74
+  const priceThirdDay = priceSecondDay - 107; //107
+  const priceSaturdays = priceThirdDay - 60; //60
+  const priceSundays = priceThirdDay - 60; //8
+  const priceOtherDays = priceSundays - 8;
 
   const [selectedTime, setSelectedTime] = useState(null);
   const [showMore, setShowMore] = useState(true);
@@ -67,7 +75,7 @@ const MoverCard = ({
               <div className="flex flex-col w-full flex-[2]">
                 {/* mover name */}
                 <div className="flex items-center justify-between w-full pr-[20px] mb-[5px] sm:mb-[7px]">
-                  <h2 className="text-primary text-bold text-[20px] ">
+                  <h2 className="text-primary font-semibold text-[20px] ">
                     {name}
                   </h2>
                 </div>
@@ -104,7 +112,11 @@ const MoverCard = ({
                 <div className="flex flex-col lg:flex-row lg:items-center space-y-[5px] lg:space-y-0 lg:space-x-[10px] mt-[0px] text-[15px] mb-[7px]">
                   <div className="flex items-center space-x-[10px] mt-[0px] text-[15px]">
                     <p className="font-semibold">{rating}</p>
-                    <FullRating small value={4} color="text-secondary" />
+                    {/* <FullRating small value={rating} color="text-secondary" /> */}
+                    <StarRating
+                      rating={rating}
+                      size="text-secondary text-[16px]"
+                    />
                     <p className="">{`- (${reviewCount} Reviews)`}</p>
                   </div>
                   {/* <div className="flex items-center space-x-[10px] mt-[0px] text-[15px]">

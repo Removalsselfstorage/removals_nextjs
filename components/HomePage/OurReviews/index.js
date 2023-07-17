@@ -4,6 +4,7 @@ import { CgChevronRight, CgChevronLeft } from 'react-icons/cg';
 import ReviewCard from './ReviewCard';
 import { reviews } from '@/dummyData/dummyData';
 import FullRating from '@/components/Rating/FullRating';
+import StarRating from '@/components/Rating/EditHalfStars2';
 
 const OurReviews = () => {
   //   const [review, setReview] = useState(reviews);
@@ -55,7 +56,7 @@ const OurReviews = () => {
           <div className="mt-[10px] flex flex-col items-center text-gray-600 text-center">
             <div className="flex items-center space-x-[10px]">
               <p className="text-[24px] font-semibold pt-[3px]">Excellent</p>
-              <FullRating value={5} color="text-secondary" />
+              <StarRating rating={4.9} size="text-[18px]" />
             </div>
             <p className="px-[50px] text-[16px] lg:text-[18px] leading-[22px]">
               <span className="text-[18px] mr-[5px] italic">"</span>Rated 4.8

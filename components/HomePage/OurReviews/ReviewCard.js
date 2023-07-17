@@ -1,3 +1,4 @@
+import StarRating from '@/components/Rating/EditHalfStars2';
 import FullRating from '@/components/Rating/FullRating';
 import { truncateTexts } from '@/utils/truncateText';
 import React from 'react';
@@ -27,8 +28,8 @@ const ReviewCard = ({ name, location, date, rating, comment }) => {
           <p className="text-[14px] text-gray-500">{date}</p>
         </div>
       </div>
-      <div className="">
-        <FullRating value={rating} color="text-secondary" />
+      <div className="my-[10px]">
+        <StarRating rating={rating} size="text-[18px]" />
       </div>
       <div className="overflow-auto scrollbar-thin scrollbar-track-gray-200/50 scrollbar-thumb-gray-500/20 scrollbar-default h-[100px]">
         <p className="leading-[25px] ">{comment}</p>

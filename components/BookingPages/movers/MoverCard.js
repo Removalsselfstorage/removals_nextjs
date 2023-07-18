@@ -15,8 +15,9 @@ import Modal from '@/components/Modal/Modal';
 import SideModal from '@/components/Modal/SideModal';
 import Link from 'next/link';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllDetails } from '@/store/quoteSlice';
+import { getAllDetails, updateMoverDetails } from '@/store/quoteSlice';
 import StarRating from '@/components/Rating/EditHalfStars2';
+import { useRouter } from 'next/navigation';
 
 const MoverCard = ({
   image,
@@ -30,6 +31,8 @@ const MoverCard = ({
   hiresCount,
   description,
 }) => {
+  const router = useRouter();
+  const dispatch = useDispatch();
   const details = useSelector(getAllDetails);
 
   const priceFirstDay = details.moveDetails.initialPackagePrice;
@@ -40,8 +43,14 @@ const MoverCard = ({
   const priceOtherDays = priceSundays - 8;
 
   const [selectedTime, setSelectedTime] = useState(null);
+  const [timeValue, setTimeValue] = useState('');
+  const [moverName, setMoverName] = useState('');
+  const [moverPrice, setMoverPrice] = useState('');
   const [showMore, setShowMore] = useState(true);
   const [showModal, setShowModal] = useState(true);
+  const [error, setError] = useState(false);
+  const [submitError, setSubmitError] = useState(true);
+  const [submitLoading, setSubmitLoading] = useState(false);
 
   const allTime = [
     { id: '7am - 9am', time: '7am - 9am' },
@@ -50,9 +59,33 @@ const MoverCard = ({
     { id: '3pm - 5pm', time: '3pm - 5pm' },
   ];
 
+  const onTimeHandle = (id, time) => {
+    setSelectedTime(id);
+    setTimeValue(time);
+  };
+
+  const onCheckout = () => {
+    setSubmitError(true);
+    if (timeValue == '') {
+      setSubmitError(false);
+    } else {
+      setSubmitLoading(true);
+      dispatch(
+        updateMoverDetails({
+          moverName: name,
+          moverTime: timeValue,
+          moverPrice: price,
+        })
+      );
+      router.push('/book/checkout');
+    }
+  };
+
+  console.log(timeValue);
+
   return (
     <>
-      <div className="flex border-[2px] rounded-[30px] py-[0px] shadow-xl overflow-hidden pb-[20px] w-full">
+      <div className="flex border-[2px] rounded-[30px] my-[20px] shadow-xl overflow-hidden pb-[20px] w-full">
         <div className="flex flex-col w-full">
           {/* row 1 */}
           <div className="flex flex-col xl:flex-row xl:items-center xl:space-x-[0px] mb-[20px] xl:mb-[0px] xl:py-[10px]">
@@ -127,7 +160,7 @@ const MoverCard = ({
                 </div>
                 {/* package type */}
                 <div className="flex justify-center items-center py-[3px] px-[10px] bg-secondary/20 rounded-[10px] max-w-[200px]">
-                  <p className="text-secondary font-semibold">
+                  <p className="text-secondary font-semibold text-[15px]">
                     {details.moveDetails.movePackage} Package
                   </p>
                 </div>
@@ -165,19 +198,22 @@ const MoverCard = ({
           </div>
 
           {/* row 3 */}
-          <p
-            className={`${
-              showMore ? 'hidden' : 'block'
-            } lg:block mx-[20px] md:mx-[30px] text-[15px] overflow-auto scrollbar-thin scrollbar-track-gray-200/50 scrollbar-thumb-gray-500/20 scrollbar-default h-[120px] md:h-[100px] w-auto`}
-          >
-            {description}
-          </p>
+          <div className="relative">
+            <p
+              className={`${
+                showMore ? 'hidden' : 'block'
+              } lg:block mx-[20px] md:mx-[30px] text-[15px] overflow-auto scrollbar-thin scrollbar-track-gray-200/50 scrollbar-thumb-gray-500/20 scrollbar-default h-[120px] md:h-[95px] w-auto`}
+            >
+              {description}
+            </p>
+            <div className="absolute inset-x-0 bottom-0 h-[30px] bg-gradient-to-t from-white via-white to-transparent bg-opacity-50"></div>
+          </div>
 
           {/* row 4 */}
           <div
             className={`${
               showMore ? 'hidden' : 'flex'
-            } lg:flex flex-col space-y-[20px] lg:space-y-0 lg:flex-row mx-[20px] md:mx-[30px] mt-[20px] md:justify-between`}
+            } lg:flex flex-col space-y-[20px] lg:space-y-0 lg:flex-row lg:items-start mx-[20px] md:mx-[30px] mt-[20px] md:justify-between`}
           >
             {/* time + instruction */}
             <div className="flex flex-col">
@@ -188,7 +224,7 @@ const MoverCard = ({
                   return (
                     <div key={index} className="flex items-center text-[15px]">
                       <div
-                        onClick={() => setSelectedTime(tm.id)}
+                        onClick={() => onTimeHandle(tm.id, tm.time)}
                         className={`${
                           isActive
                             ? 'bg-secondary text-white border-secondary'
@@ -209,9 +245,19 @@ const MoverCard = ({
               </div>
             </div>
             {/* check out */}
-            <Link href="/book/checkout" className="btn btn-primary w-auto">
-              <div>Check Out</div>
-            </Link>
+            <div className="flex flex-col items-center justify-center">
+              <button onClick={onCheckout} className="btn btn-primary w-full lg:w-[150px]">
+                {!submitLoading && <span className="">Check Out</span>}
+                {submitLoading && (
+                  <span className="loading loading-dots loading-md text-white"></span>
+                )}
+              </button>
+              {!submitError && (
+                <p className="text-[14px] text-secondary mt-[5px]">
+                  Please choose time
+                </p>
+              )}
+            </div>
           </div>
         </div>
       </div>

@@ -59,7 +59,7 @@ const initialState = {
     comment: '',
     createAccount: true,
     paymentMethod: '',
-    paidPart: true,
+    paidPart: false,
     paidFull: false,
   },
 };

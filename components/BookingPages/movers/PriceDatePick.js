@@ -57,7 +57,7 @@ const PriceDatePick = () => {
     priceSundays,
     priceOtherDays
   );
-  console.log(result);
+//   console.log(result);
 
   const allDatePrice = [
     { id: 'Thu, sept 7', date: 'Fri, sept 8', price: '456.68' },

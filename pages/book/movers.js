@@ -53,7 +53,7 @@ const Movers = () => {
               <div className="bg-white shadow-lg rounded-[30px] lg:flex-[3] py-[30px] md:px-[30px] w-full">
                 <h1 className="text-2xl font-bold mb-[30px] px-[20px]">
                   You've been matched with{' '}
-                  <span className="text-primary">4 verified movers.</span>
+                  <span className="text-primary">{homeMovers.length} verified movers.</span>
                 </h1>
                 {homeMovers.map((mv, index) => {
                     // const price2 = ()=>{

@@ -37,6 +37,7 @@ const MoveDetails = () => {
               {details.moveDetails.movePackage})
             </p>
           </div>
+
           <div className="flex flex-col space-y-[5px]">
             <p className="text-primary font-semibold text-[18px]">
               Pick-up Location:
@@ -47,6 +48,7 @@ const MoveDetails = () => {
                 `(${details.serviceLocation.locationFrom.postCode})`}
             </p>
           </div>
+
           <div className="flex flex-col space-y-[5px]">
             <p className="text-primary font-semibold text-[18px]">
               Drop-off Location:
@@ -57,6 +59,7 @@ const MoveDetails = () => {
                 `(${details.serviceLocation.locationTo.postCode})`}
             </p>
           </div>
+
           <div className="flex flex-col space-y-[5px]">
             <p className="text-primary font-semibold text-[18px]">
               Travel Distance:
@@ -65,12 +68,14 @@ const MoveDetails = () => {
               {details.moveDetails.mileage} miles
             </p>
           </div>
+
           <div className="flex flex-col space-y-[5px]">
             <p className="text-primary font-semibold text-[18px]">Volume:</p>
             <p className="font-semibold text-[14px] ">
               {details.moveDetails.volume} CU/FT
             </p>
           </div>
+
           {details.moveDetails.duration && (
             <div className="flex flex-col space-y-[5px]">
               <p className="text-primary font-semibold text-[18px]">
@@ -81,6 +86,7 @@ const MoveDetails = () => {
               </p>
             </div>
           )}
+          
           <div className="flex flex-col space-y-[5px]">
             <p className="text-primary font-semibold text-[18px]">Move date:</p>
             <p className="font-semibold text-[14px] ">

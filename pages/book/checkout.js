@@ -198,7 +198,6 @@ const Checkout = () => {
                     </label>
                   </div>
                 </div>
-                ;
               </div>
 
               {/* right section - Move summary */}

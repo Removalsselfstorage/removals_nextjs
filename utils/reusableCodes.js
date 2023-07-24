@@ -253,3 +253,18 @@
     </label>
   </div>
 </div>;
+
+
+const allDatePrice = [
+  { id: 'Thu, sept 7', date: 'Fri, sept 8', price: '456.68' },
+  { id: 'Fri, sept 8', date: 'Fri, sept 8', price: '454.63' },
+  { id: 'Sat, sept 9', date: 'Sat, sept 9', price: '452.18' },
+  { id: 'Sun, sept 10', date: 'Sun, sept 10', price: '456.22' },
+  { id: 'Mon, sept 11', date: 'Mon, sept 11', price: '450.38' },
+  { id: 'Tue, sept 12', date: 'Tue, sept 12', price: '450.07' },
+  { id: 'Wed, sept 13', date: 'Wed, sept 13', price: '448.88' },
+  { id: 'Thu, sept 14', date: 'Thu, sept 14', price: '447.74' },
+  { id: 'Fri, sept 15', date: 'Fri, sept 15', price: '446.46' },
+  { id: 'Sat, sept 16', date: 'Sat, sept 16', price: '443.68' },
+  { id: 'Sun, sept 17', date: 'Sun, sept 17', price: '451.63' },
+];

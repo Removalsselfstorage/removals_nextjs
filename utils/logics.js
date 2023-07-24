@@ -370,4 +370,66 @@ export function validatePhoneNumber(phoneNumber) {
     // All checks pass, the number is valid
     return true;
   }
+
+
+export function sortByRatingAndHireCount(movers) {
+    movers.sort((a, b) => {
+      // Sort by highest rating first
+      if (a.rating !== b.rating) {
+        return b.rating - a.rating;
+      }
+      // If ratings are equal, sort by highest hireCount
+      return b.hireCount - a.hireCount;
+    });
+}
+  
+export function getFirstSortedHomeMover(movers) {
+  movers.sort((a, b) => {
+    // Sort by highest rating first
+    if (a.rating !== b.rating) {
+      return b.rating - a.rating;
+    }
+    // If ratings are equal, sort by highest hireCount
+    return b.hireCount - a.hireCount;
+  });
+
+  return movers[0];
+}
+   
+
+export function sortHomeMoversAndExcludeHighest(movers) {
+  movers.sort((a, b) => {
+    const averageA = (a.rating + a.hireCount) / 2;
+    const averageB = (b.rating + b.hireCount) / 2;
+    
+    // Sort by lowest average first (ascending order)
+    return averageA - averageB;
+  });
+
+  // Clone the sorted array to avoid modifying the original data
+  const sortedMovers = [...movers];
+
+  // Remove the highest-rated and most hired mover
+  sortedMovers.pop();
+
+  return sortedMovers;
+}
+
+
+// The sorted homeMovers array excluding the highest-rated and most hired mover
+
+export function calculateMoverPrice(initialPrice, averageRatingHireCount, percentageIfAverageIsOne) {
+  // Calculate the price based on the average of rating and hireCount
+  let price = initialPrice * averageRatingHireCount * percentageIfAverageIsOne;
+
+  
+
+  // Round the price to two decimal places
+  price = Math.round(price * 100) / 100;
+
+  return price;
+}
+
+
+
   

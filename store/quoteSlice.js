@@ -46,6 +46,7 @@ const initialState = {
     movePackage: '',
     quoteRef: '',
     initialPackagePrice: '',
+    
   },
 
   // moverDetails
@@ -53,7 +54,13 @@ const initialState = {
     moverName: '',
     moverTime: '',
     moverPrice: '',
+    priceSecondDay: '',
+    priceThirdDay: '',
+    priceOtherDays: '',
+    priceSundays: '',
+    pickPrice: 0,
   },
+
   // paymentDetails
   paymentDetails: {
     comment: '',
@@ -83,6 +90,9 @@ export const quoteSlice = createSlice({
     updatePaymentDetails: (state, action) => {
       state.paymentDetails = action.payload;
     },
+    updatePickPrice: (state, action) => {
+      state.moverDetails.pickPrice = action.payload;
+    }
   },
 });
 
@@ -92,6 +102,7 @@ export const {
   updateMoveDetails,
   updateMoverDetails,
   updatePaymentDetails,
+  updatePickPrice,
 } = quoteSlice.actions;
 
 export const getAllDetails = (state) => state.quote;

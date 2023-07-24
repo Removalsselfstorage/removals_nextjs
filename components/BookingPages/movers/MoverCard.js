@@ -18,6 +18,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getAllDetails, updateMoverDetails } from '@/store/quoteSlice';
 import StarRating from '@/components/Rating/EditHalfStars2';
 import { useRouter } from 'next/navigation';
+import { convertToFloatOrRound, convertToFloatWithOneDecimal } from '@/utils/logics';
 
 const MoverCard = ({
   image,
@@ -30,17 +31,18 @@ const MoverCard = ({
   price,
   hiresCount,
   description,
+  score,
 }) => {
   const router = useRouter();
   const dispatch = useDispatch();
   const details = useSelector(getAllDetails);
 
   const priceFirstDay = details.moveDetails.initialPackagePrice;
-  const priceSecondDay = priceFirstDay - 74; //74
-  const priceThirdDay = priceSecondDay - 107; //107
-  const priceSaturdays = priceThirdDay - 60; //60
-  const priceSundays = priceThirdDay - 60; //8
-  const priceOtherDays = priceSundays - 8;
+  const priceSecondDay = (priceFirstDay * 0.559).toFixed(); //74
+  const priceThirdDay = (priceFirstDay * 0.495).toFixed(); //107
+  const priceSaturdays = (priceFirstDay * 0.441).toFixed(); //60
+  const priceSundays = (priceFirstDay * 0.441).toFixed(); //8
+  const priceOtherDays = (priceFirstDay * 0.330).toFixed();
 
   const [selectedTime, setSelectedTime] = useState(null);
   const [timeValue, setTimeValue] = useState('');
@@ -75,13 +77,14 @@ const MoverCard = ({
           moverName: name,
           moverTime: timeValue,
           moverPrice: price,
+          pickPrice: details.moverDetails.pickPrice
         })
       );
       router.push('/book/checkout');
     }
   };
 
-  console.log(timeValue);
+  // console.log(timeValue);
 
   return (
     <>
@@ -109,7 +112,7 @@ const MoverCard = ({
                 {/* mover name */}
                 <div className="flex items-center justify-between w-full pr-[20px] mb-[5px] sm:mb-[7px]">
                   <h2 className="text-primary font-semibold text-[20px] ">
-                    {name}
+                    {name} <span>{score}</span>
                   </h2>
                 </div>
                 {/* phone / email */}
@@ -144,7 +147,7 @@ const MoverCard = ({
                 {/* rating / reviews */}
                 <div className="flex flex-col lg:flex-row lg:items-center space-y-[5px] lg:space-y-0 lg:space-x-[10px] mt-[0px] text-[15px] mb-[7px]">
                   <div className="flex items-center space-x-[10px] mt-[0px] text-[15px]">
-                    <p className="font-semibold">{rating}</p>
+                    <p className="font-semibold">{rating.toFixed(1)}</p>
                     {/* <FullRating small value={rating} color="text-secondary" /> */}
                     <StarRating
                       rating={rating}

@@ -6,6 +6,7 @@ import {
   getAllDetails,
   updateLocationDetails,
   updateMoveDetails,
+  updatePickPrice,
 } from '@/store/quoteSlice';
 import dayjs from 'dayjs';
 import {
@@ -16,7 +17,7 @@ import {
   trimDate,
 } from '@/utils/logics';
 
-const PriceDatePick = () => {
+const PriceDatePick = ({setShowLoader}) => {
   const details = useSelector(getAllDetails);
   const dayOfWeek = dayjs(details.moveDetails.moveDateRaw).format('ddd');
   const month = dayjs(details.moveDetails.moveDateRaw).format('MMM');
@@ -36,15 +37,19 @@ const PriceDatePick = () => {
   //   const priceSaturday = 230;
   //   const priceSunday = 215;
   //   const priceOtherDays = 207;
-  const price = details.moveDetails.initialPackagePrice;
+  // const price = details.moveDetails.initialPackagePrice;
 
-  const priceFirstDay = price;
-  const priceSecondDay = price - 74; //74
-  const priceThirdDay = priceSecondDay - 107; //107
-  const priceSaturdays = priceThirdDay - 60; //60
-  const priceSundays = priceThirdDay - 60; //8
-  const priceOtherDays = priceSundays - 8;
-
+  const priceFirstDay = details.moveDetails.initialPackagePrice;
+  const priceSecondDay = (priceFirstDay * 0.559).toFixed(); //74
+  const priceThirdDay = (priceFirstDay * 0.495).toFixed(); //107
+  const priceSaturdays = (priceFirstDay * 0.441).toFixed(); //60
+  const priceSundays = (priceFirstDay * 0.441).toFixed(); //8
+  const priceOtherDays = (priceFirstDay * 0.330).toFixed();
+  // const priceSecondDay = priceFirstDay - 74; //74
+  // const priceThirdDay = priceSecondDay - 107; //107
+  // const priceSaturdays = priceThirdDay - 60; //60
+  // const priceSundays = priceThirdDay - 60; //8
+// console.log(true)
   const result = generatePriceList(
     dayOfWeek,
     dayNumber,
@@ -57,21 +62,15 @@ const PriceDatePick = () => {
     priceSundays,
     priceOtherDays
   );
+
+
+  const dispatch = useDispatch();
+
+
+
 //   console.log(result);
 
-  const allDatePrice = [
-    { id: 'Thu, sept 7', date: 'Fri, sept 8', price: '456.68' },
-    { id: 'Fri, sept 8', date: 'Fri, sept 8', price: '454.63' },
-    { id: 'Sat, sept 9', date: 'Sat, sept 9', price: '452.18' },
-    { id: 'Sun, sept 10', date: 'Sun, sept 10', price: '456.22' },
-    { id: 'Mon, sept 11', date: 'Mon, sept 11', price: '450.38' },
-    { id: 'Tue, sept 12', date: 'Tue, sept 12', price: '450.07' },
-    { id: 'Wed, sept 13', date: 'Wed, sept 13', price: '448.88' },
-    { id: 'Thu, sept 14', date: 'Thu, sept 14', price: '447.74' },
-    { id: 'Fri, sept 15', date: 'Fri, sept 15', price: '446.46' },
-    { id: 'Sat, sept 16', date: 'Sat, sept 16', price: '443.68' },
-    { id: 'Sun, sept 17', date: 'Sun, sept 17', price: '451.63' },
-  ];
+  
 
   const rowRef = useRef(null);
   const [isMoved, setIsMoved] = useState(false);
@@ -97,16 +96,38 @@ const PriceDatePick = () => {
                     `}
         onClick={() => handleClick('left')}
       />
+      {/* {pickPrice} */}
       <div
         className="flex items-center space-x-[10px] overflow-x-scroll scrollbar-hide px-[20px]  py-[20px]"
         ref={rowRef}
       >
         {result.map((pr, index) => {
           let isActive = pr.id == selectedPrice;
+
+          const selectPrice = () => {
+            setSelectedPrice(pr.id)
+            setTimeout(() => {
+              setShowLoader(true)
+            }, 0)
+            setTimeout(() => {
+              setShowLoader(false)
+            }, 1000)
+            if (index == 0){
+              dispatch(updatePickPrice(pr.price))
+            } else if (index == 1){
+              dispatch(updatePickPrice(pr.price))
+            } else if (index == 2){
+              dispatch(updatePickPrice(pr.price))
+            } else {
+              // setPickPrice(priceThirdDay)
+              dispatch(updatePickPrice(priceThirdDay))
+            }
+
+          }
           return (
             <div key={pr.id}>
               <div
-                onClick={() => setSelectedPrice(pr.id)}
+                onClick={selectPrice}
                 className={`${
                   isActive
                     ? 'border-secondary text-secondary bg-white'

@@ -42,7 +42,8 @@ const Movers = () => {
   // const [pickPrice, setPickPrice] = useState(priceThirdDay)
 
   const [showLoader, setShowLoader] = useState(false);
-  //   console.log(details.moveDetails.movePackage);
+
+    console.log(details.moverDetails.pickPrice);
 
   const firstCard = getFirstSortedHomeMover(homeMovers);
 
@@ -113,7 +114,7 @@ const Movers = () => {
                       className="mx-[10px] flex-col space-y-[20px]"
                       key={index}
                     >
-                      {/* mover 1 */}
+                      {/* mover 2 */}
                       <MoverCard
                         image={mv.imageUrl}
                         name={mv.name}

@@ -27,8 +27,8 @@ const Checkout = () => {
   const [card, setCard] = useState(false);
   const [paypal, setPaypal] = useState(false);
 
-  console.log(depositPart);
-  console.log(depositFull);
+  // console.log(depositPart);
+  // console.log(depositFull);
 
   const partDepositOnchange = (e) => {
     setDepositPart(e.target.checked);
@@ -359,12 +359,12 @@ const Checkout = () => {
                       <div className="flex flex-col items-end">
                         {depositPart && (
                           <h2 className="text-[18px] font-bold ">
-                            ₤ {details.moverDetails.moverPrice * 0.2}
+                            ₤ {(details.moverDetails.moverPrice * 0.2).toFixed()}
                           </h2>
                         )}
                         {depositFull && (
                           <h2 className="text-[18px] font-bold ">
-                            ₤ {details.moverDetails.moverPrice * 1}
+                            ₤ {(details.moverDetails.moverPrice * 1).toFixed()}
                           </h2>
                         )}
                         {!depositFull && !depositPart && (
@@ -389,7 +389,7 @@ const Checkout = () => {
           </div>
         </div> */}
                     {/* Payment button */}
-                    <div className="btn btn-primary btn-block">Pay Now</div>
+                    <div className="btn btn-secondary btn-block">Pay Now</div>
                   </div>
                 </div>
               </div>

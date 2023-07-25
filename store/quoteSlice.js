@@ -40,13 +40,12 @@ const initialState = {
     numberOfMovers: '',
     mileage: '',
     volume: '',
-    duration: '',
+    duration: 3,
     moveDate: '',
     moveDateRaw: '',
-    
     movePackage: '',
     quoteRef: '',
-    initialPackagePrice: '',
+    initialPackagePrice: 1,
     
   },
 

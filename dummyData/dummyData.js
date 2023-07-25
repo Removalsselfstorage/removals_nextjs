@@ -188,49 +188,49 @@ export const homeMovers = [
     imageUrl:
       'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGfx5xHS6HluFxjlNxuwHyWWdawC2oqyvE9Q&usqp=CAU',
   },
-  {
-    name: 'Premier Movers',
-    phone: '555-8888',
-    email: 'info@premiermovers.com',
-    loadArea: 'H-1.9m, L-3.2m, W-2.2m',
-    rating: 4.4,
-    reviewCount: 18,
-    price: 115,
-    hireCount: 52,
-    score: (4.4 + 52) / 2,
-    companyDescription:
-      'Premier Movers provides top-quality moving services for residential and commercial clients. We prioritize customer satisfaction and ensure a smooth moving process. we ensure that your belongings are treated with the utmost care throughout the entire moving process. Customer satisfaction is our priority, and we go above and beyond to exceed expectations. When you choose Reliable Home Movers, you can rest assured that your move will be handled efficiently, safely, and at a competitive price. Contact us today for a customized moving solution tailored to your specific needs.',
-    imageUrl:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwaMt0jFRsCdH0axwErVTn1ESiVE55yH9Fug&usqp=CAU',
-  },
-  {
-    name: 'Swift Relocations',
-    phone: '555-9999',
-    email: 'info@swiftrelocations.com',
-    loadArea: 'H-2.0m, L-3.1m, W-2.1m',
-    rating: 5,
-    reviewCount: 15,
-    price: 100,
-    hireCount: 46,
-    score: (5 + 46) / 2,
-    companyDescription:
-      'Swift Relocations is your trusted partner for efficient and swift relocations. Our team of professionals ensures a stress-free moving experience. we ensure that your belongings are treated with the utmost care throughout the entire moving process. Customer satisfaction is our priority, and we go above and beyond to exceed expectations. When you choose Reliable Home Movers, you can rest assured that your move will be handled efficiently, safely, and at a competitive price. Contact us today for a customized moving solution tailored to your specific needs.',
-    imageUrl:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTkbkv_8am-cW0Q1w2OWpOjNz8FXh0Evadimw&usqp=CAU',
-  },
-  {
-    name: 'ProMove Experts',
-    phone: '555-1010',
-    email: 'info@promoveexperts.com',
-    loadArea: 'H-1.8m, L-3.3m, W-2.0m',
-    rating: 3.6,
-    reviewCount: 22,
-    price: 125,
-    hireCount: 65,
-    score: (3.6 + 65) / 2,
-    companyDescription:
-      'ProMove Experts are highly experienced in handling residential and commercial moves. We prioritize attention to detail and exceptional customer service. we ensure that your belongings are treated with the utmost care throughout the entire moving process. Customer satisfaction is our priority, and we go above and beyond to exceed expectations. When you choose Reliable Home Movers, you can rest assured that your move will be handled efficiently, safely, and at a competitive price. Contact us today for a customized moving solution tailored to your specific needs.',
-    imageUrl:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCUoUc6WSd_-j_JmEA8lRRGMYJTXauJ008vA&usqp=CAU',
-  },
+  // {
+  //   name: 'Premier Movers',
+  //   phone: '555-8888',
+  //   email: 'info@premiermovers.com',
+  //   loadArea: 'H-1.9m, L-3.2m, W-2.2m',
+  //   rating: 4.4,
+  //   reviewCount: 18,
+  //   price: 115,
+  //   hireCount: 52,
+  //   score: (4.4 + 52) / 2,
+  //   companyDescription:
+  //     'Premier Movers provides top-quality moving services for residential and commercial clients. We prioritize customer satisfaction and ensure a smooth moving process. we ensure that your belongings are treated with the utmost care throughout the entire moving process. Customer satisfaction is our priority, and we go above and beyond to exceed expectations. When you choose Reliable Home Movers, you can rest assured that your move will be handled efficiently, safely, and at a competitive price. Contact us today for a customized moving solution tailored to your specific needs.',
+  //   imageUrl:
+  //     'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwaMt0jFRsCdH0axwErVTn1ESiVE55yH9Fug&usqp=CAU',
+  // },
+  // {
+  //   name: 'Swift Relocations',
+  //   phone: '555-9999',
+  //   email: 'info@swiftrelocations.com',
+  //   loadArea: 'H-2.0m, L-3.1m, W-2.1m',
+  //   rating: 5,
+  //   reviewCount: 15,
+  //   price: 100,
+  //   hireCount: 46,
+  //   score: (5 + 46) / 2,
+  //   companyDescription:
+  //     'Swift Relocations is your trusted partner for efficient and swift relocations. Our team of professionals ensures a stress-free moving experience. we ensure that your belongings are treated with the utmost care throughout the entire moving process. Customer satisfaction is our priority, and we go above and beyond to exceed expectations. When you choose Reliable Home Movers, you can rest assured that your move will be handled efficiently, safely, and at a competitive price. Contact us today for a customized moving solution tailored to your specific needs.',
+  //   imageUrl:
+  //     'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTkbkv_8am-cW0Q1w2OWpOjNz8FXh0Evadimw&usqp=CAU',
+  // },
+  // {
+  //   name: 'ProMove Experts',
+  //   phone: '555-1010',
+  //   email: 'info@promoveexperts.com',
+  //   loadArea: 'H-1.8m, L-3.3m, W-2.0m',
+  //   rating: 3.6,
+  //   reviewCount: 22,
+  //   price: 125,
+  //   hireCount: 65,
+  //   score: (3.6 + 65) / 2,
+  //   companyDescription:
+  //     'ProMove Experts are highly experienced in handling residential and commercial moves. We prioritize attention to detail and exceptional customer service. we ensure that your belongings are treated with the utmost care throughout the entire moving process. Customer satisfaction is our priority, and we go above and beyond to exceed expectations. When you choose Reliable Home Movers, you can rest assured that your move will be handled efficiently, safely, and at a competitive price. Contact us today for a customized moving solution tailored to your specific needs.',
+  //   imageUrl:
+  //     'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCUoUc6WSd_-j_JmEA8lRRGMYJTXauJ008vA&usqp=CAU',
+  // },
 ];

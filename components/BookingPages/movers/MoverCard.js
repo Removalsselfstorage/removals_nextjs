@@ -194,7 +194,7 @@ const MoverCard = ({
                     <span className="text-secondary">Move smart</span> & save
                     money!
                   </h2>
-                  <p className="lg:text-[18px] xl:mr-[30px]">{subtitle}</p>
+                  <p className="lg:text-[17px] xl:mr-[30px]">{subtitle}</p>
                 </div>
               </div>
             )}

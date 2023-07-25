@@ -36,6 +36,18 @@ const HeroInputBox = () => {
   );
   const [error, setError] = useState(false);
 
+  const durationCalculation = () => {
+    let price = 0
+    switch (key) {
+      case value:
+        
+        break;
+    
+      default:
+        break;
+    }
+  }
+
   const heroFormSubmit = () => {
     setError(false);
     if (selectValue == '' || !address || !address2) {

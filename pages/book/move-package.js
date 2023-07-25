@@ -1,24 +1,25 @@
-import QuoteType from '@/components/BookingPages/QuoteType';
-import BasicDatePicker from '@/components/DatePicker/DatePicker';
-import SelectSearch from '@/components/Inputs/SelectSearch';
-import { citiesOptions } from '@/dummyData/inputData';
-import BookingLayout from '@/layouts/BookingLayout';
-import { titleFont } from '@/utils/fonts';
-import Head from 'next/head';
-import Link from 'next/link';
-import React, { useState } from 'react';
-import { FiEdit } from 'react-icons/fi';
-import { MdKeyboardArrowRight } from 'react-icons/md';
-import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai';
+import QuoteType from "@/components/BookingPages/QuoteType";
+import BasicDatePicker from "@/components/DatePicker/DatePicker";
+import SelectSearch from "@/components/Inputs/SelectSearch";
+import { citiesOptions } from "@/dummyData/inputData";
+import BookingLayout from "@/layouts/BookingLayout";
+import { titleFont } from "@/utils/fonts";
+import Head from "next/head";
+import Link from "next/link";
+import React, { useState } from "react";
+import { FiEdit } from "react-icons/fi";
+import { MdKeyboardArrowRight } from "react-icons/md";
+import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
 import {
   getAllDetails,
   updateLocationDetails,
   updateMoveDetails,
   updatePersonalDetails,
-} from '@/store/quoteSlice';
-import { useDispatch, useSelector } from 'react-redux';
+} from "@/store/quoteSlice";
+import { useDispatch, useSelector } from "react-redux";
 
-import PackageCard from '@/components/BookingPages/PackageCard';
+import PackageCard from "@/components/BookingPages/PackageCard";
+import { moveDesciptionsCalc } from "@/utils/moversLogic";
 
 const MovePackage = () => {
   const dispatch = useDispatch();
@@ -41,7 +42,7 @@ const MovePackage = () => {
               <h3
                 className={`${titleFont.variable} font-sans2 text-2xl lg:text-4xl font-extrabold flex-col items-center justify-center`}
               >
-                <p className="">Choose a Move Package</p>{' '}
+                <p className="">Choose a Move Package</p>{" "}
                 <div className="w-full bg-primary/20 h-[20px] mt-[-12px] "></div>
               </h3>
             </div>
@@ -67,13 +68,54 @@ const MovePackage = () => {
                 title="STANDARD"
                 subTitle=""
                 price="369"
-                f1="1 Truck, 1 Bed content, Free blanket"
-                f2="Free loading & unloading"
-                f3="Free blanket, trolly & straps"
-                f4="Standard insurance cover"
-                f5="Free local mileage, waiting time"
-                f6="Standard insurance cover"
-                f7="600 cubic ft loading capacity"
+                f1={
+                  moveDesciptionsCalc(
+                    "STANDARD",
+                    details.moveDetails.propertyType
+                  ).f1
+                }
+                f2={
+                  moveDesciptionsCalc(
+                    "STANDARD",
+                    details.moveDetails.propertyType
+                  ).f2
+                }
+                f3={
+                  moveDesciptionsCalc(
+                    "STANDARD",
+                    details.moveDetails.propertyType
+                  ).f3
+                }
+                f4={
+                  moveDesciptionsCalc(
+                    "STANDARD",
+                    details.moveDetails.propertyType
+                  ).f4
+                }
+                f5={
+                  moveDesciptionsCalc(
+                    "STANDARD",
+                    details.moveDetails.propertyType
+                  ).f5
+                }
+                f6={
+                  moveDesciptionsCalc(
+                    "STANDARD",
+                    details.moveDetails.propertyType
+                  ).f6
+                }
+                f7={
+                  moveDesciptionsCalc(
+                    "STANDARD",
+                    details.moveDetails.propertyType
+                  ).f7
+                }
+                f8={
+                  moveDesciptionsCalc(
+                    "STANDARD",
+                    details.moveDetails.propertyType
+                  ).f8
+                }
                 link="/movers"
               />
               <PackageCard
@@ -81,15 +123,38 @@ const MovePackage = () => {
                 title="GOLD"
                 subTitle="Price per hour"
                 price="386"
-                f1="1 Truck, 1 Bed content, Free blanket"
-                f2="Free loading & unloading"
-                f3="Free blanket, trolly & straps"
-                f4="Standard insurance cover"
-                f5="Free local mileage, waiting time"
-                f6="Comprehensive insurance cover"
-                f7="Shrink wrapping"
-                f8="600 cubic ft loading capacity"
-                link="man-and-van"
+                f1={
+                  moveDesciptionsCalc("GOLD", details.moveDetails.propertyType)
+                    .f1
+                }
+                f2={
+                  moveDesciptionsCalc("GOLD", details.moveDetails.propertyType)
+                    .f2
+                }
+                f3={
+                  moveDesciptionsCalc("GOLD", details.moveDetails.propertyType)
+                    .f3
+                }
+                f4={
+                  moveDesciptionsCalc("GOLD", details.moveDetails.propertyType)
+                    .f4
+                }
+                f5={
+                  moveDesciptionsCalc("GOLD", details.moveDetails.propertyType)
+                    .f5
+                }
+                f6={
+                  moveDesciptionsCalc("GOLD", details.moveDetails.propertyType)
+                    .f6
+                }
+                f7={
+                  moveDesciptionsCalc("GOLD", details.moveDetails.propertyType)
+                    .f7
+                }
+                f8={
+                  moveDesciptionsCalc("GOLD", details.moveDetails.propertyType)
+                    .f8
+                }
                 preferred
                 link="/movers"
               />
@@ -98,17 +163,54 @@ const MovePackage = () => {
                 title="PREMIUM"
                 subTitle="Prices per hour"
                 price="397"
-                f1="1 Truck, 1 Bed content, Free blanket"
-                f2="Free loading & unloading"
-                f3="Free blanket, trolly & straps"
-                f4="Standard insurance cover"
-                f5="Free local mileage, waiting time"
-                f6="Comprehensive insurance cover"
-                f7="Free mattress covers"
-                f8="Free wardrobe boxes"
-                f9="1 item dismantling / assembly"
-                f10="Free ₤50 packing material"
-                f11="600 cubic ft loading capacity"
+                f1={
+                  moveDesciptionsCalc(
+                    "PREMIUM",
+                    details.moveDetails.propertyType
+                  ).f1
+                }
+                f2={
+                  moveDesciptionsCalc(
+                    "PREMIUM",
+                    details.moveDetails.propertyType
+                  ).f2
+                }
+                f3={
+                  moveDesciptionsCalc(
+                    "PREMIUM",
+                    details.moveDetails.propertyType
+                  ).f3
+                }
+                f4={
+                  moveDesciptionsCalc(
+                    "PREMIUM",
+                    details.moveDetails.propertyType
+                  ).f4
+                }
+                f5={
+                  moveDesciptionsCalc(
+                    "PREMIUM",
+                    details.moveDetails.propertyType
+                  ).f5
+                }
+                f6={
+                  moveDesciptionsCalc(
+                    "PREMIUM",
+                    details.moveDetails.propertyType
+                  ).f6
+                }
+                f7={
+                  moveDesciptionsCalc(
+                    "PREMIUM",
+                    details.moveDetails.propertyType
+                  ).f7
+                }
+                f8={
+                  moveDesciptionsCalc(
+                    "PREMIUM",
+                    details.moveDetails.propertyType
+                  ).f8
+                }
                 link="/movers"
               />
               <PackageCard
@@ -116,17 +218,66 @@ const MovePackage = () => {
                 title="PREMIUM PLUS"
                 subTitle=""
                 price="466"
-                f1="1 Truck, 1 Bed content, Free blanket"
-                f2="Free loading & unloading"
-                f3="Free blanket, trolly & straps"
-                f4="Standard insurance cover"
-                f5="Free local mileage, waiting time"
-                f6="Comprehensive insurance cover"
-                f7="2 Free mattress covers"
-                f8="Free wardrobe boxes"
-                f9="1 item dismantling / assembly"
-                f10="Free ₤75 packing material"
-                f11="600 cubic ft loading capacity"
+                f1={
+                  moveDesciptionsCalc(
+                    "PREMIUM PLUS",
+                    details.moveDetails.propertyType
+                  ).f1
+                }
+                f2={
+                  moveDesciptionsCalc(
+                    "PREMIUM PLUS",
+                    details.moveDetails.propertyType
+                  ).f2
+                }
+                f3={
+                  moveDesciptionsCalc(
+                    "PREMIUM PLUS",
+                    details.moveDetails.propertyType
+                  ).f3
+                }
+                f4={
+                  moveDesciptionsCalc(
+                    "PREMIUM PLUS",
+                    details.moveDetails.propertyType
+                  ).f4
+                }
+                f5={
+                  moveDesciptionsCalc(
+                    "PREMIUM PLUS",
+                    details.moveDetails.propertyType
+                  ).f5
+                }
+                f6={
+                  moveDesciptionsCalc(
+                    "PREMIUM PLUS",
+                    details.moveDetails.propertyType
+                  ).f6
+                }
+                f7={
+                  moveDesciptionsCalc(
+                    "PREMIUM PLUS",
+                    details.moveDetails.propertyType
+                  ).f7
+                }
+                f8={
+                  moveDesciptionsCalc(
+                    "PREMIUM PLUS",
+                    details.moveDetails.propertyType
+                  ).f8
+                }
+                f9={
+                  moveDesciptionsCalc(
+                    "PREMIUM PLUS",
+                    details.moveDetails.propertyType
+                  ).f9
+                }
+                f10={
+                  moveDesciptionsCalc(
+                    "PREMIUM PLUS",
+                    details.moveDetails.propertyType
+                  ).f10
+                }
                 link="/movers"
               />
             </div>

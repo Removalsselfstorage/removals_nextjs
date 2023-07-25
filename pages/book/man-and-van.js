@@ -48,7 +48,7 @@ const ManAndVan = () => {
     details.serviceLocation.locationTo.liftAvailable || false
   );
   const [durationCount, setDurationCount] = useState(
-    details.moveDetails.duration || 0
+    details.moveDetails.duration || 3
   );
   const [address, setAddress] = useState("");
   const [addressDetails, setAddressDetails] = useState("");
@@ -86,6 +86,20 @@ const ManAndVan = () => {
   const [activateError, setActivateError] = useState(false);
 
   const hourValue = durationCount <= 1 ? "hour" : "hours";
+
+  const durationCalculation = (duration) => {
+    let price = 1;
+    // switch (durationCount) {
+    //   case 3:
+    //     price += (57.99 * 3)
+    //     break;
+
+    //   default:
+    //     break;
+    // }
+    const newPrice = price * duration;
+    return newPrice;
+  };
 
   //   Email validation
   const handleEmailChange = (e) => {
@@ -226,7 +240,7 @@ const ManAndVan = () => {
           moveDateRaw: dateValue,
           movePackage: details.moveDetails.movePackage,
           quoteRef: details.moveDetails.quoteRef,
-          initialPackagePrice: details.moveDetails.initialPackagePrice,
+          initialPackagePrice: durationCalculation(durationCount),
         })
       );
       dispatch(
@@ -663,42 +677,47 @@ const ManAndVan = () => {
                   </div>
                 </div>
                 {/* row 6 */}
-                <div className="flex flex-col  justify-center space-y-[10px] lg:space-y-0 lg:flex-row lg:items-center lg:space-x-[50px]">
+                <div className="flex flex-col  justify-center space-y-[10px] lg:space-y-0 lg:flex-row lg:items-start lg:space-x-[50px]">
                   {/* left */}
                   <div className="flex flex-[1]">
                     {/* duration */}
                     <div className="flex flex-col w-full">
-                      <label className="label">
-                        <span className="label-text font-semibold">
-                          Duration*
-                        </span>
-                      </label>
-                      <div className="flex items-center space-x-[5px]">
-                        <div
-                          onClick={() =>
-                            durationCount &&
-                            setDurationCount((prev) => prev - 1)
-                          }
-                          className="flex justify-center items-center btn btn-primary w-[45px] p-[5px] h-[45px] rounded-[5px]"
-                        >
-                          <AiOutlineMinus className="text-white font-bold text-[18px]" />
-                        </div>
-                        <div
-                          className={`${
-                            activateError && !durationCount
-                              ? "flex justify-center items-center h-[48px] rounded-[10px] w-full border border-primary font-semibold ring ring-secondary"
-                              : "flex justify-center items-center h-[48px] rounded-[10px] w-full border border-primary font-semibold"
-                          }`}
-                        >
-                          {durationCount} {hourValue}
-                        </div>
-                        <div
-                          onClick={() => setDurationCount((prev) => prev + 1)}
-                          className="flex justify-center items-center btn btn-primary w-[45px] p-[5px] h-[45px] rounded-[5px]"
-                        >
-                          <AiOutlinePlus className="text-white font-bold text-[18px]" />
+                      <div className="flex flex-col w-full">
+                        <label className="label">
+                          <span className="label-text font-semibold">
+                            Duration*
+                          </span>
+                        </label>
+                        <div className="flex items-center space-x-[5px]">
+                          <div
+                            onClick={() =>
+                              durationCount > 3 &&
+                              setDurationCount((prev) => prev - 1)
+                            }
+                            className="flex justify-center items-center btn btn-primary w-[45px] p-[5px] h-[45px] rounded-[5px]"
+                          >
+                            <AiOutlineMinus className="text-white font-bold text-[18px]" />
+                          </div>
+                          <div
+                            className={`${
+                              activateError && !durationCount
+                                ? "flex justify-center items-center h-[48px] rounded-[10px] w-full border border-primary font-semibold ring ring-secondary"
+                                : "flex justify-center items-center h-[48px] rounded-[10px] w-full border border-primary font-semibold"
+                            }`}
+                          >
+                            {durationCount} {hourValue}
+                          </div>
+                          <div
+                            onClick={() => setDurationCount((prev) => prev + 1)}
+                            className="flex justify-center items-center btn btn-primary w-[45px] p-[5px] h-[45px] rounded-[5px]"
+                          >
+                            <AiOutlinePlus className="text-white font-bold text-[18px]" />
+                          </div>
                         </div>
                       </div>
+                      <p className="mt-[5px] text-[15px]">
+                        Minimum of 3 hours hire
+                      </p>
                     </div>
                   </div>
                   {/* right */}

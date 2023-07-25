@@ -1,20 +1,38 @@
-import BookingLayout from '@/layouts/BookingLayout';
-import { titleFont } from '@/utils/fonts';
-import Head from 'next/head';
-import Link from 'next/link';
-import React, { useRef, useState } from 'react';
+import BookingLayout from "@/layouts/BookingLayout";
+import { titleFont } from "@/utils/fonts";
+import Head from "next/head";
+import Link from "next/link";
+import React, { useRef, useState } from "react";
 
-import PriceDatePick from '@/components/BookingPages/movers/PriceDatePick';
-import FeaturesScroll from '@/components/BookingPages/movers/FeaturesScroll';
-import FullRating from '@/components/Rating/FullRating';
-import MoverCard from '@/components/BookingPages/movers/MoverCard';
-import { BiSolidPhoneCall } from 'react-icons/bi';
-import { getAllDetails } from '@/store/quoteSlice';
-import { useDispatch, useSelector } from 'react-redux';
-import dayjs from 'dayjs';
+import PriceDatePick from "@/components/BookingPages/movers/PriceDatePick";
+import FeaturesScroll from "@/components/BookingPages/movers/FeaturesScroll";
+import FullRating from "@/components/Rating/FullRating";
+import MoverCard from "@/components/BookingPages/movers/MoverCard";
+import { BiSolidPhoneCall } from "react-icons/bi";
+import { getAllDetails } from "@/store/quoteSlice";
+import { useDispatch, useSelector } from "react-redux";
+import dayjs from "dayjs";
 
 const MoveDetails = () => {
   const details = useSelector(getAllDetails);
+
+  const checkDuration = () => {
+    switch (details.moveDetails.propertyType) {
+      case "Office removals":
+        return true;
+        break;
+      case "Studio flat":
+        return true;
+        break;
+      case "Furniture & Appliances":
+        return true;
+        break;
+
+      default:
+        return false;
+        break;
+    }
+  };
 
   //   console.log(details);
   return (
@@ -43,7 +61,7 @@ const MoveDetails = () => {
               Pick-up Location:
             </p>
             <p className="font-semibold text-[14px] ">
-              {details.serviceLocation.locationFrom.name}{' '}
+              {details.serviceLocation.locationFrom.name}{" "}
               {details.serviceLocation.locationFrom.postCode &&
                 `(${details.serviceLocation.locationFrom.postCode})`}
             </p>
@@ -54,7 +72,7 @@ const MoveDetails = () => {
               Drop-off Location:
             </p>
             <p className="font-semibold text-[14px] ">
-              {details.serviceLocation.locationTo.name}{' '}
+              {details.serviceLocation.locationTo.name}{" "}
               {details.serviceLocation.locationTo.postCode &&
                 `(${details.serviceLocation.locationTo.postCode})`}
             </p>
@@ -76,7 +94,7 @@ const MoveDetails = () => {
             </p>
           </div>
 
-          {details.moveDetails.duration && (
+          {checkDuration() && (
             <div className="flex flex-col space-y-[5px]">
               <p className="text-primary font-semibold text-[18px]">
                 Duration:
@@ -86,14 +104,15 @@ const MoveDetails = () => {
               </p>
             </div>
           )}
-          
+
           <div className="flex flex-col space-y-[5px]">
             <p className="text-primary font-semibold text-[18px]">Move date:</p>
             <p className="font-semibold text-[14px] ">
-              {!details.moverDetails.moveDateFormatted ? dayjs(details.moveDetails.moveDateRaw).format(
-                'dddd, MMMM D, YYYY'
-              ) : details.moverDetails.moveDateFormatted}
-              
+              {!details.moverDetails.moveDateFormatted
+                ? dayjs(details.moveDetails.moveDateRaw).format(
+                    "dddd, MMMM D, YYYY"
+                  )
+                : details.moverDetails.moveDateFormatted}
             </p>
           </div>
         </div>

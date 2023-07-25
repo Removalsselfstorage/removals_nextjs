@@ -250,7 +250,7 @@ export function calculatePriceChange(
 //   const result = calculatePriceChange(dayOfWeek, dayNumber, month, year, price, generalDecrement, sundayIncrement);
 //   console.log(result);
 
-export function generatePriceList(
+export function generatePriceList2(
   dayOfWeek,
   dayNumber,
   month,
@@ -325,31 +325,74 @@ export function generatePriceList(
   return resultArray;
 }
 
-// Example usage
-// const dayOfWeek = 'Tue';
-// const dayNumber = 1;
-// const month = 'Jul';
-// const year = 2023;
-// const priceFirstDay = 100;
-// const priceSecondDay = 150;
-// const priceThirdDay = 200;
-// const priceSaturdays = 120;
-// const priceSundays = 130;
-// const priceOtherDays = 80;
+export function generatePriceList23(dayOfWeek, dayNumber, month, year, priceFirstDay, priceSecondDay, priceThirdDay, priceSaturdays, priceSundays, priceOtherDays) {
+  const dayMap = {
+    Sun: 0,
+    Mon: 1,
+    Tue: 2,
+    Wed: 3,
+    Thu: 4,
+    Fri: 5,
+    Sat: 6
+  };
 
-// const result = generatePriceList(
-//   dayOfWeek,
-//   dayNumber,
-//   month,
-//   year,
-//   priceFirstDay,
-//   priceSecondDay,
-//   priceThirdDay,
-//   priceSaturdays,
-//   priceSundays,
-//   priceOtherDays
-// );
-// console.log(result);
+  const monthMap = {
+    Jan: '01',
+    Feb: '02',
+    Mar: '03',
+    Apr: '04',
+    May: '05',
+    Jun: '06',
+    Jul: '07',
+    Aug: '08',
+    Sep: '09',
+    Oct: '10',
+    Nov: '11',
+    Dec: '12'
+  };
+
+  const initialDate = new Date(year, monthMap[month], dayNumber);
+
+  const resultArray = [];
+  let currentDate = initialDate;
+  let currentPrice;
+
+  let isSunday = dayOfWeek === "Sun";
+  let isSaturday = dayOfWeek === "Sat";
+
+  for (let i = 0; i < 90; i++) {
+    if (i === 0) {
+      currentPrice = priceFirstDay;
+    } else if (i === 1) {
+      currentPrice = priceSecondDay;
+    } else if (i === 2) {
+      currentPrice = priceThirdDay;
+    } else if (isSaturday) {
+      currentPrice = priceSaturdays;
+    } else if (isSunday) {
+      currentPrice = priceSundays;
+    } else {
+      currentPrice = priceOtherDays;
+    }
+
+    const formattedDate = currentDate.toISOString().split('T')[0];
+    resultArray.push({
+      id: i + 1,
+      date: currentDate.toDateString(),
+      price: currentPrice,
+      date2: formattedDate
+    });
+
+    currentDate.setDate(currentDate.getDate() + 1);
+    isSunday = currentDate.getDay() === 0;
+    isSaturday = currentDate.getDay() === 6;
+  }
+
+  return resultArray;
+}
+
+
+
 
 
 

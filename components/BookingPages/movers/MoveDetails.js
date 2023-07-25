@@ -90,9 +90,10 @@ const MoveDetails = () => {
           <div className="flex flex-col space-y-[5px]">
             <p className="text-primary font-semibold text-[18px]">Move date:</p>
             <p className="font-semibold text-[14px] ">
-              {dayjs(details.moveDetails.moveDateRaw).format(
+              {!details.moverDetails.moveDateFormatted ? dayjs(details.moveDetails.moveDateRaw).format(
                 'dddd, MMMM D, YYYY'
-              )}
+              ) : details.moverDetails.moveDateFormatted}
+              
             </p>
           </div>
         </div>

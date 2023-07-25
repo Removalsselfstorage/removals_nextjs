@@ -43,6 +43,7 @@ const initialState = {
     duration: '',
     moveDate: '',
     moveDateRaw: '',
+    
     movePackage: '',
     quoteRef: '',
     initialPackagePrice: '',
@@ -59,6 +60,8 @@ const initialState = {
     priceOtherDays: '',
     priceSundays: '',
     pickPrice: 0,
+    moveDateFormatted: '',
+    dateId: 1
   },
 
   // paymentDetails

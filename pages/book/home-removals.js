@@ -1,6 +1,6 @@
-import QuoteType from '@/components/BookingPages/QuoteType';
-import BasicDatePicker from '@/components/DatePicker/DatePicker';
-import SelectSearch from '@/components/Inputs/SelectSearch';
+import QuoteType from "@/components/BookingPages/QuoteType";
+import BasicDatePicker from "@/components/DatePicker/DatePicker";
+import SelectSearch from "@/components/Inputs/SelectSearch";
 import {
   citiesOptions,
   menOptions,
@@ -8,27 +8,27 @@ import {
   phoneCodesOptions,
   serviceOptions,
   serviceOptions2,
-} from '@/dummyData/inputData';
-import BookingLayout from '@/layouts/BookingLayout';
-import { titleFont } from '@/utils/fonts';
-import Head from 'next/head';
-import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
-import { FiEdit } from 'react-icons/fi';
-import { MdKeyboardArrowRight } from 'react-icons/md';
-import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai';
-import GoogleSearchInput from '@/components/Inputs/GoogleSearchInput';
-import { useDispatch, useSelector } from 'react-redux';
+} from "@/dummyData/inputData";
+import BookingLayout from "@/layouts/BookingLayout";
+import { titleFont } from "@/utils/fonts";
+import Head from "next/head";
+import Link from "next/link";
+import React, { useEffect, useState } from "react";
+import { FiEdit } from "react-icons/fi";
+import { MdKeyboardArrowRight } from "react-icons/md";
+import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
+import GoogleSearchInput from "@/components/Inputs/GoogleSearchInput";
+import { useDispatch, useSelector } from "react-redux";
 import {
   getAllDetails,
   updateLocationDetails,
   updateMoveDetails,
   updateMoverDetails,
   updatePersonalDetails,
-} from '@/store/quoteSlice';
-import DatePicker2 from '@/components/DatePicker/DatePicker2';
-import dayjs from 'dayjs';
-import { useRouter } from 'next/navigation';
+} from "@/store/quoteSlice";
+import DatePicker2 from "@/components/DatePicker/DatePicker2";
+import dayjs from "dayjs";
+import { useRouter } from "next/navigation";
 
 const CompleteHouse = () => {
   const router = useRouter();
@@ -49,36 +49,36 @@ const CompleteHouse = () => {
   const [lift2, setLift2] = useState(
     details.serviceLocation.locationTo.liftAvailable || false
   );
-  const [address, setAddress] = useState('');
-  const [addressDetails, setAddressDetails] = useState('');
-  const [address2, setAddress2] = useState('');
-  const [addressDetails2, setAddressDetails2] = useState('');
+  const [address, setAddress] = useState("");
+  const [addressDetails, setAddressDetails] = useState("");
+  const [address2, setAddress2] = useState("");
+  const [addressDetails2, setAddressDetails2] = useState("");
   const [propertyValue, setPropertyValue] = useState(
-    details.moveDetails.propertyType || ''
+    details.moveDetails.propertyType || ""
   );
   const [phoneValue, setPhoneValue] = useState(
-    details.personalDetails.countryCode || ''
+    details.personalDetails.countryCode || ""
   );
   const [menValue, setMenValue] = useState(
-    details.moveDetails.numberOfMovers || ''
+    details.moveDetails.numberOfMovers || ""
   );
   const [agreeTermsValue, setAgreeTermsValue] = useState(false);
   const [mileageValue, setMileageValue] = useState(
-    details.moveDetails.mileage || ''
+    details.moveDetails.mileage || ""
   );
   const [dateValue, setDateValue] = useState(
     dayjs(`'${details.moveDetails.moveDate}'`)
   );
   const [firstName, setFirstName] = useState(
-    details.personalDetails.firstName || ''
+    details.personalDetails.firstName || ""
   );
   const [lastName, setLastName] = useState(
-    details.personalDetails.lastName || ''
+    details.personalDetails.lastName || ""
   );
-  const [email, setEmail] = useState(details.personalDetails.email || '');
+  const [email, setEmail] = useState(details.personalDetails.email || "");
   const [emailError, setEmailError] = useState(true);
-  const [volume, setVolume] = useState(details.moveDetails.volume || '');
-  const [phone, setPhone] = useState(details.personalDetails.telephone || '');
+  const [volume, setVolume] = useState(details.moveDetails.volume || "");
+  const [phone, setPhone] = useState(details.personalDetails.telephone || "");
   const [phoneError, setPhoneError] = useState(true);
   const [submitError, setSubmitError] = useState(false);
   const [submitLoading, setSubmitLoading] = useState(false);
@@ -100,7 +100,7 @@ const CompleteHouse = () => {
     const inputValue = event.target.value;
 
     // Remove any non-digit characters from the input
-    const strippedNumber = inputValue.replace(/\D/g, '');
+    const strippedNumber = inputValue.replace(/\D/g, "");
 
     // Check if the stripped number is either 10 or 11 digits long
     const isValidPhoneNumber =
@@ -111,8 +111,8 @@ const CompleteHouse = () => {
   };
 
   //Date
-  const date = dayjs(dateValue).format('YYYY/MM/DD');
-  const date2 = dayjs(dateValue).format('dddd, MMMM D, YYYY');
+  const date = dayjs(dateValue).format("YYYY/MM/DD");
+  const date2 = dayjs(dateValue).format("dddd, MMMM D, YYYY");
 
   const increaseFloorCount = () => {
     setFloorCount((prev) => prev + 1);
@@ -145,7 +145,7 @@ const CompleteHouse = () => {
     const option = phoneCodesOptions.filter(
       (opt) =>
         opt.value ==
-        (details.personalDetails.countryCode || 'United Kingdom (+44)')
+        (details.personalDetails.countryCode || "United Kingdom (+44)")
       // opt.value == details.personalDetails.countryCode ||
       // 'United Kingdom (+44)'
     );
@@ -164,8 +164,8 @@ const CompleteHouse = () => {
     if (
       //   floorCount < 0 ||
       //   !floorCount2 ||
-      propertyValue == '' ||
-      propertyValue == 'Select' ||
+      propertyValue == "" ||
+      propertyValue == "Select" ||
       !address ||
       !address2 ||
       !firstName ||
@@ -175,11 +175,11 @@ const CompleteHouse = () => {
       !phoneError ||
       !phone ||
       !menValue ||
-      menValue == 'Select' ||
+      menValue == "Select" ||
       !volume ||
       !mileageValue ||
-      mileageValue == 'Select' ||
-      date == 'Invalid Date' ||
+      mileageValue == "Select" ||
+      date == "Invalid Date" ||
       !agreeTermsValue
     ) {
       setSubmitError(true);
@@ -241,13 +241,27 @@ const CompleteHouse = () => {
           initialPackagePrice: details.moveDetails.initialPackagePrice,
         })
       );
-      router.push('/book/move-package');
+      dispatch(
+        updateMoverDetails({
+          moverName: "",
+          moverTime: "",
+          moverPrice: "",
+          priceSecondDay: "",
+          priceThirdDay: "",
+          priceOtherDays: "",
+          priceSundays: "",
+          pickPrice: 0,
+          moveDateFormatted: "",
+          dateId: 1,
+        })
+      );
+      router.push("/book/move-package");
     }
   };
 
   //   console.log(details.moveDetails.moveDate);
   //   console.log(dateValue);
-  console.log(details);
+  // console.log(details);
   //   console.log(postCode1);
 
   return (
@@ -285,7 +299,7 @@ const CompleteHouse = () => {
               <h3
                 className={`${titleFont.variable} font-sans2 text-3xl lg:text-4xl font-extrabold flex-col items-center justify-center`}
               >
-                <p className="">Your Move Details</p>{' '}
+                <p className="">Your Move Details</p>{" "}
                 <div className="w-full bg-primary/20 h-[20px] mt-[-12px] "></div>
               </h3>
             </div>
@@ -341,7 +355,7 @@ const CompleteHouse = () => {
                             // activateError && !floorCount
                             //   ? 'flex justify-center items-center ring ring-secondary h-[50px] rounded-[10px] w-[60px]'
                             //   : 'flex justify-center items-center h-[50px] rounded-[10px] w-[60px] border border-primary font-semibold'
-                            'flex justify-center items-center h-[50px] rounded-[10px] w-[60px] border border-primary font-semibold'
+                            "flex justify-center items-center h-[50px] rounded-[10px] w-[60px] border border-primary font-semibold"
                           }`}
                         >
                           {floorCount}
@@ -423,7 +437,7 @@ const CompleteHouse = () => {
                             // activateError && !floorCount2
                             //   ? 'flex justify-center items-center ring ring-secondary h-[50px] rounded-[10px] w-[60px]'
                             //   : 'flex justify-center items-center h-[50px] rounded-[10px] w-[60px] border border-primary font-semibold'
-                            'flex justify-center items-center h-[50px] rounded-[10px] w-[60px] border border-primary font-semibold'
+                            "flex justify-center items-center h-[50px] rounded-[10px] w-[60px] border border-primary font-semibold"
                           }`}
                         >
                           {floorCount2}
@@ -477,8 +491,8 @@ const CompleteHouse = () => {
                         placeholder="Type here"
                         className={`${
                           activateError && !firstName
-                            ? 'ring ring-secondary'
-                            : ''
+                            ? "ring ring-secondary"
+                            : ""
                         } input input-primary w-full h-[43px]`}
                         onChange={(e) => setFirstName(e.target.value)}
                         defaultValue={firstName}
@@ -499,8 +513,8 @@ const CompleteHouse = () => {
                         placeholder="Type here"
                         className={`${
                           activateError && !lastName
-                            ? 'ring ring-secondary'
-                            : ''
+                            ? "ring ring-secondary"
+                            : ""
                         } input input-primary w-full h-[43px]`}
                         onChange={(e) => setLastName(e.target.value)}
                         defaultValue={lastName}
@@ -523,8 +537,8 @@ const CompleteHouse = () => {
                         placeholder="Type here"
                         className={`${
                           activateError && (!email || !emailError)
-                            ? 'ring ring-secondary'
-                            : ''
+                            ? "ring ring-secondary"
+                            : ""
                         } input input-primary w-full h-[43px]`}
                         onChange={handleEmailChange}
                         //
@@ -570,8 +584,8 @@ const CompleteHouse = () => {
                         placeholder="Type here"
                         className={`${
                           activateError && (!phone || !phoneError)
-                            ? 'ring ring-secondary'
-                            : ''
+                            ? "ring ring-secondary"
+                            : ""
                         } input input-primary w-full h-[43px]`}
                         onChange={handlePhoneNumberChange}
                         defaultValue={phone}
@@ -609,7 +623,7 @@ const CompleteHouse = () => {
                           setValue={setPropertyValue}
                           errorCheck={
                             activateError &&
-                            (propertyValue == 'Select' || propertyValue == '')
+                            (propertyValue == "Select" || propertyValue == "")
                           }
                         />
                       </div>
@@ -636,7 +650,7 @@ const CompleteHouse = () => {
                           setValue={setMenValue}
                           errorCheck={
                             activateError &&
-                            (menValue == 'Select' || menValue == '')
+                            (menValue == "Select" || menValue == "")
                           }
                         />
                       </div>
@@ -660,7 +674,7 @@ const CompleteHouse = () => {
                         min="0"
                         placeholder="Type here"
                         className={`${
-                          activateError && !volume ? 'ring ring-secondary' : ''
+                          activateError && !volume ? "ring ring-secondary" : ""
                         } input input-primary w-full h-[43px]`}
                         onChange={(e) => setVolume(e.target.value)}
                         defaultValue={volume}
@@ -689,7 +703,7 @@ const CompleteHouse = () => {
                           setValue={setMileageValue}
                           errorCheck={
                             activateError &&
-                            (mileageValue == 'Select' || mileageValue == '')
+                            (mileageValue == "Select" || mileageValue == "")
                           }
                         />
                       </div>
@@ -706,9 +720,9 @@ const CompleteHouse = () => {
                       </label>
                       <button
                         className={`${
-                          activateError && date == 'Invalid Date'
-                            ? 'ring ring-secondary'
-                            : ''
+                          activateError && date == "Invalid Date"
+                            ? "ring ring-secondary"
+                            : ""
                         } flex justify-center items-center bg-white border-[1.4px] rounded-[8px] border-primary cursor-pointer overflow-hidden py-[4px] focus:ring-[2px] active:ring-[2px] ring-primary`}
                       >
                         <div className="opacity-[0.9] mt-[-10px] cursor-pointer">
@@ -736,8 +750,8 @@ const CompleteHouse = () => {
                       //   checked="checked"
                       className={`${
                         activateError && !agreeTermsValue
-                          ? 'ring ring-secondary'
-                          : ''
+                          ? "ring ring-secondary"
+                          : ""
                       } checkbox checkbox-primary`}
                       onChange={(e) => setAgreeTermsValue(e.target.checked)}
                     />

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState } from "react";
 import {
   MdKeyboardArrowRight,
   MdPayments,
@@ -6,23 +6,28 @@ import {
   MdCancel,
   MdWork,
   MdEmail,
-} from 'react-icons/md';
-import { FaTruckMoving } from 'react-icons/fa';
-import { BiSolidPhoneCall } from 'react-icons/bi';
+} from "react-icons/md";
+import { FaTruckMoving } from "react-icons/fa";
+import { BiSolidPhoneCall } from "react-icons/bi";
 
-import FullRating from '@/components/Rating/FullRating';
-import Modal from '@/components/Modal/Modal';
-import SideModal from '@/components/Modal/SideModal';
-import Link from 'next/link';
-import { useDispatch, useSelector } from 'react-redux';
-import { getAllDetails, updateMoverDetails } from '@/store/quoteSlice';
-import StarRating from '@/components/Rating/EditHalfStars2';
-import { useRouter } from 'next/navigation';
-import { convertToFloatOrRound, convertToFloatWithOneDecimal } from '@/utils/logics';
+import FullRating from "@/components/Rating/FullRating";
+import Modal from "@/components/Modal/Modal";
+import SideModal from "@/components/Modal/SideModal";
+import Link from "next/link";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllDetails, updateMoverDetails } from "@/store/quoteSlice";
+import StarRating from "@/components/Rating/EditHalfStars2";
+import { useRouter } from "next/navigation";
+import {
+  convertToFloatOrRound,
+  convertToFloatWithOneDecimal,
+} from "@/utils/logics";
 
 const MoverCard = ({
   image,
   name,
+  title,
+  subtitle,
   phone,
   email,
   loadArea,
@@ -42,12 +47,12 @@ const MoverCard = ({
   const priceThirdDay = (priceFirstDay * 0.495).toFixed(); //107
   const priceSaturdays = (priceFirstDay * 0.441).toFixed(); //60
   const priceSundays = (priceFirstDay * 0.441).toFixed(); //8
-  const priceOtherDays = (priceFirstDay * 0.330).toFixed();
+  const priceOtherDays = (priceFirstDay * 0.33).toFixed();
 
   const [selectedTime, setSelectedTime] = useState(null);
-  const [timeValue, setTimeValue] = useState('');
-  const [moverName, setMoverName] = useState('');
-  const [moverPrice, setMoverPrice] = useState('');
+  const [timeValue, setTimeValue] = useState("");
+  const [moverName, setMoverName] = useState("");
+  const [moverPrice, setMoverPrice] = useState("");
   const [showMore, setShowMore] = useState(true);
   const [showModal, setShowModal] = useState(true);
   const [error, setError] = useState(false);
@@ -55,10 +60,10 @@ const MoverCard = ({
   const [submitLoading, setSubmitLoading] = useState(false);
 
   const allTime = [
-    { id: '7am - 9am', time: '7am - 9am' },
-    { id: '9am - 12am', time: '9am - 12am' },
-    { id: '12pm - 3pm', time: '12pm - 3pm' },
-    { id: '3pm - 5pm', time: '3pm - 5pm' },
+    { id: "7am - 9am", time: "7am - 9am" },
+    { id: "9am - 12am", time: "9am - 12am" },
+    { id: "12pm - 3pm", time: "12pm - 3pm" },
+    { id: "3pm - 5pm", time: "3pm - 5pm" },
   ];
 
   const onTimeHandle = (id, time) => {
@@ -68,7 +73,7 @@ const MoverCard = ({
 
   const onCheckout = () => {
     setSubmitError(true);
-    if (timeValue == '') {
+    if (timeValue == "") {
       setSubmitError(false);
     } else {
       setSubmitLoading(true);
@@ -77,13 +82,14 @@ const MoverCard = ({
           moverName: name,
           moverTime: timeValue,
           moverPrice: price,
-          pickPrice: details.moverDetails.pickPrice
+          pickPrice: details.moverDetails.pickPrice,
+          moveDateFormatted: details.moverDetails.moveDateFormatted,
+          dateId: details.moverDetails.dateId,
         })
       );
-      router.push('/book/checkout');
+      router.push("/book/checkout");
     }
   };
-
   // console.log(timeValue);
 
   return (
@@ -91,32 +97,43 @@ const MoverCard = ({
       <div className="flex border-[2px] rounded-[30px] my-[20px] shadow-xl overflow-hidden pb-[20px] w-full">
         <div className="flex flex-col w-full">
           {/* row 1 */}
-          <div className="flex flex-col xl:flex-row xl:items-center xl:space-x-[0px] mb-[20px] xl:mb-[0px] xl:py-[10px]">
+          <div
+            className={`${
+              !title
+                ? "flex flex-col xl:flex-row xl:items-center xl:space-x-[0px] mb-[20px] xl:mb-[0px] xl:py-[10px]"
+                : "flex flex-col xl:flex-row xl:items-center xl:space-x-[0px] py-[20px] mb-[20px] xl:mb-[0px] xl:py-[30px]"
+            } `}
+          >
             {/* image + details */}
-            <div className="flex flex-col md:flex-row md:items-center px-[20px] md:flex-[3] md:space-x-[30px] lg:space-x-[15px] mb-[20px] sm:mb-[10px] md:mb-[0px]">
-              {/* image */}
-              <div
-                className=" py-[20px]"
-                onClick={() => {
-                  setShowModal(true);
-                }}
-              >
-                <img
-                  src={image}
-                  alt=""
-                  className="h-[150px]  w-[300px] lg:w-[200px] object-cover md:h-[180px] lg:h-[140px] rounded-[30px]"
-                />
-              </div>
-              {/* mover details */}
-              <div className="flex flex-col w-full flex-[2]">
-                {/* mover name */}
-                <div className="flex items-center justify-between w-full pr-[20px] mb-[5px] sm:mb-[7px]">
-                  <h2 className="text-primary font-semibold text-[20px] ">
-                    {name} <span>{score}</span>
-                  </h2>
-                </div>
-                {/* phone / email */}
-                {/* <div className="flex flex-col  sm:items-start  space-y-[5px] mb-[5px] sm:mb-[10px] text-[15px]">
+            {!title && (
+              <div className="flex flex-col md:flex-row md:items-center px-[20px] md:flex-[3] md:space-x-[30px] lg:space-x-[15px] mb-[20px] sm:mb-[10px] md:mb-[0px]">
+                {/* image */}
+                {image && (
+                  <div
+                    className=" py-[20px]"
+                    onClick={() => {
+                      setShowModal(true);
+                    }}
+                  >
+                    <img
+                      src={image}
+                      alt=""
+                      className="h-[150px]  w-[300px] lg:w-[200px] object-cover md:h-[180px] lg:h-[140px] rounded-[30px]"
+                    />
+                  </div>
+                )}
+                {/* mover details */}
+                <div className="flex flex-col w-full flex-[2]">
+                  {/* mover name */}
+                  <div className="flex items-center justify-between w-full pr-[20px] mb-[5px] sm:mb-[7px]">
+                    {name && (
+                      <h2 className="text-primary font-semibold text-[20px] ">
+                        {name} <span className="text-[12px]">{score}</span>
+                      </h2>
+                    )}
+                  </div>
+                  {/* phone / email */}
+                  {/* <div className="flex flex-col  sm:items-start  space-y-[5px] mb-[5px] sm:mb-[10px] text-[15px]">
                 <div className="flex items-center space-x-[5px]">
                   <BiSolidPhoneCall className="text-primary" />
                   <a href={`tel:${phone}`} className=" link link-hover">
@@ -134,58 +151,78 @@ const MoverCard = ({
                 </div>
               </div> */}
 
-                {/* loading area */}
-                <div className="flex items-center space-x-[15px] md:space-x-[5px]  sm:items-start  space-y-[0px] lg:space-y-[0px] lg:flex-row lg:items-center mb-[5px] sm:mb-[7px] lg:mb-[7px] text-[15px]">
-                  <div className="flex items-center space-x-[5px]">
-                    <FaTruckMoving className="text-[20px] text-primary" />
-                    <p className="text-primary font-semibold hidden md:block">
-                      Load area:
-                    </p>
+                  {/* loading area */}
+                  <div className="flex items-center space-x-[15px] md:space-x-[5px]  sm:items-start  space-y-[0px] lg:space-y-[0px] lg:flex-row lg:items-center mb-[5px] sm:mb-[7px] lg:mb-[7px] text-[15px]">
+                    <div className="flex items-center space-x-[5px]">
+                      <FaTruckMoving className="text-[20px] text-primary" />
+                      <p className="text-primary font-semibold hidden md:block">
+                        Load area:
+                      </p>
+                    </div>
+                    <p className="link link-hover ">{loadArea}</p>
                   </div>
-                  <p className="link link-hover ">{loadArea}</p>
-                </div>
-                {/* rating / reviews */}
-                <div className="flex flex-col lg:flex-row lg:items-center space-y-[5px] lg:space-y-0 lg:space-x-[10px] mt-[0px] text-[15px] mb-[7px]">
-                  <div className="flex items-center space-x-[10px] mt-[0px] text-[15px]">
-                    <p className="font-semibold">{rating.toFixed(1)}</p>
-                    {/* <FullRating small value={rating} color="text-secondary" /> */}
-                    <StarRating
-                      rating={rating}
-                      size="text-secondary text-[16px]"
-                    />
-                    <p className="">{`- (${reviewCount} Reviews)`}</p>
-                  </div>
-                  {/* <div className="flex items-center space-x-[10px] mt-[0px] text-[15px]">
+                  {/* rating / reviews */}
+                  <div className="flex flex-col lg:flex-row lg:items-center space-y-[5px] lg:space-y-0 lg:space-x-[10px] mt-[0px] text-[15px] mb-[7px]">
+                    <div className="flex items-center space-x-[10px] mt-[0px] text-[15px]">
+                      <p className="font-semibold">{rating.toFixed(1)}</p>
+                      {/* <FullRating small value={rating} color="text-secondary" /> */}
+                      <StarRating
+                        rating={rating}
+                        size="text-secondary text-[16px]"
+                      />
+                      <p className="">{`- (${reviewCount} Reviews)`}</p>
+                    </div>
+                    {/* <div className="flex items-center space-x-[10px] mt-[0px] text-[15px]">
                   <p className="link link-hover text-primary font-semibold mt-[5px] md:mt-[0px] ">
                     See All Reviews
                   </p>
                 </div> */}
-                </div>
-                {/* package type */}
-                <div className="flex justify-center items-center py-[3px] px-[10px] bg-secondary/20 rounded-[10px] max-w-[200px]">
-                  <p className="text-secondary font-semibold text-[15px]">
-                    {details.moveDetails.movePackage} Package
-                  </p>
+                  </div>
+                  {/* package type */}
+                  <div className="flex justify-center items-center py-[3px] px-[10px] bg-secondary/20 rounded-[10px] max-w-[200px]">
+                    <p className="text-secondary font-semibold text-[15px]">
+                      {details.moveDetails.movePackage} Package
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
+            {title && (
+              <div className="flex flex-col md:flex-row md:items-center px-[20px] md:flex-[3] md:space-x-[30px] lg:space-x-[15px] mb-[20px] sm:mb-[10px] md:mb-[0px]">
+                <div className="flex flex-col w-full">
+                  <h2 className="text-primary font-bold text-[25px] mb-[10px]">
+                    <span className="text-secondary">Move smart</span> & save
+                    money!
+                  </h2>
+                  <p className="lg:text-[18px] xl:mr-[30px]">{subtitle}</p>
+                </div>
+              </div>
+            )}
             {/* mover price */}
-            <div className="flex md:flex-[1]">
-              <div className="flex  space-x-[20px] md:space-x-0 justify-between w-full xl:flex-col border border-primary rounded-[20px] xl:items-center xl:justify-center md:flex-[1] py-[10px] xl:py-[20px] mx-[20px] md:mx-[30px] xl:mx-[0px] xl:mr-[30px] px-[10px] sm:px-[20px] xl:px-[0px]">
-                <div className="flex flex-col xl:items-center">
+            <div className="flex md:flex-[1] mt-[10px] md:mt-[20px] xl:mt-[0px]">
+              <div
+                className={`${
+                  !title
+                    ? "flex  space-x-[20px] md:space-x-0 justify-between w-full xl:flex-col border border-primary rounded-[20px] xl:items-center xl:justify-center md:flex-[1] py-[10px] xl:py-[20px] mx-[20px] md:mx-[30px] xl:mx-[0px] xl:mr-[30px] px-[10px] sm:px-[20px] xl:px-[0px]"
+                    : "flex  space-x-[20px] md:space-x-0 justify-between w-full xl:flex-col border border-primary rounded-[20px] xl:items-center xl:justify-center md:flex-[1] py-[10px] xl:py-[35px] mx-[20px] md:mx-[30px] xl:mx-[0px] xl:mr-[30px] px-[10px] sm:px-[20px] xl:px-[0px] "
+                }`}
+              >
+                <div className="flex flex-col items-center justify-center xl:items-center">
                   <p className="font-bold text-primary text-[24px] whitespace-nowrap">
                     {`₤ ${price}`}
                   </p>
-                  <p className="text-[12px] text-gray-500">
+                  {/* <p className="text-[12px] text-gray-500">
                     Final price VAT included
-                  </p>
+                  </p> */}
                 </div>
-                <div className="flex  flex-col items-center justify-center space-y-[3px] lg:space-y-0 lg:flex-row md:space-x-[10px] md:items-center md:justify-center bg-primary/10 py-[5px] px-[10px] md:px-[30px] xl:px-[20px] rounded-[10px] xl:mt-[10px]">
-                  <MdWork className="text-[20px] text-primary" />
-                  <p className="text-primary text-[14px] leading-[16px]">
-                    {hiresCount} hires
-                  </p>
-                </div>
+                {!title && (
+                  <div className="flex  flex-col items-center justify-center space-y-[3px] lg:space-y-0 lg:flex-row md:space-x-[10px] md:items-center md:justify-center bg-primary/10 py-[5px] px-[10px] md:px-[30px] xl:px-[20px] rounded-[10px] xl:mt-[10px]">
+                    <MdWork className="text-[20px] text-primary" />
+                    <p className="text-primary text-[14px] leading-[16px]">
+                      {hiresCount} hires
+                    </p>
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -196,26 +233,28 @@ const MoverCard = ({
             className="flex justify-center mb-[30px] mx-[20px] md:mx-[30px] lg:hidden"
           >
             <div className="btn btn-primary btn-outline btn-block">
-              {showMore ? 'See More Details' : 'See Less Details'}
+              {showMore ? "See More Details" : "See Less Details"}
             </div>
           </div>
 
           {/* row 3 */}
-          <div className="relative">
-            <p
-              className={`${
-                showMore ? 'hidden' : 'block'
-              } lg:block mx-[20px] md:mx-[30px] text-[15px] overflow-auto scrollbar-thin scrollbar-track-gray-200/50 scrollbar-thumb-gray-500/20 scrollbar-default h-[120px] md:h-[95px] w-auto`}
-            >
-              {description}
-            </p>
-            <div className="absolute inset-x-0 bottom-0 h-[30px] bg-gradient-to-t from-white via-white to-transparent bg-opacity-50"></div>
-          </div>
+          {!title && (
+            <div className="relative">
+              <p
+                className={`${
+                  showMore ? "hidden" : "block"
+                } lg:block mx-[20px] md:mx-[30px] text-[15px] overflow-auto scrollbar-thin scrollbar-track-gray-200/50 scrollbar-thumb-gray-500/20 scrollbar-default h-[120px] md:h-[95px] w-auto`}
+              >
+                {description}
+              </p>
+              <div className="absolute inset-x-0 bottom-0 h-[30px] bg-gradient-to-t from-white via-white to-transparent bg-opacity-50"></div>
+            </div>
+          )}
 
           {/* row 4 */}
           <div
             className={`${
-              showMore ? 'hidden' : 'flex'
+              showMore ? "hidden" : "flex"
             } lg:flex flex-col space-y-[20px] lg:space-y-0 lg:flex-row lg:items-start mx-[20px] md:mx-[30px] mt-[20px] md:justify-between`}
           >
             {/* time + instruction */}
@@ -230,8 +269,8 @@ const MoverCard = ({
                         onClick={() => onTimeHandle(tm.id, tm.time)}
                         className={`${
                           isActive
-                            ? 'bg-secondary text-white border-secondary'
-                            : 'text-primary hover:border-secondary border-primary'
+                            ? "bg-secondary text-white border-secondary"
+                            : "text-primary hover:border-secondary border-primary"
                         } flex py-[5px] px-[10px] hover:cursor-pointer  rounded-[10px] items-center justify-center border-[2px] group  duration-150 whitespace-nowrap mr-[0px] w-full md:w-[200px]`}
                       >
                         {tm.time}
@@ -249,7 +288,10 @@ const MoverCard = ({
             </div>
             {/* check out */}
             <div className="flex flex-col items-center justify-center">
-              <button onClick={onCheckout} className="btn btn-primary w-full lg:w-[150px]">
+              <button
+                onClick={onCheckout}
+                className="btn btn-primary w-full lg:w-[150px]"
+              >
                 {!submitLoading && <span className="">Check Out</span>}
                 {submitLoading && (
                   <span className="loading loading-dots loading-md text-white"></span>

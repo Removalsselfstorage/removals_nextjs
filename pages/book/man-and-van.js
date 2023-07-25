@@ -1,6 +1,6 @@
-import QuoteType from '@/components/BookingPages/QuoteType';
-import BasicDatePicker from '@/components/DatePicker/DatePicker';
-import SelectSearch from '@/components/Inputs/SelectSearch';
+import QuoteType from "@/components/BookingPages/QuoteType";
+import BasicDatePicker from "@/components/DatePicker/DatePicker";
+import SelectSearch from "@/components/Inputs/SelectSearch";
 import {
   citiesOptions,
   menOptions,
@@ -8,25 +8,26 @@ import {
   phoneCodesOptions,
   serviceOptions,
   serviceOptions3,
-} from '@/dummyData/inputData';
-import BookingLayout from '@/layouts/BookingLayout';
-import { titleFont } from '@/utils/fonts';
-import Head from 'next/head';
-import Link from 'next/link';
-import React, { useState } from 'react';
-import { FiEdit } from 'react-icons/fi';
-import { MdKeyboardArrowRight } from 'react-icons/md';
-import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai';
-import GoogleSearchInput from '@/components/Inputs/GoogleSearchInput';
-import { useDispatch, useSelector } from 'react-redux';
+} from "@/dummyData/inputData";
+import BookingLayout from "@/layouts/BookingLayout";
+import { titleFont } from "@/utils/fonts";
+import Head from "next/head";
+import Link from "next/link";
+import React, { useState } from "react";
+import { FiEdit } from "react-icons/fi";
+import { MdKeyboardArrowRight } from "react-icons/md";
+import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
+import GoogleSearchInput from "@/components/Inputs/GoogleSearchInput";
+import { useDispatch, useSelector } from "react-redux";
 import {
   getAllDetails,
   updateLocationDetails,
   updateMoveDetails,
+  updateMoverDetails,
   updatePersonalDetails,
-} from '@/store/quoteSlice';
-import dayjs from 'dayjs';
-import { useRouter } from 'next/navigation';
+} from "@/store/quoteSlice";
+import dayjs from "dayjs";
+import { useRouter } from "next/navigation";
 
 const ManAndVan = () => {
   const router = useRouter();
@@ -49,42 +50,42 @@ const ManAndVan = () => {
   const [durationCount, setDurationCount] = useState(
     details.moveDetails.duration || 0
   );
-  const [address, setAddress] = useState('');
-  const [addressDetails, setAddressDetails] = useState('');
-  const [address2, setAddress2] = useState('');
-  const [addressDetails2, setAddressDetails2] = useState('');
+  const [address, setAddress] = useState("");
+  const [addressDetails, setAddressDetails] = useState("");
+  const [address2, setAddress2] = useState("");
+  const [addressDetails2, setAddressDetails2] = useState("");
   const [propertyValue, setPropertyValue] = useState(
-    details.moveDetails.propertyType || ''
+    details.moveDetails.propertyType || ""
   );
   const [phoneValue, setPhoneValue] = useState(
-    details.personalDetails.countryCode || ''
+    details.personalDetails.countryCode || ""
   );
   const [menValue, setMenValue] = useState(
-    details.moveDetails.numberOfMovers || ''
+    details.moveDetails.numberOfMovers || ""
   );
   const [agreeTermsValue, setAgreeTermsValue] = useState(false);
   const [mileageValue, setMileageValue] = useState(
-    details.moveDetails.mileage || ''
+    details.moveDetails.mileage || ""
   );
   const [dateValue, setDateValue] = useState(
     dayjs(`'${details.moveDetails.moveDate}'`)
   );
   const [firstName, setFirstName] = useState(
-    details.personalDetails.firstName || ''
+    details.personalDetails.firstName || ""
   );
   const [lastName, setLastName] = useState(
-    details.personalDetails.lastName || ''
+    details.personalDetails.lastName || ""
   );
-  const [email, setEmail] = useState(details.personalDetails.email || '');
+  const [email, setEmail] = useState(details.personalDetails.email || "");
   const [emailError, setEmailError] = useState(true);
-  const [volume, setVolume] = useState(details.moveDetails.volume || '');
-  const [phone, setPhone] = useState(details.personalDetails.telephone || '');
+  const [volume, setVolume] = useState(details.moveDetails.volume || "");
+  const [phone, setPhone] = useState(details.personalDetails.telephone || "");
   const [phoneError, setPhoneError] = useState(true);
   const [submitError, setSubmitError] = useState(false);
   const [submitLoading, setSubmitLoading] = useState(false);
   const [activateError, setActivateError] = useState(false);
 
-  const hourValue = durationCount <= 1 ? 'hour' : 'hours';
+  const hourValue = durationCount <= 1 ? "hour" : "hours";
 
   //   Email validation
   const handleEmailChange = (e) => {
@@ -102,7 +103,7 @@ const ManAndVan = () => {
     const inputValue = event.target.value;
 
     // Remove any non-digit characters from the input
-    const strippedNumber = inputValue.replace(/\D/g, '');
+    const strippedNumber = inputValue.replace(/\D/g, "");
 
     // Check if the stripped number is either 10 or 11 digits long
     const isValidPhoneNumber =
@@ -113,8 +114,8 @@ const ManAndVan = () => {
   };
 
   //Date
-  const date = dayjs(dateValue).format('YYYY/MM/DD');
-  const date2 = dayjs(dateValue).format('dddd, MMMM D, YYYY');
+  const date = dayjs(dateValue).format("YYYY/MM/DD");
+  const date2 = dayjs(dateValue).format("dddd, MMMM D, YYYY");
 
   const selectDefaultValue = () => {
     const option = serviceOptions3.filter(
@@ -139,7 +140,7 @@ const ManAndVan = () => {
   const defaultPhoneValue = () => {
     const option = phoneCodesOptions.filter(
       (opt) =>
-        opt.value == 'United Kingdom (+44)' ||
+        opt.value == "United Kingdom (+44)" ||
         details.personalDetails.countryCode
     );
     return option;
@@ -151,8 +152,8 @@ const ManAndVan = () => {
     if (
       //   !floorCount ||
       //   !floorCount2 ||
-      propertyValue == '' ||
-      propertyValue == 'Select' ||
+      propertyValue == "" ||
+      propertyValue == "Select" ||
       !address ||
       !address2 ||
       !firstName ||
@@ -162,12 +163,12 @@ const ManAndVan = () => {
       !phoneError ||
       !phone ||
       !menValue ||
-      menValue == 'Select' ||
+      menValue == "Select" ||
       !durationCount ||
       !volume ||
       !mileageValue ||
-      mileageValue == 'Select' ||
-      date == 'Invalid Date' ||
+      mileageValue == "Select" ||
+      date == "Invalid Date" ||
       !agreeTermsValue
     ) {
       setSubmitError(true);
@@ -228,7 +229,22 @@ const ManAndVan = () => {
           initialPackagePrice: details.moveDetails.initialPackagePrice,
         })
       );
-      router.push('/book/move-package');
+      dispatch(
+        updateMoverDetails({
+          moverName: "",
+          moverTime: "",
+          moverPrice: "",
+          priceSecondDay: "",
+          priceThirdDay: "",
+          priceOtherDays: "",
+          priceSundays: "",
+          pickPrice: 0,
+          moveDateFormatted: "",
+          dateId: 1,
+        })
+      );
+
+      router.push("/book/move-package");
     }
   };
 
@@ -266,7 +282,7 @@ const ManAndVan = () => {
               <h3
                 className={`${titleFont.variable} font-sans2 text-3xl lg:text-4xl font-extrabold flex-col items-center justify-center`}
               >
-                <p className="">Your Move Details</p>{' '}
+                <p className="">Your Move Details</p>{" "}
                 <div className="w-full bg-primary/20 h-[20px] mt-[-12px] "></div>
               </h3>
             </div>
@@ -322,7 +338,7 @@ const ManAndVan = () => {
                             // activateError && !floorCount
                             //   ? 'flex justify-center items-center ring ring-secondary h-[50px] rounded-[10px] w-[60px]'
                             //   : 'flex justify-center items-center h-[50px] rounded-[10px] w-[60px] border border-primary font-semibold'
-                            'flex justify-center items-center h-[50px] rounded-[10px] w-[60px] border border-primary font-semibold'
+                            "flex justify-center items-center h-[50px] rounded-[10px] w-[60px] border border-primary font-semibold"
                           }`}
                         >
                           {floorCount}
@@ -404,7 +420,7 @@ const ManAndVan = () => {
                             // activateError && !floorCount2
                             //   ? 'flex justify-center items-center ring ring-secondary h-[50px] rounded-[10px] w-[60px]'
                             //   : 'flex justify-center items-center h-[50px] rounded-[10px] w-[60px] border border-primary font-semibold'
-                            'flex justify-center items-center h-[50px] rounded-[10px] w-[60px] border border-primary font-semibold'
+                            "flex justify-center items-center h-[50px] rounded-[10px] w-[60px] border border-primary font-semibold"
                           }`}
                         >
                           {floorCount2}
@@ -457,8 +473,8 @@ const ManAndVan = () => {
                         placeholder="Type here"
                         className={`${
                           activateError && !firstName
-                            ? 'ring ring-secondary'
-                            : ''
+                            ? "ring ring-secondary"
+                            : ""
                         } input input-primary w-full h-[43px]`}
                         onChange={(e) => setFirstName(e.target.value)}
                         defaultValue={firstName}
@@ -479,8 +495,8 @@ const ManAndVan = () => {
                         placeholder="Type here"
                         className={`${
                           activateError && !lastName
-                            ? 'ring ring-secondary'
-                            : ''
+                            ? "ring ring-secondary"
+                            : ""
                         } input input-primary w-full h-[43px]`}
                         onChange={(e) => setLastName(e.target.value)}
                         defaultValue={lastName}
@@ -502,7 +518,7 @@ const ManAndVan = () => {
                         type="email"
                         placeholder="Type here"
                         className={`${
-                          activateError && !email ? 'ring ring-secondary' : ''
+                          activateError && !email ? "ring ring-secondary" : ""
                         } input input-primary w-full h-[43px]`}
                         onChange={handleEmailChange}
                         //
@@ -548,8 +564,8 @@ const ManAndVan = () => {
                         placeholder="Type here"
                         className={`${
                           activateError && (!phone || !phoneError)
-                            ? 'ring ring-secondary'
-                            : ''
+                            ? "ring ring-secondary"
+                            : ""
                         } input input-primary w-full h-[43px]`}
                         onChange={handlePhoneNumberChange}
                         defaultValue={phone}
@@ -582,7 +598,7 @@ const ManAndVan = () => {
                           setValue={setPropertyValue}
                           errorCheck={
                             activateError &&
-                            (propertyValue == 'Select' || propertyValue == '')
+                            (propertyValue == "Select" || propertyValue == "")
                           }
                         />
                       </div>
@@ -610,7 +626,7 @@ const ManAndVan = () => {
                             setValue={setMenValue}
                             errorCheck={
                               activateError &&
-                              (menValue == 'Select' || menValue == '')
+                              (menValue == "Select" || menValue == "")
                             }
                           />
                         </div>
@@ -638,7 +654,7 @@ const ManAndVan = () => {
                             setValue={setMileageValue}
                             errorCheck={
                               activateError &&
-                              (mileageValue == 'Select' || mileageValue == '')
+                              (mileageValue == "Select" || mileageValue == "")
                             }
                           />
                         </div>
@@ -670,8 +686,8 @@ const ManAndVan = () => {
                         <div
                           className={`${
                             activateError && !durationCount
-                              ? 'flex justify-center items-center h-[48px] rounded-[10px] w-full border border-primary font-semibold ring ring-secondary'
-                              : 'flex justify-center items-center h-[48px] rounded-[10px] w-full border border-primary font-semibold'
+                              ? "flex justify-center items-center h-[48px] rounded-[10px] w-full border border-primary font-semibold ring ring-secondary"
+                              : "flex justify-center items-center h-[48px] rounded-[10px] w-full border border-primary font-semibold"
                           }`}
                         >
                           {durationCount} {hourValue}
@@ -701,8 +717,8 @@ const ManAndVan = () => {
                           placeholder="Type here"
                           className={`${
                             activateError && !volume
-                              ? 'ring ring-secondary'
-                              : ''
+                              ? "ring ring-secondary"
+                              : ""
                           } input input-primary w-full h-[43px]`}
                           onChange={(e) => setVolume(e.target.value)}
                           defaultValue={volume}
@@ -719,9 +735,9 @@ const ManAndVan = () => {
                         </label>
                         <button
                           className={`${
-                            activateError && date == 'Invalid Date'
-                              ? 'ring ring-secondary'
-                              : ''
+                            activateError && date == "Invalid Date"
+                              ? "ring ring-secondary"
+                              : ""
                           } flex justify-center items-center bg-white border-[1.4px] rounded-[8px] border-primary cursor-pointer overflow-hidden py-[4px] focus:ring-[2px] active:ring-[2px] ring-primary`}
                         >
                           <div className="opacity-[0.9] mt-[-10px] cursor-pointer">
@@ -750,8 +766,8 @@ const ManAndVan = () => {
                       //   checked="checked"
                       className={`${
                         activateError && !agreeTermsValue
-                          ? 'ring ring-secondary'
-                          : ''
+                          ? "ring ring-secondary"
+                          : ""
                       } checkbox checkbox-primary`}
                       onChange={(e) => setAgreeTermsValue(e.target.checked)}
                     />

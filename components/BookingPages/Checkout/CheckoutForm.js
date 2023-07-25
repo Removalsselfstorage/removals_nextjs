@@ -1,25 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
-const CheckoutForm = () => {
-  const [payType, setPayType] = useState('');
-  const [depositPart, setDepositPart] = useState(false);
-  const [depositFull, setDepositFull] = useState(false);
-  const [payMethod, setPayMethod] = useState('');
-
-  console.log(depositPart);
-  console.log(depositFull);
-
-  const partDepositOnchange = (e) => {
-    setDepositPart(e.target.checked);
-    setDepositFull(false);
-  };
-  const fullDepositOnchange = (e) => {
-    setDepositFull(e.target.checked);
-    setDepositPart(false);
-  };
+const CheckoutForm = ({partDepositOnchange, fullDepositOnchange, cardOnchange, paypalOnchange}) => {
+  
 
   return (
-    <div className="bg-white shadow-lg rounded-[30px] lg:flex-[3] py-[30px] px-[30px] md:px-[50px] w-full">
+    <div className="bg-white shadow-lg rounded-[30px] lg:flex-[2] py-[30px] px-[30px] md:px-[50px] w-full">
       {/*50% payment row */}
       <div className="mt-[0px]">
         <h1 className="text-xl font-bold mb-[20px] px-[0px]">Payment Type*</h1>
@@ -55,7 +40,7 @@ const CheckoutForm = () => {
         </div>
       </div>
       {/* full payment row */}
-      <div className="mt-[50px]">
+      <div className="mt-[30px] md:mt-[50px]">
         <h1 className="text-xl font-bold mb-[20px] px-[0px]">
           Payment Method*
         </h1>
@@ -68,6 +53,7 @@ const CheckoutForm = () => {
                   type="radio"
                   name="radio-2"
                   className="radio radio-primary"
+                  onChange={cardOnchange}
                 />
                 <span className="flex flex-col w-full">
                   <p className="leading-[18px] text-[15px] md:text-[16px] font-semibold mb-[10px] ">
@@ -92,6 +78,7 @@ const CheckoutForm = () => {
                   type="radio"
                   name="radio-2"
                   className="radio radio-primary"
+                  onChange={paypalOnchange}
                 />
                 <span className="flex flex-col w-full">
                   <p className="leading-[18px] text-[15px] md:text-[16px] font-semibold mb-[10px]">
@@ -109,7 +96,7 @@ const CheckoutForm = () => {
         </div>
       </div>
       {/* comment row */}
-      <div className="mt-[50px]">
+      <div className="mt-[30px] md:mt-[50px]">
         <h1 className="text-xl font-bold mb-[20px] px-[0px]">
           Leave a comment
         </h1>
@@ -137,7 +124,6 @@ const CheckoutForm = () => {
           </label>
         </div>
       </div>
-      ;
     </div>
   );
 };

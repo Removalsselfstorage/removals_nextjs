@@ -50,7 +50,7 @@ const PackageCard = ({
     router.push(`/book/${link}`);
   };
 
-  console.log(details)
+  // console.log(details)
 
   return (
     <div

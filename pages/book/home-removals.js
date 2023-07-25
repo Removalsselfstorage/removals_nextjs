@@ -36,6 +36,8 @@ const CompleteHouse = () => {
   const dispatch = useDispatch();
   const details = useSelector(getAllDetails);
 
+ 
+
   //   states
   const [floorCount, setFloorCount] = useState(
     details.serviceLocation.locationFrom.floor || 0

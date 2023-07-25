@@ -49,20 +49,6 @@ const MovePackage = () => {
 
             {/* move packages */}
             <div className="py-[0px] px-[20px] lg:px-[100px] xl:px-[20px] grid md:grid-cols-2  lg:grid-cols-2 xl:grid-cols-4 justify-center lg:gap-x-[20px] lg:gap-y-[50px] gap-x-[20px] gap-y-[50px]">
-              {/* <PackageCard
-                image="/svg/house_removal.svg"
-                title="STANDARD"
-                subTitle="Prices are estimated"
-                price="369"
-                f1="1 Truck, 1 Bed content, Free blanket"
-                f2="Free loading & unloading"
-                f3="Free blanket, trolly & straps"
-                f4="Standard insurance cover"
-                f5="Free local mileage, waiting time"
-                f6="Standard insurance cover"
-                f7="600 cubic ft loading capacity"
-                link="home-removals"
-              /> */}
               <PackageCard
                 image="/svg/hand_packing.svg"
                 title="STANDARD"
@@ -155,6 +141,10 @@ const MovePackage = () => {
                   moveDesciptionsCalc("GOLD", details.moveDetails.propertyType)
                     .f8
                 }
+                f9={
+                  moveDesciptionsCalc("GOLD", details.moveDetails.propertyType)
+                    .f9
+                }
                 preferred
                 link="/movers"
               />
@@ -210,6 +200,30 @@ const MovePackage = () => {
                     "PREMIUM",
                     details.moveDetails.propertyType
                   ).f8
+                }
+                f9={
+                  moveDesciptionsCalc(
+                    "PREMIUM",
+                    details.moveDetails.propertyType
+                  ).f9
+                }
+                f10={
+                  moveDesciptionsCalc(
+                    "PREMIUM",
+                    details.moveDetails.propertyType
+                  ).f10
+                }
+                f11={
+                  moveDesciptionsCalc(
+                    "PREMIUM",
+                    details.moveDetails.propertyType
+                  ).f11
+                }
+                f12={
+                  moveDesciptionsCalc(
+                    "PREMIUM",
+                    details.moveDetails.propertyType
+                  ).f12
                 }
                 link="/movers"
               />
@@ -277,6 +291,18 @@ const MovePackage = () => {
                     "PREMIUM PLUS",
                     details.moveDetails.propertyType
                   ).f10
+                }
+                f11={
+                  moveDesciptionsCalc(
+                    "PREMIUM PLUS",
+                    details.moveDetails.propertyType
+                  ).f11
+                }
+                f12={
+                  moveDesciptionsCalc(
+                    "PREMIUM PLUS",
+                    details.moveDetails.propertyType
+                  ).f12
                 }
                 link="/movers"
               />

@@ -9,7 +9,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import { convertToSentenceCase, generateRandomValues } from "@/utils/logics";
-import { priceCalc } from "@/utils/moversLogic";
+import { priceCalc, priceCalc2 } from "@/utils/moversLogic";
 
 const PackageCard = ({
   image,
@@ -26,6 +26,8 @@ const PackageCard = ({
   f8,
   f9,
   f10,
+  f11,
+  f12,
   link,
   preferred,
 }) => {
@@ -34,6 +36,86 @@ const PackageCard = ({
   const details = useSelector(getAllDetails);
 
   const randomRefValue = generateRandomValues();
+
+  const mileageValueCalc = (mileage) => {
+    switch (mileage) {
+      case "0 - 25":
+        return 0.99 * 25;
+        break;
+      case "26 - 75":
+        return 0.99 * 75;
+        break;
+      case "76 - 150":
+        return 0.99 * 150;
+        break;
+      case "151 - 200":
+        return 0.99 * 200;
+        break;
+      case "201 - 250":
+        return 0.99 * 250;
+        break;
+      case "251 - 300":
+        return 0.99 * 300;
+        break;
+      case "301 - 350":
+        return 0.99 * 350;
+        break;
+      case "351 - 400":
+        return 0.99 * 400;
+        break;
+      case "401 - 450":
+        return 0.99 * 450;
+        break;
+      case "451 - 500":
+        return 0.99 * 500;
+        break;
+      case "501 - 550":
+        return 0.99 * 550;
+        break;
+      case "551 - 600":
+        return 0.99 * 600;
+        break;
+
+      default:
+        break;
+    }
+  };
+
+  const totalMileage = mileageValueCalc(details.moveDetails.mileage);
+  const totalPrice = (totalMileage) => {
+    switch (details.moveDetails.propertyType) {
+      case "Office removals":
+        return priceCalc(
+          title,
+          details.moveDetails.duration,
+          details.moveDetails.numberOfMovers
+        );
+        break;
+      case "Studio flat":
+        return priceCalc(
+          title,
+          details.moveDetails.duration,
+          details.moveDetails.numberOfMovers
+        );
+        break;
+      case "Furniture & Appliances":
+        return priceCalc(
+          title,
+          details.moveDetails.duration,
+          details.moveDetails.numberOfMovers
+        );
+        break;
+
+      default:
+        return priceCalc2(
+          title,
+          totalMileage,
+          details.moveDetails.numberOfMovers,
+          details.moveDetails.propertyType
+        );
+        break;
+    }
+  };
 
   const onBookNow = () => {
     dispatch(
@@ -47,11 +129,7 @@ const PackageCard = ({
         moveDateRaw: details.moveDetails.moveDateRaw,
         movePackage: convertToSentenceCase(title),
         quoteRef: randomRefValue,
-        initialPackagePrice: priceCalc(
-          title,
-          details.moveDetails.duration,
-          details.moveDetails.numberOfMovers
-        ),
+        initialPackagePrice: totalPrice(totalMileage),
       })
     );
     router.push(`/book/${link}`);
@@ -84,11 +162,12 @@ const PackageCard = ({
             }  text-[30px] mb-[10px]`}
           >
             ₤
-            {priceCalc(
+            {/* {priceCalc(
               title,
               details.moveDetails.duration,
               details.moveDetails.numberOfMovers
-            )}
+            )} */}
+            {totalPrice(totalMileage)}
           </p>
           {/* <p className="">₤{price}</p> */}
           <div className="flex flex-col space-y-[5px] ">
@@ -110,6 +189,8 @@ const PackageCard = ({
             {f8 && <li className="border-b py-[5px]">* {f8}</li>}
             {f9 && <li className="border-b py-[5px]">* {f9}</li>}
             {f10 && <li className="border-b py-[5px]">* {f10}</li>}
+            {f11 && <li className="border-b py-[5px]">* {f11}</li>}
+            {f12 && <li className="border-b py-[5px]">* {f12}</li>}
           </ul>
         </div>
       </div>

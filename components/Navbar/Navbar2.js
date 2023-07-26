@@ -1,11 +1,11 @@
-import { BiSolidPhoneCall } from 'react-icons/bi';
-import { BiMenu } from 'react-icons/bi';
-import { IoClose } from 'react-icons/io5';
-import { BsChevronDown } from 'react-icons/bs';
-import { RiCustomerService2Fill } from 'react-icons/ri';
-import { useEffect, useState } from 'react';
-import Link from 'next/link';
-import ScrollUpMenuNav from '../ScrollUpMenuNav';
+import { BiSolidPhoneCall } from "react-icons/bi";
+import { BiMenu } from "react-icons/bi";
+import { IoClose } from "react-icons/io5";
+import { BsChevronDown } from "react-icons/bs";
+import { RiCustomerService2Fill } from "react-icons/ri";
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import ScrollUpMenuNav from "../ScrollUpMenuNav";
 
 const Navbar2 = () => {
   return (
@@ -37,7 +37,7 @@ const Navbar2 = () => {
                     <div className="flex items-center mr-[10px] md:mr-[30px] font-semibold space-x-[7px]">
                       <RiCustomerService2Fill size={20} className="" />
                       <a href="tel:07869116203" className="link link-hover">
-                        07869116203{' '}
+                        07869116203{" "}
                       </a>
                     </div>
                     <label
@@ -66,45 +66,46 @@ const Navbar2 = () => {
             <div className="drawer-side">
               <label htmlFor="my-drawer-3" className="drawer-overlay"></label>
 
-              <ul className="menu p-4 w-[250px] md:w-[400px] h-full bg-base-100 md:text-[16px] flex flex-col space-y-[10px] md:space-y-[15px]">
-                <li>
-                  <a className="btn-nav">Home</a>
-                </li>
-                <li>
-                  <a className="btn-nav">Home Removals</a>
-                </li>
-                <li>
-                  <a className="btn-nav">Man and Van</a>
-                </li>
-                <li>
-                  <a className="btn-nav">Storage & Self Storage</a>
-                </li>
-                <li className="border-b-[2px] pb-[10px]">
-                  <a className="btn-nav">Handy Man / Packing</a>
-                </li>
-                <li>
-                  <a className="btn-nav">Locations</a>
-                </li>
-                <li>
-                  <a className="btn-nav">Moving Tips</a>
-                </li>
-
-                <li>
-                  <a className="btn-nav">About Us</a>
-                </li>
-                <li>
-                  <a className="btn-nav">Contact Us</a>
-                </li>
-                <li className="border-b-[2px] pb-[10px]">
-                  <a className="btn-nav">Blog</a>
-                </li>
-                <li>
-                  <a className="btn-nav">Become a Mover</a>
-                </li>
-                <li>
-                  <a className="btn-nav">Mover Login</a>
-                </li>
-              </ul>
+              <div className="overflow-auto scrollbar-thin scrollbar-track-gray-200/50 scrollbar-thumb-gray-500/20 scrollbar-default h-[100%]">
+                <ul className="menu p-4 w-[250px] md:w-[400px]  bg-base-100 md:text-[16px] flex flex-col space-y-[10px] md:space-y-[15px]  h-auto pb-[200px]">
+                  <li>
+                    <a className="btn-nav">Home</a>
+                  </li>
+                  <li>
+                    <a className="btn-nav">Home Removals</a>
+                  </li>
+                  <li>
+                    <a className="btn-nav">Man and Van</a>
+                  </li>
+                  <li>
+                    <a className="btn-nav">Storage & Self Storage</a>
+                  </li>
+                  <li className="border-b-[2px] pb-[10px]">
+                    <a className="btn-nav">Handy Man / Packing</a>
+                  </li>
+                  <li>
+                    <a className="btn-nav">Locations</a>
+                  </li>
+                  <li>
+                    <a className="btn-nav">Moving Tips</a>
+                  </li>
+                  <li>
+                    <a className="btn-nav">About Us</a>
+                  </li>
+                  <li>
+                    <a className="btn-nav">Contact Us</a>
+                  </li>
+                  <li className="border-b-[2px] pb-[10px]">
+                    <a className="btn-nav">Blog</a>
+                  </li>
+                  <li>
+                    <a className="btn-nav">Become a Mover</a>
+                  </li>
+                  <li>
+                    <a className="btn-nav">Mover Login</a>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>

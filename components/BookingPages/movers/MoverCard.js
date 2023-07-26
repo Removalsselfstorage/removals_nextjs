@@ -101,7 +101,7 @@ const MoverCard = ({
             className={`${
               !title
                 ? "flex flex-col xl:flex-row xl:items-center xl:space-x-[0px] mb-[20px] xl:mb-[0px] xl:py-[10px]"
-                : "flex flex-col xl:flex-row xl:items-center xl:space-x-[0px] py-[20px] mb-[20px] xl:mb-[0px] xl:py-[30px]"
+                : "flex flex-col xl:flex-row xl:items-center xl:space-x-[0px] py-[20px] mb-[0px] xl:mb-[0px] xl:py-[30px]"
             } `}
           >
             {/* image + details */}
@@ -190,11 +190,16 @@ const MoverCard = ({
             {title && (
               <div className="flex flex-col md:flex-row md:items-center px-[20px] md:flex-[3] md:space-x-[30px] lg:space-x-[15px] mb-[20px] sm:mb-[10px] md:mb-[0px]">
                 <div className="flex flex-col w-full">
-                  <h2 className="text-primary font-bold text-[25px] mb-[10px]">
+                  <h2 className="text-primary font-bold text-[20px] md:text-[25px] mb-[10px]">
                     <span className="text-secondary">Move smart</span> & save
                     money!
                   </h2>
-                  <p className="lg:text-[17px] xl:mr-[30px]">{subtitle}</p>
+                  <p className="lg:text-[17px] xl:mr-[30px]">
+                    Book your{" "}
+                    <span className="font-bold">fixed-price move</span> with our{" "}
+                    <span className="font-bold">Smart Moving feature</span> and
+                    we will find you the best mover according to your needs.
+                  </p>
                 </div>
               </div>
             )}
@@ -204,7 +209,7 @@ const MoverCard = ({
                 className={`${
                   !title
                     ? "flex  space-x-[20px] md:space-x-0 justify-between w-full xl:flex-col border border-primary rounded-[20px] xl:items-center xl:justify-center md:flex-[1] py-[10px] xl:py-[20px] mx-[20px] md:mx-[30px] xl:mx-[0px] xl:mr-[30px] px-[10px] sm:px-[20px] xl:px-[0px]"
-                    : "flex  space-x-[20px] md:space-x-0 justify-between w-full xl:flex-col border border-primary rounded-[20px] xl:items-center xl:justify-center md:flex-[1] py-[10px] xl:py-[35px] mx-[20px] md:mx-[30px] xl:mx-[0px] xl:mr-[30px] px-[10px] sm:px-[20px] xl:px-[0px] "
+                    : "flex  space-x-[20px] md:space-x-0 justify-between w-full xl:flex-col border border-primary rounded-[20px] xl:items-center xl:justify-center md:flex-[1] py-[10px] xl:py-[30px] mx-[20px] md:mx-[30px] xl:mx-[0px] xl:mr-[30px] px-[10px] sm:px-[20px] xl:px-[0px] "
                 }`}
               >
                 <div className="flex flex-col items-center justify-center xl:items-center">
@@ -271,7 +276,7 @@ const MoverCard = ({
                           isActive
                             ? "bg-secondary text-white border-secondary"
                             : "text-primary hover:border-secondary border-primary"
-                        } flex py-[5px] px-[10px] hover:cursor-pointer  rounded-[10px] items-center justify-center border-[2px] group  duration-150 whitespace-nowrap mr-[0px] w-full md:w-[200px]`}
+                        } flex py-[5px] px-[0px] hover:cursor-pointer  rounded-[10px] items-center justify-center border-[2px] group  duration-150 whitespace-nowrap mr-[0px] w-full md:w-[200px]`}
                       >
                         {tm.time}
                       </div>

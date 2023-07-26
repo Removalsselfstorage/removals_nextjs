@@ -38,7 +38,7 @@ const Movers = () => {
   // const [pickPrice, setPickPrice] = useState(priceThirdDay)
 
   const [showLoader, setShowLoader] = useState(false);
-
+  const [todayPick, setTodayPick] = useState(false);
   // console.log(details.moverDetails.pickPrice);
 
   const firstCard = getFirstSortedHomeMover(homeMovers);
@@ -60,7 +60,10 @@ const Movers = () => {
             {/* features links */}
             <FeaturesScroll />
             {/* price date pick */}
-            <PriceDatePick setShowLoader={setShowLoader} />
+            <PriceDatePick
+              setShowLoader={setShowLoader}
+              setTodayPick={setTodayPick}
+            />
             {/* movers list row */}
             <div className="flex flex-col space-y-[10px] lg:space-y-0 lg:flex-row lg:space-x-[10px] mx-[10px] md:mx-[20px]">
               {/* left section */}
@@ -70,11 +73,12 @@ const Movers = () => {
 
               {/* right section */}
               <div className="bg-white shadow-lg rounded-[30px] lg:flex-[3] py-[30px] md:px-[30px] w-full">
-                {!showLoader ? (
+                {!showLoader  ? (
                   <h1 className="text-2xl font-bold mb-[30px] px-[20px]">
-                    You've been matched with{" "}
+                    
                     <span className="text-primary">
-                      {homeMovers.length} verified movers.
+                      {todayPick ? "Movers unavailable for hire today" : `You've been matched with ${homeMovers.length} verified movers`}.
+                      {/* {homeMovers.length} verified movers. */}
                     </span>
                   </h1>
                 ) : (
@@ -83,6 +87,7 @@ const Movers = () => {
                   </h1>
                 )}
                 {!showLoader &&
+                  !todayPick &&
                   homeMovers.map((mv, index) => {
                     if (index === 0) {
                       return (
@@ -110,7 +115,7 @@ const Movers = () => {
                       );
                     }
                   })}
-                {!showLoader && (
+                {!showLoader && !todayPick && (
                   <div className="mx-[10px] flex-col space-y-[20px]">
                     <MoverCard
                       image=""
@@ -132,6 +137,7 @@ const Movers = () => {
                   </div>
                 )}
                 {!showLoader &&
+                  !todayPick &&
                   otherCards.map((mv, index) => {
                     return (
                       <div

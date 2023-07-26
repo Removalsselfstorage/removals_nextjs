@@ -14,13 +14,18 @@ import {
   calculatePrice,
   calculatePriceChange,
   calculatePriceDecrease,
+  decreaseByPercentage,
+  generatePriceArray,
   generatePriceList,
   generatePriceList2,
+  generatePrices,
+  getFormattedTodayDate,
+  increaseByPercentage,
   trimDate,
 } from "@/utils/logics";
 import { formatDate } from "@/utils/moversLogic";
 
-const PriceDatePick = ({ setShowLoader }) => {
+const PriceDatePick = ({ setShowLoader, setTodayPick }) => {
   const details = useSelector(getAllDetails);
   const dayOfWeek = dayjs(details.moveDetails.moveDateRaw).format("ddd");
   const month = dayjs(details.moveDetails.moveDateRaw).format("MMM");
@@ -28,11 +33,16 @@ const PriceDatePick = ({ setShowLoader }) => {
   const year = dayjs(details.moveDetails.moveDateRaw).format("YYYY");
 
   const priceFirstDay = details.moveDetails.initialPackagePrice;
-  const priceSecondDay = (priceFirstDay * 0.559).toFixed(); //74
-  const priceThirdDay = (priceFirstDay * 0.495).toFixed(); //107
-  const priceSaturdays = (priceFirstDay * 0.441).toFixed(); //60
-  const priceSundays = (priceFirstDay * 0.441).toFixed(); //8
-  const priceOtherDays = (priceFirstDay * 0.33).toFixed();
+  // const priceSecondDay = (priceFirstDay * 0.559).toFixed(); //74
+  // const priceThirdDay = (priceFirstDay * 0.495).toFixed(); //107
+  // const priceFridays = (priceFirstDay * 0.441).toFixed();
+  // const priceSaturdays = (priceFirstDay * 0.441).toFixed();
+  // const priceSundays = (priceFirstDay * 0.441).toFixed();
+  // const priceOtherDays = (priceFirstDay * 0.33).toFixed();
+  const priceFridays = priceFirstDay;
+  const priceSaturdays = priceFirstDay;
+  const priceSundays = increaseByPercentage(priceFirstDay, 3).toFixed();
+  const priceOtherDays = decreaseByPercentage(priceFirstDay, 3).toFixed();
 
   const result = generatePriceList2(
     dayOfWeek,
@@ -40,8 +50,9 @@ const PriceDatePick = ({ setShowLoader }) => {
     month,
     year,
     priceFirstDay,
-    priceSecondDay,
-    priceThirdDay,
+    // priceSecondDay,
+    // priceThirdDay,
+    priceFridays,
     priceSaturdays,
     priceSundays,
     priceOtherDays
@@ -53,7 +64,7 @@ const PriceDatePick = ({ setShowLoader }) => {
 
   // Mon Jul 31 2023 to 2023-07-31
 
-  console.log(result);
+  // console.log(result3);
 
   const rowRef = useRef(null);
   const [isMoved, setIsMoved] = useState(false);
@@ -99,6 +110,7 @@ const PriceDatePick = ({ setShowLoader }) => {
           // ) : details.moverDetails.moveDateFormatted}
           const date2 = formatDate(pr.date);
           const date = dayjs(`${date2}`).format("dddd, MMMM D, YYYY");
+          const today = getFormattedTodayDate();
 
           const selectPrice = () => {
             setSelectedPrice(pr.id);
@@ -126,7 +138,12 @@ const PriceDatePick = ({ setShowLoader }) => {
               dispatch(updatePickPrice(pr.price));
             } else {
               // setPickPrice(priceThirdDay)
-              dispatch(updatePickPrice(priceThirdDay));
+              dispatch(updatePickPrice(priceFirstDay));
+            }
+            if (today == trimDate(pr.date)) {
+              setTodayPick(true);
+            }else{
+              setTodayPick(false);
             }
           };
 
@@ -134,11 +151,18 @@ const PriceDatePick = ({ setShowLoader }) => {
             <div key={pr.id}>
               <div
                 onClick={selectPrice}
-                className={` ${
+                className={`${
+                  today == trimDate(pr.date)
+                    ? "border-gray-300 text-gray-300 bg-white"
+                    : pr.id == details.moverDetails.dateId
+                    ? "border-secondary text-secondary bg-white"
+                    : "text-primary hover:border-secondary border-primary"
+                  // : "text-primary hover:border-secondary border-primary"
+                } ${
                   pr.id == details.moverDetails.dateId
                     ? "border-secondary text-secondary bg-white"
                     : "text-primary hover:border-secondary border-primary"
-                } flex flex-col py-[10px] md:py-[15px] px-[10px] md:px-[15px] hover:cursor-pointer rounded-[20px] items-center justify-center border-[2px] group hover:scale-[1.07]  `}
+                }  flex flex-col py-[10px] md:py-[15px] px-[10px] md:px-[15px] hover:cursor-pointer rounded-[20px] items-center justify-center border-[2px] group hover:scale-[1.07]  `}
               >
                 <p className="font-semibold text-[14px] md:text-[15px]  whitespace-nowrap duration-150">
                   {trimDate(pr.date)}

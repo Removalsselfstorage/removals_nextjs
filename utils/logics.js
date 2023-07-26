@@ -1,5 +1,5 @@
 export const truncateTexts = (text, count) => {
-  return text?.length > count ? text.slice(0, count) + '...' : text;
+  return text?.length > count ? text.slice(0, count) + "..." : text;
 };
 
 export function convertToSentenceCase(text) {
@@ -15,13 +15,13 @@ export function convertToSentenceCase(text) {
 
 export function generateRandomValues() {
   const values = [];
-  const characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-  const numbers = '0123456789';
+  const characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  const numbers = "0123456789";
 
   for (let i = 0; i < 8; i++) {
-    const randomType = Math.random() < 0.5 ? 'string' : 'number';
+    const randomType = Math.random() < 0.5 ? "string" : "number";
 
-    if (randomType === 'string') {
+    if (randomType === "string") {
       let randomChar;
       for (let j = 0; j < 2; j++) {
         randomChar = characters.charAt(
@@ -45,13 +45,13 @@ export function calculatePrice(
   dailyDecrementPercentages
 ) {
   const daysOfWeek = [
-    'Monday',
-    'Tuesday',
-    'Wednesday',
-    'Thursday',
-    'Friday',
-    'Saturday',
-    'Sunday',
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday",
   ];
   let currentPrice = startingPrice;
   const updatedPrices = [];
@@ -71,7 +71,7 @@ export function calculatePrice(
 
 export function trimDate(dateString) {
   const date = new Date(dateString);
-  const trimmedDate = date.toDateString().replace(/\s\d{4}$/, '');
+  const trimmedDate = date.toDateString().replace(/\s\d{4}$/, "");
   return trimmedDate;
 }
 
@@ -150,26 +150,6 @@ export function calculatePriceDecrease(
   return resultArray;
 }
 
-// Example usage
-//   const dayOfWeek = "Mon";
-//   const dayNumber = 15;
-//   const month = "Apr";
-//   const year = 2023;
-//   const price = 100;
-//   const generalDecrement = 0.02;
-//   const decrementPercentages = {
-//     Sun: 0.01,
-//     Mon: 0.02,
-//     Tue: 0.03,
-//     Wed: 0.04,
-//     Thu: 0.05,
-//     Fri: 0.06,
-//     Sat: 0.07
-//   };
-
-//   const result = calculatePriceDecrease(dayOfWeek, dayNumber, month, year, price, generalDecrement, decrementPercentages);
-//   console.log(result);
-
 export function calculatePriceChange(
   dayOfWeek,
   dayNumber,
@@ -238,26 +218,15 @@ export function calculatePriceChange(
   return resultArray;
 }
 
-// Example usage
-//   const dayOfWeek = "Mon";
-//   const dayNumber = 15;
-//   const month = "Apr";
-//   const year = 2023;
-//   const price = 100;
-//   const generalDecrement = 0.02;
-//   const sundayIncrement = 0.05;
-
-//   const result = calculatePriceChange(dayOfWeek, dayNumber, month, year, price, generalDecrement, sundayIncrement);
-//   console.log(result);
-
 export function generatePriceList2(
   dayOfWeek,
   dayNumber,
   month,
   year,
   priceFirstDay,
-  priceSecondDay,
-  priceThirdDay,
+  // priceSecondDay,
+  // priceThirdDay,
+  priceFridays,
   priceSaturdays,
   priceSundays,
   priceOtherDays
@@ -293,16 +262,15 @@ export function generatePriceList2(
   let currentDate = initialDate;
   let currentPrice;
 
-  let isSunday = dayOfWeek === 'Sun';
-  let isSaturday = dayOfWeek === 'Sat';
+  let isFriday = dayOfWeek === "Fri";
+  let isSunday = dayOfWeek === "Sun";
+  let isSaturday = dayOfWeek === "Sat";
 
-  for (let i = 0; i < 90; i++) {
+  for (let i = 0; i < 150; i++) {
     if (i === 0) {
       currentPrice = priceFirstDay;
-    } else if (i === 1) {
-      currentPrice = priceSecondDay;
-    } else if (i === 2) {
-      currentPrice = priceThirdDay;
+    } else if (isFriday) {
+      currentPrice = priceFridays;
     } else if (isSaturday) {
       currentPrice = priceSaturdays;
     } else if (isSunday) {
@@ -319,13 +287,25 @@ export function generatePriceList2(
 
     currentDate.setDate(currentDate.getDate() + 1);
     isSunday = currentDate.getDay() === 0;
+    isFriday = currentDate.getDay() === 5;
     isSaturday = currentDate.getDay() === 6;
   }
 
   return resultArray;
 }
 
-export function generatePriceList23(dayOfWeek, dayNumber, month, year, priceFirstDay, priceSecondDay, priceThirdDay, priceSaturdays, priceSundays, priceOtherDays) {
+export function generatePriceList23(
+  dayOfWeek,
+  dayNumber,
+  month,
+  year,
+  priceFirstDay,
+  priceSecondDay,
+  priceThirdDay,
+  priceSaturdays,
+  priceSundays,
+  priceOtherDays
+) {
   const dayMap = {
     Sun: 0,
     Mon: 1,
@@ -333,22 +313,22 @@ export function generatePriceList23(dayOfWeek, dayNumber, month, year, priceFirs
     Wed: 3,
     Thu: 4,
     Fri: 5,
-    Sat: 6
+    Sat: 6,
   };
 
   const monthMap = {
-    Jan: '01',
-    Feb: '02',
-    Mar: '03',
-    Apr: '04',
-    May: '05',
-    Jun: '06',
-    Jul: '07',
-    Aug: '08',
-    Sep: '09',
-    Oct: '10',
-    Nov: '11',
-    Dec: '12'
+    Jan: "01",
+    Feb: "02",
+    Mar: "03",
+    Apr: "04",
+    May: "05",
+    Jun: "06",
+    Jul: "07",
+    Aug: "08",
+    Sep: "09",
+    Oct: "10",
+    Nov: "11",
+    Dec: "12",
   };
 
   const initialDate = new Date(year, monthMap[month], dayNumber);
@@ -375,12 +355,12 @@ export function generatePriceList23(dayOfWeek, dayNumber, month, year, priceFirs
       currentPrice = priceOtherDays;
     }
 
-    const formattedDate = currentDate.toISOString().split('T')[0];
+    const formattedDate = currentDate.toISOString().split("T")[0];
     resultArray.push({
       id: i + 1,
       date: currentDate.toDateString(),
       price: currentPrice,
-      date2: formattedDate
+      date2: formattedDate,
     });
 
     currentDate.setDate(currentDate.getDate() + 1);
@@ -391,41 +371,248 @@ export function generatePriceList23(dayOfWeek, dayNumber, month, year, priceFirs
   return resultArray;
 }
 
+export function decreaseByPercentage(value, decreasePercentage) {
+  const decreaseAmount = (decreasePercentage / 100) * value;
+  const result = value - decreaseAmount;
+  return result;
+}
 
 
+export function increaseByPercentage(value, increasePercentage) {
+  const increaseAmount = (increasePercentage / 100) * value;
+  const result = value - -increaseAmount;
+  return result;
+}
 
+export function getFormattedTodayDate() {
+  const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  const monthsOfYear = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
+  const today = new Date();
+  const dayOfWeek = daysOfWeek[today.getDay()];
+  const month = monthsOfYear[today.getMonth()];
+  const dayOfMonth = today.getDate();
 
-export function validatePhoneNumber(phoneNumber) {
-    // Remove any non-digit characters from the input
-    const cleanedNumber = phoneNumber.replace(/\D/g, "");
-  
-    // Check if the cleaned number contains 10 digits
-    if (cleanedNumber.length !== 10) {
-      return false;
+  const formattedDate = `${dayOfWeek} ${month} ${dayOfMonth}`;
+  return formattedDate;
+}
+
+export function generatePriceArray(
+  dayOfWeek,
+  month,
+  dayNumber,
+  year,
+  defaultPrice,
+  pricesForSundaysForFirst3Weeks,
+  pricesForMondaysToThursdaysForFirst3Weeks,
+  pricesForFridaysToSaturdaysForFirst3Weeks,
+  pricesForSundaysAfter3Weeks,
+  pricesForMondaysToThursdaysAfter3Weeks,
+  pricesForFridaysToSaturdaysAfter3Weeks
+) {
+  const priceArray = [];
+
+  function calculatePrice(weekday, isFirst3Weeks) {
+    if (weekday === "Sun") {
+      return isFirst3Weeks
+        ? defaultPrice * (1 + pricesForSundaysForFirst3Weeks / 100)
+        : defaultPrice * (1 + pricesForSundaysAfter3Weeks / 100);
+    } else if (weekday === "Fri" || weekday === "Sat") {
+      return isFirst3Weeks
+        ? defaultPrice * (1 + pricesForFridaysToSaturdaysForFirst3Weeks / 100)
+        : defaultPrice * (1 + pricesForFridaysToSaturdaysAfter3Weeks / 100);
+    } else {
+      return isFirst3Weeks
+        ? defaultPrice * (1 + pricesForMondaysToThursdaysForFirst3Weeks / 100)
+        : defaultPrice * (1 + pricesForMondaysToThursdaysAfter3Weeks / 100);
     }
-  
-    // Check if the first digit is between 2 and 9
-    if (cleanedNumber.charAt(0) < "2" || cleanedNumber.charAt(0) > "9") {
-      return false;
-    }
-  
-    // All checks pass, the number is valid
-    return true;
   }
 
+  const startDate = new Date(`${month} ${dayNumber}, ${year}`);
+  let currentDate = startDate;
+  let isFirst3Weeks = true;
+
+  for (let i = 0; i < 42; i++) {
+    // Assuming we generate prices for up to 42 days (6 weeks)
+    const id = i + 1;
+    const date = currentDate.toISOString().split("T")[0];
+    const price = calculatePrice(
+      currentDate.toLocaleString("en-us", { weekday: "short" }),
+      isFirst3Weeks
+    );
+
+    priceArray.push({ id, date, price });
+
+    currentDate.setDate(currentDate.getDate() + 1);
+
+    if (currentDate.getDate() > 21 && isFirst3Weeks) {
+      isFirst3Weeks = false;
+    }
+  }
+
+  return priceArray;
+}
+
+// Example usage with the provided constants
+// const dayOfWeek = "Sun";
+// const month = "Jul";
+// const dayNumber = 26;
+// const year = 2023;
+// const defaultPrice = 100;
+// const pricesForSundaysForFirst3Weeks = 4;
+// const pricesForMondaysToThursdaysForFirst3Weeks = 3;
+// const pricesForFridaysToSaturdaysForFirst3Weeks = 0;
+// const pricesForSundaysAfter3Weeks = 4;
+// const pricesForMondaysToThursdaysAfter3Weeks = 3;
+// const pricesForFridaysToSaturdaysAfter3Weeks = 2.5;
+
+// const priceArray = generatePriceArray(
+//   dayOfWeek,
+//   month,
+//   dayNumber,
+//   year,
+//   defaultPrice,
+//   pricesForSundaysForFirst3Weeks,
+//   pricesForMondaysToThursdaysForFirst3Weeks,
+//   pricesForFridaysToSaturdaysForFirst3Weeks,
+//   pricesForSundaysAfter3Weeks,
+//   pricesForMondaysToThursdaysAfter3Weeks,
+//   pricesForFridaysToSaturdaysAfter3Weeks
+// );
+
+// console.log(priceArray);
+
+export function generatePrices(
+  dayOfWeek,
+  dayNumber,
+  month,
+  year,
+  firstDayPrice,
+  weekdaysPrice,
+  fridaysSaturdaysPrice,
+  sundaysPrice,
+  weekdaysPriceAfter3Weeks,
+  fridaysSaturdaysPriceAfter3Weeks,
+  sundaysPriceAfter3Weeks
+) {
+  const dayAbbreviations = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  const monthAbbreviations = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+  let dayIndex = dayAbbreviations.indexOf(dayOfWeek);
+  const monthIndex = monthAbbreviations.indexOf(month);
+
+  // if (dayIndex === -1) {
+  //   throw new Error('Invalid dayOfWeek. Please provide an abbreviated string (e.g., "Mon", "Tue", etc.).');
+  // }
+
+  // if (monthIndex === -1) {
+  //   throw new Error('Invalid month. Please provide an abbreviated string (e.g., "Jan", "Feb", etc.).');
+  // }
+
+  const pricesArray = [];
+
+  let currentDate = new Date(year, monthIndex, dayNumber);
+  currentDate.setDate(currentDate.getDate() - currentDate.getDay() + dayIndex); // Move to the provided dayOfWeek
+  let isFirstThreeWeeks = true;
+
+  for (let i = 0; i < 5 * 30; i++) {
+    // 5 months, assuming 30 days per month
+
+    let price = isFirstThreeWeeks
+      ? firstDayPrice
+      : dayIndex === 0
+      ? sundaysPriceAfter3Weeks
+      : dayIndex === 5 || dayIndex === 6
+      ? fridaysSaturdaysPriceAfter3Weeks
+      : weekdaysPriceAfter3Weeks;
+
+    if (isFirstThreeWeeks) {
+      if (dayIndex === 0) price = sundaysPrice;
+      else if (dayIndex === 5 || dayIndex === 6) price = fridaysSaturdaysPrice;
+      else price = weekdaysPrice;
+    }
+
+    const priceObject = {
+      id: i + 1,
+      date: currentDate.toDateString(),
+      price: price,
+    };
+    pricesArray.push(priceObject);
+
+    // Move to the next day
+    currentDate.setDate(currentDate.getDate() + 1);
+    dayIndex = currentDate.getDay();
+
+    // Check if the 3-week period has ended
+    if (i === 20) {
+      isFirstThreeWeeks = false;
+    }
+  }
+
+  return pricesArray;
+}
+
+// Example usage:
+const dayOfWeek = "Mon"; // Monday (Abbreviated string format)
+const dayNumber = 1;
+const month = "Aug"; // August (Abbreviated string format)
+const year = 2023;
+const prices = generatePrices(
+  dayOfWeek,
+  dayNumber,
+  month,
+  year,
+  10,
+  8,
+  12,
+  15,
+  12,
+  18,
+  20
+);
+console.log(prices);
+
+export function validatePhoneNumber(phoneNumber) {
+  // Remove any non-digit characters from the input
+  const cleanedNumber = phoneNumber.replace(/\D/g, "");
+
+  // Check if the cleaned number contains 10 digits
+  if (cleanedNumber.length !== 10) {
+    return false;
+  }
+
+  // Check if the first digit is between 2 and 9
+  if (cleanedNumber.charAt(0) < "2" || cleanedNumber.charAt(0) > "9") {
+    return false;
+  }
+
+  // All checks pass, the number is valid
+  return true;
+}
 
 export function sortByRatingAndHireCount(movers) {
-    movers.sort((a, b) => {
-      // Sort by highest rating first
-      if (a.rating !== b.rating) {
-        return b.rating - a.rating;
-      }
-      // If ratings are equal, sort by highest hireCount
-      return b.hireCount - a.hireCount;
-    });
+  movers.sort((a, b) => {
+    // Sort by highest rating first
+    if (a.rating !== b.rating) {
+      return b.rating - a.rating;
+    }
+    // If ratings are equal, sort by highest hireCount
+    return b.hireCount - a.hireCount;
+  });
 }
-  
+
 export function getFirstSortedHomeMover(movers) {
   movers.sort((a, b) => {
     // Sort by highest rating first
@@ -438,13 +625,12 @@ export function getFirstSortedHomeMover(movers) {
 
   return movers[0];
 }
-   
 
 export function sortHomeMoversAndExcludeHighest(movers) {
   movers.sort((a, b) => {
     const averageA = (a.rating + a.hireCount) / 2;
     const averageB = (b.rating + b.hireCount) / 2;
-    
+
     // Sort by lowest average first (ascending order)
     return averageA - averageB;
   });
@@ -458,21 +644,18 @@ export function sortHomeMoversAndExcludeHighest(movers) {
   return sortedMovers;
 }
 
-
 // The sorted homeMovers array excluding the highest-rated and most hired mover
 
-export function calculateMoverPrice(initialPrice, averageRatingHireCount, percentageIfAverageIsOne) {
+export function calculateMoverPrice(
+  initialPrice,
+  averageRatingHireCount,
+  percentageIfAverageIsOne
+) {
   // Calculate the price based on the average of rating and hireCount
   let price = initialPrice * averageRatingHireCount * percentageIfAverageIsOne;
-
-  
 
   // Round the price to two decimal places
   price = Math.round(price * 100) / 100;
 
   return price;
 }
-
-
-
-  

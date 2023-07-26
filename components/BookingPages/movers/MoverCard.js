@@ -190,7 +190,7 @@ const MoverCard = ({
             {title && (
               <div className="flex flex-col md:flex-row md:items-center px-[20px] md:flex-[3] md:space-x-[30px] lg:space-x-[15px] mb-[20px] sm:mb-[10px] md:mb-[0px]">
                 <div className="flex flex-col w-full">
-                  <h2 className="text-primary font-bold text-[20px] md:text-[25px] mb-[10px]">
+                  <h2 className="text-primary font-bold text-[22px] md:text-[25px] mb-[10px]">
                     <span className="text-secondary">Move smart</span> & save
                     money!
                   </h2>

@@ -67,7 +67,7 @@ const Navbar2 = () => {
               <label htmlFor="my-drawer-3" className="drawer-overlay"></label>
 
               <div className="overflow-auto scrollbar-thin scrollbar-track-gray-200/50 scrollbar-thumb-gray-500/20 scrollbar-default h-[100%]">
-                <ul className="menu p-4 w-[250px] md:w-[400px]  bg-base-100 md:text-[16px] flex flex-col space-y-[10px] md:space-y-[15px]  h-auto pb-[200px]">
+                <ul className="menu p-4 w-[250px] md:w-[400px]  bg-base-100 md:text-[16px] flex flex-col space-y-[10px] md:space-y-[15px]  h-auto pb-[300px] pt-[30px] lg:pb-[500px] lg:pt-[50px]">
                   <li>
                     <a className="btn-nav">Home</a>
                   </li>

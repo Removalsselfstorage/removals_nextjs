@@ -11,11 +11,11 @@ const Navbar2 = () => {
   return (
     <>
       <div
-        className={`fixed left-0 right-0 top-0 z-50 border-b-[1.8px] flex flex-col items-center`}
+        className={`fixed left-0 right-0 top-0 z-[5000] border-b-[1.8px] flex flex-col items-center`}
       >
         {/* Main Nav */}
         <div className={`bg-white w-full `}>
-          <div className="drawer z-[900]">
+          <div className="drawer z-[9000]">
             <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
             <div className="drawer-content flex flex-col">
               {/* Navbar */}

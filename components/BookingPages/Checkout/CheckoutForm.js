@@ -81,9 +81,18 @@ const CheckoutForm = ({
           Payment Method*
         </h1>
         {/* row 1 */}
-        <PayPalScriptProvider options={initialOptions}>
-          <PayPalButtons style={{ layout: "vertical" }} />
-        </PayPalScriptProvider>
+        <div className="w-full md:px-[100px]">
+          <PayPalScriptProvider options={initialOptions}>
+            <PayPalButtons style={{ layout: "vertical" }} />
+          </PayPalScriptProvider>
+        </div>
+        <div className="w-full flex justify-center">
+          <img
+            src="/svg/cards.svg"
+            alt=""
+            className="h-[15px] md:h-[25px] w-fit"
+          />
+        </div>
         {/* <div className="mb-[20px]">
           <div className="flex mt-[10px] mb-[10px] md:mb-[20px] w-full">
             <div className="form-control ">

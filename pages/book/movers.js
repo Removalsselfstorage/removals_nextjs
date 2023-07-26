@@ -15,7 +15,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { homeMovers } from "@/dummyData/dummyData";
 import {
   calculateMoverPrice,
+  decreaseByPercentage,
   getFirstSortedHomeMover,
+  increaseByPercentage,
   sortHomeMoversAndExcludeHighest,
 } from "@/utils/logics";
 import Loader1 from "@/components/loaders/loader1";
@@ -26,13 +28,28 @@ const Movers = () => {
 
   useEffect(() => {
     const priceFirstDay = details.moveDetails.initialPackagePrice;
-    const priceSecondDay = (priceFirstDay * 0.559).toFixed(); //74
-    const priceThirdDay = (priceFirstDay * 0.495).toFixed(); //107
-    const priceSaturdays = (priceFirstDay * 0.441).toFixed(); //60
-    const priceSundays = (priceFirstDay * 0.441).toFixed(); //8
-    const priceOtherDays = (priceFirstDay * 0.33).toFixed();
+    const priceFridays = priceFirstDay;
+    const priceSaturdays = priceFirstDay;
+    const priceSundays = increaseByPercentage(priceFirstDay, 4).toFixed();
+    const priceOtherDays = decreaseByPercentage(priceFirstDay, 3).toFixed();
+    const priceFridaysAfter3Weeks = decreaseByPercentage(
+      priceFirstDay,
+      2.5
+    ).toFixed();
+    const priceSaturdaysAfter3Weeks = decreaseByPercentage(
+      priceFirstDay,
+      2.5
+    ).toFixed();
+    const priceSundaysAfter3Weeks = increaseByPercentage(
+      priceFirstDay,
+      3.5
+    ).toFixed();
+    const priceOtherDaysAfter3Weeks = decreaseByPercentage(
+      priceFirstDay,
+      3
+    ).toFixed();
 
-    dispatch(updatePickPrice(priceThirdDay));
+    dispatch(updatePickPrice(priceFirstDay));
   }, []);
 
   // const [pickPrice, setPickPrice] = useState(priceThirdDay)
@@ -73,12 +90,13 @@ const Movers = () => {
 
               {/* right section */}
               <div className="bg-white shadow-lg rounded-[30px] lg:flex-[3] py-[30px] md:px-[30px] w-full">
-                {!showLoader  ? (
+                {!showLoader ? (
                   <h1 className="text-2xl font-bold mb-[30px] px-[20px]">
-                    
                     <span className="text-primary">
-                      {todayPick ? "Movers unavailable for hire today" : `You've been matched with ${homeMovers.length} verified movers`}.
-                      {/* {homeMovers.length} verified movers. */}
+                      {todayPick
+                        ? "Movers unavailable for hire today"
+                        : `You've been matched with ${homeMovers.length} verified movers`}
+                      .{/* {homeMovers.length} verified movers. */}
                     </span>
                   </h1>
                 ) : (
@@ -127,7 +145,7 @@ const Movers = () => {
                       loadArea={firstCard.loadArea}
                       rating={firstCard.rating}
                       reviewCount={firstCard.reviewCount}
-                      price={details.moverDetails.pickPrice}
+                      price={(details.moverDetails.pickPrice * 0.6).toFixed()}
                       // price={priceThirdDay}
                       hiresCount={firstCard.hireCount}
                       description={firstCard.companyDescription}

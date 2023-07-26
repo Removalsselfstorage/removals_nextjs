@@ -224,8 +224,6 @@ export function generatePriceList2(
   month,
   year,
   priceFirstDay,
-  // priceSecondDay,
-  // priceThirdDay,
   priceFridays,
   priceSaturdays,
   priceSundays,
@@ -293,6 +291,85 @@ export function generatePriceList2(
 
   return resultArray;
 }
+
+export function generatePriceList3(
+  dayOfWeek,
+  dayNumber,
+  month,
+  year,
+  priceFirstDay,
+  priceFridays,
+  priceSaturdays,
+  priceSundays,
+  priceOtherDays,
+  priceFridaysAfter3Weeks,
+  priceSaturdaysAfter3Weeks,
+  priceSundaysAfter3Weeks,
+  priceOtherDaysAfter3Weeks
+) {
+  const dayMap = {
+    Sun: 0,
+    Mon: 1,
+    Tue: 2,
+    Wed: 3,
+    Thu: 4,
+    Fri: 5,
+    Sat: 6,
+  };
+
+  const monthMap = {
+    Jan: 0,
+    Feb: 1,
+    Mar: 2,
+    Apr: 3,
+    May: 4,
+    Jun: 5,
+    Jul: 6,
+    Aug: 7,
+    Sep: 8,
+    Oct: 9,
+    Nov: 10,
+    Dec: 11,
+  };
+
+  const initialDate = new Date(year, monthMap[month], dayNumber);
+
+  const resultArray = [];
+  let currentDate = initialDate;
+  let currentPrice;
+
+  let isFriday = dayOfWeek === "Fri";
+  let isSunday = dayOfWeek === "Sun";
+  let isSaturday = dayOfWeek === "Sat";
+
+  for (let i = 0; i < 150; i++) {
+    if (i === 0) {
+      currentPrice = priceFirstDay;
+    } else if (isFriday) {
+      currentPrice = i >= 21 ? priceFridaysAfter3Weeks : priceFridays;
+    } else if (isSaturday) {
+      currentPrice = i >= 21 ? priceSaturdaysAfter3Weeks : priceSaturdays;
+    } else if (isSunday) {
+      currentPrice = i >= 21 ? priceSundaysAfter3Weeks : priceSundays;
+    } else {
+      currentPrice = i >= 21 ? priceOtherDaysAfter3Weeks : priceOtherDays;
+    }
+
+    resultArray.push({
+      id: i + 1,
+      date: currentDate.toDateString(),
+      price: currentPrice,
+    });
+
+    currentDate.setDate(currentDate.getDate() + 1);
+    isSunday = currentDate.getDay() === 0;
+    isFriday = currentDate.getDay() === 5;
+    isSaturday = currentDate.getDay() === 6;
+  }
+
+  return resultArray;
+}
+
 
 export function generatePriceList23(
   dayOfWeek,

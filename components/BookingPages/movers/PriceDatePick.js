@@ -18,6 +18,7 @@ import {
   generatePriceArray,
   generatePriceList,
   generatePriceList2,
+  generatePriceList3,
   generatePrices,
   getFormattedTodayDate,
   increaseByPercentage,
@@ -33,16 +34,26 @@ const PriceDatePick = ({ setShowLoader, setTodayPick }) => {
   const year = dayjs(details.moveDetails.moveDateRaw).format("YYYY");
 
   const priceFirstDay = details.moveDetails.initialPackagePrice;
-  // const priceSecondDay = (priceFirstDay * 0.559).toFixed(); //74
-  // const priceThirdDay = (priceFirstDay * 0.495).toFixed(); //107
-  // const priceFridays = (priceFirstDay * 0.441).toFixed();
-  // const priceSaturdays = (priceFirstDay * 0.441).toFixed();
-  // const priceSundays = (priceFirstDay * 0.441).toFixed();
-  // const priceOtherDays = (priceFirstDay * 0.33).toFixed();
   const priceFridays = priceFirstDay;
   const priceSaturdays = priceFirstDay;
-  const priceSundays = increaseByPercentage(priceFirstDay, 3).toFixed();
+  const priceSundays = increaseByPercentage(priceFirstDay, 4).toFixed();
   const priceOtherDays = decreaseByPercentage(priceFirstDay, 3).toFixed();
+  const priceFridaysAfter3Weeks = decreaseByPercentage(
+    priceFirstDay,
+    2.5
+  ).toFixed();
+  const priceSaturdaysAfter3Weeks = decreaseByPercentage(
+    priceFirstDay,
+    2.5
+  ).toFixed();
+  const priceSundaysAfter3Weeks = increaseByPercentage(
+    priceFirstDay,
+    3.5
+  ).toFixed();
+  const priceOtherDaysAfter3Weeks = decreaseByPercentage(
+    priceFirstDay,
+    3
+  ).toFixed();
 
   const result = generatePriceList2(
     dayOfWeek,
@@ -56,6 +67,21 @@ const PriceDatePick = ({ setShowLoader, setTodayPick }) => {
     priceSaturdays,
     priceSundays,
     priceOtherDays
+  );
+  const result2 = generatePriceList3(
+    dayOfWeek,
+    dayNumber,
+    month,
+    year,
+    priceFirstDay,
+    priceFridays,
+    priceSaturdays,
+    priceSundays,
+    priceOtherDays,
+    priceFridaysAfter3Weeks,
+    priceSaturdaysAfter3Weeks,
+    priceSundaysAfter3Weeks,
+    priceOtherDaysAfter3Weeks
   );
 
   const dispatch = useDispatch();
@@ -101,7 +127,7 @@ const PriceDatePick = ({ setShowLoader, setTodayPick }) => {
         className="flex items-center space-x-[10px] overflow-x-scroll scrollbar-hide px-[20px]  py-[20px]"
         ref={rowRef}
       >
-        {result.map((pr, index) => {
+        {result2.map((pr, index) => {
           // setSelectedPrice(pr.id);
           // let isActive = pr.id == selectedPrice;
           let isActivated = pr.id == details.moverDetails.dateId;
@@ -130,19 +156,20 @@ const PriceDatePick = ({ setShowLoader, setTodayPick }) => {
                 dateId: pr.id,
               })
             );
-            if (index == 0) {
-              dispatch(updatePickPrice(pr.price));
-            } else if (index == 1) {
-              dispatch(updatePickPrice(pr.price));
-            } else if (index == 2) {
-              dispatch(updatePickPrice(pr.price));
-            } else {
-              // setPickPrice(priceThirdDay)
-              dispatch(updatePickPrice(priceFirstDay));
-            }
+            // if (index == 0) {
+            //   dispatch(updatePickPrice(pr.price));
+            // } else if (index == 1) {
+            //   dispatch(updatePickPrice(pr.price));
+            // } else if (index == 2) {
+            //   dispatch(updatePickPrice(pr.price));
+            // } else {
+            //   // setPickPrice(priceThirdDay)
+            //   dispatch(updatePickPrice(priceFirstDay));
+            // }
+            dispatch(updatePickPrice(pr.price));
             if (today == trimDate(pr.date)) {
               setTodayPick(true);
-            }else{
+            } else {
               setTodayPick(false);
             }
           };

@@ -1,11 +1,11 @@
-import { BiSolidPhoneCall } from 'react-icons/bi';
-import { BiMenu } from 'react-icons/bi';
-import { IoClose } from 'react-icons/io5';
-import { BsChevronDown } from 'react-icons/bs';
-import { RiCustomerService2Fill } from 'react-icons/ri';
-import { useEffect, useState } from 'react';
-import Link from 'next/link';
-import ScrollUpMenuNav from '../ScrollUpMenuNav';
+import { BiSolidPhoneCall } from "react-icons/bi";
+import { BiMenu } from "react-icons/bi";
+import { IoClose } from "react-icons/io5";
+import { BsChevronDown } from "react-icons/bs";
+import { RiCustomerService2Fill } from "react-icons/ri";
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import ScrollUpMenuNav from "../ScrollUpMenuNav";
 // import ScrollUpMenuNav from '../ScrollUpMenuNav';
 
 const Navbar = () => {
@@ -20,7 +20,7 @@ const Navbar = () => {
         setShadow(false);
       }
     };
-    window.addEventListener('scroll', handleShadow);
+    window.addEventListener("scroll", handleShadow);
   }, [shadow]);
 
   useEffect(() => {
@@ -33,7 +33,7 @@ const Navbar = () => {
       }
       oldScrollY = window.scrollY;
     };
-    window.addEventListener('scroll', showNavbar);
+    window.addEventListener("scroll", showNavbar);
   }, [showNav]);
 
   return (
@@ -41,8 +41,8 @@ const Navbar = () => {
       <div
         className={`${
           shadow
-            ? 'shadow-lg fixed left-0 right-0 top-0 z-50 border-b-[1.8px]'
-            : 'fixed left-0 right-0 top-0 z-50 border-b-[1.8px]'
+            ? "shadow-lg fixed left-0 right-0 top-0 z-50 border-b-[1.8px]"
+            : "fixed left-0 right-0 top-0 z-50 border-b-[1.8px]"
         } flex flex-col items-center`}
       >
         {/* Top Nav */}
@@ -55,7 +55,7 @@ const Navbar = () => {
                   <div className="flex items-center ml-[10px] space-x-[7px]">
                     <RiCustomerService2Fill size={20} className="" />
                     <a href="tel:07869116203" className="link link-hover">
-                      07869116203{' '}
+                      07869116203{" "}
                     </a>
                     <p className="">|</p>
                   </div>
@@ -64,7 +64,7 @@ const Navbar = () => {
                 <div className="flex items-center ml-[10px] space-x-[7px]">
                   <BiSolidPhoneCall size={20} className="" />
                   <a href="tel:(800)-995-5003" className="link link-hover">
-                    (800) 995-5003{' '}
+                    (800) 995-5003{" "}
                   </a>
                 </div>
               </div>
@@ -79,19 +79,19 @@ const Navbar = () => {
           </div>
         )}
         {/* Main Nav */}
-        <div className={`${shadow ? 'bg-white/90' : 'bg-white'} w-full`}>
+        <div className={`${shadow ? "bg-white/90" : "bg-white"} w-full`}>
           <div className="drawer z-[900]">
             <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
             <div className="drawer-content flex flex-col">
               {/* Navbar */}
               <div className="w-full navbar  md:max-w-7xl mx-auto items-center ">
                 <div className="navbar-start flex flex-[1] items-center">
-                  <Link href='/'>
-                      <img
-                        src="/rss_logo2.svg"
-                        alt=""
-                        className="h-[30px] md:h-[40px]"
-                      />
+                  <Link href="/">
+                    <img
+                      src="/rss_logo2.svg"
+                      alt=""
+                      className="h-[30px] md:h-[40px]"
+                    />
                   </Link>
                 </div>
                 <div className="navbar-center hidden lg:flex flex-[2]">
@@ -158,10 +158,19 @@ const Navbar = () => {
                     </label>
                   </div>
                   <div className=" lg:space-x-[10px] hidden lg:flex">
-                    <a className="btn btn-outline btn-primary">
+                    <Link
+                      href="/join-us"
+                      className="btn btn-outline btn-primary"
+                    >
                       Become a Mover
-                    </a>
-                    <a className="btn btn-primary">Mover Login</a>
+                    </Link>
+                    <Link
+                      href="#"
+                      className="btn  btn-primary"
+                    >
+                      Mover Login
+                    </Link>
+                    {/* <a className="btn btn-primary">Mover Login</a> */}
                   </div>
                 </div>
               </div>
@@ -169,53 +178,47 @@ const Navbar = () => {
 
             <div className="drawer-side lg:hidden">
               <label htmlFor="my-drawer-3" className="drawer-overlay"></label>
-              {/* <ul className="menu p-4 w-80 h-full bg-base-200">
-                <li>
-                  <a>Sidebar Item 1</a>
-                </li>
-                <li>
-                  <a>Sidebar Item 2</a>
-                </li>
-              </ul> */}
-              <ul className="menu p-4 w-[250px] md:w-[400px] h-full bg-base-100 md:text-[16px] flex flex-col space-y-[10px] md:space-y-[15px]">
-                <li>
-                  <a className="btn-nav">Home</a>
-                </li>
-                <li>
-                  <a className="btn-nav">Home Removals</a>
-                </li>
-                <li>
-                  <a className="btn-nav">Man and Van</a>
-                </li>
-                <li>
-                  <a className="btn-nav">Storage & Self Storage</a>
-                </li>
-                <li className="border-b-[2px] pb-[10px]">
-                  <a className="btn-nav">Handy Man / Packing</a>
-                </li>
-                <li>
-                  <a className="btn-nav">Locations</a>
-                </li>
-                <li>
-                  <a className="btn-nav">Moving Tips</a>
-                </li>
 
-                <li>
-                  <a className="btn-nav">About Us</a>
-                </li>
-                <li>
-                  <a className="btn-nav">Contact Us</a>
-                </li>
-                <li className="border-b-[2px] pb-[10px]">
-                  <a className="btn-nav">Blog</a>
-                </li>
-                <li>
-                  <a className="btn-nav">Become a Mover</a>
-                </li>
-                <li>
-                  <a className="btn-nav">Mover Login</a>
-                </li>
-              </ul>
+              <div className="overflow-auto scrollbar-thin scrollbar-track-gray-200/50 scrollbar-thumb-gray-500/20 scrollbar-default h-[100%]">
+                <ul className="menu p-4 w-[250px] md:w-[400px] h-full bg-base-100 md:text-[16px] flex flex-col space-y-[10px] md:space-y-[15px]">
+                  <li>
+                    <a className="btn-nav">Home</a>
+                  </li>
+                  <li>
+                    <a className="btn-nav">Home Removals</a>
+                  </li>
+                  <li>
+                    <a className="btn-nav">Man and Van</a>
+                  </li>
+                  <li>
+                    <a className="btn-nav">Storage & Self Storage</a>
+                  </li>
+                  <li className="border-b-[2px] pb-[10px]">
+                    <a className="btn-nav">Handy Man / Packing</a>
+                  </li>
+                  <li>
+                    <a className="btn-nav">Locations</a>
+                  </li>
+                  <li>
+                    <a className="btn-nav">Moving Tips</a>
+                  </li>
+                  <li>
+                    <a className="btn-nav">About Us</a>
+                  </li>
+                  <li>
+                    <a className="btn-nav">Contact Us</a>
+                  </li>
+                  <li className="border-b-[2px] pb-[10px]">
+                    <a className="btn-nav">Blog</a>
+                  </li>
+                  <li>
+                    <a className="btn-nav">Become a Mover</a>
+                  </li>
+                  <li>
+                    <a className="btn-nav">Mover Login</a>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>

@@ -8,30 +8,31 @@ const CheckoutForm = ({
   fullDepositOnchange,
   cardOnchange,
   paypalOnchange,
+  scriptLoaded,
 }) => {
   const [amount, setAmount] = useState(20);
-  const [scriptLoaded, setScriptLoaded] = useState(false);
+  // const [scriptLoaded, setScriptLoaded] = useState(false);
 
-  const addPaypalScript = () => {
-    if (window.paypal) {
-      setScriptLoaded(true);
-      return;
-    }
-    const script = document.createElement("script");
-    script.src =
-      "https://www.paypal.com/sdk/js?client-id=AUjKA9gFxV187adUYdXSmLX-XQkhTp4mb9pHwovh-ICBlBFpqlbmwFH920CRsQncHmB1CObNRic2scql";
+  // const addPaypalScript = () => {
+  //   if (window.paypal) {
+  //     setScriptLoaded(true);
+  //     return;
+  //   }
+  //   const script = document.createElement("script");
+  //   script.src =
+  //     "https://www.paypal.com/sdk/js?client-id=AUjKA9gFxV187adUYdXSmLX-XQkhTp4mb9pHwovh-ICBlBFpqlbmwFH920CRsQncHmB1CObNRic2scql";
 
-    script.type = "text/javascript";
-    script.async = true;
-    script.onload = () => {
-      setScriptLoaded(true);
-    };
-    document.body.appendChild(script);
-  };
+  //   script.type = "text/javascript";
+  //   script.async = true;
+  //   script.onload = () => {
+  //     setScriptLoaded(true);
+  //   };
+  //   document.body.appendChild(script);
+  // };
 
-  useEffect(() => {
-    addPaypalScript();
-  }, []);
+  // useEffect(() => {
+  //   addPaypalScript();
+  // }, []);
 
   const initialOptions = {
     clientId: "test",

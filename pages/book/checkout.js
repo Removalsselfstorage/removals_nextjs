@@ -2,7 +2,7 @@ import BookingLayout from "@/layouts/BookingLayout";
 import { titleFont } from "@/utils/fonts";
 import Head from "next/head";
 import Link from "next/link";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import PriceDatePick from "@/components/BookingPages/movers/PriceDatePick";
 import FeaturesScroll from "@/components/BookingPages/movers/FeaturesScroll";
@@ -80,6 +80,7 @@ const Checkout = () => {
                 fullDepositOnchange={fullDepositOnchange}
                 cardOnchange={cardOnchange}
                 paypalOnchange={paypalOnchange}
+                // scriptLoaded={scriptLoaded}
               />
 
               {/* right section - Move summary */}

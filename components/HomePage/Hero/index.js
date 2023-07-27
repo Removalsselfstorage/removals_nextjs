@@ -13,7 +13,7 @@ const Hero = () => {
         style={{ backgroundImage: 'url(/hero_bg.jpg)' }}
       >
         <div className="hero-overlay bg-black/70 "></div>
-        <div className="hero-content flex-col text-white lg:flex-row md:space-x-[50px] space-y-[0px] md:px-[50px] md:max-w-7xl mx-auto">
+        <div className="hero-content flex-col text-white lg:flex-row md:space-x-[50px] space-y-[0px] md:px-[50px] md:max-w-7xl mx-auto pt-[70px] lg:pt-[10px]">
           {/* Hero Text */}
           <div className=" hidden lg:flex lg:flex-col md:justify-between h-full">
             {/* need help */}

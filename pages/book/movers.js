@@ -52,6 +52,27 @@ const Movers = () => {
     dispatch(updatePickPrice(priceFirstDay));
   }, []);
 
+  const [scriptLoaded, setScriptLoaded] = useState(false);
+  const addPaypalScript = () => {
+    if (window.paypal) {
+      setScriptLoaded(true);
+      return;
+    }
+    const script = document.createElement("script");
+    script.src =
+      "https://www.paypal.com/sdk/js?client-id=AUjKA9gFxV187adUYdXSmLX-XQkhTp4mb9pHwovh-ICBlBFpqlbmwFH920CRsQncHmB1CObNRic2scql";
+
+    script.type = "text/javascript";
+    script.async = true;
+    script.onload = () => {
+      setScriptLoaded(true);
+    };
+    document.body.appendChild(script);
+  };
+  useEffect(() => {
+    addPaypalScript();
+  }, []);
+
   // const [pickPrice, setPickPrice] = useState(priceThirdDay)
 
   const [showLoader, setShowLoader] = useState(false);

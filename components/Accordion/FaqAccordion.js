@@ -41,7 +41,7 @@ function FaqAccordion({ items, openFirst, titleStyle, childrenStyle }) {
               <p
                 className={`${
                   activeIndex === index ? 'flex  ' : 'hidden'
-                } items-center justify-between  cursor-pointer lg:text-[18px] ${childrenStyle}`}
+                } items-center justify-between  cursor-pointer lg:text-[17px] ${childrenStyle}`}
               >
                 {item.answer}
               </p>

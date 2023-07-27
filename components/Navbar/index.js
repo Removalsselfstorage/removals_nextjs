@@ -99,7 +99,7 @@ const Navbar = () => {
                 <div className="navbar-center hidden lg:flex flex-[2]">
                   <ul className="menu menu-horizontal  px-1 text-[16px]">
                     <li>
-                      <a className="btn-nav ">Home</a>
+                      <Link href="/" className="btn-nav ">Home</Link >
                     </li>
                     <li className="dropdown dropdown-hover dropdown-end group">
                       <label tabIndex={0} className="flex items-center btn-nav">

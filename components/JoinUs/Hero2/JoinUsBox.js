@@ -15,6 +15,7 @@ import {
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import StarRating from "@/components/Rating/EditHalfStars2";
+import { RiEyeCloseLine, RiEyeLine } from "react-icons/ri";
 
 const JoinUsBox = () => {
   const router = useRouter();
@@ -38,6 +39,8 @@ const JoinUsBox = () => {
   const [firstName, setFirstName] = useState(
     details.personalDetails.firstName || ""
   );
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [lastName, setLastName] = useState(
     details.personalDetails.lastName || ""
   );
@@ -344,7 +347,7 @@ const JoinUsBox = () => {
               type="tel"
               placeholder="Phone Number"
               className={`${
-                activateError  && (!phone || !phoneError)
+                activateError && (!phone || !phoneError)
                   ? "ring ring-secondary"
                   : ""
               } input input-primary w-full h-[43px]`}
@@ -358,21 +361,28 @@ const JoinUsBox = () => {
             )}
           </div>
 
-           {/* password */}
-           <div className="form-control w-full ">
-              {/* <label className="label">
-                <span className="label-text font-semibold">First Name*</span>
-              </label> */}
-              <input
-                type="text"
-                placeholder="Password"
-                className={`${
-                  activateError && !firstName ? "ring ring-secondary" : ""
-                } input input-primary w-full h-[43px]`}
-                onChange={(e) => setFirstName(e.target.value)}
-                defaultValue={firstName}
-              />
-            </div>
+          {/* password */}
+          <div className="w-full flex items-center justify-between">
+            <input
+              type={showPassword ? "text" : "password"}
+              placeholder="Password"
+              className={`${
+                activateError && !password ? "ring ring-secondary" : ""
+              } input input-primary flex-1`}
+              onChange={(e) => setPassword(e.target.value)}
+              defaultValue={password}
+            />
+            <span
+              onClick={() => setShowPassword(!showPassword)}
+              className="pl-[10px] cursor-pointer"
+            >
+              {showPassword ? (
+                <RiEyeCloseLine className="text-primary text-[20px]" />
+              ) : (
+                <RiEyeLine className="text-primary text-[20px]" />
+              )}
+            </span>
+          </div>
 
           <div className="form-control mt-6">
             <button

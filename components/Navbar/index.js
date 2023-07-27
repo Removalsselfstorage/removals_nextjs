@@ -69,11 +69,13 @@ const Navbar = () => {
                 </div>
               </div>
               <div className="lg:flex items-center  space-x-[10px] hidden pr-[10px]">
+                <p className="link link-hover ">Moving Tips</p>
+                <p className="">|</p>
                 <p className="link link-hover ">About Us</p>
                 <p className="">|</p>
                 <p className="link link-hover ">Contact Us</p>
-                <p className="">|</p>
-                <p className="link link-hover"> Blog</p>
+                {/* <p className="">|</p>
+                <p className="link link-hover"> Blog</p> */}
               </div>
             </div>
           </div>
@@ -131,7 +133,7 @@ const Navbar = () => {
                       <a className="btn-nav">Locations</a>
                     </li>
                     <li>
-                      <a className="btn-nav">Moving Tips</a>
+                      <a className="btn-nav">My Reservations</a>
                     </li>
                   </ul>
                 </div>
@@ -164,10 +166,7 @@ const Navbar = () => {
                     >
                       Become a Mover
                     </Link>
-                    <Link
-                      href="#"
-                      className="btn  btn-primary"
-                    >
+                    <Link href="#" className="btn  btn-primary">
                       Mover Login
                     </Link>
                     {/* <a className="btn btn-primary">Mover Login</a> */}

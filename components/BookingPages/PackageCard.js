@@ -82,7 +82,7 @@ const PackageCard = ({
       case "Studio flat":
         switch (title) {
           case "STANDARD":
-            return "( ₤ 65.99 / HR )";
+            return "( ₤ 57.99 / HR )";
             break;
           case "GOLD":
             return "( ₤ 60.99 / HR )";
@@ -101,7 +101,7 @@ const PackageCard = ({
       case "Furniture & Appliances":
         switch (title) {
           case "STANDARD":
-            return "( ₤ 65.99 / HR )";
+            return "( ₤ 57.99 / HR )";
             break;
           case "GOLD":
             return "( ₤ 60.99 / HR )";

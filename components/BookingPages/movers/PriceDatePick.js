@@ -124,7 +124,7 @@ const PriceDatePick = ({ setShowLoader, setTodayPick }) => {
       />
       {/* {pickPrice} */}
       <div
-        className="flex items-center space-x-[10px] overflow-x-scroll scrollbar-hide px-[20px]  py-[20px]"
+        className="flex items-center space-x-[10px] overflow-x-scroll scrollbar-thin scrollbar-track-primary/0 group-hover:scrollbar-track-primary/10 scrollbar-thumb-primary/0 group-hover:scrollbar-thumb-primary/50 scrollbar-default px-[20px]  pt-[20px] pb-[10px] mb-[10px]"
         ref={rowRef}
       >
         {result2.map((pr, index) => {

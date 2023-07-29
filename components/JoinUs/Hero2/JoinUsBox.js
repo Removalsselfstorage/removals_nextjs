@@ -273,8 +273,8 @@ const JoinUsBox = () => {
   console.log(details);
 
   return (
-    <div className="card shadow-2xl bg-base-100 justify-center  text-black w-full md:w-[400px]">
-      <div className="card-body w-full">
+    <div className="card shadow-2xl bg-base-100 justify-center text-black w-full md:w-[400px]">
+      <div className="card-body ">
         <h3 className="text-2xl font-extrabold text-primary uppercase mt-[0px] mb-[20px] text-center">
           Join us for free!
         </h3>
@@ -368,7 +368,7 @@ const JoinUsBox = () => {
               placeholder="Password"
               className={`${
                 activateError && !password ? "ring ring-secondary" : ""
-              } input input-primary flex-1`}
+              } input input-primary w-full`}
               onChange={(e) => setPassword(e.target.value)}
               defaultValue={password}
             />

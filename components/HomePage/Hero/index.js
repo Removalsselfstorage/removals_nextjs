@@ -7,9 +7,9 @@ import Link from 'next/link';
 
 const Hero = () => {
   return (
-    <div className=" bg-base-200 mt-[50px]  md:mt-[0px] md:pt-[100px]">
+    <div className=" bg-base-200 mt-[50px]  md:mt-[0px] md:pt-[70px] lg:pt-[100px]">
       <div
-        className="hero min-h-[95vh] md:min-h-[85vh] lg:min-h-[95vh] 2xl:min-h-[80vh] bg-black/80"
+        className="hero min-h-[80vh] md:min-h-[80vh] lg:min-h-[80vh] 2xl:min-h-[80vh] bg-black/80"
         style={{ backgroundImage: 'url(/hero_bg.jpg)' }}
       >
         <div className="hero-overlay bg-black/70 "></div>

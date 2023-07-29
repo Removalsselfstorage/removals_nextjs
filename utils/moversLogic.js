@@ -27,13 +27,13 @@ export const priceCalc = (title, duration, movers) => {
     case "STANDARD":
       switch (movers) {
         case "1 Man":
-          return (57.99 * duration).toFixed(0);
+          return (57.99 * duration).toFixed(2);
           break;
         case "2 Men":
-          return (65.99 * duration).toFixed(0);
+          return (65.99 * duration).toFixed(2);
           break;
         case "3 Men":
-          return (75.99 * duration).toFixed(0);
+          return (75.99 * duration).toFixed(2);
           break;
 
         default:
@@ -43,13 +43,13 @@ export const priceCalc = (title, duration, movers) => {
     case "GOLD":
       switch (movers) {
         case "1 Man":
-          return (60.99 * duration).toFixed(0);
+          return (60.99 * duration).toFixed(2);
           break;
         case "2 Men":
-          return (70.99 * duration).toFixed(0);
+          return (70.99 * duration).toFixed(2);
           break;
         case "3 Men":
-          return (78.99 * duration).toFixed(0);
+          return (78.99 * duration).toFixed(2);
           break;
 
         default:
@@ -59,13 +59,13 @@ export const priceCalc = (title, duration, movers) => {
     case "PREMIUM":
       switch (movers) {
         case "1 Man":
-          return (63.99 * duration).toFixed(0);
+          return (63.99 * duration).toFixed(2);
           break;
         case "2 Men":
-          return (79.99 * duration).toFixed(0);
+          return (79.99 * duration).toFixed(2);
           break;
         case "3 Men":
-          return (93.99 * duration).toFixed(0);
+          return (93.99 * duration).toFixed(2);
           break;
 
         default:
@@ -75,13 +75,13 @@ export const priceCalc = (title, duration, movers) => {
     case "PREMIUM PLUS":
       switch (movers) {
         case "1 Man":
-          return (70.99 * duration).toFixed(0);
+          return (70.99 * duration).toFixed(2);
           break;
         case "2 Men":
-          return (95.99 * duration).toFixed(0);
+          return (95.99 * duration).toFixed(2);
           break;
         case "3 Men":
-          return (110.99 * duration).toFixed(0);
+          return (110.99 * duration).toFixed(2);
           break;
 
         default:
@@ -93,6 +93,7 @@ export const priceCalc = (title, duration, movers) => {
       break;
   }
 };
+
 export const priceCalc2 = (title, mileage, movers, propertyType) => {
   switch (propertyType) {
     case "1 bed property":
@@ -382,9 +383,11 @@ export const moveDesciptionsCalc = (title, propertyType) => {
             f1: "Free mileage",
             f2: "Minimum 3 hours hire",
             f3: "Item dismantling / assembling",
-            f4: "Load / unload Blankets",
-            f5: "Trolly & straps",
-            f6: "450 cubic ft loading capacity",
+            f4: "Help Load / unload",
+            f5: "Trolly, straps & Blanket",
+            f6: "Standard insurance cover",
+            f7: "Cancel up to 1 week before your move",
+            f8: "450 cubic ft loading capacity",
           };
           break;
         case "GOLD":
@@ -392,11 +395,12 @@ export const moveDesciptionsCalc = (title, propertyType) => {
             f1: "Free mileage",
             f2: "Minimum 3 hours hire",
             f3: "Item dismantling / assembling",
-            f4: "Load / unload Blankets",
-            f5: "Trolly & straps",
+            f4: "Help Load / unload",
+            f5: "Trolly, straps & Blanket",
             f6: "Help Load / unload",
-            f7: "Shrink Wrapping services",
-            f8: "550 Cubic ft loading capacity",
+            f7: "Standard insurance cover",
+            f8: "Cancel up to 1 week before your move",
+            f10: "550 Cubic ft loading capacity",
           };
           break;
         case "PREMIUM":
@@ -404,11 +408,14 @@ export const moveDesciptionsCalc = (title, propertyType) => {
             f1: "Free mileage",
             f2: "Minimum 3 hours hire",
             f3: "Item dismantling / assembling",
-            f4: "Load / unload Blankets",
-            f5: "Trolly & straps",
+            f4: "Help Load / unload",
+            f5: "Trolly, straps & Blanket",
             f6: "Help Load / unload",
             f7: "Shrink Wrapping services",
-            f8: "660 Cubic ft loading capacity",
+            f8: "Moving Concierge",
+            f9: "Comprehensive insurance cover",
+            f10: "Cancel up to 48hrs before your move",
+            f11: "660 Cubic ft loading capacity",
           };
           break;
         case "PREMIUM PLUS":
@@ -416,13 +423,15 @@ export const moveDesciptionsCalc = (title, propertyType) => {
             f1: "Free mileage",
             f2: "Minimum 3 hours hire",
             f3: "Item dismantling / assembling",
-            f4: "Load / unload Blankets",
-            f5: "Trolly & straps",
-            f6: "Help Load / unload",
-            f7: "Shrink Wrapping services",
-            f8: "Free packing service",
-            f9: "Free mattress cover",
-            f10: "840 Cubic ft loading capacity",
+            f4: "Help Load / unload",
+            f5: "Trolly, straps & Blanket",
+            f6: "Shrink Wrapping services",
+            f7: "Free packing service",
+            f8: "Free mattress cover",
+            f9: "Moving Concierge",
+            f10: "Comprehensive insurance cover",
+            f11: "Cancel up to 48hrs before your move",
+            f12: "840 Cubic ft loading capacity",
           };
           break;
 
@@ -437,9 +446,11 @@ export const moveDesciptionsCalc = (title, propertyType) => {
             f1: "Free mileage",
             f2: "Minimum 3 hours hire",
             f3: "Item dismantling / assembling",
-            f4: "Load / unload Blankets",
-            f5: "Trolly & straps",
-            f6: "450 cubic ft loading capacity",
+            f4: "Help Load / unload",
+            f5: "Trolly, straps & Blanket",
+            f6: "Standard insurance cover",
+            f7: "Cancel up to 1 week before your move",
+            f8: "450 cubic ft loading capacity",
           };
           break;
         case "GOLD":
@@ -447,11 +458,13 @@ export const moveDesciptionsCalc = (title, propertyType) => {
             f1: "Free mileage",
             f2: "Minimum 3 hours hire",
             f3: "Item dismantling / assembling",
-            f4: "Load / unload Blankets",
-            f5: "Trolly & straps",
-            f6: "Help Load / unload",
+            f4: "Help Load / unload",
+            f5: "Trolly, straps & Blanket",
+            f6: "Help Help Load / unload",
             f7: "Shrink Wrapping services",
-            f8: "550 Cubic ft loading capacity",
+            f8: "Standard insurance cover",
+            f9: "Cancel up to 1 week before your move",
+            f10: "550 Cubic ft loading capacity",
           };
           break;
         case "PREMIUM":
@@ -459,11 +472,13 @@ export const moveDesciptionsCalc = (title, propertyType) => {
             f1: "Free mileage",
             f2: "Minimum 3 hours hire",
             f3: "Item dismantling / assembling",
-            f4: "Load / unload Blankets",
-            f5: "Trolly & straps",
-            f6: "Help Load / unload",
-            f7: "Shrink Wrapping services",
-            f8: "660 Cubic ft loading capacity",
+            f4: "Help Load / unload",
+            f5: "Trolly, straps & Blanket",
+            f6: "Shrink Wrapping services",
+            f7: "Moving Concierge",
+            f8: "Comprehensive insurance cover",
+            f9: "Cancel up to 48hrs before your move",
+            f10: "660 Cubic ft loading capacity",
           };
           break;
         case "PREMIUM PLUS":
@@ -471,13 +486,15 @@ export const moveDesciptionsCalc = (title, propertyType) => {
             f1: "Free mileage",
             f2: "Minimum 3 hours hire",
             f3: "Item dismantling / assembling",
-            f4: "Load / unload Blankets",
-            f5: "Trolly & straps",
-            f6: "Help Load / unload",
-            f7: "Shrink Wrapping services",
-            f8: "Free packing service",
-            f9: "Free mattress cover",
-            f10: "840 Cubic ft loading capacity",
+            f4: "Help Load / unload",
+            f5: "Trolly, straps & Blanket",
+            f6: "Shrink Wrapping services",
+            f7: "Free packing service",
+            f8: "Free mattress cover",
+            f9: "Moving Concierge",
+            f10: "Comprehensive insurance cover",
+            f11: "Cancel up to 48hrs before your move",
+            f12: "840 Cubic ft loading capacity",
           };
           break;
 
@@ -492,9 +509,11 @@ export const moveDesciptionsCalc = (title, propertyType) => {
             f1: "Free mileage",
             f2: "Minimum 3 hours hire",
             f3: "Item dismantling / assembling",
-            f4: "Load / unload Blankets",
-            f5: "Trolly & straps",
-            f6: "450 cubic ft loading capacity",
+            f4: "Help Load / unload",
+            f5: "Trolly, straps & Blanket",
+            f6: "Standard insurance cover",
+            f7: "Cancel up to 1 week before your move",
+            f8: "450 cubic ft loading capacity",
           };
           break;
         case "GOLD":
@@ -502,11 +521,12 @@ export const moveDesciptionsCalc = (title, propertyType) => {
             f1: "Free mileage",
             f2: "Minimum 3 hours hire",
             f3: "Item dismantling / assembling",
-            f4: "Load / unload Blankets",
-            f5: "Trolly & straps",
-            f6: "Help Load / unload",
-            f7: "Shrink Wrapping services",
-            f8: "550 Cubic ft loading capacity",
+            f4: "Help Load / unload",
+            f5: "Trolly, straps & Blanket",
+            f6: "Shrink Wrapping services",
+            f7: "Standard insurance cover",
+            f8: "Cancel up to 1 week before your move",
+            f9: "550 Cubic ft loading capacity",
           };
           break;
         case "PREMIUM":
@@ -514,11 +534,13 @@ export const moveDesciptionsCalc = (title, propertyType) => {
             f1: "Free mileage",
             f2: "Minimum 3 hours hire",
             f3: "Item dismantling / assembling",
-            f4: "Load / unload Blankets",
-            f5: "Trolly & straps",
-            f6: "Help Load / unload",
-            f7: "Shrink Wrapping services",
-            f8: "660 Cubic ft loading capacity",
+            f4: "Help Load / unload",
+            f5: "Trolly, straps & Blanket",
+            f6: "Shrink Wrapping services",
+            f7: "Moving Concierge",
+            f8: "Comprehensive insurance cover",
+            f9: "Cancel up to 48hrs before your move",
+            f10: "660 Cubic ft loading capacity",
           };
           break;
         case "PREMIUM PLUS":
@@ -526,13 +548,15 @@ export const moveDesciptionsCalc = (title, propertyType) => {
             f1: "Free mileage",
             f2: "Minimum 3 hours hire",
             f3: "Item dismantling / assembling",
-            f4: "Load / unload Blankets",
-            f5: "Trolly & straps",
-            f6: "Help Load / unload",
+            f4: "Help Load / unload",
+            f5: "Trolly, straps & Blanket",
             f7: "Shrink Wrapping services",
             f8: "Free packing service",
             f9: "Free mattress cover",
-            f10: "840 Cubic ft loading capacity",
+            f10: "Moving Concierge",
+            f11: "Comprehensive insurance cover",
+            f12: "Cancel up to 48hrs before your move",
+            f13: "840 Cubic ft loading capacity",
           };
           break;
 
@@ -546,22 +570,22 @@ export const moveDesciptionsCalc = (title, propertyType) => {
           return {
             f1: "Free local mileage",
             f2: "Free loading / unloading",
-            f3: "Truck & free blanket",
-            f4: "Free waiting time",
-            f5: "Trolly & straps",
+            f3: "Free waiting time for keys",
+            f4: "Trolly, straps & blankets",
             f5: "Standard insurance cover",
-            f6: "600 cubic ft loading capacity",
+            f6: "Cancel up to 1 week before your move",
+            f7: "600 cubic ft loading capacity",
           };
           break;
         case "GOLD":
           return {
             f1: "Free local mileage",
             f2: "Free loading / unloading",
-            f3: "1 truck & free blanket",
-            f4: "Free waiting time",
-            f5: "Trolly & straps",
-            f6: "Item dismantling / assembling",
-            f7: "Shrink Wrapping services",
+            f3: "Free waiting time for keys",
+            f4: "Trolly, straps & blankets",
+            f5: "Item dismantling / assembling",
+            f6: "Shrink Wrapping services",
+            f7: "Cancel up to 72hrs before your move",
             f8: "Comprehensive insurance cover",
             f9: "600 cubic ft loading capacity",
           };
@@ -570,31 +594,33 @@ export const moveDesciptionsCalc = (title, propertyType) => {
           return {
             f1: "Free local mileage",
             f2: "Free loading / unloading",
-            f3: "1 truck & free blanket",
-            f4: "Free waiting time",
-            f5: "Trolly & straps",
-            f6: "Item dismantling / assembling",
-            f7: "Shrink Wrapping services",
-            f8: "Free mattress covers",
-            f9: "Free ₤50 packing material",
-            f10: "Comprehensive insurance cover",
-            f11: "600 cubic ft loading capacity",
+            f3: "Free waiting time for keys",
+            f4: "Trolly, straps & blankets",
+            f5: "Item dismantling / assembling",
+            f6: "Shrink Wrapping services",
+            f9: "Free mattress covers",
+            f10: "Free ₤50 packing material",
+            f11: "Moving Concierge",
+            f12: "Cancel up to 48hrs before your move",
+            f13: "Comprehensive insurance cover",
+            f14: "600 cubic ft loading capacity",
           };
           break;
         case "PREMIUM PLUS":
           return {
             f1: "Free local mileage",
             f2: "Free loading / unloading",
-            f3: "1 truck & free blanket",
-            f4: "Free waiting time",
-            f5: "Trolly & straps",
-            f6: "Item dismantling / assembling",
-            f7: "Shrink Wrapping services",
-            f8: "Free packing services",
-            f9: "Free mattress covers",
-            f10: "Free ₤75 packing material",
-            f11: "Comprehensive insurance cover",
-            f12: "600 cubic ft loading capacity",
+            f3: "Free waiting time for keys",
+            f4: "Trolly, straps & blankets",
+            f5: "Item dismantling / assembling",
+            f6: "Shrink Wrapping services",
+            f7: "Free packing services",
+            f8: "Free mattress covers",
+            f9: "Free ₤75 packing material",
+            f10: "Moving Concierge",
+            f11: "Cancel up to 48hrs before your move",
+            f12: "Comprehensive insurance cover",
+            f13: "600 cubic ft loading capacity",
           };
           break;
 
@@ -608,22 +634,22 @@ export const moveDesciptionsCalc = (title, propertyType) => {
           return {
             f1: "Free local mileage",
             f2: "Free loading / unloading",
-            f3: "Truck & free blanket",
-            f4: "Free waiting time",
-            f5: "Trolly & straps",
+            f3: "Free waiting time for keys",
+            f4: "Trolly, straps & blankets",
             f5: "Standard insurance cover",
-            f6: "600 cubic ft loading capacity",
+            f6: "Cancel up to 1 week before your move",
+            f7: "600 cubic ft loading capacity",
           };
           break;
         case "GOLD":
           return {
             f1: "Free local mileage",
             f2: "Free loading / unloading",
-            f3: "1 truck & free blanket",
-            f4: "Free waiting time",
-            f5: "Trolly & straps",
-            f6: "Item dismantling / assembling",
-            f7: "Shrink Wrapping services",
+            f3: "Free waiting time for keys",
+            f4: "Trolly, straps & blankets",
+            f5: "Item dismantling / assembling",
+            f6: "Shrink Wrapping services",
+            f7: "Cancel up to 72hrs before your move",
             f8: "Comprehensive insurance cover",
             f9: "600 cubic ft loading capacity",
           };
@@ -632,31 +658,33 @@ export const moveDesciptionsCalc = (title, propertyType) => {
           return {
             f1: "Free local mileage",
             f2: "Free loading / unloading",
-            f3: "1 truck & free blanket",
-            f4: "Free waiting time",
-            f5: "Trolly & straps",
-            f6: "Item dismantling / assembling",
-            f7: "Shrink Wrapping services",
-            f8: "Free mattress covers",
-            f9: "Free ₤75 packing material",
-            f10: "Comprehensive insurance cover",
-            f11: "600 cubic ft loading capacity",
+            f3: "Free waiting time for keys",
+            f4: "Trolly, straps & blankets",
+            f5: "Item dismantling / assembling",
+            f6: "Shrink Wrapping services",
+            f7: "Free mattress covers",
+            f8: "Free ₤75 packing material",
+            f9: "Moving Concierge",
+            f10: "Cancel up to 48hrs before your move",
+            f11: "Comprehensive insurance cover",
+            f12: "600 cubic ft loading capacity",
           };
           break;
         case "PREMIUM PLUS":
           return {
             f1: "Free local mileage",
             f2: "Free loading / unloading",
-            f3: "1 truck & free blanket",
-            f4: "Free waiting time",
-            f5: "Trolly & straps",
-            f6: "Item dismantling / assembling",
-            f7: "Shrink Wrapping services",
+            f3: "Free waiting time for keys",
+            f4: "Trolly, straps & blankets",
+            f5: "Item dismantling / assembling",
+            f6: "Shrink Wrapping services",
             f7: "Free packing services",
             f8: "Free mattress covers",
             f9: "Free ₤85 packing material",
-            f10: "Comprehensive insurance cover",
-            f11: "700 cubic ft loading capacity",
+            f10: "Moving Concierge",
+            f11: "Cancel up to 48hrs before your move",
+            f12: "Comprehensive insurance cover",
+            f13: "700 cubic ft loading capacity",
           };
           break;
 
@@ -670,22 +698,22 @@ export const moveDesciptionsCalc = (title, propertyType) => {
           return {
             f1: "Free local mileage",
             f2: "Free loading / unloading",
-            f3: "Truck & free blanket",
-            f4: "Free waiting time for keys",
-            f5: "Trolly & straps",
-            f5: "Standard insurance cover",
-            f6: "520 cubic ft loading capacity",
+            f3: "Free waiting time for keys",
+            f4: "Trolly, straps & blankets",
+            f6: "Standard insurance cover",
+            f7: "Cancel up to 1 week before your move",
+            f8: "520 cubic ft loading capacity",
           };
           break;
         case "GOLD":
           return {
             f1: "Free local mileage",
             f2: "Free loading / unloading",
-            f3: "1 truck & free blanket",
-            f4: "Free waiting time for keys",
-            f5: "Trolly & straps",
-            f6: "Item dismantling / assembling",
-            f7: "Shrink Wrapping services",
+            f3: "Free waiting time for keys",
+            f4: "Trolly, straps & blankets",
+            f5: "Item dismantling / assembling",
+            f6: "Shrink Wrapping services",
+            f7: "Cancel up to 72hrs before your move",
             f8: "Standard insurance cover",
             f9: "530 cubic ft loading capacity",
           };
@@ -694,31 +722,33 @@ export const moveDesciptionsCalc = (title, propertyType) => {
           return {
             f1: "Free local mileage",
             f2: "Free loading / unloading",
-            f3: "1 truck & free blanket",
-            f4: "Free waiting time for keys",
-            f5: "Trolly & straps",
-            f6: "Item dismantling / assembling",
-            f7: "Shrink Wrapping services",
-            f8: "Free mattress covers",
-            f9: "Free ₤75 packing material",
-            f10: "Comprehensive insurance cover",
-            f11: "540 cubic ft loading capacity",
+            f3: "Free waiting time for keys",
+            f4: "Trolly, straps & blankets",
+            f5: "Item dismantling / assembling",
+            f6: "Shrink Wrapping services",
+            f7: "Free mattress covers",
+            f8: "Free ₤75 packing material",
+            f9: "Moving Concierge",
+            f10: "Cancel up to 48hrs before your move",
+            f11: "Comprehensive insurance cover",
+            f12: "600 cubic ft loading capacity",
           };
           break;
         case "PREMIUM PLUS":
           return {
             f1: "Free local mileage",
             f2: "Free loading / unloading",
-            f3: "1 truck & free blanket",
-            f4: "Free waiting time for keys",
-            f5: "Trolly & straps",
-            f6: "Item dismantling / assembling",
-            f7: "Shrink Wrapping services",
+            f3: "Free waiting time for keys",
+            f4: "Trolly, straps & blankets",
+            f5: "Item dismantling / assembling",
+            f6: "Shrink Wrapping services",
             f7: "Free packing services",
             f8: "Free mattress covers",
             f9: "Free ₤85 packing material",
-            f10: "Comprehensive insurance cover",
-            f11: "550 cubic ft loading capacity",
+            f10: "Moving Concierge",
+            f11: "Cancel up to 48hrs before your move",
+            f12: "Comprehensive insurance cover",
+            f13: "600 cubic ft loading capacity",
           };
           break;
 
@@ -732,22 +762,22 @@ export const moveDesciptionsCalc = (title, propertyType) => {
           return {
             f1: "Free local mileage",
             f2: "Free loading / unloading",
-            f3: "Truck & free blanket",
-            f4: "Free waiting time for keys",
-            f5: "Trolly & straps",
+            f3: "Free waiting time for keys",
+            f4: "Trolly, straps & blankets",
             f5: "Standard insurance cover",
-            f6: "560 cubic ft loading capacity",
+            f6: "Cancel up to 1 week before your move",
+            f7: "560 cubic ft loading capacity",
           };
           break;
         case "GOLD":
           return {
             f1: "Free local mileage",
             f2: "Free loading / unloading",
-            f3: "1 truck & free blanket",
-            f4: "Free waiting time for keys",
-            f5: "Trolly & straps",
-            f6: "Item dismantling / assembling",
-            f7: "Shrink Wrapping services",
+            f3: "Free waiting time for keys",
+            f4: "Trolly, straps & blankets",
+            f5: "Item dismantling / assembling",
+            f6: "Shrink Wrapping services",
+            f7: "Cancel up to 72hrs before your move",
             f8: "Standard insurance cover",
             f9: "570 cubic ft loading capacity",
           };
@@ -756,31 +786,33 @@ export const moveDesciptionsCalc = (title, propertyType) => {
           return {
             f1: "Free local mileage",
             f2: "Free loading / unloading",
-            f3: "1 truck & free blanket",
-            f4: "Free waiting time for keys",
-            f5: "Trolly & straps",
-            f6: "Item dismantling / assembling",
-            f7: "Shrink Wrapping services",
-            f8: "Free mattress covers",
-            f9: "Free ₤75 packing material",
-            f10: "Comprehensive insurance cover",
-            f11: "760 cubic ft loading capacity",
+            f3: "Free waiting time for keys",
+            f4: "Trolly, straps & blankets",
+            f5: "Item dismantling / assembling",
+            f6: "Shrink Wrapping services",
+            f7: "Free mattress covers",
+            f8: "Free ₤75 packing material",
+            f9: "Moving Concierge",
+            f10: "Cancel up to 48hrs before your move",
+            f11: "Comprehensive insurance cover",
+            f12: "760 cubic ft loading capacity",
           };
           break;
         case "PREMIUM PLUS":
           return {
             f1: "Free local mileage",
             f2: "Free loading / unloading",
-            f3: "1 truck & free blanket",
-            f4: "Free waiting time for keys",
-            f5: "Trolly & straps",
-            f6: "Item dismantling / assembling",
-            f7: "Shrink Wrapping services",
+            f3: "Free waiting time for keys",
+            f4: "Trolly, straps & blankets",
+            f5: "Item dismantling / assembling",
+            f6: "Shrink Wrapping services",
             f7: "Free packing services",
             f8: "Free mattress covers",
             f9: "Free ₤85 packing material",
-            f10: "Comprehensive insurance cover",
-            f11: "880 cubic ft loading capacity",
+            f10: "Moving Concierge",
+            f11: "Cancel up to 48hrs before your move",
+            f12: "Comprehensive insurance cover",
+            f13: "880 cubic ft loading capacity",
           };
           break;
 

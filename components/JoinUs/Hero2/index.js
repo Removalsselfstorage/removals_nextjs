@@ -8,7 +8,7 @@ import JoinUsBox from "./JoinUsBox";
 
 const JoinUsHero = () => {
   return (
-    <div className=" bg-base-200 mt-[100px]  md:mt-[0px] md:pt-[100px]">
+    <div className=" bg-base-200 mt-[50px]  md:mt-[0px] md:pt-[100px]">
       <div
         className="hero min-h-[80vh] md:min-h-[80vh] lg:min-h-[80vh] 2xl:min-h-[80vh] bg-black/80"
         style={{ backgroundImage: "url(/hero_register.jpg)" }}

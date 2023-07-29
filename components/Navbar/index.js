@@ -99,7 +99,9 @@ const Navbar = () => {
                 <div className="navbar-center hidden lg:flex flex-[2]">
                   <ul className="menu menu-horizontal  px-1 text-[16px]">
                     <li>
-                      <Link href="/" className="btn-nav ">Home</Link >
+                      <Link href="/" className="btn-nav ">
+                        Home
+                      </Link>
                     </li>
                     <li className="dropdown dropdown-hover dropdown-end group">
                       <label tabIndex={0} className="flex items-center btn-nav">
@@ -211,7 +213,9 @@ const Navbar = () => {
                     <a className="btn-nav">Blog</a>
                   </li>
                   <li>
-                    <a className="btn-nav">Become a Mover</a>
+                    <Link href="/join-us" className="btn-nav">
+                      Become a Mover
+                    </Link>
                   </li>
                   <li>
                     <a className="btn-nav">Mover Login</a>

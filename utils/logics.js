@@ -370,7 +370,6 @@ export function generatePriceList3(
   return resultArray;
 }
 
-
 export function generatePriceList23(
   dayOfWeek,
   dayNumber,
@@ -454,7 +453,6 @@ export function decreaseByPercentage(value, decreasePercentage) {
   return result;
 }
 
-
 export function increaseByPercentage(value, increasePercentage) {
   const increaseAmount = (increasePercentage / 100) * value;
   const result = value - -increaseAmount;
@@ -462,8 +460,21 @@ export function increaseByPercentage(value, increasePercentage) {
 }
 
 export function getFormattedTodayDate() {
-  const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-  const monthsOfYear = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  const monthsOfYear = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
 
   const today = new Date();
   const dayOfWeek = daysOfWeek[today.getDay()];

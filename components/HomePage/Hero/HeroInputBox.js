@@ -1,20 +1,20 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { FiEdit } from 'react-icons/fi';
-import FullRating from '../../Rating/FullRating';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect, useRef, useState } from "react";
+import { FiEdit } from "react-icons/fi";
+import FullRating from "../../Rating/FullRating";
+import { useDispatch, useSelector } from "react-redux";
 
-import SelectSearch from '@/components/Inputs/SelectSearch';
-import { citiesOptions, serviceOptions } from '@/dummyData/inputData';
-import GoogleSearchInput from '@/components/Inputs/GoogleSearchInput';
-import useGoogleSearch from '@/utils/useGoogleSearch';
+import SelectSearch from "@/components/Inputs/SelectSearch";
+import { citiesOptions, serviceOptions } from "@/dummyData/inputData";
+import GoogleSearchInput from "@/components/Inputs/GoogleSearchInput";
+import useGoogleSearch from "@/utils/useGoogleSearch";
 import {
   getAllDetails,
   updateLocationDetails,
   updateMoveDetails,
-} from '@/store/quoteSlice';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import StarRating from '@/components/Rating/EditHalfStars2';
+} from "@/store/quoteSlice";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import StarRating from "@/components/Rating/EditHalfStars2";
 
 const HeroInputBox = () => {
   const router = useRouter();
@@ -25,32 +25,31 @@ const HeroInputBox = () => {
 
   const details = useSelector(getAllDetails);
 
-  const [address, setAddress] = useState('');
-  const [addressDetails, setAddressDetails] = useState('');
-  const [address2, setAddress2] = useState('');
-  const [addressDetails2, setAddressDetails2] = useState('');
+  const [address, setAddress] = useState("");
+  const [addressDetails, setAddressDetails] = useState("");
+  const [address2, setAddress2] = useState("");
+  const [addressDetails2, setAddressDetails2] = useState("");
   const [submitLoading, setSubmitLoading] = useState(false);
 
   const [selectValue, setSelectValue] = useState(
-    details.moveDetails.propertyType || ''
+    details.moveDetails.propertyType || ""
   );
   const [error, setError] = useState(false);
 
   const durationCalculation = () => {
-    let price = 0
+    let price = 0;
     switch (key) {
       case value:
-        
         break;
-    
+
       default:
         break;
     }
-  }
+  };
 
   const heroFormSubmit = () => {
     setError(false);
-    if (selectValue == '' || !address || !address2) {
+    if (selectValue == "" || !address || !address2) {
       setError(true);
     } else {
       setSubmitLoading(true);
@@ -82,7 +81,7 @@ const HeroInputBox = () => {
         })
       );
       switch (selectValue) {
-        case 'Office removals':
+        case "Office removals":
           dispatch(
             updateMoveDetails({
               propertyType: selectValue,
@@ -97,12 +96,12 @@ const HeroInputBox = () => {
               initialPackagePrice: details.moveDetails.initialPackagePrice,
             })
           );
-          router.push('/book/man-and-van');
+          router.push("/book/man-and-van");
           break;
-        case 'Man and van':
-          router.push('/book/man-and-van');
+        case "Man and van":
+          router.push("/book/man-and-van");
           break;
-        case 'Studio flat':
+        case "Studio flat":
           dispatch(
             updateMoveDetails({
               propertyType: selectValue,
@@ -117,9 +116,9 @@ const HeroInputBox = () => {
               initialPackagePrice: details.moveDetails.initialPackagePrice,
             })
           );
-          router.push('/book/man-and-van');
+          router.push("/book/man-and-van");
           break;
-        case 'Furniture & Appliances':
+        case "Furniture & Appliances":
           dispatch(
             updateMoveDetails({
               propertyType: selectValue,
@@ -134,15 +133,15 @@ const HeroInputBox = () => {
               initialPackagePrice: details.moveDetails.initialPackagePrice,
             })
           );
-          router.push('/book/man-and-van');
+          router.push("/book/man-and-van");
           break;
-        case 'Storage':
-          router.push('/book/man-and-van');
+        case "Storage":
+          router.push("/book/man-and-van");
           break;
-        case 'Home removals':
-          router.push('/book/home-removals');
+        case "Home removals":
+          router.push("/book/home-removals");
           break;
-        case '1 bed property':
+        case "1 bed property":
           dispatch(
             updateMoveDetails({
               propertyType: selectValue,
@@ -157,9 +156,9 @@ const HeroInputBox = () => {
               initialPackagePrice: details.moveDetails.initialPackagePrice,
             })
           );
-          router.push('/book/home-removals');
+          router.push("/book/home-removals");
           break;
-        case '2 bed property':
+        case "2 bed property":
           dispatch(
             updateMoveDetails({
               propertyType: selectValue,
@@ -174,9 +173,9 @@ const HeroInputBox = () => {
               initialPackagePrice: details.moveDetails.initialPackagePrice,
             })
           );
-          router.push('/book/home-removals');
+          router.push("/book/home-removals");
           break;
-        case '3 bed property':
+        case "3 bed property":
           dispatch(
             updateMoveDetails({
               propertyType: selectValue,
@@ -191,9 +190,9 @@ const HeroInputBox = () => {
               initialPackagePrice: details.moveDetails.initialPackagePrice,
             })
           );
-          router.push('/book/home-removals');
+          router.push("/book/home-removals");
           break;
-        case '4 bed property':
+        case "4 bed property":
           dispatch(
             updateMoveDetails({
               propertyType: selectValue,
@@ -208,11 +207,11 @@ const HeroInputBox = () => {
               initialPackagePrice: details.moveDetails.initialPackagePrice,
             })
           );
-          router.push('/book/home-removals');
+          router.push("/book/home-removals");
           break;
 
         default:
-          router.push('/book');
+          router.push("/book");
           break;
       }
     }
@@ -236,42 +235,41 @@ const HeroInputBox = () => {
 
   return (
     <div className="card shadow-2xl bg-base-100  text-black w-full md:w-[400px]">
-      <div className="card-body w-[400px]">
+      <div className="card-body ">
         <div className="flex flex-col items-center justify-center mb-[0px] bg-gray-200 rounded-tl-[18px] rounded-tr-[18px] mx-[-32px] mt-[-32px] pt-[20px] pb-[20px] md:px-[50px]">
           <h3 className="text-xl font-bold text-gray-800 uppercase mb-[-10px]">
             TRUST<span className="text-gray-500">PILOT</span>
           </h3>
           <div className="my-[12px]">
-              <StarRating rating={4.9} size="text-[20px]" />
+            <StarRating rating={4.9} size="text-[20px]" />
           </div>
           <p className="text-gray-400 text-[14px] mt-[-5px] text-center">
             TrustScore 4.9 | 4,155 Reviews
           </p>
         </div>
-        <h3 className="text-2xl font-bold text-primary uppercase mt-[10px] text-center">
+        <h3 className="text-2xl font-bold text-primary uppercase mt-[10px] text-center mb-[10px]">
           Get a Free Quote
         </h3>
         <div className="w-full">
-          <div className="mb-[0px]">
-            <label className="label">
+          {/* what are you moving */}
+          {/* <label className="label">
               <span className="font-semibold">What are you moving?</span>
-            </label>
-            <div className="w-full">
-              <SelectSearch
-                placeholder="Select"
-                options={serviceOptions}
-                isSearchable={false}
-                name="service"
-                // defaultValue={serviceOptions[2]}
-                defaultValue={selectDefaultValue() || serviceOptions(0)}
-                setValue={setSelectValue}
-              />
-            </div>
+            </label> */}
+          <div className="w-full mb-[20px]">
+            <SelectSearch
+              placeholder="What are you moving?"
+              options={serviceOptions}
+              isSearchable={false}
+              name="service"
+              // defaultValue={serviceOptions[2]}
+              defaultValue={selectDefaultValue() || serviceOptions(0)}
+              setValue={setSelectValue}
+            />
           </div>
-          <div className="form-control">
-            <label className="label">
+          <div className="form-control mb-[20px]">
+            {/* <label className="label">
               <span className="font-semibold">Where are you moving from?</span>
-            </label>
+            </label> */}
             {/* <SelectSearch
               placeholder="Location"
               options={citiesOptions}
@@ -285,7 +283,7 @@ const HeroInputBox = () => {
               setAddress={setAddress}
               addressDetails={addressDetails}
               setAddressDetails={setAddressDetails}
-              placeholder="Search location..."
+              placeholder="Where are you moving from?"
               defaultValue={details.serviceLocation.locationFrom.name || null}
             />
             {/* <input
@@ -296,9 +294,9 @@ const HeroInputBox = () => {
             /> */}
           </div>
           <div className="form-control">
-            <label className="label">
+            {/* <label className="label">
               <span className="font-semibold">Where are you moving to?</span>
-            </label>
+            </label> */}
             {/* <SelectSearch
               placeholder="Location"
               options={citiesOptions}
@@ -316,7 +314,7 @@ const HeroInputBox = () => {
               setAddress={setAddress2}
               addressDetails={addressDetails2}
               setAddressDetails={setAddressDetails2}
-              placeholder="Search location..."
+              placeholder="Where are you moving to?"
               defaultValue={details.serviceLocation.locationTo.name || null}
             />
           </div>

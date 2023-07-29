@@ -8,7 +8,8 @@ import { getCsrfToken, getProviders, getSession } from "next-auth/react";
 import Head from "next/head";
 import React from "react";
 
-const JoinUs = ({ providers, csrfToken, callbackUrl }) => {
+// const JoinUs = ({ providers, csrfToken, callbackUrl }) => {
+const JoinUs = () => {
   return (
     <NormalLayout>
       <Head>
@@ -29,29 +30,29 @@ const JoinUs = ({ providers, csrfToken, callbackUrl }) => {
 export default JoinUs;
 
 
-export async function getServerSideProps(context) {
-  const { req, query } = context;
+// export async function getServerSideProps(context) {
+//   const { req, query } = context;
 
-  const session = await getSession({ req });
-  // const { callbackUrl } = query;
+//   const session = await getSession({ req });
+//   // const { callbackUrl } = query;
 
-  if (session) {
-    return {
-      redirect: {
-        destination: `${callbackUrl}`,
-        permanent: false,
-      },
-    };
-  }
-  const csrfToken = await getCsrfToken(context);
+//   if (session) {
+//     return {
+//       redirect: {
+//         destination: `${callbackUrl}`,
+//         permanent: false,
+//       },
+//     };
+//   }
+//   const csrfToken = await getCsrfToken(context);
 
-  const providers = Object.values(await getProviders());
-  return {
-    props: {
-      providers,
-      csrfToken,
-      // callbackUrl,
-    },
-  };
-}
+//   const providers = Object.values(await getProviders());
+//   return {
+//     props: {
+//       providers,
+//       csrfToken,
+//       // callbackUrl,
+//     },
+//   };
+// }
 

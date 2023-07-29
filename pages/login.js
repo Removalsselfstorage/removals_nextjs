@@ -19,7 +19,8 @@ import * as Yup from "yup";
 import { Form, Formik, useField } from "formik";
 import LoginInput from "@/components/LoginInput";
 
-const Login = ({ providers, csrfToken, callbackUrl }) => {
+// const Login = ({ providers, csrfToken, callbackUrl }) => {
+const Login = () => {
   const router = useRouter();
 
   const dispatch = useDispatch();
@@ -108,11 +109,11 @@ const Login = ({ providers, csrfToken, callbackUrl }) => {
               >
                 {(form) => (
                   <Form method="post" action="/api/auth/signin/email">
-                    <input
+                    {/* <input
                       type="hidden"
                       name="csrfToken"
                       defaultValue={csrfToken}
-                    />
+                    /> */}
                     {/* email */}
                     <div className="mb-[10px]">
                       <LoginInput
@@ -171,28 +172,28 @@ const Login = ({ providers, csrfToken, callbackUrl }) => {
 
 export default Login;
 
-export async function getServerSideProps(context) {
-  const { req, query } = context;
+// export async function getServerSideProps(context) {
+//   const { req, query } = context;
 
-  const session = await getSession({ req });
-  // const { callbackUrl } = query;
+//   const session = await getSession({ req });
+//   // const { callbackUrl } = query;
 
-  if (session) {
-    return {
-      redirect: {
-        destination: `${callbackUrl}`,
-        permanent: false,
-      },
-    };
-  }
-  const csrfToken = await getCsrfToken(context);
+//   if (session) {
+//     return {
+//       redirect: {
+//         destination: `${callbackUrl}`,
+//         permanent: false,
+//       },
+//     };
+//   }
+//   const csrfToken = await getCsrfToken(context);
 
-  const providers = Object.values(await getProviders());
-  return {
-    props: {
-      providers,
-      csrfToken,
-      // callbackUrl,
-    },
-  };
-}
+//   const providers = Object.values(await getProviders());
+//   return {
+//     props: {
+//       providers,
+//       csrfToken,
+//       // callbackUrl,
+//     },
+//   };
+// }

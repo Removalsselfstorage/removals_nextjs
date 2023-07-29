@@ -1,6 +1,4 @@
 import React from "react";
-import HeroInputBox from "./JoinUsBox";
-import Typed from "react-typed";
 import { titleFont } from "@/utils/fonts";
 import { RiCustomerService2Fill } from "react-icons/ri";
 import Link from "next/link";
@@ -65,9 +63,7 @@ const JoinUsHero = () => {
           </div>
           {/* Hero inputs */}
           <div className="lg:flex-[1] w-full flex justify-center">
-            <JoinUsBox
-             
-            />
+            <JoinUsBox />
           </div>
         </div>
       </div>

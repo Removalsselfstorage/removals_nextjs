@@ -124,14 +124,34 @@ const Login = () => {
                         onChange={handleChange}
                       />
                     </div>
-
-                    <div className="mb-[10px]">
+                    {/* password */}
+                    {/* <div className="mb-[10px]">
                       <LoginInput
                         type="password"
                         name="login_password"
                         placeholder="Password"
                         onChange={handleChange}
                       />
+                    </div> */}
+                    <div className="w-full flex  justify-between mb-[10px]">
+                      <div className="w-full">
+                        <LoginInput
+                          type={showPassword ? "text" : "password"}
+                          name="login_password"
+                          placeholder="Password"
+                          onChange={handleChange}
+                        />
+                      </div>
+                      <span
+                        onClick={() => setShowPassword(!showPassword)}
+                        className="pl-[10px] cursor-pointer pt-[10px]"
+                      >
+                        {showPassword ? (
+                          <RiEyeCloseLine className="text-primary text-[20px]" />
+                        ) : (
+                          <RiEyeLine className="text-primary text-[20px]" />
+                        )}
+                      </span>
                     </div>
                     {/* <div className={styles.button}>
                       <CircledIconBtn type="submit" text="Sign In" />

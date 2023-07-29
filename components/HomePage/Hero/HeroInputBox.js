@@ -231,7 +231,7 @@ const HeroInputBox = () => {
   //   console.log(selectValue);
   //   console.log(addressDetails);
   //   console.log(addressDetails);
-  console.log(details);
+  // console.log(details);
 
   return (
     <div className="card shadow-2xl bg-base-100  text-black w-full md:w-[400px]">

@@ -670,7 +670,7 @@ const prices = generatePrices(
   18,
   20
 );
-console.log(prices);
+// console.log(prices);
 
 export function validatePhoneNumber(phoneNumber) {
   // Remove any non-digit characters from the input

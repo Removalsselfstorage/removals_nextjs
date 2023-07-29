@@ -121,7 +121,7 @@ const JoinUsBox = () => {
                     onChange={handleChange}
                   />
                 </div>
-
+                {/* password */}
                 <div className="w-full flex  justify-between mb-[10px]">
                   <div className="w-full">
                     <LoginInput

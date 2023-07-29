@@ -381,7 +381,7 @@ const ManAndVan = () => {
                             onChange={(e) => setLift(e.target.checked)}
                             checked={lift}
                           />
-                          <span className="leading-[20px] text-[14px] text-gray-400 md:text-[16px]">
+                          <span className="leading-[20px] text-[13px] text-gray-400 md:text-[14px]">
                             Check if available
                           </span>
                         </label>
@@ -463,7 +463,7 @@ const ManAndVan = () => {
                             onChange={(e) => setLift2(e.target.checked)}
                             checked={lift2}
                           />
-                          <span className="leading-[20px] text-[14px] text-gray-400 md:text-[16px]">
+                          <span className="leading-[20px] text-[13px] text-gray-400 md:text-[14px]">
                             Check if available
                           </span>
                         </label>

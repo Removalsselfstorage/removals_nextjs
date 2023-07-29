@@ -168,7 +168,7 @@ const Navbar = () => {
                     >
                       Become a Mover
                     </Link>
-                    <Link href="#" className="btn  btn-primary">
+                    <Link href="/login" className="btn  btn-primary">
                       Mover Login
                     </Link>
                     {/* <a className="btn btn-primary">Mover Login</a> */}
@@ -183,13 +183,21 @@ const Navbar = () => {
               <div className="overflow-auto scrollbar-thin scrollbar-track-gray-200/50 scrollbar-thumb-gray-500/20 scrollbar-default h-[100%]">
                 <ul className="menu p-4 w-[250px] md:w-[400px] h-full bg-base-100 md:text-[16px] flex flex-col space-y-[10px] md:space-y-[15px]">
                   <li>
-                    <a className="btn-nav">Home</a>
+                    <Link href="/" className="btn-nav">
+                      Home
+                    </Link>
                   </li>
                   <li>
-                    <a className="btn-nav">Home Removals</a>
+                    {/* <a className="btn-nav">Home Removals</a> */}
+                    <Link href="/book/home-removals" className="btn-nav">
+                      Home Removals
+                    </Link>
                   </li>
                   <li>
-                    <a className="btn-nav">Man and Van</a>
+                    {/* <a className="btn-nav">Man and Van</a> */}
+                    <Link href="/book/man-and-van" className="btn-nav">
+                      Man and Van
+                    </Link>
                   </li>
                   <li>
                     <a className="btn-nav">Storage & Self Storage</a>
@@ -217,9 +225,9 @@ const Navbar = () => {
                       Become a Mover
                     </Link>
                   </li>
-                  <li>
-                    <a className="btn-nav">Mover Login</a>
-                  </li>
+                  <Link href="/login" className="btn-nav">
+                    Mover Login
+                  </Link>
                 </ul>
               </div>
             </div>

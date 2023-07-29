@@ -2,6 +2,25 @@
   /* appointment row */
 }
 
+{/* links */}
+            {/* <div className="flex items-center space-x-[5px] px-[30px] text-[13px] leading-[16px] md:text-[16px]">
+              <Link href="/">
+                <p className="text-primary link link-hover font-semibold">
+                  Home
+                </p>
+              </Link>
+              <MdKeyboardArrowRight size={20} className="text-primary" />
+              <Link href="/book">
+                <p className="text-primary link link-hover font-semibold">
+                  Choose Quote Type
+                </p>
+              </Link>
+              <MdKeyboardArrowRight size={20} className="text-primary" />
+              <p className="text-primary font-semibold">
+                Complete House Removal
+              </p>
+            </div> */}
+
 <div className="">
   <h1 className="text-xl font-bold mb-[20px] px-[0px]">Payment method</h1>
   {/* row 1 */}

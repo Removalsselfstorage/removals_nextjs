@@ -3,10 +3,6 @@ import { FiEdit } from "react-icons/fi";
 import FullRating from "../../Rating/FullRating";
 import { useDispatch, useSelector } from "react-redux";
 
-import SelectSearch from "@/components/Inputs/SelectSearch";
-import { citiesOptions, serviceOptions } from "@/dummyData/inputData";
-import GoogleSearchInput from "@/components/Inputs/GoogleSearchInput";
-import useGoogleSearch from "@/utils/useGoogleSearch";
 import {
   getAllDetails,
   updateLocationDetails,
@@ -16,261 +12,59 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import StarRating from "@/components/Rating/EditHalfStars2";
 import { RiEyeCloseLine, RiEyeLine } from "react-icons/ri";
+import * as Yup from "yup";
+import { Form, Formik, useField } from "formik";
+import LoginInput from "@/components/LoginInput";
 
-const JoinUsBox = () => {
+const JoinUsBox = ({ providers, csrfToken, callbackUrl }) => {
   const router = useRouter();
 
-  //   const { mapApiJs, geocodeJson, loadAsyncScript, extractAddress } =
-  //     useGoogleSearch();
   const dispatch = useDispatch();
 
   const details = useSelector(getAllDetails);
 
-  const [address, setAddress] = useState("");
-  const [addressDetails, setAddressDetails] = useState("");
-  const [address2, setAddress2] = useState("");
-  const [addressDetails2, setAddressDetails2] = useState("");
-  const [submitLoading, setSubmitLoading] = useState(false);
-  const [activateError, setActivateError] = useState(false);
-  const [email, setEmail] = useState(details.personalDetails.email || "");
-  const [emailError, setEmailError] = useState(true);
-  const [phone, setPhone] = useState(details.personalDetails.telephone || "");
-  const [phoneError, setPhoneError] = useState(true);
-  const [firstName, setFirstName] = useState(
-    details.personalDetails.firstName || ""
-  );
-  const [password, setPassword] = useState("");
+  const initialValues = {
+    signup_email: "",
+    signup_password: "",
+    signup_firstname: "",
+    signup_lastname: "",
+    success: "",
+    error: "",
+  }; // console.log(details);
+
+  const [loading, setLoading] = useState(false);
+  const [user, setUser] = useState(initialValues);
   const [showPassword, setShowPassword] = useState(false);
-  const [lastName, setLastName] = useState(
-    details.personalDetails.lastName || ""
-  );
-
-  const [selectValue, setSelectValue] = useState(
-    details.moveDetails.propertyType || ""
-  );
-  const [error, setError] = useState(false);
-
-  const durationCalculation = () => {
-    let price = 0;
-    switch (key) {
-      case value:
-        break;
-
-      default:
-        break;
-    }
+  const [submitLoading, setSubmitLoading] = useState(false);
+  const {
+    signup_email,
+    signup_password,
+    signup_firstname,
+    signup_lastname,
+    success,
+    error,
+  } = user;
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setUser({ ...user, [name]: value });
   };
 
-  const handleEmailChange = (e) => {
-    // const inputValue = e.target.value;
-    setEmail(e.target.value);
+  const signUpValidation = Yup.object().shape({
+    signup_firstname: Yup.string().required("First name is required"),
+    signup_lastname: Yup.string().required("Last name is required"),
+    signup_email: Yup.string()
+      .email("Please enter a valid email address")
+      .required("Email address is required"),
+    signup_password: Yup.string()
+      .required("Please enter a password")
+      .min(8, "Password must be at least 8 characters")
+      .max(32, `Password can't be more than 32 characters`),
+  });
 
-    // Regular expression to validate email format
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    // setIsValid(emailPattern.test(inputValue));
-    setEmailError(emailPattern.test(e.target.value));
+  const signUpHandler = (values, actions) => {
+    alert(JSON.stringify(values, null, 2));
+    actions.setSubmitting(false);
   };
-
-  //phone number validation
-  const handlePhoneNumberChange = (event) => {
-    const inputValue = event.target.value;
-
-    // Remove any non-digit characters from the input
-    const strippedNumber = inputValue.replace(/\D/g, "");
-
-    // Check if the stripped number is either 10 or 11 digits long
-    const isValidPhoneNumber =
-      strippedNumber.length === 10 || strippedNumber.length === 11;
-
-    setPhone(strippedNumber);
-    setPhoneError(isValidPhoneNumber);
-  };
-
-  const heroFormSubmit = () => {
-    setError(false);
-    if (selectValue == "" || !address || !address2) {
-      setError(true);
-    } else {
-      setSubmitLoading(true);
-      dispatch(
-        updateLocationDetails({
-          //   moveService: details.serviceLocation.moveService,
-          locationFrom: {
-            name: address,
-            postCode: addressDetails
-              ? addressDetails.zip
-              : details.serviceLocation.locationFrom.postCode,
-            city: addressDetails
-              ? addressDetails.city
-              : details.serviceLocation.locationTo.city,
-            country: addressDetails
-              ? addressDetails.country
-              : details.serviceLocation.locationTo.country,
-            floor: details.serviceLocation.locationFrom.floor,
-            liftAvailable: details.serviceLocation.locationFrom.liftAvailable,
-          },
-          locationTo: {
-            name: address2,
-            postCode: addressDetails2.zip,
-            city: addressDetails2.city,
-            country: addressDetails2.country,
-            floor: details.serviceLocation.locationTo.floor,
-            liftAvailable: details.serviceLocation.locationTo.liftAvailable,
-          },
-        })
-      );
-      switch (selectValue) {
-        case "Office removals":
-          dispatch(
-            updateMoveDetails({
-              propertyType: selectValue,
-              numberOfMovers: details.moveDetails.numberOfMovers,
-              mileage: details.moveDetails.mileage,
-              volume: details.moveDetails.volume,
-              duration: details.moveDetails.duration,
-              moveDate: details.moveDetails.moveDate,
-              moveDateRaw: details.moveDetails.moveDateRaw,
-              movePackage: details.moveDetails.movePackage,
-              quoteRef: details.moveDetails.quoteRef,
-              initialPackagePrice: details.moveDetails.initialPackagePrice,
-            })
-          );
-          router.push("/book/man-and-van");
-          break;
-        case "Man and van":
-          router.push("/book/man-and-van");
-          break;
-        case "Studio flat":
-          dispatch(
-            updateMoveDetails({
-              propertyType: selectValue,
-              numberOfMovers: details.moveDetails.numberOfMovers,
-              mileage: details.moveDetails.mileage,
-              volume: details.moveDetails.volume,
-              duration: details.moveDetails.duration,
-              moveDate: details.moveDetails.moveDate,
-              moveDateRaw: details.moveDetails.moveDateRaw,
-              movePackage: details.moveDetails.movePackage,
-              quoteRef: details.moveDetails.quoteRef,
-              initialPackagePrice: details.moveDetails.initialPackagePrice,
-            })
-          );
-          router.push("/book/man-and-van");
-          break;
-        case "Furniture & Appliances":
-          dispatch(
-            updateMoveDetails({
-              propertyType: selectValue,
-              numberOfMovers: details.moveDetails.numberOfMovers,
-              mileage: details.moveDetails.mileage,
-              volume: details.moveDetails.volume,
-              duration: details.moveDetails.duration,
-              moveDate: details.moveDetails.moveDate,
-              moveDateRaw: details.moveDetails.moveDateRaw,
-              movePackage: details.moveDetails.movePackage,
-              quoteRef: details.moveDetails.quoteRef,
-              initialPackagePrice: details.moveDetails.initialPackagePrice,
-            })
-          );
-          router.push("/book/man-and-van");
-          break;
-        case "Storage":
-          router.push("/book/man-and-van");
-          break;
-        case "Home removals":
-          router.push("/book/home-removals");
-          break;
-        case "1 bed property":
-          dispatch(
-            updateMoveDetails({
-              propertyType: selectValue,
-              numberOfMovers: details.moveDetails.numberOfMovers,
-              mileage: details.moveDetails.mileage,
-              volume: details.moveDetails.volume,
-              duration: details.moveDetails.duration,
-              moveDate: details.moveDetails.moveDate,
-              moveDateRaw: details.moveDetails.moveDateRaw,
-              movePackage: details.moveDetails.movePackage,
-              quoteRef: details.moveDetails.quoteRef,
-              initialPackagePrice: details.moveDetails.initialPackagePrice,
-            })
-          );
-          router.push("/book/home-removals");
-          break;
-        case "2 bed property":
-          dispatch(
-            updateMoveDetails({
-              propertyType: selectValue,
-              numberOfMovers: details.moveDetails.numberOfMovers,
-              mileage: details.moveDetails.mileage,
-              volume: details.moveDetails.volume,
-              duration: details.moveDetails.duration,
-              moveDate: details.moveDetails.moveDate,
-              moveDateRaw: details.moveDetails.moveDateRaw,
-              movePackage: details.moveDetails.movePackage,
-              quoteRef: details.moveDetails.quoteRef,
-              initialPackagePrice: details.moveDetails.initialPackagePrice,
-            })
-          );
-          router.push("/book/home-removals");
-          break;
-        case "3 bed property":
-          dispatch(
-            updateMoveDetails({
-              propertyType: selectValue,
-              numberOfMovers: details.moveDetails.numberOfMovers,
-              mileage: details.moveDetails.mileage,
-              volume: details.moveDetails.volume,
-              duration: details.moveDetails.duration,
-              moveDate: details.moveDetails.moveDate,
-              moveDateRaw: details.moveDetails.moveDateRaw,
-              movePackage: details.moveDetails.movePackage,
-              quoteRef: details.moveDetails.quoteRef,
-              initialPackagePrice: details.moveDetails.initialPackagePrice,
-            })
-          );
-          router.push("/book/home-removals");
-          break;
-        case "4 bed property":
-          dispatch(
-            updateMoveDetails({
-              propertyType: selectValue,
-              numberOfMovers: details.moveDetails.numberOfMovers,
-              mileage: details.moveDetails.mileage,
-              volume: details.moveDetails.volume,
-              duration: details.moveDetails.duration,
-              moveDate: details.moveDetails.moveDate,
-              moveDateRaw: details.moveDetails.moveDateRaw,
-              movePackage: details.moveDetails.movePackage,
-              quoteRef: details.moveDetails.quoteRef,
-              initialPackagePrice: details.moveDetails.initialPackagePrice,
-            })
-          );
-          router.push("/book/home-removals");
-          break;
-
-        default:
-          router.push("/book");
-          break;
-      }
-    }
-  };
-
-  const selectDefaultValue = () => {
-    const option = serviceOptions.filter(
-      (opt) => opt.value == details.moveDetails.propertyType
-    );
-    return option;
-  };
-
-  //   console.log(address);
-  //   console.log(addressDetails)
-  //   console.log(address2)
-  //   console.log(addressDetails2)
-  //   console.log(selectValue);
-  //   console.log(addressDetails);
-  //   console.log(addressDetails);
-  console.log(details);
 
   return (
     <div className="card shadow-2xl bg-base-100 justify-center text-black w-full md:w-[400px]">
@@ -279,12 +73,8 @@ const JoinUsBox = () => {
           Join us for free!
         </h3>
         <div className="w-full">
-          <div className="flex space-x-[20px]">
-            {/* first name */}
+          {/* <div className="flex space-x-[20px]">
             <div className="form-control w-full mb-[20px]">
-              {/* <label className="label">
-                <span className="label-text font-semibold">First Name*</span>
-              </label> */}
               <input
                 type="text"
                 placeholder="First Name"
@@ -295,11 +85,8 @@ const JoinUsBox = () => {
                 defaultValue={firstName}
               />
             </div>
-            {/* Last name */}
+
             <div className="form-control w-full mb-[20px]">
-              {/* <label className="label">
-                <span className="label-text font-semibold">Last Name*</span>
-              </label> */}
               <input
                 type="text"
                 placeholder="Last Name"
@@ -310,13 +97,9 @@ const JoinUsBox = () => {
                 defaultValue={lastName}
               />
             </div>
-          </div>
+          </div> */}
 
-          {/* email */}
-          <div className="form-control w-full mb-[20px]">
-            {/* <label className="label">
-              <span className="label-text font-semibold">Email*</span>
-            </label> */}
+          {/* <div className="form-control w-full mb-[20px]">
             <input
               type="email"
               placeholder="Email Address"
@@ -334,15 +117,9 @@ const JoinUsBox = () => {
                 Please enter a valid email
               </p>
             )}
-          </div>
+          </div> */}
 
-          {/* Telephone* */}
-          <div className="form-control w-full flex-[1] mb-[20px]">
-            {/* <label className="label">
-                        <span className="label-text font-semibold">
-                          Telephone*
-                        </span>
-                      </label> */}
+          {/* <div className="form-control w-full flex-[1] mb-[20px]">
             <input
               type="tel"
               placeholder="Phone Number"
@@ -359,10 +136,9 @@ const JoinUsBox = () => {
                 Please enter a valid number
               </p>
             )}
-          </div>
+          </div> */}
 
-          {/* password */}
-          <div className="w-full flex items-center justify-between">
+          {/* <div className="w-full flex items-center justify-between">
             <input
               type={showPassword ? "text" : "password"}
               placeholder="Password"
@@ -382,9 +158,9 @@ const JoinUsBox = () => {
                 <RiEyeLine className="text-primary text-[20px]" />
               )}
             </span>
-          </div>
+          </div> */}
 
-          <div className="form-control mt-6">
+          {/* <div className="form-control mt-6">
             <button
               onClick={() => {}}
               className="btn btn-primary flex items-center space-x-[5px]"
@@ -394,12 +170,110 @@ const JoinUsBox = () => {
                 <span className="loading loading-dots loading-md text-white"></span>
               )}
             </button>
-          </div>
-          {error && (
+          </div> */}
+          {/* {error && (
             <p className="text-secondary w-full text-center mt-[10px]">
               Please input all fields
             </p>
-          )}
+          )} */}
+
+          <Formik
+            enableReinitialize
+            initialValues={user}
+            validationSchema={signUpValidation}
+            onSubmit={(values, actions) => {
+              signUpHandler(values, actions);
+            }}
+          >
+            {(form) => (
+              <Form method="post" action="/api/auth/signin/email">
+                <input
+                  type="hidden"
+                  name="csrfToken"
+                  defaultValue={csrfToken}
+                />
+                {/* names */}
+                <div className="flex space-x-[20px] mb-[10px]">
+                  <div className="form-control w-full mb-[0px]">
+                    <LoginInput
+                      type="text"
+                      name="signup_firstname"
+                      // icon="email"
+                      placeholder="First Name"
+                      onChange={handleChange}
+                    />
+                  </div>
+
+                  <div className="form-control w-full mb-[0px]">
+                    <LoginInput
+                      type="text"
+                      name="signup_lastname"
+                      // icon="email"
+                      placeholder="Last Name"
+                      onChange={handleChange}
+                    />
+                  </div>
+                </div>
+                {/* email */}
+                <div className="mb-[10px]">
+                  <LoginInput
+                    type="text"
+                    name="signup_email"
+                    // icon="email"
+                    placeholder="Email Address"
+                    onChange={handleChange}
+                  />
+                </div>
+
+                <div className="w-full flex  justify-between mb-[10px]">
+                  <div className="w-full">
+                    <LoginInput
+                      type={showPassword ? "text" : "password"}
+                      name="signup_password"
+                      placeholder="Password"
+                      onChange={handleChange}
+                    />
+                  </div>
+                  <span
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="pl-[10px] cursor-pointer pt-[10px]"
+                  >
+                    {showPassword ? (
+                      <RiEyeCloseLine className="text-primary text-[20px]" />
+                    ) : (
+                      <RiEyeLine className="text-primary text-[20px]" />
+                    )}
+                  </span>
+                </div>
+                {/* <div className={styles.button}>
+                      <CircledIconBtn type="submit" text="Sign In" />
+                      {error && <span className={styles.error}>{error}</span>}
+                    </div> */}
+                <div className="form-control mt-6">
+                  <button
+                    onClick={() => {}}
+                    type="submit"
+                    className="btn btn-primary flex items-center space-x-[5px]"
+                  >
+                    {!submitLoading && <span className="">Get Started</span>}
+                    {submitLoading && (
+                      <span className="loading loading-dots loading-md text-white"></span>
+                    )}
+                  </button>
+                </div>
+                {/* <div className={styles.account}>
+                      <Link href="/auth/forgot" className={styles.forgot}>
+                        Forgot password?
+                      </Link>{" "}
+                      |
+                      <Link href="/signup" className={styles.forgot}>
+                        {" "}
+                        Sign Up
+                      </Link>
+                    </div> */}
+              </Form>
+            )}
+          </Formik>
         </div>
       </div>
     </div>

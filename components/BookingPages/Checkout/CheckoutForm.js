@@ -179,7 +179,7 @@ const CheckoutForm = ({
         <PayPalButton
           amount={amount}
           onSuccess={(details, data) => {
-            console.log({ details, data });
+            // console.log({ details, data });
           }}
         />
       ) : (

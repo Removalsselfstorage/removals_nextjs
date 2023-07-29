@@ -4,10 +4,11 @@ import JoinUsFAQ from "@/components/JoinUs/FAQ";
 import JoinUsHero from "@/components/JoinUs/Hero2";
 import MoverFeatures from "@/components/JoinUs/MoverFeatures";
 import NormalLayout from "@/layouts/NormalLayout";
+import { getCsrfToken, getProviders, getSession } from "next-auth/react";
 import Head from "next/head";
 import React from "react";
 
-const JoinUs = () => {
+const JoinUs = ({ providers, csrfToken, callbackUrl }) => {
   return (
     <NormalLayout>
       <Head>
@@ -17,7 +18,7 @@ const JoinUs = () => {
       </Head>
 
       <main>
-        <JoinUsHero />
+        <JoinUsHero providers={providers} csrfToken={csrfToken} callbackUrl={callbackUrl} />
         <MoverFeatures />
         <JoinUsFAQ/>
       </main>
@@ -26,3 +27,31 @@ const JoinUs = () => {
 };
 
 export default JoinUs;
+
+
+export async function getServerSideProps(context) {
+  const { req, query } = context;
+
+  const session = await getSession({ req });
+  // const { callbackUrl } = query;
+
+  if (session) {
+    return {
+      redirect: {
+        destination: `${callbackUrl}`,
+        permanent: false,
+      },
+    };
+  }
+  const csrfToken = await getCsrfToken(context);
+
+  const providers = Object.values(await getProviders());
+  return {
+    props: {
+      providers,
+      csrfToken,
+      // callbackUrl,
+    },
+  };
+}
+

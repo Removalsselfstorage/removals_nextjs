@@ -28,15 +28,16 @@ import {
 } from "@/store/quoteSlice";
 import DatePicker2 from "@/components/DatePicker/DatePicker2";
 import dayjs from "dayjs";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
+import { signOut, useSession } from "next-auth/react";
 
 const CompleteHouse = () => {
+  const {data: session} = useSession();
+
   const router = useRouter();
 
   const dispatch = useDispatch();
   const details = useSelector(getAllDetails);
-
- 
 
   //   states
   const [floorCount, setFloorCount] = useState(
@@ -164,8 +165,6 @@ const CompleteHouse = () => {
     setSubmitError(false);
 
     if (
-      //   floorCount < 0 ||
-      //   !floorCount2 ||
       propertyValue == "" ||
       propertyValue == "Select" ||
       !address ||
@@ -277,25 +276,6 @@ const CompleteHouse = () => {
       <main>
         <div className="mb-[70px] lg:mb-[100px] pt-[70px]">
           <div className="md:max-w-7xl mx-auto">
-            {/* links */}
-            {/* <div className="flex items-center space-x-[5px] px-[30px] text-[13px] leading-[16px] md:text-[16px]">
-              <Link href="/">
-                <p className="text-primary link link-hover font-semibold">
-                  Home
-                </p>
-              </Link>
-              <MdKeyboardArrowRight size={20} className="text-primary" />
-              <Link href="/book">
-                <p className="text-primary link link-hover font-semibold">
-                  Choose Quote Type
-                </p>
-              </Link>
-              <MdKeyboardArrowRight size={20} className="text-primary" />
-              <p className="text-primary font-semibold">
-                Complete House Removal
-              </p>
-            </div> */}
-
             {/* Title */}
             <div className="w-full flex justify-center py-[30px] md:py-[40px]">
               <h3
@@ -305,6 +285,9 @@ const CompleteHouse = () => {
                 <div className="w-full bg-primary/20 h-[20px] mt-[-12px] "></div>
               </h3>
             </div>
+
+            <div className="">{session?.data?.user?.email}</div>
+            <button onClick={() => signOut()}>Logout</button>
 
             {/* form */}
             <div className="flex flex-col  px-[20px] lg:px-[100px] py-[30px] bg-white rounded-[20px] mx-[10px] md:mx-[100px]">
@@ -386,7 +369,7 @@ const CompleteHouse = () => {
                             onChange={(e) => setLift(e.target.checked)}
                             checked={lift}
                           />
-                          <span className="leading-[20px] text-[14px] text-gray-400 md:text-[16px]">
+                          <span className="leading-[20px] text-[13px] text-gray-400 md:text-[14px]">
                             Check if available
                           </span>
                         </label>
@@ -468,7 +451,7 @@ const CompleteHouse = () => {
                             onChange={(e) => setLift2(e.target.checked)}
                             checked={lift2}
                           />
-                          <span className="leading-[20px] text-[14px] text-gray-400 md:text-[16px]">
+                          <span className="leading-[20px] text-[13px] text-gray-400 md:text-[14px]">
                             Check if available
                           </span>
                         </label>
@@ -797,3 +780,5 @@ const CompleteHouse = () => {
 };
 
 export default CompleteHouse;
+
+// CompleteHouse.requireAuth = true;

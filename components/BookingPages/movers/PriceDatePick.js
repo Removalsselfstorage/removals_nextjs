@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { BiSolidChevronLeft, BiSolidChevronRight } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -112,19 +112,29 @@ const PriceDatePick = ({ setShowLoader, setTodayPick }) => {
     }
   };
 
-  // console.log(details.moverDetails.dateId);
+  // const today2 = getFormattedTodayDate();
+
+  // const date2 = dayjs(details.moveDetails.moveDateRaw).format("ddd MMM D");
+  // useEffect(() => {
+  //   if (today2 == trimDate(date2)) {
+  //     setTodayPick(true);
+  //   } else {
+  //     setTodayPick(false);
+  //   }
+  // }, []);
+
+  // console.log({ today2, date2 });
 
   return (
     <div className="group mr-[20px] ml-[5px] relative border-b border-white/20 pb-[0px]  md:pb-[0px] mt-[10px] ">
       <BiSolidChevronLeft
-        className={`absolute top-[28%] left-[0px] z-40 h-10 w-10 cursor-pointer text-white  opacity-100 transition hover:scale-125 group-hover:opacity-100 hover:bg-green-700/60 hover:text-white rounded-full bg-primary/70
-                    ${!isMoved && "hidden"}
+        className={`group-hover:flex absolute hidden top-[28%]  left-[0px] z-40 h-10 w-10 cursor-pointer text-white  opacity-100 transition hover:scale-125 group-hover:opacity-100 hover:bg-green-700/60 hover:text-white rounded-full bg-primary/70
                     `}
         onClick={() => handleClick("left")}
       />
       {/* {pickPrice} */}
       <div
-        className="flex items-center space-x-[10px] overflow-x-scroll scrollbar-thin scrollbar-track-primary/0 group-hover:scrollbar-track-primary/10 scrollbar-thumb-primary/0 group-hover:scrollbar-thumb-primary/50 scrollbar-default px-[20px]  pt-[20px] pb-[10px] mb-[10px]"
+        className="flex items-center space-x-[10px] overflow-x-scroll scrollbar-thin scrollbar-track-primary/10 scrollbar-thumb-primary/50 scrollbar-default px-[20px]  pt-[20px] pb-[10px] mb-[10px]"
         ref={rowRef}
       >
         {result2.map((pr, index) => {

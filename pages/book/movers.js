@@ -17,10 +17,13 @@ import {
   calculateMoverPrice,
   decreaseByPercentage,
   getFirstSortedHomeMover,
+  getFormattedTodayDate,
   increaseByPercentage,
   sortHomeMoversAndExcludeHighest,
+  trimDate,
 } from "@/utils/logics";
 import Loader1 from "@/components/loaders/loader1";
+import dayjs from "dayjs";
 
 const Movers = () => {
   const dispatch = useDispatch();
@@ -69,14 +72,26 @@ const Movers = () => {
     };
     document.body.appendChild(script);
   };
+
+  const [showLoader, setShowLoader] = useState(false);
+  const [todayPick, setTodayPick] = useState(false);
+
   useEffect(() => {
     addPaypalScript();
+
+    const today2 = getFormattedTodayDate();
+
+    const date2 = dayjs(details.moveDetails.moveDateRaw).format("ddd MMM D");
+    if (today2 === date2) {
+      setTodayPick(true);
+    } else {
+      setTodayPick(false);
+    }
+    console.log(today2 == date2);
   }, []);
 
   // const [pickPrice, setPickPrice] = useState(priceThirdDay)
 
-  const [showLoader, setShowLoader] = useState(false);
-  const [todayPick, setTodayPick] = useState(false);
   // console.log(details.moverDetails.pickPrice);
 
   const firstCard = getFirstSortedHomeMover(homeMovers);
@@ -115,7 +130,7 @@ const Movers = () => {
                   <h1 className="text-2xl font-bold mb-[30px] px-[20px]">
                     <span className="text-primary">
                       {todayPick
-                        ? "Movers unavailable for hire today"
+                        ? "Movers are unavailable for hire today"
                         : `You've been matched with ${homeMovers.length} verified movers`}
                       .{/* {homeMovers.length} verified movers. */}
                     </span>

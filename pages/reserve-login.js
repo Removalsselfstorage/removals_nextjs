@@ -51,7 +51,10 @@ const ReserveLogin = () => {
     login_email: Yup.string()
       .email("Please enter a valid email address")
       .required("Email address is required"),
-    login_ref: Yup.string().required("Please enter a quote reference code"),
+    login_ref: Yup.string()
+      .required("Please enter a quote reference code")
+      .min(12, "Quote code must be 12 characters")
+      .max(12, `Quote code must be 12 characters`),
   });
 
   const signInHandler = (values, actions) => {

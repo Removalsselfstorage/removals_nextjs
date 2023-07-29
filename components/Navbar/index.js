@@ -170,7 +170,7 @@ const Navbar = () => {
                     >
                       Become a Mover
                     </Link>
-                    <Link href="/login" className="btn  btn-primary">
+                    <Link href="/mover-login" className="btn  btn-primary">
                       Mover Login
                     </Link>
                     {/* <a className="btn btn-primary">Mover Login</a> */}
@@ -227,7 +227,7 @@ const Navbar = () => {
                       Become a Mover
                     </Link>
                   </li>
-                  <Link href="/login" className="btn-nav">
+                  <Link href="/mover-login" className="btn-nav">
                     Mover Login
                   </Link>
                 </ul>

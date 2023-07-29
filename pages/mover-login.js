@@ -18,9 +18,10 @@ import { getCsrfToken, getProviders, getSession } from "next-auth/react";
 import * as Yup from "yup";
 import { Form, Formik, useField } from "formik";
 import LoginInput from "@/components/LoginInput";
+import { FaArrowRight } from "react-icons/fa";
 
 // const Login = ({ providers, csrfToken, callbackUrl }) => {
-const Login = () => {
+const MoverLogin = () => {
   const router = useRouter();
 
   const dispatch = useDispatch();
@@ -169,6 +170,19 @@ const Login = () => {
                         )}
                       </button>
                     </div>
+
+                    <div className="mt-[20px] text-[14px] flex items-center justify-center mx-[0px]">
+                      <p className="w-[50px]">Don't have an account yet?</p>
+                      <Link
+                        href="/join-us"
+                        className="flex items-center space-x-[5px] cursor-pointer"
+                      >
+                        <span className="text-primary font-bold text-[15px] cursor-pointer">
+                          Join Us
+                        </span>
+                        <FaArrowRight className="text-primary" />
+                      </Link>
+                    </div>
                     {/* <div className={styles.account}>
                       <Link href="/auth/forgot" className={styles.forgot}>
                         Forgot password?
@@ -190,7 +204,7 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default MoverLogin;
 
 // export async function getServerSideProps(context) {
 //   const { req, query } = context;

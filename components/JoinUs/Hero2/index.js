@@ -52,7 +52,7 @@ const JoinUsHero = () => {
               </p>
               <div className="flex space-x-[20px] mt-[20px] text-[14px] items-center">
                 <p className="">Already have an account? </p>
-                <Link href="/login" className="btn btn-secondary btn-wide">
+                <Link href="/mover-login" className="btn btn-secondary btn-wide">
                   Sign In
                 </Link>
                 {/* <a className="btn btn-secondary btn-wide">

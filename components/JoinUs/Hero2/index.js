@@ -6,7 +6,8 @@ import { RiCustomerService2Fill } from "react-icons/ri";
 import Link from "next/link";
 import JoinUsBox from "./JoinUsBox";
 
-const JoinUsHero = ({ providers, csrfToken, callbackUrl }) => {
+// const JoinUsHero = ({ providers, csrfToken, callbackUrl }) => {
+const JoinUsHero = () => {
   return (
     <div className=" bg-base-200 mt-[50px]  md:mt-[0px] md:pt-[100px]">
       <div
@@ -65,9 +66,7 @@ const JoinUsHero = ({ providers, csrfToken, callbackUrl }) => {
           {/* Hero inputs */}
           <div className="lg:flex-[1] w-full flex justify-center">
             <JoinUsBox
-              providers={providers}
-              csrfToken={csrfToken}
-              callbackUrl={callbackUrl}
+             
             />
           </div>
         </div>

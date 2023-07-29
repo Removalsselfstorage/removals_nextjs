@@ -16,7 +16,8 @@ import * as Yup from "yup";
 import { Form, Formik, useField } from "formik";
 import LoginInput from "@/components/LoginInput";
 
-const JoinUsBox = ({ providers, csrfToken, callbackUrl }) => {
+// const JoinUsBox = ({ providers, csrfToken, callbackUrl }) => {
+const JoinUsBox = () => {
   const router = useRouter();
 
   const dispatch = useDispatch();
@@ -73,110 +74,6 @@ const JoinUsBox = ({ providers, csrfToken, callbackUrl }) => {
           Join us for free!
         </h3>
         <div className="w-full">
-          {/* <div className="flex space-x-[20px]">
-            <div className="form-control w-full mb-[20px]">
-              <input
-                type="text"
-                placeholder="First Name"
-                className={`${
-                  activateError && !firstName ? "ring ring-secondary" : ""
-                } input input-primary w-full h-[43px]`}
-                onChange={(e) => setFirstName(e.target.value)}
-                defaultValue={firstName}
-              />
-            </div>
-
-            <div className="form-control w-full mb-[20px]">
-              <input
-                type="text"
-                placeholder="Last Name"
-                className={`${
-                  activateError && !lastName ? "ring ring-secondary" : ""
-                } input input-primary w-full h-[43px]`}
-                onChange={(e) => setLastName(e.target.value)}
-                defaultValue={lastName}
-              />
-            </div>
-          </div> */}
-
-          {/* <div className="form-control w-full mb-[20px]">
-            <input
-              type="email"
-              placeholder="Email Address"
-              className={`${
-                activateError && (!email || !emailError)
-                  ? "ring ring-secondary"
-                  : ""
-              } input input-primary w-full h-[43px]`}
-              onChange={handleEmailChange}
-              //
-              defaultValue={email}
-            />
-            {!emailError && email && (
-              <p className="text-[14px] text-secondary mt-[5px]">
-                Please enter a valid email
-              </p>
-            )}
-          </div> */}
-
-          {/* <div className="form-control w-full flex-[1] mb-[20px]">
-            <input
-              type="tel"
-              placeholder="Phone Number"
-              className={`${
-                activateError && (!phone || !phoneError)
-                  ? "ring ring-secondary"
-                  : ""
-              } input input-primary w-full h-[43px]`}
-              onChange={handlePhoneNumberChange}
-              defaultValue={phone}
-            />
-            {!phoneError && phone && (
-              <p className="text-[14px] text-secondary mt-[5px]">
-                Please enter a valid number
-              </p>
-            )}
-          </div> */}
-
-          {/* <div className="w-full flex items-center justify-between">
-            <input
-              type={showPassword ? "text" : "password"}
-              placeholder="Password"
-              className={`${
-                activateError && !password ? "ring ring-secondary" : ""
-              } input input-primary w-full`}
-              onChange={(e) => setPassword(e.target.value)}
-              defaultValue={password}
-            />
-            <span
-              onClick={() => setShowPassword(!showPassword)}
-              className="pl-[10px] cursor-pointer"
-            >
-              {showPassword ? (
-                <RiEyeCloseLine className="text-primary text-[20px]" />
-              ) : (
-                <RiEyeLine className="text-primary text-[20px]" />
-              )}
-            </span>
-          </div> */}
-
-          {/* <div className="form-control mt-6">
-            <button
-              onClick={() => {}}
-              className="btn btn-primary flex items-center space-x-[5px]"
-            >
-              {!submitLoading && <span className="">Get Started</span>}
-              {submitLoading && (
-                <span className="loading loading-dots loading-md text-white"></span>
-              )}
-            </button>
-          </div> */}
-          {/* {error && (
-            <p className="text-secondary w-full text-center mt-[10px]">
-              Please input all fields
-            </p>
-          )} */}
-
           <Formik
             enableReinitialize
             initialValues={user}
@@ -187,11 +84,11 @@ const JoinUsBox = ({ providers, csrfToken, callbackUrl }) => {
           >
             {(form) => (
               <Form method="post" action="/api/auth/signin/email">
-                <input
+                {/* <input
                   type="hidden"
                   name="csrfToken"
                   defaultValue={csrfToken}
-                />
+                /> */}
                 {/* names */}
                 <div className="flex space-x-[20px] mb-[10px]">
                   <div className="form-control w-full mb-[0px]">

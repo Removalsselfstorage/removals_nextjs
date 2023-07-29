@@ -286,8 +286,8 @@ const CompleteHouse = () => {
               </h3>
             </div>
 
-            <div className="">{session?.data?.user?.email}</div>
-            <button onClick={() => signOut()}>Logout</button>
+            {/* <div className="">{session?.data?.user?.email}</div>
+            <button onClick={() => signOut()}>Logout</button> */}
 
             {/* form */}
             <div className="flex flex-col  px-[20px] lg:px-[100px] py-[30px] bg-white rounded-[20px] mx-[10px] md:mx-[100px]">

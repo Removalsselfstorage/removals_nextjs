@@ -19,7 +19,7 @@ const JoinUs = () => {
       </Head>
 
       <main>
-        <JoinUsHero providers={providers} csrfToken={csrfToken} callbackUrl={callbackUrl} />
+        <JoinUsHero />
         <MoverFeatures />
         <JoinUsFAQ/>
       </main>

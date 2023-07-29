@@ -135,7 +135,9 @@ const Navbar = () => {
                       <a className="btn-nav">Locations</a>
                     </li>
                     <li>
-                      <a className="btn-nav">My Reservations</a>
+                      <Link href="/reserve-login" className="btn-nav">
+                        My Reservation
+                      </Link>
                     </li>
                   </ul>
                 </div>

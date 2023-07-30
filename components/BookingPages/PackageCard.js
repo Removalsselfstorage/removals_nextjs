@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import { convertToSentenceCase, generateRandomValues } from "@/utils/logics";
 import { priceCalc, priceCalc2 } from "@/utils/moversLogic";
-import { FaBusAlt } from "react-icons/fa";
+import { FaBusAlt, FaTruckMoving } from "react-icons/fa";
 import { IoMdMan } from "react-icons/io";
 
 const PackageCard = ({
@@ -282,7 +282,7 @@ const PackageCard = ({
           {/* <p className="">₤{price}</p> */}
           <div className="flex flex-col space-y-[5px] ">
             <p className="font-bold">*{details.moveDetails.propertyType}*</p>
-            <div className="flex items-end justify-center text-gray-500 ">
+            <div className="flex items-center justify-center text-gray-500 ">
               {imageArray.map((_, index) => (
                 <IoMdMan
                   className="text-primary text-[30px] mx-[-8px]"
@@ -290,7 +290,8 @@ const PackageCard = ({
                 />
               ))}
 
-              <FaBusAlt className="text-primary text-[35px] ml-[5px]" />
+              {/* <FaBusAlt className="text-primary text-[35px] ml-[5px]" /> */}
+              <FaTruckMoving className="text-primary text-[40px] ml-[5px]" />
             </div>
             <p className="font-semibold text-[15px] text-gray-500 pt-[7px]">
               {details.moveDetails.numberOfMovers} and Jumbo Van

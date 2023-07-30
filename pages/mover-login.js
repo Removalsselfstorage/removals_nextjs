@@ -19,6 +19,7 @@ import * as Yup from "yup";
 import { Form, Formik, useField } from "formik";
 import LoginInput from "@/components/LoginInput";
 import { FaArrowRight } from "react-icons/fa";
+import BookingLayout from "../layouts/BookingLayout";
 
 // const Login = ({ providers, csrfToken, callbackUrl }) => {
 const MoverLogin = () => {
@@ -52,8 +53,8 @@ const MoverLogin = () => {
       .required("Email address is required"),
     login_password: Yup.string()
       .required("Please enter a password")
-      .min(8, "Password must be at least 8 characters")
-      .max(32, `Password can't be more than 32 characters`),
+      // .min(8, "Password must be at least 8 characters")
+      // .max(32, `Password can't be more than 32 characters`),
   });
 
   const signInHandler = (values, actions) => {
@@ -86,7 +87,7 @@ const MoverLogin = () => {
   //phone number validation
 
   return (
-    <NormalLayout>
+    <BookingLayout>
       <Head>
         <title>Removals and Selfstorage - Login</title>
         <meta name="description" content="Rss removal and storage website" />
@@ -200,7 +201,7 @@ const MoverLogin = () => {
           </div>
         </div>
       </main>
-    </NormalLayout>
+    </BookingLayout>
   );
 };
 

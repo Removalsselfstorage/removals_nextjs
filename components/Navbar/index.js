@@ -7,12 +7,20 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import ScrollUpMenuNav from "../ScrollUpMenuNav";
 import useAuth from "@/hooks/useAuth";
+import { useSelector } from "react-redux";
+import { getAllUserDetails } from "@/store/userSlice";
+import { trimToFirstLetter } from "@/utils/logics";
 // import ScrollUpMenuNav from '../ScrollUpMenuNav';
 
 const Navbar = () => {
   const [shadow, setShadow] = useState(false);
   const [showNav, setShowNav] = useState(true);
-  const { user, logout, loading } = useAuth()
+  const { user, logout, loading } = useAuth();
+
+  const users = useSelector(getAllUserDetails);
+
+  console.log(user);
+  console.log(users.userDetails?.email);
 
   useEffect(() => {
     const handleShadow = () => {
@@ -89,6 +97,7 @@ const Navbar = () => {
             <div className="drawer-content flex flex-col">
               {/* Navbar */}
               <div className="w-full navbar  md:max-w-7xl mx-auto items-center ">
+                {/* nav-start */}
                 <div className="navbar-start flex flex-[1] items-center">
                   <Link href="/">
                     <img
@@ -98,6 +107,8 @@ const Navbar = () => {
                     />
                   </Link>
                 </div>
+
+                {/* nav-center */}
                 <div className="navbar-center hidden lg:flex flex-[2]">
                   <ul className="menu menu-horizontal  px-1 text-[16px]">
                     <li>
@@ -137,14 +148,70 @@ const Navbar = () => {
                       <a className="btn-nav">Locations</a>
                     </li>
                     <li>
-                      <Link href="/reserve-login" className="btn-nav">
-                        My Reservation
-                      </Link>
+                      {!users.userDetails && (
+                        <Link href="/reserve-login" className="btn-nav">
+                          My Reservation
+                        </Link>
+                      )}
+                      {users.userDetails && (
+                        <Link href="/mover-dashboard" className="btn-nav">
+                          My Dashboard
+                        </Link>
+                      )}
                     </li>
                   </ul>
                 </div>
 
+                {/* nav right */}
                 <div className="navbar-end flex flex-[1] space-x-[10px]">
+                  {!users.userDetails && (
+                    <div className=" lg:space-x-[10px] hidden lg:flex">
+                      <Link
+                        href="/join-us"
+                        className="btn btn-outline btn-primary"
+                      >
+                        Become a Mover
+                      </Link>
+                      <Link href="/mover-login" className="btn  btn-primary">
+                        Mover Login
+                      </Link>
+                      {/* <a className="btn btn-primary">Mover Login</a> */}
+                    </div>
+                  )}
+                  {users.userDetails && (
+                    <ul className="menu menu-horizontal  px-1 text-[16px] hidden lg:flex">
+                      <li className="dropdown dropdown-hover dropdown-end group">
+                        <label
+                          tabIndex={0}
+                          className="flex items-center justify-center bg-primary h-[40px] w-[40px] rounded-full btn-nav"
+                        >
+                          <p className="text-white font-bold">
+                            {trimToFirstLetter(users.userDetails?.email)}
+                          </p>
+                        </label>
+                        <ul
+                          tabIndex={0}
+                          className="dropdown-content z-[1] menu py-[20px] px-[10px] shadow bg-base-100 rounded-box w-[250px] text-[16px]"
+                        >
+                          <li>
+                            <a className="btn-nav">My Profile</a>
+                          </li>
+                          <li
+                            onClick={() => {
+                              logout();
+                            }}
+                          >
+                            <a className="btn-nav">Log Out</a>
+                          </li>
+
+                          {/* <li>
+                          <a className="btn-nav">Moving Your Business</a>
+                        </li> */}
+                        </ul>
+                      </li>
+                    </ul>
+                  )}
+
                   <div className="flex-none lg:hidden">
                     <label
                       htmlFor="my-drawer-3"
@@ -164,18 +231,6 @@ const Navbar = () => {
                         ></path>
                       </svg>
                     </label>
-                  </div>
-                  <div className=" lg:space-x-[10px] hidden lg:flex">
-                    <Link
-                      href="/join-us"
-                      className="btn btn-outline btn-primary"
-                    >
-                      Become a Mover
-                    </Link>
-                    <Link href="/mover-login" className="btn  btn-primary">
-                      Mover Login
-                    </Link>
-                    {/* <a className="btn btn-primary">Mover Login</a> */}
                   </div>
                 </div>
               </div>
@@ -224,14 +279,34 @@ const Navbar = () => {
                   <li className="border-b-[2px] pb-[10px]">
                     <a className="btn-nav">Blog</a>
                   </li>
-                  <li>
-                    <Link href="/join-us" className="btn-nav">
-                      Become a Mover
-                    </Link>
-                  </li>
-                  <Link href="/mover-login" className="btn-nav">
-                    Mover Login
-                  </Link>
+                  {!users.userDetails && (
+                    <li>
+                      <Link href="/join-us" className="btn-nav">
+                        Become a Mover
+                      </Link>
+                    </li>
+                  )}
+                  {!users.userDetails && (
+                    <li>
+                      <Link href="/mover-login" className="btn-nav">
+                        Mover Login
+                      </Link>
+                    </li>
+                  )}
+                  {users.userDetails && (
+                    <li>
+                      <a className="btn-nav">My Profile</a>
+                    </li>
+                  )}
+                  {users.userDetails && (
+                    <li
+                      onClick={() => {
+                        logout();
+                      }}
+                    >
+                      <a className="btn-nav">Log Out</a>
+                    </li>
+                  )}
                 </ul>
               </div>
             </div>

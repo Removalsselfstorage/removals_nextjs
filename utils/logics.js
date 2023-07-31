@@ -1,3 +1,11 @@
+export function trimToFirstLetter(word) {
+  if (typeof word !== "string" || word.length === 0) {
+    return "";
+  }
+
+  return word.charAt(0).toUpperCase();
+}
+
 export const truncateTexts = (text, count) => {
   return text?.length > count ? text.slice(0, count) + "..." : text;
 };
@@ -14,7 +22,8 @@ export function convertToSentenceCase(text) {
 }
 
 export function generateRandomValues() {
-  const allowedChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  const allowedChars =
+    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
   const length = 8;
   let randomValue = "rs";
 

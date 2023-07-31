@@ -94,7 +94,14 @@ const ReserveLogin = () => {
         <link rel="icon" href="/rrs_favicon.svg" />
       </Head>
 
-      <main className="h-[100vh] flex justify-center items-center pt-[100px]">
+      <main
+        className="h-[100vh] flex justify-center items-center pt-[100px]"
+        style={{
+          backgroundImage: "url(/bg-tarvel3.png)",
+          backgroundSize: "cover",
+          backgroundRepeat: "no-repeat",
+        }}
+      >
         <div className="card shadow-2xl bg-base-100 justify-center text-black w-full md:w-[400px] mx-[20px] px-[20px] pt-[10px] pb-[30px]">
           <div className="card-body ">
             <h3 className="text-2xl font-extrabold text-primary uppercase mt-[0px] mb-[0px] text-center">

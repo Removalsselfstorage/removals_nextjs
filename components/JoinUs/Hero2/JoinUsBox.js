@@ -189,7 +189,7 @@ const JoinUsBox = () => {
                     type="submit"
                     className="btn btn-primary flex items-center space-x-[5px]"
                   >
-                    {!submitLoading && <span className="">Get Started</span>}
+                    {!submitLoading && <span className="">Register</span>}
                     {submitLoading && (
                       <span className="loading loading-dots loading-md text-white"></span>
                     )}

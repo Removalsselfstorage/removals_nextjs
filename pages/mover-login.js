@@ -69,8 +69,8 @@ const MoverLogin = () => {
     // alert(JSON.stringify(values, null, 2));
     dispatch(
       updateUserNames({
-        firstName: values.signup_firstname,
-        lastName: values.signup_lastname,
+        firstName: values.login_email,
+        lastName: values.login_lastname,
       })
     );
     await signIn(values.login_email, values.login_password);
@@ -93,7 +93,14 @@ const MoverLogin = () => {
         <link rel="icon" href="/rrs_favicon.svg" />
       </Head>
 
-      <main className="h-[100vh] flex justify-center items-center">
+      <main
+        className="h-[100vh] flex justify-center items-center"
+        style={{
+          backgroundImage: "url(/bg-tarvel3.png)",
+          backgroundSize: "cover",
+          backgroundRepeat: "no-repeat",
+        }}
+      >
         <div className="card shadow-2xl bg-base-100 justify-center text-black w-full md:w-[400px] mx-[20px] px-[20px] pt-[10px] pb-[30px]">
           <div className="card-body ">
             <h3 className="text-2xl font-extrabold text-primary uppercase mt-[0px] mb-[20px] text-center">

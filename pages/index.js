@@ -16,9 +16,7 @@ import { getAllUserDetails } from "@/store/userSlice";
 import { useSelector } from "react-redux";
 
 export default function Home() {
-  const userDetails = useSelector(getAllUserDetails);
-
-  console.log(userDetails);
+  
 
   return (
     <NormalLayout>

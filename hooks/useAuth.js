@@ -66,54 +66,119 @@ export const AuthProvider = ({ children }) => {
     [auth]
   );
 
+  // const signUp = async (email, password) => {
+  //   setLoading(true);
+
+  //   await createUserWithEmailAndPassword(auth, email, password)
+  //     .then((userCredential) => {
+  //       setUser(userCredential.user);
+  //       dispatch(updateUserDetails(userCredential.user));
+  //       dispatch(updateSignupMessage("Registration successful"));
+  //       router.push("/mover-login");
+  //       setLoading(false);
+  //     })
+  //     .catch((error) => {
+  //       // setSignupError(error.message)
+  //       setError(error.message);
+  //       dispatch(updateSignupError(error.message));
+  //     })
+  //     .finally(() => setLoading(false));
+  // };
   const signUp = async (email, password) => {
     setLoading(true);
 
-    await createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        setUser(userCredential.user);
-        dispatch(updateUserDetails(userCredential.user));
-        dispatch(updateSignupMessage("Registration successful"));
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      setUser(userCredential.user);
+      dispatch(updateUserDetails(userCredential.user));
+      dispatch(updateSignupMessage("Registration successful"));
+
+      // Delay the router push by 3 seconds
+      setTimeout(() => {
         router.push("/mover-login");
-        setLoading(false);
-      })
-      .catch((error) => {
-        // setSignupError(error.message)
-        setError(error.message);
-        dispatch(updateSignupError(error.message));
-      })
-      .finally(() => setLoading(false));
+      }, 3000);
+
+      setLoading(false);
+    } catch (error) {
+      setError(error.message);
+      dispatch(updateSignupError(error.message));
+      setLoading(false);
+    }
   };
 
+  // const signIn = async (email, password) => {
+  //   setLoading(true);
+  //   await signInWithEmailAndPassword(auth, email, password)
+  //     .then((userCredential) => {
+  //       setUser(userCredential.user);
+  //       dispatch(updateUserDetails(userCredential.user));
+  //       router.push("/");
+  //       setLoading(false);
+  //     })
+  //     .catch((error) => {
+  //       setError(error.message);
+  //       dispatch(updateLoginError(error.message));
+  //     })
+  //     .finally(() => setLoading(false));
+  // };
   const signIn = async (email, password) => {
     setLoading(true);
-    await signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        setUser(userCredential.user);
-        dispatch(updateUserDetails(userCredential.user));
+
+    try {
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      setUser(userCredential.user);
+      dispatch(updateUserDetails(userCredential.user));
+
+      // Delay the router push by 3 seconds
+      setTimeout(() => {
         router.push("/");
-        setLoading(false);
-      })
-      .catch((error) => {
-        setError(error.message);
-        dispatch(updateLoginError(error.message));
-      })
-      .finally(() => setLoading(false));
+      }, 0);
+
+      // setLoading(false);
+    } catch (error) {
+      setError(error.message);
+      dispatch(updateLoginError(error.message));
+      setLoading(false);
+    }
   };
+
+  // const logout = async () => {
+  //   setLoading(true);
+
+  //   signOut(auth)
+  //     .then(() => {
+  //       setUser(null);
+  //       dispatch(updateUserDetails(null));
+  //     })
+  //     .catch((error) => {
+  //       setError(error.message);
+  //       dispatch(updateLoginError(error.message));
+  //     })
+  //     .finally(() => setLoading(false));
+  // };
 
   const logout = async () => {
     setLoading(true);
 
-    signOut(auth)
-      .then(() => {
-        setUser(null);
-        dispatch(updateUserDetails(null));
-      })
-      .catch((error) => {
-        setError(error.message);
-        dispatch(updateLoginError(error.message));
-      })
-      .finally(() => setLoading(false));
+    try {
+      await signOut(auth);
+      setUser(null);
+      dispatch(updateUserDetails(null));
+      router.push("/mover-login");
+    } catch (error) {
+      setError(error.message);
+      dispatch(updateLoginError(error.message));
+    } finally {
+      setLoading(false);
+    }
   };
 
   const memoedValue = useMemo(

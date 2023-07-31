@@ -164,7 +164,7 @@ const SummaryDetails = ({
                 Quote Ref:
               </p>
               <p className="font-semibold text-[14px] ">
-                rs{details.moveDetails.quoteRef}
+                {details.moveDetails.quoteRef}
               </p>
             </div>
             {/* mover name */}

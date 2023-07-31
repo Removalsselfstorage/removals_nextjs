@@ -376,6 +376,69 @@ export const priceCalc2 = (title, mileage, movers, propertyType) => {
 
 export const moveDesciptionsCalc = (title, propertyType) => {
   switch (propertyType) {
+    case "Man and van":
+      switch (title) {
+        case "STANDARD":
+          return {
+            f1: "Free mileage",
+            // f2: "Minimum 3 hours hire",
+            f2: "Item dismantling / assembling",
+            f3: "Help Load / unload",
+            f4: "Trolly, straps & Blanket",
+            f5: "Standard insurance cover",
+            f6: "Cancel up to 1 week before your move",
+            // f8: "450 cubic ft loading capacity",
+          };
+          break;
+        case "GOLD":
+          return {
+            f1: "Free mileage",
+            // f2: "Minimum 3 hours hire",
+            f2: "Item dismantling / assembling",
+            f3: "Help Load / unload",
+            f4: "Trolly, straps & Blanket",
+            f5: "Help Load / unload",
+            f6: "Standard insurance cover",
+            f7: "Cancel up to 1 week before your move",
+            // f10: "550 Cubic ft loading capacity",
+          };
+          break;
+        case "PREMIUM":
+          return {
+            f1: "Free mileage",
+            // f2: "Minimum 3 hours hire",
+            f2: "Item dismantling / assembling",
+            f3: "Help Load / unload",
+            f4: "Trolly, straps & Blanket",
+            f5: "Help Load / unload",
+            f6: "Shrink Wrapping services",
+            f7: "Moving Concierge",
+            f8: "Comprehensive insurance cover",
+            f9: "Cancel up to 48hrs before your move",
+            // f11: "660 Cubic ft loading capacity",
+          };
+          break;
+        case "PREMIUM PLUS":
+          return {
+            f1: "Free mileage",
+            // f2: "Minimum 3 hours hire",
+            f2: "Item dismantling / assembling",
+            f3: "Help Load / unload",
+            f4: "Trolly, straps & Blanket",
+            f5: "Shrink Wrapping services",
+            f6: "Free packing service",
+            f7: "Free mattress cover",
+            f8: "Moving Concierge",
+            f9: "Comprehensive insurance cover",
+            f10: "Cancel up to 48hrs before your move",
+            // f12: "840 Cubic ft loading capacity",
+          };
+          break;
+
+        default:
+          break;
+      }
+      break;
     case "Office removals":
       switch (title) {
         case "STANDARD":
@@ -828,6 +891,69 @@ export const moveDesciptionsCalc = (title, propertyType) => {
 };
 export const moveDesciptionsCalc2 = (title, propertyType) => {
   switch (propertyType) {
+    case "Man and van":
+      switch (title) {
+        case "Standard":
+          return {
+            f1: "Free mileage",
+            // f2: "Minimum 3 hours hire",
+            f2: "Item dismantling / assembling",
+            f3: "Help Load / unload",
+            f4: "Trolly, straps & Blanket",
+            f5: "Standard insurance cover",
+            f6: "Cancel up to 1 week before your move",
+            // f8: "450 cubic ft loading capacity",
+          };
+          break;
+        case "Gold":
+          return {
+            f1: "Free mileage",
+            // f2: "Minimum 3 hours hire",
+            f2: "Item dismantling / assembling",
+            f3: "Help Load / unload",
+            f4: "Trolly, straps & Blanket",
+            f5: "Help Load / unload",
+            f6: "Standard insurance cover",
+            f7: "Cancel up to 1 week before your move",
+            // f10: "550 Cubic ft loading capacity",
+          };
+          break;
+        case "Premium":
+          return {
+            f1: "Free mileage",
+            // f2: "Minimum 3 hours hire",
+            f2: "Item dismantling / assembling",
+            f3: "Help Load / unload",
+            f4: "Trolly, straps & Blanket",
+            f5: "Help Load / unload",
+            f6: "Shrink Wrapping services",
+            f7: "Moving Concierge",
+            f8: "Comprehensive insurance cover",
+            f9: "Cancel up to 48hrs before your move",
+            // f11: "660 Cubic ft loading capacity",
+          };
+          break;
+        case "Premium plus":
+          return {
+            f1: "Free mileage",
+            // f2: "Minimum 3 hours hire",
+            f2: "Item dismantling / assembling",
+            f3: "Help Load / unload",
+            f4: "Trolly, straps & Blanket",
+            f5: "Shrink Wrapping services",
+            f6: "Free packing service",
+            f7: "Free mattress cover",
+            f8: "Moving Concierge",
+            f9: "Comprehensive insurance cover",
+            f10: "Cancel up to 48hrs before your move",
+            // f12: "840 Cubic ft loading capacity",
+          };
+          break;
+
+        default:
+          break;
+      }
+      break;
     case "Office removals":
       switch (title) {
         case "Standard":

@@ -99,6 +99,20 @@ const HeroInputBox = () => {
           router.push("/book/man-and-van");
           break;
         case "Man and van":
+          dispatch(
+            updateMoveDetails({
+              propertyType: selectValue,
+              numberOfMovers: details.moveDetails.numberOfMovers,
+              mileage: details.moveDetails.mileage,
+              volume: details.moveDetails.volume,
+              duration: details.moveDetails.duration,
+              moveDate: details.moveDetails.moveDate,
+              moveDateRaw: details.moveDetails.moveDateRaw,
+              movePackage: details.moveDetails.movePackage,
+              quoteRef: details.moveDetails.quoteRef,
+              initialPackagePrice: details.moveDetails.initialPackagePrice,
+            })
+          );
           router.push("/book/man-and-van");
           break;
         case "Studio flat":

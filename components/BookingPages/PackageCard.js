@@ -60,6 +60,9 @@ const PackageCard = ({
 
   const checkPropertyType = () => {
     switch (details.moveDetails.propertyType) {
+      case "Man and van":
+        return true;
+        break;
       case "Office removals":
         return true;
         break;
@@ -134,6 +137,13 @@ const PackageCard = ({
   const totalMileage = mileageValueCalc(details.moveDetails.mileage);
   const totalPrice = (totalMileage) => {
     switch (details.moveDetails.propertyType) {
+      case "Man and van":
+        return priceCalc(
+          title,
+          details.moveDetails.duration,
+          details.moveDetails.numberOfMovers
+        );
+        break;
       case "Office removals":
         return priceCalc(
           title,

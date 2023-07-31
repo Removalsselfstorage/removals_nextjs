@@ -1,19 +1,25 @@
-import Image from 'next/image';
-import Head from 'next/head';
-import { titleFont } from '@/utils/fonts';
-import Hero from '@/components/HomePage/Hero';
-import OurServices from '@/components/HomePage/OurServices';
-import WhyChooseUs from '@/components/HomePage/WhyChooseUs';
-import AboutUs from '@/components/HomePage/AboutUs';
-import OurReviews from '@/components/HomePage/OurReviews';
-import FAQ from '@/components/HomePage/FAQ';
-import FeaturedCompanies from '@/components/HomePage/FeatureCompanies';
-import InputSearch from '@/components/Inputs/InputSearch';
-import Features from '@/components/HomePage/Features';
-import HowItWorks from '@/components/HomePage/HowItWorks';
-import NormalLayout from '@/layouts/NormalLayout';
+import Image from "next/image";
+import Head from "next/head";
+import { titleFont } from "@/utils/fonts";
+import Hero from "@/components/HomePage/Hero";
+import OurServices from "@/components/HomePage/OurServices";
+import WhyChooseUs from "@/components/HomePage/WhyChooseUs";
+import AboutUs from "@/components/HomePage/AboutUs";
+import OurReviews from "@/components/HomePage/OurReviews";
+import FAQ from "@/components/HomePage/FAQ";
+import FeaturedCompanies from "@/components/HomePage/FeatureCompanies";
+import InputSearch from "@/components/Inputs/InputSearch";
+import Features from "@/components/HomePage/Features";
+import HowItWorks from "@/components/HomePage/HowItWorks";
+import NormalLayout from "@/layouts/NormalLayout";
+import { getAllUserDetails } from "@/store/userSlice";
+import { useSelector } from "react-redux";
 
 export default function Home() {
+  const userDetails = useSelector(getAllUserDetails);
+
+  console.log(userDetails);
+
   return (
     <NormalLayout>
       <Head>

@@ -9,7 +9,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import { convertToSentenceCase, generateRandomValues } from "@/utils/logics";
-import { priceCalc, priceCalc2 } from "@/utils/moversLogic";
+import { moveRate, priceCalc, priceCalc2 } from "@/utils/moversLogic";
 import { FaBusAlt, FaTruckMoving } from "react-icons/fa";
 import { IoMdMan } from "react-icons/io";
 
@@ -57,71 +57,6 @@ const PackageCard = ({
   };
 
   const imageArray = new Array(moveMen()).fill(null);
-
-  const moveRate = () => {
-    switch (details.moveDetails.propertyType) {
-      case "Office removals":
-        switch (title) {
-          case "STANDARD":
-            return "( ₤ 57.99 / HR )";
-            break;
-          case "GOLD":
-            return "( ₤ 60.99 / HR )";
-            break;
-          case "PREMIUM":
-            return "( ₤ 63.99 / HR )";
-            break;
-          case "PREMIUM PLUS":
-            return "( ₤ 70.99 / HR )";
-            break;
-
-          default:
-            break;
-        }
-        break;
-      case "Studio flat":
-        switch (title) {
-          case "STANDARD":
-            return "( ₤ 57.99 / HR )";
-            break;
-          case "GOLD":
-            return "( ₤ 60.99 / HR )";
-            break;
-          case "PREMIUM":
-            return "( ₤ 63.99 / HR )";
-            break;
-          case "PREMIUM PLUS":
-            return "( ₤ 70.99 / HR )";
-            break;
-
-          default:
-            break;
-        }
-        break;
-      case "Furniture & Appliances":
-        switch (title) {
-          case "STANDARD":
-            return "( ₤ 57.99 / HR )";
-            break;
-          case "GOLD":
-            return "( ₤ 60.99 / HR )";
-            break;
-          case "PREMIUM":
-            return "( ₤ 63.99 / HR )";
-            break;
-          case "PREMIUM PLUS":
-            return "( ₤ 70.99 / HR )";
-            break;
-
-          default:
-            break;
-        }
-        break;
-
-      default:
-        break;
-    }
-  };
 
   const checkPropertyType = () => {
     switch (details.moveDetails.propertyType) {
@@ -285,13 +220,19 @@ const PackageCard = ({
             <div className="flex items-center justify-center text-gray-500 ">
               {imageArray.map((_, index) => (
                 <IoMdMan
-                  className="text-primary text-[30px] mx-[-8px]"
+                  className={`${
+                    preferred ? "text-secondary" : "text-primary"
+                  } text-primary text-[30px] mx-[-8px]`}
                   key={index}
                 />
               ))}
 
               {/* <FaBusAlt className="text-primary text-[35px] ml-[5px]" /> */}
-              <FaTruckMoving className="text-primary text-[40px] ml-[5px]" />
+              <FaTruckMoving
+                className={`${
+                  preferred ? "text-secondary" : "text-primary"
+                } text-primary text-[40px] ml-[5px]`}
+              />
             </div>
             <p className="font-semibold text-[15px] text-gray-500 pt-[7px]">
               {details.moveDetails.numberOfMovers} and Jumbo Van
@@ -301,7 +242,11 @@ const PackageCard = ({
                 For a {details.moveDetails.duration} hours move
               </p>
             )}
-            {checkPropertyType() && <p className="font-bold">{moveRate()}</p>}
+            {checkPropertyType() && (
+              <p className="font-bold">
+                {moveRate(title, details.moveDetails.numberOfMovers)}
+              </p>
+            )}
           </div>
           <ul className="text-gray-500 mt-[15px] md:mt-[20px] text-start text-[13px] w-full">
             <li className="border-b  py-[5px]">* {f1}</li>

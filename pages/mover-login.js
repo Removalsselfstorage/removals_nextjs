@@ -20,6 +20,12 @@ import { Form, Formik, useField } from "formik";
 import LoginInput from "@/components/LoginInput";
 import { FaArrowRight } from "react-icons/fa";
 import BookingLayout from "../layouts/BookingLayout";
+import {
+  getAllUserDetails,
+  updateLoginError,
+  updateUserNames,
+} from "@/store/userSlice";
+import useAuth from "@/hooks/useAuth";
 
 // const Login = ({ providers, csrfToken, callbackUrl }) => {
 const MoverLogin = () => {
@@ -28,6 +34,7 @@ const MoverLogin = () => {
   const dispatch = useDispatch();
 
   const details = useSelector(getAllDetails);
+  const userDetails = useSelector(getAllUserDetails);
 
   const initialValues = {
     login_email: "",
@@ -37,6 +44,7 @@ const MoverLogin = () => {
   };
 
   // const [field, meta] = useField(props);
+  const { signIn, signUp } = useAuth();
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState(initialValues);
   const [showPassword, setShowPassword] = useState(false);
@@ -51,38 +59,29 @@ const MoverLogin = () => {
     login_email: Yup.string()
       .email("Please enter a valid email address")
       .required("Email address is required"),
-    login_password: Yup.string()
-      .required("Please enter a password")
-      // .min(8, "Password must be at least 8 characters")
-      // .max(32, `Password can't be more than 32 characters`),
+    login_password: Yup.string().required("Please enter a password"),
+    // .min(8, "Password must be at least 8 characters")
+    // .max(32, `Password can't be more than 32 characters`),
   });
 
-  const signInHandler = (values, actions) => {
-    // setLoading(true);
-    // let options = {
-    //   redirect: false,
-    //   email: login_email,
-    //   password: login_password,
-    // };
-    // const res = await signIn('credentials', options);
-    // setUser({ ...user, success: '', error: '' });
-
-    // if (res?.error) {
-    //   setLoading(false);
-    //   setUser({ ...user, error: res?.error });
-    // } else {
-    //   setLoading(false);
-
-    //   return router.push(callbackUrl || '/');
-    // }
-    // setTimeout(() => {
-    //   alert(JSON.stringify(values, null, 2));
-    //   actions.setSubmitting(false);
-    // }, 1000);
-    // alert("values");
-    alert(JSON.stringify(values, null, 2));
-    actions.setSubmitting(false);
+  const signInHandler = async (values, actions) => {
+    setSubmitLoading(true);
+    // alert(JSON.stringify(values, null, 2));
+    dispatch(
+      updateUserNames({
+        firstName: values.signup_firstname,
+        lastName: values.signup_lastname,
+      })
+    );
+    await signIn(values.login_email, values.login_password);
+    setSubmitLoading(false);
+    // actions.setSubmitting(false);
   };
+
+  useEffect(() => {
+    dispatch(updateLoginError(null));
+    // dispatch(updateSignupError(null));
+  }, []);
 
   //phone number validation
 
@@ -124,6 +123,7 @@ const MoverLogin = () => {
                         // icon="email"
                         placeholder="Email Address"
                         onChange={handleChange}
+                        value={user.login_email}
                       />
                     </div>
                     {/* password */}
@@ -142,6 +142,7 @@ const MoverLogin = () => {
                           name="login_password"
                           placeholder="Password"
                           onChange={handleChange}
+                          value={user.login_password}
                         />
                       </div>
                       <span
@@ -159,9 +160,9 @@ const MoverLogin = () => {
                       <CircledIconBtn type="submit" text="Sign In" />
                       {error && <span className={styles.error}>{error}</span>}
                     </div> */}
-                    <div className="form-control mt-6">
+                    <div className="form-control mt-6 mb-[10px]">
                       <button
-                        onClick={() => {}}
+                        // onClick={() => {}}
                         type="submit"
                         className="btn btn-primary flex items-center space-x-[5px]"
                       >
@@ -171,6 +172,12 @@ const MoverLogin = () => {
                         )}
                       </button>
                     </div>
+
+                    {userDetails.loginError && (
+                      <p className="text-center text-[15px] text-secondary">
+                        Email / password is invalid
+                      </p>
+                    )}
 
                     <div className="mt-[20px] text-[14px] flex items-center justify-center mx-[0px]">
                       <p className="w-[50px]">Don't have an account yet?</p>

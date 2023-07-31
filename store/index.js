@@ -1,6 +1,6 @@
-import { configureStore, combineReducers } from '@reduxjs/toolkit';
-import thunk from 'redux-thunk';
-import storage from 'redux-persist/lib/storage';
+import { configureStore, combineReducers } from "@reduxjs/toolkit";
+import thunk from "redux-thunk";
+import storage from "redux-persist/lib/storage";
 import {
   persistReducer,
   FLUSH,
@@ -9,10 +9,11 @@ import {
   PERSIST,
   PURGE,
   REGISTER,
-} from 'redux-persist';
+} from "redux-persist";
 // import createWebStorage from 'redux-persist/lib/storage/createWebStorage';
-import cartReducer from './cartSlice';
-import quoteReducer from './quoteSlice';
+import cartReducer from "./userSlice";
+import quoteReducer from "./quoteSlice";
+import userReducer from "./userSlice";
 
 ////////////
 // const createNoopStorage = () => {
@@ -35,10 +36,10 @@ import quoteReducer from './quoteSlice';
 
 /////////////////////
 
-const rootReducer = combineReducers({ quote: quoteReducer });
+const rootReducer = combineReducers({ quote: quoteReducer, user: userReducer });
 
 const persistConfig = {
-  key: 'root',
+  key: "root",
   //   version: 1,
   storage,
 };
@@ -47,7 +48,7 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
   reducer: persistedReducer,
-  devTools: process.env.NODE_ENV !== 'production',
+  devTools: process.env.NODE_ENV !== "production",
   middleware: [thunk],
 });
 

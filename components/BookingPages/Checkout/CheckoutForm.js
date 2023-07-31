@@ -2,15 +2,21 @@
 import React, { useEffect, useState } from "react";
 // import { PayPalButton } from "react-paypal-button-v3";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
+import { getAllDetails } from "@/store/quoteSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const CheckoutForm = ({
-  partDepositOnchange,
-  fullDepositOnchange,
   cardOnchange,
   paypalOnchange,
   scriptLoaded,
+  depositFull,
+  depositPart,
+  setDepositPart,
+  setDepositFull,
 }) => {
   const [amount, setAmount] = useState(20);
+
+  const details = useSelector(getAllDetails);
   // const [scriptLoaded, setScriptLoaded] = useState(false);
 
   // const addPaypalScript = () => {
@@ -34,6 +40,15 @@ const CheckoutForm = ({
   //   addPaypalScript();
   // }, []);
 
+  const partDepositOnchange = (e) => {
+    setDepositPart(e.target.checked);
+    setDepositFull(false);
+  };
+  const fullDepositOnchange = (e) => {
+    setDepositFull(e.target.checked);
+    setDepositPart(false);
+  };
+
   const initialOptions = {
     clientId: "test",
     currency: "USD",
@@ -41,9 +56,9 @@ const CheckoutForm = ({
   };
 
   return (
-    <div className="bg-white shadow-lg rounded-[30px] lg:flex-[2] py-[30px] px-[30px] md:px-[50px] w-full">
+    <div className="lg:sticky lg:top-[80px] bg-white shadow-lg rounded-[30px] lg:flex-[2] py-[30px] px-[30px] md:px-[50px] w-full">
       {/*50% payment row */}
-      <div className="mt-[0px]">
+      <div className="mt-[0px] ">
         <h1 className="text-xl font-bold mb-[20px] px-[0px]">Payment Type*</h1>
         <div className="flex space-x-[20px] items-center">
           {/* left */}
@@ -73,6 +88,60 @@ const CheckoutForm = ({
                 Full Deposit
               </p>
             </label>
+          </div>
+        </div>
+      </div>
+      {/* price section */}
+      <div className="lg:hidden">
+        <div className="flex justify-between mb-[10px] md:mb-[10px] border-t border-black/30 pt-[20px] mt-[20px]">
+          <h2 className="text-[18px] font-semibold text-primary ">
+            Mover Price:
+          </h2>
+          <div className="flex flex-col items-end">
+            <h2 className="text-[16px] font-bold ">
+              ₤ {details.moverDetails.moverPrice}
+            </h2>
+            {/* <p className="text-[12px] text-gray-500">VAT included</p> */}
+          </div>
+        </div>
+      </div>
+
+      {/* payment method */}
+      <div className="lg:hidden">
+        <div className="flex justify-between mb-[10px] md:mb-[10px]  pt-[0px]">
+          <h2 className="text-[18px] font-semibold text-primary">
+            Payment Method:
+          </h2>
+          <div className="flex flex-col items-end">
+            {depositPart && <h2 className="text-[16px] font-bold ">20%</h2>}
+            {depositFull && <h2 className="text-[16px] font-bold ">100%</h2>}
+            {!depositFull && !depositPart && (
+              <h2 className="text-[16px] font-bold ">--</h2>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* final price */}
+      <div className="lg:hidden">
+        <div className="flex justify-between mb-[10px] md:mb-[20px] border-t border-b border-black/30 pt-[20px] pb-[20px]">
+          <h2 className="text-primary font-semibold text-[18px]">
+            Final Price:
+          </h2>
+          <div className="flex flex-col items-end">
+            {depositPart && (
+              <h2 className="text-[25px] font-bold ">
+                ₤ {(details.moverDetails.moverPrice * 0.2).toFixed()}
+              </h2>
+            )}
+            {depositFull && (
+              <h2 className="text-[25px] font-bold ">
+                ₤ {(details.moverDetails.moverPrice * 1).toFixed()}
+              </h2>
+            )}
+            {!depositFull && !depositPart && (
+              <h2 className="text-[25px] font-bold ">--</h2>
+            )}
           </div>
         </div>
       </div>
@@ -145,7 +214,7 @@ const CheckoutForm = ({
         </div> */}
       </div>
       {/* comment row */}
-      <div className="mt-[10px] md:mt-[30px]">
+      <div className="mt-[30px] md:mt-[30px]">
         <h1 className="text-xl font-bold mb-[20px] px-[0px]">
           Leave a comment
         </h1>
@@ -173,6 +242,9 @@ const CheckoutForm = ({
           </label>
         </div>
       </div>
+
+       {/* Payment button */}
+       <div className="btn btn-secondary btn-block mb-[30px]">Complete Check-Out</div>
 
       {/* <PaymentForm/> */}
       {/* {scriptLoaded ? (

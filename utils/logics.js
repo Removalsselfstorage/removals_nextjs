@@ -14,29 +14,16 @@ export function convertToSentenceCase(text) {
 }
 
 export function generateRandomValues() {
-  const values = [];
-  const characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-  const numbers = "0123456789";
+  const allowedChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  const length = 8;
+  let randomValue = "rs";
 
-  for (let i = 0; i < 8; i++) {
-    const randomType = Math.random() < 0.5 ? "string" : "number";
-
-    if (randomType === "string") {
-      let randomChar;
-      for (let j = 0; j < 2; j++) {
-        randomChar = characters.charAt(
-          Math.floor(Math.random() * characters.length)
-        );
-        // randomString += randomChar;
-      }
-      values.push(randomChar);
-    } else {
-      const randomNumber = Math.floor(Math.random() * 100);
-      values.push(`${randomNumber}`);
-    }
+  for (let i = 0; i < length - 2; i++) {
+    const randomIndex = Math.floor(Math.random() * allowedChars.length);
+    randomValue += allowedChars[randomIndex];
   }
 
-  return values;
+  return randomValue;
 }
 
 export function calculatePrice(

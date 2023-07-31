@@ -15,6 +15,13 @@ import { RiEyeCloseLine, RiEyeLine } from "react-icons/ri";
 import * as Yup from "yup";
 import { Form, Formik, useField } from "formik";
 import LoginInput from "@/components/LoginInput";
+import useAuth from "@/hooks/useAuth";
+import {
+  getAllUserDetails,
+  updateSignupError,
+  updateSignupMessage,
+  updateUserNames,
+} from "@/store/userSlice";
 
 // const JoinUsBox = ({ providers, csrfToken, callbackUrl }) => {
 const JoinUsBox = () => {
@@ -24,6 +31,8 @@ const JoinUsBox = () => {
 
   const details = useSelector(getAllDetails);
 
+  const userDetails = useSelector(getAllUserDetails);
+
   const initialValues = {
     signup_email: "",
     signup_password: "",
@@ -32,6 +41,8 @@ const JoinUsBox = () => {
     success: "",
     error: "",
   }; // console.log(details);
+
+  const { signIn, signUp } = useAuth();
 
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState(initialValues);
@@ -62,10 +73,32 @@ const JoinUsBox = () => {
       .max(32, `Password can't be more than 32 characters`),
   });
 
-  const signUpHandler = (values, actions) => {
-    alert(JSON.stringify(values, null, 2));
-    actions.setSubmitting(false);
+  const signUpHandler = async (values, actions) => {
+    setSubmitLoading(true);
+
+    dispatch(
+      updateUserNames({
+        firstName: values.signup_firstname,
+        lastName: values.signup_lastname,
+      })
+    );
+    // alert(JSON.stringify(values, null, 2));
+    await signUp(values.signup_email, values.signup_password);
+    setSubmitLoading(false);
+    // setSubmitLoading(false);
+    // actions.setSubmitting(false);
   };
+
+  useEffect(() => {
+    dispatch(updateSignupMessage(null));
+    dispatch(updateSignupError(null));
+  }, []);
+
+  // const buttonHandler = () => {
+  //   setShowSpinner(true)
+
+  //   setLogin(false)
+  // }
 
   return (
     <div className="card shadow-2xl bg-base-100 justify-center text-black w-full md:w-[400px]">
@@ -98,6 +131,7 @@ const JoinUsBox = () => {
                       // icon="email"
                       placeholder="First Name"
                       onChange={handleChange}
+                      value={user.signup_firstname}
                     />
                   </div>
 
@@ -108,6 +142,7 @@ const JoinUsBox = () => {
                       // icon="email"
                       placeholder="Last Name"
                       onChange={handleChange}
+                      value={user.signup_lastname}
                     />
                   </div>
                 </div>
@@ -119,6 +154,7 @@ const JoinUsBox = () => {
                     // icon="email"
                     placeholder="Email Address"
                     onChange={handleChange}
+                    value={user.signup_email}
                   />
                 </div>
                 {/* password */}
@@ -129,6 +165,7 @@ const JoinUsBox = () => {
                       name="signup_password"
                       placeholder="Password"
                       onChange={handleChange}
+                      value={user.signup_password}
                     />
                   </div>
                   <span
@@ -146,9 +183,9 @@ const JoinUsBox = () => {
                       <CircledIconBtn type="submit" text="Sign In" />
                       {error && <span className={styles.error}>{error}</span>}
                     </div> */}
-                <div className="form-control mt-6">
+                <div className="form-control mt-6 mb-[10px]">
                   <button
-                    onClick={() => {}}
+                    // onClick={() => {}}
                     type="submit"
                     className="btn btn-primary flex items-center space-x-[5px]"
                   >
@@ -158,6 +195,17 @@ const JoinUsBox = () => {
                     )}
                   </button>
                 </div>
+                {userDetails.signupError  && !userDetails.signupMessage && (
+                  <p className="text-center text-[15px] text-secondary">
+                    Email already in use
+                  </p>
+                )}
+                {userDetails.signupMessage && (
+                  <p className="text-center text-[15px] text-primary">
+                    {userDetails.signupMessage}
+                  </p>
+                )}
+
                 {/* <div className={styles.account}>
                       <Link href="/auth/forgot" className={styles.forgot}>
                         Forgot password?

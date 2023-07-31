@@ -27,7 +27,7 @@ const MoverCard = ({
   image,
   name,
   title,
-  subtitle,
+  bookSmart,
   phone,
   email,
   loadArea,
@@ -99,13 +99,13 @@ const MoverCard = ({
           {/* row 1 */}
           <div
             className={`${
-              !title
+              !bookSmart
                 ? "flex flex-col xl:flex-row xl:items-center xl:space-x-[0px] mb-[20px] xl:mb-[0px] xl:py-[10px]"
                 : "flex flex-col xl:flex-row xl:items-center xl:space-x-[0px] py-[20px] mb-[0px] xl:mb-[0px] xl:py-[30px]"
             } `}
           >
             {/* image + details */}
-            {!title && (
+            {!bookSmart && (
               <div className="flex flex-col md:flex-row md:items-center px-[20px] md:flex-[3] md:space-x-[30px] lg:space-x-[15px] mb-[20px] sm:mb-[10px] md:mb-[0px]">
                 {/* image */}
                 {image && (
@@ -187,7 +187,7 @@ const MoverCard = ({
                 </div>
               </div>
             )}
-            {title && (
+            {bookSmart && (
               <div className="flex flex-col md:flex-row md:items-center px-[20px] md:flex-[3] md:space-x-[30px] lg:space-x-[15px] mb-[20px] sm:mb-[10px] md:mb-[0px]">
                 <div className="flex flex-col w-full">
                   <h2 className="text-primary font-bold text-[22px] md:text-[25px] mb-[10px]">
@@ -207,7 +207,7 @@ const MoverCard = ({
             <div className="flex md:flex-[1] mt-[10px] md:mt-[20px] xl:mt-[0px]">
               <div
                 className={`${
-                  !title
+                  !bookSmart
                     ? "flex  space-x-[20px] md:space-x-0 justify-between w-full xl:flex-col border border-primary rounded-[20px] xl:items-center xl:justify-center md:flex-[1] py-[10px] xl:py-[20px] mx-[20px] md:mx-[30px] xl:mx-[0px] xl:mr-[30px] px-[10px] sm:px-[20px] xl:px-[0px]"
                     : "flex  space-x-[20px] md:space-x-0 justify-between w-full xl:flex-col border border-primary rounded-[20px] xl:items-center xl:justify-center md:flex-[1] py-[10px] xl:py-[30px] mx-[20px] md:mx-[30px] xl:mx-[0px] xl:mr-[30px] px-[10px] sm:px-[20px] xl:px-[0px] "
                 }`}
@@ -220,7 +220,7 @@ const MoverCard = ({
                     Final price VAT included
                   </p> */}
                 </div>
-                {!title && (
+                {!bookSmart && (
                   <div className="flex  flex-col items-center justify-center space-y-[3px] lg:space-y-0 lg:flex-row md:space-x-[10px] md:items-center md:justify-center bg-primary/10 py-[5px] px-[10px] md:px-[30px] xl:px-[20px] rounded-[10px] xl:mt-[10px]">
                     <MdWork className="text-[20px] text-primary" />
                     <p className="text-primary text-[14px] leading-[16px]">
@@ -243,7 +243,7 @@ const MoverCard = ({
           </div>
 
           {/* row 3 */}
-          {!title && (
+          {!bookSmart && (
             <div className="relative">
               <p
                 className={`${

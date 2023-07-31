@@ -32,7 +32,7 @@ import { redirect, useRouter } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
 
 const CompleteHouse = () => {
-  const {data: session} = useSession();
+  const { data: session } = useSession();
 
   const router = useRouter();
 
@@ -41,10 +41,10 @@ const CompleteHouse = () => {
 
   //   states
   const [floorCount, setFloorCount] = useState(
-    details.serviceLocation.locationFrom.floor || 0
+    details.serviceLocation.locationFrom.floor || -1
   );
   const [floorCount2, setFloorCount2] = useState(
-    details.serviceLocation.locationTo.floor || 0
+    details.serviceLocation.locationTo.floor || -1
   );
   const [lift, setLift] = useState(
     details.serviceLocation.locationFrom.liftAvailable || false
@@ -117,14 +117,14 @@ const CompleteHouse = () => {
   const date = dayjs(dateValue).format("YYYY/MM/DD");
   const date2 = dayjs(dateValue).format("dddd, MMMM D, YYYY");
 
-  const increaseFloorCount = () => {
-    setFloorCount((prev) => prev + 1);
-  };
-  const decreaseFloorCount = () => {
-    if (floorCount != 0) {
-      setFloorCount((prev) => prev - 1);
-    }
-  };
+  // const increaseFloorCount = () => {
+  //   setFloorCount((prev) => prev + 1);
+  // };
+  // const decreaseFloorCount = () => {
+  //   if (floorCount != 0) {
+  //     setFloorCount((prev) => prev - 1);
+  //   }
+  // };
   const selectDefaultValue = () => {
     const option = serviceOptions2.filter(
       (opt) => opt.value == details.moveDetails.propertyType
@@ -329,7 +329,7 @@ const CompleteHouse = () => {
                       <div className="flex items-center space-x-[5px]">
                         <div
                           onClick={() =>
-                            floorCount && setFloorCount((prev) => prev - 1)
+                            floorCount >= 0 && setFloorCount((prev) => prev - 1)
                           }
                           className="flex justify-center items-center btn btn-primary w-[50px] p-[5px] h-[50px] rounded-[5px]"
                         >
@@ -354,7 +354,7 @@ const CompleteHouse = () => {
                       </div>
                     </div>
                     {/* lift */}
-                    {floorCount > 0 && (
+                    {floorCount != 0 && (
                       <div className="flex flex-col w-full flex-[2] ">
                         <label className="label">
                           <span className="label-text font-semibold">
@@ -411,7 +411,8 @@ const CompleteHouse = () => {
                       <div className="flex items-center space-x-[5px]">
                         <div
                           onClick={() =>
-                            floorCount2 && setFloorCount2((prev) => prev - 1)
+                            floorCount2 >= 0 &&
+                            setFloorCount2((prev) => prev - 1)
                           }
                           className="flex justify-center items-center btn btn-primary w-[50px] p-[5px] h-[50px] rounded-[5px]"
                         >
@@ -436,7 +437,7 @@ const CompleteHouse = () => {
                       </div>
                     </div>
                     {/* lift */}
-                    {floorCount2 > 0 && (
+                    {floorCount2 != 0 && (
                       <div className="flex flex-col w-full flex-[2] ">
                         <label className="label">
                           <span className="label-text font-semibold">

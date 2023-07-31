@@ -172,17 +172,15 @@ const Movers = () => {
                 {!showLoader && !todayPick && (
                   <div className="mx-[10px] flex-col space-y-[20px]">
                     <MoverCard
+                      bookSmart
                       image=""
-                      title="Move smart & save money!"
-                      subtitle="Book your fixed-price move with our Smart Moving feature & we will find you the best mover according to your needs."
-                      // name={firstCard.name}
+                      name="Smart Booking"
                       phone={firstCard.phone}
                       email={firstCard.email}
                       loadArea={firstCard.loadArea}
                       rating={firstCard.rating}
                       reviewCount={firstCard.reviewCount}
-                      price={(details.moverDetails.pickPrice * 0.6).toFixed()}
-                      // price={priceThirdDay}
+                      price={(details.moverDetails.pickPrice * 0.79).toFixed()}
                       hiresCount={firstCard.hireCount}
                       description={firstCard.companyDescription}
                       score={firstCard.score}
@@ -210,7 +208,7 @@ const Movers = () => {
                           price={calculateMoverPrice(
                             details.moverDetails.pickPrice,
                             mv.score,
-                            0.05
+                            0.052
                           ).toFixed()}
                           hiresCount={mv.hireCount}
                           description={mv.companyDescription}

@@ -6,11 +6,13 @@ import { RiCustomerService2Fill } from "react-icons/ri";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import ScrollUpMenuNav from "../ScrollUpMenuNav";
+import useAuth from "@/hooks/useAuth";
 // import ScrollUpMenuNav from '../ScrollUpMenuNav';
 
 const Navbar = () => {
   const [shadow, setShadow] = useState(false);
   const [showNav, setShowNav] = useState(true);
+  const { user, logout, loading } = useAuth()
 
   useEffect(() => {
     const handleShadow = () => {

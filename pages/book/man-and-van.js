@@ -36,10 +36,10 @@ const ManAndVan = () => {
   const details = useSelector(getAllDetails);
 
   const [floorCount, setFloorCount] = useState(
-    details.serviceLocation.locationFrom.floor || 0
+    details.serviceLocation.locationFrom.floor || -1
   );
   const [floorCount2, setFloorCount2] = useState(
-    details.serviceLocation.locationTo.floor || 0
+    details.serviceLocation.locationTo.floor || -1
   );
   const [lift, setLift] = useState(
     details.serviceLocation.locationFrom.liftAvailable || false
@@ -273,22 +273,7 @@ const ManAndVan = () => {
       <main>
         <div className="mb-[70px] lg:mb-[100px] pt-[70px]">
           <div className="md:max-w-7xl mx-auto">
-            {/* links */}
-            {/* <div className="flex items-center space-x-[5px] px-[30px] text-[13px] leading-[16px] md:text-[16px]">
-              <Link href="/">
-                <p className="text-primary link link-hover font-semibold">
-                  Home
-                </p>
-              </Link>
-              <MdKeyboardArrowRight size={20} className="text-primary" />
-              <Link href="/book">
-                <p className="text-primary link link-hover font-semibold">
-                  Choose Quote Type
-                </p>
-              </Link>
-              <MdKeyboardArrowRight size={20} className="text-primary" />
-              <p className="text-primary font-semibold">Man and Van</p>
-            </div> */}
+           
 
             {/* Title */}
             <div className="w-full flex justify-center py-[30px] md:py-[40px]">
@@ -341,7 +326,7 @@ const ManAndVan = () => {
                       <div className="flex items-center space-x-[5px]">
                         <div
                           onClick={() =>
-                            floorCount && setFloorCount((prev) => prev - 1)
+                            floorCount >= 0 && setFloorCount((prev) => prev - 1)
                           }
                           className="flex justify-center items-center btn btn-primary w-[50px] p-[5px] h-[50px] rounded-[5px]"
                         >
@@ -366,7 +351,7 @@ const ManAndVan = () => {
                       </div>
                     </div>
                     {/* lift */}
-                    {floorCount > 0 && (
+                    {floorCount != 0 && (
                       <div className="flex flex-col w-full flex-[2] ">
                         <label className="label">
                           <span className="label-text font-semibold">
@@ -423,7 +408,7 @@ const ManAndVan = () => {
                       <div className="flex items-center space-x-[5px]">
                         <div
                           onClick={() =>
-                            floorCount2 && setFloorCount2((prev) => prev - 1)
+                            floorCount2 >= 0 && setFloorCount2((prev) => prev - 1)
                           }
                           className="flex justify-center items-center btn btn-primary w-[50px] p-[5px] h-[50px] rounded-[5px]"
                         >
@@ -448,7 +433,7 @@ const ManAndVan = () => {
                       </div>
                     </div>
                     {/* lift */}
-                    {floorCount2 > 0 && (
+                    {floorCount2 != 0 && (
                       <div className="flex flex-col w-full flex-[2] ">
                         <label className="label">
                           <span className="label-text font-semibold">

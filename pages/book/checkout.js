@@ -30,14 +30,6 @@ const Checkout = () => {
   // console.log(depositPart);
   // console.log(depositFull);
 
-  const partDepositOnchange = (e) => {
-    setDepositPart(e.target.checked);
-    setDepositFull(false);
-  };
-  const fullDepositOnchange = (e) => {
-    setDepositFull(e.target.checked);
-    setDepositPart(false);
-  };
   const cardOnchange = (e) => {
     setCard(e.target.checked);
     setPaypal(false);
@@ -46,6 +38,8 @@ const Checkout = () => {
     setPaypal(e.target.checked);
     setCard(false);
   };
+
+  
 
   return (
     <BookingLayout>
@@ -73,23 +67,29 @@ const Checkout = () => {
             </div>
 
             {/* checkout section*/}
-            <div className="flex flex-col space-y-[10px] lg:space-y-0 lg:flex-row lg:space-x-[10px] mx-[10px] md:mx-[20px]">
+            <div className="flex flex-col-reverse  space-y-[20px] lg:space-y-0 lg:flex-row lg:space-x-[10px] mx-[10px] md:mx-[20px]">
               {/* left section - pament form */}
-              <CheckoutForm
-                partDepositOnchange={partDepositOnchange}
-                fullDepositOnchange={fullDepositOnchange}
-                cardOnchange={cardOnchange}
-                paypalOnchange={paypalOnchange}
-                // scriptLoaded={scriptLoaded}
-              />
+              <div className="lg:flex-[1.3] w-full">
+                <CheckoutForm
+                  cardOnchange={cardOnchange}
+                  paypalOnchange={paypalOnchange}
+                  depositFull={depositFull}
+                  depositPart={depositPart}
+                  setDepositFull={setDepositFull}
+                  setDepositPart={setDepositPart}
+                  // scriptLoaded={scriptLoaded}
+                />
+              </div>
 
               {/* right section - Move summary */}
-              <div className="lg:flex-[1.3] w-full">
+              <div className="lg:flex-[1] w-full ">
                 <SummaryDetails
                   card={card}
                   paypal={paypal}
                   depositFull={depositFull}
                   depositPart={depositPart}
+                  setDepositFull={setDepositFull}
+                  setDepositPart={setDepositPart}
                 />
               </div>
             </div>

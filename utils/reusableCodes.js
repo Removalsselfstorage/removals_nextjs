@@ -287,3 +287,72 @@ const allDatePrice = [
   { id: 'Sat, sept 16', date: 'Sat, sept 16', price: '443.68' },
   { id: 'Sun, sept 17', date: 'Sun, sept 17', price: '451.63' },
 ];
+
+
+
+
+// nextauth
+// import NextAuth from "next-auth";
+// import CredentialsProvider from "next-auth/providers/credentials";
+// import { signInWithEmailAndPassword } from "firebase/auth";
+// import { auth } from "@/firebase";
+
+// export const authOptions = {
+//   providers: [
+//     CredentialsProvider({
+//       name: "Credentials",
+//       credentials: {},
+//       async authorize(credentials) {
+//         return await signInWithEmailAndPassword(
+//           auth,
+//           credentials.email || "",
+//           credentials.password || ""
+//         )
+//           .then((userCredential) => {
+//             if (userCredential.user) {
+//               return userCredential.user;
+//             }
+//             return null;
+//           })
+//           .catch((error) => console.log(error));
+//       },
+//     }),
+//   ],
+
+//   //   secret: process.env.NEXTAUTH_SECRET,
+
+//   pages: {
+//     signIn: "/mover-login",
+//   },
+
+// //   callbacks: {
+// //     async session({ session, token, user }) {
+// //       session.user.username = session.user.name
+// //         .split(" ")
+// //         .join(" ")
+// //         .toLocaleLowerCase();
+// //       session.user.uid = token.sub;
+// //       return session;
+// //     },
+// //   },
+// };
+
+// export default NextAuth(authOptions);
+
+
+ {/* links */}
+            {/* <div className="flex items-center space-x-[5px] px-[30px] text-[13px] leading-[16px] md:text-[16px]">
+              <Link href="/">
+                <p className="text-primary link link-hover font-semibold">
+                  Home
+                </p>
+              </Link>
+              <MdKeyboardArrowRight size={20} className="text-primary" />
+              <Link href="/book">
+                <p className="text-primary link link-hover font-semibold">
+                  Choose Quote Type
+                </p>
+              </Link>
+              <MdKeyboardArrowRight size={20} className="text-primary" />
+              <p className="text-primary font-semibold">Man and Van</p>
+            </div> */}

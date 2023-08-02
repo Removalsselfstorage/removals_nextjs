@@ -125,7 +125,7 @@ const Navbar = () => {
                       </label>
                       <ul
                         tabIndex={0}
-                        className="dropdown-content z-[1] menu py-[20px] px-[10px] shadow bg-base-100 rounded-box w-[250px] text-[16px]"
+                        className="dropdown-content z-[1] menu py-[20px] px-[10px] shadow-xl bg-base-100 rounded-box w-[250px] text-[16px]"
                       >
                         <li>
                           <a className="btn-nav">Home Removals</a>
@@ -180,10 +180,10 @@ const Navbar = () => {
                   )}
                   {users.userDetails && (
                     <ul className="menu menu-horizontal  px-1 text-[16px] hidden lg:flex">
-                      <li className="dropdown dropdown-hover dropdown-end group">
+                      <li className="dropdown dropdown-hover dropdown-end">
                         <label
                           tabIndex={0}
-                          className="flex items-center justify-center bg-primary h-[40px] w-[40px] rounded-full btn-nav"
+                          className="flex items-center justify-center bg-primary h-[40px] w-[40px] hover:bg-primary/50 rounded-full"
                         >
                           <p className="text-white font-bold">
                             {trimToFirstLetter(users.userDetails?.email)}
@@ -191,7 +191,7 @@ const Navbar = () => {
                         </label>
                         <ul
                           tabIndex={0}
-                          className="dropdown-content z-[1] menu py-[20px] px-[10px] shadow bg-base-100 rounded-box w-[250px] text-[16px]"
+                          className="dropdown-content z-[1] menu py-[20px] px-[10px]  bg-base-100 rounded-box w-[250px] text-[16px] shadow-xl"
                         >
                           <li>
                             <a className="btn-nav">My Profile</a>

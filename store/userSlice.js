@@ -10,6 +10,7 @@ const initialState = {
     firstName: "",
     lastName: "",
   },
+  showModal: false,
 };
 
 export const userSlice = createSlice({
@@ -33,6 +34,9 @@ export const userSlice = createSlice({
     },
     updateSignupMessage: (state, action) => {
       state.signupMessage = action.payload;
+    },
+    toggleShowModal: (state, action) => {
+      state.showModal = !state.showModal;
     },
   },
 });

@@ -14,9 +14,11 @@ import HowItWorks from "@/components/HomePage/HowItWorks";
 import NormalLayout from "@/layouts/NormalLayout";
 import { getAllUserDetails } from "@/store/userSlice";
 import { useSelector } from "react-redux";
+import MuiModal from "@/components/Modal/MuiModal";
+import { useState } from "react";
 
 export default function Home() {
-  
+  const [open, setOpen] = useState(false);
 
   return (
     <NormalLayout>
@@ -31,6 +33,10 @@ export default function Home() {
       <main className="">
         <Hero />
         <Features />
+        {/* <MuiModal open={open} setOpen={setOpen}>
+          <p className="text-2xl font-bold text-black">Hello World</p>
+        </MuiModal>
+        <button onClick={()=> setOpen(true)}>Open Modal</button> */}
         <OurServices />
         <HowItWorks />
         <WhyChooseUs />

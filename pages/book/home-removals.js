@@ -41,10 +41,10 @@ const CompleteHouse = () => {
 
   //   states
   const [floorCount, setFloorCount] = useState(
-    details.serviceLocation.locationFrom.floor || -1
+    details.serviceLocation.locationFrom.floor || 0
   );
   const [floorCount2, setFloorCount2] = useState(
-    details.serviceLocation.locationTo.floor || -1
+    details.serviceLocation.locationTo.floor || 0
   );
   const [lift, setLift] = useState(
     details.serviceLocation.locationFrom.liftAvailable || false

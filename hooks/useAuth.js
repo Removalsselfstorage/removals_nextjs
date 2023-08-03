@@ -96,7 +96,6 @@ export const AuthProvider = ({ children }) => {
       await sendEmailVerification(user);
       // updateVerificationMessage("Email verification link sent");
     } catch (error) {
-      // setError(error.message);
       console.log(error);
     }
   };

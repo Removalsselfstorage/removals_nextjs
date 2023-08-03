@@ -22,6 +22,7 @@ import {
   updateSignupMessage,
   updateUserNames,
 } from "@/store/userSlice";
+import toast, { Toaster } from "react-hot-toast";
 
 // const JoinUsBox = ({ providers, csrfToken, callbackUrl }) => {
 const JoinUsBox = () => {
@@ -74,6 +75,16 @@ const JoinUsBox = () => {
       .max(32, `Password can't be more than 32 characters`),
   });
 
+  const toastStyle = {
+    background: "white",
+    color: "black",
+    fontWeight: "bold",
+    fontSize: "16px",
+    padding: "15px",
+    borderRadius: "9999px",
+    maxWidth: "1000px",
+  };
+
   const signUpHandler = async (values, actions) => {
     setSubmitLoading(true);
 
@@ -96,6 +107,16 @@ const JoinUsBox = () => {
       signup_lastname: "",
     });
     setSubmitLoading(false);
+
+    // toast(
+    //   `
+    //   ${userDetails.signupError && "Email does exist"}
+    //   ${userDetails.signupMessage && "Signup was successful"}`,
+    //   {
+    //     duration: 8000,
+    //     style: toastStyle,
+    //   }
+    // );
     // setSubmitLoading(false);
     // actions.setSubmitting(false);
   };
@@ -113,6 +134,7 @@ const JoinUsBox = () => {
 
   return (
     <div className="card shadow-2xl bg-base-100 justify-center text-black w-full md:w-[400px]">
+      {/* <Toaster position="bottom-center" /> */}
       <div className="card-body ">
         <h3 className="text-2xl font-extrabold text-primary uppercase mt-[0px] mb-[20px] text-center">
           Join us for free!

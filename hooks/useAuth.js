@@ -5,6 +5,7 @@ import {
   signOut,
   sendPasswordResetEmail,
   User,
+  sendEmailVerification,
 } from "firebase/auth";
 
 import { useRouter } from "next/router";
@@ -23,7 +24,10 @@ import {
   updateSignupMessage,
   updatePasswordResetMessage,
   updatePasswordResetError,
+  updateVerificationMessage,
 } from "@/store/userSlice";
+import toast, { Toaster } from "react-hot-toast";
+import { colors } from "@/utils/theme";
 
 const AuthContext = createContext({
   user: null,
@@ -40,6 +44,25 @@ export const AuthProvider = ({ children }) => {
   const dispatch = useDispatch();
 
   const userDetails = useSelector(getAllUserDetails);
+
+  const toastStyle1 = {
+    background: "white",
+    color: colors.primary,
+    fontWeight: "bold",
+    fontSize: "16px",
+    padding: "15px",
+    borderRadius: "9999px",
+    maxWidth: "1000px",
+  };
+  const toastStyle2 = {
+    background: "white",
+    color: colors.secondary,
+    fontWeight: "bold",
+    fontSize: "16px",
+    padding: "15px",
+    borderRadius: "9999px",
+    maxWidth: "1000px",
+  };
 
   const [user, setUser] = useState(null);
   const [error, setError] = useState(null);
@@ -67,6 +90,16 @@ export const AuthProvider = ({ children }) => {
       }),
     [auth]
   );
+
+  const emailConfirmation = async (user) => {
+    try {
+      await sendEmailVerification(user);
+      // updateVerificationMessage("Email verification link sent");
+    } catch (error) {
+      // setError(error.message);
+      console.log(error);
+    }
+  };
 
   // useEffect(() => {
   //   setInitialLoading(true);
@@ -115,6 +148,11 @@ export const AuthProvider = ({ children }) => {
       setUser(userCredential.user);
       dispatch(updateUserDetails(userCredential.user));
       dispatch(updateSignupMessage("Registration successful"));
+      // toast(`Registration successful`, {
+      //   duration: 8000,
+      //   style: toastStyle1,
+      // });
+      emailConfirmation(userCredential.user);
 
       // Delay the router push by 3 seconds
       setTimeout(() => {
@@ -125,6 +163,10 @@ export const AuthProvider = ({ children }) => {
     } catch (error) {
       setError(error.message);
       dispatch(updateSignupError(error.message));
+      // toast(`Email already in use`, {
+      //   duration: 8000,
+      //   style: toastStyle2,
+      // });
       setLoading(false);
     }
   };
@@ -153,13 +195,23 @@ export const AuthProvider = ({ children }) => {
         email,
         password
       );
-      setUser(userCredential.user);
-      dispatch(updateUserDetails(userCredential.user));
-
-      // Delay the router push by 3 seconds
-      setTimeout(() => {
+      if (userCredential.user.emailVerified) {
+        setUser(userCredential.user);
+        dispatch(updateUserDetails(userCredential.user));
         router.push("/");
-      }, 0);
+      } else {
+        setUser(userCredential.user);
+        dispatch(
+          updateVerificationMessage(
+            "Please verify your email via link sent to your mail, to login."
+          )
+        );
+      }
+
+      // // Delay the router push by 3 seconds
+      // setTimeout(() => {
+      //   router.push("/");
+      // }, 0);
 
       // setLoading(false);
     } catch (error) {
@@ -167,6 +219,10 @@ export const AuthProvider = ({ children }) => {
       dispatch(updateLoginError(error.message));
       setLoading(false);
     }
+  };
+
+  const resendEmailVerification = () => {
+    emailConfirmation(user);
   };
 
   // const logout = async () => {
@@ -189,9 +245,11 @@ export const AuthProvider = ({ children }) => {
 
     try {
       await signOut(auth);
-      setUser(null);
-      dispatch(updateUserDetails(null));
       router.push("/mover-login");
+      setTimeout(() => {
+        setUser(null);
+        dispatch(updateUserDetails(null));
+      }, 2000);
     } catch (error) {
       setError(error.message);
       dispatch(updateLoginError(error.message));
@@ -218,7 +276,16 @@ export const AuthProvider = ({ children }) => {
   };
 
   const memoedValue = useMemo(
-    () => ({ user, signUp, signIn, error, loading, logout, forgotPassword }),
+    () => ({
+      user,
+      signUp,
+      signIn,
+      error,
+      loading,
+      logout,
+      forgotPassword,
+      resendEmailVerification,
+    }),
     [user, loading, error]
   );
 

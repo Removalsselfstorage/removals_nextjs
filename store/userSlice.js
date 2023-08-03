@@ -6,6 +6,7 @@ const initialState = {
   signupMessage: null,
   passwordResetMessage: null,
   passwordResetError: null,
+  verificationMessage: null,
   logoutError: null,
   userDetails: null,
   userNames: {
@@ -43,6 +44,9 @@ export const userSlice = createSlice({
     updatePasswordResetError: (state, action) => {
       state.passwordResetError = action.payload;
     },
+    updateVerificationMessage: (state, action) => {
+      state.verificationMessage = action.payload;
+    },
     toggleShowModal: (state, action) => {
       state.showModal = !state.showModal;
     },
@@ -57,7 +61,8 @@ export const {
   updateLogoutError,
   updateSignupMessage,
   updatePasswordResetMessage,
-  updatePasswordResetError
+  updatePasswordResetError,
+  updateVerificationMessage,
 } = userSlice.actions;
 
 export const getAllUserDetails = (state) => state.user;

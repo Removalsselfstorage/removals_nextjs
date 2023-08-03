@@ -28,6 +28,7 @@ import {
   updateUserNames,
 } from "@/store/userSlice";
 import useAuth from "@/hooks/useAuth";
+import toast, { Toaster } from "react-hot-toast";
 
 // const Login = ({ providers, csrfToken, callbackUrl }) => {
 const LoginReset = () => {
@@ -61,6 +62,16 @@ const LoginReset = () => {
       .required("Email address is required"),
   });
 
+  const toastStyle = {
+    background: "white",
+    color: "black",
+    fontWeight: "bold",
+    fontSize: "16px",
+    padding: "15px",
+    borderRadius: "9999px",
+    maxWidth: "1000px",
+  };
+
   const resetHandler = async (values, actions) => {
     setSubmitLoading(true);
     dispatch(updatePasswordResetError(null));
@@ -68,6 +79,10 @@ const LoginReset = () => {
     // alert(JSON.stringify(values, null, 2));
 
     await forgotPassword(values.reset_email);
+    // toast(`A Reset link has been sent to your email`, {
+    //   duration: 4000,
+    //   style: toastStyle,
+    // });
     setUser({ ...user, reset_email: "" });
     setSubmitLoading(false);
     // actions.setSubmitting(false);
@@ -97,6 +112,7 @@ const LoginReset = () => {
           backgroundRepeat: "no-repeat",
         }}
       >
+        {/* <Toaster position="bottom-center" /> */}
         <div className="card shadow-2xl bg-base-100 justify-center text-black w-full md:w-[400px] mx-[20px] px-[20px] pt-[10px] pb-[30px]">
           <div className="card-body ">
             <h3 className="text-2xl font-extrabold text-primary uppercase mt-[0px] mb-[0px] text-center">

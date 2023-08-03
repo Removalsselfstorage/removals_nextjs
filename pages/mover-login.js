@@ -24,8 +24,10 @@ import {
   getAllUserDetails,
   updateLoginError,
   updateUserNames,
+  updateVerificationMessage,
 } from "@/store/userSlice";
 import useAuth from "@/hooks/useAuth";
+import toast, { Toaster } from "react-hot-toast";
 
 // const Login = ({ providers, csrfToken, callbackUrl }) => {
 const MoverLogin = () => {
@@ -44,11 +46,12 @@ const MoverLogin = () => {
   };
 
   // const [field, meta] = useField(props);
-  const { signIn, signUp } = useAuth();
+  const { signIn, signUp, resendEmailVerification } = useAuth();
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState(initialValues);
   const [showPassword, setShowPassword] = useState(false);
   const [submitLoading, setSubmitLoading] = useState(false);
+  const [showResendMessage, setShowResendMessage] = useState(false);
   const { login_email, login_password, success, error } = user;
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -66,7 +69,9 @@ const MoverLogin = () => {
 
   const signInHandler = async (values, actions) => {
     setSubmitLoading(true);
+    setShowResendMessage(false)
     dispatch(updateLoginError(null));
+    dispatch(updateVerificationMessage(null));
 
     await signIn(values.login_email, values.login_password);
     setUser({
@@ -78,8 +83,19 @@ const MoverLogin = () => {
     // actions.setSubmitting(false);
   };
 
+  const resendLinkHandler = async () => {
+    setSubmitLoading(true);
+
+    dispatch(updateLoginError(null));
+    dispatch(updateVerificationMessage(null));
+    await resendEmailVerification();
+    setSubmitLoading(false);
+    setShowResendMessage(true);
+  };
+
   useEffect(() => {
     dispatch(updateLoginError(null));
+    dispatch(updateVerificationMessage(null));
     // dispatch(updateSignupError(null));
   }, []);
 
@@ -187,6 +203,26 @@ const MoverLogin = () => {
                         )}
                       </button>
                     </div>
+
+                    {userDetails.verificationMessage && (
+                      <p className="text-center text-[15px] text-primary">
+                        {userDetails.verificationMessage}{" "}
+                        <span
+                          className="font-bold cursor-pointer"
+                          onClick={() => {
+                            resendLinkHandler();
+                          }}
+                        >
+                          Resend link?
+                        </span>
+                      </p>
+                    )}
+
+                    {showResendMessage && (
+                      <p className="text-center text-[15px] text-primary">
+                        Email verification link sent
+                      </p>
+                    )}
 
                     {userDetails.loginError && (
                       <p className="text-center text-[15px] text-secondary">

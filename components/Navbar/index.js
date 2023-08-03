@@ -20,7 +20,7 @@ const Navbar = () => {
   const users = useSelector(getAllUserDetails);
 
   console.log(user);
-  console.log(users.userDetails?.email);
+  // console.log(users.userDetails?.email);
 
   useEffect(() => {
     const handleShadow = () => {

@@ -48,6 +48,7 @@ const JoinUsBox = () => {
   const [user, setUser] = useState(initialValues);
   const [showPassword, setShowPassword] = useState(false);
   const [submitLoading, setSubmitLoading] = useState(false);
+  const [showError, setShowError] = useState(false);
   const {
     signup_email,
     signup_password,
@@ -76,6 +77,9 @@ const JoinUsBox = () => {
   const signUpHandler = async (values, actions) => {
     setSubmitLoading(true);
 
+    dispatch(updateSignupMessage(null));
+    dispatch(updateSignupError(null));
+
     dispatch(
       updateUserNames({
         firstName: values.signup_firstname,
@@ -84,6 +88,13 @@ const JoinUsBox = () => {
     );
     // alert(JSON.stringify(values, null, 2));
     await signUp(values.signup_email, values.signup_password);
+    setUser({
+      ...user,
+      signup_email: "",
+      signup_password: "",
+      signup_firstname: "",
+      signup_lastname: "",
+    });
     setSubmitLoading(false);
     // setSubmitLoading(false);
     // actions.setSubmitting(false);
@@ -131,7 +142,7 @@ const JoinUsBox = () => {
                       // icon="email"
                       placeholder="First Name"
                       onChange={handleChange}
-                      value={user.signup_firstname}
+                      value={signup_firstname}
                     />
                   </div>
 
@@ -142,35 +153,36 @@ const JoinUsBox = () => {
                       // icon="email"
                       placeholder="Last Name"
                       onChange={handleChange}
-                      value={user.signup_lastname}
+                      value={signup_lastname}
                     />
                   </div>
                 </div>
                 {/* email */}
                 <div className="mb-[10px]">
                   <LoginInput
-                    type="text"
+                    type="email"
                     name="signup_email"
                     // icon="email"
                     placeholder="Email Address"
                     onChange={handleChange}
-                    value={user.signup_email}
+                    value={signup_email}
                   />
                 </div>
                 {/* password */}
-                <div className="w-full flex  justify-between mb-[10px]">
+                <div className="w-full flex  justify-between mb-[10px] relative">
                   <div className="w-full">
                     <LoginInput
                       type={showPassword ? "text" : "password"}
                       name="signup_password"
                       placeholder="Password"
                       onChange={handleChange}
-                      value={user.signup_password}
+                      value={signup_password}
+                      password
                     />
                   </div>
                   <span
                     onClick={() => setShowPassword(!showPassword)}
-                    className="pl-[10px] cursor-pointer pt-[10px]"
+                    className="pl-[10px] cursor-pointer pt-[10px] absolute right-[10px]"
                   >
                     {showPassword ? (
                       <RiEyeCloseLine className="text-primary text-[20px]" />
@@ -195,7 +207,7 @@ const JoinUsBox = () => {
                     )}
                   </button>
                 </div>
-                {userDetails.signupError  && !userDetails.signupMessage && (
+                {userDetails.signupError && !userDetails.signupMessage && (
                   <p className="text-center text-[15px] text-secondary">
                     Email already in use
                   </p>

@@ -3,6 +3,7 @@ import {
   onAuthStateChanged,
   signInWithEmailAndPassword,
   signOut,
+  sendPasswordResetEmail,
   User,
 } from "firebase/auth";
 
@@ -20,6 +21,8 @@ import {
   updateLogoutError,
   updateUserNames,
   updateSignupMessage,
+  updatePasswordResetMessage,
+  updatePasswordResetError,
 } from "@/store/userSlice";
 
 const AuthContext = createContext({
@@ -40,10 +43,8 @@ export const AuthProvider = ({ children }) => {
 
   const [user, setUser] = useState(null);
   const [error, setError] = useState(null);
-  const [initialLoading, setInitialLoading] = useState(true);
+  const [initialLoading, setInitialLoading] = useState();
   const [loading, setLoading] = useState(false);
-  // const [loginError, setLoginError] = useRecoilState(loginErrorState);
-  // const [signupError, setSignupError] = useRecoilState(signupErrorState);
 
   useEffect(
     () =>
@@ -60,11 +61,29 @@ export const AuthProvider = ({ children }) => {
           // setLoading(true);
           // router.push("/login");
         }
+        // setError("");
 
         setInitialLoading(false);
       }),
     [auth]
   );
+
+  // useEffect(() => {
+  //   setInitialLoading(true);
+  //   const unsubscribe = onAuthStateChanged(auth, (user) => {
+  //     if (user) {
+  //       // Logged in...
+  //       setUser(user);
+  //       dispatch(updateUserDetails(user));
+  //     } else {
+  //       // Not logged in...
+  //       setUser(null);
+  //     }
+  //     setError("");
+  //     setInitialLoading(false);
+  //   });
+  //   return unsubscribe;
+  // }, [auth]);
 
   // const signUp = async (email, password) => {
   //   setLoading(true);
@@ -181,8 +200,25 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const forgotPassword = async (email) => {
+    setLoading(true);
+
+    try {
+      await sendPasswordResetEmail(auth, email);
+      dispatch(updatePasswordResetMessage("Password reset link has been sent"));
+      // setUser(null);
+      // dispatch(updateUserDetails(null));
+      // router.push("/mover-login");
+    } catch (error) {
+      setError(error.message);
+      dispatch(updatePasswordResetError(error.message));
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const memoedValue = useMemo(
-    () => ({ user, signUp, signIn, error, loading, logout }),
+    () => ({ user, signUp, signIn, error, loading, logout, forgotPassword }),
     [user, loading, error]
   );
 

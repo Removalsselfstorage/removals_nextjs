@@ -66,14 +66,14 @@ const MoverLogin = () => {
 
   const signInHandler = async (values, actions) => {
     setSubmitLoading(true);
-    // alert(JSON.stringify(values, null, 2));
-    dispatch(
-      updateUserNames({
-        firstName: values.login_email,
-        lastName: values.login_lastname,
-      })
-    );
+    dispatch(updateLoginError(null));
+
     await signIn(values.login_email, values.login_password);
+    setUser({
+      ...user,
+      login_email: "",
+      login_password: "",
+    });
     setSubmitLoading(false);
     // actions.setSubmitting(false);
   };
@@ -116,7 +116,8 @@ const MoverLogin = () => {
                 }}
               >
                 {(form) => (
-                  <Form method="post" action="/api/auth/signin/email">
+                  // <Form method="post" action="/api/auth/signin/email">
+                  <Form method="post">
                     {/* <input
                       type="hidden"
                       name="csrfToken"
@@ -125,7 +126,7 @@ const MoverLogin = () => {
                     {/* email */}
                     <div className="mb-[10px]">
                       <LoginInput
-                        type="text"
+                        type="email"
                         name="login_email"
                         // icon="email"
                         placeholder="Email Address"
@@ -142,19 +143,21 @@ const MoverLogin = () => {
                         onChange={handleChange}
                       />
                     </div> */}
-                    <div className="w-full flex  justify-between mb-[10px]">
-                      <div className="w-full">
+                    <div className="w-full flex  justify-between mb-[0px] relative">
+                      <div className="w-full ">
                         <LoginInput
                           type={showPassword ? "text" : "password"}
                           name="login_password"
                           placeholder="Password"
                           onChange={handleChange}
                           value={user.login_password}
+                          password
+                          // className="form-control'
                         />
                       </div>
                       <span
                         onClick={() => setShowPassword(!showPassword)}
-                        className="pl-[10px] cursor-pointer pt-[10px]"
+                        className="pl-[0px] cursor-pointer pt-[10px] absolute right-[10px]"
                       >
                         {showPassword ? (
                           <RiEyeCloseLine className="text-primary text-[20px]" />
@@ -163,6 +166,11 @@ const MoverLogin = () => {
                         )}
                       </span>
                     </div>
+                    <Link href="/login-reset">
+                      <p className="text-primary font-bold text-[15px] cursor-pointer">
+                        Forgot password?
+                      </p>
+                    </Link>
                     {/* <div className={styles.button}>
                       <CircledIconBtn type="submit" text="Sign In" />
                       {error && <span className={styles.error}>{error}</span>}

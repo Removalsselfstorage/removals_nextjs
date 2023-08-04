@@ -10,8 +10,6 @@ import {
 
 import { useRouter } from "next/router";
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
-// import { useRecoilState } from 'recoil'
-// import { modalState, movieState, loginErrorState, signupErrorState } from '../atoms/modalAtom.'
 import { auth } from "@/firebase";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -26,8 +24,6 @@ import {
   updatePasswordResetError,
   updateVerificationMessage,
 } from "@/store/userSlice";
-import toast, { Toaster } from "react-hot-toast";
-import { colors } from "@/utils/theme";
 
 const AuthContext = createContext({
   user: null,
@@ -47,29 +43,7 @@ export const AuthProvider = ({ children }) => {
 
   const { userDetails } = useSelector(getAllUserDetails);
 
-  // const users = userDetails.
-
-  const toastStyle1 = {
-    background: "white",
-    color: colors.primary,
-    fontWeight: "bold",
-    fontSize: "16px",
-    padding: "15px",
-    borderRadius: "9999px",
-    maxWidth: "1000px",
-  };
-  const toastStyle2 = {
-    background: "white",
-    color: colors.secondary,
-    fontWeight: "bold",
-    fontSize: "16px",
-    padding: "15px",
-    borderRadius: "9999px",
-    maxWidth: "1000px",
-  };
-
   const [user, setUser] = useState(null);
-  // const [user2, setUser2] = useState(null);
   const [error, setError] = useState(null);
   const [initialLoading, setInitialLoading] = useState();
   const [loading, setLoading] = useState(false);
@@ -106,41 +80,6 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // useEffect(() => {
-  //   setInitialLoading(true);
-  //   const unsubscribe = onAuthStateChanged(auth, (user) => {
-  //     if (user) {
-  //       // Logged in...
-  //       setUser(user);
-  //       dispatch(updateUserDetails(user));
-  //     } else {
-  //       // Not logged in...
-  //       setUser(null);
-  //     }
-  //     setError("");
-  //     setInitialLoading(false);
-  //   });
-  //   return unsubscribe;
-  // }, [auth]);
-
-  // const signUp = async (email, password) => {
-  //   setLoading(true);
-
-  //   await createUserWithEmailAndPassword(auth, email, password)
-  //     .then((userCredential) => {
-  //       setUser(userCredential.user);
-  //       dispatch(updateUserDetails(userCredential.user));
-  //       dispatch(updateSignupMessage("Registration successful"));
-  //       router.push("/mover-login");
-  //       setLoading(false);
-  //     })
-  //     .catch((error) => {
-  //       // setSignupError(error.message)
-  //       setError(error.message);
-  //       dispatch(updateSignupError(error.message));
-  //     })
-  //     .finally(() => setLoading(false));
-  // };
   const signUp = async (email, password) => {
     setLoading(true);
 
@@ -176,21 +115,6 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // const signIn = async (email, password) => {
-  //   setLoading(true);
-  //   await signInWithEmailAndPassword(auth, email, password)
-  //     .then((userCredential) => {
-  //       setUser(userCredential.user);
-  //       dispatch(updateUserDetails(userCredential.user));
-  //       router.push("/");
-  //       setLoading(false);
-  //     })
-  //     .catch((error) => {
-  //       setError(error.message);
-  //       dispatch(updateLoginError(error.message));
-  //     })
-  //     .finally(() => setLoading(false));
-  // };
   const signIn = async (email, password) => {
     setLoading(true);
 
@@ -222,21 +146,6 @@ export const AuthProvider = ({ children }) => {
   const resendEmailVerification = () => {
     emailConfirmation(user);
   };
-
-  // const logout = async () => {
-  //   setLoading(true);
-
-  //   signOut(auth)
-  //     .then(() => {
-  //       setUser(null);
-  //       dispatch(updateUserDetails(null));
-  //     })
-  //     .catch((error) => {
-  //       setError(error.message);
-  //       dispatch(updateLoginError(error.message));
-  //     })
-  //     .finally(() => setLoading(false));
-  // };
 
   const logout = async () => {
     setLoading(true);

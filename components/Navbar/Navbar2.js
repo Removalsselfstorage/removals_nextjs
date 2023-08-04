@@ -6,8 +6,13 @@ import { RiCustomerService2Fill } from "react-icons/ri";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import ScrollUpMenuNav from "../ScrollUpMenuNav";
+import useAuth from "@/hooks/useAuth";
+import { getAllUserDetails } from "@/store/userSlice";
+import { useSelector } from "react-redux";
 
 const Navbar2 = () => {
+  const { user, logout, loading } = useAuth();
+  const users = useSelector(getAllUserDetails);
   return (
     <>
       <div
@@ -95,15 +100,37 @@ const Navbar2 = () => {
                   <li>
                     <a className="btn-nav">Contact Us</a>
                   </li>
-                  <li className="border-b-[2px] pb-[10px]">
+                  {/* <li className="border-b-[2px] pb-[10px]">
                     <a className="btn-nav">Blog</a>
-                  </li>
-                  <li>
-                    <a className="btn-nav">Become a Mover</a>
-                  </li>
-                  <li>
-                    <a className="btn-nav">Mover Login</a>
-                  </li>
+                  </li> */}
+                  {!users.userDetails && (
+                    <li>
+                      <Link href="/join-us" className="btn-nav">
+                        Become a Mover
+                      </Link>
+                    </li>
+                  )}
+                  {!users.userDetails && (
+                    <li>
+                      <Link href="/mover-login" className="btn-nav">
+                        Mover Login
+                      </Link>
+                    </li>
+                  )}
+                  {users.userDetails && (
+                    <li>
+                      <a className="btn-nav">My Profile</a>
+                    </li>
+                  )}
+                  {users.userDetails && (
+                    <li
+                      onClick={() => {
+                        logout();
+                      }}
+                    >
+                      <a className="btn-nav">Log Out</a>
+                    </li>
+                  )}
                 </ul>
               </div>
             </div>

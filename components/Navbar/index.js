@@ -276,9 +276,9 @@ const Navbar = () => {
                   <li>
                     <a className="btn-nav">Contact Us</a>
                   </li>
-                  <li className="border-b-[2px] pb-[10px]">
+                  {/* <li className="border-b-[2px] pb-[10px]">
                     <a className="btn-nav">Blog</a>
-                  </li>
+                  </li> */}
                   {!users.userDetails && (
                     <li>
                       <Link href="/join-us" className="btn-nav">

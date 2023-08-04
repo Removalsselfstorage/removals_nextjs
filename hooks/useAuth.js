@@ -192,7 +192,6 @@ export const AuthProvider = ({ children }) => {
   //     .finally(() => setLoading(false));
   // };
   const signIn = async (email, password) => {
-    
     setLoading(true);
 
     try {
@@ -206,7 +205,7 @@ export const AuthProvider = ({ children }) => {
         dispatch(updateUserDetails(userCredential.user));
         router.push("/");
       } else {
-        // setUser(userCredential.user);
+        setUser(userCredential.user);
         dispatch(
           updateVerificationMessage(
             "Please verify your email via link sent to your mail, to login."

@@ -19,7 +19,7 @@ const Navbar = () => {
 
   const users = useSelector(getAllUserDetails);
 
-  console.log(user);
+  console.log(users);
   // console.log(users.userDetails?.email);
 
   useEffect(() => {

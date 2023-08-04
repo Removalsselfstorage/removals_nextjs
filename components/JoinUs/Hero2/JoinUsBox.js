@@ -48,11 +48,13 @@ const JoinUsBox = () => {
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState(initialValues);
   const [showPassword, setShowPassword] = useState(false);
+  const [showPassword2, setShowPassword2] = useState(false);
   const [submitLoading, setSubmitLoading] = useState(false);
   const [showError, setShowError] = useState(false);
   const {
     signup_email,
     signup_password,
+    signup_passwordConfirm,
     signup_firstname,
     signup_lastname,
     success,
@@ -73,6 +75,9 @@ const JoinUsBox = () => {
       .required("Please enter a password")
       .min(8, "Password must be at least 8 characters")
       .max(32, `Password can't be more than 32 characters`),
+    signup_passwordConfirm: Yup.string()
+      .required("Please confirm your password")
+      .oneOf([Yup.ref("signup_password")], `Password doesn't match`),
   });
 
   const toastStyle = {
@@ -103,6 +108,7 @@ const JoinUsBox = () => {
       ...user,
       signup_email: "",
       signup_password: "",
+      signup_passwordConfirm: "",
       signup_firstname: "",
       signup_lastname: "",
     });
@@ -213,10 +219,32 @@ const JoinUsBox = () => {
                     )}
                   </span>
                 </div>
-                {/* <div className={styles.button}>
-                      <CircledIconBtn type="submit" text="Sign In" />
-                      {error && <span className={styles.error}>{error}</span>}
-                    </div> */}
+
+                {/*confirm password */}
+                <div className="w-full flex  justify-between mb-[10px] relative">
+                  <div className="w-full">
+                    <LoginInput
+                      type={showPassword2 ? "text" : "password"}
+                      name="signup_passwordConfirm"
+                      placeholder="Confirm Password"
+                      onChange={handleChange}
+                      value={signup_passwordConfirm}
+                      password
+                    />
+                  </div>
+                  <span
+                    onClick={() => setShowPassword2(!showPassword2)}
+                    className="pl-[10px] cursor-pointer pt-[10px] absolute right-[10px]"
+                  >
+                    {showPassword2 ? (
+                      <RiEyeCloseLine className="text-primary text-[20px]" />
+                    ) : (
+                      <RiEyeLine className="text-primary text-[20px]" />
+                    )}
+                  </span>
+                </div>
+
+                {/* register button */}
                 <div className="form-control mt-6 mb-[10px]">
                   <button
                     // onClick={() => {}}

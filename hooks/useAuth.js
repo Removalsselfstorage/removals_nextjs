@@ -34,6 +34,8 @@ const AuthContext = createContext({
   signUp: async () => {},
   signIn: async () => {},
   logout: async () => {},
+  forgotPassword: async () => {},
+  resendEmailVerification: async () => {},
   error: null,
   loading: false,
 });
@@ -43,7 +45,9 @@ export const AuthProvider = ({ children }) => {
 
   const dispatch = useDispatch();
 
-  const userDetails = useSelector(getAllUserDetails);
+  const { userDetails } = useSelector(getAllUserDetails);
+
+  // const users = userDetails.
 
   const toastStyle1 = {
     background: "white",
@@ -65,21 +69,23 @@ export const AuthProvider = ({ children }) => {
   };
 
   const [user, setUser] = useState(null);
+  // const [user2, setUser2] = useState(null);
   const [error, setError] = useState(null);
   const [initialLoading, setInitialLoading] = useState();
   const [loading, setLoading] = useState(false);
 
   useEffect(
     () =>
-      onAuthStateChanged(auth, (user) => {
-        if (user) {
+      onAuthStateChanged(auth, (userDetails) => {
+        if (userDetails?.emailVerified) {
           // Logged in...
-          setUser(user);
-          dispatch(updateUserDetails(user));
+          // setUser(user);
+          dispatch(updateUserDetails(userDetails));
           setLoading(false);
         } else {
           // Not logged in...
-          setUser(null);
+          // setUser(null);
+          dispatch(updateUserDetails(null));
           // dispatch(updateUserDetails(null));
           // setLoading(true);
           // router.push("/login");
@@ -91,9 +97,9 @@ export const AuthProvider = ({ children }) => {
     [auth]
   );
 
-  const emailConfirmation = async (user) => {
+  const emailConfirmation = async (usr) => {
     try {
-      await sendEmailVerification(user);
+      await sendEmailVerification(usr);
       // updateVerificationMessage("Email verification link sent");
     } catch (error) {
       console.log(error);
@@ -144,8 +150,8 @@ export const AuthProvider = ({ children }) => {
         email,
         password
       );
-      setUser(userCredential.user);
-      dispatch(updateUserDetails(userCredential.user));
+      // setUser(userCredential.user);
+      // dispatch(updateUserDetails(userCredential.user));
       dispatch(updateSignupMessage("Registration successful"));
       // toast(`Registration successful`, {
       //   duration: 8000,
@@ -156,7 +162,7 @@ export const AuthProvider = ({ children }) => {
       // Delay the router push by 3 seconds
       setTimeout(() => {
         router.push("/mover-login");
-      }, 3000);
+      }, 2000);
 
       setLoading(false);
     } catch (error) {
@@ -186,6 +192,7 @@ export const AuthProvider = ({ children }) => {
   //     .finally(() => setLoading(false));
   // };
   const signIn = async (email, password) => {
+    
     setLoading(true);
 
     try {
@@ -195,24 +202,17 @@ export const AuthProvider = ({ children }) => {
         password
       );
       if (userCredential.user.emailVerified) {
-        setUser(userCredential.user);
+        // setUser(userCredential.user);
         dispatch(updateUserDetails(userCredential.user));
         router.push("/");
       } else {
-        setUser(userCredential.user);
+        // setUser(userCredential.user);
         dispatch(
           updateVerificationMessage(
             "Please verify your email via link sent to your mail, to login."
           )
         );
       }
-
-      // // Delay the router push by 3 seconds
-      // setTimeout(() => {
-      //   router.push("/");
-      // }, 0);
-
-      // setLoading(false);
     } catch (error) {
       setError(error.message);
       dispatch(updateLoginError(error.message));

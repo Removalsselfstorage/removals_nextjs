@@ -35,7 +35,7 @@ const MoverLogin = () => {
 
   const dispatch = useDispatch();
 
-  const details = useSelector(getAllDetails);
+  // const details = useSelector(getAllDetails);
   const userDetails = useSelector(getAllUserDetails);
 
   const initialValues = {

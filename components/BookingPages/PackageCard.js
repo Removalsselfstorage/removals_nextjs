@@ -12,6 +12,7 @@ import { convertToSentenceCase, generateRandomValues } from "@/utils/logics";
 import { moveRate, priceCalc, priceCalc2 } from "@/utils/moversLogic";
 import { FaBusAlt, FaTruckMoving } from "react-icons/fa";
 import { IoMdMan } from "react-icons/io";
+import { FiCheckCircle } from "react-icons/fi";
 
 const PackageCard = ({
   image,
@@ -259,18 +260,114 @@ const PackageCard = ({
             )}
           </div>
           <ul className="text-gray-500 mt-[15px] md:mt-[20px] text-start text-[13px] w-full">
-            <li className="border-b  py-[5px]">* {f1}</li>
-            <li className="border-b py-[5px]">* {f2}</li>
-            <li className="border-b py-[5px]">* {f3}</li>
-            <li className="border-b py-[5px]">* {f4}</li>
-            <li className="border-b py-[5px]">* {f5}</li>
-            <li className="border-b py-[5px]">* {f6}</li>
-            {f7 && <li className="border-b py-[5px]">* {f7}</li>}
-            {f8 && <li className="border-b py-[5px]">* {f8}</li>}
-            {f9 && <li className="border-b py-[5px]">* {f9}</li>}
-            {f10 && <li className="border-b py-[5px]">* {f10}</li>}
-            {f11 && <li className="border-b py-[5px]">* {f11}</li>}
-            {f12 && <li className="border-b py-[5px]">* {f12}</li>}
+            <li className="border-b  py-[5px] flex items-center">
+              <span className={`${
+                    preferred ? "text-secondary" : "text-primary"
+                  } mr-[5px] `}>
+                <FiCheckCircle />
+              </span>
+              {f1}
+            </li>
+            <li className="border-b py-[5px] flex items-center">
+              <span className={`${
+                    preferred ? "text-secondary" : "text-primary"
+                  } mr-[5px] `}>
+                <FiCheckCircle />
+              </span>
+              {f2}
+            </li>
+            <li className="border-b py-[5px] flex items-center">
+              <span className={`${
+                    preferred ? "text-secondary" : "text-primary"
+                  } mr-[5px] `}>
+                <FiCheckCircle />
+              </span>
+              {f3}
+            </li>
+            <li className="border-b py-[5px] flex items-center">
+              <span className={`${
+                    preferred ? "text-secondary" : "text-primary"
+                  } mr-[5px] `}>
+                <FiCheckCircle />
+              </span>
+              {f4}
+            </li>
+            <li className="border-b py-[5px] flex items-center">
+              <span className={`${
+                    preferred ? "text-secondary" : "text-primary"
+                  } mr-[5px] `}>
+                <FiCheckCircle />
+              </span>
+              {f5}
+            </li>
+            <li className="border-b py-[5px] flex items-center">
+              <span className={`${
+                    preferred ? "text-secondary" : "text-primary"
+                  } mr-[5px] `}>
+                <FiCheckCircle />
+              </span>
+              {f6}
+            </li>
+            {f7 && (
+              <li className="border-b py-[5px] flex items-center">
+                <span className={`${
+                    preferred ? "text-secondary" : "text-primary"
+                  } mr-[5px] `}>
+                  <FiCheckCircle />
+                </span>
+                {f7}
+              </li>
+            )}
+            {f8 && (
+              <li className="border-b py-[5px] flex items-center">
+                <span className={`${
+                    preferred ? "text-secondary" : "text-primary"
+                  } mr-[5px] `}>
+                  <FiCheckCircle />
+                </span>
+                {f8}
+              </li>
+            )}
+            {f9 && (
+              <li className="border-b py-[5px] flex items-center">
+                <span className={`${
+                    preferred ? "text-secondary" : "text-primary"
+                  } mr-[5px] `}>
+                  <FiCheckCircle />
+                </span>
+                {f9}
+              </li>
+            )}
+            {f10 && (
+              <li className="border-b py-[5px] flex items-center">
+                <span className={`${
+                    preferred ? "text-secondary" : "text-primary"
+                  } mr-[5px] `}>
+                  <FiCheckCircle />
+                </span>
+                {f10}
+              </li>
+            )}
+            {f11 && (
+              <li className="border-b py-[5px] flex items-center">
+                <span className={`${
+                    preferred ? "text-secondary" : "text-primary"
+                  } mr-[5px] `}>
+                  <FiCheckCircle />
+                </span>
+                {f11}
+              </li>
+            )}
+            {f12 && (
+              <li className="border-b py-[5px] flex items-center">
+                <span className={`${
+                    preferred ? "text-secondary" : "text-primary"
+                  } mr-[5px] `}>
+                  <FiCheckCircle />
+                </span>
+                {f12}
+              </li>
+            )}
           </ul>
         </div>
       </div>

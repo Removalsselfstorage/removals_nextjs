@@ -9,7 +9,7 @@ import {
   updateMoveDetails,
 } from "@/store/quoteSlice";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 import StarRating from "@/components/Rating/EditHalfStars2";
 import { RiEyeCloseLine, RiEyeLine } from "react-icons/ri";
 import NormalLayout from "@/layouts/NormalLayout";
@@ -28,6 +28,8 @@ import {
 } from "@/store/userSlice";
 import useAuth from "@/hooks/useAuth";
 import toast, { Toaster } from "react-hot-toast";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "@/firebase";
 
 // const Login = ({ providers, csrfToken, callbackUrl }) => {
 const MoverLogin = () => {
@@ -69,7 +71,7 @@ const MoverLogin = () => {
 
   const signInHandler = async (values, actions) => {
     setSubmitLoading(true);
-    setShowResendMessage(false)
+    setShowResendMessage(false);
     dispatch(updateLoginError(null));
     dispatch(updateVerificationMessage(null));
 
@@ -96,10 +98,17 @@ const MoverLogin = () => {
   useEffect(() => {
     dispatch(updateLoginError(null));
     dispatch(updateVerificationMessage(null));
-    // dispatch(updateSignupError(null));
   }, []);
 
-  //phone number validation
+  // useEffect(
+  //   () =>
+  //     onAuthStateChanged(auth, (userDetails) => {
+  //       if (userDetails.userDetails) {
+  //         router.push("/");
+  //       }
+  //     }),
+  //   []
+  // );
 
   return (
     <BookingLayout>

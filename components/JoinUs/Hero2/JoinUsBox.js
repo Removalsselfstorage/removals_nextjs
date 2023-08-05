@@ -37,6 +37,7 @@ const JoinUsBox = () => {
   const initialValues = {
     signup_email: "",
     signup_password: "",
+    signup_passwordConfirm: "",
     signup_firstname: "",
     signup_lastname: "",
     success: "",

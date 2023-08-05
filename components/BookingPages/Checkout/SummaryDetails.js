@@ -13,6 +13,7 @@ import { getAllDetails } from "@/store/quoteSlice";
 import { useDispatch, useSelector } from "react-redux";
 import dayjs from "dayjs";
 import { moveDesciptionsCalc, moveDesciptionsCalc2 } from "@/utils/moversLogic";
+import { FiCheckCircle } from "react-icons/fi";
 
 const SummaryDetails = ({
   depositFull,
@@ -279,29 +280,89 @@ const SummaryDetails = ({
           {/* move package features */}
           <div className="grid md:grid-cols-3 lg:grid-cols-1 lg:h-[200px] mt-[20px] gap-y-[10px] gap-x-[10px] overflow-auto scrollbar-thin scrollbar-track-gray-200/50 scrollbar-thumb-gray-500/20 scrollbar-default h-[200px] md:h-full mb-[10px] md:mb-[20px] pb-[30px]">
             <ul className=" mt-[0px] text-start text-[14px] w-full">
-              <li className="border-b  py-[5px]">* {features.f1}</li>
-              <li className="border-b py-[5px]">* {features.f2}</li>
-              <li className="border-b py-[5px]">* {features.f3}</li>
-              <li className="border-b py-[5px]">* {features.f4}</li>
-              <li className="border-b py-[5px]">* {features.f5}</li>
-              <li className="border-b py-[5px]">* {features.f6}</li>
+              <li className="border-b  py-[5px] flex items-center">
+                <span className={`text-primary mr-[5px] `}>
+                  <FiCheckCircle />
+                </span>{" "}
+                {features.f1}
+              </li>
+              <li className="border-b py-[5px] flex items-center">
+                <span className={`text-primary mr-[5px] `}>
+                  <FiCheckCircle />
+                </span>{" "}
+                {features.f2}
+              </li>
+              <li className="border-b py-[5px] flex items-center">
+                <span className={`text-primary mr-[5px] `}>
+                  <FiCheckCircle />
+                </span>{" "}
+                {features.f3}
+              </li>
+              <li className="border-b py-[5px] flex items-center">
+                <span className={`text-primary mr-[5px] `}>
+                  <FiCheckCircle />
+                </span>{" "}
+                {features.f4}
+              </li>
+              <li className="border-b py-[5px] flex items-center">
+                <span className={`text-primary mr-[5px] `}>
+                  <FiCheckCircle />
+                </span>{" "}
+                {features.f5}
+              </li>
+              <li className="border-b py-[5px] flex items-center">
+                <span className={`text-primary mr-[5px] `}>
+                  <FiCheckCircle />
+                </span>{" "}
+                {features.f6}
+              </li>
               {features.f7 && (
-                <li className="border-b py-[5px]">* {features.f7}</li>
+                <li className="border-b py-[5px] flex items-center">
+                  <span className={`text-primary mr-[5px] `}>
+                    <FiCheckCircle />
+                  </span>{" "}
+                  {features.f7}
+                </li>
               )}
               {features.f8 && (
-                <li className="border-b py-[5px]">* {features.f8}</li>
+                <li className="border-b py-[5px] flex items-center">
+                  <span className={`text-primary mr-[5px] `}>
+                    <FiCheckCircle />
+                  </span>{" "}
+                  {features.f8}
+                </li>
               )}
               {features.f9 && (
-                <li className="border-b py-[5px]">* {features.f9}</li>
+                <li className="border-b py-[5px] flex items-center">
+                  <span className={`text-primary mr-[5px] `}>
+                    <FiCheckCircle />
+                  </span>{" "}
+                  {features.f9}
+                </li>
               )}
               {features.f10 && (
-                <li className="border-b py-[5px]">* {features.f10}</li>
+                <li className="border-b py-[5px] flex items-center">
+                  <span className={`text-primary mr-[5px] `}>
+                    <FiCheckCircle />
+                  </span>{" "}
+                  {features.f10}
+                </li>
               )}
               {features.f11 && (
-                <li className="border-b py-[5px]">* {features.f11}</li>
+                <li className="border-b py-[5px] flex items-center">
+                  <span className={`text-primary mr-[5px] `}>
+                    <FiCheckCircle />
+                  </span>{" "}
+                  {features.f11}
+                </li>
               )}
               {features.f12 && (
-                <li className="border-b py-[5px]">* {features.f12}</li>
+                <li className="border-b py-[5px] flex items-center">
+                  <span className={`text-primary mr-[5px] `}>
+                    <FiCheckCircle />
+                  </span>{" "}
+                  {features.f12}
+                </li>
               )}
             </ul>
           </div>

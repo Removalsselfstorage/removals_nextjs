@@ -4,12 +4,28 @@ import JoinUsFAQ from "@/components/JoinUs/FAQ";
 import JoinUsHero from "@/components/JoinUs/Hero2";
 import MoverFeatures from "@/components/JoinUs/MoverFeatures";
 import NormalLayout from "@/layouts/NormalLayout";
+import { getAllUserDetails } from "@/store/userSlice";
 import { getCsrfToken, getProviders, getSession } from "next-auth/react";
 import Head from "next/head";
-import React from "react";
+import { useRouter } from "next/navigation";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 // const JoinUs = ({ providers, csrfToken, callbackUrl }) => {
 const JoinUs = () => {
+  const router = useRouter();
+
+  const dispatch = useDispatch();
+
+  // const details = useSelector(getAllDetails);
+  const userDetails = useSelector(getAllUserDetails);
+
+  useEffect(() => {
+    if (userDetails.userDetails) {
+      router.push("/");
+    }
+  }, []);
+
   return (
     <NormalLayout>
       <Head>
@@ -18,17 +34,22 @@ const JoinUs = () => {
         <link rel="icon" href="/rrs_favicon.svg" />
       </Head>
 
-      <main>
-        <JoinUsHero />
-        <MoverFeatures />
-        <JoinUsFAQ/>
-      </main>
+      {!userDetails.userDetails ? (
+        <main>
+          <JoinUsHero />
+          <MoverFeatures />
+          <JoinUsFAQ />
+        </main>
+      ) : (
+        <div className="flex items-center justify-center h-[100vh] ">
+          <span className="h-full loading loading-bars text-primary w-[40px] lg:w-[60px]"></span>
+        </div>
+      )}
     </NormalLayout>
   );
 };
 
 export default JoinUs;
-
 
 // export async function getServerSideProps(context) {
 //   const { req, query } = context;
@@ -55,4 +76,3 @@ export default JoinUs;
 //     },
 //   };
 // }
-

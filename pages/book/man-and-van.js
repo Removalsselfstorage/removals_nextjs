@@ -273,8 +273,6 @@ const ManAndVan = () => {
       <main>
         <div className="mb-[70px] lg:mb-[100px] pt-[70px]">
           <div className="md:max-w-7xl mx-auto">
-           
-
             {/* Title */}
             <div className="w-full flex justify-center py-[30px] md:py-[40px]">
               {/* <h3 className="text-4xl font-extrabold">Our Services</h3> */}
@@ -408,7 +406,8 @@ const ManAndVan = () => {
                       <div className="flex items-center space-x-[5px]">
                         <div
                           onClick={() =>
-                            floorCount2 >= 0 && setFloorCount2((prev) => prev - 1)
+                            floorCount2 >= 0 &&
+                            setFloorCount2((prev) => prev - 1)
                           }
                           className="flex justify-center items-center btn btn-primary w-[50px] p-[5px] h-[50px] rounded-[5px]"
                         >
@@ -717,7 +716,8 @@ const ManAndVan = () => {
                         </label>
                         <input
                           type="number"
-                          min="0"
+                          min="10"
+                          step="5"
                           placeholder="Type here"
                           className={`${
                             activateError && !volume

@@ -657,7 +657,8 @@ const CompleteHouse = () => {
                       </label>
                       <input
                         type="number"
-                        min="0"
+                        min="10"
+                        step="5"
                         placeholder="Type here"
                         className={`${
                           activateError && !volume ? "ring ring-secondary" : ""

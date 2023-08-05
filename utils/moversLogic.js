@@ -397,9 +397,8 @@ export const moveDesciptionsCalc = (title, propertyType) => {
             f2: "Item dismantling / assembling",
             f3: "Help Load / unload",
             f4: "Trolly, straps & Blanket",
-            f5: "Help Load / unload",
-            f6: "Standard insurance cover",
-            f7: "Cancel up to 1 week before your move",
+            f5: "Standard insurance cover",
+            f6: "Cancel up to 1 week before your move",
             // f10: "550 Cubic ft loading capacity",
           };
           break;
@@ -410,11 +409,10 @@ export const moveDesciptionsCalc = (title, propertyType) => {
             f2: "Item dismantling / assembling",
             f3: "Help Load / unload",
             f4: "Trolly, straps & Blanket",
-            f5: "Help Load / unload",
-            f6: "Shrink Wrapping services",
-            f7: "Moving Concierge",
-            f8: "Comprehensive insurance cover",
-            f9: "Cancel up to 48hrs before your move",
+            f5: "Shrink Wrapping services",
+            f6: "Moving Concierge",
+            f7: "Comprehensive insurance cover",
+            f8: "Cancel up to 48hrs before your move",
             // f11: "660 Cubic ft loading capacity",
           };
           break;
@@ -460,9 +458,8 @@ export const moveDesciptionsCalc = (title, propertyType) => {
             f2: "Item dismantling / assembling",
             f3: "Help Load / unload",
             f4: "Trolly, straps & Blanket",
-            f5: "Help Load / unload",
-            f6: "Standard insurance cover",
-            f7: "Cancel up to 1 week before your move",
+            f5: "Standard insurance cover",
+            f6: "Cancel up to 1 week before your move",
             // f10: "550 Cubic ft loading capacity",
           };
           break;
@@ -473,11 +470,10 @@ export const moveDesciptionsCalc = (title, propertyType) => {
             f2: "Item dismantling / assembling",
             f3: "Help Load / unload",
             f4: "Trolly, straps & Blanket",
-            f5: "Help Load / unload",
-            f6: "Shrink Wrapping services",
-            f7: "Moving Concierge",
-            f8: "Comprehensive insurance cover",
-            f9: "Cancel up to 48hrs before your move",
+            f5: "Shrink Wrapping services",
+            f6: "Moving Concierge",
+            f7: "Comprehensive insurance cover",
+            f8: "Cancel up to 48hrs before your move",
             // f11: "660 Cubic ft loading capacity",
           };
           break;
@@ -523,9 +519,8 @@ export const moveDesciptionsCalc = (title, propertyType) => {
             f2: "Item dismantling / assembling",
             f3: "Help Load / unload",
             f4: "Trolly, straps & Blanket",
-            f5: "Help Load / unload",
-            f6: "Standard insurance cover",
-            f7: "Cancel up to 1 week before your move",
+            f5: "Standard insurance cover",
+            f6: "Cancel up to 1 week before your move",
             // f10: "550 Cubic ft loading capacity",
           };
           break;
@@ -536,11 +531,10 @@ export const moveDesciptionsCalc = (title, propertyType) => {
             f2: "Item dismantling / assembling",
             f3: "Help Load / unload",
             f4: "Trolly, straps & Blanket",
-            f5: "Help Load / unload",
-            f6: "Shrink Wrapping services",
-            f7: "Moving Concierge",
-            f8: "Comprehensive insurance cover",
-            f9: "Cancel up to 48hrs before your move",
+            f5: "Shrink Wrapping services",
+            f6: "Moving Concierge",
+            f7: "Comprehensive insurance cover",
+            f8: "Cancel up to 48hrs before your move",
             // f11: "660 Cubic ft loading capacity",
           };
           break;
@@ -586,9 +580,8 @@ export const moveDesciptionsCalc = (title, propertyType) => {
             f2: "Item dismantling / assembling",
             f3: "Help Load / unload",
             f4: "Trolly, straps & Blanket",
-            f5: "Help Load / unload",
-            f6: "Standard insurance cover",
-            f7: "Cancel up to 1 week before your move",
+            f5: "Standard insurance cover",
+            f6: "Cancel up to 1 week before your move",
             // f10: "550 Cubic ft loading capacity",
           };
           break;
@@ -599,11 +592,10 @@ export const moveDesciptionsCalc = (title, propertyType) => {
             f2: "Item dismantling / assembling",
             f3: "Help Load / unload",
             f4: "Trolly, straps & Blanket",
-            f5: "Help Load / unload",
-            f6: "Shrink Wrapping services",
-            f7: "Moving Concierge",
-            f8: "Comprehensive insurance cover",
-            f9: "Cancel up to 48hrs before your move",
+            f5: "Shrink Wrapping services",
+            f6: "Moving Concierge",
+            f7: "Comprehensive insurance cover",
+            f8: "Cancel up to 48hrs before your move",
             // f11: "660 Cubic ft loading capacity",
           };
           break;

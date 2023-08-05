@@ -100,17 +100,13 @@ const MoverLogin = () => {
     dispatch(updateVerificationMessage(null));
   }, []);
 
-  // useEffect(
-  //   () =>
-  //     onAuthStateChanged(auth, (userDetails) => {
-  //       if (userDetails.userDetails) {
-  //         router.push("/");
-  //       }
-  //     }),
-  //   []
-  // );
+  useEffect(() => {
+    if (userDetails.userDetails) {
+      router.push("/");
+    }
+  }, []);
 
-  return (
+  return !userDetails.userDetails ? (
     <BookingLayout>
       <Head>
         <title>Removals and Selfstorage - Login</title>
@@ -269,6 +265,10 @@ const MoverLogin = () => {
         </div>
       </main>
     </BookingLayout>
+  ) : (
+    <div className="flex items-center justify-center h-[100vh] ">
+      <span className="h-full loading loading-bars text-primary w-[40px] lg:w-[60px]"></span>
+    </div>
   );
 };
 

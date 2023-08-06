@@ -24,6 +24,8 @@ import {
   updatePasswordResetError,
   updateVerificationMessage,
 } from "@/store/userSlice";
+// import { sendEmail } from "@/utils/sendEmails";
+import { activateEmailTemplate } from "@/emails/activateEmailTemplate";
 
 const AuthContext = createContext({
   user: null,
@@ -71,14 +73,14 @@ export const AuthProvider = ({ children }) => {
     [auth]
   );
 
-  const emailConfirmation = async (usr) => {
-    try {
-      await sendEmailVerification(usr);
-      // updateVerificationMessage("Email verification link sent");
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const emailConfirmation = async (usr) => {
+  //   try {
+  //     await sendEmailVerification(usr);
+  //     // updateVerificationMessage("Email verification link sent");
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   const signUp = async (email, password) => {
     setLoading(true);
@@ -91,7 +93,11 @@ export const AuthProvider = ({ children }) => {
       );
       // setUser(userCredential.user);
       // dispatch(updateUserDetails(userCredential.user));
-      dispatch(updateSignupMessage("Registration successful"));
+      dispatch(
+        updateSignupMessage(
+          "Registered successfully! Please activate your email to get started"
+        )
+      );
       // toast(`Registration successful`, {
       //   duration: 8000,
       //   style: toastStyle1,
@@ -101,7 +107,7 @@ export const AuthProvider = ({ children }) => {
       // Delay the router push by 3 seconds
       setTimeout(() => {
         router.push("/mover-login");
-      }, 2000);
+      }, 2500);
 
       setLoading(false);
     } catch (error) {
@@ -127,6 +133,14 @@ export const AuthProvider = ({ children }) => {
       if (userCredential.user.emailVerified) {
         // setUser(userCredential.user);
         dispatch(updateUserDetails(userCredential.user));
+        const url = `${process.env.BASE_URL}`;
+        sendEmail(
+          email,
+          url,
+          "",
+          "Welcome to Removal and self storage",
+          activateEmailTemplate
+        );
         router.push("/");
       } else {
         setUser(userCredential.user);

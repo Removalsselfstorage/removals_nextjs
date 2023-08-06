@@ -102,7 +102,7 @@ const Navbar = () => {
               {/* Navbar */}
               <div className="w-full navbar h-[30px] md:max-w-7xl mx-auto items-center ">
                 {/* nav-start */}
-                <div className="navbar-start flex lg:flex-[1] items-center">
+                <div className="navbar-start lg:w-[20%] flex  items-center">
                   <Link href="/">
                     <img
                       src="/rss_logo2.svg"
@@ -113,8 +113,8 @@ const Navbar = () => {
                 </div>
 
                 {/* nav-center */}
-                <div className="navbar-center hidden lg:flex  xl:flex xl:flex-[2]">
-                  <ul className="flex items-center lg:justify-between space-x-[0px]  lg:space-x-[40px] text-[16px]">
+                <div className="navbar-center  hidden lg:flex ">
+                  <ul className="flex items-center lg:justify-between space-x-[10px]  xl:space-x-[30px] text-[16px]">
                     <li className="">
                       <Link
                         href="/"
@@ -252,7 +252,7 @@ const Navbar = () => {
                 </div>
 
                 {/* nav right */}
-                <div className="navbar-end flex lg:flex-[1] space-x-[10px]">
+                <div className="navbar-end  lg:w-[40%] flex  space-x-[10px]">
                   {!users.userDetails && (
                     <div className=" lg:space-x-[10px] hidden lg:flex">
                       <Link
@@ -278,7 +278,7 @@ const Navbar = () => {
                             {trimToFirstLetter(users.userDetails?.email)}
                           </p>
                         </label>
-                        
+
                         <ul
                           tabIndex={0}
                           className="dropdown-content z-[1] border-t-[5px] border-primary flex flex-col space-y-[15px] py-[20px] shadow-xl bg-base-100 rounded-box w-[250px] text-[16px] px-[20px]"
@@ -294,28 +294,22 @@ const Navbar = () => {
                             >
                               <div className="flex">
                                 <span className="text-[20px] mr-[10px]">
-                                <FiSettings />
+                                  <FiSettings />
                                 </span>
                                 <a className="">Edit Profile</a>
                               </div>
                             </Link>
                           </li>
-                          <li>
-                            <Link
-                              href="/services/man-and-van"
-                              className={`${
-                                router.pathname === "/services/man-and-van"
-                                  ? " text-primary"
-                                  : ""
-                              } font-semibold hover:text-primary`}
-                            >
-                              <div className="flex">
-                                <span className="text-[20px] mr-[10px]">
-                                  <BiLogOut />
-                                </span>
-                                <a className="">Log Out</a>
-                              </div>
-                            </Link>
+                          <li
+                            className={` font-semibold hover:text-primary cursor-pointer`}
+                            onClick={() => logout()}
+                          >
+                            <div className="flex">
+                              <span className="text-[20px] mr-[10px]">
+                                <BiLogOut />
+                              </span>
+                              <a className="">Log Out</a>
+                            </div>
                           </li>
                         </ul>
                       </li>

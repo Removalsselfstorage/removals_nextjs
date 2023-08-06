@@ -132,15 +132,7 @@ export const AuthProvider = ({ children }) => {
       );
       if (userCredential.user.emailVerified) {
         // setUser(userCredential.user);
-        dispatch(updateUserDetails(userCredential.user));
-        const url = `${process.env.BASE_URL}`;
-        sendEmail(
-          email,
-          url,
-          "",
-          "Welcome to Removal and self storage",
-          activateEmailTemplate
-        );
+
         router.push("/");
       } else {
         setUser(userCredential.user);

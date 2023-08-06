@@ -1,4 +1,4 @@
-import { BiSolidPhoneCall } from "react-icons/bi";
+import { BiLogOut, BiLogOutCircle, BiSolidPhoneCall } from "react-icons/bi";
 import { BiMenu } from "react-icons/bi";
 import { IoClose } from "react-icons/io5";
 import { BsChevronDown } from "react-icons/bs";
@@ -10,9 +10,13 @@ import useAuth from "@/hooks/useAuth";
 import { useSelector } from "react-redux";
 import { getAllUserDetails } from "@/store/userSlice";
 import { trimToFirstLetter } from "@/utils/logics";
+import { CgProfile } from "react-icons/cg";
+import { useRouter } from "next/router";
+import { FiSettings } from "react-icons/fi";
 // import ScrollUpMenuNav from '../ScrollUpMenuNav';
 
 const Navbar = () => {
+  const router = useRouter();
   const [shadow, setShadow] = useState(false);
   const [showNav, setShowNav] = useState(true);
   const { user, logout, loading } = useAuth();
@@ -60,9 +64,9 @@ const Navbar = () => {
           <div className="bg-primary w-full">
             <div className="flex lg:flex-row flex-col w-full md:max-w-7xl mx-auto px-[0px] items-center  py-[10px] text-[13px] h-[40px] text-white lg:justify-between ">
               <div className="flex  items-center">
-                <div className="flex md:hidden">
-                  <p className="hidden lg:flex">Need help?</p>
-                  <div className="flex items-center ml-[10px] space-x-[7px]">
+                <div className="flex">
+                  <p className="hidden">Need help?</p>
+                  <div className=" md:items-center ml-[10px] space-x-[7px] hidden md:flex">
                     <RiCustomerService2Fill size={20} className="" />
                     <a href="tel:07869116203" className="link link-hover">
                       07869116203{" "}
@@ -96,9 +100,9 @@ const Navbar = () => {
             <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
             <div className="drawer-content flex flex-col">
               {/* Navbar */}
-              <div className="w-full navbar  md:max-w-7xl mx-auto items-center ">
+              <div className="w-full navbar h-[30px] md:max-w-7xl mx-auto items-center ">
                 {/* nav-start */}
-                <div className="navbar-start flex flex-[1] items-center">
+                <div className="navbar-start flex lg:flex-[1] items-center">
                   <Link href="/">
                     <img
                       src="/rss_logo2.svg"
@@ -109,52 +113,137 @@ const Navbar = () => {
                 </div>
 
                 {/* nav-center */}
-                <div className="navbar-center hidden lg:flex flex-[2]">
-                  <ul className="menu menu-horizontal  px-1 text-[16px]">
-                    <li>
-                      <Link href="/" className="btn-nav ">
+                <div className="navbar-center hidden lg:flex  xl:flex xl:flex-[2]">
+                  <ul className="flex items-center lg:justify-between space-x-[0px]  lg:space-x-[40px] text-[16px]">
+                    <li className="">
+                      <Link
+                        href="/"
+                        className={`${
+                          router.pathname === "/"
+                            ? "border-b-[5px] border-primary text-primary"
+                            : ""
+                        } btn-navs `}
+                      >
                         Home
                       </Link>
                     </li>
                     <li className="dropdown dropdown-hover dropdown-end group">
-                      <label tabIndex={0} className="flex items-center btn-nav">
+                      <label
+                        tabIndex={0}
+                        className="flex items-center font-semibold hover:text-primary"
+                      >
                         <p className="">Our Services</p>
-                        <span className="group-hover:rotate-180 duration-100">
+                        <span className="group-hover:rotate-180 duration-100 ml-[5px]">
                           <BsChevronDown />
                         </span>
                       </label>
                       <ul
                         tabIndex={0}
-                        className="dropdown-content z-[1] menu py-[20px] px-[10px] shadow-xl bg-base-100 rounded-box w-[250px] text-[16px]"
+                        className="dropdown-content border-t-[5px] border-primary z-[1] flex flex-col space-y-[15px] py-[20px] shadow-xl bg-base-100 rounded-box w-[250px] text-[16px] px-[20px]"
                       >
-                        <li>
-                          <a className="btn-nav">Home Removals</a>
+                        <li className="w-full">
+                          <Link
+                            href="/services/home-removals"
+                            className={`${
+                              router.pathname === "/services/home-removals"
+                                ? " text-primary"
+                                : ""
+                            } font-semibold hover:text-primary w-full`}
+                          >
+                            <p className="w-full">Home Removals</p>
+                          </Link>
                         </li>
-                        <li>
+                        {/* <li>
                           <a className="btn-nav">Man and Van</a>
-                        </li>
+                        </li> */}
                         <li>
+                          <Link
+                            href="/services/man-and-van"
+                            className={`${
+                              router.pathname === "/services/man-and-van"
+                                ? " text-primary"
+                                : ""
+                            } font-semibold hover:text-primary`}
+                          >
+                            <p className="w-full">Man and Van</p>
+                          </Link>
+                        </li>
+                        {/* <li>
                           <a className="btn-nav">Storage & Self Storage</a>
-                        </li>
+                        </li> */}
                         <li>
+                          <Link
+                            href="/services/storage"
+                            className={`${
+                              router.pathname === "/services/storage"
+                                ? " text-primary"
+                                : ""
+                            } font-semibold hover:text-primary`}
+                          >
+                            <p className="w-full">Storage & Self Storage</p>
+                          </Link>
+                        </li>
+
+                        {/* <li>
                           <a className="btn-nav">Handy Man / Packing</a>
+                        </li> */}
+                        <li>
+                          <Link
+                            href="/services/packing"
+                            className={`${
+                              router.pathname === "/services/packing"
+                                ? " text-primary"
+                                : ""
+                            } font-semibold hover:text-primary`}
+                          >
+                            <p className="w-full">Handy Man / Packing</p>
+                          </Link>
                         </li>
                         {/* <li>
                           <a className="btn-nav">Moving Your Business</a>
                         </li> */}
                       </ul>
                     </li>
-                    <li>
-                      <a className="btn-nav">Locations</a>
+                    <li className="">
+                      <Link
+                        href="/"
+                        className={`${
+                          router.pathname === "/locations"
+                            ? "border-b-[5px] border-primary text-primary"
+                            : ""
+                        } btn-navs`}
+                      >
+                        Locations
+                      </Link>
                     </li>
                     <li>
                       {!users.userDetails && (
-                        <Link href="/reserve-login" className="btn-nav">
+                        // <Link href="/reserve-login" className="btn-nav">
+                        //   My Reservation
+                        // </Link>
+                        <Link
+                          href="/reserve-login"
+                          className={`${
+                            router.pathname === "/reserve-login"
+                              ? "border-b-[5px] border-primary text-primary"
+                              : ""
+                          } btn-navs`}
+                        >
                           My Reservation
                         </Link>
                       )}
                       {users.userDetails && (
-                        <Link href="/mover-dashboard" className="btn-nav">
+                        // <Link href="/mover-profile" className="btn-nav">
+                        //   My Dashboard
+                        // </Link>
+                        <Link
+                          href="/mover-profile"
+                          className={`${
+                            router.pathname === "/mover-profile"
+                              ? "border-b-[5px] border-primary text-primary"
+                              : ""
+                          } btn-navs`}
+                        >
                           My Dashboard
                         </Link>
                       )}
@@ -163,7 +252,7 @@ const Navbar = () => {
                 </div>
 
                 {/* nav right */}
-                <div className="navbar-end flex flex-[1] space-x-[10px]">
+                <div className="navbar-end flex lg:flex-[1] space-x-[10px]">
                   {!users.userDetails && (
                     <div className=" lg:space-x-[10px] hidden lg:flex">
                       <Link
@@ -179,7 +268,7 @@ const Navbar = () => {
                     </div>
                   )}
                   {users.userDetails && (
-                    <ul className="menu menu-horizontal  px-1 text-[16px] hidden lg:flex">
+                    <ul className="  px-1 text-[16px] hidden lg:flex ">
                       <li className="dropdown  dropdown-end">
                         <label
                           tabIndex={0}
@@ -189,24 +278,45 @@ const Navbar = () => {
                             {trimToFirstLetter(users.userDetails?.email)}
                           </p>
                         </label>
+                        
                         <ul
                           tabIndex={0}
-                          className="dropdown-content z-[1] menu py-[20px] px-[10px]  bg-base-100 rounded-box w-[250px] text-[16px] shadow-xl"
+                          className="dropdown-content z-[1] border-t-[5px] border-primary flex flex-col space-y-[15px] py-[20px] shadow-xl bg-base-100 rounded-box w-[250px] text-[16px] px-[20px]"
                         >
+                          <li className="w-full">
+                            <Link
+                              href="/mover-profile/edit-profile"
+                              className={`${
+                                router.pathname === "/service/home-removals"
+                                  ? " text-primary"
+                                  : ""
+                              } font-semibold hover:text-primary w-full`}
+                            >
+                              <div className="flex">
+                                <span className="text-[20px] mr-[10px]">
+                                <FiSettings />
+                                </span>
+                                <a className="">Edit Profile</a>
+                              </div>
+                            </Link>
+                          </li>
                           <li>
-                            <a className="btn-nav">My Profile</a>
+                            <Link
+                              href="/services/man-and-van"
+                              className={`${
+                                router.pathname === "/services/man-and-van"
+                                  ? " text-primary"
+                                  : ""
+                              } font-semibold hover:text-primary`}
+                            >
+                              <div className="flex">
+                                <span className="text-[20px] mr-[10px]">
+                                  <BiLogOut />
+                                </span>
+                                <a className="">Log Out</a>
+                              </div>
+                            </Link>
                           </li>
-                          <li
-                            onClick={() => {
-                              logout();
-                            }}
-                          >
-                            <a className="btn-nav">Log Out</a>
-                          </li>
-
-                          {/* <li>
-                          <a className="btn-nav">Moving Your Business</a>
-                        </li> */}
                         </ul>
                       </li>
                     </ul>

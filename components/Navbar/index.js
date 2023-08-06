@@ -206,7 +206,7 @@ const Navbar = () => {
                     </li>
                     <li className="">
                       <Link
-                        href="/"
+                        href="/locations"
                         className={`${
                           router.pathname === "/locations"
                             ? "border-b-[5px] border-primary text-primary"

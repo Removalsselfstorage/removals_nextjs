@@ -97,7 +97,7 @@ const Movers = () => {
   }, []);
 
   useEffect(() => {
-    if (!details.moveDetails.movePackage) {
+    if (!details.moveDetails.initialPackagePrice) {
       router.push("/");
     }
   }, []);
@@ -114,7 +114,7 @@ const Movers = () => {
         <link rel="icon" href="/rrs_favicon.svg" />
       </Head>
 
-      {details.moveDetails.movePackage ? (
+      {details.moveDetails.initialPackagePrice ? (
         <main className="">
           <div className="mb-[70px] lg:mb-[100px] pt-[80px] md:pt-[100px] ">
             {showLoader && <Loader1 />}

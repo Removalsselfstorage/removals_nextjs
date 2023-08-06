@@ -45,7 +45,7 @@ const initialState = {
     moveDateRaw: '',
     movePackage: '',
     quoteRef: '',
-    initialPackagePrice: 1,
+    initialPackagePrice: 0,
     
   },
 

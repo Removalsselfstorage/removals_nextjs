@@ -33,11 +33,11 @@ const MoverLayout = ({ children }) => {
   return (
     <div className={`${textFont.variable} font-sans `}>
       <Navbar3 />
-      
+
       {userDetails.userDetails ? (
-        <div className="flex bg-base-200/  pt-[50px]   lg:pt-[50px]">
-          <aside className="flex-[0.4] border border-r-[2px]">
-            <ul className=" z-[1]  pt-[30px] pb-[10px]  shadow-xl bg-base-100  text-[16px] px-[10px] w-[300px] border-b">
+        <div className="flex bg-base-200  pt-[50px]   lg:pt-[50px]">
+          <aside className="hidden md:flex lg:flex-[0.4] border border-r-[2px] md:flex-col lg:w-[300px]">
+            <ul className="   pt-[30px] pb-[10px] grow shadow-xl bg-base-100 text-[16px] px-[10px] border-b">
               <li className=" my-[10px] px-[0px] w-full">
                 <Link
                   href="/mover-profile"
@@ -50,7 +50,7 @@ const MoverLayout = ({ children }) => {
                   <span className="text-[25px] mr-[10px]">
                     <AiOutlineHome />
                   </span>
-                  <a className="">Dashboard</a>
+                  <a className="hidden lg:flex">Dashboard</a>
                 </Link>
               </li>
               <li className=" my-[10px] px-[0px] w-full">
@@ -65,7 +65,7 @@ const MoverLayout = ({ children }) => {
                   <span className="text-[25px] mr-[10px]">
                     <LiaUserClockSolid />
                   </span>
-                  <a className="">Appointments</a>
+                  <a className="hidden lg:flex">Appointments</a>
                 </Link>
               </li>
 
@@ -81,7 +81,7 @@ const MoverLayout = ({ children }) => {
                   <span className="text-[25px] mr-[10px]">
                     <MdWorkOutline />
                   </span>
-                  <a className="">Job Board</a>
+                  <a className="hidden lg:flex">Job Board</a>
                 </Link>
               </li>
 
@@ -97,11 +97,11 @@ const MoverLayout = ({ children }) => {
                   <span className="text-[25px] mr-[10px]">
                     <HiOutlineInboxArrowDown />
                   </span>
-                  <a className="">Inbox</a>
+                  <a className="hidden lg:flex">Inbox</a>
                 </Link>
               </li>
             </ul>
-            <ul className=" z-[1]  py-[15px]  shadow-xl bg-base-100  text-[16px] px-[10px] w-[300px]">
+            <ul className=" py-[15px]  shadow-xl bg-base-100 grow  text-[16px] px-[10px]  pb-[200px]">
               {/* portfolio */}
               <li className=" my-[10px] px-[0px] w-full">
                 <Link
@@ -115,7 +115,7 @@ const MoverLayout = ({ children }) => {
                   <span className="text-[25px] mr-[10px]">
                     <FaRegCalendarAlt />
                   </span>
-                  <a className="">Calendar</a>
+                  <a className="hidden lg:flex">Calendar</a>
                 </Link>
               </li>
               {/* portfolio */}
@@ -131,7 +131,7 @@ const MoverLayout = ({ children }) => {
                   <span className="text-[25px] mr-[10px]">
                     <BsImages />
                   </span>
-                  <a className="">Portfolio</a>
+                  <a className="hidden lg:flex">Portfolio</a>
                 </Link>
               </li>
               <li className=" my-[10px] px-[0px] w-full">
@@ -146,7 +146,7 @@ const MoverLayout = ({ children }) => {
                   <span className="text-[25px] mr-[10px]">
                     <FiSettings />
                   </span>
-                  <a className="">Edit Profile</a>
+                  <a className="hidden lg:flex">Edit Profile</a>
                 </Link>
               </li>
               <li className=" my-[10px] px-[0px] w-full">
@@ -161,12 +161,12 @@ const MoverLayout = ({ children }) => {
                   <span className="text-[25px] mr-[10px]">
                     <TfiComments />
                   </span>
-                  <a className="">Reviews</a>
+                  <a className="hidden lg:flex">Reviews</a>
                 </Link>
               </li>
             </ul>
           </aside>
-          <main className="flex-[1]">{children}</main>
+          <main className="lg:flex-[1]">{children}</main>
         </div>
       ) : (
         <div className="flex items-center justify-center h-[100vh] ">

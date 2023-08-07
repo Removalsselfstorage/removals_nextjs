@@ -1,7 +1,7 @@
 import { BiLogOut, BiSolidPhoneCall } from "react-icons/bi";
 import { BiMenu } from "react-icons/bi";
 import { IoClose } from "react-icons/io5";
-import { BsChevronDown } from "react-icons/bs";
+import { BsChevronDown, BsImages } from "react-icons/bs";
 import { RiCustomerService2Fill } from "react-icons/ri";
 import { useEffect, useState } from "react";
 import Link from "next/link";
@@ -13,6 +13,12 @@ import { trimToFirstLetter } from "@/utils/logics";
 import { CgProfile } from "react-icons/cg";
 import { FiSettings } from "react-icons/fi";
 import { useRouter } from "next/router";
+import { AiOutlineHome } from "react-icons/ai";
+import { LiaUserClockSolid } from "react-icons/lia";
+import { MdWorkOutline } from "react-icons/md";
+import { HiOutlineInboxArrowDown } from "react-icons/hi2";
+import { FaRegCalendarAlt } from "react-icons/fa";
+import { TfiComments } from "react-icons/tfi";
 
 const Navbar3 = () => {
   const router = useRouter();
@@ -27,7 +33,11 @@ const Navbar3 = () => {
         <div className={`bg-white w-full `}>
           <div className="mx-[20px] ">
             <div className="drawer z-[9000] ">
-              <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
+              <input
+                id="my-drawer-3"
+                type="checkbox"
+                className="drawer-toggle"
+              />
               <div className="drawer-content flex flex-col">
                 {/* Navbar */}
                 <div className="w-full navbar  items-center ">
@@ -51,45 +61,40 @@ const Navbar3 = () => {
                         </a>
                       </div>
                       <ul className="  px-1 text-[16px] hidden lg:flex ">
-                      <li className="dropdown  dropdown-end">
-                        <label
-                          tabIndex={0}
-                          className="flex items-center justify-center bg-primary h-[40px] w-[40px] hover:bg-primary/60 rounded-full"
-                        >
-                          <p className="text-white font-bold">
-                            {trimToFirstLetter(users.userDetails?.email)}
-                          </p>
-                        </label>
-                        
-                        <ul
-                          tabIndex={0}
-                          className="dropdown-content z-[1] border-t-[5px] border-primary flex flex-col space-y-[15px] py-[20px] shadow-xl bg-base-100 rounded-box w-[250px] text-[16px] px-[20px]"
-                        >
-                          <li className="w-full">
-                            <Link
-                              href="/mover-profile/edit-profile"
-                              className={`${
-                                router.pathname === "/service/home-removals"
-                                  ? " text-primary"
-                                  : ""
-                              } font-semibold hover:text-primary w-full`}
-                            >
-                              <div className="flex">
-                                <span className="text-[20px] mr-[10px]">
-                                <FiSettings />
-                                </span>
-                                <a className="">Edit Profile</a>
-                              </div>
-                            </Link>
-                          </li>
-                          <li>
-                            <Link
-                              href="/services/man-and-van"
-                              className={`${
-                                router.pathname === "/services/man-and-van"
-                                  ? " text-primary"
-                                  : ""
-                              } font-semibold hover:text-primary`}
+                        <li className="dropdown  dropdown-end">
+                          <label
+                            tabIndex={0}
+                            className="flex items-center justify-center bg-primary h-[40px] w-[40px] hover:bg-primary/60 rounded-full"
+                          >
+                            <p className="text-white font-bold">
+                              {trimToFirstLetter(users.userDetails?.email)}
+                            </p>
+                          </label>
+
+                          <ul
+                            tabIndex={0}
+                            className="dropdown-content z-[1] border-t-[5px] border-primary flex flex-col space-y-[15px] py-[20px] shadow-xl bg-base-100 rounded-box w-[250px] text-[16px] px-[20px]"
+                          >
+                            <li className="w-full">
+                              <Link
+                                href="/mover-profile/edit-profile"
+                                className={`${
+                                  router.pathname === "/service/home-removals"
+                                    ? " text-primary"
+                                    : ""
+                                } font-semibold hover:text-primary w-full`}
+                              >
+                                <div className="flex">
+                                  <span className="text-[20px] mr-[10px]">
+                                    <FiSettings />
+                                  </span>
+                                  <a className="">Edit Profile</a>
+                                </div>
+                              </Link>
+                            </li>
+                            <li
+                              onClick={() => logout()}
+                              className={`font-semibold hover:text-primary`}
                             >
                               <div className="flex">
                                 <span className="text-[20px] mr-[10px]">
@@ -97,11 +102,10 @@ const Navbar3 = () => {
                                 </span>
                                 <a className="">Log Out</a>
                               </div>
-                            </Link>
-                          </li>
-                        </ul>
-                      </li>
-                    </ul>
+                            </li>
+                          </ul>
+                        </li>
+                      </ul>
                       <label
                         htmlFor="my-drawer-3"
                         className="btn btn-square btn-ghost lg:hidden"
@@ -127,65 +131,142 @@ const Navbar3 = () => {
               <div className="drawer-side">
                 <label htmlFor="my-drawer-3" className="drawer-overlay"></label>
                 <div className="overflow-auto scrollbar-thin scrollbar-track-gray-200/50 scrollbar-thumb-gray-500/20 scrollbar-default h-[100%]">
-                  <ul className="menu p-4 w-[250px] md:w-[400px]  bg-base-100 md:text-[16px] flex flex-col space-y-[10px] md:space-y-[15px]  h-auto pb-[300px] pt-[30px] lg:pb-[500px] lg:pt-[50px]">
-                    <li>
-                      <a className="btn-nav">Home</a>
-                    </li>
-                    <li>
-                      <a className="btn-nav">Home Removals</a>
-                    </li>
-                    <li>
-                      <a className="btn-nav">Man and Van</a>
-                    </li>
-                    <li>
-                      <a className="btn-nav">Storage & Self Storage</a>
-                    </li>
-                    <li className="border-b-[2px] pb-[10px]">
-                      <a className="btn-nav">Handy Man / Packing</a>
-                    </li>
-                    <li>
-                      <a className="btn-nav">Locations</a>
-                    </li>
-                    <li>
-                      <a className="btn-nav">Moving Tips</a>
-                    </li>
-                    <li>
-                      <a className="btn-nav">About Us</a>
-                    </li>
-                    <li>
-                      <a className="btn-nav">Contact Us</a>
-                    </li>
-                    {/* <li className="border-b-[2px] pb-[10px]">
-                      <a className="btn-nav">Blog</a>
-                    </li> */}
-                    {!users.userDetails && (
-                      <li>
-                        <Link href="/join-us" className="btn-nav">
-                          Become a Mover
-                        </Link>
-                      </li>
-                    )}
-                    {!users.userDetails && (
-                      <li>
-                        <Link href="/mover-login" className="btn-nav">
-                          Mover Login
-                        </Link>
-                      </li>
-                    )}
-                    {users.userDetails && (
-                      <li>
-                        <a className="btn-nav">My Profile</a>
-                      </li>
-                    )}
-                    {users.userDetails && (
-                      <li
-                        onClick={() => {
-                          logout();
-                        }}
+                  <ul className="menu p-4 w-[250px] md:w-[400px]  bg-base-100 md:text-[16px] flex flex-col h-auto pb-[300px] pt-[30px] lg:pb-[500px] lg:pt-[50px]">
+                    <li className=" my-[10px] px-[0px] w-full">
+                      <Link
+                        href="/mover-profile"
+                        className={`${
+                          router.pathname === "/mover-profile"
+                            ? "bg-primary/10 text-primary"
+                            : ""
+                        } flex items-center btn-dash py-[5px] px-[20px] rounded-[10px] w-full`}
                       >
-                        <a className="btn-nav">Log Out</a>
-                      </li>
-                    )}
+                        <span className="text-[25px] mr-[10px]">
+                          <AiOutlineHome />
+                        </span>
+                        <a className="">Dashboard</a>
+                      </Link>
+                    </li>
+                    <li className=" my-[10px] px-[0px] w-full">
+                      <Link
+                        href="/mover-profile/appointments"
+                        className={`${
+                          router.pathname === "/mover-profile/appointments"
+                            ? "bg-primary/10 text-primary"
+                            : ""
+                        } flex items-center btn-dash py-[5px] px-[20px] rounded-[10px] w-full`}
+                      >
+                        <span className="text-[25px] mr-[10px]">
+                          <LiaUserClockSolid />
+                        </span>
+                        <a className="">Appointments</a>
+                      </Link>
+                    </li>
+
+                    <li className=" my-[10px] px-[0px] w-full">
+                      <Link
+                        href="/mover-profile/job-board"
+                        className={`${
+                          router.pathname === "/mover-profile/job-board"
+                            ? "bg-primary/10 text-primary"
+                            : ""
+                        } flex items-center btn-dash py-[5px] px-[20px] rounded-[10px] w-full`}
+                      >
+                        <span className="text-[25px] mr-[10px]">
+                          <MdWorkOutline />
+                        </span>
+                        <a className="">Job Board</a>
+                      </Link>
+                    </li>
+                    <li className=" my-[10px] px-[0px] w-full">
+                      <Link
+                        href="/mover-profile/inbox"
+                        className={`${
+                          router.pathname === "/mover-profile/inbox"
+                            ? "bg-primary/10 text-primary"
+                            : ""
+                        } flex items-center btn-dash py-[5px] px-[20px] rounded-[10px] w-full`}
+                      >
+                        <span className="text-[25px] mr-[10px]">
+                          <HiOutlineInboxArrowDown />
+                        </span>
+                        <a className="">Inbox</a>
+                      </Link>
+                    </li>
+                    <li className=" my-[10px] px-[0px] w-full">
+                      <Link
+                        href="/mover-profile/calendar"
+                        className={`${
+                          router.pathname === "/mover-profile/calendar"
+                            ? "bg-primary/10 text-primary"
+                            : ""
+                        } flex items-center btn-dash py-[5px] px-[20px] rounded-[10px] w-full`}
+                      >
+                        <span className="text-[25px] mr-[10px]">
+                          <FaRegCalendarAlt />
+                        </span>
+                        <a className="">Calendar</a>
+                      </Link>
+                    </li>
+                    <li className=" my-[10px] px-[0px] w-full">
+                      <Link
+                        href="/mover-profile/portfolio"
+                        className={`${
+                          router.pathname === "/mover-profile/portfolio"
+                            ? "bg-primary/10 text-primary"
+                            : ""
+                        } flex items-center btn-dash py-[5px] px-[20px] rounded-[10px] w-full`}
+                      >
+                        <span className="text-[25px] mr-[10px]">
+                          <BsImages />
+                        </span>
+                        <a className="">Portfolio</a>
+                      </Link>
+                    </li>
+                    <li className=" my-[10px] px-[0px] w-full">
+                      <Link
+                        href="/mover-profile/edit-profile"
+                        className={`${
+                          router.pathname === "/mover-profile/edit-profile"
+                            ? "bg-primary/10 text-primary"
+                            : ""
+                        } flex items-center btn-dash py-[5px] px-[20px] rounded-[10px] w-full`}
+                      >
+                        <span className="text-[25px] mr-[10px]">
+                          <FiSettings />
+                        </span>
+                        <a className="">Edit Profile</a>
+                      </Link>
+                    </li>
+                    <li className=" my-[10px] px-[0px] w-full">
+                      <Link
+                        href="/mover-profile/reviews"
+                        className={`${
+                          router.pathname === "/mover-profile/reviews"
+                            ? "bg-primary/10 text-primary"
+                            : ""
+                        } flex items-center btn-dash py-[5px] px-[20px] rounded-[10px] w-full`}
+                      >
+                        <span className="text-[25px] mr-[10px]">
+                          <TfiComments />
+                        </span>
+                        <a className="">Reviews</a>
+                      </Link>
+                    </li>
+                    <li
+                      className=" my-[10px] px-[0px] w-full"
+                      onClick={() => logout()}
+                    >
+                      <div
+                        // href="/mover-profile/reviews"
+                        className={` flex items-center btn-dash py-[5px] px-[20px] rounded-[10px] w-full`}
+                      >
+                        <span className="text-[25px] mr-[10px]">
+                          <BiLogOut />
+                        </span>
+                        <a className="">Log Out</a>
+                      </div>
+                    </li>
                   </ul>
                 </div>
               </div>

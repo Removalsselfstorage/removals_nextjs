@@ -145,7 +145,7 @@ const MoverProfile = () => {
           </section>
 
           {/* scroll section */}
-          <div className="w-[100%] h-[330px] sm:h-[320px] md:h-[250] lg:h-[250px] relative flex overflow-hidden">
+          <div className="w-[100%] h-[350px] sm:h-[320px] md:h-[270px] lg:h-[250px] relative flex overflow-hidden">
             {sectionData.map((section, sectionIndex) => {
               let position = "translate-x-[100%]";
               if (sectionIndex === index) {

@@ -73,14 +73,14 @@ export const AuthProvider = ({ children }) => {
     [auth]
   );
 
-  // const emailConfirmation = async (usr) => {
-  //   try {
-  //     await sendEmailVerification(usr);
-  //     // updateVerificationMessage("Email verification link sent");
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+  const emailConfirmation = async (usr) => {
+    try {
+      await sendEmailVerification(usr);
+      updateVerificationMessage("Email verification link sent");
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const signUp = async (email, password) => {
     setLoading(true);
@@ -107,7 +107,7 @@ export const AuthProvider = ({ children }) => {
       // Delay the router push by 3 seconds
       setTimeout(() => {
         router.push("/mover-login");
-      }, 2500);
+      }, 2000);
 
       setLoading(false);
     } catch (error) {
@@ -132,7 +132,7 @@ export const AuthProvider = ({ children }) => {
       );
       if (userCredential.user.emailVerified) {
         // setUser(userCredential.user);
-
+          dispatch(updateUserDetails(userCredential.user));
         router.push("/");
       } else {
         setUser(userCredential.user);
@@ -210,7 +210,7 @@ export const AuthProvider = ({ children }) => {
 };
 
 // Let's only export the `useAuth` hook instead of the context.
-// We only want to use the hook directly and never the context comopnent.
+// We only want to use the hook directly and never the context compnent.
 export default function useAuth() {
   return useContext(AuthContext);
 }

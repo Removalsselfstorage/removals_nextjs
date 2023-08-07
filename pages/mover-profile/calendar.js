@@ -8,8 +8,8 @@ import { BiLogOut } from "react-icons/bi";
 import { CgProfile } from "react-icons/cg";
 import { useSelector } from "react-redux";
 
-const Inbox = () => {
-  const router = useRouter();
+const Calendar = () => {
+   const router = useRouter();
   const userDetails = useSelector(getAllUserDetails);
 
   useEffect(() => {
@@ -20,17 +20,17 @@ const Inbox = () => {
   return (
     <MoverLayout>
       <Head>
-        <title>Mover Profile - Inbox</title>
+        <title>Mover Profile - Calendar</title>
         <meta name="description" content="Rss removal and storage website" />
         <link rel="icon" href="/rrs_favicon.svg" />
       </Head>
 
       {/* <div className="py-[50px] bg-white/90 px-[30px]">
-        <p>Inbox</p>
+        <p>Reviews</p>
       </div> */}
       {userDetails.userDetails ? (
         <div className="py-[50px] bg-white/90 px-[30px]">
-          <p>Inbox</p>
+          <p>Calendar</p>
         </div>
       ) : (
         <div className="flex items-center justify-center h-[100vh] ">
@@ -41,4 +41,4 @@ const Inbox = () => {
   );
 };
 
-export default Inbox;
+export default Calendar;

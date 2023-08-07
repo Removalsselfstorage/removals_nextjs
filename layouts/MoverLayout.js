@@ -12,6 +12,7 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import { AiOutlineHome } from "react-icons/ai";
 import { MdWorkOutline } from "react-icons/md";
+import { FaRegCalendarAlt } from "react-icons/fa";
 import { HiOutlineInboxArrowDown } from "react-icons/hi2";
 import { BsImages } from "react-icons/bs";
 import { FiSettings } from "react-icons/fi";
@@ -32,6 +33,7 @@ const MoverLayout = ({ children }) => {
   return (
     <div className={`${textFont.variable} font-sans `}>
       <Navbar3 />
+      
       {userDetails.userDetails ? (
         <div className="flex bg-base-200/  pt-[50px]   lg:pt-[50px]">
           <aside className="flex-[0.4] border border-r-[2px]">
@@ -100,6 +102,23 @@ const MoverLayout = ({ children }) => {
               </li>
             </ul>
             <ul className=" z-[1]  py-[15px]  shadow-xl bg-base-100  text-[16px] px-[10px] w-[300px]">
+              {/* portfolio */}
+              <li className=" my-[10px] px-[0px] w-full">
+                <Link
+                  href="/mover-profile/calendar"
+                  className={`${
+                    router.pathname === "/mover-profile/calendar"
+                      ? "bg-primary/10 text-primary"
+                      : ""
+                  } flex items-center btn-dash py-[15px] px-[20px] rounded-[10px] w-full`}
+                >
+                  <span className="text-[25px] mr-[10px]">
+                    <FaRegCalendarAlt />
+                  </span>
+                  <a className="">Calendar</a>
+                </Link>
+              </li>
+              {/* portfolio */}
               <li className=" my-[10px] px-[0px] w-full">
                 <Link
                   href="/mover-profile/portfolio"

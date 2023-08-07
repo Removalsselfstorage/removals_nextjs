@@ -28,7 +28,15 @@ const MoverProfile = () => {
 
       {userDetails.userDetails ? (
         <div className="py-[50px] bg-white/90 px-[30px]">
-          <p>Dashboard</p>
+          <section>
+            <div className="flex flex-col">
+              <p className="font-bold text-[25px]">Dashboard</p>
+              <div className="flex items-center">
+                
+              </div>
+              
+            </div>
+          </section>
         </div>
       ) : (
         <div className="flex items-center justify-center h-[100vh] ">

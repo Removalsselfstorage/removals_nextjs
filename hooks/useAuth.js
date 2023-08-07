@@ -132,8 +132,8 @@ export const AuthProvider = ({ children }) => {
       );
       if (userCredential.user.emailVerified) {
         // setUser(userCredential.user);
-          dispatch(updateUserDetails(userCredential.user));
-        router.push("/");
+        dispatch(updateUserDetails(userCredential.user));
+        router.back();
       } else {
         setUser(userCredential.user);
         dispatch(

@@ -138,14 +138,14 @@ const MoverProfile = () => {
                 </p>
                 <p className="text-[13px] text-secondary">
                   Make sure to complete all the required steps (in red) in the
-                  "Set up your profile" below.
+                  "Set up your profile" section below.
                 </p>
               </div>
             </div>
           </section>
 
           {/* scroll section */}
-          <div className="w-[100%] h-[350px] sm:h-[320px] md:h-[270px] lg:h-[250px] relative flex overflow-hidden">
+          <div className="w-[100%] h-[55vh] sm:h-[45vh]  lg:h-[35vh]  relative flex overflow-x-hidden overflow-auto scrollbar-thin scrollbar-track-gray-200 scrollbar-thumb-gray-400 scrollbar-default">
             {sectionData.map((section, sectionIndex) => {
               let position = "translate-x-[100%]";
               if (sectionIndex === index) {
@@ -159,7 +159,7 @@ const MoverProfile = () => {
               }
               return (
                 <section
-                  className={`${position} mb-[30px] bg-gray-100/80  rounded-[10px] border pt-[10px] absolute top-0 left-0 w-[100%] h-[100%] opacity-0 transition-all flex flex-col `}
+                  className={`${position} mb-[30px]  bg-gray-100/80  rounded-[10px] border pt-[10px] absolute top-0 left-0 w-[100%] h-[100%] opacity-0 transition-all flex flex-col `}
                   key={section.id}
                 >
                   <div className="flex flex-col md:flex-row md:items-center md:justify-between bg-white px-[20px] py-[20px]">

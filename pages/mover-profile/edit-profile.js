@@ -56,6 +56,15 @@ const EditProfile = () => {
     setPhoneError(isValidPhoneNumber);
   };
 
+
+  const handleBioChange = (event) => {
+    const newText = event.target.value;
+    
+    if (newText.length <= 200) {
+      setPersonalBio(newText);
+    }
+  };
+
   const FormSubmit = () => {
     setActivateError(true);
     setSubmitError(false);
@@ -297,11 +306,11 @@ const EditProfile = () => {
                       activateError && !personalBio ? "ring ring-secondary" : ""
                     } textarea w-full textarea-primary min-h-[150px] max-h-[200px] placeholder:text-[16px] text-[15px]`}
                     placeholder="Tell us about yourself and your work experience"
-                    onChange={(e) => setPersonalBio(e.target.value)}
+                    onChange={handleBioChange}
                     defaultValue={personalBio}
                   ></textarea>
                   <p className="text-gray-500 mb-[10px] text-[15px] mt-[5px]">
-                    0 / 200 Characters
+                    {personalBio.length} / 200 Characters
                   </p>
                 </div>
 

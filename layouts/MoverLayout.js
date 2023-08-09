@@ -6,7 +6,7 @@ import Navbar2 from "@/components/Navbar/Navbar2";
 import SessionProvider from "@/utils/SessionProvider";
 import { CgProfile } from "react-icons/cg";
 import { LiaUserClockSolid } from "react-icons/lia";
-import { BiLogOut } from "react-icons/bi";
+import { BiLogOut, BiSolidBank } from "react-icons/bi";
 import Navbar3 from "@/components/Navbar/Navbar3";
 import { useRouter } from "next/router";
 import Link from "next/link";
@@ -36,7 +36,7 @@ const MoverLayout = ({ children }) => {
 
       {userDetails.userDetails ? (
         <div className="flex bg-base-200  pt-[50px]   lg:pt-[50px]">
-          <aside className="hidden md:flex lg:flex-[0.4] border border-r-[2px] md:flex-col lg:w-[300px]">
+          <aside className="md:sticky md:top-[80px] hidden md:flex md:flex-[0.4] lg:flex-[0.4] border border-r-[2px] md:flex-col lg:w-[300px]">
             <ul className="   pt-[30px] pb-[10px]  shadow-xl bg-base-100 text-[16px] px-[10px] border-b">
               <li className=" my-[10px] px-[0px] w-full">
                 <Link
@@ -151,6 +151,21 @@ const MoverLayout = ({ children }) => {
               </li>
               <li className=" my-[10px] px-[0px] w-full">
                 <Link
+                  href="/mover-profile/billing"
+                  className={`${
+                    router.pathname === "/mover-profile/billing"
+                      ? "bg-primary/10 text-primary"
+                      : ""
+                  } flex items-center btn-dash py-[15px] px-[20px] rounded-[10px] w-full`}
+                >
+                  <span className="text-[25px] mr-[10px]">
+                    <BiSolidBank />
+                  </span>
+                  <a className="hidden lg:flex">Billing</a>
+                </Link>
+              </li>
+              <li className=" my-[10px] px-[0px] w-full">
+                <Link
                   href="/mover-profile/reviews"
                   className={`${
                     router.pathname === "/mover-profile/reviews"
@@ -166,7 +181,7 @@ const MoverLayout = ({ children }) => {
               </li>
             </ul>
           </aside>
-          <main className="lg:flex-[1]">{children}</main>
+          <main className="md:flex-[1] lg:flex-[1]">{children}</main>
         </div>
       ) : (
         <div className="flex items-center justify-center h-[100vh] ">

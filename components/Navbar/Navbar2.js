@@ -39,7 +39,7 @@ const Navbar2 = () => {
                 {/* right side */}
                 <div className="navbar-end flex space-x-[10px]">
                   <div className="flex items-center">
-                    <div className="flex items-center mr-[10px] md:mr-[30px] font-semibold space-x-[7px]">
+                    <div className="hidden md:flex items-center mr-[10px] md:mr-[30px] font-semibold space-x-[7px]">
                       <RiCustomerService2Fill size={20} className="" />
                       <a href="tel:07869116203" className="link link-hover">
                         07869116203{" "}
@@ -128,7 +128,7 @@ const Navbar2 = () => {
                         logout();
                       }}
                     >
-                      <a className="btn-nav">Log Out</a>
+                      <a className="btn-nav ">Log Out</a>
                     </li>
                   )}
                 </ul>

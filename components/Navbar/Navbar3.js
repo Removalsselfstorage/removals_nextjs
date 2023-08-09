@@ -54,7 +54,7 @@ const Navbar3 = () => {
                   {/* right side */}
                   <div className="navbar-end flex space-x-[10px]">
                     <div className="flex items-center">
-                      <div className="flex items-center mr-[10px] md:mr-[30px] font-semibold space-x-[7px]">
+                      <div className="md:flex items-center mr-[10px] md:mr-[30px] font-semibold space-x-[7px] hidden">
                         <RiCustomerService2Fill size={20} className="" />
                         <a href="tel:07869116203" className="link link-hover">
                           07869116203{" "}
@@ -94,7 +94,7 @@ const Navbar3 = () => {
                             </li>
                             <li
                               onClick={() => logout()}
-                              className={`font-semibold hover:text-primary`}
+                              className={`font-semibold hover:text-primary cursor-pointer`}
                             >
                               <div className="flex">
                                 <span className="text-[20px] mr-[10px]">
@@ -254,7 +254,7 @@ const Navbar3 = () => {
                       </Link>
                     </li>
                     <li
-                      className=" my-[10px] px-[0px] w-full"
+                      className=" my-[10px] px-[0px] w-full cursor-pointer"
                       onClick={() => logout()}
                     >
                       <div

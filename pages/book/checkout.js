@@ -75,7 +75,7 @@ const Checkout = () => {
               </div>
 
               {/* checkout section*/}
-              <div className="flex flex-col-reverse  space-y-[20px] lg:space-y-0 lg:flex-row lg:space-x-[10px] mx-[10px] md:mx-[20px]">
+              <div className="flex flex-col-reverse   lg:space-y-0 lg:flex-row lg:space-x-[10px] mx-[10px] md:mx-[20px]">
                 {/* left section - pament form */}
                 <div className="lg:flex-[1.3] w-full">
                   <CheckoutForm
@@ -90,7 +90,7 @@ const Checkout = () => {
                 </div>
 
                 {/* right section - Move summary */}
-                <div className="lg:flex-[1] w-full ">
+                <div className="lg:flex-[1] w-full mb-[30px] lg:mb-[0px]">
                   <SummaryDetails
                     card={card}
                     paypal={paypal}

@@ -304,7 +304,7 @@ const CompleteHouse = () => {
                     <div className="form-control w-full ">
                       <label className="label">
                         <span className="label-text font-semibold">
-                          Location FROM*
+                          Location FROM<span className="text-secondary">*</span>
                         </span>
                       </label>
                       <GoogleSearchInput
@@ -324,7 +324,7 @@ const CompleteHouse = () => {
                     {/* floor */}
                     <div className="flex flex-col w-full flex-[1] ">
                       <label className="label">
-                        <span className="label-text font-semibold">Floor*</span>
+                        <span className="label-text font-semibold">Floor<span className="text-secondary">*</span></span>
                       </label>
                       <div className="flex items-center space-x-[5px]">
                         <div
@@ -386,7 +386,7 @@ const CompleteHouse = () => {
                     <div className="form-control w-full ">
                       <label className="label">
                         <span className="label-text font-semibold">
-                          Location TO*
+                          Location TO<span className="text-secondary">*</span>
                         </span>
                       </label>
                       <GoogleSearchInput
@@ -406,7 +406,7 @@ const CompleteHouse = () => {
                     {/* floor */}
                     <div className="flex flex-col w-full flex-[1] ">
                       <label className="label">
-                        <span className="label-text font-semibold">Floor*</span>
+                        <span className="label-text font-semibold">Floor<span className="text-secondary">*</span></span>
                       </label>
                       <div className="flex items-center space-x-[5px]">
                         <div
@@ -469,7 +469,7 @@ const CompleteHouse = () => {
                     <div className="form-control w-full">
                       <label className="label">
                         <span className="label-text font-semibold">
-                          First Name*
+                          First Name<span className="text-secondary">*</span>
                         </span>
                       </label>
                       <input
@@ -491,7 +491,7 @@ const CompleteHouse = () => {
                     <div className="form-control w-full ">
                       <label className="label">
                         <span className="label-text font-semibold">
-                          Last Name*
+                          Last Name<span className="text-secondary">*</span>
                         </span>
                       </label>
                       <input
@@ -516,7 +516,7 @@ const CompleteHouse = () => {
                     {/* email */}
                     <div className="form-control w-full ">
                       <label className="label">
-                        <span className="label-text font-semibold">Email*</span>
+                        <span className="label-text font-semibold">Email<span className="text-secondary">*</span></span>
                       </label>
                       <input
                         type="email"
@@ -544,7 +544,7 @@ const CompleteHouse = () => {
                     <div className="flex flex-col w-full flex-[1]">
                       <label className="label">
                         <span className="label-text font-semibold">
-                          Country Code*
+                          Country Code<span className="text-secondary">*</span>
                         </span>
                       </label>
                       <SelectSearch
@@ -562,7 +562,7 @@ const CompleteHouse = () => {
                     <div className="form-control w-full flex-[1]">
                       <label className="label">
                         <span className="label-text font-semibold">
-                          Telephone*
+                          Telephone<span className="text-secondary">*</span>
                         </span>
                       </label>
                       <input
@@ -593,7 +593,7 @@ const CompleteHouse = () => {
                     <div className="flex flex-col w-full">
                       <label className="label">
                         <span className="label-text font-semibold">
-                          Property Type*
+                          Property Type<span className="text-secondary">*</span>
                         </span>
                       </label>
                       <div className="w-full">
@@ -622,7 +622,7 @@ const CompleteHouse = () => {
                     <div className="form-control w-full ">
                       <label className="label">
                         <span className="label-text font-semibold">
-                          Number of Movers*
+                          Number of Movers<span className="text-secondary">*</span>
                         </span>
                       </label>
                       <div className="w-full">
@@ -652,7 +652,7 @@ const CompleteHouse = () => {
                     <div className="flex flex-col w-full">
                       <label className="label">
                         <span className="label-text font-semibold">
-                          Volume: CU/FT*
+                          Volume: CU/FT<span className="text-secondary">*</span>
                         </span>
                       </label>
                       <input
@@ -674,7 +674,7 @@ const CompleteHouse = () => {
                     <div className="form-control w-full ">
                       <label className="label">
                         <span className="label-text font-semibold">
-                          Mileage*
+                          Mileage<span className="text-secondary">*</span>
                         </span>
                       </label>
                       <div className="w-full">
@@ -702,7 +702,7 @@ const CompleteHouse = () => {
                     <div className="form-control">
                       <label className="label">
                         <span className="label-text font-semibold">
-                          Move Date*
+                          Move Date<span className="text-secondary">*</span>
                         </span>
                       </label>
                       <button

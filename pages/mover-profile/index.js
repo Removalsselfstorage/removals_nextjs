@@ -171,7 +171,7 @@ const MoverProfile = () => {
                 >
                   <div className="flex flex-col md:flex-row md:items-center md:justify-between bg-white px-[20px] py-[20px]">
                     <p className="font-bold text-[20px]">Set up your profile</p>
-                    <p className="">1 out of 6 completed</p>
+                    <p className="">0 out of 6 completed</p>
                   </div>
                   <div className="flex flex-col space-y-[20px] md:space-y-[0px] md:flex-row md:justify-between md:space-x-[50px] py-[20px] px-[20px]">
                     {/* left */}

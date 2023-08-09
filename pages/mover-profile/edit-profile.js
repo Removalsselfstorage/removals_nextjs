@@ -211,7 +211,7 @@ const EditProfile = () => {
                   </div>
                 </div>
                 {/* row 2 */}
-                <div className="flex flex-col items-center mb-[20px] justify-center space-y-[10px] lg:space-y-0 lg:flex-row lg:items-center lg:space-x-[30px]">
+                <div className="flex flex-col items-center mb-[20px] justify-center space-y-[10px] lg:space-y-0 lg:flex-row lg:items-start lg:space-x-[30px]">
                   {/* left */}
                   <div className="flex w-full flex-[1] flex-col items-center md:flex-row md:space-x-[20px] space-y-[10px] md:space-y-0 md:justify-center">
                     {/* Mobile* */}
@@ -232,6 +232,9 @@ const EditProfile = () => {
                         onChange={handlePhoneNumberChange}
                         defaultValue={phone}
                       />
+                      <p className="text-[14px] mt-[10px] link text-primary">
+                        Change mobile number
+                      </p>
                     </div>
                   </div>
                   {/* right */}
@@ -280,11 +283,14 @@ const EditProfile = () => {
                 </div>
                 {/* Personal Bio */}
                 <div className="form-control w-full">
-                  <label className="label ">
+                  <div className=" ">
                     <span className="label-text font-semibold text-[16px]">
                       Personal Bio<span className="text-secondary">*</span>
                     </span>
-                  </label>
+                  </div>
+                  <p className="text-gray-500 mb-[10px] text-[15px] mt-[5px]">
+                    (Do not include your phone number or website.)
+                  </p>
 
                   <textarea
                     className={`${
@@ -294,6 +300,9 @@ const EditProfile = () => {
                     onChange={(e) => setPersonalBio(e.target.value)}
                     defaultValue={personalBio}
                   ></textarea>
+                  <p className="text-gray-500 mb-[10px] text-[15px] mt-[5px]">
+                    0 / 200 Characters
+                  </p>
                 </div>
 
                 {/* Update button */}
@@ -337,7 +346,7 @@ const EditProfile = () => {
             </div>
 
             {/* right */}
-            <div className="lg:flex-[1] w-full bg-secondary/5 border rounded-[10px] shadow-lg py-[30px] px-[20px] mb-[30px] xl:mb-[0px]">
+            <div className="lg:flex-[1] h-fit w-full bg-secondary/5 border rounded-[10px] shadow-lg pt-[30px] pb-[50px] px-[20px] mb-[30px] xl:mb-[0px]">
               <div className="flex">
                 <p className="font-bold text-[22px] flex-grow ">
                   Make your profile <br />

@@ -35,8 +35,8 @@ const MoverLayout = ({ children }) => {
       <Navbar3 />
 
       {userDetails.userDetails ? (
-        <div className="flex bg-base-200  pt-[50px]   lg:pt-[50px]">
-          <aside className="md:sticky md:top-[80px] hidden md:flex md:flex-[0.4] lg:flex-[0.4] border border-r-[2px] md:flex-col lg:w-[300px]">
+        <div className="flex bg-base-200  pt-[50px]   lg:pt-[50px] ">
+          <aside className=" hidden md:flex md:flex-[0.4] lg:flex-[0.4] border border-r-[2px] md:flex-col lg:w-[300px] ">
             <ul className="   pt-[30px] pb-[10px]  shadow-xl bg-base-100 text-[16px] px-[10px] border-b">
               <li className=" my-[10px] px-[0px] w-full">
                 <Link

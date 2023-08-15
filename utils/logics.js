@@ -743,3 +743,64 @@ export function calculateMoverPrice(
 
   return price;
 }
+
+export function changeFontWeight(sentence, targetPhrase) {
+  // Find the starting index of the target phrase in the sentence
+  const startIndex = sentence?.indexOf(targetPhrase);
+
+  // If the target phrase is not found, return the original sentence
+  if (startIndex === -1) {
+    console.error("Target phrase not found");
+    return sentence;
+  }
+
+  // Build the modified sentence
+
+  return (
+    <>
+      {sentence?.slice(0, startIndex)}{" "}
+      <span className="font-bold">{targetPhrase}</span>
+      {sentence?.slice(startIndex + targetPhrase.length)}
+    </>
+  );
+}
+
+export function changeFontWeight2(sentence, targetPhrase) {
+  // Initialize the modified sentence
+  let modifiedSentence = sentence;
+
+  // Find the starting index of the first occurrence of the target phrase
+  let startIndex = modifiedSentence?.indexOf(targetPhrase);
+
+  // While the target phrase is found in the sentence
+  while (startIndex !== -1) {
+    // Build the modified sentence with the current occurrence wrapped in a <span>
+    modifiedSentence = (
+      <>
+        {modifiedSentence?.slice(0, startIndex)}
+        <span className="font-bold">{targetPhrase}</span>
+        {modifiedSentence?.slice(startIndex + targetPhrase.length)}
+      </>
+    );
+
+    // Find the starting index of the next occurrence of the target phrase
+    startIndex = modifiedSentence?.indexOf(targetPhrase);
+  }
+
+  // Return the final modified sentence
+  return modifiedSentence;
+}
+
+
+
+function boldenPhrase(sentence, phrase) {
+  // Use a regular expression to globally replace the phrase with a bold version
+  const boldenedSentence = sentence.replace(new RegExp(phrase, 'gi'), '<strong>$&</strong>');
+  return boldenedSentence;
+}
+
+// Example usage:
+const originalSentence = "The quick brown fox jumps over the lazy dog.";
+const phraseToBolden = "fox";
+const boldenedResult = boldenPhrase(originalSentence, phraseToBolden);
+// console.log(boldenedResult);

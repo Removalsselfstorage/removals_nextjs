@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   MdKeyboardArrowRight,
   MdPayments,
@@ -15,13 +15,18 @@ import Modal from "@/components/Modal/Modal";
 import SideModal from "@/components/Modal/SideModal";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllDetails, updateMoverDetails } from "@/store/quoteSlice";
+import {
+  getAllDetails,
+  updateMoverDetails,
+  updateMoverSideDetails,
+} from "@/store/quoteSlice";
 import StarRating from "@/components/Rating/EditHalfStars2";
 import { useRouter } from "next/navigation";
 import {
   convertToFloatOrRound,
   convertToFloatWithOneDecimal,
 } from "@/utils/logics";
+// import SideDrawer from "./sideDrawer";
 
 const MoverCard = ({
   image,
@@ -36,11 +41,36 @@ const MoverCard = ({
   price,
   hiresCount,
   description,
+  setShowLoader2,
+  showLoader2,
   score,
 }) => {
   const router = useRouter();
   const dispatch = useDispatch();
   const details = useSelector(getAllDetails);
+
+  const sideBarDispatch = () => {
+    setTimeout(() => {
+      setShowLoader2(true);
+    }, 0);
+    setTimeout(() => {
+      setShowLoader2(false);
+    }, 500);
+    dispatch(
+      updateMoverSideDetails({
+        image,
+        name,
+        loadArea,
+        rating,
+        reviewCount,
+        price,
+        hiresCount,
+        description,
+        selectedTime,
+        timeValue,
+      })
+    );
+  };
 
   const priceFirstDay = details.moveDetails.initialPackagePrice;
   const priceSecondDay = (priceFirstDay * 0.559).toFixed(); //74
@@ -58,6 +88,7 @@ const MoverCard = ({
   const [error, setError] = useState(false);
   const [submitError, setSubmitError] = useState(true);
   const [submitLoading, setSubmitLoading] = useState(false);
+  const [sideBarOpened, setSideBarOpened] = useState(false)
 
   const allTime = [
     { id: "7am - 9am", time: "7am - 9am" },
@@ -68,6 +99,21 @@ const MoverCard = ({
 
   const onTimeHandle = (id, time) => {
     setSelectedTime(id);
+    dispatch(
+      updateMoverSideDetails({
+        image,
+        name,
+        loadArea,
+        rating,
+        reviewCount,
+        price,
+        hiresCount,
+        description,
+        selectedTime: id,
+        selectedTime2: details.moverSideDetails.selectedTime2,
+        timeValue: time,
+      })
+    );
     setTimeValue(time);
   };
 
@@ -90,12 +136,32 @@ const MoverCard = ({
       router.push("/book/checkout");
     }
   };
-  // console.log(timeValue);
+  useEffect(() => {
+    dispatch(
+      updateMoverSideDetails({
+        image: details.moverSideDetails.image,
+        name: details.moverSideDetails.name,
+        loadArea: details.moverSideDetails.loadArea,
+        rating: details.moverSideDetails.rating,
+        reviewCount: details.moverSideDetails.reviewCount,
+        price: details.moverSideDetails.price,
+        hiresCount: details.moverSideDetails.hiresCount,
+        description: details.moverSideDetails.description,
+        selectedTime: null,
+        selectedTime2: null,
+        timeValue: null,
+      })
+    );
+  }, []);
+
+  // console.log(details.moverSideDetails.selectedTime);
 
   return (
     <>
-      <div className="flex border-[2px] rounded-[30px] my-[20px] shadow-xl overflow-hidden pb-[20px] w-full">
+      <div className="flex border-[2px] rounded-[30px] my-[20px] shadow-xl overflow-hidden  pb-[20px] w-full">
         <div className="flex flex-col w-full">
+          {/* side drawer */}
+
           {/* row 1 */}
           <div
             className={`${
@@ -106,20 +172,20 @@ const MoverCard = ({
           >
             {/* image + details */}
             {!bookSmart && (
-              <div className="flex flex-col md:flex-row md:items-center px-[20px] md:flex-[3] md:space-x-[30px] lg:space-x-[15px] mb-[20px] sm:mb-[10px] md:mb-[0px]">
+              <div className="flex flex-col mt-[10px] md:flex-row md:items-center px-[20px] md:flex-[3] md:space-x-[30px] lg:space-x-[15px] mb-[20px] sm:mb-[10px] md:mb-[0px]">
                 {/* image */}
                 {image && (
-                  <div
-                    className=" py-[20px]"
-                    onClick={() => {
-                      setShowModal(true);
-                    }}
-                  >
-                    <img
-                      src={image}
-                      alt=""
-                      className="h-[150px]  w-[300px] lg:w-[200px] object-cover md:h-[180px] lg:h-[140px] rounded-[30px]"
-                    />
+                  <div className="drawer-content" onClick={sideBarDispatch}>
+                    <label
+                      htmlFor="my-drawer-4"
+                      className="drawer-button py-[20px] cursor-pointer"
+                    >
+                      <img
+                        src={image}
+                        alt=""
+                        className="h-[150px]  w-[300px] lg:w-[200px] object-cover md:h-[180px] lg:h-[140px] rounded-[30px]"
+                      />
+                    </label>
                   </div>
                 )}
                 {/* mover details */}
@@ -132,24 +198,6 @@ const MoverCard = ({
                       </h2>
                     )}
                   </div>
-                  {/* phone / email */}
-                  {/* <div className="flex flex-col  sm:items-start  space-y-[5px] mb-[5px] sm:mb-[10px] text-[15px]">
-                <div className="flex items-center space-x-[5px]">
-                  <BiSolidPhoneCall className="text-primary" />
-                  <a href={`tel:${phone}`} className=" link link-hover">
-                    {phone}
-                  </a>
-                </div>
-                <div className="flex items-center space-x-[5px]">
-                  <MdEmail className="text-[20px] text-primary" />
-                  <a
-                    href={`mailto:${email}?subject=Enquiry`}
-                    className="link link-hover"
-                  >
-                    {email}
-                  </a>
-                </div>
-              </div> */}
 
                   {/* loading area */}
                   <div className="flex items-center space-x-[15px] md:space-x-[5px]  sm:items-start  space-y-[0px] lg:space-y-[0px] lg:flex-row lg:items-center mb-[5px] sm:mb-[7px] lg:mb-[7px] text-[15px]">
@@ -267,7 +315,14 @@ const MoverCard = ({
               {/* time */}
               <div className="grid grid-cols-2 justify-center gap-x-[10px] gap-y-[10px] sm:grid-cols-4 w-auto md:w-[450px]">
                 {allTime.map((tm, index) => {
+                  // let isActive;
                   let isActive = tm.id == selectedTime;
+                  // if (name == details.moverSideDetails.name) {
+                  //   isActive = tm.id == details.moverSideDetails.selectedTime2;
+                  // } else {
+                  //   isActive = tm.id == selectedTime;
+                  // }
+                  //  let isActive = tm.id == details.moverSideDetails.selectedTime;
                   return (
                     <div key={index} className="flex items-center text-[15px]">
                       <div

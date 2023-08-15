@@ -1,11 +1,12 @@
 import MoverLayout from "@/layouts/MoverLayout";
 import NormalLayout from "@/layouts/NormalLayout";
 import { getAllUserDetails } from "@/store/userSlice";
+import { FilePicker } from "evergreen-ui";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import { BiLogOut } from "react-icons/bi";
+import { BiLogOut, BiSolidPhoneCall } from "react-icons/bi";
 import { CgProfile } from "react-icons/cg";
 import { FiEdit } from "react-icons/fi";
 import { GiTrophyCup } from "react-icons/gi";
@@ -17,6 +18,7 @@ const EditProfile = () => {
   const router = useRouter();
   const userDetails = useSelector(getAllUserDetails);
 
+  const [imageUpload, setImageUpload] = useState(null);
   const [address, setAddress] = useState("");
   const [personalBio, setPersonalBio] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -41,6 +43,8 @@ const EditProfile = () => {
     setEmailError(emailPattern.test(e.target.value));
   };
 
+  const bioMaxLength = 200;
+
   //phone number validation
   const handlePhoneNumberChange = (event) => {
     const inputValue = event.target.value;
@@ -56,12 +60,17 @@ const EditProfile = () => {
     setPhoneError(isValidPhoneNumber);
   };
 
-
   const handleBioChange = (event) => {
     const newText = event.target.value;
-    
-    if (newText.length <= 200) {
+
+    if (newText.length <= bioMaxLength) {
       setPersonalBio(newText);
+    }
+  };
+
+  const handleKeyDown = (event) => {
+    if (personalBio.length >= bioMaxLength && event.key !== "Backspace") {
+      event.preventDefault(); // Prevent typing more characters
     }
   };
 
@@ -124,27 +133,42 @@ const EditProfile = () => {
                     {/* <div className="bg-gray-200 h-[120px] w-[120px] rounded-[10px] flex justify-center items-center text-[30px] font-bold">
                       OG
                     </div> */}
-                    {/* <div className="avatar ">
-                      <div className="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                        <img src="/customer_agent.jpg" />
+                    {imageUpload ? (
+                      <div className="avatar ">
+                        <div className="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                          <img src={URL.createObjectURL(imageUpload)} />
+                        </div>
                       </div>
-                    </div> */}
-                    <div className="avatar placeholder">
-                      <div className="bg-gray-200 rounded-full w-24">
-                        <span className="text-3xl font-bold">OG</span>
+                    ) : (
+                      <div className="avatar placeholder">
+                        <div className="bg-gray-200 rounded-full w-[120px]">
+                          <span className="text-3xl font-bold">OG</span>
+                        </div>
                       </div>
-                    </div>
+                    )}
 
                     <div className="flex flex-col">
-                      <p className="italic text-gray-400 text-[14px]">
+                      <p className=" text-gray-400  text-[14px]">
                         Accepted file types: PNG, JPG
                       </p>
-                      <p className="italic text-gray-400 text-[14px]">
+                      <p className=" text-gray-400 text-[14px] mb-[10px] ">
                         Maximum file size: 5MB
                       </p>
-                      <div className="btn btn-outline btn-secondary mt-[10px]">
+                      {/* <div className="btn btn-outline btn-secondary mt-[10px]">
                         Upload Picture
-                      </div>
+                      </div> */}
+                      <input
+                        type="file"
+                        className="file-input file-input-bordered file-input-secondary w-full max-w-xs "
+                        accept="image/png, image/gif, image/jpeg"
+                        onChange={(e) => {
+                          setImageUpload(e.target.files[0]);
+                        }}
+                      />
+                      {/* <FilePicker
+                      className="w-full max-w-xs"
+                      placeholder="Upload Profile Image"
+                      /> */}
                     </div>
                   </div>
                 </div>
@@ -185,7 +209,7 @@ const EditProfile = () => {
                       </label>
                       <input
                         type="text"
-                        placeholder="Type here"
+                        placeholder="First name"
                         className={`${
                           activateError && !firstName
                             ? "ring ring-secondary"
@@ -207,7 +231,7 @@ const EditProfile = () => {
                       </label>
                       <input
                         type="text"
-                        placeholder="Type here"
+                        placeholder="Last name"
                         className={`${
                           activateError && !lastName
                             ? "ring ring-secondary"
@@ -232,7 +256,7 @@ const EditProfile = () => {
                       </label>
                       <input
                         type="tel"
-                        placeholder="Type here"
+                        placeholder="Mobile number"
                         className={`${
                           activateError && (!phone || !phoneError)
                             ? "ring ring-secondary"
@@ -241,9 +265,39 @@ const EditProfile = () => {
                         onChange={handlePhoneNumberChange}
                         defaultValue={phone}
                       />
-                      <p className="text-[14px] mt-[10px] link text-primary">
+                      <p
+                        className="text-[14px] mt-[10px] link text-primary"
+                        onClick={() => window.my_modal_3.showModal()}
+                      >
                         Change mobile number
                       </p>
+                      {/* modal */}
+                      <dialog
+                        id="my_modal_3"
+                        className="modal py-[20px] px-[10px]"
+                      >
+                        <form method="dialog" className="modal-box ">
+                          <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 border border-primary text-primary">
+                            ✕
+                          </button>
+                          <h3 className="font-bold text-lg text-primary">
+                            Change your Mobile Number
+                          </h3>
+                          <p className="py-4">
+                            If you wish to change your mobile number, please
+                            contact us and we will correct it for you.
+                          </p>
+                          <div className="btn btn-secondary">
+                            <BiSolidPhoneCall size={20} className="" />
+                            <a href="tel:(800)-995-5003" className="">
+                              (800) 995-5003{" "}
+                            </a>
+                          </div>
+                        </form>
+                        <form method="dialog" className="modal-backdrop">
+                          <button>close</button>
+                        </form>
+                      </dialog>
                     </div>
                   </div>
                   {/* right */}
@@ -257,7 +311,7 @@ const EditProfile = () => {
                       </label>
                       <input
                         type="email"
-                        placeholder="Type here"
+                        placeholder="Email address"
                         className={`${
                           activateError && !email ? "ring ring-secondary" : ""
                         } input input-primary w-full h-[43px]`}
@@ -307,10 +361,12 @@ const EditProfile = () => {
                     } textarea w-full textarea-primary min-h-[150px] max-h-[200px] placeholder:text-[16px] text-[15px]`}
                     placeholder="Tell us about yourself and your work experience"
                     onChange={handleBioChange}
-                    defaultValue={personalBio}
+                    value={personalBio}
+                    // disabled={personalBio.length >= bioMaxLength}
+                    onKeyDown={handleKeyDown}
                   ></textarea>
                   <p className="text-gray-500 mb-[10px] text-[15px] mt-[5px]">
-                    {personalBio.length} / 200 Characters
+                    {personalBio.length} / {bioMaxLength} Characters
                   </p>
                 </div>
 

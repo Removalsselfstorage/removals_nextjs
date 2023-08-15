@@ -10,7 +10,11 @@ import FullRating from "@/components/Rating/FullRating";
 import MoverCard from "@/components/BookingPages/movers/MoverCard";
 import { BiSolidPhoneCall } from "react-icons/bi";
 import MoveDetails from "@/components/BookingPages/movers/MoveDetails";
-import { getAllDetails, updatePickPrice } from "@/store/quoteSlice";
+import {
+  getAllDetails,
+  updatePickPrice,
+  updateMoverSideDetails,
+} from "@/store/quoteSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { homeMovers } from "@/dummyData/dummyData";
 import {
@@ -25,6 +29,7 @@ import {
 import Loader1 from "@/components/loaders/loader1";
 import dayjs from "dayjs";
 import { useRouter } from "next/navigation";
+import SideDrawer from "@/components/BookingPages/movers/SideDrawer";
 
 const Movers = () => {
   const router = useRouter();
@@ -76,7 +81,10 @@ const Movers = () => {
   };
 
   const [showLoader, setShowLoader] = useState(false);
+  const [showLoader2, setShowLoader2] = useState(false);
   const [todayPick, setTodayPick] = useState(false);
+  const [selectedTime, setSelectedTime] = useState(null);
+  const [timeValue, setTimeValue] = useState("");
 
   const firstCard = getFirstSortedHomeMover(homeMovers);
 
@@ -93,7 +101,7 @@ const Movers = () => {
     } else {
       setTodayPick(false);
     }
-    console.log(today2 == date2);
+    // console.log(today2 == date2);
   }, []);
 
   useEffect(() => {
@@ -117,7 +125,15 @@ const Movers = () => {
       {details.moveDetails.initialPackagePrice ? (
         <main className="">
           <div className="mb-[70px] lg:mb-[100px] pt-[80px] md:pt-[100px] ">
+            <SideDrawer
+              showLoader2={showLoader2}
+              selectedTime={selectedTime}
+              setSelectedTime={setSelectedTime}
+              timeValue={timeValue}
+              setTimeValue={setTimeValue}
+            />
             {showLoader && <Loader1 />}
+            {/* {showLoader2 && <Loader1 />} */}
             <div className="md:max-w-7xl mx-auto">
               {/* features links */}
               <FeaturesScroll />
@@ -172,6 +188,11 @@ const Movers = () => {
                               hiresCount={firstCard.hireCount}
                               description={firstCard.companyDescription}
                               score={firstCard.score}
+                              setShowLoader2={setShowLoader2}
+                              showLoader2={showLoader2}
+                             
+                              // timeValue={timeValue}
+                              // setTimeValue={setTimeValue}
                               // pickPrice={pickPrice} setPickPrice={setPickPrice}
                             />
                           </div>
@@ -195,6 +216,9 @@ const Movers = () => {
                         hiresCount={firstCard.hireCount}
                         description={firstCard.companyDescription}
                         score={firstCard.score}
+                        setShowLoader2={setShowLoader2}
+                        showLoader2={showLoader2}
+                       
                         // pickPrice={pickPrice} setPickPrice={setPickPrice}
                       />
                     </div>
@@ -224,6 +248,9 @@ const Movers = () => {
                             hiresCount={mv.hireCount}
                             description={mv.companyDescription}
                             score={mv.score}
+                            setShowLoader2={setShowLoader2}
+                            showLoader2={showLoader2}
+                            
                             // pickPrice={pickPrice} setPickPrice={setPickPrice}
                           />
                         </div>

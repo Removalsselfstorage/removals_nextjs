@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   isAMover: false,
@@ -6,20 +6,20 @@ const initialState = {
   serviceLocation: {
     // moveService: '',
     locationFrom: {
-      name: '',
-      postCode: '',
-      city: '',
-      state: '',
-      country: '',
+      name: "",
+      postCode: "",
+      city: "",
+      state: "",
+      country: "",
       floor: 0,
       liftAvailable: false,
     },
     locationTo: {
-      name: '',
-      postCode: '',
-      city: '',
-      state: '',
-      country: '',
+      name: "",
+      postCode: "",
+      city: "",
+      state: "",
+      country: "",
       floor: 0,
       liftAvailable: false,
     },
@@ -27,54 +27,69 @@ const initialState = {
 
   // personalDetails
   personalDetails: {
-    firstName: '',
-    lastName: '',
-    email: '',
-    countryCode: '',
-    telephone: '',
+    firstName: "",
+    lastName: "",
+    email: "",
+    countryCode: "",
+    telephone: "",
   },
 
   // moveDetails
   moveDetails: {
-    propertyType: '',
-    numberOfMovers: '',
-    mileage: '',
-    volume: '',
+    propertyType: "",
+    numberOfMovers: "",
+    mileage: "",
+    volume: "",
     duration: 3,
-    moveDate: '',
-    moveDateRaw: '',
-    movePackage: '',
-    quoteRef: '',
+    moveDate: "",
+    moveDateRaw: "",
+    movePackage: "",
+    quoteRef: "",
     initialPackagePrice: 0,
-    
+  },
+
+  //moversideDetails
+
+  moverSideDetails: {
+    image: "",
+    name: "",
+    loadArea: "",
+    rating: 0,
+    reviewCount: 0,
+    price: 0,
+    hiresCount: 0,
+    description: "",
+    selectedTime: null,
+    selectedTime2: null,
+    timeValue: ""
   },
 
   // moverDetails
   moverDetails: {
-    moverName: '',
-    moverTime: '',
-    moverPrice: '',
-    priceSecondDay: '',
-    priceThirdDay: '',
-    priceOtherDays: '',
-    priceSundays: '',
+    moverName: "",
+    moverTime: "",
+    moverPrice: "",
+    priceSecondDay: "",
+    priceThirdDay: "",
+    priceOtherDays: "",
+    priceSundays: "",
     pickPrice: 0,
-    moveDateFormatted: '',
-    dateId: 1
+    moveDateFormatted: "",
+    dateId: 1,
   },
 
   // paymentDetails
   paymentDetails: {
-    comment: '',
+    comment: "",
     createAccount: true,
-    paymentMethod: '',
+    paymentMethod: "",
     paidPart: false,
     paidFull: false,
   },
 };
 
 export const quoteSlice = createSlice({
-  name: 'quote',
+  name: "quote",
   initialState,
   reducers: {
     updateLocationDetails: (state, action) => {
@@ -94,7 +109,10 @@ export const quoteSlice = createSlice({
     },
     updatePickPrice: (state, action) => {
       state.moverDetails.pickPrice = action.payload;
-    }
+    },
+    updateMoverSideDetails: (state, action) => {
+      state.moverSideDetails = action.payload;
+    },
   },
 });
 
@@ -105,6 +123,7 @@ export const {
   updateMoverDetails,
   updatePaymentDetails,
   updatePickPrice,
+  updateMoverSideDetails,
 } = quoteSlice.actions;
 
 export const getAllDetails = (state) => state.quote;

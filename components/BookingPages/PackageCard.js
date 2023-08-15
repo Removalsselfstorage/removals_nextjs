@@ -261,58 +261,72 @@ const PackageCard = ({
           </div>
           <ul className="text-gray-500 mt-[15px] md:mt-[20px] text-start text-[13px] w-full">
             <li className="border-b  py-[5px] flex items-center">
-              <span className={`${
-                    preferred ? "text-secondary" : "text-primary"
-                  } mr-[5px] `}>
+              <span
+                className={`${
+                  preferred ? "text-secondary" : "text-primary"
+                } mr-[5px] `}
+              >
                 <FiCheckCircle />
               </span>
               {f1}
             </li>
             <li className="border-b py-[5px] flex items-center">
-              <span className={`${
-                    preferred ? "text-secondary" : "text-primary"
-                  } mr-[5px] `}>
+              <span
+                className={`${
+                  preferred ? "text-secondary" : "text-primary"
+                } mr-[5px] `}
+              >
                 <FiCheckCircle />
               </span>
               {f2}
             </li>
             <li className="border-b py-[5px] flex items-center">
-              <span className={`${
-                    preferred ? "text-secondary" : "text-primary"
-                  } mr-[5px] `}>
+              <span
+                className={`${
+                  preferred ? "text-secondary" : "text-primary"
+                } mr-[5px] `}
+              >
                 <FiCheckCircle />
               </span>
               {f3}
             </li>
             <li className="border-b py-[5px] flex items-center">
-              <span className={`${
-                    preferred ? "text-secondary" : "text-primary"
-                  } mr-[5px] `}>
+              <span
+                className={`${
+                  preferred ? "text-secondary" : "text-primary"
+                } mr-[5px] `}
+              >
                 <FiCheckCircle />
               </span>
               {f4}
             </li>
             <li className="border-b py-[5px] flex items-center">
-              <span className={`${
-                    preferred ? "text-secondary" : "text-primary"
-                  } mr-[5px] `}>
+              <span
+                className={`${
+                  preferred ? "text-secondary" : "text-primary"
+                } mr-[5px] `}
+              >
                 <FiCheckCircle />
               </span>
               {f5}
             </li>
             <li className="border-b py-[5px] flex items-center">
-              <span className={`${
-                    preferred ? "text-secondary" : "text-primary"
-                  } mr-[5px] `}>
+              <span
+                className={`${
+                  preferred ? "text-secondary" : "text-primary"
+                } mr-[5px] `}
+              >
                 <FiCheckCircle />
               </span>
               {f6}
             </li>
             {f7 && (
               <li className="border-b py-[5px] flex items-center">
-                <span className={`${
+                <span
+                  className={`${
                     preferred ? "text-secondary" : "text-primary"
-                  } mr-[5px] `}>
+                  } mr-[5px] `}
+                >
                   <FiCheckCircle />
                 </span>
                 {f7}
@@ -320,9 +334,11 @@ const PackageCard = ({
             )}
             {f8 && (
               <li className="border-b py-[5px] flex items-center">
-                <span className={`${
+                <span
+                  className={`${
                     preferred ? "text-secondary" : "text-primary"
-                  } mr-[5px] `}>
+                  } mr-[5px] `}
+                >
                   <FiCheckCircle />
                 </span>
                 {f8}
@@ -330,9 +346,11 @@ const PackageCard = ({
             )}
             {f9 && (
               <li className="border-b py-[5px] flex items-center">
-                <span className={`${
+                <span
+                  className={`${
                     preferred ? "text-secondary" : "text-primary"
-                  } mr-[5px] `}>
+                  } mr-[5px] `}
+                >
                   <FiCheckCircle />
                 </span>
                 {f9}
@@ -340,9 +358,11 @@ const PackageCard = ({
             )}
             {f10 && (
               <li className="border-b py-[5px] flex items-center">
-                <span className={`${
+                <span
+                  className={`${
                     preferred ? "text-secondary" : "text-primary"
-                  } mr-[5px] `}>
+                  } mr-[5px] `}
+                >
                   <FiCheckCircle />
                 </span>
                 {f10}
@@ -350,9 +370,11 @@ const PackageCard = ({
             )}
             {f11 && (
               <li className="border-b py-[5px] flex items-center">
-                <span className={`${
+                <span
+                  className={`${
                     preferred ? "text-secondary" : "text-primary"
-                  } mr-[5px] `}>
+                  } mr-[5px] `}
+                >
                   <FiCheckCircle />
                 </span>
                 {f11}
@@ -360,9 +382,11 @@ const PackageCard = ({
             )}
             {f12 && (
               <li className="border-b py-[5px] flex items-center">
-                <span className={`${
+                <span
+                  className={`${
                     preferred ? "text-secondary" : "text-primary"
-                  } mr-[5px] `}>
+                  } mr-[5px] `}
+                >
                   <FiCheckCircle />
                 </span>
                 {f12}

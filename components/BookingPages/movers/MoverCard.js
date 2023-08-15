@@ -154,7 +154,6 @@ const MoverCard = ({
     );
   }, []);
 
-  // console.log(details.moverSideDetails.selectedTime);
 
   return (
     <>

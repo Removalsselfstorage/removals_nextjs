@@ -193,7 +193,7 @@ const PackageCard = ({
         initialPackagePrice: totalPrice(totalMileage),
       })
     );
-    router.push(`/book/${link}`);
+    router.push(`/book/movers`);
   };
 
   // console.log(details)

@@ -61,7 +61,7 @@ const initialState = {
     description: "",
     selectedTime: null,
     selectedTime2: null,
-    timeValue: ""
+    timeValue: null
   },
 
   // moverDetails

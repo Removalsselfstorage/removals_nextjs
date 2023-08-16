@@ -10,6 +10,10 @@ import { AuthProvider } from "@/hooks/useAuth";
 
 let persistor = persistStore(store);
 
+persistor.flush().then(() => {
+  console.log("Persisted state has been cleared.");
+});
+
 export default function App({
   Component,
   pageProps: { session, ...pageProps },

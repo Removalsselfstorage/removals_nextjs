@@ -1,5 +1,6 @@
 import MoverLayout from "@/layouts/MoverLayout";
 import NormalLayout from "@/layouts/NormalLayout";
+import { uploadMoverDetails } from "@/lib/uploadMoverDetails";
 import { getAllUserDetails } from "@/store/userSlice";
 import { FilePicker } from "evergreen-ui";
 import Head from "next/head";
@@ -13,37 +14,72 @@ import { GiTrophyCup } from "react-icons/gi";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { TiPin } from "react-icons/ti";
 import { useSelector } from "react-redux";
+import * as Yup from "yup";
+import { Form, Formik, useField, Field, ErrorMessage } from "formik";
+import NormalInput from "@/components/Inputs/NormalInput";
+import FileInput from "@/components/Inputs/FileInput";
+import TextAreaInput from "@/components/Inputs/TextAreaInput";
+import FormikControl from "@/components/Formik/FormikControl";
+import TextError from "@/components/Formik/TextError";
+import MyTextInput from "@/components/InputsType/MyTextInput";
+import MyTextArea from "@/components/InputsType/MyTextArea";
 
 const EditProfile = () => {
   const router = useRouter();
   const userDetails = useSelector(getAllUserDetails);
 
-  const [imageUpload, setImageUpload] = useState(null);
-  const [address, setAddress] = useState("");
-  const [personalBio, setPersonalBio] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [phone, setPhone] = useState("");
+  const initialValues = {
+    firstName: "",
+    lastName: "",
+    phone: "",
+    email: "",
+    address: "",
+    personalBio: "",
+    // imageUpload: null,
+    success: "",
+    error: "",
+  };
+
+  const [moverDetails, setMoverDetails] = useState(initialValues);
+  // const [imageUpload, setImageUpload] = useState(null);
+  // const [address, setAddress] = useState("");
+  const [personalBioCount, setPersonalBioCount] = useState("");
+  // const [firstName, setFirstName] = useState("");
+  // const [lastName, setLastName] = useState("");
+  // const [phone, setPhone] = useState("");
   const [phoneError, setPhoneError] = useState(true);
-  const [email, setEmail] = useState("");
+  // const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState(true);
   const [submitError, setSubmitError] = useState(false);
   const [submitLoading, setSubmitLoading] = useState(false);
   const [activateError, setActivateError] = useState(false);
   const [showUpdateMessage, setShowUpdateMessage] = useState(false);
 
+  console.log(personalBioCount);
+
+  const {
+    firstName,
+    lastName,
+    phone,
+    email,
+    address,
+    personalBio,
+    // imageUpload,
+    success,
+    error,
+  } = moverDetails;
+
+  // console.log({ address, personalBio, firstName });
+
   //   Email validation
   const handleEmailChange = (e) => {
-    // const inputValue = e.target.value;
     setEmail(e.target.value);
 
-    // Regular expression to validate email format
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    // setIsValid(emailPattern.test(inputValue));
     setEmailError(emailPattern.test(e.target.value));
   };
 
-  const bioMaxLength = 200;
+  const bioMaxLength = 20;
 
   //phone number validation
   const handlePhoneNumberChange = (event) => {
@@ -60,12 +96,14 @@ const EditProfile = () => {
     setPhoneError(isValidPhoneNumber);
   };
 
-  const handleBioChange = (event) => {
-    const newText = event.target.value;
-
-    if (newText.length <= bioMaxLength) {
-      setPersonalBio(newText);
-    }
+  const handleBioChange = (e) => {
+    // const newText = event.target.value;
+    // setPersonalBioCount(e.target.value);
+    // if (value.length <= bioMaxLength) {
+    //   setPersonalBioCount(e.target.value);
+    // }
+    const { name, value } = e.target;
+    setMoverDetails({ ...moverDetails, [name]: value });
   };
 
   const handleKeyDown = (event) => {
@@ -74,26 +112,89 @@ const EditProfile = () => {
     }
   };
 
-  const FormSubmit = () => {
-    setActivateError(true);
-    setSubmitError(false);
-    if (
-      !address ||
-      !firstName ||
-      !lastName ||
-      !email ||
-      !emailError ||
-      !phoneError ||
-      !personalBio ||
-      !phone
-    ) {
-      setSubmitError(true);
-    } else {
-      // setSubmitLoading(true);
-      setSubmitError(false);
-      setShowUpdateMessage(true);
-      alert("Updated profile");
-    }
+  // const MAX_FILE_SIZE = 102400; //100KB
+  const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB in bytes;
+
+  // const validFileExtensions = { image: ['jpg', 'gif', 'png', 'jpeg', 'svg', 'webp'] };
+  const validFileExtensions = { image: ["jpg", "gif", "png", "jpeg", "webp"] };
+
+  function isValidFileType(fileName, fileType) {
+    return (
+      fileName &&
+      validFileExtensions[fileType].indexOf(fileName.split(".").pop()) > -1
+    );
+  }
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setMoverDetails({ ...moverDetails, [name]: value });
+  };
+
+  const updateValidation = Yup.object({
+    firstName: Yup.string().required("First name is required"),
+    lastName: Yup.string().required("Last name is required"),
+    email: Yup.string()
+      .email("Please enter a valid email address")
+      .required("Email address is required"),
+    address: Yup.string().required("Address is required"),
+    // phone: Yup.string().matches(/(\+91\ )[6-9]{1}[0-9 ]{4}[0-9 ]{4}[0-9]{3}/, {
+    phone: Yup.string()
+      .matches(/^(?:\d{10}|\d{11})$/, {
+        message: "Invalid phone number",
+        excludeEmptyString: false,
+      })
+      .required("Phone number is required"),
+    personalBio: Yup.string().required("Personal is required"),
+    // imageUpload: Yup.mixed()
+    //   .required("Image is required")
+    //   .test("is-valid-type", "Not a valid image type", (value) =>
+    //     isValidFileType(value && value.name.toLowerCase(), "imageUpload")
+    //   )
+    //   .test(
+    //     "is-valid-size",
+    //     "Max allowed size is 5MB",
+    //     (value) => value && value.size <= MAX_FILE_SIZE
+    //   ),
+  });
+
+  const formSubmit = async (values, { setSubmitting }) => {
+    // setSubmitLoading(true);
+    // setActivateError(true);
+    // setSubmitError(false);
+
+    // const result = await uploadMoverDetails({
+    //   imageUpload,
+    //   address,
+    //   personalBio,
+    //   firstName,
+    //   lastName,
+    //   email,
+    //   phone,
+    // });
+
+    // if (result) {
+    //   setSubmitLoading(false);
+    //   setShowUpdateMessage(true);
+    // } else {
+    //   alert("Failed to update profile");
+    // }
+
+    // setMoverDetails({
+    //   ...moverDetails,
+    //   firstName: "",
+    //   lastName: "",
+    //   phone: "",
+    //   email: "",
+    //   address: "",
+    //   personalBio: "",
+    //   imageUpload: null,
+    // });
+    setTimeout(() => {
+      alert(JSON.stringify(values, null, 2));
+      setSubmitting(false);
+    }, 400);
+
+    // window.location.reload();
   };
 
   useEffect(() => {
@@ -127,287 +228,313 @@ const EditProfile = () => {
           <div className="  flex flex-col-reverse  xl:space-y-0 xl:flex-row xl:space-x-[20px] mx-[10px] md:mx-[30px]">
             {/* left */}
             <div className="lg:flex-[1.5] w-full bg-white/70 border px-[20px] py-[30px] rounded-[10px] shadow-lg">
-              <section className="mb-[30px]">
-                <div className="flex flex-col">
-                  <div className="flex items-center space-x-[30px]">
-                    {/* <div className="bg-gray-200 h-[120px] w-[120px] rounded-[10px] flex justify-center items-center text-[30px] font-bold">
-                      OG
-                    </div> */}
-                    {imageUpload ? (
-                      <div className="avatar ">
-                        <div className="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                          <img src={URL.createObjectURL(imageUpload)} />
-                        </div>
-                      </div>
-                    ) : (
-                      <div className="avatar placeholder">
-                        <div className="bg-gray-200 rounded-full w-[120px]">
-                          <span className="text-3xl font-bold">OG</span>
-                        </div>
-                      </div>
-                    )}
+              <Formik
+                // enableReinitialize
+                initialValues={moverDetails}
+                validationSchema={updateValidation}
+                onSubmit={formSubmit}
+                validateOnchange={false}
+                // validateOnBlur={false}
+              >
+                {({
+                  values,
+                  errors,
+                  touched,
+                  handleChange,
+                  handleBlur,
+                  handleSubmit,
+                  isSubmitting,
+                  isValid,
+                }) => (
+                  <Form>
+                    {/* <section className="mb-[30px]">
+                      <div className="flex flex-col">
+                        <div className="flex items-center space-x-[30px]">
+                          {imageUpload ? (
+                            <div className="avatar ">
+                              <div className="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                                <img src={URL.createObjectURL(imageUpload)} />
+                              </div>
+                            </div>
+                          ) : (
+                            <div className="avatar placeholder">
+                              <div className="bg-gray-200 rounded-full w-[120px]">
+                                <span className="text-3xl font-bold">OG</span>
+                              </div>
+                            </div>
+                          )}
 
-                    <div className="flex flex-col">
-                      <p className=" text-gray-400  text-[14px]">
-                        Accepted file types: PNG, JPG
-                      </p>
-                      <p className=" text-gray-400 text-[14px] mb-[10px] ">
-                        Maximum file size: 5MB
-                      </p>
-                      {/* <div className="btn btn-outline btn-secondary mt-[10px]">
-                        Upload Picture
-                      </div> */}
-                      <input
-                        type="file"
-                        className="file-input file-input-bordered file-input-secondary w-full max-w-xs "
-                        accept="image/png, image/gif, image/jpeg"
-                        onChange={(e) => {
-                          setImageUpload(e.target.files[0]);
-                        }}
-                      />
-                      {/* <FilePicker
-                      className="w-full max-w-xs"
-                      placeholder="Upload Profile Image"
-                      /> */}
-                    </div>
-                  </div>
-                </div>
-              </section>
-
-              <section className="mb-[30px]">
-                <div className="rounded-[10px] bg-primary/5 flex flex-col py-[30px] px-[20px] text-[15px]">
-                  <div className="flex space-x-[10px] mb-[10px]">
-                    {/* <IoMdNotificationsOutline className="text-primary text-[30px] " /> */}
-                    <p className="">
-                      Upload{" "}
-                      <span className="font-bold">images of yourself</span>. Do
-                      not include images with phone numbers or websites.
-                    </p>
-                  </div>
-                  <p className="">
-                    We encourage you to upload a profile picture{" "}
-                    <span className="font-bold">related to your work!</span>
-                  </p>
-                  <p className="">
-                    <span className="font-bold">Example: </span> If you are a
-                    removal company upload an image wih your van.
-                  </p>
-                </div>
-              </section>
-
-              <section>
-                {/* row 1 */}
-                <div className="flex flex-col items-center mb-[20px] justify-center space-y-[10px] lg:space-y-0 lg:flex-row lg:items-center lg:space-x-[30px]">
-                  {/* left */}
-                  <div className="flex w-full flex-[1] flex-col items-center md:flex-row md:space-x-[20px] space-y-[10px] md:space-y-0 md:justify-center">
-                    {/* first name */}
-                    <div className="form-control w-full">
-                      <label className="label ">
-                        <span className="label-text font-semibold text-[16px]">
-                          First Name<span className="text-secondary">*</span>
-                        </span>
-                      </label>
-                      <input
-                        type="text"
-                        placeholder="First name"
-                        className={`${
-                          activateError && !firstName
-                            ? "ring ring-secondary"
-                            : ""
-                        } input input-primary w-full h-[43px]`}
-                        onChange={(e) => setFirstName(e.target.value)}
-                        defaultValue={firstName}
-                      />
-                    </div>
-                  </div>
-                  {/* right */}
-                  <div className="flex flex-[1] w-full flex-col md:flex-row md:space-x-[10px] space-y-[10px] md:space-y-0 md:justify-center">
-                    {/* last name */}
-                    <div className="form-control w-full ">
-                      <label className="label">
-                        <span className="label-text font-semibold text-[16px]">
-                          Last Name<span className="text-secondary">*</span>
-                        </span>
-                      </label>
-                      <input
-                        type="text"
-                        placeholder="Last name"
-                        className={`${
-                          activateError && !lastName
-                            ? "ring ring-secondary"
-                            : ""
-                        } input input-primary w-full h-[43px]`}
-                        onChange={(e) => setLastName(e.target.value)}
-                        defaultValue={lastName}
-                      />
-                    </div>
-                  </div>
-                </div>
-                {/* row 2 */}
-                <div className="flex flex-col items-center mb-[20px] justify-center space-y-[10px] lg:space-y-0 lg:flex-row lg:items-start lg:space-x-[30px]">
-                  {/* left */}
-                  <div className="flex w-full flex-[1] flex-col items-center md:flex-row md:space-x-[20px] space-y-[10px] md:space-y-0 md:justify-center">
-                    {/* Mobile* */}
-                    <div className="form-control w-full flex-[1]">
-                      <label className="label">
-                        <span className="label-text font-semibold text-[16px]">
-                          Mobile<span className="text-secondary">*</span>
-                        </span>
-                      </label>
-                      <input
-                        type="tel"
-                        placeholder="Mobile number"
-                        className={`${
-                          activateError && (!phone || !phoneError)
-                            ? "ring ring-secondary"
-                            : ""
-                        } input input-primary w-full h-[43px]`}
-                        onChange={handlePhoneNumberChange}
-                        defaultValue={phone}
-                      />
-                      <p
-                        className="text-[14px] mt-[10px] link text-primary"
-                        onClick={() => window.my_modal_3.showModal()}
-                      >
-                        Change mobile number
-                      </p>
-                      {/* modal */}
-                      <dialog
-                        id="my_modal_3"
-                        className="modal py-[20px] px-[10px]"
-                      >
-                        <form method="dialog" className="modal-box ">
-                          <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 border border-primary text-primary">
-                            ✕
-                          </button>
-                          <h3 className="font-bold text-lg text-primary">
-                            Change your Mobile Number
-                          </h3>
-                          <p className="py-4">
-                            If you wish to change your mobile number, please
-                            contact us and we will correct it for you.
-                          </p>
-                          <div className="btn btn-secondary">
-                            <BiSolidPhoneCall size={20} className="" />
-                            <a href="tel:(800)-995-5003" className="">
-                              (800) 995-5003{" "}
-                            </a>
+                          <div className="flex flex-col">
+                            <p className=" text-gray-400  text-[14px]">
+                              Accepted file types: PNG, JPG
+                            </p>
+                            <p className=" text-gray-400 text-[14px] mb-[10px] ">
+                              Maximum file size: 5MB
+                            </p>
+                            <FileInput
+                              type="file"
+                              name="imageUpload"
+                              // className="file-input file-input-bordered file-input-secondary w-full max-w-xs "
+                              // accept="image/png, image/gif, image/jpeg"
+                              onChange={(e) => {
+                                // const { name, value, files } = e.target;
+                                setMoverDetails({
+                                  ...moverDetails,
+                                  imageUpload: e.target.files[0],
+                                });
+                                // setImageUpload(e.target.files[0]);
+                              }}
+                            />
                           </div>
-                        </form>
-                        <form method="dialog" className="modal-backdrop">
-                          <button>close</button>
-                        </form>
-                      </dialog>
-                    </div>
-                  </div>
-                  {/* right */}
-                  <div className="flex flex-[1] w-full flex-col md:flex-row md:space-x-[10px] space-y-[10px] md:space-y-0 md:justify-center">
-                    {/* email */}
-                    <div className="form-control w-full ">
-                      <label className="label">
-                        <span className="label-text font-semibold text-[16px]">
-                          Email<span className="text-secondary">*</span>
-                        </span>
-                      </label>
-                      <input
-                        type="email"
-                        placeholder="Email address"
-                        className={`${
-                          activateError && !email ? "ring ring-secondary" : ""
-                        } input input-primary w-full h-[43px]`}
-                        onChange={handleEmailChange}
-                        //
-                        defaultValue={email}
-                      />
-                      {!emailError && (
-                        <p className="text-[14px] text-secondary mt-[5px]">
-                          Please enter a valid email
+                        </div>
+                      </div>
+                    </section> */}
+
+                    <section className="mb-[30px]">
+                      <div className="rounded-[10px] bg-primary/5 flex flex-col py-[30px] px-[20px] text-[15px]">
+                        <div className="flex space-x-[10px] mb-[10px]">
+                          {/* <IoMdNotificationsOutline className="text-primary text-[30px] " /> */}
+                          <p className="">
+                            Upload{" "}
+                            <span className="font-bold">
+                              images of yourself
+                            </span>
+                            . Do not include images with phone numbers or
+                            websites.
+                          </p>
+                        </div>
+                        <p className="">
+                          We encourage you to upload a profile picture{" "}
+                          <span className="font-bold">
+                            related to your work!
+                          </span>
                         </p>
-                      )}
-                    </div>
-                  </div>
-                </div>
-                {/* Address */}
-                <div className="form-control w-full mb-[20px]">
-                  <label className="label ">
-                    <span className="label-text font-semibold text-[16px]">
-                      Address<span className="text-secondary">*</span>
-                    </span>
-                  </label>
+                        <p className="">
+                          <span className="font-bold">Example: </span> If you
+                          are a removal company upload an image wih your van.
+                        </p>
+                      </div>
+                    </section>
 
-                  <textarea
-                    className={`${
-                      activateError && !address ? "ring ring-secondary" : ""
-                    } textarea w-full textarea-primary min-h-[80px] max-h-[100px] placeholder:text-[16px] text-[15px]`}
-                    placeholder="Home address"
-                    onChange={(e) => setAddress(e.target.value)}
-                    defaultValue={address}
-                  ></textarea>
-                </div>
-                {/* Personal Bio */}
-                <div className="form-control w-full">
-                  <div className=" ">
-                    <span className="label-text font-semibold text-[16px]">
-                      Personal Bio<span className="text-secondary">*</span>
-                    </span>
-                  </div>
-                  <p className="text-gray-500 mb-[10px] text-[15px] mt-[5px]">
-                    (Do not include your phone number or website.)
-                  </p>
+                    <section>
+                      {/* row 1 */}
+                      <div className="flex flex-col items-center mb-[20px] justify-center space-y-[10px] lg:space-y-0 lg:flex-row lg:items-start lg:space-x-[30px]">
+                        {/* left */}
+                        <div className="flex w-full flex-[1] flex-col  md:flex-row md:space-x-[20px] space-y-[10px] md:space-y-0 md:justify-center">
+                          {/* first name */}
+                          <div className="form-control w-full">
+                            {/* <FormikControl
+                              control="input"
+                              type="text"
+                              label="First Name"
+                              name="firstName"
+                              placeholder="First name"
+                              // defaultValue={firstName}
+                              required
+                              className="input input-primary w-full h-[43px] mb-[5px] mt-[0px]"
+                            /> */}
+                            <MyTextInput
+                              type="text"
+                              label="First Name"
+                              name="firstName"
+                              placeholder="First name"
+                              required
+                            />
+                          </div>
+                        </div>
+                        {/* right */}
+                        <div className="flex flex-[1] w-full flex-col md:flex-row md:space-x-[10px] space-y-[10px] md:space-y-0 md:justify-center">
+                          {/* last name */}
+                          <div className="form-control w-full ">
+                            <MyTextInput
+                              type="text"
+                              label="Last Name"
+                              name="lastName"
+                              placeholder="Last name"
+                              required
+                            />
+                          </div>
+                        </div>
+                      </div>
 
-                  <textarea
-                    className={`${
-                      activateError && !personalBio ? "ring ring-secondary" : ""
-                    } textarea w-full textarea-primary min-h-[150px] max-h-[200px] placeholder:text-[16px] text-[15px]`}
-                    placeholder="Tell us about yourself and your work experience"
-                    onChange={handleBioChange}
-                    value={personalBio}
-                    // disabled={personalBio.length >= bioMaxLength}
-                    onKeyDown={handleKeyDown}
-                  ></textarea>
-                  <p className="text-gray-500 mb-[10px] text-[15px] mt-[5px]">
-                    {personalBio.length} / {bioMaxLength} Characters
-                  </p>
-                </div>
+                      {/* row 2 */}
+                      <div className="flex flex-col items-center mb-[20px] justify-center space-y-[10px] lg:space-y-0 lg:flex-row lg:items-start lg:space-x-[30px]">
+                        {/* left */}
+                        <div className="flex w-full flex-[1] flex-col md:flex-row md:space-x-[20px] space-y-[10px] md:space-y-0 md:justify-center">
+                          {/* Mobile* */}
+                          <div className="form-control w-full flex-[1]">
+                            {/* <FormikControl
+                              control="input"
+                              type="tel"
+                              label="Mobile"
+                              name="phone"
+                              placeholder="Mobile number"
+                              required
+                              className="input input-primary w-full h-[43px] mb-[5px] mt-[0px]"
+                            /> */}
+                            <MyTextInput
+                              type="tel"
+                              label="Mobile"
+                              name="phone"
+                              placeholder="Mobile number"
+                              required
+                            />
+                            <p
+                              className="text-[14px] mt-[0px] link text-primary"
+                              onClick={() => window.my_modal_3.showModal()}
+                            >
+                              Change mobile number
+                            </p>
+                            {/* modal */}
+                            <dialog
+                              id="my_modal_3"
+                              className="modal py-[20px] px-[10px]"
+                            >
+                              <form method="dialog" className="modal-box ">
+                                <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 border border-primary text-primary">
+                                  ✕
+                                </button>
+                                <h3 className="font-bold text-lg text-primary">
+                                  Change your Mobile Number
+                                </h3>
+                                <p className="py-4">
+                                  If you wish to change your mobile number,
+                                  please contact us and we will correct it for
+                                  you.
+                                </p>
+                                <div className="btn btn-secondary">
+                                  <BiSolidPhoneCall size={20} className="" />
+                                  <a href="tel:(800)-995-5003" className="">
+                                    (800) 995-5003{" "}
+                                  </a>
+                                </div>
+                              </form>
+                              <form method="dialog" className="modal-backdrop">
+                                <button>close</button>
+                              </form>
+                            </dialog>
+                          </div>
+                        </div>
+                        {/* right */}
+                        <div className="flex flex-[1] w-full flex-col md:flex-row md:space-x-[10px] space-y-[10px] md:space-y-0 md:justify-center">
+                          {/* email */}
+                          <div className="form-control w-full ">
+                            {/* <FormikControl
+                              control="input"
+                              type="email"
+                              label="Email"
+                              name="email"
+                              placeholder="Email address"
+                              required
+                              className="input input-primary w-full h-[43px] mb-[5px] mt-[0px]"
+                            /> */}
+                            <MyTextInput
+                              type="email"
+                              label="Email"
+                              name="email"
+                              placeholder="Email address"
+                              required
+                            />
+                          </div>
+                        </div>
+                      </div>
 
-                {/* Update button */}
-                <div className=" mt-[50px] w-full flex justify-between items-end">
-                  <div className="flex flex-col items-center justify-center">
-                    <button
-                      onClick={FormSubmit}
-                      className="btn btn-secondary btn-wide flex items-center space-x-[5px] "
-                    >
-                      {!submitLoading && (
-                        <span className="">Update Profile</span>
-                      )}
-                      {submitLoading && (
-                        <span className="loading loading-dots loading-md text-white"></span>
-                      )}
-                      {/* {!submitLoading && (
+                      {/* Address */}
+                      <div className="form-control w-full mb-[20px]">
+                        {/* <FormikControl
+                          control="textarea"
+                          // type="email"
+                          label="Address"
+                          name="address"
+                          placeholder="Home address"
+                          required
+                          className="textarea w-full textarea-primary min-h-[80px] max-h-[100px] placeholder:text-[16px] text-[15px] mb-[5px] mt-[0px]"
+                        /> */}
+                        <MyTextArea
+                          label="Address"
+                          name="address"
+                          placeholder="Home address"
+                          classes="min-h-[80px] max-h-[100px]"
+                          // onChange={handleChange}
+                          // defaultValue={address}
+                          required
+                        />
+                      </div>
+
+                      {/* Personal Bio */}
+                      <div className="form-control w-full">
+                        {/* <FormikControl
+                          control="textarea"
+                          // type="email"
+                          label=" Personal Bio"
+                          name="personalBio"
+                          placeholder="Tell us about yourself and your work experience"
+                          required
+                          label2="(Do not include your phone number or website.)"
+                          // onKeyDown={handleKeyDown}
+                          // onChange={handleBioChange}
+                          // value={personalBio}
+                          className="textarea w-full textarea-primary min-h-[150px] max-h-[200px] placeholder:text-[16px] text-[15px] mb-[5px] mt-[0px]"
+                        /> */}
+                        <MyTextArea
+                          label=" Personal Bio"
+                          name="personalBio"
+                          placeholder="Tell us about yourself and your work experience"
+                          label2="(Do not include your phone number or website)"
+                          classes="min-h-[150px] max-h-[200px]"
+                          //   onKeyDown={handleKeyDown}
+                          // onChange={handleBioChange}
+                          // defaultValue={personalBio}
+                          required
+                        />
+                        {/* <p className="text-gray-500 mb-[10px] text-[15px] mt-[0px]">
+                          {personalBioCount.length} / {bioMaxLength} Characters
+                        </p> */}
+                      </div>
+                    </section>
+
+                    <div className=" mt-[50px] w-full flex justify-between items-end">
+                      <div className="flex flex-col items-center justify-center">
+                        <button
+                          type="submit"
+                          // disabled={!isValid || !dirty}
+                          disabled={!isValid}
+                          //  disabled={isSubmitting}
+                          className="btn btn-secondary btn-wide flex items-center space-x-[5px] "
+                        >
+                          {!submitLoading && (
+                            <span className="">Update Profile</span>
+                          )}
+                          {submitLoading && (
+                            <span className="loading loading-dots loading-md text-white"></span>
+                          )}
+                          {/* {!submitLoading && (
                         <span className="">
                           <FiEdit className="text-[20px]" />
                         </span>
                       )} */}
-                    </button>
-                    {submitError && (
-                      <p className="text-[16px] text-secondary mt-[15px] w-full text-start">
-                        Please fill all mandatory fields
-                      </p>
-                    )}
-                    {!submitError && showUpdateMessage && (
-                      <p className="text-[15px] text-primary mt-[20px] w-full text-start">
-                        Profile updated successfully
-                      </p>
-                    )}
-                  </div>
-                  <Link
-                    href="/mover-profile/terms-and-policies"
-                    className="link text-secondary"
-                  >
-                    Terms & Conditions
-                  </Link>
-                </div>
-              </section>
+                        </button>
+                        {error && (
+                          <p className="text-[16px] text-secondary mt-[15px] w-full text-start">
+                            {error}
+                          </p>
+                        )}
+                        {success && (
+                          <p className="text-[15px] text-primary mt-[20px] w-full text-start">
+                            Profile updated successfully
+                          </p>
+                        )}
+                      </div>
+                      <Link
+                        href="/mover-profile/terms-and-policies"
+                        className="link text-secondary"
+                      >
+                        Terms & Conditions
+                      </Link>
+                    </div>
+                  </Form>
+                )}
+              </Formik>
             </div>
 
             {/* right */}

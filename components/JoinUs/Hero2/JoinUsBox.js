@@ -156,7 +156,8 @@ const JoinUsBox = () => {
             }}
           >
             {(form) => (
-              <Form method="post" action="/api/auth/signin/email">
+              // <Form method="post" action="/api/auth/signin/email">
+              <Form>
                 {/* <input
                   type="hidden"
                   name="csrfToken"

@@ -8,7 +8,7 @@ import {
 } from "@/store/quoteSlice";
 import { changeFontWeight, changeFontWeight2 } from "@/utils/logics";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { FaTruckMoving } from "react-icons/fa";
 import { FiCheckCircle } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
@@ -18,6 +18,8 @@ const SideDrawer = ({
   showLoader2,
   selectedTime,
   setSelectedTime,
+  clickedModalOpen,
+  setClickedModalOpen,
   // timeValue,
   // setTimeValue,
 }) => {
@@ -92,6 +94,8 @@ const SideDrawer = ({
   const textDescription = sideDetails?.description;
   const moverName = sideDetails?.name;
 
+  const modalContentRef = useRef(null);
+
   useEffect(() => {
     setTimeout(() => {
       setInitialLoader(true);
@@ -101,10 +105,16 @@ const SideDrawer = ({
     }, 500);
   }, [showLoader2]);
 
+  useEffect(() => {
+    if (modalContentRef.current) {
+      modalContentRef.current.scrollTop = 0;
+    }
+  }, [clickedModalOpen]);
+
   // console.log(sideDetails);
 
   return (
-    <div className="drawer drawer-end">
+    <div className="drawer drawer-end" ref={modalContentRef}>
       <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
       <div className="drawer-side z-[99999] h-[100vh]">
         <label htmlFor="my-drawer-4" className="drawer-overlay"></label>
@@ -264,19 +274,19 @@ const SideDrawer = ({
 
             {/* reviews comments */}
             <div className="">
-            {reviews.slice(0, 3).map((review, index) => {
-              return (
-                <div className="py-[10px]" key={review.id}>
-                  <ReviewCard2
-                    name={review.name}
-                    location={review.location}
-                    date={review.date}
-                    rating={review.rating}
-                    comment={review.comment}
-                  />
-                </div>
-              );
-            })}
+              {reviews.slice(0, 3).map((review, index) => {
+                return (
+                  <div className="py-[10px]" key={review.id}>
+                    <ReviewCard2
+                      name={review.name}
+                      location={review.location}
+                      date={review.date}
+                      rating={review.rating}
+                      comment={review.comment}
+                    />
+                  </div>
+                );
+              })}
             </div>
 
             {/* row 6 */}

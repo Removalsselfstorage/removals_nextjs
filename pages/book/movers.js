@@ -85,6 +85,7 @@ const Movers = () => {
   const [todayPick, setTodayPick] = useState(false);
   const [selectedTime, setSelectedTime] = useState(null);
   const [timeValue, setTimeValue] = useState("");
+  const [clickedModalOpen, setClickedModalOpen] = useState(false);
 
   const firstCard = getFirstSortedHomeMover(homeMovers);
 
@@ -131,6 +132,8 @@ const Movers = () => {
               setSelectedTime={setSelectedTime}
               timeValue={timeValue}
               setTimeValue={setTimeValue}
+              clickedModalOpen={clickedModalOpen}
+              setClickedModalOpen={setClickedModalOpen}
             />
             {showLoader && <Loader1 />}
             {/* {showLoader2 && <Loader1 />} */}
@@ -190,7 +193,9 @@ const Movers = () => {
                               score={firstCard.score}
                               setShowLoader2={setShowLoader2}
                               showLoader2={showLoader2}
-                             
+                              clickedModalOpen={clickedModalOpen}
+                              setClickedModalOpen={setClickedModalOpen}
+
                               // timeValue={timeValue}
                               // setTimeValue={setTimeValue}
                               // pickPrice={pickPrice} setPickPrice={setPickPrice}
@@ -218,7 +223,7 @@ const Movers = () => {
                         score={firstCard.score}
                         setShowLoader2={setShowLoader2}
                         showLoader2={showLoader2}
-                       
+
                         // pickPrice={pickPrice} setPickPrice={setPickPrice}
                       />
                     </div>
@@ -250,7 +255,7 @@ const Movers = () => {
                             score={mv.score}
                             setShowLoader2={setShowLoader2}
                             showLoader2={showLoader2}
-                            
+
                             // pickPrice={pickPrice} setPickPrice={setPickPrice}
                           />
                         </div>

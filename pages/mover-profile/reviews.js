@@ -1,3 +1,4 @@
+import FormikContainer from "@/components/Formik/FormikContainer";
 import MoverLayout from "@/layouts/MoverLayout";
 import NormalLayout from "@/layouts/NormalLayout";
 import { getAllUserDetails } from "@/store/userSlice";
@@ -30,7 +31,7 @@ const Reviews = () => {
       </div> */}
       {userDetails.userDetails ? (
         <div className="py-[50px] bg-white/90 px-[30px]">
-          <p>Reviews</p>
+          <FormikContainer/>
         </div>
       ) : (
         <div className="flex items-center justify-center h-[100vh] ">

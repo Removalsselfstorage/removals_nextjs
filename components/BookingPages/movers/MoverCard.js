@@ -44,6 +44,8 @@ const MoverCard = ({
   setShowLoader2,
   showLoader2,
   score,
+  clickedModalOpen,
+  setClickedModalOpen,
 }) => {
   const router = useRouter();
   const dispatch = useDispatch();
@@ -56,6 +58,7 @@ const MoverCard = ({
     setTimeout(() => {
       setShowLoader2(false);
     }, 500);
+    // setClickedModalOpen((prev)=>!prev);
     dispatch(
       updateMoverSideDetails({
         image,
@@ -88,7 +91,7 @@ const MoverCard = ({
   const [error, setError] = useState(false);
   const [submitError, setSubmitError] = useState(true);
   const [submitLoading, setSubmitLoading] = useState(false);
-  const [sideBarOpened, setSideBarOpened] = useState(false)
+  const [sideBarOpened, setSideBarOpened] = useState(false);
 
   const allTime = [
     { id: "7am - 9am", time: "7am - 9am" },
@@ -154,6 +157,7 @@ const MoverCard = ({
     );
   }, []);
 
+  // console.log(clickedModalOpen)
 
   return (
     <>

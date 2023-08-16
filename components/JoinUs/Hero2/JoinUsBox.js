@@ -23,6 +23,10 @@ import {
   updateUserNames,
 } from "@/store/userSlice";
 import toast, { Toaster } from "react-hot-toast";
+import {
+  getAllMoverDetails,
+  updateMoverPersonalDetails,
+} from "@/store/moverSlice";
 
 // const JoinUsBox = ({ providers, csrfToken, callbackUrl }) => {
 const JoinUsBox = () => {
@@ -30,7 +34,7 @@ const JoinUsBox = () => {
 
   const dispatch = useDispatch();
 
-  const details = useSelector(getAllDetails);
+  const details = useSelector(getAllMoverDetails);
 
   const userDetails = useSelector(getAllUserDetails);
 
@@ -98,13 +102,23 @@ const JoinUsBox = () => {
     dispatch(updateSignupError(null));
 
     dispatch(
-      updateUserNames({
-        firstName: values.signup_firstname,
-        lastName: values.signup_lastname,
+      updateMoverPersonalDetails({
+        firstName: signup_firstname,
+        lastName: signup_lastname,
+        email: signup_email,
+        phone: details.personalDetails.phone,
+        address: details.personalDetails.address,
+        personalBio: details.personalDetails.personalBio,
+        profilePicture: details.personalDetails.profilePicture,
       })
     );
     // alert(JSON.stringify(values, null, 2));
-    await signUp(values.signup_email, values.signup_password);
+    await signUp(
+      values.signup_email,
+      values.signup_password,
+      values.signup_firstname,
+      values.signup_lastname
+    );
     setUser({
       ...user,
       signup_email: "",

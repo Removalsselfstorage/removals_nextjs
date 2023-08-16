@@ -14,6 +14,7 @@ import {
 import cartReducer from "./userSlice";
 import quoteReducer from "./quoteSlice";
 import userReducer from "./userSlice";
+import moverReducer from "./moverSlice";
 
 ////////////
 // const createNoopStorage = () => {
@@ -36,7 +37,11 @@ import userReducer from "./userSlice";
 
 /////////////////////
 
-const rootReducer = combineReducers({ quote: quoteReducer, user: userReducer });
+const rootReducer = combineReducers({
+  quote: quoteReducer,
+  user: userReducer,
+  mover: moverReducer,
+});
 
 const persistConfig = {
   key: "root",

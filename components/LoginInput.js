@@ -5,7 +5,7 @@ import { SiMinutemailer } from "react-icons/si";
 import { IoKeyOutline } from "react-icons/io5";
 import { ErrorMessage, useField } from "formik";
 
-const LoginInput = ({ placeholder, password, ...props }) => {
+const LoginInput = ({ placeholder, ...props }) => {
   const [field, meta] = useField(props);
   return (
     <div>
@@ -26,12 +26,10 @@ const LoginInput = ({ placeholder, password, ...props }) => {
         {...props}
         className={`${
           meta.touched && meta.error ? "ring ring-secondary" : ""
-        } input input-primary w-full h-[43px] mb-[20px] ${
-          password ? "pr-[35px]" : ""
-        }`}
+        } input input-primary w-full h-[43px] mb-[20px] `}
       />
       {meta.touched && meta.error && (
-        <div className="text-secondary text-[14px] mt-[-10px]">
+        <div className="text-secondary text-[13px] mt-[-20px] text-end">
           <ErrorMessage name={field.name} />
         </div>
       )}

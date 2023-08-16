@@ -26,6 +26,10 @@ import {
 } from "@/store/userSlice";
 // import { sendEmail } from "@/utils/sendEmails";
 import { activateEmailTemplate } from "@/emails/activateEmailTemplate";
+import {
+  getAllMoverDetails,
+  updateMoverPersonalDetails,
+} from "@/store/moverSlice";
 
 const AuthContext = createContext({
   user: null,
@@ -41,6 +45,8 @@ const AuthContext = createContext({
 export const AuthProvider = ({ children }) => {
   const router = useRouter();
 
+  const details = useSelector(getAllMoverDetails);
+
   const dispatch = useDispatch();
 
   const { userDetails } = useSelector(getAllUserDetails);
@@ -53,7 +59,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(
     () =>
       onAuthStateChanged(auth, (userDetails) => {
-        if (userDetails?.emailVerified) {
+        if (userDetails) {
           // Logged in...
           // setUser(user);
           dispatch(updateUserDetails(userDetails));
@@ -82,7 +88,7 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const signUp = async (email, password) => {
+  const signUp = async (email, password, firstName, lastName) => {
     setLoading(true);
 
     try {
@@ -91,6 +97,7 @@ export const AuthProvider = ({ children }) => {
         email,
         password
       );
+
       // setUser(userCredential.user);
       // dispatch(updateUserDetails(userCredential.user));
       dispatch(
@@ -98,6 +105,21 @@ export const AuthProvider = ({ children }) => {
           "Registered successfully! Please activate your email to get started"
         )
       );
+
+      dispatch(updateUserDetails(userCredential.user));
+
+      dispatch(
+        updateMoverPersonalDetails({
+          firstName: firstName,
+          lastName: lastName,
+          email: email,
+          phone: details.personalDetails.phone,
+          address: details.personalDetails.address,
+          personalBio: details.personalDetails.personalBio,
+          profilePicture: details.personalDetails.profilePicture,
+        })
+      );
+
       // toast(`Registration successful`, {
       //   duration: 8000,
       //   style: toastStyle1,
@@ -106,7 +128,7 @@ export const AuthProvider = ({ children }) => {
 
       // Delay the router push by 3 seconds
       setTimeout(() => {
-        router.push("/mover-login");
+        router.push("/onboarding/personal-details");
       }, 2000);
 
       setLoading(false);

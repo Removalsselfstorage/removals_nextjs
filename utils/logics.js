@@ -6,6 +6,14 @@ export function trimToFirstLetter(word) {
   return word.charAt(0).toUpperCase();
 }
 
+export function trimFirstTwoLetters(word) {
+  if (typeof word !== 'string' || word.length < 2) {
+    return word;
+  }
+
+  return word.substring(2);
+}
+
 export const truncateTexts = (text, count) => {
   return text?.length > count ? text.slice(0, count) + "..." : text;
 };

@@ -64,9 +64,9 @@ const Navbar3 = () => {
                         <li className="dropdown  dropdown-end">
                           <label
                             tabIndex={0}
-                            className="flex items-center justify-center bg-primary h-[40px] w-[40px] hover:bg-primary/60 rounded-full"
+                            className="flex items-center cursor-pointer justify-center bg-primary h-[40px] w-[40px] hover:bg-primary/60 rounded-full"
                           >
-                            <p className="text-white font-bold">
+                            <p className="text-white font-bold ">
                               {trimToFirstLetter(users.userDetails?.email)}
                             </p>
                           </label>

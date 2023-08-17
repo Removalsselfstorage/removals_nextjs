@@ -3,6 +3,7 @@ import thunk from "redux-thunk";
 import storage from "redux-persist/lib/storage";
 import {
   persistReducer,
+  persistStore,
   FLUSH,
   REHYDRATE,
   PAUSE,
@@ -10,6 +11,8 @@ import {
   PURGE,
   REGISTER,
 } from "redux-persist";
+import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
+// import hardSet from 'redux-persist/lib/stateReconciler/hardSet';
 // import createWebStorage from 'redux-persist/lib/storage/createWebStorage';
 import cartReducer from "./userSlice";
 import quoteReducer from "./quoteSlice";
@@ -47,6 +50,7 @@ const persistConfig = {
   key: "root",
   //   version: 1,
   storage,
+  stateReconciler: autoMergeLevel2
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -68,3 +72,5 @@ export const store = configureStore({
 // });
 
 export default store;
+
+// export const persistor = persistStore(store)

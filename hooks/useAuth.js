@@ -28,6 +28,7 @@ import {
 import { activateEmailTemplate } from "@/emails/activateEmailTemplate";
 import {
   getAllMoverDetails,
+  updateJustRegistered,
   updateMoverPersonalDetails,
 } from "@/store/moverSlice";
 
@@ -40,6 +41,7 @@ const AuthContext = createContext({
   resendEmailVerification: async () => {},
   error: null,
   loading: false,
+  justRegistered: false,
 });
 
 export const AuthProvider = ({ children }) => {
@@ -59,7 +61,9 @@ export const AuthProvider = ({ children }) => {
   useEffect(
     () =>
       onAuthStateChanged(auth, (userDetails) => {
-        if (userDetails) {
+        // if (userDetails) {
+
+        if (userDetails?.emailVerified) {
           // Logged in...
           // setUser(user);
           dispatch(updateUserDetails(userDetails));
@@ -100,13 +104,10 @@ export const AuthProvider = ({ children }) => {
 
       // setUser(userCredential.user);
       // dispatch(updateUserDetails(userCredential.user));
-      dispatch(
-        updateSignupMessage(
-          "Registered successfully! Please activate your email to get started"
-        )
-      );
 
-      dispatch(updateUserDetails(userCredential.user));
+      // dispatch(updateUserDetails(userCredential.user));
+
+      emailConfirmation(userCredential.user);
 
       dispatch(
         updateMoverPersonalDetails({
@@ -120,6 +121,8 @@ export const AuthProvider = ({ children }) => {
         })
       );
 
+      dispatch(updateJustRegistered(true));
+
       // toast(`Registration successful`, {
       //   duration: 8000,
       //   style: toastStyle1,
@@ -127,12 +130,21 @@ export const AuthProvider = ({ children }) => {
       emailConfirmation(userCredential.user);
 
       // Delay the router push by 3 seconds
+
+      dispatch(
+        updateSignupMessage(
+          "Registered successfully! Please activate your email to get started"
+        )
+      );
+
       setTimeout(() => {
-        router.push("/onboarding/personal-details");
+        // router.push("/onboarding/personal-details");
+        router.push("/mover-login");
       }, 2000);
 
       setLoading(false);
     } catch (error) {
+      console.log("SignupError", error);
       setError(error.message);
       dispatch(updateSignupError(error.message));
       // toast(`Email already in use`, {
@@ -155,7 +167,11 @@ export const AuthProvider = ({ children }) => {
       if (userCredential.user.emailVerified) {
         // setUser(userCredential.user);
         dispatch(updateUserDetails(userCredential.user));
-        router.back();
+        if (details.justRegistered) {
+          router.push("/onboarding/personal-details");
+        } else {
+          router.push("/mover-profile");
+        }
       } else {
         setUser(userCredential.user);
         dispatch(
@@ -164,6 +180,37 @@ export const AuthProvider = ({ children }) => {
           )
         );
       }
+      // switch (userCredential.user.emailVerified) {
+      //   case true:
+      //     dispatch(updateUserDetails(userCredential.user));
+      //     switch (details.personalDetails.phone) {
+      //       case true:
+      //         router.back();
+
+      //         break;
+      //       case null:
+      //         router.push("/onboarding/personal-details");
+      //         break;
+
+      //       default:
+      //         break;
+      //     }
+
+      //     break;
+
+      //   case false:
+      //     setUser(userCredential.user);
+      //     dispatch(
+      //       updateVerificationMessage(
+      //         "Please verify your email via link sent to your mail, to login."
+      //       )
+      //     );
+
+      //     break;
+
+      //   default:
+      //     break;
+      // }
     } catch (error) {
       setError(error.message);
       dispatch(updateLoginError(error.message));

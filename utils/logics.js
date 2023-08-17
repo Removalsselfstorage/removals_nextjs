@@ -1,3 +1,13 @@
+export function combineInitials(firstName, lastName) {
+  if (firstName.length > 0 && lastName.length > 0) {
+    const combinedInitials = (firstName[0] + lastName[0]).toUpperCase();
+    return combinedInitials;
+  } else {
+    console.log("Both first name and last name must have at least one character.");
+    return null;
+  }
+}
+
 export function trimToFirstLetter(word) {
   if (typeof word !== "string" || word.length === 0) {
     return "";

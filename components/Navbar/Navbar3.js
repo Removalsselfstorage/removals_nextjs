@@ -9,7 +9,7 @@ import ScrollUpMenuNav from "../ScrollUpMenuNav";
 import useAuth from "@/hooks/useAuth";
 import { getAllUserDetails } from "@/store/userSlice";
 import { useSelector } from "react-redux";
-import { trimToFirstLetter } from "@/utils/logics";
+import { combineInitials, trimToFirstLetter } from "@/utils/logics";
 import { CgProfile } from "react-icons/cg";
 import { FiSettings } from "react-icons/fi";
 import { useRouter } from "next/router";
@@ -19,11 +19,17 @@ import { MdWorkOutline } from "react-icons/md";
 import { HiOutlineInboxArrowDown } from "react-icons/hi2";
 import { FaRegCalendarAlt } from "react-icons/fa";
 import { TfiComments } from "react-icons/tfi";
+import { getAllMoverDetails } from "@/store/moverSlice";
 
 const Navbar3 = () => {
   const router = useRouter();
   const { user, logout, loading } = useAuth();
   const users = useSelector(getAllUserDetails);
+  const moverDetails = useSelector(getAllMoverDetails);
+
+  const firstName = moverDetails.personalDetails.firstName;
+  const lastName = moverDetails.personalDetails.lastName;
+
   return (
     <>
       <div
@@ -67,7 +73,8 @@ const Navbar3 = () => {
                             className="flex items-center cursor-pointer justify-center bg-primary h-[40px] w-[40px] hover:bg-primary/60 rounded-full"
                           >
                             <p className="text-white font-bold ">
-                              {trimToFirstLetter(users.userDetails?.email)}
+                              {/* {trimToFirstLetter(users.userDetails?.email)} */}
+                              {combineInitials(firstName, lastName)}
                             </p>
                           </label>
 

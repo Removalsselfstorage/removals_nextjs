@@ -1,15 +1,24 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  // personalDetails
+  justRegistered: false,
   personalDetails: {
     firstName: "",
     lastName: "",
     email: "",
-    phone: "",
+    phone: null,
     address: "",
     personalBio: "",
+    profilePictureRaw: null,
     profilePicture: null,
+    companyName: "",
+    companyNumber: "",
+    companyAddress: "",
+    regCertificate: null,
+    vehInsurance: null,
+    pubInsurance: null,
+    tranInsurance: null,
+    drivingLicense: null,
   },
 };
 
@@ -20,12 +29,14 @@ export const moverSlice = createSlice({
     updateMoverPersonalDetails: (state, action) => {
       state.personalDetails = action.payload;
     },
+    updateJustRegistered: (state, action) => {
+      state.justRegistered = action.payload;
+    },
   },
 });
 
-export const {
-  updateMoverPersonalDetails
-} = moverSlice.actions;
+export const { updateMoverPersonalDetails, updateJustRegistered } =
+  moverSlice.actions;
 
 export const getAllMoverDetails = (state) => state.mover;
 

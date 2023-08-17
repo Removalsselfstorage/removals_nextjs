@@ -1,7 +1,7 @@
 import { titleFont } from "@/utils/fonts";
 import Head from "next/head";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   AiOutlinePlus,
   AiOutlineMinus,
@@ -12,13 +12,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { redirect, useRouter } from "next/navigation";
 import {
   getAllMoverDetails,
+  updateJustRegistered,
   updateMoverPersonalDetails,
 } from "@/store/moverSlice";
 import { getAllUserDetails } from "@/store/userSlice";
 import MoverLayout from "@/layouts/MoverLayout";
 import MoverLayout2 from "@/layouts/MoverLayout2";
 import { uploadMoverDetails } from "@/lib/uploadMoverDetails";
-import { trimToFirstLetter } from "@/utils/logics";
+import { combineInitials, trimToFirstLetter } from "@/utils/logics";
 
 const PersonalDetails = () => {
   const router = useRouter();
@@ -27,12 +28,15 @@ const PersonalDetails = () => {
   const dispatch = useDispatch();
   const details = useSelector(getAllMoverDetails);
 
+  // const firstName = details.personalDetails.firstName;
+  // const lastName = details.personalDetails.lastName;
+
   //   states
   const [imageUpload, setImageUpload] = useState(
-    details.personalDetails.profilePicture || null
+    details.personalDetails.profilePictureRaw || null
   );
   const [previewUrl, setPreviewUrl] = useState(
-    details.personalDetails.profilePicture || ""
+    details.personalDetails.profilePicture || null
   );
   const [personalBio, setPersonalBio] = useState(
     details.personalDetails.personalBio || ""
@@ -110,6 +114,12 @@ const PersonalDetails = () => {
     }
   };
 
+  const fileInputRef = useRef(null);
+
+  const handleButtonClick = () => {
+    fileInputRef.current.click();
+  };
+
   // const imgUrl = URL.createObjectURL(imageUpload);
 
   const personalFormSubmit = async () => {
@@ -125,7 +135,7 @@ const PersonalDetails = () => {
       !phoneError ||
       !phone ||
       !personalBio ||
-      !imageUpload
+      !previewUrl
     ) {
       setSubmitError(true);
     } else {
@@ -149,9 +159,19 @@ const PersonalDetails = () => {
           phone,
           address,
           personalBio,
+          profilePictureRaw: imageUpload,
           profilePicture: previewUrl,
+          companyName: details.personalDetails.companyName,
+          companyNumber: details.personalDetails.companyNumber,
+          companyAddress: details.personalDetails.companyAddress,
+          regCertificate: details.personalDetails.regCertificate,
+          vehInsurance: details.personalDetails.vehInsurance,
+          pubInsurance: details.personalDetails.pubInsurance,
+          tranInsurance: details.personalDetails.tranInsurance,
+          drivingLicense: details.personalDetails.drivingLicense,
         })
       );
+      dispatch(updateJustRegistered(false));
 
       router.push("/onboarding/documentation");
     }
@@ -178,7 +198,7 @@ const PersonalDetails = () => {
 
       <main>
         {userDetails.userDetails ? (
-          <div className="mb-[70px] lg:mb-[100px] pt-[70px] bg-white/80">
+          <div className="pb-[70px] lg:pb-[100px] pt-[70px] bg-white/80">
             <div className="md:max-w-7xl mx-auto">
               {/* Title */}
               <div className="w-full flex justify-center py-[30px] md:py-[40px]">
@@ -209,13 +229,14 @@ const PersonalDetails = () => {
                 <div className="flex justify-center text-secondary mb-[10px] md:mb-[20px] text-[14px] md:text-[16px]">
                   <p className="">Fields marked with * are mandatory</p>
                 </div>
+
                 <div className="flex flex-col space-y-[20px]">
                   {/* image upload */}
                   <section className="mb-[0px]">
                     <div className="flex flex-col space-y-[20px] lg:space-y-0 lg:flex-row lg:space-x-[20px]">
                       <div className="flex flex-col lg:flex-[1]">
                         <div className="">
-                          {imageUpload ? (
+                          {previewUrl ? (
                             <div className="avatar ">
                               <div className="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
                                 <img src={previewUrl} />
@@ -224,7 +245,9 @@ const PersonalDetails = () => {
                           ) : (
                             <div className="avatar placeholder">
                               <div className="bg-gray-200 rounded-full w-[120px]">
-                                <span className="text-5xl font-bold">{trimToFirstLetter(details.personalDetails?.email)}</span>
+                                <span className="text-5xl font-bold">
+                                  {combineInitials(firstName, lastName)}
+                                </span>
                               </div>
                             </div>
                           )}
@@ -234,16 +257,33 @@ const PersonalDetails = () => {
                             Upload Profile Picture{" "}
                             <span className="text-secondary">*</span>
                           </p>
-                          <input
-                            type="file"
-                            className={`${
-                              activateError && !imageUpload
-                                ? "ring ring-secondary"
-                                : ""
-                            } file-input file-input-bordered file-input-primary w-full max-w-xs`}
-                            accept="image/png, image/gif, image/jpeg"
-                            onChange={handleFileInputChange}
-                          />
+                          <div className="">
+                            <div className="flex items-center space-x-[20px] border border-primary rounded-[20px]">
+                              <button
+                                onClick={handleButtonClick}
+                                className="btn btn-primary border border-primary rounded-[15px]"
+                              >
+                                {/* Choose File */}
+                                {previewUrl ? "Update File" : "Choose File"}
+                              </button>
+                              <p className="">
+                                {previewUrl
+                                  ? "File is selected"
+                                  : "No file selected"}
+                              </p>
+                            </div>
+                            <input
+                              type="file"
+                              className={`${
+                                activateError && !previewUrl
+                                  ? "ring ring-secondary"
+                                  : ""
+                              } file-input file-input-bordered file-input-primary w-full max-w-xs hidden`}
+                              accept="image/png, image/gif, image/jpeg"
+                              onChange={handleFileInputChange}
+                              ref={fileInputRef}
+                            />
+                          </div>
                           <p className=" text-gray-400  text-[14px] mt-[10px]">
                             Accepted file types: PNG, JPG; Maximum file size:
                             5MB
@@ -461,7 +501,7 @@ const PersonalDetails = () => {
                     <div className="flex flex-col items-center justify-center">
                       <button
                         onClick={personalFormSubmit}
-                        className="btn btn-primary w-[150px] flex items-center space-x-[5px] h-[60px]"
+                        className="btn btn-secondary w-[150px] flex items-center space-x-[5px] h-[60px]"
                       >
                         {!submitLoading && <span className="">Next</span>}
                         {submitLoading && (

@@ -1,5 +1,5 @@
 export function combineInitials(firstName, lastName) {
-  if (firstName.length > 0 && lastName.length > 0) {
+  if (firstName?.length > 0 && lastName?.length > 0) {
     const combinedInitials = (firstName[0] + lastName[0]).toUpperCase();
     return combinedInitials;
   } else {

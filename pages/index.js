@@ -13,11 +13,19 @@ import Features from "@/components/HomePage/Features";
 import HowItWorks from "@/components/HomePage/HowItWorks";
 import NormalLayout from "@/layouts/NormalLayout";
 import { getAllUserDetails } from "@/store/userSlice";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import MuiModal from "@/components/Modal/MuiModal";
 import { useState } from "react";
+import { getAllMoverDetails } from "@/store/moverSlice";
 
 export default function Home() {
+
+  const dispatch = useDispatch();
+
+  const users = useSelector(getAllUserDetails);
+  const moverDetails = useSelector(getAllMoverDetails);
+
+
   const [open, setOpen] = useState(false);
 
   return (

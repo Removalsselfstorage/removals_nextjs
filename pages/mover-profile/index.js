@@ -1,5 +1,10 @@
 import MoverLayout from "@/layouts/MoverLayout";
 import NormalLayout from "@/layouts/NormalLayout";
+import { fetchMoverDetails3 } from "@/lib/fetchData2";
+import {
+  getAllMoverDetails,
+  updateFirebaseMoverDetails,
+} from "@/store/moverSlice";
 import { getAllUserDetails } from "@/store/userSlice";
 import Head from "next/head";
 import Link from "next/link";
@@ -16,7 +21,7 @@ import { CgProfile } from "react-icons/cg";
 import { FaRegEdit } from "react-icons/fa";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { TfiComments } from "react-icons/tfi";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const sections = [
   {
@@ -78,7 +83,9 @@ const sections = [
 
 const MoverProfile = () => {
   const router = useRouter();
+  const dispatch = useDispatch();
   const userDetails = useSelector(getAllUserDetails);
+  const moverDetails = useSelector(getAllMoverDetails);
 
   const [index, setIndex] = useState(0);
   const [sectionData, setSectionData] = useState(sections);
@@ -107,6 +114,15 @@ const MoverProfile = () => {
   //     clearInterval(slider);
   //   };
   // }, [index]);
+
+  const uid = userDetails.userDetails?.uid;
+  const readMoversData = async () => {
+    const res = await fetchMoverDetails3(uid);
+    dispatch(updateFirebaseMoverDetails(res));
+  };
+  useEffect(() => {
+    readMoversData();
+  }, []);
 
   return (
     <MoverLayout>
@@ -138,7 +154,7 @@ const MoverProfile = () => {
 
           <section className="mb-[30px]">
             <div className="flex items-center bg-secondary/10 rounded-[10px] px-[20px] py-[15px] space-x-[20px]">
-            <IoMdNotificationsOutline className="text-secondary text-[40px]" />
+              <IoMdNotificationsOutline className="text-secondary text-[40px]" />
               <div className="flex flex-col">
                 <p className="font-bold text-secondary">
                   Your profile is pending activation!

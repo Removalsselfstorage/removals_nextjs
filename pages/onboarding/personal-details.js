@@ -12,15 +12,29 @@ import { useDispatch, useSelector } from "react-redux";
 import { redirect, useRouter } from "next/navigation";
 import {
   getAllMoverDetails,
+  updateFirebaseMoverDetails,
   updateJustRegistered,
   updateMoverPersonalDetails,
 } from "@/store/moverSlice";
 import { getAllUserDetails } from "@/store/userSlice";
 import MoverLayout from "@/layouts/MoverLayout";
 import MoverLayout2 from "@/layouts/MoverLayout2";
-import { uploadMoverDetails } from "@/lib/uploadMoverDetails";
+import {
+  uploadMoverDetails,
+  uploadMoverPersonalDetails,
+} from "@/lib/uploadMoverPersonalDetails";
 import { combineInitials, trimToFirstLetter } from "@/utils/logics";
+import CustomFileInput from "@/components/Inputs/CustomFileInput";
+import { fetchMoverDetails } from "@/lib/fetchData";
+import { FetchMoverDetails2, fetchMoverDetails3 } from "@/lib/fetchData2";
+import {
+  UploadMoverPersonalDetails2,
+  uploadMoverPersonalDetails2,
+} from "@/lib/uploadMoverPersonalDetails2";
+import { collection, getDocs, onSnapshot, query } from "firebase/firestore";
+import { db } from "@/firebase";
 
+// const PersonalDetails = ({ moverSyncDetails }) => {
 const PersonalDetails = () => {
   const router = useRouter();
   const userDetails = useSelector(getAllUserDetails);
@@ -32,31 +46,44 @@ const PersonalDetails = () => {
   // const lastName = details.personalDetails.lastName;
 
   //   states
+  // const [moverSyncDetails, setMoverSyncDetails] = useState({});
   const [imageUpload, setImageUpload] = useState(
-    details.personalDetails.profilePictureRaw || null
-  );
-  const [previewUrl, setPreviewUrl] = useState(
-    details.personalDetails.profilePicture || null
-  );
-  const [personalBio, setPersonalBio] = useState(
-    details.personalDetails.personalBio || ""
+    details.personalDetails.profilePicture?.raw || null
   );
 
-  const [address, setAddress] = useState(details.personalDetails.address || "");
+  const [previewUrl, setPreviewUrl] = useState(
+    details.firebaseMoverDetails?.profileImagePreviewUrl ||
+      details.personalDetails.profilePicture?.url
+  );
+
+  const [personalBio, setPersonalBio] = useState(
+    details.firebaseMoverDetails?.personalBio ||
+      details.personalDetails.personalBio
+  );
+
+  const [address, setAddress] = useState(
+    details.firebaseMoverDetails?.address || details.personalDetails?.address
+  );
 
   const [firstName, setFirstName] = useState(
-    details.personalDetails.firstName || ""
+    details.firebaseMoverDetails?.firstName ||
+      details.personalDetails?.firstName
   );
   const [lastName, setLastName] = useState(
-    details.personalDetails.lastName || ""
+    details.firebaseMoverDetails?.lastName || details.personalDetails?.lastName
   );
-  const [email, setEmail] = useState(details.personalDetails.email || "");
+  const [email, setEmail] = useState(
+    details.firebaseMoverDetails?.email || details.personalDetails?.email
+  );
   const [emailError, setEmailError] = useState(true);
-  const [phone, setPhone] = useState(details.personalDetails.phone || "");
+  const [phone, setPhone] = useState(
+    details.firebaseMoverDetails?.phone || details.personalDetails?.phone
+  );
   const [phoneError, setPhoneError] = useState(true);
   const [submitError, setSubmitError] = useState(false);
   const [submitLoading, setSubmitLoading] = useState(false);
   const [activateError, setActivateError] = useState(false);
+  const [fileUploadError, setFileUploadError] = useState("");
 
   //   Email validation
   const handleEmailChange = (e) => {
@@ -76,7 +103,6 @@ const PersonalDetails = () => {
     // Remove any non-digit characters from the input
     const strippedNumber = inputValue.replace(/\D/g, "");
 
-    // Check if the stripped number is either 10 or 11 digits long
     const isValidPhoneNumber =
       strippedNumber.length === 10 || strippedNumber.length === 11;
 
@@ -87,12 +113,9 @@ const PersonalDetails = () => {
   const bioMaxLength = 200;
   const handleBioChange = (e) => {
     const value = e.target.value;
-    // setPersonalBio(e.target.value);
     if (value.length <= bioMaxLength) {
       setPersonalBio(e.target.value);
     }
-    // const { name, value } = e.target;
-    // setMoverDetails({ ...moverDetails, [name]: value });
   };
 
   const handleKeyDown = (event) => {
@@ -101,23 +124,11 @@ const PersonalDetails = () => {
     }
   };
 
-  const handleFileInputChange = (event) => {
-    const file = event.target.files[0];
-    setImageUpload(file);
+  const uid = userDetails.userDetails?.uid;
 
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        setPreviewUrl(reader.result);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const fileInputRef = useRef(null);
-
-  const handleButtonClick = () => {
-    fileInputRef.current.click();
+  const readMoversData = async () => {
+    const res = await fetchMoverDetails3(uid);
+    dispatch(updateFirebaseMoverDetails(res));
   };
 
   // const imgUrl = URL.createObjectURL(imageUpload);
@@ -135,21 +146,32 @@ const PersonalDetails = () => {
       !phoneError ||
       !phone ||
       !personalBio ||
+      fileUploadError ||
       !previewUrl
     ) {
       setSubmitError(true);
     } else {
       setSubmitLoading(true);
 
-      // const result = await uploadMoverDetails({
-      //   imageUpload,
-      //   address,
-      //   personalBio,
-      //   firstName,
-      //   lastName,
-      //   email,
-      //   phone,
-      // });
+      const moveObj = {
+        profilePicture: {
+          raw: imageUpload,
+          url: previewUrl,
+          name: imageUpload?.name,
+        },
+        address,
+        personalBio,
+        firstName,
+        lastName,
+        email,
+        phone,
+
+        uid,
+      };
+
+      // const profilePixName = imageUpload.name;
+      // const uid = userDetails.userDetails.uid;
+      const result = await UploadMoverPersonalDetails2(moveObj);
 
       dispatch(
         updateMoverPersonalDetails({
@@ -159,8 +181,13 @@ const PersonalDetails = () => {
           phone,
           address,
           personalBio,
-          profilePictureRaw: imageUpload,
-          profilePicture: previewUrl,
+          // profilePictureRaw: imageUpload,
+          // profilePicture: previewUrl,
+          profilePicture: {
+            raw: imageUpload,
+            url: previewUrl,
+            name: imageUpload?.name,
+          },
           companyName: details.personalDetails.companyName,
           companyNumber: details.personalDetails.companyNumber,
           companyAddress: details.personalDetails.companyAddress,
@@ -171,7 +198,11 @@ const PersonalDetails = () => {
           drivingLicense: details.personalDetails.drivingLicense,
         })
       );
+      readMoversData();
+
       dispatch(updateJustRegistered(false));
+
+      // console.log(uid, result);
 
       router.push("/onboarding/documentation");
     }
@@ -183,10 +214,9 @@ const PersonalDetails = () => {
     }
   }, []);
 
-  //   console.log(details.moveDetails.moveDate);
-  //   console.log(dateValue);
-  // console.log(details);
-  // console.log(imageUpload);
+  useEffect(() => {
+    readMoversData();
+  }, []);
 
   return (
     <MoverLayout2>
@@ -228,15 +258,16 @@ const PersonalDetails = () => {
                 {/* mandatory text */}
                 <div className="flex justify-center text-secondary mb-[10px] md:mb-[20px] text-[14px] md:text-[16px]">
                   <p className="">Fields marked with * are mandatory</p>
+                  {/* {moverSyncDetails?.firstName} */}
                 </div>
 
                 <div className="flex flex-col space-y-[20px]">
                   {/* image upload */}
                   <section className="mb-[0px]">
-                    <div className="flex flex-col space-y-[20px] lg:space-y-0 lg:flex-row lg:space-x-[20px]">
-                      <div className="flex flex-col lg:flex-[1]">
-                        <div className="">
-                          {previewUrl ? (
+                    <div className="flex flex-col space-y-[20px] lg:space-y-0 lg:flex-row lg:space-x-[50px]">
+                      <div className="flex flex-col lg:flex-[1] w-full">
+                        <div className="w-full">
+                          {previewUrl && !fileUploadError ? (
                             <div className="avatar ">
                               <div className="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
                                 <img src={previewUrl} />
@@ -252,48 +283,40 @@ const PersonalDetails = () => {
                             </div>
                           )}
                         </div>
-                        <div className="flex flex-col mt-[10px]">
-                          <p className=" font-bold text-[20px] mb-[10px]">
+                        <div className="flex flex-col mt-[10px] w-full">
+                          <p className=" font-bold  mb-[10px]">
                             Upload Profile Picture{" "}
                             <span className="text-secondary">*</span>
                           </p>
-                          <div className="">
-                            <div className="flex items-center space-x-[20px] border border-primary rounded-[20px]">
-                              <button
-                                onClick={handleButtonClick}
-                                className="btn btn-primary border border-primary rounded-[15px]"
-                              >
-                                {/* Choose File */}
-                                {previewUrl ? "Update File" : "Choose File"}
-                              </button>
-                              <p className="">
-                                {previewUrl
-                                  ? "File is selected"
-                                  : "No file selected"}
-                              </p>
-                            </div>
-                            <input
-                              type="file"
-                              className={`${
-                                activateError && !previewUrl
-                                  ? "ring ring-secondary"
-                                  : ""
-                              } file-input file-input-bordered file-input-primary w-full max-w-xs hidden`}
-                              accept="image/png, image/gif, image/jpeg"
-                              onChange={handleFileInputChange}
-                              ref={fileInputRef}
+
+                          <div className="w-full">
+                            <CustomFileInput
+                              activateError={activateError}
+                              previewUrl={previewUrl}
+                              setPreviewUrl={setPreviewUrl}
+                              setImageUpload={setImageUpload}
+                              imageUpload={imageUpload}
+                              setFileUploadError={setFileUploadError}
+                              fileUploadError={fileUploadError}
                             />
                           </div>
-                          <p className=" text-gray-400  text-[14px] mt-[10px]">
-                            Accepted file types: PNG, JPG; Maximum file size:
-                            5MB
-                          </p>
-                          <p className=" text-gray-400 text-[14px] mb-[10px] "></p>
+                          {!fileUploadError && (
+                            <p className=" text-gray-400  text-[14px] mt-[10px]">
+                              Accepted file types: PNG, JPG, JPEG; File size:
+                              3MB max.
+                            </p>
+                          )}
+
+                          {fileUploadError && (
+                            <p className=" text-secondary text-[14px] mt-[10px]">
+                              {fileUploadError}
+                            </p>
+                          )}
                         </div>
                       </div>
 
-                      <div className="rounded-[10px] lg:flex-[1]  bg-primary/5 flex flex-col py-[30px] px-[20px] text-[15px]">
-                        <div className="flex space-x-[10px] mb-[10px]">
+                      <div className="rounded-[10px] lg:flex-[1] w-full bg-primary/5 flex flex-col py-[30px] px-[20px] text-[15px]">
+                        <div className="flex space-x-[10px] mb-[10px] w-full">
                           {/* <IoMdNotificationsOutline className="text-primary text-[30px] " /> */}
                           <p className="">
                             Upload{" "}
@@ -304,7 +327,7 @@ const PersonalDetails = () => {
                             websites.
                           </p>
                         </div>
-                        <p className="mb-[10px]">
+                        <p className="mb-[10px] w-full">
                           We encourage you to upload a profile picture{" "}
                           <span className="font-bold">
                             {" "}
@@ -312,7 +335,7 @@ const PersonalDetails = () => {
                           </span>
                           .
                         </p>
-                        <p className="">
+                        <p className="w-full">
                           <span className="font-bold">Example: </span> If you
                           are a removal company upload an image wih your van.
                         </p>
@@ -532,3 +555,34 @@ const PersonalDetails = () => {
 export default PersonalDetails;
 
 // CompleteHouse.requireAuth = true;
+
+// export async function getServerSideProps() {
+
+//   const moverSyncDetails = await fetchMoverDetails3();
+
+//   return {
+//     props: {
+//       moverSyncDetails,
+//     },
+//   };
+// }
+
+// export async function getServerSideProps() {
+//   const moverSyncDetails = await fetchMoverDetails2();
+
+//   return {
+//     props: {
+//       moverSyncDetails,
+//     },
+//   };
+// }
+
+// export async function getServerSideProps() {
+//   const moverSyncDetails = await fetchMoverDetails3();
+
+//   return {
+//     props: {
+//       moverSyncDetails,
+//     },
+//   };
+// }

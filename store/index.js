@@ -12,7 +12,7 @@ import {
   REGISTER,
 } from "redux-persist";
 import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
-// import hardSet from 'redux-persist/lib/stateReconciler/hardSet';
+import hardSet from 'redux-persist/lib/stateReconciler/hardSet';
 // import createWebStorage from 'redux-persist/lib/storage/createWebStorage';
 import cartReducer from "./userSlice";
 import quoteReducer from "./quoteSlice";
@@ -50,7 +50,7 @@ const persistConfig = {
   key: "root",
   //   version: 1,
   storage,
-  stateReconciler: autoMergeLevel2
+  stateReconciler: hardSet
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

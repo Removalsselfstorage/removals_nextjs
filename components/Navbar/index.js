@@ -7,23 +7,42 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import ScrollUpMenuNav from "../ScrollUpMenuNav";
 import useAuth from "@/hooks/useAuth";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getAllUserDetails } from "@/store/userSlice";
 import { trimToFirstLetter } from "@/utils/logics";
 import { CgProfile } from "react-icons/cg";
 import { useRouter } from "next/router";
 import { FiSettings } from "react-icons/fi";
+import {
+  getAllMoverDetails,
+  updateFirebaseMoverDetails,
+} from "@/store/moverSlice";
+import { fetchMoverDetails3 } from "@/lib/fetchData2";
 // import ScrollUpMenuNav from '../ScrollUpMenuNav';
 
 const Navbar = () => {
   const router = useRouter();
+  const dispatch = useDispatch();
+  const users = useSelector(getAllUserDetails);
+  const moverDetails = useSelector(getAllMoverDetails);
+
+  const firstName = moverDetails.firebaseMoverDetails?.firstName || moverDetails.personalDetails.firstName;
+  const lastName = moverDetails.firebaseMoverDetails?.lastName || moverDetails.personalDetails.lastName;
+
   const [shadow, setShadow] = useState(false);
   const [showNav, setShowNav] = useState(true);
   const { user, logout, loading } = useAuth();
 
-  const users = useSelector(getAllUserDetails);
+  const uid = users.userDetails?.uid;
+  // const readMoversData = async () => {
+  //   const res = await fetchMoverDetails3(uid);
+  //   dispatch(updateFirebaseMoverDetails(res));
+  // };
+  // useEffect(() => {
+  //   readMoversData();
+  // }, []);
 
-  console.log(users);
+  // console.log(users);
   // console.log(users.userDetails?.email);
 
   useEffect(() => {
@@ -270,14 +289,28 @@ const Navbar = () => {
                   {users.userDetails && (
                     <ul className="  px-1 text-[16px] hidden lg:flex ">
                       <li className="dropdown  dropdown-end">
-                        <label
-                          tabIndex={0}
-                          className="flex items-center justify-center bg-primary h-[40px] w-[40px] hover:bg-primary/60 rounded-full"
-                        >
-                          <p className="text-white font-bold">
-                            {trimToFirstLetter(users.userDetails?.email)}
-                          </p>
-                        </label>
+                        {moverDetails.firebaseMoverDetails.profileImageUrl ? (
+                          <label className="avatar cursor-pointer" tabIndex={0}>
+                            <div className="w-[40px] rounded-full  border-primary border-[3px]">
+                              <img
+                                src={
+                                  moverDetails.firebaseMoverDetails
+                                    .profileImageUrl || "/userPlaceholder.png"
+                                }
+                              />
+                            </div>
+                          </label>
+                        ) : (
+                          <label
+                            tabIndex={0}
+                            className="flex items-center cursor-pointer justify-center bg-primary h-[40px] w-[40px] hover:bg-primary/60 rounded-full"
+                          >
+                            <p className="text-white font-bold ">
+                              {/* {trimToFirstLetter(users.userDetails?.email)} */}
+                              {combineInitials(firstName, lastName)}
+                            </p>
+                          </label>
+                        )}
 
                         <ul
                           tabIndex={0}

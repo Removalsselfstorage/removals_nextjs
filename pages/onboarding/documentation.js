@@ -25,12 +25,34 @@ import { redirect, useRouter } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
 import {
   getAllMoverDetails,
+  updateFirebaseCompanyPix,
+  updateFirebaseDrivingLicense,
+  updateFirebaseMoverDetails,
+  updateFirebaseMoverDoc,
+  updateFirebaseMoverDocumentation,
+  updateFirebasePubInsurance,
+  updateFirebaseRegCertificate,
+  updateFirebaseTranInsurance,
+  updateFirebaseVehInsurance,
   updateMoverPersonalDetails,
 } from "@/store/moverSlice";
 import { getAllUserDetails } from "@/store/userSlice";
 import MoverLayout from "@/layouts/MoverLayout";
 import MoverLayout2 from "@/layouts/MoverLayout2";
 import { combineInitials } from "@/utils/logics";
+import CustomFileInput from "@/components/Inputs/CustomFileInput";
+import {
+  fetchMoverDetails3,
+  fetchMoverDetails4,
+  fetchMoversCompanyPix,
+  fetchMoversDetails,
+  fetchMoversDrivingLicense,
+  fetchMoversPubInsurance,
+  fetchMoversRegCertificate,
+  fetchMoversTranInsurance,
+  fetchMoversVehInsurance,
+} from "@/lib/fetchData2";
+import { UploadMoverDocumentation } from "@/lib/uploadMoverDocumentation";
 
 const PersonalDetails = () => {
   // const { data: session } = useSession();
@@ -42,48 +64,74 @@ const PersonalDetails = () => {
   const details = useSelector(getAllMoverDetails);
 
   //   states
-  const [regCertificateUpload, setRegCertificateUpload] = useState(null);
-  const [regCertificateUploadurl, setRegCertificateUploadurl] = useState(
-    details.personalDetails.regCertificate || null
+  const [companyBio, setCompanyBio] = useState(
+    details.firebaseMoverDoc?.companyBio || details.personalDetails.companyBio
   );
-  const [vehInsuranceUpload, setVehInsuranceUpload] = useState(null);
-  const [vehInsuranceUploadurl, setVehInsuranceUploadurl] = useState(
-    details.personalDetails.regCertificate || null
-  );
-  const [pubInsuranceUpload, setPubInsuranceUpload] = useState(null);
-  const [pubInsuranceUploadurl, setPubInsuranceUploadurl] = useState(
-    details.personalDetails.regCertificate || null
-  );
-  const [tranInsuranceUpload, setTranInsuranceUpload] = useState(null);
-  const [tranInsuranceUploadurl, setTranInsuranceUploadurl] = useState(
-    details.personalDetails.regCertificate || null
-  );
-  const [drivingLicenseUpload, setDrivingLicenseUpload] = useState(null);
-  const [drivingLicenseUploadurl, setDrivingLicenseUploadurl] = useState(
-    details.personalDetails.regCertificate || null
-  );
-
-  const [address, setAddress] = useState("");
-
   const [companyName, setCompanyName] = useState(
-    details.personalDetails.companyName || ""
+    details.firebaseMoverDoc?.companyName || details.personalDetails.companyName
   );
   const [companyNumber, setCompanyNumber] = useState(
-    details.personalDetails.companyNumber || ""
+    details.firebaseMoverDoc?.companyNumber ||
+      details.personalDetails.companyNumber
   );
-  const [phoneError, setPhoneError] = useState(true);
   const [companyAddress, setCompanyAddress] = useState(
-    details.personalDetails.companyAddress || ""
+    details.firebaseMoverDoc?.companyAddress ||
+      details.personalDetails.companyAddress
   );
-  const [lastName, setLastName] = useState(
-    details.personalDetails.lastName || ""
+  const [companyProfilePix, setCompanyProfilePix] = useState(
+    details.personalDetails.companyProfilePix?.raw || null
   );
-  const [email, setEmail] = useState(details.personalDetails.email || "");
-  const [emailError, setEmailError] = useState(true);
-  const [phone, setPhone] = useState(details.personalDetails.telephone || "");
+  const [companyProfilePixurl, setCompanyProfilePixurl] = useState(
+    details.firebaseCompanyPix?.companyProfilePixPreviewUrl ||
+      details.personalDetails.companyProfilePix?.url
+  );
+  const [regCertificateUpload, setRegCertificateUpload] = useState(
+    details.personalDetails.regCertificate?.raw || null
+  );
+  const [regCertificateUploadurl, setRegCertificateUploadurl] = useState(
+    details.firebaseRegCertificate?.regCertificatePreviewUrl ||
+      details.personalDetails.regCertificate?.url
+  );
+  const [vehInsuranceUpload, setVehInsuranceUpload] = useState(
+    details.personalDetails.vehInsurance?.raw || null
+  );
+  const [vehInsuranceUploadurl, setVehInsuranceUploadurl] = useState(
+    details.firebaseVehInsurance?.vehInsurancePreviewUrl ||
+      details.personalDetails.vehInsurance?.url
+  );
+  const [pubInsuranceUpload, setPubInsuranceUpload] = useState(
+    details.firebasePubInsurance.pubInsurance?.raw || null
+  );
+  const [pubInsuranceUploadurl, setPubInsuranceUploadurl] = useState(
+    details.firebaseMoverDocumentation?.pubInsurancePreviewUrl ||
+      details.personalDetails.pubInsurance?.url
+  );
+  const [tranInsuranceUpload, setTranInsuranceUpload] = useState(
+    details.personalDetails.tranInsurance?.raw || null
+  );
+  const [tranInsuranceUploadurl, setTranInsuranceUploadurl] = useState(
+    details.firebaseTranInsurance?.tranInsurancePreviewUrl ||
+      details.personalDetails.tranInsurance?.url
+  );
+  const [drivingLicenseUpload, setDrivingLicenseUpload] = useState(
+    details.personalDetails.drivingLicense?.raw || null
+  );
+  const [drivingLicenseUploadurl, setDrivingLicenseUploadurl] = useState(
+    details.firebaseDrivingLicense?.drivingLicensePreviewUrl ||
+      details.personalDetails.drivingLicense?.url
+  );
+
+  const [phoneError, setPhoneError] = useState(true);
   const [submitError, setSubmitError] = useState(false);
+  const [submitSuccess, setSubmitSuccess] = useState(false);
   const [submitLoading, setSubmitLoading] = useState(false);
   const [activateError, setActivateError] = useState(false);
+  const [fileUploadErrorCP, setFileUploadErrorCP] = useState("");
+  const [fileUploadErrorRC, setFileUploadErrorRC] = useState("");
+  const [fileUploadErrorVI, setFileUploadErrorVI] = useState("");
+  const [fileUploadErrorPI, setFileUploadErrorPI] = useState("");
+  const [fileUploadErrorTI, setFileUploadErrorTI] = useState("");
+  const [fileUploadErrorDL, setFileUploadErrorDL] = useState("");
 
   //   Email validation
   const handleEmailChange = (e) => {
@@ -111,83 +159,43 @@ const PersonalDetails = () => {
     setPhoneError(isValidPhoneNumber);
   };
 
-  const bioMaxLength = 20;
+  const bioMaxLength = 500;
   const handleBioChange = (e) => {
     const value = e.target.value;
-    // setPersonalBio(e.target.value);
+    // setcompanyBio(e.target.value);
     if (value.length <= bioMaxLength) {
-      setPersonalBio(e.target.value);
+      setCompanyBio(e.target.value);
     }
     // const { name, value } = e.target;
     // setMoverDetails({ ...moverDetails, [name]: value });
   };
 
-  const rchandleFileInputChange = (event) => {
-    const file = event.target.files[0];
-    setRegCertificateUpload(file);
-
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        setRegCertificateUploadurl(reader.result);
-      };
-      reader.readAsDataURL(file);
+  const handleKeyDown = (event) => {
+    if (companyBio?.length >= bioMaxLength && event.key !== "Backspace") {
+      event.preventDefault(); // Prevent typing more characters
     }
   };
 
-  const vihandleFileInputChange = (event) => {
-    const file = event.target.files[0];
-    setVehInsuranceUpload(file);
+  const uid = userDetails.userDetails?.uid;
 
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        setVehInsuranceUploadurl(reader.result);
-      };
-      reader.readAsDataURL(file);
-    }
+  const readMoversData = async () => {
+    const res1 = await fetchMoversDetails(uid);
+    const res2 = await fetchMoversCompanyPix(uid);
+    const res3 = await fetchMoversRegCertificate(uid);
+    const res4 = await fetchMoversVehInsurance(uid);
+    const res5 = await fetchMoversPubInsurance(uid);
+    const res6 = await fetchMoversTranInsurance(uid);
+    const res7 = await fetchMoversDrivingLicense(uid);
+    dispatch(updateFirebaseMoverDoc(res1));
+    dispatch(updateFirebaseCompanyPix(res2));
+    dispatch(updateFirebaseRegCertificate(res3));
+    dispatch(updateFirebaseVehInsurance(res4));
+    dispatch(updateFirebasePubInsurance(res5));
+    dispatch(updateFirebaseTranInsurance(res6));
+    dispatch(updateFirebaseDrivingLicense(res7));
   };
 
-  const pihandleFileInputChange = (event) => {
-    const file = event.target.files[0];
-    setPubInsuranceUpload(file);
-
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        setPubInsuranceUploadurl(reader.result);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const tihandleFileInputChange = (event) => {
-    const file = event.target.files[0];
-    setTranInsuranceUpload(file);
-
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        setTranInsuranceUploadurl(reader.result);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const dlhandleFileInputChange = (event) => {
-    const file = event.target.files[0];
-    setDrivingLicenseUpload(file);
-
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        setDrivingLicenseUploadurl(reader.result);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const documentFormSubmit = () => {
+  const documentFormSubmit = async () => {
     setActivateError(true);
     setSubmitError(false);
 
@@ -196,15 +204,70 @@ const PersonalDetails = () => {
       !companyName ||
       !phoneError ||
       !companyNumber ||
+      !companyProfilePixurl ||
       !regCertificateUploadurl ||
       !vehInsuranceUploadurl ||
       !pubInsuranceUploadurl ||
       !tranInsuranceUploadurl ||
+      fileUploadErrorCP ||
+      fileUploadErrorRC ||
+      fileUploadErrorVI ||
+      fileUploadErrorPI ||
+      fileUploadErrorTI ||
+      fileUploadErrorDL ||
       !drivingLicenseUploadurl
     ) {
       setSubmitError(true);
     } else {
       setSubmitLoading(true);
+
+      const moveObj = {
+        companyName,
+        companyNumber,
+        companyAddress,
+        companyBio,
+        companyProfilePix: {
+          raw: companyProfilePix,
+          url: companyProfilePixurl,
+          name: companyProfilePix?.name,
+        },
+        regCertificate: {
+          raw: regCertificateUpload,
+          url: regCertificateUploadurl,
+          name: regCertificateUpload?.name,
+        },
+        vehInsurance: {
+          raw: vehInsuranceUpload,
+          url: vehInsuranceUploadurl,
+          name: vehInsuranceUpload?.name,
+        },
+        pubInsurance: {
+          raw: pubInsuranceUpload,
+          url: pubInsuranceUploadurl,
+          name: pubInsuranceUpload?.name,
+        },
+        pubInsurance: {
+          raw: pubInsuranceUpload,
+          url: pubInsuranceUploadurl,
+          name: pubInsuranceUpload?.name,
+        },
+        tranInsurance: {
+          raw: tranInsuranceUpload,
+          url: tranInsuranceUploadurl,
+          name: tranInsuranceUpload?.name,
+        },
+        drivingLicense: {
+          raw: drivingLicenseUpload,
+          url: drivingLicenseUploadurl,
+          name: drivingLicenseUpload?.name,
+        },
+        email:
+          details.firebaseMoverDetails?.email || details.personalDetails.email,
+        uid,
+      };
+
+      const result = await UploadMoverDocumentation(moveObj);
+      console.log(result);
 
       dispatch(
         updateMoverPersonalDetails({
@@ -213,20 +276,59 @@ const PersonalDetails = () => {
           email: details.personalDetails.email,
           phone: details.personalDetails.phone,
           address: details.personalDetails.address,
-          personalBio: details.personalDetails.personalBio,
           profilePicture: details.personalDetails.profilePicture,
           companyName,
           companyNumber,
           companyAddress,
-          regCertificate: regCertificateUploadurl,
-          vehInsurance: vehInsuranceUploadurl,
-          pubInsurance: pubInsuranceUploadurl,
-          tranInsurance: tranInsuranceUploadurl,
-          drivingLicense: drivingLicenseUploadurl,
+          companyBio,
+          companyProfilePix: {
+            raw: companyProfilePix,
+            url: companyProfilePixurl,
+            name: companyProfilePix?.name,
+          },
+          // regCertificate: regCertificateUploadurl,
+          regCertificate: {
+            raw: regCertificateUpload,
+            url: regCertificateUploadurl,
+            name: regCertificateUpload?.name,
+          },
+          // vehInsurance: vehInsuranceUploadurl,
+          vehInsurance: {
+            raw: vehInsuranceUpload,
+            url: vehInsuranceUploadurl,
+            name: vehInsuranceUpload?.name,
+          },
+          // pubInsurance: pubInsuranceUploadurl,
+          pubInsurance: {
+            raw: pubInsuranceUpload,
+            url: pubInsuranceUploadurl,
+            name: pubInsuranceUpload?.name,
+          },
+          // tranInsurance: tranInsuranceUploadurl,
+          tranInsurance: {
+            raw: tranInsuranceUpload,
+            url: tranInsuranceUploadurl,
+            name: tranInsuranceUpload?.name,
+          },
+          // drivingLicense: drivingLicenseUploadurl,
+          drivingLicense: {
+            raw: drivingLicenseUpload,
+            url: drivingLicenseUploadurl,
+            name: drivingLicenseUpload?.name,
+          },
         })
       );
+      readMoversData();
 
-      router.push("/mover-profile");
+      setSubmitSuccess(true);
+
+      setSubmitLoading(false);
+
+      // router.push("/mover-profile");
+      setTimeout(() => {
+        // router.push("/onboarding/personal-details");
+        router.push("/mover-profile");
+      }, 2000);
     }
   };
 
@@ -238,7 +340,6 @@ const PersonalDetails = () => {
 
   //   console.log(details.moveDetails.moveDate);
   //   console.log(dateValue);
-  // console.log(details);
   // console.log(details);
 
   return (
@@ -363,10 +464,36 @@ const PersonalDetails = () => {
                   ></textarea>
                 </div>
 
+                {/* Company Bio */}
+                <div className="form-control w-full">
+                  <div className=" ">
+                    <span className="label-text font-semibold text-[16px]">
+                      Company Bio<span className="text-secondary">*</span>
+                    </span>
+                  </div>
+                  <p className="text-gray-500 mb-[10px] text-[15px] mt-[5px]">
+                    (Do not include your phone number or website.)
+                  </p>
+
+                  <textarea
+                    className={`${
+                      activateError && !companyBio ? "ring ring-secondary" : ""
+                    } textarea w-full textarea-primary min-h-[150px] max-h-[200px] placeholder:text-[16px] text-[15px]`}
+                    placeholder="Tell us about yourself and your work experience"
+                    onChange={handleBioChange}
+                    value={companyBio}
+                    // disabled={companyBio.length >= bioMaxLength}
+                    onKeyDown={handleKeyDown}
+                  ></textarea>
+                  <p className="text-gray-500 mb-[10px] text-[15px] mt-[5px]">
+                    {companyBio?.length} / {bioMaxLength} Characters
+                  </p>
+                </div>
+
                 {/* mandatory text */}
                 <div className="flex flex-col w-full items-center  mb-[40px] mt-[0px]">
                   <p className=" text-gray-400  text-[14px] mt-[10px]">
-                    (Accepted file types: PNG, JPG; Maximum file size: 5MB)
+                    (Accepted file types: PNG, JPG; Maximum file size: 3MB)
                   </p>
                 </div>
 
@@ -374,72 +501,100 @@ const PersonalDetails = () => {
                 <section className="mb-[30px]">
                   <div className="flex flex-col space-y-[20px] lg:space-y-0 lg:flex-row lg:space-x-[70px]">
                     {/* upload 1 */}
-                    <div className="flex  w-full lg:flex-[1]">
-                      <div className="flex flex-col w-full">
+                    <div className="flex lg:flex-[1] w-full">
+                      <div className="flex w-full flex-col">
                         {/* image preview */}
                         <div className="flex space-x-[20px] items-center mb-[20px] w-full justify-between">
-                          <p className=" font-bold text-[16px] mb-[10px]">
-                            Company registration certificate
-                            <span className="text-secondary">*</span>
-                          </p>
-                          <div className="avatar ">
-                            <div className="w-[50px] h-[50px] rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                              <img
-                                src={
-                                  regCertificateUploadurl
-                                    ? regCertificateUploadurl
-                                    : "https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/s3fs-public/thumbnails/image/file.jpg"
-                                }
-                              />
-                            </div>
+                          <div className="flex flex-col">
+                            <p className=" font-bold text-[16px] mb-[0px]">
+                              Company Profile Image
+                              <span className="text-secondary">*</span>
+                            </p>
+                            <p className=" text-gray-400  text-[14px] mt-[0px]">
+                              Image of mover van without company name
+                            </p>
                           </div>
+                          {companyProfilePixurl && !fileUploadErrorCP ? (
+                            <div className="avatar ">
+                              <div className="w-[50px] h-[50px] rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                                <img src={companyProfilePixurl} />
+                              </div>
+                            </div>
+                          ) : (
+                            <div className="avatar ">
+                              <div className="w-[50px] h-[50px] rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                                <img src="/file.jpg" />
+                              </div>
+                            </div>
+                          )}
                         </div>
                         {/* image input file */}
-                        <input
+                        {/* <input
                           type="file"
                           className={`${
-                            activateError && !regCertificateUploadurl
+                            activateError && !drivingLicenseUploadurl
                               ? "ring ring-secondary"
                               : ""
                           } file-input file-input-bordered file-input-primary w-full`}
                           accept="image/png, image/gif, image/jpeg"
-                          onChange={rchandleFileInputChange}
-                          value={regCertificateUpload}
+                          onChange={dlhandleFileInputChange}
+                        /> */}
+                        <CustomFileInput
+                          activateError={activateError}
+                          previewUrl={companyProfilePixurl}
+                          setPreviewUrl={setCompanyProfilePixurl}
+                          setImageUpload={setCompanyProfilePix}
+                          imageUpload={companyProfilePix}
+                          fileUploadError={fileUploadErrorCP}
+                          setFileUploadError={setFileUploadErrorCP}
                         />
+
+                        {fileUploadErrorCP && (
+                          <p className=" text-secondary text-[14px] mt-[10px]">
+                            {fileUploadErrorCP}
+                          </p>
+                        )}
                       </div>
                     </div>
                     {/* upload 2 */}
-                    <div className="flex w-full  lg:flex-[1]">
-                      <div className="flex flex-col w-full">
+                    <div className="flex lg:flex-[1] w-full">
+                      <div className="flex w-full flex-col">
                         {/* image preview */}
                         <div className="flex space-x-[20px] items-center mb-[20px] w-full justify-between">
                           <p className=" font-bold text-[16px] mb-[10px]">
-                            Vehicle insurance
+                            Driving Licence
                             <span className="text-secondary">*</span>
                           </p>
-                          <div className="avatar ">
-                            <div className="w-[50px] h-[50px] rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                              <img
-                                src={
-                                  vehInsuranceUploadurl
-                                    ? vehInsuranceUploadurl
-                                    : "https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/s3fs-public/thumbnails/image/file.jpg"
-                                }
-                              />
+                          {drivingLicenseUploadurl && !fileUploadErrorDL ? (
+                            <div className="avatar ">
+                              <div className="w-[50px] h-[50px] rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                                <img src={drivingLicenseUploadurl} />
+                              </div>
                             </div>
-                          </div>
+                          ) : (
+                            <div className="avatar ">
+                              <div className="w-[50px] h-[50px] rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                                <img src="/file.jpg" />
+                              </div>
+                            </div>
+                          )}
                         </div>
                         {/* image input file */}
-                        <input
-                          type="file"
-                          className={`${
-                            activateError && !vehInsuranceUploadurl
-                              ? "ring ring-secondary"
-                              : ""
-                          } file-input file-input-bordered file-input-primary w-full`}
-                          accept="image/png, image/gif, image/jpeg"
-                          onChange={vihandleFileInputChange}
+                        <CustomFileInput
+                          activateError={activateError}
+                          imageUpload={drivingLicenseUpload}
+                          setImageUpload={setDrivingLicenseUpload}
+                          previewUrl={drivingLicenseUploadurl}
+                          setPreviewUrl={setDrivingLicenseUploadurl}
+                          fileUploadError={fileUploadErrorDL}
+                          setFileUploadError={setFileUploadErrorDL}
                         />
+
+                        {fileUploadErrorDL && (
+                          <p className=" text-secondary text-[14px] mt-[10px]">
+                            {fileUploadErrorDL}
+                          </p>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -454,33 +609,124 @@ const PersonalDetails = () => {
                         {/* image preview */}
                         <div className="flex space-x-[20px] items-center mb-[20px] w-full justify-between">
                           <p className=" font-bold text-[16px] mb-[10px]">
+                            Company registration certificate
+                            <span className="text-secondary">*</span>
+                          </p>
+                          {regCertificateUploadurl && !fileUploadErrorRC ? (
+                            <div className="avatar ">
+                              <div className="w-[50px] h-[50px] rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                                <img src={regCertificateUploadurl} />
+                              </div>
+                            </div>
+                          ) : (
+                            <div className="avatar ">
+                              <div className="w-[50px] h-[50px] rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                                <img src="/file.jpg" />
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                        {/* image input file */}
+                        <CustomFileInput
+                          activateError={activateError}
+                          imageUpload={regCertificateUpload}
+                          setImageUpload={setRegCertificateUpload}
+                          previewUrl={regCertificateUploadurl}
+                          setPreviewUrl={setRegCertificateUploadurl}
+                          fileUploadError={fileUploadErrorRC}
+                          setFileUploadError={setFileUploadErrorRC}
+                        />
+                        {fileUploadErrorRC && (
+                          <p className=" text-secondary text-[14px] mt-[10px]">
+                            {fileUploadErrorRC}
+                          </p>
+                        )}
+                      </div>
+                    </div>
+                    {/* upload 2 */}
+                    <div className="flex w-full  lg:flex-[1]">
+                      <div className="flex flex-col w-full">
+                        {/* image preview */}
+                        <div className="flex space-x-[20px] items-center mb-[20px] w-full justify-between">
+                          <p className=" font-bold text-[16px] mb-[10px]">
+                            Vehicle insurance
+                            <span className="text-secondary">*</span>
+                          </p>
+                          {vehInsuranceUploadurl && !fileUploadErrorVI ? (
+                            <div className="avatar ">
+                              <div className="w-[50px] h-[50px] rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                                <img src={vehInsuranceUploadurl} />
+                              </div>
+                            </div>
+                          ) : (
+                            <div className="avatar ">
+                              <div className="w-[50px] h-[50px] rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                                <img src="/file.jpg" />
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                        {/* image input file */}
+                        <CustomFileInput
+                          activateError={activateError}
+                          imageUpload={vehInsuranceUpload}
+                          setImageUpload={setVehInsuranceUpload}
+                          previewUrl={vehInsuranceUploadurl}
+                          setPreviewUrl={setVehInsuranceUploadurl}
+                          fileUploadError={fileUploadErrorVI}
+                          setFileUploadError={setFileUploadErrorVI}
+                        />
+                        {fileUploadErrorVI && (
+                          <p className=" text-secondary text-[14px] mt-[10px]">
+                            {fileUploadErrorVI}
+                          </p>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </section>
+
+                {/* image upload 3*/}
+                <section className="mb-[30px]">
+                  <div className="flex flex-col space-y-[20px] lg:space-y-0 lg:flex-row lg:space-x-[70px]">
+                    {/* upload 1 */}
+                    <div className="flex  w-full lg:flex-[1]">
+                      <div className="flex flex-col w-full">
+                        {/* image preview */}
+                        <div className="flex space-x-[20px] items-center mb-[20px] w-full justify-between">
+                          <p className=" font-bold text-[16px] mb-[10px]">
                             Public Liability Insurance
                             <span className="text-secondary">*</span>
                           </p>
-                          <div className="avatar ">
-                            <div className="w-[50px] h-[50px] rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                              <img
-                                src={
-                                  pubInsuranceUploadurl
-                                    ? pubInsuranceUploadurl
-                                    : "https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/s3fs-public/thumbnails/image/file.jpg"
-                                }
-                              />
+                          {pubInsuranceUploadurl && !fileUploadErrorPI ? (
+                            <div className="avatar ">
+                              <div className="w-[50px] h-[50px] rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                                <img src={pubInsuranceUploadurl} />
+                              </div>
                             </div>
-                          </div>
+                          ) : (
+                            <div className="avatar ">
+                              <div className="w-[50px] h-[50px] rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                                <img src="/file.jpg" />
+                              </div>
+                            </div>
+                          )}
                         </div>
                         {/* image input file */}
-                        <input
-                          type="file"
-                          className={`${
-                            activateError && !pubInsuranceUploadurl
-                              ? "ring ring-secondary"
-                              : ""
-                          } file-input file-input-bordered file-input-primary w-full`}
-                          accept="image/png, image/gif, image/jpeg"
-                          onChange={pihandleFileInputChange}
-                          // defaultValue={}
+                        <CustomFileInput
+                          activateError={activateError}
+                          imageUpload={pubInsuranceUpload}
+                          setImageUpload={setPubInsuranceUpload}
+                          previewUrl={pubInsuranceUploadurl}
+                          setPreviewUrl={setPubInsuranceUploadurl}
+                          fileUploadError={fileUploadErrorPI}
+                          setFileUploadError={setFileUploadErrorPI}
                         />
+                        {fileUploadErrorPI && (
+                          <p className=" text-secondary text-[14px] mt-[10px]">
+                            {fileUploadErrorPI}
+                          </p>
+                        )}
                       </div>
                     </div>
                     {/* upload 2 */}
@@ -492,80 +738,55 @@ const PersonalDetails = () => {
                             Goods-in-transit Insurance
                             <span className="text-secondary">*</span>
                           </p>
-                          <div className="avatar ">
-                            <div className="w-[50px] h-[50px] rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                              <img
-                                src={
-                                  tranInsuranceUploadurl
-                                    ? tranInsuranceUploadurl
-                                    : "https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/s3fs-public/thumbnails/image/file.jpg"
-                                }
-                              />
+                          {tranInsuranceUploadurl && !fileUploadErrorTI ? (
+                            <div className="avatar ">
+                              <div className="w-[50px] h-[50px] rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                                <img src={tranInsuranceUploadurl} />
+                              </div>
                             </div>
-                          </div>
+                          ) : (
+                            <div className="avatar ">
+                              <div className="w-[50px] h-[50px] rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                                <img src="/file.jpg" />
+                              </div>
+                            </div>
+                          )}
                         </div>
                         {/* image input file */}
-                        <input
-                          type="file"
-                          className={`${
-                            activateError && !tranInsuranceUploadurl
-                              ? "ring ring-secondary"
-                              : ""
-                          } file-input file-input-bordered file-input-primary w-full`}
-                          accept="image/png, image/gif, image/jpeg"
-                          onChange={tihandleFileInputChange}
+                        <CustomFileInput
+                          activateError={activateError}
+                          imageUpload={tranInsuranceUpload}
+                          setImageUpload={setTranInsuranceUpload}
+                          previewUrl={tranInsuranceUploadurl}
+                          setPreviewUrl={setTranInsuranceUploadurl}
+                          fileUploadError={fileUploadErrorTI}
+                          setFileUploadError={setFileUploadErrorTI}
                         />
-                      </div>
-                    </div>
-                  </div>
-                </section>
-
-                {/* image upload 3*/}
-                <section className="mb-[30px]">
-                  <div className="flex flex-col space-y-[20px] lg:space-y-0 lg:flex-row lg:space-x-[70px]">
-                    {/* upload 1 */}
-                    <div className="flex lg:flex-[1] w-full">
-                      <div className="flex w-full flex-col">
-                        {/* image preview */}
-                        <div className="flex space-x-[20px] items-center mb-[20px] w-full justify-between">
-                          <p className=" font-bold text-[16px] mb-[10px]">
-                            Driving Licence
-                            <span className="text-secondary">*</span>
+                        {fileUploadErrorTI && (
+                          <p className=" text-secondary text-[14px] mt-[10px]">
+                            {fileUploadErrorTI}
                           </p>
-                          <div className="avatar ">
-                            <div className="w-[50px] h-[50px] rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                              <img
-                                src={
-                                  drivingLicenseUploadurl
-                                    ? drivingLicenseUploadurl
-                                    : "https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/s3fs-public/thumbnails/image/file.jpg"
-                                }
-                              />
-                            </div>
-                          </div>
-                        </div>
-                        {/* image input file */}
-                        <input
-                          type="file"
-                          className={`${
-                            activateError && !drivingLicenseUploadurl
-                              ? "ring ring-secondary"
-                              : ""
-                          } file-input file-input-bordered file-input-primary w-full`}
-                          accept="image/png, image/gif, image/jpeg"
-                          onChange={dlhandleFileInputChange}
-                        />
+                        )}
                       </div>
                     </div>
-                    <div className="flex lg:flex-[1]"></div>
                   </div>
                 </section>
 
                 {/* error message */}
                 <div className="flex justify-center w-full">
-                  {submitError && (
+                  {submitError && !submitSuccess && !submitLoading && (
                     <p className="text-[16px] text-secondary mt-[15px]">
                       Please fill all mandatory fields
+                    </p>
+                  )}
+                  {submitSuccess && !submitError && !submitLoading && (
+                    <p className="text-[16px] text-primary mt-[15px]">
+                      Documentations successfully submitted
+                    </p>
+                  )}
+                  {submitLoading && !submitError && !submitSuccess && (
+                    <p className="text-[16px] text-primary mt-[15px]">
+                      Submitting ...
                     </p>
                   )}
                 </div>
@@ -574,21 +795,20 @@ const PersonalDetails = () => {
                 <div className="w-full flex justify-end mt-[50px]">
                   <div className="flex items-start space-x-[20px]">
                     <div className="flex flex-col items-center justify-center">
-                      <Link
-                        href="/onboarding/personal-details"
-                        // onClick={documentFormSubmit}
-                        className="btn btn-secondary w-[150px] flex items-center space-x-[5px] h-[60px]"
-                      >
-                        <span className="">
-                          <AiOutlineLeft className="text-[20px]" />
-                        </span>
-                        <span className="">Previous</span>
+                      <Link href="/onboarding/personal-details">
+                        <button className="btn btn-secondary w-[150px] flex items-center space-x-[5px] h-[60px]" disabled={submitLoading}>
+                          <span className="">
+                            <AiOutlineLeft className="text-[20px]" />
+                          </span>
+                          <span className="">Previous</span>
+                        </button>
                       </Link>
                     </div>
                     <div className="flex flex-col items-center justify-center">
                       <button
                         onClick={documentFormSubmit}
                         className="btn btn-secondary w-[150px] flex items-center space-x-[5px] h-[60px]"
+                        disabled={submitLoading}
                       >
                         {!submitLoading && <span className="">Submit</span>}
                         {submitLoading && (

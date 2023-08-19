@@ -1,6 +1,6 @@
 import MoverLayout from "@/layouts/MoverLayout";
 import NormalLayout from "@/layouts/NormalLayout";
-import { uploadMoverDetails } from "@/lib/uploadMoverDetails";
+import { uploadMoverDetails } from "@/lib/uploadMoverPersonalDetails";
 import { getAllUserDetails } from "@/store/userSlice";
 import { FilePicker } from "evergreen-ui";
 import Head from "next/head";

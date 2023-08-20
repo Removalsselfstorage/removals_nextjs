@@ -2,7 +2,7 @@ import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import thunk from "redux-thunk";
 import storage from 'reduxjs-toolkit-persist/lib/storage'
 import storageSession from 'reduxjs-toolkit-persist/lib/storage/session'
-import { persistReducer } from 'reduxjs-toolkit-persist'
+import { persistReducer, createMigrate } from 'reduxjs-toolkit-persist'
 import hardSet from 'reduxjs-toolkit-persist/lib/stateReconciler/hardSet'
 // import storage from "redux-persist/lib/storage";
 // import {

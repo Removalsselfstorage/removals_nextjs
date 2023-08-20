@@ -14,9 +14,9 @@ import { getAllUserDetails } from "@/store/userSlice";
 let persistor = persistStore(store);
 
 // persistor.flush().then(() => {
-persistor.purge().then(() => {
-  console.log("Persisted state has been cleared.");
-});
+// persistor.purge().then(() => {
+//   console.log("Persisted state has been cleared.");
+// });
 
 export default function App({ Component, pageProps: { ...pageProps } }) {
   return (

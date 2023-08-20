@@ -1,3 +1,4 @@
+import StarRating from "@/components/Rating/EditHalfStars2";
 import MoverLayout from "@/layouts/MoverLayout";
 import NormalLayout from "@/layouts/NormalLayout";
 import { fetchMoverDetails3 } from "@/lib/fetchData2";
@@ -6,6 +7,7 @@ import {
   updateFirebaseMoverDetails,
 } from "@/store/moverSlice";
 import { getAllUserDetails } from "@/store/userSlice";
+import { combineInitials } from "@/utils/logics";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -18,7 +20,7 @@ import {
 } from "react-icons/bi";
 import { BsImages, BsTools } from "react-icons/bs";
 import { CgProfile } from "react-icons/cg";
-import { FaRegEdit } from "react-icons/fa";
+import { FaRegEdit, FaTruckMoving } from "react-icons/fa";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { TfiComments } from "react-icons/tfi";
 import { useDispatch, useSelector } from "react-redux";
@@ -87,10 +89,15 @@ const MoverProfile = () => {
   const userDetails = useSelector(getAllUserDetails);
   const moverDetails = useSelector(getAllMoverDetails);
 
+  const firstName = moverDetails.firebaseMoverDetails?.firstName;
+  const lastName = moverDetails.firebaseMoverDetails?.lastName;
+
   const [index, setIndex] = useState(0);
   const [sectionData, setSectionData] = useState(sections);
 
- 
+  const [previewUrl, setPreviewUrl] = useState(
+    moverDetails.firebaseMoverDetails?.profileImagePreviewUrl
+  );
 
   useEffect(() => {
     const lastIndex = sectionData.length - 1;
@@ -120,6 +127,8 @@ const MoverProfile = () => {
     readMoversData();
   }, []);
 
+  console.log(previewUrl);
+
   return (
     <MoverLayout>
       <Head>
@@ -132,16 +141,65 @@ const MoverProfile = () => {
         <section className="mb-[30px]">
           <div className="flex flex-col">
             <p className="font-bold text-[25px] mb-[20px]">Dashboard</p>
-            <div className="flex items-center space-x-[30px]">
-              <div className="avatar placeholder">
-                <div className="bg-gray-200 rounded-full w-24">
-                  <span className="text-3xl font-bold">OG</span>
+            <div className="flex flex-col space-y-[20px] lg:space-y-0 lg:flex-row lg:justify-between">
+              <div className="flex items-center space-x-[30px]">
+                {previewUrl ? (
+                  <div className="avatar ">
+                    <div className="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                      <img src={previewUrl} />
+                    </div>
+                  </div>
+                ) : (
+                  <div className="avatar placeholder">
+                    <div className="bg-gray-200 rounded-full w-[120px]">
+                      <span className="text-5xl font-bold">
+                        {combineInitials(firstName, lastName)}
+                      </span>
+                    </div>
+                  </div>
+                )}
+                <div className="flex flex-col">
+                  <p className="">Welcome,</p>
+                  <p className="font-bold text-[25px]">
+                    {firstName} {lastName}
+                  </p>
+                  <p className="italic text-gray-400 ">No reviews yet</p>
                 </div>
               </div>
+              {/* mover details */}
               <div className="flex flex-col">
-                <p className="">Welcome,</p>
-                <p className="font-bold text-[25px]">Oliver G.</p>
-                <p className="italic text-gray-400 ">No reviews yet</p>
+                {/* mover name */}
+                <div className="flex items-center space-x-[15px] md:space-x-[5px]  sm:items-start  space-y-[0px] lg:space-y-[0px] lg:flex-row lg:items-center mb-[5px] sm:mb-[7px] lg:mb-[7px] text-[15px]">
+                  <p className="text-primary font-semibold hidden md:block">
+                    Mover Username:
+                  </p>
+                  <p className=" font-semibold">Infinity Movers</p>
+                </div>
+                {/* mover rating */}
+                <div className="flex items-center space-x-[15px] md:space-x-[5px]  sm:items-start  space-y-[0px] lg:space-y-[0px] lg:flex-row lg:items-center mb-[5px] sm:mb-[7px] lg:mb-[7px] text-[15px]">
+                  <p className="text-primary font-semibold hidden md:block">
+                    Mover Rating:
+                  </p>
+                  <div className="flex items-center space-x-[10px] mt-[0px] text-[15px]">
+                    <p className="font-semibold">0</p>
+                    {/* <FullRating small value={rating} color="text-secondary" /> */}
+                    <StarRating
+                      rating={0}
+                      size="text-secondary text-[16px]"
+                    />
+                    {/* <p className="">{`- (0 Reviews)`}</p> */}
+                  </div>
+                </div>
+
+                {/* mover name */}
+                <div className="flex items-center space-x-[15px] md:space-x-[5px]  sm:items-start  space-y-[0px] lg:space-y-[0px] lg:flex-row lg:items-center mb-[5px] sm:mb-[7px] lg:mb-[7px] text-[15px]">
+                  <div className="flex items-center space-x-[5px]">
+                    <p className="text-primary font-semibold hidden md:block">
+                      Mover Hires:
+                    </p>
+                  </div>
+                  <p className=" font-semibold">0 Hires</p>
+                </div>
               </div>
             </div>
           </div>

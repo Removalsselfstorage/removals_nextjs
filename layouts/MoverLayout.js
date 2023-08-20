@@ -14,6 +14,7 @@ import { AiOutlineHome } from "react-icons/ai";
 import { MdWorkOutline } from "react-icons/md";
 import { FaRegCalendarAlt } from "react-icons/fa";
 import { HiOutlineInboxArrowDown } from "react-icons/hi2";
+import { HiDocumentDuplicate } from "react-icons/hi";
 import { BsImages } from "react-icons/bs";
 import { FiSettings } from "react-icons/fi";
 import { TfiComments } from "react-icons/tfi";
@@ -145,6 +146,21 @@ const MoverLayout = ({ children }) => {
                       <FiSettings />
                     </span>
                     <p className="hidden lg:flex">Edit Profile</p>
+                  </Link>
+                </li>
+                <li className=" my-[10px] px-[0px] w-full">
+                  <Link
+                    href="/mover-profile/documentation"
+                    className={`${
+                      router.pathname === "/mover-profile/documentation"
+                        ? "bg-primary/10 text-primary"
+                        : ""
+                    } flex items-center btn-dash py-[15px] px-[20px] rounded-[10px] w-full`}
+                  >
+                    <span className="text-[25px] mr-[10px]">
+                      <HiDocumentDuplicate />
+                    </span>
+                    <p className="hidden lg:flex">Documentation</p>
                   </Link>
                 </li>
                 <li className=" my-[10px] px-[0px] w-full">

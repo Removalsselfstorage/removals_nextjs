@@ -19,6 +19,7 @@ import { FiSettings } from "react-icons/fi";
 import { TfiComments } from "react-icons/tfi";
 import { useSelector } from "react-redux";
 import { getAllUserDetails } from "@/store/userSlice";
+import { fetchMoverDetails3 } from "@/lib/fetchData2";
 
 const MoverLayout2 = ({ children }) => {
   const router = useRouter();

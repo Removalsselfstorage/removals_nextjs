@@ -45,16 +45,13 @@ import {
 } from "@/lib/fetchData2";
 import { UploadMoverDocumentation } from "@/lib/uploadMoverDocumentation";
 
-const PersonalDetails = () => {
-  // const { data: session } = useSession();
-
+const Portfolio = () => {
   const router = useRouter();
   const userDetails = useSelector(getAllUserDetails);
 
   const dispatch = useDispatch();
   const details = useSelector(getAllMoverDetails);
 
-  //   states
   const [companyBio, setCompanyBio] = useState(
     details.firebaseMoverDoc?.companyBio || details.personalDetails.companyBio
   );
@@ -323,20 +320,10 @@ const PersonalDetails = () => {
     }
   };
 
-  // useEffect(() => {
-  //   if (!userDetails.userDetails) {
-  //     router.push("/");
-  //   }
-  // }, []);
-
-  //   console.log(details.moveDetails.moveDate);
-  //   console.log(dateValue);
-  // console.log(details);
-
   return (
-    <MoverLayout2>
+    <MoverLayout>
       <Head>
-        <title>House Removals - Removal and Self Storage</title>
+        <title>Mover Profile - Documentation</title>
         <meta name="description" content="Rss removal and storage website" />
         <link rel="icon" href="/rrs_favicon.svg" />
       </Head>
@@ -344,31 +331,19 @@ const PersonalDetails = () => {
       <main>
         <div className="pb-[70px] lg:pb-[100px] pt-[70px] bg-white/80">
           <div className="md:max-w-7xl mx-auto">
-            {/* Title */}
-            <div className="w-full flex justify-center py-[30px] md:py-[40px]">
-              <h3
-                className={`${titleFont.variable} font-sans2 text-3xl lg:text-4xl font-extrabold flex-col items-center justify-center`}
-              >
-                <p className="">Mover Onboarding</p>{" "}
-                <div className="w-full bg-primary/20 h-[20px] mt-[-12px] "></div>
-              </h3>
-            </div>
-
             {/* form */}
             <div className="flex flex-col  px-[20px] lg:px-[100px] py-[30px] bg-white rounded-[20px] border mx-[10px] md:mx-[100px]">
-              {/* stepper */}
-              <div className="w-full flex justify-center mb-[20px]">
-                <ul className="steps">
-                  <li className="step step-primary px-[50px] font-bold text-[20px] leading-[25px] text-gray-300">
-                    Personal Details
-                  </li>
-                  <li className="step step-primary font-bold text-[20px] leading-[25px]">
+              <section className="mb-[30px]  px-[0px] ">
+                <div className="flex flex-col">
+                  <p className="font-bold text-[25px] mb-[0px]">
                     Documentation
-                  </li>
-                  {/* <li className="step">Purchase</li>
-                <li className="step">Receive Product</li> */}
-                </ul>
-              </div>
+                  </p>
+                  <p className="">
+                    Set up your Removal & Self Storage profile and increase your
+                    hiring chances
+                  </p>
+                </div>
+              </section>
               {/* mandatory text */}
               <div className="flex flex-col w-full items-center  mb-[40px] mt-[20px]">
                 <p className="text-secondary">
@@ -784,19 +759,7 @@ const PersonalDetails = () => {
               {/* submit button */}
               <div className="w-full flex justify-end mt-[50px]">
                 <div className="flex items-start space-x-[20px]">
-                  <div className="flex flex-col items-center justify-center">
-                    <Link href="/onboarding/personal-details">
-                      <button
-                        className="btn btn-secondary w-[150px] flex items-center space-x-[5px] h-[60px]"
-                        disabled={submitLoading}
-                      >
-                        <span className="">
-                          <AiOutlineLeft className="text-[20px]" />
-                        </span>
-                        <span className="">Previous</span>
-                      </button>
-                    </Link>
-                  </div>
+                  
                   <div className="flex flex-col items-center justify-center">
                     <button
                       onClick={documentFormSubmit}
@@ -807,11 +770,7 @@ const PersonalDetails = () => {
                       {submitLoading && (
                         <span className="loading loading-dots loading-md text-white"></span>
                       )}
-                      {!submitLoading && (
-                        <span className="">
-                          <AiOutlineRight className="text-[20px]" />
-                        </span>
-                      )}
+                      
                     </button>
                   </div>
                 </div>
@@ -820,29 +779,8 @@ const PersonalDetails = () => {
           </div>
         </div>
       </main>
-    </MoverLayout2>
+    </MoverLayout>
   );
 };
 
-export default PersonalDetails;
-
-// CompleteHouse.requireAuth = true;
-
-// export async function getServerSideProps() {
-//   // const csrfToken = await getCsrfToken(context);
-//   const res1 = await fetchMoversDetails(uid);
-//   const res2 = await fetchMoversCompanyPix(uid);
-//   const res3 = await fetchMoversRegCertificate(uid);
-//   const res4 = await fetchMoversVehInsurance(uid);
-//   const res5 = await fetchMoversPubInsurance(uid);
-//   const res6 = await fetchMoversTranInsurance(uid);
-//   const res7 = await fetchMoversDrivingLicense(uid);
-
-//   return {
-//     props: {
-//       providers,
-//       csrfToken,
-//       // callbackUrl,
-//     },
-//   };
-// }
+export default Portfolio;

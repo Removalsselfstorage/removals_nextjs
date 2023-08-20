@@ -79,6 +79,7 @@ const CustomFileInput = ({
         </button>
         <p className="truncate ... px-[10px] text-[14px] w-[255px]">
           {previewUrl && !fileUploadError
+            // ? imageUpload?.name || details.firebaseMoverDetails.profilePictureName
             ? imageUpload?.name || details.firebaseMoverDetails.profilePictureName
             : "No file selected"}
         </p>

@@ -1,18 +1,22 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import thunk from "redux-thunk";
-import storage from "redux-persist/lib/storage";
-import {
-  persistReducer,
-  persistStore,
-  FLUSH,
-  REHYDRATE,
-  PAUSE,
-  PERSIST,
-  PURGE,
-  REGISTER,
-} from "redux-persist";
-import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
-import hardSet from 'redux-persist/lib/stateReconciler/hardSet';
+import storage from 'reduxjs-toolkit-persist/lib/storage'
+import storageSession from 'reduxjs-toolkit-persist/lib/storage/session'
+import { persistReducer } from 'reduxjs-toolkit-persist'
+import hardSet from 'reduxjs-toolkit-persist/lib/stateReconciler/hardSet'
+// import storage from "redux-persist/lib/storage";
+// import {
+//   persistReducer,
+//   persistStore,
+//   FLUSH,
+//   REHYDRATE,
+//   PAUSE,
+//   PERSIST,
+//   PURGE,
+//   REGISTER,
+// } from "redux-persist";
+// import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
+// import hardSet from 'redux-persist/lib/stateReconciler/hardSet';
 // import createWebStorage from 'redux-persist/lib/storage/createWebStorage';
 import cartReducer from "./userSlice";
 import quoteReducer from "./quoteSlice";
@@ -50,6 +54,7 @@ const persistConfig = {
   key: "root",
   //   version: 1,
   storage,
+  // storage: storageSession,
   stateReconciler: hardSet
 };
 

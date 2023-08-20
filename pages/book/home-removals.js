@@ -29,10 +29,9 @@ import {
 import DatePicker2 from "@/components/DatePicker/DatePicker2";
 import dayjs from "dayjs";
 import { redirect, useRouter } from "next/navigation";
-import { signOut, useSession } from "next-auth/react";
 
 const CompleteHouse = () => {
-  const { data: session } = useSession();
+
 
   const router = useRouter();
 
@@ -117,14 +116,7 @@ const CompleteHouse = () => {
   const date = dayjs(dateValue).format("YYYY/MM/DD");
   const date2 = dayjs(dateValue).format("dddd, MMMM D, YYYY");
 
-  // const increaseFloorCount = () => {
-  //   setFloorCount((prev) => prev + 1);
-  // };
-  // const decreaseFloorCount = () => {
-  //   if (floorCount != 0) {
-  //     setFloorCount((prev) => prev - 1);
-  //   }
-  // };
+
   const selectDefaultValue = () => {
     const option = serviceOptions2.filter(
       (opt) => opt.value == details.moveDetails.propertyType
@@ -155,10 +147,7 @@ const CompleteHouse = () => {
     return option;
   };
 
-  // const postCode1 = addressDetails
-  //   ? addressDetails.zip
-  //   : details.serviceLocation.locationFrom.postCode;
-  //   const postCode1 = details.serviceLocation.locationFrom.postCode;
+
 
   const removalFormSubmit = () => {
     setActivateError(true);
@@ -260,10 +249,7 @@ const CompleteHouse = () => {
     }
   };
 
-  //   console.log(details.moveDetails.moveDate);
-  //   console.log(dateValue);
-  // console.log(details);
-  //   console.log(postCode1);
+
 
   return (
     <BookingLayout>

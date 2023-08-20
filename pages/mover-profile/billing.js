@@ -9,14 +9,6 @@ import { CgProfile } from "react-icons/cg";
 import { useSelector } from "react-redux";
 
 const Billing = () => {
-  const router = useRouter();
-  const userDetails = useSelector(getAllUserDetails);
-
-  useEffect(() => {
-    if (!userDetails.userDetails) {
-      router.push("/");
-    }
-  }, []);
   return (
     <MoverLayout>
       <Head>
@@ -25,16 +17,9 @@ const Billing = () => {
         <link rel="icon" href="/rrs_favicon.svg" />
       </Head>
 
-      
-      {userDetails.userDetails ? (
-        <div className="py-[50px] bg-white/90 px-[30px]">
-          <p>Billing</p>
-        </div>
-      ) : (
-        <div className="flex items-center justify-center h-[100vh] ">
-          <span className="h-full loading loading-bars text-primary w-[40px] lg:w-[60px]"></span>
-        </div>
-      )}
+      <div className="py-[50px] bg-white/90 px-[30px]">
+        <p>Billing</p>
+      </div>
     </MoverLayout>
   );
 };

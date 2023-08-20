@@ -32,8 +32,12 @@ const Navbar3 = () => {
   const users = useSelector(getAllUserDetails);
   const moverDetails = useSelector(getAllMoverDetails);
 
-  const firstName = moverDetails.firebaseMoverDetails?.firstName || moverDetails.personalDetails.firstName;
-  const lastName = moverDetails.firebaseMoverDetails?.lastName || moverDetails.personalDetails.lastName;
+  const firstName =
+    moverDetails.firebaseMoverDetails?.firstName ||
+    moverDetails.personalDetails.firstName;
+  const lastName =
+    moverDetails.firebaseMoverDetails?.lastName ||
+    moverDetails.personalDetails.lastName;
 
   // const uid = users.userDetails?.uid;
   // const readMoversData = async () => {
@@ -82,7 +86,8 @@ const Navbar3 = () => {
                       </div>
                       <ul className="  px-1 text-[16px] hidden lg:flex ">
                         <li className="dropdown  dropdown-end">
-                          {moverDetails.firebaseMoverDetails?.profileImageUrl ? (
+                          {moverDetails.firebaseMoverDetails
+                            ?.profileImageUrl ? (
                             <label
                               className="avatar cursor-pointer"
                               tabIndex={0}
@@ -125,7 +130,7 @@ const Navbar3 = () => {
                                   <span className="text-[20px] mr-[10px]">
                                     <FiSettings />
                                   </span>
-                                  <a className="">Edit Profile</a>
+                                  <p className="">Edit Profile</p>
                                 </div>
                               </Link>
                             </li>
@@ -133,11 +138,11 @@ const Navbar3 = () => {
                               onClick={() => logout()}
                               className={`font-semibold hover:text-primary cursor-pointer`}
                             >
-                              <div className="flex">
+                              <div className="flex ">
                                 <span className="text-[20px] mr-[10px]">
                                   <BiLogOut />
                                 </span>
-                                <a className="">Log Out</a>
+                                <p className="">Log Out</p>
                               </div>
                             </li>
                           </ul>
@@ -182,7 +187,7 @@ const Navbar3 = () => {
                         <span className="text-[25px] mr-[10px]">
                           <AiOutlineHome />
                         </span>
-                        <a className="">Dashboard</a>
+                        <p className="">Dashboard</p>
                       </Link>
                     </li>
                     <li className=" my-[10px] px-[0px] w-full">
@@ -197,7 +202,7 @@ const Navbar3 = () => {
                         <span className="text-[25px] mr-[10px]">
                           <LiaUserClockSolid />
                         </span>
-                        <a className="">Appointments</a>
+                        <p className="">Appointments</p>
                       </Link>
                     </li>
 
@@ -213,7 +218,7 @@ const Navbar3 = () => {
                         <span className="text-[25px] mr-[10px]">
                           <MdWorkOutline />
                         </span>
-                        <a className="">Job Board</a>
+                        <p className="">Job Board</p>
                       </Link>
                     </li>
                     <li className=" my-[10px] px-[0px] w-full">
@@ -228,7 +233,7 @@ const Navbar3 = () => {
                         <span className="text-[25px] mr-[10px]">
                           <HiOutlineInboxArrowDown />
                         </span>
-                        <a className="">Inbox</a>
+                        <p className="">Inbox</p>
                       </Link>
                     </li>
                     <li className=" my-[10px] px-[0px] w-full">
@@ -243,7 +248,7 @@ const Navbar3 = () => {
                         <span className="text-[25px] mr-[10px]">
                           <FaRegCalendarAlt />
                         </span>
-                        <a className="">Calendar</a>
+                        <p className="">Calendar</p>
                       </Link>
                     </li>
                     <li className=" my-[10px] px-[0px] w-full">
@@ -258,7 +263,7 @@ const Navbar3 = () => {
                         <span className="text-[25px] mr-[10px]">
                           <BsImages />
                         </span>
-                        <a className="">Portfolio</a>
+                        <p className="">Portfolio</p>
                       </Link>
                     </li>
                     <li className=" my-[10px] px-[0px] w-full">
@@ -273,7 +278,7 @@ const Navbar3 = () => {
                         <span className="text-[25px] mr-[10px]">
                           <FiSettings />
                         </span>
-                        <a className="">Edit Profile</a>
+                        <p className="">Edit Profile</p>
                       </Link>
                     </li>
                     <li className=" my-[10px] px-[0px] w-full">
@@ -288,7 +293,7 @@ const Navbar3 = () => {
                         <span className="text-[25px] mr-[10px]">
                           <TfiComments />
                         </span>
-                        <a className="">Reviews</a>
+                        <p className="">Reviews</p>
                       </Link>
                     </li>
                     <li
@@ -302,7 +307,7 @@ const Navbar3 = () => {
                         <span className="text-[25px] mr-[10px]">
                           <BiLogOut />
                         </span>
-                        <a className="">Log Out</a>
+                        <p className="">Log Out</p>
                       </div>
                     </li>
                   </ul>

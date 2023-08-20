@@ -116,7 +116,7 @@ const Movers = () => {
   // console.log(details.moverDetails.pickPrice);
 
   return (
-    <BookingLayout>
+    <>
       <Head>
         <title>Movers - Removals and Selfstorage</title>
         <meta name="description" content="Rss removal and storage website" />
@@ -124,157 +124,155 @@ const Movers = () => {
       </Head>
 
       {details.moveDetails.initialPackagePrice ? (
-        <main className="">
-          <div className="mb-[70px] lg:mb-[100px] pt-[80px] md:pt-[100px] ">
-            <SideDrawer
-              showLoader2={showLoader2}
-              selectedTime={selectedTime}
-              setSelectedTime={setSelectedTime}
-              timeValue={timeValue}
-              setTimeValue={setTimeValue}
-              clickedModalOpen={clickedModalOpen}
-              setClickedModalOpen={setClickedModalOpen}
-            />
-            {showLoader && <Loader1 />}
-            {/* {showLoader2 && <Loader1 />} */}
-            <div className="md:max-w-7xl mx-auto">
-              {/* features links */}
-              <FeaturesScroll />
-              {/* price date pick */}
-              <PriceDatePick
-                setShowLoader={setShowLoader}
-                setTodayPick={setTodayPick}
+        <BookingLayout>
+          <main className="">
+            <div className="mb-[70px] lg:mb-[100px] pt-[80px] md:pt-[100px] ">
+              <SideDrawer
+                showLoader2={showLoader2}
+                selectedTime={selectedTime}
+                setSelectedTime={setSelectedTime}
+                timeValue={timeValue}
+                setTimeValue={setTimeValue}
+                clickedModalOpen={clickedModalOpen}
+                setClickedModalOpen={setClickedModalOpen}
               />
-              {/* movers list row */}
-              <div className="flex flex-col space-y-[10px] lg:space-y-0 lg:flex-row lg:space-x-[10px] mx-[10px] md:mx-[20px]">
-                {/* left section */}
-                <div className="lg:flex-[1]  w-full">
-                  <MoveDetails />
-                </div>
-
-                {/* right section */}
-                <div className="bg-white shadow-lg rounded-[30px] lg:flex-[3] py-[30px] md:px-[30px] w-full">
-                  {!showLoader ? (
-                    <h1 className="text-2xl font-bold mb-[30px] px-[20px]">
-                      <span className="text-primary">
-                        {todayPick
-                          ? "Movers are unavailable for hire today"
-                          : `You've been matched with ${homeMovers.length} verified movers`}
-                        .{/* {homeMovers.length} verified movers. */}
-                      </span>
-                    </h1>
-                  ) : (
-                    <h1 className="text-2xl font-bold mb-[30px] px-[20px]">
-                      Matching Movers ...
-                    </h1>
-                  )}
-                  {!showLoader &&
-                    !todayPick &&
-                    homeMovers.map((mv, index) => {
-                      if (index === 0) {
+              {showLoader && <Loader1 />}
+              {/* {showLoader2 && <Loader1 />} */}
+              <div className="md:max-w-7xl mx-auto">
+                {/* features links */}
+                <FeaturesScroll />
+                {/* price date pick */}
+                <PriceDatePick
+                  setShowLoader={setShowLoader}
+                  setTodayPick={setTodayPick}
+                />
+                {/* movers list row */}
+                <div className="flex flex-col space-y-[10px] lg:space-y-0 lg:flex-row lg:space-x-[10px] mx-[10px] md:mx-[20px]">
+                  {/* left section */}
+                  <div className="lg:flex-[1]  w-full">
+                    <MoveDetails />
+                  </div>
+                  {/* right section */}
+                  <div className="bg-white shadow-lg rounded-[30px] lg:flex-[3] py-[30px] md:px-[30px] w-full">
+                    {!showLoader ? (
+                      <h1 className="text-2xl font-bold mb-[30px] px-[20px]">
+                        <span className="text-primary">
+                          {todayPick
+                            ? "Movers are unavailable for hire today"
+                            : `You've been matched with ${homeMovers.length} verified movers`}
+                          .{/* {homeMovers.length} verified movers. */}
+                        </span>
+                      </h1>
+                    ) : (
+                      <h1 className="text-2xl font-bold mb-[30px] px-[20px]">
+                        Matching Movers ...
+                      </h1>
+                    )}
+                    {!showLoader &&
+                      !todayPick &&
+                      homeMovers.map((mv, index) => {
+                        if (index === 0) {
+                          return (
+                            <div
+                              className="mx-[10px] flex-col space-y-[20px]"
+                              key={index}
+                            >
+                              {/* mover 1 */}
+                              <MoverCard
+                                image={firstCard.imageUrl}
+                                name={firstCard.name}
+                                phone={firstCard.phone}
+                                email={firstCard.email}
+                                loadArea={firstCard.loadArea}
+                                rating={firstCard.rating}
+                                reviewCount={firstCard.reviewCount}
+                                price={details.moverDetails.pickPrice}
+                                // price={priceThirdDay}
+                                hiresCount={firstCard.hireCount}
+                                description={firstCard.companyDescription}
+                                score={firstCard.score}
+                                setShowLoader2={setShowLoader2}
+                                showLoader2={showLoader2}
+                                clickedModalOpen={clickedModalOpen}
+                                setClickedModalOpen={setClickedModalOpen}
+                                // timeValue={timeValue}
+                                // setTimeValue={setTimeValue}
+                                // pickPrice={pickPrice} setPickPrice={setPickPrice}
+                              />
+                            </div>
+                          );
+                        }
+                      })}
+                    {!showLoader && !todayPick && (
+                      <div className="mx-[10px] flex-col space-y-[20px]">
+                        <MoverCard
+                          bookSmart
+                          image=""
+                          name="Smart Booking"
+                          phone={firstCard.phone}
+                          email={firstCard.email}
+                          loadArea={firstCard.loadArea}
+                          rating={firstCard.rating}
+                          reviewCount={firstCard.reviewCount}
+                          price={(
+                            details.moverDetails.pickPrice * 0.79
+                          ).toFixed()}
+                          hiresCount={firstCard.hireCount}
+                          description={firstCard.companyDescription}
+                          score={firstCard.score}
+                          setShowLoader2={setShowLoader2}
+                          showLoader2={showLoader2}
+                          // pickPrice={pickPrice} setPickPrice={setPickPrice}
+                        />
+                      </div>
+                    )}
+                    {!showLoader &&
+                      !todayPick &&
+                      otherCards.map((mv, index) => {
                         return (
                           <div
                             className="mx-[10px] flex-col space-y-[20px]"
                             key={index}
                           >
-                            {/* mover 1 */}
+                            {/* mover 2 */}
                             <MoverCard
-                              image={firstCard.imageUrl}
-                              name={firstCard.name}
-                              phone={firstCard.phone}
-                              email={firstCard.email}
-                              loadArea={firstCard.loadArea}
-                              rating={firstCard.rating}
-                              reviewCount={firstCard.reviewCount}
-                              price={details.moverDetails.pickPrice}
-                              // price={priceThirdDay}
-                              hiresCount={firstCard.hireCount}
-                              description={firstCard.companyDescription}
-                              score={firstCard.score}
+                              image={mv.imageUrl}
+                              name={mv.name}
+                              phone={mv.phone}
+                              email={mv.email}
+                              loadArea={mv.loadArea}
+                              rating={mv.rating}
+                              reviewCount={mv.reviewCount}
+                              price={calculateMoverPrice(
+                                details.moverDetails.pickPrice,
+                                mv.score,
+                                0.052
+                              ).toFixed()}
+                              hiresCount={mv.hireCount}
+                              description={mv.companyDescription}
+                              score={mv.score}
                               setShowLoader2={setShowLoader2}
                               showLoader2={showLoader2}
-                              clickedModalOpen={clickedModalOpen}
-                              setClickedModalOpen={setClickedModalOpen}
-
-                              // timeValue={timeValue}
-                              // setTimeValue={setTimeValue}
                               // pickPrice={pickPrice} setPickPrice={setPickPrice}
                             />
                           </div>
                         );
-                      }
-                    })}
-                  {!showLoader && !todayPick && (
-                    <div className="mx-[10px] flex-col space-y-[20px]">
-                      <MoverCard
-                        bookSmart
-                        image=""
-                        name="Smart Booking"
-                        phone={firstCard.phone}
-                        email={firstCard.email}
-                        loadArea={firstCard.loadArea}
-                        rating={firstCard.rating}
-                        reviewCount={firstCard.reviewCount}
-                        price={(
-                          details.moverDetails.pickPrice * 0.79
-                        ).toFixed()}
-                        hiresCount={firstCard.hireCount}
-                        description={firstCard.companyDescription}
-                        score={firstCard.score}
-                        setShowLoader2={setShowLoader2}
-                        showLoader2={showLoader2}
-
-                        // pickPrice={pickPrice} setPickPrice={setPickPrice}
-                      />
-                    </div>
-                  )}
-                  {!showLoader &&
-                    !todayPick &&
-                    otherCards.map((mv, index) => {
-                      return (
-                        <div
-                          className="mx-[10px] flex-col space-y-[20px]"
-                          key={index}
-                        >
-                          {/* mover 2 */}
-                          <MoverCard
-                            image={mv.imageUrl}
-                            name={mv.name}
-                            phone={mv.phone}
-                            email={mv.email}
-                            loadArea={mv.loadArea}
-                            rating={mv.rating}
-                            reviewCount={mv.reviewCount}
-                            price={calculateMoverPrice(
-                              details.moverDetails.pickPrice,
-                              mv.score,
-                              0.052
-                            ).toFixed()}
-                            hiresCount={mv.hireCount}
-                            description={mv.companyDescription}
-                            score={mv.score}
-                            setShowLoader2={setShowLoader2}
-                            showLoader2={showLoader2}
-
-                            // pickPrice={pickPrice} setPickPrice={setPickPrice}
-                          />
-                        </div>
-                      );
-                    })}
+                      })}
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          {/* <div className="w-[20vw] h-[100%] z-[2000] absolute top-0 right-0 bg-white">
-            <p className="text-3xl font-bold">Side bar</p>
-        </div> */}
-        </main>
+            {/* <div className="w-[20vw] h-[100%] z-[2000] absolute top-0 right-0 bg-white">
+              <p className="text-3xl font-bold">Side bar</p>
+          </div> */}
+          </main>
+        </BookingLayout>
       ) : (
         <div className="flex items-center justify-center h-[100vh] ">
           <span className="h-full loading loading-bars text-primary w-[40px] lg:w-[60px]"></span>
         </div>
       )}
-    </BookingLayout>
+    </>
   );
 };
 

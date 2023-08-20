@@ -332,11 +332,11 @@ const PersonalDetails = () => {
     }
   };
 
-  useEffect(() => {
-    if (!userDetails.userDetails) {
-      router.push("/");
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (!userDetails.userDetails) {
+  //     router.push("/");
+  //   }
+  // }, []);
 
   //   console.log(details.moveDetails.moveDate);
   //   console.log(dateValue);
@@ -351,185 +351,184 @@ const PersonalDetails = () => {
       </Head>
 
       <main>
-        {userDetails.userDetails ? (
-          <div className="pb-[70px] lg:pb-[100px] pt-[70px] bg-white/80">
-            <div className="md:max-w-7xl mx-auto">
-              {/* Title */}
-              <div className="w-full flex justify-center py-[30px] md:py-[40px]">
-                <h3
-                  className={`${titleFont.variable} font-sans2 text-3xl lg:text-4xl font-extrabold flex-col items-center justify-center`}
-                >
-                  <p className="">Mover Onboarding</p>{" "}
-                  <div className="w-full bg-primary/20 h-[20px] mt-[-12px] "></div>
-                </h3>
-              </div>
+        <div className="pb-[70px] lg:pb-[100px] pt-[70px] bg-white/80">
+          <div className="md:max-w-7xl mx-auto">
+            {/* Title */}
+            <div className="w-full flex justify-center py-[30px] md:py-[40px]">
+              <h3
+                className={`${titleFont.variable} font-sans2 text-3xl lg:text-4xl font-extrabold flex-col items-center justify-center`}
+              >
+                <p className="">Mover Onboarding</p>{" "}
+                <div className="w-full bg-primary/20 h-[20px] mt-[-12px] "></div>
+              </h3>
+            </div>
 
-              {/* form */}
-              <div className="flex flex-col  px-[20px] lg:px-[100px] py-[30px] bg-white rounded-[20px] border mx-[10px] md:mx-[100px]">
-                {/* stepper */}
-                <div className="w-full flex justify-center mb-[20px]">
-                  <ul className="steps">
-                    <li className="step step-primary px-[50px] font-bold text-[20px] leading-[25px] text-gray-300">
-                      Personal Details
-                    </li>
-                    <li className="step step-primary font-bold text-[20px] leading-[25px]">
-                      Documentation
-                    </li>
-                    {/* <li className="step">Purchase</li>
+            {/* form */}
+            <div className="flex flex-col  px-[20px] lg:px-[100px] py-[30px] bg-white rounded-[20px] border mx-[10px] md:mx-[100px]">
+              {/* stepper */}
+              <div className="w-full flex justify-center mb-[20px]">
+                <ul className="steps">
+                  <li className="step step-primary px-[50px] font-bold text-[20px] leading-[25px] text-gray-300">
+                    Personal Details
+                  </li>
+                  <li className="step step-primary font-bold text-[20px] leading-[25px]">
+                    Documentation
+                  </li>
+                  {/* <li className="step">Purchase</li>
                 <li className="step">Receive Product</li> */}
-                  </ul>
-                </div>
-                {/* mandatory text */}
-                <div className="flex flex-col w-full items-center  mb-[40px] mt-[20px]">
-                  <p className="text-secondary">
-                    Fields marked with * are mandatory
-                  </p>
-                </div>
-                {/* <p className="font-bold text-[25px] mt-[20px]">
+                </ul>
+              </div>
+              {/* mandatory text */}
+              <div className="flex flex-col w-full items-center  mb-[40px] mt-[20px]">
+                <p className="text-secondary">
+                  Fields marked with * are mandatory
+                </p>
+              </div>
+              {/* <p className="font-bold text-[25px] mt-[20px]">
                 Personal Details
               </p> */}
 
-                {/* row 1 */}
-                <div className="flex flex-col items-center justify-center space-y-[10px] lg:space-y-0 lg:flex-row lg:items-center lg:space-x-[50px] mb-[20px]">
-                  {/* left */}
-                  <div className="flex w-full flex-[1] flex-col items-center md:flex-row md:space-x-[30px] space-y-[10px] md:space-y-0 md:justify-center">
-                    {/* first name */}
-                    <div className="form-control w-full">
-                      <label className="label">
-                        <span className="label-text font-semibold">
-                          Company Name
-                          <span className="text-secondary">*</span>
-                        </span>
-                      </label>
-                      <input
-                        type="text"
-                        placeholder="Company name"
-                        className={`${
-                          activateError && !companyName
-                            ? "ring ring-secondary"
-                            : ""
-                        } input input-primary w-full h-[43px]`}
-                        onChange={(e) => setCompanyName(e.target.value)}
-                        defaultValue={companyName}
-                      />
-                    </div>
-                  </div>
-                  {/* right */}
-                  <div className="flex flex-[1] w-full flex-col md:flex-row md:space-x-[10px] space-y-[10px] md:space-y-0 md:justify-center">
-                    {/* Telephone* */}
-                    <div className="form-control w-full flex-[1]">
-                      <label className="label">
-                        <span className="label-text font-semibold">
-                          Company Telephone
-                          <span className="text-secondary">*</span>
-                        </span>
-                      </label>
-                      <input
-                        type="tel"
-                        placeholder="Company telephone"
-                        className={`${
-                          activateError && (!companyNumber || !phoneError)
-                            ? "ring ring-secondary"
-                            : ""
-                        } input input-primary w-full h-[43px]`}
-                        onChange={handlePhoneNumberChange}
-                        defaultValue={companyNumber}
-                      />
-                      {!phoneError && (
-                        <p className="text-[14px] text-secondary mt-[5px]">
-                          Please enter a valid number
-                        </p>
-                      )}
-                    </div>
+              {/* row 1 */}
+              <div className="flex flex-col items-center justify-center space-y-[10px] lg:space-y-0 lg:flex-row lg:items-center lg:space-x-[50px] mb-[20px]">
+                {/* left */}
+                <div className="flex w-full flex-[1] flex-col items-center md:flex-row md:space-x-[30px] space-y-[10px] md:space-y-0 md:justify-center">
+                  {/* first name */}
+                  <div className="form-control w-full">
+                    <label className="label">
+                      <span className="label-text font-semibold">
+                        Company Name
+                        <span className="text-secondary">*</span>
+                      </span>
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="Company name"
+                      className={`${
+                        activateError && !companyName
+                          ? "ring ring-secondary"
+                          : ""
+                      } input input-primary w-full h-[43px]`}
+                      onChange={(e) => setCompanyName(e.target.value)}
+                      defaultValue={companyName}
+                    />
                   </div>
                 </div>
-
-                {/* address */}
-                <div className="form-control w-full mb-[30px]">
-                  <label className="label ">
-                    <span className="label-text font-semibold text-[16px]">
-                      Company Address<span className="text-secondary">*</span>
-                    </span>
-                  </label>
-
-                  <textarea
-                    className={`${
-                      activateError && !companyAddress
-                        ? "ring ring-secondary"
-                        : ""
-                    } textarea w-full textarea-primary min-h-[80px] max-h-[100px] placeholder:text-[16px] text-[15px]`}
-                    placeholder="Company address"
-                    onChange={(e) => setCompanyAddress(e.target.value)}
-                    defaultValue={companyAddress}
-                  ></textarea>
-                </div>
-
-                {/* Company Bio */}
-                <div className="form-control w-full">
-                  <div className=" ">
-                    <span className="label-text font-semibold text-[16px]">
-                      Company Bio<span className="text-secondary">*</span>
-                    </span>
+                {/* right */}
+                <div className="flex flex-[1] w-full flex-col md:flex-row md:space-x-[10px] space-y-[10px] md:space-y-0 md:justify-center">
+                  {/* Telephone* */}
+                  <div className="form-control w-full flex-[1]">
+                    <label className="label">
+                      <span className="label-text font-semibold">
+                        Company Telephone
+                        <span className="text-secondary">*</span>
+                      </span>
+                    </label>
+                    <input
+                      type="tel"
+                      placeholder="Company telephone"
+                      className={`${
+                        activateError && (!companyNumber || !phoneError)
+                          ? "ring ring-secondary"
+                          : ""
+                      } input input-primary w-full h-[43px]`}
+                      onChange={handlePhoneNumberChange}
+                      defaultValue={companyNumber}
+                    />
+                    {!phoneError && (
+                      <p className="text-[14px] text-secondary mt-[5px]">
+                        Please enter a valid number
+                      </p>
+                    )}
                   </div>
-                  <p className="text-gray-500 mb-[10px] text-[15px] mt-[5px]">
-                    (Do not include your phone number or website.)
-                  </p>
-
-                  <textarea
-                    className={`${
-                      activateError && !companyBio ? "ring ring-secondary" : ""
-                    } textarea w-full textarea-primary min-h-[150px] max-h-[200px] placeholder:text-[16px] text-[15px]`}
-                    placeholder="Tell us about yourself and your work experience"
-                    onChange={handleBioChange}
-                    value={companyBio}
-                    // disabled={companyBio.length >= bioMaxLength}
-                    onKeyDown={handleKeyDown}
-                  ></textarea>
-                  <p className="text-gray-500 mb-[10px] text-[15px] mt-[5px]">
-                    {companyBio?.length} / {bioMaxLength} Characters
-                  </p>
                 </div>
+              </div>
 
-                {/* mandatory text */}
-                <div className="flex flex-col w-full items-center  mb-[40px] mt-[0px]">
-                  <p className=" text-gray-400  text-[14px] mt-[10px]">
-                    (Accepted file types: PNG, JPG; Maximum file size: 3MB)
-                  </p>
+              {/* address */}
+              <div className="form-control w-full mb-[30px]">
+                <label className="label ">
+                  <span className="label-text font-semibold text-[16px]">
+                    Company Address<span className="text-secondary">*</span>
+                  </span>
+                </label>
+
+                <textarea
+                  className={`${
+                    activateError && !companyAddress
+                      ? "ring ring-secondary"
+                      : ""
+                  } textarea w-full textarea-primary min-h-[80px] max-h-[100px] placeholder:text-[16px] text-[15px]`}
+                  placeholder="Company address"
+                  onChange={(e) => setCompanyAddress(e.target.value)}
+                  defaultValue={companyAddress}
+                ></textarea>
+              </div>
+
+              {/* Company Bio */}
+              <div className="form-control w-full">
+                <div className=" ">
+                  <span className="label-text font-semibold text-[16px]">
+                    Company Bio<span className="text-secondary">*</span>
+                  </span>
                 </div>
+                <p className="text-gray-500 mb-[10px] text-[15px] mt-[5px]">
+                  (Do not include your phone number or website.)
+                </p>
 
-                {/* image upload 1*/}
-                <section className="mb-[30px]">
-                  <div className="flex flex-col space-y-[20px] lg:space-y-0 lg:flex-row lg:space-x-[70px]">
-                    {/* upload 1 */}
-                    <div className="flex lg:flex-[1] w-full">
-                      <div className="flex w-full flex-col">
-                        {/* image preview */}
-                        <div className="flex space-x-[20px] items-center mb-[20px] w-full justify-between">
-                          <div className="flex flex-col">
-                            <p className=" font-bold text-[16px] mb-[0px]">
-                              Company Profile Image
-                              <span className="text-secondary">*</span>
-                            </p>
-                            <p className=" text-gray-400  text-[14px] mt-[0px]">
-                              Image of mover van without company name
-                            </p>
-                          </div>
-                          {companyProfilePixurl && !fileUploadErrorCP ? (
-                            <div className="avatar ">
-                              <div className="w-[50px] h-[50px] rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                                <img src={companyProfilePixurl} />
-                              </div>
-                            </div>
-                          ) : (
-                            <div className="avatar ">
-                              <div className="w-[50px] h-[50px] rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                                <img src="/file.jpg" />
-                              </div>
-                            </div>
-                          )}
+                <textarea
+                  className={`${
+                    activateError && !companyBio ? "ring ring-secondary" : ""
+                  } textarea w-full textarea-primary min-h-[150px] max-h-[200px] placeholder:text-[16px] text-[15px]`}
+                  placeholder="Tell us about yourself and your work experience"
+                  onChange={handleBioChange}
+                  value={companyBio}
+                  // disabled={companyBio.length >= bioMaxLength}
+                  onKeyDown={handleKeyDown}
+                ></textarea>
+                <p className="text-gray-500 mb-[10px] text-[15px] mt-[5px]">
+                  {companyBio?.length} / {bioMaxLength} Characters
+                </p>
+              </div>
+
+              {/* mandatory text */}
+              <div className="flex flex-col w-full items-center  mb-[40px] mt-[0px]">
+                <p className=" text-gray-400  text-[14px] mt-[10px]">
+                  (Accepted file types: PNG, JPG; Maximum file size: 3MB)
+                </p>
+              </div>
+
+              {/* image upload 1*/}
+              <section className="mb-[30px]">
+                <div className="flex flex-col space-y-[20px] lg:space-y-0 lg:flex-row lg:space-x-[70px]">
+                  {/* upload 1 */}
+                  <div className="flex lg:flex-[1] w-full">
+                    <div className="flex w-full flex-col">
+                      {/* image preview */}
+                      <div className="flex space-x-[20px] items-center mb-[20px] w-full justify-between">
+                        <div className="flex flex-col">
+                          <p className=" font-bold text-[16px] mb-[0px]">
+                            Company Profile Image
+                            <span className="text-secondary">*</span>
+                          </p>
+                          <p className=" text-gray-400  text-[14px] mt-[0px]">
+                            Image of mover van without company name
+                          </p>
                         </div>
-                        {/* image input file */}
-                        {/* <input
+                        {companyProfilePixurl && !fileUploadErrorCP ? (
+                          <div className="avatar ">
+                            <div className="w-[50px] h-[50px] rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                              <img src={companyProfilePixurl} />
+                            </div>
+                          </div>
+                        ) : (
+                          <div className="avatar ">
+                            <div className="w-[50px] h-[50px] rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                              <img src="/file.jpg" />
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                      {/* image input file */}
+                      {/* <input
                           type="file"
                           className={`${
                             activateError && !drivingLicenseUploadurl
@@ -539,298 +538,296 @@ const PersonalDetails = () => {
                           accept="image/png, image/gif, image/jpeg"
                           onChange={dlhandleFileInputChange}
                         /> */}
-                        <CustomFileInput
-                          activateError={activateError}
-                          previewUrl={companyProfilePixurl}
-                          setPreviewUrl={setCompanyProfilePixurl}
-                          setImageUpload={setCompanyProfilePix}
-                          imageUpload={companyProfilePix}
-                          fileUploadError={fileUploadErrorCP}
-                          setFileUploadError={setFileUploadErrorCP}
-                        />
+                      <CustomFileInput
+                        activateError={activateError}
+                        previewUrl={companyProfilePixurl}
+                        setPreviewUrl={setCompanyProfilePixurl}
+                        setImageUpload={setCompanyProfilePix}
+                        imageUpload={companyProfilePix}
+                        fileUploadError={fileUploadErrorCP}
+                        setFileUploadError={setFileUploadErrorCP}
+                      />
 
-                        {fileUploadErrorCP && (
-                          <p className=" text-secondary text-[14px] mt-[10px]">
-                            {fileUploadErrorCP}
-                          </p>
-                        )}
-                      </div>
-                    </div>
-                    {/* upload 2 */}
-                    <div className="flex lg:flex-[1] w-full">
-                      <div className="flex w-full flex-col">
-                        {/* image preview */}
-                        <div className="flex space-x-[20px] items-center mb-[20px] w-full justify-between">
-                          <p className=" font-bold text-[16px] mb-[10px]">
-                            Driving Licence
-                            <span className="text-secondary">*</span>
-                          </p>
-                          {drivingLicenseUploadurl && !fileUploadErrorDL ? (
-                            <div className="avatar ">
-                              <div className="w-[50px] h-[50px] rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                                <img src={drivingLicenseUploadurl} />
-                              </div>
-                            </div>
-                          ) : (
-                            <div className="avatar ">
-                              <div className="w-[50px] h-[50px] rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                                <img src="/file.jpg" />
-                              </div>
-                            </div>
-                          )}
-                        </div>
-                        {/* image input file */}
-                        <CustomFileInput
-                          activateError={activateError}
-                          imageUpload={drivingLicenseUpload}
-                          setImageUpload={setDrivingLicenseUpload}
-                          previewUrl={drivingLicenseUploadurl}
-                          setPreviewUrl={setDrivingLicenseUploadurl}
-                          fileUploadError={fileUploadErrorDL}
-                          setFileUploadError={setFileUploadErrorDL}
-                        />
-
-                        {fileUploadErrorDL && (
-                          <p className=" text-secondary text-[14px] mt-[10px]">
-                            {fileUploadErrorDL}
-                          </p>
-                        )}
-                      </div>
+                      {fileUploadErrorCP && (
+                        <p className=" text-secondary text-[14px] mt-[10px]">
+                          {fileUploadErrorCP}
+                        </p>
+                      )}
                     </div>
                   </div>
-                </section>
+                  {/* upload 2 */}
+                  <div className="flex lg:flex-[1] w-full">
+                    <div className="flex w-full flex-col">
+                      {/* image preview */}
+                      <div className="flex space-x-[20px] items-center mb-[20px] w-full justify-between">
+                        <p className=" font-bold text-[16px] mb-[10px]">
+                          Driving Licence
+                          <span className="text-secondary">*</span>
+                        </p>
+                        {drivingLicenseUploadurl && !fileUploadErrorDL ? (
+                          <div className="avatar ">
+                            <div className="w-[50px] h-[50px] rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                              <img src={drivingLicenseUploadurl} />
+                            </div>
+                          </div>
+                        ) : (
+                          <div className="avatar ">
+                            <div className="w-[50px] h-[50px] rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                              <img src="/file.jpg" />
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                      {/* image input file */}
+                      <CustomFileInput
+                        activateError={activateError}
+                        imageUpload={drivingLicenseUpload}
+                        setImageUpload={setDrivingLicenseUpload}
+                        previewUrl={drivingLicenseUploadurl}
+                        setPreviewUrl={setDrivingLicenseUploadurl}
+                        fileUploadError={fileUploadErrorDL}
+                        setFileUploadError={setFileUploadErrorDL}
+                      />
 
-                {/* image upload 2*/}
-                <section className="mb-[30px]">
-                  <div className="flex flex-col space-y-[20px] lg:space-y-0 lg:flex-row lg:space-x-[70px]">
-                    {/* upload 1 */}
-                    <div className="flex  w-full lg:flex-[1]">
-                      <div className="flex flex-col w-full">
-                        {/* image preview */}
-                        <div className="flex space-x-[20px] items-center mb-[20px] w-full justify-between">
-                          <p className=" font-bold text-[16px] mb-[10px]">
-                            Company registration certificate
-                            <span className="text-secondary">*</span>
-                          </p>
-                          {regCertificateUploadurl && !fileUploadErrorRC ? (
-                            <div className="avatar ">
-                              <div className="w-[50px] h-[50px] rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                                <img src={regCertificateUploadurl} />
-                              </div>
-                            </div>
-                          ) : (
-                            <div className="avatar ">
-                              <div className="w-[50px] h-[50px] rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                                <img src="/file.jpg" />
-                              </div>
-                            </div>
-                          )}
-                        </div>
-                        {/* image input file */}
-                        <CustomFileInput
-                          activateError={activateError}
-                          imageUpload={regCertificateUpload}
-                          setImageUpload={setRegCertificateUpload}
-                          previewUrl={regCertificateUploadurl}
-                          setPreviewUrl={setRegCertificateUploadurl}
-                          fileUploadError={fileUploadErrorRC}
-                          setFileUploadError={setFileUploadErrorRC}
-                        />
-                        {fileUploadErrorRC && (
-                          <p className=" text-secondary text-[14px] mt-[10px]">
-                            {fileUploadErrorRC}
-                          </p>
-                        )}
-                      </div>
-                    </div>
-                    {/* upload 2 */}
-                    <div className="flex w-full  lg:flex-[1]">
-                      <div className="flex flex-col w-full">
-                        {/* image preview */}
-                        <div className="flex space-x-[20px] items-center mb-[20px] w-full justify-between">
-                          <p className=" font-bold text-[16px] mb-[10px]">
-                            Vehicle insurance
-                            <span className="text-secondary">*</span>
-                          </p>
-                          {vehInsuranceUploadurl && !fileUploadErrorVI ? (
-                            <div className="avatar ">
-                              <div className="w-[50px] h-[50px] rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                                <img src={vehInsuranceUploadurl} />
-                              </div>
-                            </div>
-                          ) : (
-                            <div className="avatar ">
-                              <div className="w-[50px] h-[50px] rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                                <img src="/file.jpg" />
-                              </div>
-                            </div>
-                          )}
-                        </div>
-                        {/* image input file */}
-                        <CustomFileInput
-                          activateError={activateError}
-                          imageUpload={vehInsuranceUpload}
-                          setImageUpload={setVehInsuranceUpload}
-                          previewUrl={vehInsuranceUploadurl}
-                          setPreviewUrl={setVehInsuranceUploadurl}
-                          fileUploadError={fileUploadErrorVI}
-                          setFileUploadError={setFileUploadErrorVI}
-                        />
-                        {fileUploadErrorVI && (
-                          <p className=" text-secondary text-[14px] mt-[10px]">
-                            {fileUploadErrorVI}
-                          </p>
-                        )}
-                      </div>
+                      {fileUploadErrorDL && (
+                        <p className=" text-secondary text-[14px] mt-[10px]">
+                          {fileUploadErrorDL}
+                        </p>
+                      )}
                     </div>
                   </div>
-                </section>
-
-                {/* image upload 3*/}
-                <section className="mb-[30px]">
-                  <div className="flex flex-col space-y-[20px] lg:space-y-0 lg:flex-row lg:space-x-[70px]">
-                    {/* upload 1 */}
-                    <div className="flex  w-full lg:flex-[1]">
-                      <div className="flex flex-col w-full">
-                        {/* image preview */}
-                        <div className="flex space-x-[20px] items-center mb-[20px] w-full justify-between">
-                          <p className=" font-bold text-[16px] mb-[10px]">
-                            Public Liability Insurance
-                            <span className="text-secondary">*</span>
-                          </p>
-                          {pubInsuranceUploadurl && !fileUploadErrorPI ? (
-                            <div className="avatar ">
-                              <div className="w-[50px] h-[50px] rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                                <img src={pubInsuranceUploadurl} />
-                              </div>
-                            </div>
-                          ) : (
-                            <div className="avatar ">
-                              <div className="w-[50px] h-[50px] rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                                <img src="/file.jpg" />
-                              </div>
-                            </div>
-                          )}
-                        </div>
-                        {/* image input file */}
-                        <CustomFileInput
-                          activateError={activateError}
-                          imageUpload={pubInsuranceUpload}
-                          setImageUpload={setPubInsuranceUpload}
-                          previewUrl={pubInsuranceUploadurl}
-                          setPreviewUrl={setPubInsuranceUploadurl}
-                          fileUploadError={fileUploadErrorPI}
-                          setFileUploadError={setFileUploadErrorPI}
-                        />
-                        {fileUploadErrorPI && (
-                          <p className=" text-secondary text-[14px] mt-[10px]">
-                            {fileUploadErrorPI}
-                          </p>
-                        )}
-                      </div>
-                    </div>
-                    {/* upload 2 */}
-                    <div className="flex w-full  lg:flex-[1]">
-                      <div className="flex w-full flex-col">
-                        {/* image preview */}
-                        <div className="flex space-x-[20px] items-center mb-[20px] w-full justify-between">
-                          <p className=" font-bold text-[16px] mb-[10px]">
-                            Goods-in-transit Insurance
-                            <span className="text-secondary">*</span>
-                          </p>
-                          {tranInsuranceUploadurl && !fileUploadErrorTI ? (
-                            <div className="avatar ">
-                              <div className="w-[50px] h-[50px] rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                                <img src={tranInsuranceUploadurl} />
-                              </div>
-                            </div>
-                          ) : (
-                            <div className="avatar ">
-                              <div className="w-[50px] h-[50px] rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                                <img src="/file.jpg" />
-                              </div>
-                            </div>
-                          )}
-                        </div>
-                        {/* image input file */}
-                        <CustomFileInput
-                          activateError={activateError}
-                          imageUpload={tranInsuranceUpload}
-                          setImageUpload={setTranInsuranceUpload}
-                          previewUrl={tranInsuranceUploadurl}
-                          setPreviewUrl={setTranInsuranceUploadurl}
-                          fileUploadError={fileUploadErrorTI}
-                          setFileUploadError={setFileUploadErrorTI}
-                        />
-                        {fileUploadErrorTI && (
-                          <p className=" text-secondary text-[14px] mt-[10px]">
-                            {fileUploadErrorTI}
-                          </p>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                </section>
-
-                {/* error message */}
-                <div className="flex justify-center w-full">
-                  {submitError && !submitSuccess && !submitLoading && (
-                    <p className="text-[16px] text-secondary mt-[15px]">
-                      Please fill all mandatory fields
-                    </p>
-                  )}
-                  {submitSuccess && !submitError && !submitLoading && (
-                    <p className="text-[16px] text-primary mt-[15px]">
-                      Documentations successfully submitted
-                    </p>
-                  )}
-                  {submitLoading && !submitError && !submitSuccess && (
-                    <p className="text-[16px] text-primary mt-[15px]">
-                      Submitting ...
-                    </p>
-                  )}
                 </div>
+              </section>
 
-                {/* submit button */}
-                <div className="w-full flex justify-end mt-[50px]">
-                  <div className="flex items-start space-x-[20px]">
-                    <div className="flex flex-col items-center justify-center">
-                      <Link href="/onboarding/personal-details">
-                        <button className="btn btn-secondary w-[150px] flex items-center space-x-[5px] h-[60px]" disabled={submitLoading}>
-                          <span className="">
-                            <AiOutlineLeft className="text-[20px]" />
-                          </span>
-                          <span className="">Previous</span>
-                        </button>
-                      </Link>
+              {/* image upload 2*/}
+              <section className="mb-[30px]">
+                <div className="flex flex-col space-y-[20px] lg:space-y-0 lg:flex-row lg:space-x-[70px]">
+                  {/* upload 1 */}
+                  <div className="flex  w-full lg:flex-[1]">
+                    <div className="flex flex-col w-full">
+                      {/* image preview */}
+                      <div className="flex space-x-[20px] items-center mb-[20px] w-full justify-between">
+                        <p className=" font-bold text-[16px] mb-[10px]">
+                          Company registration certificate
+                          <span className="text-secondary">*</span>
+                        </p>
+                        {regCertificateUploadurl && !fileUploadErrorRC ? (
+                          <div className="avatar ">
+                            <div className="w-[50px] h-[50px] rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                              <img src={regCertificateUploadurl} />
+                            </div>
+                          </div>
+                        ) : (
+                          <div className="avatar ">
+                            <div className="w-[50px] h-[50px] rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                              <img src="/file.jpg" />
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                      {/* image input file */}
+                      <CustomFileInput
+                        activateError={activateError}
+                        imageUpload={regCertificateUpload}
+                        setImageUpload={setRegCertificateUpload}
+                        previewUrl={regCertificateUploadurl}
+                        setPreviewUrl={setRegCertificateUploadurl}
+                        fileUploadError={fileUploadErrorRC}
+                        setFileUploadError={setFileUploadErrorRC}
+                      />
+                      {fileUploadErrorRC && (
+                        <p className=" text-secondary text-[14px] mt-[10px]">
+                          {fileUploadErrorRC}
+                        </p>
+                      )}
                     </div>
-                    <div className="flex flex-col items-center justify-center">
+                  </div>
+                  {/* upload 2 */}
+                  <div className="flex w-full  lg:flex-[1]">
+                    <div className="flex flex-col w-full">
+                      {/* image preview */}
+                      <div className="flex space-x-[20px] items-center mb-[20px] w-full justify-between">
+                        <p className=" font-bold text-[16px] mb-[10px]">
+                          Vehicle insurance
+                          <span className="text-secondary">*</span>
+                        </p>
+                        {vehInsuranceUploadurl && !fileUploadErrorVI ? (
+                          <div className="avatar ">
+                            <div className="w-[50px] h-[50px] rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                              <img src={vehInsuranceUploadurl} />
+                            </div>
+                          </div>
+                        ) : (
+                          <div className="avatar ">
+                            <div className="w-[50px] h-[50px] rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                              <img src="/file.jpg" />
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                      {/* image input file */}
+                      <CustomFileInput
+                        activateError={activateError}
+                        imageUpload={vehInsuranceUpload}
+                        setImageUpload={setVehInsuranceUpload}
+                        previewUrl={vehInsuranceUploadurl}
+                        setPreviewUrl={setVehInsuranceUploadurl}
+                        fileUploadError={fileUploadErrorVI}
+                        setFileUploadError={setFileUploadErrorVI}
+                      />
+                      {fileUploadErrorVI && (
+                        <p className=" text-secondary text-[14px] mt-[10px]">
+                          {fileUploadErrorVI}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              {/* image upload 3*/}
+              <section className="mb-[30px]">
+                <div className="flex flex-col space-y-[20px] lg:space-y-0 lg:flex-row lg:space-x-[70px]">
+                  {/* upload 1 */}
+                  <div className="flex  w-full lg:flex-[1]">
+                    <div className="flex flex-col w-full">
+                      {/* image preview */}
+                      <div className="flex space-x-[20px] items-center mb-[20px] w-full justify-between">
+                        <p className=" font-bold text-[16px] mb-[10px]">
+                          Public Liability Insurance
+                          <span className="text-secondary">*</span>
+                        </p>
+                        {pubInsuranceUploadurl && !fileUploadErrorPI ? (
+                          <div className="avatar ">
+                            <div className="w-[50px] h-[50px] rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                              <img src={pubInsuranceUploadurl} />
+                            </div>
+                          </div>
+                        ) : (
+                          <div className="avatar ">
+                            <div className="w-[50px] h-[50px] rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                              <img src="/file.jpg" />
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                      {/* image input file */}
+                      <CustomFileInput
+                        activateError={activateError}
+                        imageUpload={pubInsuranceUpload}
+                        setImageUpload={setPubInsuranceUpload}
+                        previewUrl={pubInsuranceUploadurl}
+                        setPreviewUrl={setPubInsuranceUploadurl}
+                        fileUploadError={fileUploadErrorPI}
+                        setFileUploadError={setFileUploadErrorPI}
+                      />
+                      {fileUploadErrorPI && (
+                        <p className=" text-secondary text-[14px] mt-[10px]">
+                          {fileUploadErrorPI}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                  {/* upload 2 */}
+                  <div className="flex w-full  lg:flex-[1]">
+                    <div className="flex w-full flex-col">
+                      {/* image preview */}
+                      <div className="flex space-x-[20px] items-center mb-[20px] w-full justify-between">
+                        <p className=" font-bold text-[16px] mb-[10px]">
+                          Goods-in-transit Insurance
+                          <span className="text-secondary">*</span>
+                        </p>
+                        {tranInsuranceUploadurl && !fileUploadErrorTI ? (
+                          <div className="avatar ">
+                            <div className="w-[50px] h-[50px] rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                              <img src={tranInsuranceUploadurl} />
+                            </div>
+                          </div>
+                        ) : (
+                          <div className="avatar ">
+                            <div className="w-[50px] h-[50px] rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                              <img src="/file.jpg" />
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                      {/* image input file */}
+                      <CustomFileInput
+                        activateError={activateError}
+                        imageUpload={tranInsuranceUpload}
+                        setImageUpload={setTranInsuranceUpload}
+                        previewUrl={tranInsuranceUploadurl}
+                        setPreviewUrl={setTranInsuranceUploadurl}
+                        fileUploadError={fileUploadErrorTI}
+                        setFileUploadError={setFileUploadErrorTI}
+                      />
+                      {fileUploadErrorTI && (
+                        <p className=" text-secondary text-[14px] mt-[10px]">
+                          {fileUploadErrorTI}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              {/* error message */}
+              <div className="flex justify-center w-full">
+                {submitError && !submitSuccess && !submitLoading && (
+                  <p className="text-[16px] text-secondary mt-[15px]">
+                    Please fill all mandatory fields
+                  </p>
+                )}
+                {submitSuccess && !submitError && !submitLoading && (
+                  <p className="text-[16px] text-primary mt-[15px]">
+                    Documentations successfully submitted
+                  </p>
+                )}
+                {submitLoading && !submitError && !submitSuccess && (
+                  <p className="text-[16px] text-primary mt-[15px]">
+                    Submitting ...
+                  </p>
+                )}
+              </div>
+
+              {/* submit button */}
+              <div className="w-full flex justify-end mt-[50px]">
+                <div className="flex items-start space-x-[20px]">
+                  <div className="flex flex-col items-center justify-center">
+                    <Link href="/onboarding/personal-details">
                       <button
-                        onClick={documentFormSubmit}
                         className="btn btn-secondary w-[150px] flex items-center space-x-[5px] h-[60px]"
                         disabled={submitLoading}
                       >
-                        {!submitLoading && <span className="">Submit</span>}
-                        {submitLoading && (
-                          <span className="loading loading-dots loading-md text-white"></span>
-                        )}
-                        {!submitLoading && (
-                          <span className="">
-                            <AiOutlineRight className="text-[20px]" />
-                          </span>
-                        )}
+                        <span className="">
+                          <AiOutlineLeft className="text-[20px]" />
+                        </span>
+                        <span className="">Previous</span>
                       </button>
-                    </div>
+                    </Link>
+                  </div>
+                  <div className="flex flex-col items-center justify-center">
+                    <button
+                      onClick={documentFormSubmit}
+                      className="btn btn-secondary w-[150px] flex items-center space-x-[5px] h-[60px]"
+                      disabled={submitLoading}
+                    >
+                      {!submitLoading && <span className="">Submit</span>}
+                      {submitLoading && (
+                        <span className="loading loading-dots loading-md text-white"></span>
+                      )}
+                      {!submitLoading && (
+                        <span className="">
+                          <AiOutlineRight className="text-[20px]" />
+                        </span>
+                      )}
+                    </button>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        ) : (
-          <div className="flex items-center justify-center h-[100vh] ">
-            <span className="h-full loading loading-bars text-primary w-[40px] lg:w-[60px]"></span>
-          </div>
-        )}
+        </div>
       </main>
     </MoverLayout2>
   );

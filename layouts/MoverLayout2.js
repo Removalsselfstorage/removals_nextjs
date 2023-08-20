@@ -32,19 +32,19 @@ const MoverLayout2 = ({ children }) => {
 
   return (
     <div className={`${textFont.variable} font-sans `}>
-      <Navbar3 />
-
       {userDetails.userDetails ? (
-        <div className="flex bg-base-200  pt-[50px]   lg:pt-[50px] ">
-          
-          <main className="md:flex-[1] lg:flex-[1]">{children}</main>
-        </div>
+        <>
+          <Navbar3 />
+          <div className="flex bg-base-200  pt-[50px]   lg:pt-[50px] ">
+            <main className="md:flex-[1] lg:flex-[1]">{children}</main>
+          </div>
+          <Footer />
+        </>
       ) : (
         <div className="flex items-center justify-center h-[100vh] ">
           <span className="h-full loading loading-bars text-primary w-[40px] lg:w-[60px]"></span>
         </div>
       )}
-      <Footer />
     </div>
   );
 };

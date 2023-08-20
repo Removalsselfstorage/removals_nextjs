@@ -74,7 +74,7 @@ const GoogleSearchInput = ({
 }) => {
   const searchInput = useRef(null);
 
-  const quotes = useSelector(getAllDetails);
+ 
 
   // init gmap script
   const initMapScript = () => {

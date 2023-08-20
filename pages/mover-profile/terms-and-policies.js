@@ -25,18 +25,9 @@ const TermsAndPolicies = () => {
         <link rel="icon" href="/rrs_favicon.svg" />
       </Head>
 
-      {/* <div className="py-[50px] bg-white/90 px-[30px]">
-        <p>Edit Profile</p>
-      </div> */}
-       {userDetails.userDetails ? (
-        <div className="py-[50px] bg-white/90 px-[30px]">
-          <p>Terms & Policies</p>
-        </div>
-      ) : (
-        <div className="flex items-center justify-center h-[100vh] ">
-          <span className="h-full loading loading-bars text-primary w-[40px] lg:w-[60px]"></span>
-        </div>
-      )}
+      <div className="py-[50px] bg-white/90 px-[30px]">
+        <p>Terms & Policies</p>
+      </div>
     </MoverLayout>
   );
 };

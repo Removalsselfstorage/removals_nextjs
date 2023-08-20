@@ -15,22 +15,15 @@ let persistor = persistStore(store);
 //   console.log("Persisted state has been cleared.");
 // });
 
-export default function App({
-  Component,
-  pageProps: { session, ...pageProps },
-}) {
-
-
-
+export default function App({ Component, pageProps: { ...pageProps } }) {
   return (
-    <SessionProvider session={session}>
-      <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
-          <AuthProvider>
-            <Component {...pageProps} />
-          </AuthProvider>
-        </PersistGate>
-      </Provider>
-    </SessionProvider>
+    // <SessionProvider session={session}>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <AuthProvider>
+          <Component {...pageProps} />
+        </AuthProvider>
+      </PersistGate>
+    </Provider>
   );
 }

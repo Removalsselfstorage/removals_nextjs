@@ -221,7 +221,6 @@ const JoinUsBox = () => {
                       placeholder="Password"
                       onChange={handleChange}
                       value={signup_password}
-                      password
                     />
                   </div>
                   <span

@@ -25,19 +25,21 @@ import {
 } from "@/store/moverSlice";
 import { fetchMoverDetails3 } from "@/lib/fetchData2";
 
-const Navbar3 = () => {
+const Navbar3 = ({ data }) => {
   const router = useRouter();
   const dispatch = useDispatch();
   const { user, logout, loading } = useAuth();
   const users = useSelector(getAllUserDetails);
   const moverDetails = useSelector(getAllMoverDetails);
 
-  const firstName =
-    moverDetails.firebaseMoverDetails?.firstName ||
-    moverDetails.personalDetails.firstName;
-  const lastName =
-    moverDetails.firebaseMoverDetails?.lastName ||
-    moverDetails.personalDetails.lastName;
+  // const firstName =
+  //   moverDetails?.firebaseMoverDetails?.firstName ||
+  //   moverDetails?.personalDetails.firstName;
+  // const lastName =
+  //   moverDetails?.firebaseMoverDetails?.lastName ||
+  //   moverDetails?.personalDetails.lastName;
+  const firstName = data.firstName;
+  const lastName = data.lastName;
 
   // const uid = users.userDetails?.uid;
   // const readMoversData = async () => {
@@ -86,8 +88,7 @@ const Navbar3 = () => {
                       </div>
                       <ul className="  px-1 text-[16px] hidden lg:flex ">
                         <li className="dropdown  dropdown-end">
-                          {moverDetails.firebaseMoverDetails
-                            ?.profileImageUrl ? (
+                          {data.profileImageUrl ? (
                             <label
                               className="avatar cursor-pointer"
                               tabIndex={0}
@@ -95,8 +96,8 @@ const Navbar3 = () => {
                               <div className="w-[40px] rounded-full  border-primary border-[3px]">
                                 <img
                                   src={
-                                    moverDetails.firebaseMoverDetails
-                                      .profileImageUrl || "/userPlaceholder.png"
+                                    data.profileImageUrl ||
+                                    "/userPlaceholder.png"
                                   }
                                 />
                               </div>

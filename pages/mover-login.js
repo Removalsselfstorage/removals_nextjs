@@ -107,169 +107,167 @@ const MoverLogin = () => {
   }, []);
 
   return (
-    <BookingLayout>
+    <>
       <Head>
         <title>Removals and Selfstorage - Login</title>
         <meta name="description" content="Rss removal and storage website" />
         <link rel="icon" href="/rrs_favicon.svg" />
       </Head>
       {!userDetails.userDetails ? (
-        <main
-          className="h-[100vh] flex justify-center items-center"
-          style={{
-            backgroundImage: "url(/bg-tarvel3.png)",
-            backgroundSize: "cover",
-            backgroundRepeat: "no-repeat",
-          }}
-        >
-          <div className="card shadow-2xl bg-base-100 justify-center text-black w-full md:w-[400px] mx-[20px] px-[20px] pt-[10px] pb-[30px]">
-            <div className="card-body ">
-              <h3 className="text-2xl font-extrabold text-primary uppercase mt-[0px] mb-[20px] text-center">
-                Mover Login
-              </h3>
-              <div className="w-full">
-                <Formik
-                  enableReinitialize
-                  initialValues={user}
-                  validationSchema={loginValidation}
-                  onSubmit={(values, actions) => {
-                    signInHandler(values, actions);
-                  }}
-                >
-                  {(form) => (
-                    // <Form method="post" action="/api/auth/signin/email">
-                    <Form method="post">
-                      {/* <input
-                      type="hidden"
-                      name="csrfToken"
-                      defaultValue={csrfToken}
-                    /> */}
-                      {/* email */}
-                      <div className="mb-[10px]">
-                        <LoginInput
-                          type="email"
-                          name="login_email"
-                          // icon="email"
-                          placeholder="Email Address"
-                          onChange={handleChange}
-                          value={user.login_email}
-                        />
-                      </div>
-                      {/* password */}
-                      {/* <div className="mb-[10px]">
-                      <LoginInput
-                        type="password"
-                        name="login_password"
-                        placeholder="Password"
-                        onChange={handleChange}
-                      />
-                    </div> */}
-                      <div className="w-full flex  justify-between mb-[0px] relative">
-                        <div className="w-full ">
+        <BookingLayout>
+          <main
+            className="h-[100vh] flex justify-center items-center"
+            style={{
+              backgroundImage: "url(/bg-tarvel3.png)",
+              backgroundSize: "cover",
+              backgroundRepeat: "no-repeat",
+            }}
+          >
+            <div className="card shadow-2xl bg-base-100 justify-center text-black w-full md:w-[400px] mx-[20px] px-[20px] pt-[10px] pb-[30px]">
+              <div className="card-body ">
+                <h3 className="text-2xl font-extrabold text-primary uppercase mt-[0px] mb-[20px] text-center">
+                  Mover Login
+                </h3>
+                <div className="w-full">
+                  <Formik
+                    enableReinitialize
+                    initialValues={user}
+                    validationSchema={loginValidation}
+                    onSubmit={(values, actions) => {
+                      signInHandler(values, actions);
+                    }}
+                  >
+                    {(form) => (
+                      // <Form method="post" action="/api/auth/signin/email">
+                      <Form method="post">
+                        {/* <input
+                        type="hidden"
+                        name="csrfToken"
+                        defaultValue={csrfToken}
+                      /> */}
+                        {/* email */}
+                        <div className="mb-[10px]">
                           <LoginInput
-                            type={showPassword ? "text" : "password"}
-                            name="login_password"
-                            placeholder="Password"
+                            type="email"
+                            name="login_email"
+                            // icon="email"
+                            placeholder="Email Address"
                             onChange={handleChange}
-                            value={user.login_password}
-                            password
-                            // className="form-control'
+                            value={user.login_email}
                           />
                         </div>
-                        <span
-                          onClick={() => setShowPassword(!showPassword)}
-                          className="pl-[0px] cursor-pointer pt-[10px] absolute right-[10px]"
-                        >
-                          {showPassword ? (
-                            <RiEyeCloseLine className="text-primary text-[20px]" />
-                          ) : (
-                            <RiEyeLine className="text-primary text-[20px]" />
-                          )}
-                        </span>
-                      </div>
-                      <Link href="/login-reset">
-                        <p className="text-primary font-bold text-[15px] cursor-pointer">
-                          Forgot password?
-                        </p>
-                      </Link>
-                      {/* <div className={styles.button}>
-                      <CircledIconBtn type="submit" text="Sign In" />
-                      {error && <span className={styles.error}>{error}</span>}
-                    </div> */}
-                      <div className="form-control mt-6 mb-[10px]">
-                        <button
-                          // onClick={() => {}}
-                          type="submit"
-                          className="btn btn-primary flex items-center space-x-[5px]"
-                        >
-                          {!submitLoading && <span className="">Login</span>}
-                          {submitLoading && (
-                            <span className="loading loading-dots loading-md text-white"></span>
-                          )}
-                        </button>
-                      </div>
-
-                      {userDetails.verificationMessage && (
-                        <p className="text-center text-[15px] text-primary">
-                          {userDetails.verificationMessage}{" "}
+                        {/* password */}
+                        {/* <div className="mb-[10px]">
+                        <LoginInput
+                          type="password"
+                          name="login_password"
+                          placeholder="Password"
+                          onChange={handleChange}
+                        />
+                      </div> */}
+                        <div className="w-full flex  justify-between mb-[0px] relative">
+                          <div className="w-full ">
+                            <LoginInput
+                              type={showPassword ? "text" : "password"}
+                              name="login_password"
+                              placeholder="Password"
+                              onChange={handleChange}
+                              value={user.login_password}
+                              password
+                              // className="form-control'
+                            />
+                          </div>
                           <span
-                            className="font-bold cursor-pointer"
-                            onClick={() => {
-                              resendLinkHandler();
-                            }}
+                            onClick={() => setShowPassword(!showPassword)}
+                            className="pl-[0px] cursor-pointer pt-[10px] absolute right-[10px]"
                           >
-                            Resend link?
+                            {showPassword ? (
+                              <RiEyeCloseLine className="text-primary text-[20px]" />
+                            ) : (
+                              <RiEyeLine className="text-primary text-[20px]" />
+                            )}
                           </span>
-                        </p>
-                      )}
-
-                      {showResendMessage && (
-                        <p className="text-center text-[15px] text-primary">
-                          Email verification link sent
-                        </p>
-                      )}
-
-                      {userDetails.loginError && (
-                        <p className="text-center text-[15px] text-secondary">
-                          Email / password is invalid
-                        </p>
-                      )}
-
-                      <div className="mt-[20px] text-[14px] flex items-center justify-center mx-[0px]">
-                        <p className="w-[50px]">Don't have an account yet?</p>
-                        <Link
-                          href="/join-us"
-                          className="flex items-center space-x-[5px] cursor-pointer"
-                        >
-                          <span className="text-primary font-bold text-[15px] cursor-pointer">
-                            Join Us
-                          </span>
-                          <FaArrowRight className="text-primary" />
+                        </div>
+                        <Link href="/login-reset">
+                          <p className="text-primary font-bold text-[15px] cursor-pointer">
+                            Forgot password?
+                          </p>
                         </Link>
-                      </div>
-                      {/* <div className={styles.account}>
-                      <Link href="/auth/forgot" className={styles.forgot}>
-                        Forgot password?
-                      </Link>{" "}
-                      |
-                      <Link href="/signup" className={styles.forgot}>
-                        {" "}
-                        Sign Up
-                      </Link>
-                    </div> */}
-                    </Form>
-                  )}
-                </Formik>
+                        {/* <div className={styles.button}>
+                        <CircledIconBtn type="submit" text="Sign In" />
+                        {error && <span className={styles.error}>{error}</span>}
+                      </div> */}
+                        <div className="form-control mt-6 mb-[10px]">
+                          <button
+                            // onClick={() => {}}
+                            type="submit"
+                            className="btn btn-primary flex items-center space-x-[5px]"
+                          >
+                            {!submitLoading && <span className="">Login</span>}
+                            {submitLoading && (
+                              <span className="loading loading-dots loading-md text-white"></span>
+                            )}
+                          </button>
+                        </div>
+                        {userDetails.verificationMessage && (
+                          <p className="text-center text-[15px] text-primary">
+                            {userDetails.verificationMessage}{" "}
+                            <span
+                              className="font-bold cursor-pointer"
+                              onClick={() => {
+                                resendLinkHandler();
+                              }}
+                            >
+                              Resend link?
+                            </span>
+                          </p>
+                        )}
+                        {showResendMessage && (
+                          <p className="text-center text-[15px] text-primary">
+                            Email verification link sent
+                          </p>
+                        )}
+                        {userDetails.loginError && (
+                          <p className="text-center text-[15px] text-secondary">
+                            Email / password is invalid
+                          </p>
+                        )}
+                        <div className="mt-[20px] text-[14px] flex items-center justify-center mx-[0px]">
+                          <p className="w-[50px]">Don't have an account yet?</p>
+                          <Link
+                            href="/join-us"
+                            className="flex items-center space-x-[5px] cursor-pointer"
+                          >
+                            <span className="text-primary font-bold text-[15px] cursor-pointer">
+                              Join Us
+                            </span>
+                            <FaArrowRight className="text-primary" />
+                          </Link>
+                        </div>
+                        {/* <div className={styles.account}>
+                        <Link href="/auth/forgot" className={styles.forgot}>
+                          Forgot password?
+                        </Link>{" "}
+                        |
+                        <Link href="/signup" className={styles.forgot}>
+                          {" "}
+                          Sign Up
+                        </Link>
+                      </div> */}
+                      </Form>
+                    )}
+                  </Formik>
+                </div>
               </div>
             </div>
-          </div>
-        </main>
+          </main>
+        </BookingLayout>
       ) : (
         <div className="flex items-center justify-center h-[100vh] ">
           <span className="h-full loading loading-bars text-primary w-[40px] lg:w-[60px]"></span>
         </div>
       )}
-    </BookingLayout>
+    </>
   );
 };
 

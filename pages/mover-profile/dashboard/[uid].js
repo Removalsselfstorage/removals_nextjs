@@ -83,20 +83,23 @@ const sections = [
   },
 ];
 
-const MoverProfile = () => {
+const MoverProfile = ({ userData }) => {
   const router = useRouter();
   const dispatch = useDispatch();
   const userDetails = useSelector(getAllUserDetails);
   const moverDetails = useSelector(getAllMoverDetails);
 
-  const firstName = moverDetails.firebaseMoverDetails?.firstName;
-  const lastName = moverDetails.firebaseMoverDetails?.lastName;
+  // const firstName = moverDetails.firebaseMoverDetails?.firstName;
+  // const lastName = moverDetails.firebaseMoverDetails?.lastName;
+
+  const firstName = userData?.firstName;
+  const lastName = userData?.lastName;
 
   const [index, setIndex] = useState(0);
   const [sectionData, setSectionData] = useState(sections);
 
   const [previewUrl, setPreviewUrl] = useState(
-    moverDetails.firebaseMoverDetails?.profileImagePreviewUrl
+    userData?.profileImagePreviewUrl
   );
 
   useEffect(() => {
@@ -118,19 +121,22 @@ const MoverProfile = () => {
   //   };
   // }, [index]);
 
-  const uid = userDetails.userDetails?.uid;
-  const readMoversData = async () => {
-    const res = await fetchMoverDetails3(uid);
-    dispatch(updateFirebaseMoverDetails(res));
-  };
-  useEffect(() => {
-    readMoversData();
-  }, []);
+  // const uid = userDetails?.userDetails?.uid;
+  // let readMoversData = async () => {};
+  // if (uid) {
+  //   readMoversData = async () => {
+  //     const res = await fetchMoverDetails3(uid);
+  //     dispatch(updateFirebaseMoverDetails(res));
+  //   };
+  // }
+  // useEffect(() => {
+  //   readMoversData();
+  // }, []);
 
   console.log(previewUrl);
 
   return (
-    <MoverLayout>
+    <MoverLayout data={userData}>
       <Head>
         <title>Mover Profile - Dashboard</title>
         <meta name="description" content="Rss removal and storage website" />
@@ -183,10 +189,7 @@ const MoverProfile = () => {
                   <div className="flex items-center space-x-[10px] mt-[0px] text-[15px]">
                     <p className="font-semibold">0</p>
                     {/* <FullRating small value={rating} color="text-secondary" /> */}
-                    <StarRating
-                      rating={0}
-                      size="text-secondary text-[16px]"
-                    />
+                    <StarRating rating={0} size="text-secondary text-[16px]" />
                     {/* <p className="">{`- (0 Reviews)`}</p> */}
                   </div>
                 </div>
@@ -294,3 +297,30 @@ const MoverProfile = () => {
 };
 
 export default MoverProfile;
+
+
+
+
+
+export async function getServerSideProps(context) {
+  const { uid } = context.params; // Access the UID from the URL
+  let userData = null;
+
+  // console.log({uid})
+
+  // const res = await fetchMoverDetails3("5L2jQzETlfTusrd5GE48eS08r3H2");
+  const res = await fetchMoverDetails3(uid);
+  if(res){
+
+    userData = res;
+  } else {
+    console.log("No data")
+  }
+  
+
+  return {
+    props: {
+      userData,
+    },
+  };
+}

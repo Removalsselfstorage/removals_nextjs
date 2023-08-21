@@ -10,6 +10,7 @@ const CustomFileInput = ({
   imageUpload,
   setFileUploadError,
   fileUploadError,
+  data,
   //   handleButtonClick,
   //   handleFileInputChange,
   //   fileInputRef,
@@ -80,7 +81,9 @@ const CustomFileInput = ({
         <p className="truncate ... px-[10px] text-[14px] w-[255px]">
           {previewUrl && !fileUploadError
             // ? imageUpload?.name || details.firebaseMoverDetails.profilePictureName
-            ? imageUpload?.name || details.firebaseMoverDetails.profilePictureName
+            ? imageUpload?.name || data?.profilePictureName || data?.companyProfilePixName || data?.drivingLicenseName || data?.pubInsuranceName || data?.regCertificateName || data?.tranInsuranceName || data?.vehInsuranceName
+
+ 
             : "No file selected"}
         </p>
       </div>

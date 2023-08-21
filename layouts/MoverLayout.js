@@ -21,9 +21,11 @@ import { TfiComments } from "react-icons/tfi";
 import { useSelector } from "react-redux";
 import { getAllUserDetails } from "@/store/userSlice";
 
-const MoverLayout = ({ children }) => {
+const MoverLayout = ({ children, data }) => {
   const router = useRouter();
   const userDetails = useSelector(getAllUserDetails);
+
+  const uid = userDetails?.userDetails?.uid;
 
   useEffect(() => {
     if (!userDetails.userDetails) {
@@ -35,15 +37,23 @@ const MoverLayout = ({ children }) => {
     <div className={`${textFont.variable} font-sans `}>
       {userDetails.userDetails ? (
         <>
-          <Navbar3 />
+          <Navbar3 data={data}/>
           <div className="flex bg-base-200  pt-[50px]   lg:pt-[50px] ">
             <aside className=" hidden md:flex md:flex-[0.4] lg:flex-[0.4] border border-r-[2px] md:flex-col lg:w-[300px] ">
               <ul className="   pt-[30px] pb-[10px]  shadow-xl bg-base-100 text-[16px] px-[10px] border-b">
                 <li className=" my-[10px] px-[0px] w-full">
-                  <Link
+                  {/* <Link
                     href="/mover-profile"
                     className={`${
                       router.pathname === "/mover-profile"
+                        ? "bg-primary/10 text-primary"
+                        : ""
+                    } flex items-center btn-dash py-[15px] px-[20px] rounded-[10px] w-full`}
+                  > */}
+                  <Link
+                    href={`/mover-profile/dashboard/${uid}`}
+                    className={`${
+                      router.pathname === `/mover-profile/dashboard/[uid]`
                         ? "bg-primary/10 text-primary"
                         : ""
                     } flex items-center btn-dash py-[15px] px-[20px] rounded-[10px] w-full`}
@@ -54,11 +64,20 @@ const MoverLayout = ({ children }) => {
                     <p className="hidden lg:flex">Dashboard</p>
                   </Link>
                 </li>
+
                 <li className=" my-[10px] px-[0px] w-full">
-                  <Link
+                  {/* <Link
                     href="/mover-profile/appointments"
                     className={`${
                       router.pathname === "/mover-profile/appointments"
+                        ? "bg-primary/10 text-primary"
+                        : ""
+                    } flex items-center btn-dash py-[15px] px-[20px] rounded-[10px] w-full`}
+                  > */}
+                  <Link
+                    href={`/mover-profile/appointments/${uid}`}
+                    className={`${
+                      router.pathname === `/mover-profile/appointments/[uid]`
                         ? "bg-primary/10 text-primary"
                         : ""
                     } flex items-center btn-dash py-[15px] px-[20px] rounded-[10px] w-full`}
@@ -69,11 +88,20 @@ const MoverLayout = ({ children }) => {
                     <p className="hidden lg:flex">Appointments</p>
                   </Link>
                 </li>
+
                 <li className=" my-[10px] px-[0px] w-full">
-                  <Link
+                  {/* <Link
                     href="/mover-profile/job-board"
                     className={`${
                       router.pathname === "/mover-profile/job-board"
+                        ? "bg-primary/10 text-primary"
+                        : ""
+                    } flex items-center btn-dash py-[15px] px-[20px] rounded-[10px] w-full`}
+                  > */}
+                  <Link
+                    href={`/mover-profile/job-board/${uid}`}
+                    className={`${
+                      router.pathname === `/mover-profile/job-board/[uid]`
                         ? "bg-primary/10 text-primary"
                         : ""
                     } flex items-center btn-dash py-[15px] px-[20px] rounded-[10px] w-full`}
@@ -84,11 +112,20 @@ const MoverLayout = ({ children }) => {
                     <p className="hidden lg:flex">Job Board</p>
                   </Link>
                 </li>
+
                 <li className=" my-[10px] px-[0px] w-full">
-                  <Link
+                  {/* <Link
                     href="/mover-profile/inbox"
                     className={`${
                       router.pathname === "/mover-profile/inbox"
+                        ? "bg-primary/10 text-primary"
+                        : ""
+                    } flex items-center btn-dash py-[15px] px-[20px] rounded-[10px] w-full`}
+                  > */}
+                  <Link
+                    href={`/mover-profile/inbox/${uid}`}
+                    className={`${
+                      router.pathname === `/mover-profile/inbox/[uid]`
                         ? "bg-primary/10 text-primary"
                         : ""
                     } flex items-center btn-dash py-[15px] px-[20px] rounded-[10px] w-full`}
@@ -100,13 +137,22 @@ const MoverLayout = ({ children }) => {
                   </Link>
                 </li>
               </ul>
+
               <ul className=" py-[15px]  shadow-xl bg-base-100 grow  text-[16px] px-[10px]  pb-[200px]">
                 {/* portfolio */}
                 <li className=" my-[10px] px-[0px] w-full">
-                  <Link
+                  {/* <Link
                     href="/mover-profile/calendar"
                     className={`${
                       router.pathname === "/mover-profile/calendar"
+                        ? "bg-primary/10 text-primary"
+                        : ""
+                    } flex items-center btn-dash py-[15px] px-[20px] rounded-[10px] w-full`}
+                  > */}
+                  <Link
+                    href={`/mover-profile/calendar/${uid}`}
+                    className={`${
+                      router.pathname === `/mover-profile/calendar/[uid]`
                         ? "bg-primary/10 text-primary"
                         : ""
                     } flex items-center btn-dash py-[15px] px-[20px] rounded-[10px] w-full`}
@@ -117,12 +163,21 @@ const MoverLayout = ({ children }) => {
                     <p className="hidden lg:flex">Calendar</p>
                   </Link>
                 </li>
+
                 {/* portfolio */}
                 <li className=" my-[10px] px-[0px] w-full">
-                  <Link
+                  {/* <Link
                     href="/mover-profile/portfolio"
                     className={`${
                       router.pathname === "/mover-profile/portfolio"
+                        ? "bg-primary/10 text-primary"
+                        : ""
+                    } flex items-center btn-dash py-[15px] px-[20px] rounded-[10px] w-full`}
+                  > */}
+                  <Link
+                    href={`/mover-profile/portfolio/${uid}`}
+                    className={`${
+                      router.pathname === `/mover-profile/portfolio/[uid]`
                         ? "bg-primary/10 text-primary"
                         : ""
                     } flex items-center btn-dash py-[15px] px-[20px] rounded-[10px] w-full`}
@@ -133,11 +188,20 @@ const MoverLayout = ({ children }) => {
                     <p className="hidden lg:flex">Portfolio</p>
                   </Link>
                 </li>
+
                 <li className=" my-[10px] px-[0px] w-full">
-                  <Link
+                  {/* <Link
                     href="/mover-profile/edit-profile"
                     className={`${
                       router.pathname === "/mover-profile/edit-profile"
+                        ? "bg-primary/10 text-primary"
+                        : ""
+                    } flex items-center btn-dash py-[15px] px-[20px] rounded-[10px] w-full`}
+                  > */}
+                  <Link
+                    href={`/mover-profile/edit-profile/${uid}`}
+                    className={`${
+                      router.pathname === `/mover-profile/edit-profile/[uid]`
                         ? "bg-primary/10 text-primary"
                         : ""
                     } flex items-center btn-dash py-[15px] px-[20px] rounded-[10px] w-full`}
@@ -148,11 +212,20 @@ const MoverLayout = ({ children }) => {
                     <p className="hidden lg:flex">Edit Profile</p>
                   </Link>
                 </li>
+
                 <li className=" my-[10px] px-[0px] w-full">
-                  <Link
+                  {/* <Link
                     href="/mover-profile/documentation"
                     className={`${
                       router.pathname === "/mover-profile/documentation"
+                        ? "bg-primary/10 text-primary"
+                        : ""
+                    } flex items-center btn-dash py-[15px] px-[20px] rounded-[10px] w-full`}
+                  > */}
+                  <Link
+                    href={`/mover-profile/documentations/${uid}`}
+                    className={`${
+                      router.pathname === `/mover-profile/documentations/[uid]`
                         ? "bg-primary/10 text-primary"
                         : ""
                     } flex items-center btn-dash py-[15px] px-[20px] rounded-[10px] w-full`}
@@ -163,11 +236,12 @@ const MoverLayout = ({ children }) => {
                     <p className="hidden lg:flex">Documentation</p>
                   </Link>
                 </li>
+
                 <li className=" my-[10px] px-[0px] w-full">
                   <Link
-                    href="/mover-profile/billing"
+                    href={`/mover-profile/billing/${uid}`}
                     className={`${
-                      router.pathname === "/mover-profile/billing"
+                      router.pathname === `/mover-profile/billing/[uid]`
                         ? "bg-primary/10 text-primary"
                         : ""
                     } flex items-center btn-dash py-[15px] px-[20px] rounded-[10px] w-full`}
@@ -178,11 +252,20 @@ const MoverLayout = ({ children }) => {
                     <p className="hidden lg:flex">Billing</p>
                   </Link>
                 </li>
+
                 <li className=" my-[10px] px-[0px] w-full">
-                  <Link
+                  {/* <Link
                     href="/mover-profile/reviews"
                     className={`${
                       router.pathname === "/mover-profile/reviews"
+                        ? "bg-primary/10 text-primary"
+                        : ""
+                    } flex items-center btn-dash py-[15px] px-[20px] rounded-[10px] w-full`}
+                  > */}
+                  <Link
+                    href={`/mover-profile/reviews/${uid}`}
+                    className={`${
+                      router.pathname === `/mover-profile/reviews/[uid]`
                         ? "bg-primary/10 text-primary"
                         : ""
                     } flex items-center btn-dash py-[15px] px-[20px] rounded-[10px] w-full`}

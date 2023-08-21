@@ -170,7 +170,7 @@ export const AuthProvider = ({ children }) => {
         if (details.justRegistered) {
           router.push("/onboarding/personal-details");
         } else {
-          router.push("/mover-profile");
+          router.push(`/mover-profile/dashboard/${userCredential.user.uid}`);
         }
       } else {
         setUser(userCredential.user);

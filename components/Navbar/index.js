@@ -9,7 +9,7 @@ import ScrollUpMenuNav from "../ScrollUpMenuNav";
 import useAuth from "@/hooks/useAuth";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllUserDetails } from "@/store/userSlice";
-import { trimToFirstLetter } from "@/utils/logics";
+import { combineInitials, trimToFirstLetter } from "@/utils/logics";
 import { CgProfile } from "react-icons/cg";
 import { useRouter } from "next/router";
 import { FiSettings } from "react-icons/fi";
@@ -26,8 +26,8 @@ const Navbar = () => {
   const users = useSelector(getAllUserDetails);
   const moverDetails = useSelector(getAllMoverDetails);
 
-  const firstName = moverDetails.firebaseMoverDetails?.firstName || moverDetails.personalDetails.firstName;
-  const lastName = moverDetails.firebaseMoverDetails?.lastName || moverDetails.personalDetails.lastName;
+  const firstName = moverDetails.personalDetails?.firstName || moverDetails.personalDetails.firstName;
+  const lastName = moverDetails.personalDetails?.lastName || moverDetails.personalDetails.lastName;
 
   const [shadow, setShadow] = useState(false);
   const [showNav, setShowNav] = useState(true);

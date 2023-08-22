@@ -15,6 +15,7 @@ import {
   updateFirebaseMoverDetails,
   updateJustRegistered,
   updateMoverPersonalDetails,
+  updatePersonalDetails,
 } from "@/store/moverSlice";
 import { getAllUserDetails } from "@/store/userSlice";
 import MoverLayout from "@/layouts/MoverLayout";
@@ -47,33 +48,22 @@ const PersonalDetails = () => {
   );
 
   const [previewUrl, setPreviewUrl] = useState(
-    details.firebaseMoverDetails?.profileImagePreviewUrl ||
-      details.personalDetails.profilePicture?.url
+    details.personalDetails.profilePicture?.url
   );
 
   const [personalBio, setPersonalBio] = useState(
-    details.firebaseMoverDetails?.personalBio ||
-      details.personalDetails.personalBio
+    details.personalDetails.personalBio
   );
 
-  const [address, setAddress] = useState(
-    details.firebaseMoverDetails?.address || details.personalDetails?.address
-  );
+  const [address, setAddress] = useState(details.personalDetails?.address);
 
   const [firstName, setFirstName] = useState(
-    details.firebaseMoverDetails?.firstName ||
-      details.personalDetails?.firstName
+    details.personalDetails?.firstName
   );
-  const [lastName, setLastName] = useState(
-    details.firebaseMoverDetails?.lastName || details.personalDetails?.lastName
-  );
-  const [email, setEmail] = useState(
-    details.firebaseMoverDetails?.email || details.personalDetails?.email
-  );
+  const [lastName, setLastName] = useState(details.personalDetails?.lastName);
+  const [email, setEmail] = useState(details.personalDetails?.email);
   const [emailError, setEmailError] = useState(true);
-  const [phone, setPhone] = useState(
-    details.firebaseMoverDetails?.phone || details.personalDetails?.phone
-  );
+  const [phone, setPhone] = useState(details.personalDetails?.phone);
   const [phoneError, setPhoneError] = useState(true);
   const [submitError, setSubmitError] = useState(false);
   const [submitLoading, setSubmitLoading] = useState(false);
@@ -121,10 +111,10 @@ const PersonalDetails = () => {
 
   const uid = userDetails.userDetails?.uid;
 
-  const readMoversData = async () => {
-    const res = await fetchMoverDetails3(uid);
-    dispatch(updateFirebaseMoverDetails(res));
-  };
+  // const readMoversData = async () => {
+  //   const res = await fetchMoverDetails3(uid);
+  //   dispatch(updateFirebaseMoverDetails(res));
+  // };
 
   // const imgUrl = URL.createObjectURL(imageUpload);
 
@@ -169,31 +159,45 @@ const PersonalDetails = () => {
       const result = await UploadMoverPersonalDetails2(moveObj);
 
       dispatch(
-        updateMoverPersonalDetails({
+        // updateMoverPersonalDetails({
+        //   firstName,
+        //   lastName,
+        //   email,
+        //   phone,
+        //   address,
+        //   personalBio,
+        //   // profilePictureRaw: imageUpload,
+        //   // profilePicture: previewUrl,
+        //   profilePicture: {
+        //     raw: imageUpload,
+        //     url: previewUrl,
+        //     name: imageUpload?.name,
+        //   },
+        //   companyName: details.personalDetails.companyName,
+        //   companyNumber: details.personalDetails.companyNumber,
+        //   companyAddress: details.personalDetails.companyAddress,
+        //   regCertificate: details.personalDetails.regCertificate,
+        //   vehInsurance: details.personalDetails.vehInsurance,
+        //   pubInsurance: details.personalDetails.pubInsurance,
+        //   tranInsurance: details.personalDetails.tranInsurance,
+        //   drivingLicense: details.personalDetails.drivingLicense,
+        // })
+        updatePersonalDetails({
           firstName,
           lastName,
           email,
           phone,
           address,
           personalBio,
-          // profilePictureRaw: imageUpload,
-          // profilePicture: previewUrl,
           profilePicture: {
             raw: imageUpload,
             url: previewUrl,
             name: imageUpload?.name,
           },
-          companyName: details.personalDetails.companyName,
-          companyNumber: details.personalDetails.companyNumber,
-          companyAddress: details.personalDetails.companyAddress,
-          regCertificate: details.personalDetails.regCertificate,
-          vehInsurance: details.personalDetails.vehInsurance,
-          pubInsurance: details.personalDetails.pubInsurance,
-          tranInsurance: details.personalDetails.tranInsurance,
-          drivingLicense: details.personalDetails.drivingLicense,
+          reviewSubmit: false,
         })
       );
-      readMoversData();
+      // readMoversData();
 
       dispatch(updateJustRegistered(false));
 
@@ -203,11 +207,9 @@ const PersonalDetails = () => {
     }
   };
 
-  
-
-  useEffect(() => {
-    readMoversData();
-  }, []);
+  // useEffect(() => {
+  //   readMoversData();
+  // }, []);
 
   return (
     <MoverLayout2>
@@ -288,6 +290,7 @@ const PersonalDetails = () => {
                             imageUpload={imageUpload}
                             setFileUploadError={setFileUploadError}
                             fileUploadError={fileUploadError}
+                            data={details}
                           />
                         </div>
                         {!fileUploadError && (
@@ -396,10 +399,11 @@ const PersonalDetails = () => {
                           activateError && (!email || !emailError)
                             ? "ring ring-secondary"
                             : ""
-                        } input input-primary w-full h-[43px]`}
+                        } input input-primary w-full h-[43px] bg-gray-200`}
                         onChange={handleEmailChange}
                         //
                         defaultValue={email}
+                        readOnly
                       />
                       {!emailError && (
                         <p className="text-[14px] text-secondary mt-[5px]">
@@ -535,35 +539,4 @@ const PersonalDetails = () => {
 
 export default PersonalDetails;
 
-// CompleteHouse.requireAuth = true;
 
-// export async function getServerSideProps() {
-
-//   const moverSyncDetails = await fetchMoverDetails3();
-
-//   return {
-//     props: {
-//       moverSyncDetails,
-//     },
-//   };
-// }
-
-// export async function getServerSideProps() {
-//   const moverSyncDetails = await fetchMoverDetails2();
-
-//   return {
-//     props: {
-//       moverSyncDetails,
-//     },
-//   };
-// }
-
-// export async function getServerSideProps() {
-//   const moverSyncDetails = await fetchMoverDetails3();
-
-//   return {
-//     props: {
-//       moverSyncDetails,
-//     },
-//   };
-// }

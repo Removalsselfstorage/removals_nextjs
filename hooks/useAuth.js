@@ -114,17 +114,17 @@ export const AuthProvider = ({ children }) => {
 
       emailConfirmation(userCredential.user);
 
-      dispatch(
-        updateMoverPersonalDetails({
-          firstName: firstName,
-          lastName: lastName,
-          email: email,
-          phone: details.personalDetails.phone,
-          address: details.personalDetails.address,
-          personalBio: details.personalDetails.personalBio,
-          profilePicture: details.personalDetails.profilePicture,
-        })
-      );
+      // dispatch(
+      //   updateMoverPersonalDetails({
+      //     firstName: firstName,
+      //     lastName: lastName,
+      //     email: email,
+      //     phone: details.personalDetails.phone,
+      //     address: details.personalDetails.address,
+      //     personalBio: details.personalDetails.personalBio,
+      //     profilePicture: details.personalDetails.profilePicture,
+      //   })
+      // );
 
       dispatch(updateJustRegistered(true));
 
@@ -132,7 +132,7 @@ export const AuthProvider = ({ children }) => {
       //   duration: 8000,
       //   style: toastStyle1,
       // });
-      emailConfirmation(userCredential.user);
+      // emailConfirmation(userCredential.user);
 
       // Delay the router push by 3 seconds
 

@@ -16,6 +16,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { redirect, useRouter } from "next/navigation";
 import {
   getAllMoverDetails,
+  updateCompanyDetails,
+  updateCompanyDocs,
   updateFirebaseCompanyPix,
   updateFirebaseDrivingLicense,
   updateFirebaseMoverDetails,
@@ -56,60 +58,52 @@ const PersonalDetails = () => {
 
   //   states
   const [companyBio, setCompanyBio] = useState(
-    details.firebaseMoverDoc?.companyBio || details.personalDetails.companyBio
+    details.companyDetails.companyBio
   );
   const [companyName, setCompanyName] = useState(
-    details.firebaseMoverDoc?.companyName || details.personalDetails.companyName
+    details.companyDetails.companyName
   );
   const [companyNumber, setCompanyNumber] = useState(
-    details.firebaseMoverDoc?.companyNumber ||
-      details.personalDetails.companyNumber
+    details.companyDetails.companyNumber
   );
   const [companyAddress, setCompanyAddress] = useState(
-    details.firebaseMoverDoc?.companyAddress ||
-      details.personalDetails.companyAddress
+    details.companyDetails.companyAddress
   );
   const [companyProfilePix, setCompanyProfilePix] = useState(
-    details.personalDetails.companyProfilePix?.raw || null
+    details.companyDetails.companyProfilePix?.raw
   );
   const [companyProfilePixurl, setCompanyProfilePixurl] = useState(
-    details.firebaseCompanyPix?.companyProfilePixPreviewUrl ||
-      details.personalDetails.companyProfilePix?.url
+    details.companyDetails.companyProfilePix?.url
   );
   const [regCertificateUpload, setRegCertificateUpload] = useState(
-    details.personalDetails.regCertificate?.raw || null
+    details.companyDocs.regCertificate?.raw
   );
   const [regCertificateUploadurl, setRegCertificateUploadurl] = useState(
-    details.firebaseRegCertificate?.regCertificatePreviewUrl ||
-      details.personalDetails.regCertificate?.url
+    details.companyDocs.regCertificate?.url
   );
   const [vehInsuranceUpload, setVehInsuranceUpload] = useState(
-    details.personalDetails.vehInsurance?.raw || null
+    details.companyDocs.vehInsurance?.raw
   );
   const [vehInsuranceUploadurl, setVehInsuranceUploadurl] = useState(
-    details.firebaseVehInsurance?.vehInsurancePreviewUrl ||
-      details.personalDetails.vehInsurance?.url
+    details.companyDocs.vehInsurance?.url
   );
   const [pubInsuranceUpload, setPubInsuranceUpload] = useState(
-    details.firebasePubInsurance.pubInsurance?.raw || null
+    details.companyDocs.pubInsurance?.raw || null
   );
   const [pubInsuranceUploadurl, setPubInsuranceUploadurl] = useState(
-    details.firebaseMoverDocumentation?.pubInsurancePreviewUrl ||
-      details.personalDetails.pubInsurance?.url
+    details.companyDocs.pubInsurance?.url
   );
   const [tranInsuranceUpload, setTranInsuranceUpload] = useState(
-    details.personalDetails.tranInsurance?.raw || null
+    details.companyDocs.tranInsurance?.raw
   );
   const [tranInsuranceUploadurl, setTranInsuranceUploadurl] = useState(
-    details.firebaseTranInsurance?.tranInsurancePreviewUrl ||
-      details.personalDetails.tranInsurance?.url
+    details.companyDocs.tranInsurance?.url
   );
   const [drivingLicenseUpload, setDrivingLicenseUpload] = useState(
-    details.personalDetails.drivingLicense?.raw || null
+    details.companyDocs.drivingLicense?.raw
   );
   const [drivingLicenseUploadurl, setDrivingLicenseUploadurl] = useState(
-    details.firebaseDrivingLicense?.drivingLicensePreviewUrl ||
-      details.personalDetails.drivingLicense?.url
+    details.companyDocs.drivingLicense?.url
   );
 
   const [phoneError, setPhoneError] = useState(true);
@@ -169,22 +163,22 @@ const PersonalDetails = () => {
 
   const uid = userDetails.userDetails?.uid;
 
-  const readMoversData = async () => {
-    const res1 = await fetchMoversDetails(uid);
-    const res2 = await fetchMoversCompanyPix(uid);
-    const res3 = await fetchMoversRegCertificate(uid);
-    const res4 = await fetchMoversVehInsurance(uid);
-    const res5 = await fetchMoversPubInsurance(uid);
-    const res6 = await fetchMoversTranInsurance(uid);
-    const res7 = await fetchMoversDrivingLicense(uid);
-    dispatch(updateFirebaseMoverDoc(res1));
-    dispatch(updateFirebaseCompanyPix(res2));
-    dispatch(updateFirebaseRegCertificate(res3));
-    dispatch(updateFirebaseVehInsurance(res4));
-    dispatch(updateFirebasePubInsurance(res5));
-    dispatch(updateFirebaseTranInsurance(res6));
-    dispatch(updateFirebaseDrivingLicense(res7));
-  };
+  // const readMoversData = async () => {
+  //   const res1 = await fetchMoversDetails(uid);
+  //   const res2 = await fetchMoversCompanyPix(uid);
+  //   const res3 = await fetchMoversRegCertificate(uid);
+  //   const res4 = await fetchMoversVehInsurance(uid);
+  //   const res5 = await fetchMoversPubInsurance(uid);
+  //   const res6 = await fetchMoversTranInsurance(uid);
+  //   const res7 = await fetchMoversDrivingLicense(uid);
+  //   dispatch(updateFirebaseMoverDoc(res1));
+  //   dispatch(updateFirebaseCompanyPix(res2));
+  //   dispatch(updateFirebaseRegCertificate(res3));
+  //   dispatch(updateFirebaseVehInsurance(res4));
+  //   dispatch(updateFirebasePubInsurance(res5));
+  //   dispatch(updateFirebaseTranInsurance(res6));
+  //   dispatch(updateFirebaseDrivingLicense(res7));
+  // };
 
   const documentFormSubmit = async () => {
     setActivateError(true);
@@ -252,8 +246,8 @@ const PersonalDetails = () => {
           url: drivingLicenseUploadurl,
           name: drivingLicenseUpload?.name,
         },
-        email:
-          details.firebaseMoverDetails?.email || details.personalDetails.email,
+        email: details.personalDetails.email,
+        reviewSubmit: true,
         uid,
       };
 
@@ -261,13 +255,7 @@ const PersonalDetails = () => {
       console.log(result);
 
       dispatch(
-        updateMoverPersonalDetails({
-          firstName: details.personalDetails.firstName,
-          lastName: details.personalDetails.lastName,
-          email: details.personalDetails.email,
-          phone: details.personalDetails.phone,
-          address: details.personalDetails.address,
-          profilePicture: details.personalDetails.profilePicture,
+        updateCompanyDetails({
           companyName,
           companyNumber,
           companyAddress,
@@ -275,41 +263,96 @@ const PersonalDetails = () => {
           companyProfilePix: {
             raw: companyProfilePix,
             url: companyProfilePixurl,
-            name: companyProfilePix?.name,
+            name: companyProfilePix.name,
           },
-          // regCertificate: regCertificateUploadurl,
+          reviewSubmit: false,
+        })
+      );
+
+      dispatch(
+        updateCompanyDocs({
           regCertificate: {
             raw: regCertificateUpload,
             url: regCertificateUploadurl,
-            name: regCertificateUpload?.name,
+            name: regCertificateUpload.name,
           },
           // vehInsurance: vehInsuranceUploadurl,
           vehInsurance: {
             raw: vehInsuranceUpload,
             url: vehInsuranceUploadurl,
-            name: vehInsuranceUpload?.name,
+            name: vehInsuranceUpload.name,
           },
           // pubInsurance: pubInsuranceUploadurl,
           pubInsurance: {
             raw: pubInsuranceUpload,
             url: pubInsuranceUploadurl,
-            name: pubInsuranceUpload?.name,
+            name: pubInsuranceUpload.name,
           },
           // tranInsurance: tranInsuranceUploadurl,
           tranInsurance: {
             raw: tranInsuranceUpload,
             url: tranInsuranceUploadurl,
-            name: tranInsuranceUpload?.name,
+            name: tranInsuranceUpload.name,
           },
           // drivingLicense: drivingLicenseUploadurl,
           drivingLicense: {
             raw: drivingLicenseUpload,
             url: drivingLicenseUploadurl,
-            name: drivingLicenseUpload?.name,
+            name: drivingLicenseUpload.name,
           },
         })
       );
-      readMoversData();
+
+      // dispatch(
+      //   updateMoverPersonalDetails({
+      //     firstName: details.personalDetails.firstName,
+      //     lastName: details.personalDetails.lastName,
+      //     email: details.personalDetails.email,
+      //     phone: details.personalDetails.phone,
+      //     address: details.personalDetails.address,
+      //     profilePicture: details.personalDetails.profilePicture,
+      //     companyName,
+      //     companyNumber,
+      //     companyAddress,
+      //     companyBio,
+      //     companyProfilePix: {
+      //       raw: companyProfilePix,
+      //       url: companyProfilePixurl,
+      //       name: companyProfilePix?.name,
+      //     },
+      //     // regCertificate: regCertificateUploadurl,
+      //     regCertificate: {
+      //       raw: regCertificateUpload,
+      //       url: regCertificateUploadurl,
+      //       name: regCertificateUpload?.name,
+      //     },
+      //     // vehInsurance: vehInsuranceUploadurl,
+      //     vehInsurance: {
+      //       raw: vehInsuranceUpload,
+      //       url: vehInsuranceUploadurl,
+      //       name: vehInsuranceUpload?.name,
+      //     },
+      //     // pubInsurance: pubInsuranceUploadurl,
+      //     pubInsurance: {
+      //       raw: pubInsuranceUpload,
+      //       url: pubInsuranceUploadurl,
+      //       name: pubInsuranceUpload?.name,
+      //     },
+      //     // tranInsurance: tranInsuranceUploadurl,
+      //     tranInsurance: {
+      //       raw: tranInsuranceUpload,
+      //       url: tranInsuranceUploadurl,
+      //       name: tranInsuranceUpload?.name,
+      //     },
+      //     // drivingLicense: drivingLicenseUploadurl,
+      //     drivingLicense: {
+      //       raw: drivingLicenseUpload,
+      //       url: drivingLicenseUploadurl,
+      //       name: drivingLicenseUpload?.name,
+      //     },
+      //   })
+      // );
+      // readMoversData();
 
       setSubmitSuccess(true);
 
@@ -318,8 +361,8 @@ const PersonalDetails = () => {
       // router.push("/mover-profile");
       setTimeout(() => {
         // router.push("/onboarding/personal-details");
-        router.push("/mover-profile");
-      }, 2000);
+        router.push("/mover-profile/dashboard");
+      }, 1500);
     }
   };
 
@@ -537,6 +580,7 @@ const PersonalDetails = () => {
                         imageUpload={companyProfilePix}
                         fileUploadError={fileUploadErrorCP}
                         setFileUploadError={setFileUploadErrorCP}
+                        data={details}
                       />
 
                       {fileUploadErrorCP && (
@@ -578,6 +622,7 @@ const PersonalDetails = () => {
                         setPreviewUrl={setDrivingLicenseUploadurl}
                         fileUploadError={fileUploadErrorDL}
                         setFileUploadError={setFileUploadErrorDL}
+                        data={details}
                       />
 
                       {fileUploadErrorDL && (
@@ -625,6 +670,7 @@ const PersonalDetails = () => {
                         setPreviewUrl={setRegCertificateUploadurl}
                         fileUploadError={fileUploadErrorRC}
                         setFileUploadError={setFileUploadErrorRC}
+                        data={details}
                       />
                       {fileUploadErrorRC && (
                         <p className=" text-secondary text-[14px] mt-[10px]">
@@ -665,6 +711,7 @@ const PersonalDetails = () => {
                         setPreviewUrl={setVehInsuranceUploadurl}
                         fileUploadError={fileUploadErrorVI}
                         setFileUploadError={setFileUploadErrorVI}
+                        data={details}
                       />
                       {fileUploadErrorVI && (
                         <p className=" text-secondary text-[14px] mt-[10px]">
@@ -711,6 +758,7 @@ const PersonalDetails = () => {
                         setPreviewUrl={setPubInsuranceUploadurl}
                         fileUploadError={fileUploadErrorPI}
                         setFileUploadError={setFileUploadErrorPI}
+                        data={details}
                       />
                       {fileUploadErrorPI && (
                         <p className=" text-secondary text-[14px] mt-[10px]">
@@ -751,6 +799,7 @@ const PersonalDetails = () => {
                         setPreviewUrl={setTranInsuranceUploadurl}
                         fileUploadError={fileUploadErrorTI}
                         setFileUploadError={setFileUploadErrorTI}
+                        data={details}
                       />
                       {fileUploadErrorTI && (
                         <p className=" text-secondary text-[14px] mt-[10px]">

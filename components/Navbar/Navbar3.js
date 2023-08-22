@@ -181,7 +181,7 @@ const Navbar3 = ({ data }) => {
                       <Link
                         href="/mover-profile"
                         className={`${
-                          router.pathname === "/mover-profile"
+                          router.pathname === "/mover-profile/dashboard"
                             ? "bg-primary/10 text-primary"
                             : ""
                         } flex items-center btn-dash py-[5px] px-[20px] rounded-[10px] w-full`}

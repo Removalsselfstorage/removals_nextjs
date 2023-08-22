@@ -206,6 +206,7 @@ const MoverLogin = () => {
                             // onClick={() => {}}
                             type="submit"
                             className="btn btn-primary flex items-center space-x-[5px]"
+                            disabled={submitLoading}
                           >
                             {!submitLoading && <span className="">Login</span>}
                             {submitLoading && (

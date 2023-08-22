@@ -44,59 +44,64 @@ import {
   fetchMoversVehInsurance,
 } from "@/lib/fetchData2";
 import { UploadMoverDocumentation } from "@/lib/uploadMoverDocumentation";
+import { IoMdNotificationsOutline } from "react-icons/io";
 
-const Documentations = ({ userData }) => {
+const Documentations = () => {
   const router = useRouter();
   const userDetails = useSelector(getAllUserDetails);
 
   const dispatch = useDispatch();
   const details = useSelector(getAllMoverDetails);
 
-  console.log(userData);
+ 
 
-  const [companyBio, setCompanyBio] = useState(userData.Details.companyBio);
-  const [companyName, setCompanyName] = useState(userData.Details.companyName);
+  const [companyBio, setCompanyBio] = useState(
+    details.companyDetails.companyBio
+  );
+  const [companyName, setCompanyName] = useState(
+    details.companyDetails.companyName
+  );
   const [companyNumber, setCompanyNumber] = useState(
-    userData.Details.companyNumber
+    details.companyDetails.companyNumber
   );
   const [companyAddress, setCompanyAddress] = useState(
-    userData.Details.companyAddress
+    details.companyDetails.companyAddress
   );
   const [companyProfilePix, setCompanyProfilePix] = useState(
-    details.personalDetails.companyProfilePix?.raw || null
+    details.companyDetails.companyProfilePix?.raw || null
   );
   const [companyProfilePixurl, setCompanyProfilePixurl] = useState(
-    userData.CompanyPix.companyProfilePixPreviewUrl
+    details.companyDetails.companyProfilePix?.url
   );
   const [regCertificateUpload, setRegCertificateUpload] = useState(
-    details.personalDetails.regCertificate?.raw || null
+    details.companyDocs.regCertificate?.raw || null
   );
   const [regCertificateUploadurl, setRegCertificateUploadurl] = useState(
-    userData.RegCertificate.regCertificatePreviewUrl
+    details.companyDocs.regCertificate?.url
   );
   const [vehInsuranceUpload, setVehInsuranceUpload] = useState(
-    details.personalDetails.vehInsurance?.raw || null
+    details.companyDocs.vehInsurance?.raw || null
   );
   const [vehInsuranceUploadurl, setVehInsuranceUploadurl] = useState(
-    userData.VehInsurance.vehInsurancePreviewUrl
+    details.companyDocs.vehInsurance?.url
   );
   const [pubInsuranceUpload, setPubInsuranceUpload] = useState(
-    details.firebasePubInsurance.pubInsurance?.raw || null
+    details.companyDocs.pubInsurance?.raw || null
   );
   const [pubInsuranceUploadurl, setPubInsuranceUploadurl] = useState(
-    userData.PubInsurance.pubInsurancePreviewUrl
+    details.companyDocs.pubInsurance?.url
   );
   const [tranInsuranceUpload, setTranInsuranceUpload] = useState(
-    details.personalDetails.tranInsurance?.raw || null
+    details.companyDocs.tranInsurance?.raw || null
   );
   const [tranInsuranceUploadurl, setTranInsuranceUploadurl] = useState(
-    userData.TranInsurance.tranInsurancePreviewUrl
+    details.companyDocs.tranInsurance?.url
   );
   const [drivingLicenseUpload, setDrivingLicenseUpload] = useState(
-    details.personalDetails.drivingLicense?.raw || null
+    details.companyDocs.drivingLicense?.raw || null
   );
   const [drivingLicenseUploadurl, setDrivingLicenseUploadurl] = useState(
-    userData.DrivingLicense.drivingLicensePreviewUrl
+    details.companyDocs.drivingLicense?.url
   );
 
   const [phoneError, setPhoneError] = useState(true);
@@ -240,63 +245,63 @@ const Documentations = ({ userData }) => {
           url: drivingLicenseUploadurl,
           name: drivingLicenseUpload?.name,
         },
-        email:
-          details.firebaseMoverDetails?.email || details.personalDetails.email,
+        email: details.personalDetails.email,
+        reviewSubmit: true,
         uid,
       };
 
       const result = await UploadMoverDocumentation(moveObj);
       console.log(result);
 
-      dispatch(
-        updateMoverPersonalDetails({
-          firstName: details.personalDetails.firstName,
-          lastName: details.personalDetails.lastName,
-          email: details.personalDetails.email,
-          phone: details.personalDetails.phone,
-          address: details.personalDetails.address,
-          profilePicture: details.personalDetails.profilePicture,
-          companyName,
-          companyNumber,
-          companyAddress,
-          companyBio,
-          companyProfilePix: {
-            raw: companyProfilePix,
-            url: companyProfilePixurl,
-            name: companyProfilePix?.name,
-          },
-          // regCertificate: regCertificateUploadurl,
-          regCertificate: {
-            raw: regCertificateUpload,
-            url: regCertificateUploadurl,
-            name: regCertificateUpload?.name,
-          },
-          // vehInsurance: vehInsuranceUploadurl,
-          vehInsurance: {
-            raw: vehInsuranceUpload,
-            url: vehInsuranceUploadurl,
-            name: vehInsuranceUpload?.name,
-          },
-          // pubInsurance: pubInsuranceUploadurl,
-          pubInsurance: {
-            raw: pubInsuranceUpload,
-            url: pubInsuranceUploadurl,
-            name: pubInsuranceUpload?.name,
-          },
-          // tranInsurance: tranInsuranceUploadurl,
-          tranInsurance: {
-            raw: tranInsuranceUpload,
-            url: tranInsuranceUploadurl,
-            name: tranInsuranceUpload?.name,
-          },
-          // drivingLicense: drivingLicenseUploadurl,
-          drivingLicense: {
-            raw: drivingLicenseUpload,
-            url: drivingLicenseUploadurl,
-            name: drivingLicenseUpload?.name,
-          },
-        })
-      );
+      // dispatch(
+      //   updateMoverPersonalDetails({
+      //     firstName: details.personalDetails.firstName,
+      //     lastName: details.personalDetails.lastName,
+      //     email: details.personalDetails.email,
+      //     phone: details.personalDetails.phone,
+      //     address: details.personalDetails.address,
+      //     profilePicture: details.personalDetails.profilePicture,
+      //     companyName,
+      //     companyNumber,
+      //     companyAddress,
+      //     companyBio,
+      //     companyProfilePix: {
+      //       raw: companyProfilePix,
+      //       url: companyProfilePixurl,
+      //       name: companyProfilePix?.name,
+      //     },
+      //     // regCertificate: regCertificateUploadurl,
+      //     regCertificate: {
+      //       raw: regCertificateUpload,
+      //       url: regCertificateUploadurl,
+      //       name: regCertificateUpload?.name,
+      //     },
+      //     // vehInsurance: vehInsuranceUploadurl,
+      //     vehInsurance: {
+      //       raw: vehInsuranceUpload,
+      //       url: vehInsuranceUploadurl,
+      //       name: vehInsuranceUpload?.name,
+      //     },
+      //     // pubInsurance: pubInsuranceUploadurl,
+      //     pubInsurance: {
+      //       raw: pubInsuranceUpload,
+      //       url: pubInsuranceUploadurl,
+      //       name: pubInsuranceUpload?.name,
+      //     },
+      //     // tranInsurance: tranInsuranceUploadurl,
+      //     tranInsurance: {
+      //       raw: tranInsuranceUpload,
+      //       url: tranInsuranceUploadurl,
+      //       name: tranInsuranceUpload?.name,
+      //     },
+      //     // drivingLicense: drivingLicenseUploadurl,
+      //     drivingLicense: {
+      //       raw: drivingLicenseUpload,
+      //       url: drivingLicenseUploadurl,
+      //       name: drivingLicenseUpload?.name,
+      //     },
+      //   })
+      // );
       // readMoversData();
 
       setSubmitSuccess(true);
@@ -304,12 +309,14 @@ const Documentations = ({ userData }) => {
       setSubmitLoading(false);
 
       // router.push("/mover-profile");
-      window.location.reload();
+      // window.location.reload();
     }
   };
 
+  console.log(details)
+
   return (
-    <MoverLayout data={userData.userDetails}>
+    <MoverLayout >
       <Head>
         <title>Mover Profile - Documentation</title>
         <meta name="description" content="Rss removal and storage website" />
@@ -327,6 +334,19 @@ const Documentations = ({ userData }) => {
               </p>
             </div>
           </section>
+
+          {(submitSuccess || details.companyDetails.reviewSubmit) && (
+          <section className="mb-[30px] px-[0px] ">
+            <div className="flex items-center bg-primary/10 rounded-[10px] px-[20px] py-[15px] space-x-[20px]">
+              <IoMdNotificationsOutline className="text-primary text-[40px]" />
+              <div className="flex flex-col">
+                <p className="font-bold text-primary">
+                  Your Update has been submitted for review!
+                </p>
+              </div>
+            </div>
+          </section>
+        )}
           <div className="bg-white/70 border px-[20px] py-[30px] rounded-[10px] shadow-lg">
             {/* mandatory text */}
             <div className="flex flex-col w-full items-center  mb-[40px] mt-[20px]">
@@ -485,7 +505,7 @@ const Documentations = ({ userData }) => {
                       imageUpload={companyProfilePix}
                       fileUploadError={fileUploadErrorCP}
                       setFileUploadError={setFileUploadErrorCP}
-                      data={userData.CompanyPix}
+                      data={details}
                     />
                     {fileUploadErrorCP && (
                       <p className=" text-secondary text-[14px] mt-[10px]">
@@ -526,7 +546,7 @@ const Documentations = ({ userData }) => {
                       setPreviewUrl={setDrivingLicenseUploadurl}
                       fileUploadError={fileUploadErrorDL}
                       setFileUploadError={setFileUploadErrorDL}
-                      data={userData.DrivingLicense}
+                      data={details}
                     />
                     {fileUploadErrorDL && (
                       <p className=" text-secondary text-[14px] mt-[10px]">
@@ -572,7 +592,7 @@ const Documentations = ({ userData }) => {
                       setPreviewUrl={setRegCertificateUploadurl}
                       fileUploadError={fileUploadErrorRC}
                       setFileUploadError={setFileUploadErrorRC}
-                      data={userData.RegCertificate}
+                      data={details}
                     />
                     {fileUploadErrorRC && (
                       <p className=" text-secondary text-[14px] mt-[10px]">
@@ -613,7 +633,7 @@ const Documentations = ({ userData }) => {
                       setPreviewUrl={setVehInsuranceUploadurl}
                       fileUploadError={fileUploadErrorVI}
                       setFileUploadError={setFileUploadErrorVI}
-                      data={userData.VehInsurance}
+                      data={details}
                     />
                     {fileUploadErrorVI && (
                       <p className=" text-secondary text-[14px] mt-[10px]">
@@ -659,7 +679,7 @@ const Documentations = ({ userData }) => {
                       setPreviewUrl={setPubInsuranceUploadurl}
                       fileUploadError={fileUploadErrorPI}
                       setFileUploadError={setFileUploadErrorPI}
-                      data={userData.PubInsurance}
+                      data={details}
                     />
                     {fileUploadErrorPI && (
                       <p className=" text-secondary text-[14px] mt-[10px]">
@@ -700,7 +720,7 @@ const Documentations = ({ userData }) => {
                       setPreviewUrl={setTranInsuranceUploadurl}
                       fileUploadError={fileUploadErrorTI}
                       setFileUploadError={setFileUploadErrorTI}
-                      data={userData.TranInsurance}
+                      data={details}
                     />
                     {fileUploadErrorTI && (
                       <p className=" text-secondary text-[14px] mt-[10px]">
@@ -755,36 +775,36 @@ const Documentations = ({ userData }) => {
 
 export default Documentations;
 
-export async function getServerSideProps(context) {
-  const { uid } = context.params; // Access the UID from the URL
-  let userData = {};
+// export async function getServerSideProps(context) {
+//   const { uid } = context.params; // Access the UID from the URL
+//   let userData = {};
 
-  const res = await fetchMoverDetails3(uid);
-  const res1 = await fetchMoversDetails(uid);
-  const res2 = await fetchMoversCompanyPix(uid);
-  const res3 = await fetchMoversRegCertificate(uid);
-  const res4 = await fetchMoversVehInsurance(uid);
-  const res5 = await fetchMoversPubInsurance(uid);
-  const res6 = await fetchMoversTranInsurance(uid);
-  const res7 = await fetchMoversDrivingLicense(uid);
-  if (res1 && res2 && res3 && res4 && res5 && res6 && res7) {
-    userData = {
-      userDetails: res,
-      Details: res1,
-      CompanyPix: res2,
-      RegCertificate: res3,
-      VehInsurance: res4,
-      PubInsurance: res5,
-      TranInsurance: res6,
-      DrivingLicense: res7,
-    };
-  } else {
-    console.log("No data");
-  }
+//   const res = await fetchMoverDetails3(uid);
+//   const res1 = await fetchMoversDetails(uid);
+//   const res2 = await fetchMoversCompanyPix(uid);
+//   const res3 = await fetchMoversRegCertificate(uid);
+//   const res4 = await fetchMoversVehInsurance(uid);
+//   const res5 = await fetchMoversPubInsurance(uid);
+//   const res6 = await fetchMoversTranInsurance(uid);
+//   const res7 = await fetchMoversDrivingLicense(uid);
+//   if (res1 && res2 && res3 && res4 && res5 && res6 && res7) {
+//     userData = {
+//       userDetails: res,
+//       Details: res1,
+//       CompanyPix: res2,
+//       RegCertificate: res3,
+//       VehInsurance: res4,
+//       PubInsurance: res5,
+//       TranInsurance: res6,
+//       DrivingLicense: res7,
+//     };
+//   } else {
+//     console.log("No data");
+//   }
 
-  return {
-    props: {
-      userData,
-    },
-  };
-}
+//   return {
+//     props: {
+//       userData,
+//     },
+//   };
+// }

@@ -1,12 +1,27 @@
 import StarRating from "@/components/Rating/EditHalfStars2";
 import MoverLayout from "@/layouts/MoverLayout";
 import NormalLayout from "@/layouts/NormalLayout";
-import { fetchMoverDetails3 } from "@/lib/fetchData2";
+import {
+  fetchAllMoversDetails,
+  fetchMoverDetails3,
+  fetchMoversCompanyPix,
+  fetchMoversDetails,
+  fetchMoversDrivingLicense,
+  fetchMoversPubInsurance,
+  fetchMoversRegCertificate,
+  fetchMoversTranInsurance,
+  fetchMoversVehInsurance,
+} from "@/lib/fetchData2";
 import {
   getAllMoverDetails,
+  updateCompanyDetails,
+  updateCompanyDocs,
   updateFirebaseMoverDetails,
+  updateFullDetails,
+  updateMoverPersonalDetails,
+  updatePersonalDetails,
 } from "@/store/moverSlice";
-import { getAllUserDetails } from "@/store/userSlice";
+import { getAllpersonalDetails } from "@/store/userSlice";
 import { combineInitials } from "@/utils/logics";
 import Head from "next/head";
 import Link from "next/link";
@@ -83,23 +98,23 @@ const sections = [
   },
 ];
 
-const MoverProfile = ({ userData }) => {
+const Dashboard = ({ userData }) => {
   const router = useRouter();
   const dispatch = useDispatch();
-  const userDetails = useSelector(getAllUserDetails);
+  // const personalDetails = useSelector(getAllpersonalDetails);
   const moverDetails = useSelector(getAllMoverDetails);
 
   // const firstName = moverDetails.firebaseMoverDetails?.firstName;
   // const lastName = moverDetails.firebaseMoverDetails?.lastName;
 
-  const firstName = userData?.firstName;
-  const lastName = userData?.lastName;
+  const firstName = userData?.personalDetails.firstName;
+  const lastName = userData?.personalDetails.lastName;
 
   const [index, setIndex] = useState(0);
   const [sectionData, setSectionData] = useState(sections);
 
   const [previewUrl, setPreviewUrl] = useState(
-    userData?.profileImagePreviewUrl
+    userData?.personalDetails?.profileImagePreviewUrl
   );
 
   useEffect(() => {
@@ -121,7 +136,7 @@ const MoverProfile = ({ userData }) => {
   //   };
   // }, [index]);
 
-  // const uid = userDetails?.userDetails?.uid;
+  // const uid = personalDetails?.personalDetails?.uid;
   // let readMoversData = async () => {};
   // if (uid) {
   //   readMoversData = async () => {
@@ -129,14 +144,78 @@ const MoverProfile = ({ userData }) => {
   //     dispatch(updateFirebaseMoverDetails(res));
   //   };
   // }
-  // useEffect(() => {
-  //   readMoversData();
-  // }, []);
+  useEffect(() => {
+    // readMoversData();
 
-  console.log(previewUrl);
+    dispatch(
+      updatePersonalDetails({
+        firstName: userData?.personalDetails.firstName,
+        lastName: userData?.personalDetails.lastName,
+        email: userData?.personalDetails.email,
+        phone: userData?.personalDetails.phone,
+        address: userData?.personalDetails.address,
+        personalBio: userData?.personalDetails.personalBio,
+        profilePicture: {
+          raw: userData?.personalDetails.profileImagePreviewUrl,
+          url: userData?.personalDetails.profileImagePreviewUrl,
+          name: userData?.personalDetails.profilePictureName,
+        },
+        reviewSubmit: userData?.personalDetails.reviewSubmit,
+      })
+    );
+    dispatch(
+      updateCompanyDetails({
+        companyName: userData.companyDetails.companyName,
+        companyNumber: userData.companyDetails.companyNumber,
+        companyAddress: userData.companyDetails.companyAddress,
+        companyBio: userData.companyDetails.companyBio,
+        companyProfilePix: {
+          raw: userData.CompanyPix.companyProfilePixPreviewUrl,
+          url: userData.CompanyPix.companyProfilePixPreviewUrl,
+          name: userData.CompanyPix.companyProfilePixName,
+        },
+        reviewSubmit: userData?.companyDetails.reviewSubmit,
+      })
+    );
+    dispatch(
+      updateCompanyDocs({
+        regCertificate: {
+          raw: userData.RegCertificate.regCertificatePreviewUrl,
+          url: userData.RegCertificate.regCertificatePreviewUrl,
+          name: userData.RegCertificate.regCertificateName,
+        },
+        // vehInsurance: vehInsuranceUploadurl,
+        vehInsurance: {
+          raw: userData.VehInsurance.vehInsurancePreviewUrl,
+          url: userData.VehInsurance.vehInsurancePreviewUrl,
+          name: userData.VehInsurance.vehInsuranceName,
+        },
+        // pubInsurance: pubInsuranceUploadurl,
+        pubInsurance: {
+          raw: userData.PubInsurance.pubInsurancePreviewUrl,
+          url: userData.PubInsurance.pubInsurancePreviewUrl,
+          name: userData.PubInsurance.pubInsuranceName,
+        },
+        // tranInsurance: tranInsuranceUploadurl,
+        tranInsurance: {
+          raw: userData.TranInsurance.tranInsurancePreviewUrl,
+          url: userData.TranInsurance.tranInsurancePreviewUrl,
+          name: userData.TranInsurance.tranInsuranceName,
+        },
+        // drivingLicense: drivingLicenseUploadurl,
+        drivingLicense: {
+          raw: userData.DrivingLicense.drivingLicensePreviewUrl,
+          url: userData.DrivingLicense.drivingLicensePreviewUrl,
+          name: userData.DrivingLicense.drivingLicenseName,
+        },
+      })
+    );
+  }, []);
+
+  console.log(userData);
 
   return (
-    <MoverLayout data={userData}>
+    <MoverLayout>
       <Head>
         <title>Mover Profile - Dashboard</title>
         <meta name="description" content="Rss removal and storage website" />
@@ -296,27 +375,35 @@ const MoverProfile = ({ userData }) => {
   );
 };
 
-export default MoverProfile;
-
-
-
-
+export default Dashboard;
 
 export async function getServerSideProps(context) {
   const { uid } = context.params; // Access the UID from the URL
-  let userData = null;
+  // let userData = {};
 
-  // console.log({uid})
-
-  // const res = await fetchMoverDetails3("5L2jQzETlfTusrd5GE48eS08r3H2");
-  const res = await fetchMoverDetails3(uid);
-  if(res){
-
-    userData = res;
-  } else {
-    console.log("No data")
-  }
-  
+  // const res = await fetchMoverDetails3(uid);
+  // const res1 = await fetchMoversDetails(uid);
+  // const res2 = await fetchMoversCompanyPix(uid);
+  // const res3 = await fetchMoversRegCertificate(uid);
+  // const res4 = await fetchMoversVehInsurance(uid);
+  // const res5 = await fetchMoversPubInsurance(uid);
+  // const res6 = await fetchMoversTranInsurance(uid);
+  // const res7 = await fetchMoversDrivingLicense(uid);
+  // if (res1 && res2 && res3 && res4 && res5 && res6 && res7) {
+  //   userData = {
+  //     personalDetails: res,
+  //     companyDetails: res1,
+  //     CompanyPix: res2,
+  //     RegCertificate: res3,
+  //     VehInsurance: res4,
+  //     PubInsurance: res5,
+  //     TranInsurance: res6,
+  //     DrivingLicense: res7,
+  //   };
+  // } else {
+  //   console.log("No data");
+  // }
+  const userData = await fetchAllMoversDetails(uid);
 
   return {
     props: {

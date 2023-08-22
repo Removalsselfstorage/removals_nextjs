@@ -9,9 +9,9 @@ import { BiLogOut } from "react-icons/bi";
 import { CgProfile } from "react-icons/cg";
 import { useSelector } from "react-redux";
 
-const Calendar = ({userData}) => {
+const Calendar = () => {
   return (
-    <MoverLayout data={userData}>
+    <MoverLayout>
       <Head>
         <title>Mover Profile - Calendar</title>
         <meta name="description" content="Rss removal and storage website" />
@@ -27,25 +27,4 @@ const Calendar = ({userData}) => {
 
 export default Calendar;
 
-export async function getServerSideProps(context) {
-  const { uid } = context.params; // Access the UID from the URL
-  let userData = null;
 
-  // console.log({uid})
-
-  // const res = await fetchMoverDetails3("5L2jQzETlfTusrd5GE48eS08r3H2");
-  const res = await fetchMoverDetails3(uid);
-  if(res){
-
-    userData = res;
-  } else {
-    console.log("No data")
-  }
-  
-
-  return {
-    props: {
-      userData,
-    },
-  };
-}

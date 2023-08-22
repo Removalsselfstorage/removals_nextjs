@@ -5,6 +5,7 @@ import thunk from "redux-thunk";
 // import { persistReducer, createMigrate } from 'reduxjs-toolkit-persist'
 // import hardSet from 'reduxjs-toolkit-persist/lib/stateReconciler/hardSet'
 import storage from "redux-persist/lib/storage";
+import localforage from "localforage";
 import {
   persistReducer,
   persistStore,
@@ -16,8 +17,8 @@ import {
   REGISTER,
 } from "redux-persist";
 // import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
-import hardSet from 'redux-persist/lib/stateReconciler/hardSet';
-import createWebStorage from 'redux-persist/lib/storage/createWebStorage';
+import hardSet from "redux-persist/lib/stateReconciler/hardSet";
+import createWebStorage from "redux-persist/lib/storage/createWebStorage";
 import cartReducer from "./userSlice";
 import quoteReducer from "./quoteSlice";
 import userReducer from "./userSlice";
@@ -53,9 +54,9 @@ const rootReducer = combineReducers({
 const persistConfig = {
   key: "root",
   //   version: 1,
-  storage,
+  storage: localforage,
   // storage: storageSession,
-  stateReconciler: hardSet
+  stateReconciler: hardSet,
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

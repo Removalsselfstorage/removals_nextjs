@@ -9,9 +9,9 @@ import { BiLogOut } from "react-icons/bi";
 import { CgProfile } from "react-icons/cg";
 import { useSelector } from "react-redux";
 
-const Appointments = ({userData}) => {
+const Appointments = () => {
   return (
-    <MoverLayout data={userData}>
+    <MoverLayout>
       <Head>
         <title>Mover Profile - Appointments</title>
         <meta name="description" content="Rss removal and storage website" />
@@ -30,25 +30,25 @@ export default Appointments;
 
 
 
-export async function getServerSideProps(context) {
-  const { uid } = context.params; // Access the UID from the URL
-  let userData = null;
+// export async function getServerSideProps(context) {
+//   const { uid } = context.params; // Access the UID from the URL
+//   let userData = null;
 
-  // console.log({uid})
+//   // console.log({uid})
 
-  // const res = await fetchMoverDetails3("5L2jQzETlfTusrd5GE48eS08r3H2");
-  const res = await fetchMoverDetails3(uid);
-  if(res){
+//   // const res = await fetchMoverDetails3("5L2jQzETlfTusrd5GE48eS08r3H2");
+//   const res = await fetchMoverDetails3(uid);
+//   if(res){
 
-    userData = res;
-  } else {
-    console.log("No data")
-  }
+//     userData = res;
+//   } else {
+//     console.log("No data")
+//   }
   
 
-  return {
-    props: {
-      userData,
-    },
-  };
-}
+//   return {
+//     props: {
+//       userData,
+//     },
+//   };
+// }

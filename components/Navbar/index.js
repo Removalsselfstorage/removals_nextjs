@@ -26,8 +26,9 @@ const Navbar = () => {
   const users = useSelector(getAllUserDetails);
   const moverDetails = useSelector(getAllMoverDetails);
 
-  const firstName = moverDetails.personalDetails?.firstName || moverDetails.personalDetails.firstName;
-  const lastName = moverDetails.personalDetails?.lastName || moverDetails.personalDetails.lastName;
+  const firstName = moverDetails.personalDetails.firstName;
+  const lastName = moverDetails.personalDetails.lastName;
+  const previewUrl = moverDetails.personalDetails.profilePicture.url
 
   const [shadow, setShadow] = useState(false);
   const [showNav, setShowNav] = useState(true);
@@ -256,9 +257,9 @@ const Navbar = () => {
                         //   My Dashboard
                         // </Link>
                         <Link
-                          href="/mover-profile"
+                          href={`/mover-profile/dashboard/${uid}`}
                           className={`${
-                            router.pathname === "/mover-profile"
+                            router.pathname === "/mover-profile/dashboard/[uid]"
                               ? "border-b-[5px] border-primary text-primary"
                               : ""
                           } btn-navs`}
@@ -289,13 +290,12 @@ const Navbar = () => {
                   {users.userDetails && (
                     <ul className="  px-1 text-[16px] hidden lg:flex ">
                       <li className="dropdown  dropdown-end">
-                        {moverDetails.firebaseMoverDetails.profileImageUrl ? (
+                        {previewUrl ? (
                           <label className="avatar cursor-pointer" tabIndex={0}>
                             <div className="w-[40px] rounded-full  border-primary border-[3px]">
                               <img
                                 src={
-                                  moverDetails.firebaseMoverDetails
-                                    .profileImageUrl || "/userPlaceholder.png"
+                                  previewUrl || "/userPlaceholder.png"
                                 }
                               />
                             </div>

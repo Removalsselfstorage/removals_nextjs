@@ -38,8 +38,9 @@ const Navbar3 = ({ data }) => {
   // const lastName =
   //   moverDetails?.firebaseMoverDetails?.lastName ||
   //   moverDetails?.personalDetails.lastName;
-  const firstName = data.firstName;
-  const lastName = data.lastName;
+  const firstName = moverDetails.personalDetails.firstName;
+  const lastName = moverDetails.personalDetails.lastName;
+  const previewUrl = moverDetails.personalDetails.profilePicture.url
 
   // const uid = users.userDetails?.uid;
   // const readMoversData = async () => {
@@ -88,7 +89,7 @@ const Navbar3 = ({ data }) => {
                       </div>
                       <ul className="  px-1 text-[16px] hidden lg:flex ">
                         <li className="dropdown  dropdown-end">
-                          {data.profileImageUrl ? (
+                          {previewUrl ? (
                             <label
                               className="avatar cursor-pointer"
                               tabIndex={0}
@@ -96,7 +97,7 @@ const Navbar3 = ({ data }) => {
                               <div className="w-[40px] rounded-full  border-primary border-[3px]">
                                 <img
                                   src={
-                                    data.profileImageUrl ||
+                                    previewUrl ||
                                     "/userPlaceholder.png"
                                   }
                                 />

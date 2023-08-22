@@ -39,6 +39,7 @@ const CustomFileInput = ({
       if (file.size <= 1024 * 1024 * 3) {
         // 1MB as an example size limit
         setImageUpload(file);
+        console.log(file);
         const reader = new FileReader();
         reader.onload = () => {
           setPreviewUrl(reader.result);
@@ -80,10 +81,15 @@ const CustomFileInput = ({
         </button>
         <p className="truncate ... px-[10px] text-[14px] w-[255px]">
           {previewUrl && !fileUploadError
-            // ? imageUpload?.name || details.firebaseMoverDetails.profilePictureName
-            ? imageUpload?.name || data?.profilePictureName || data?.companyProfilePixName || data?.drivingLicenseName || data?.pubInsuranceName || data?.regCertificateName || data?.tranInsuranceName || data?.vehInsuranceName
-
- 
+            ? // ? imageUpload?.name || details.firebaseMoverDetails.profilePictureName
+              imageUpload?.name ||
+              data?.personalDetails.profilePicture.name ||
+              data?.companyDetails.companyProfilePix.name ||
+              data?.companyDocs.regCertificate.name ||
+              data?.companyDocs.vehInsurance.name ||
+              data?.companyDocs.pubInsurance.name ||
+              data?.companyDocs.tranInsurance.name ||
+              data?.companyDocs.drivingLicense.name
             : "No file selected"}
         </p>
       </div>

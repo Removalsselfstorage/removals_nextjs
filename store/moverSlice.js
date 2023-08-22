@@ -2,60 +2,61 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   justRegistered: false,
-  firebaseMoverDetails: {},
-  firebaseMoverDoc: {},
-  firebaseCompanyPix: {},
-  firebaseRegCertificate: {},
-  firebaseVehInsurance: {},
-  firebasePubInsurance: {},
-  firebaseTranInsurance: {},
-  firebaseDrivingLicense: {},
+
   personalDetails: {
     firstName: "",
     lastName: "",
     email: "",
-    phone: null,
+    phone: "",
     address: "",
     personalBio: "",
-    companyBio: "",
-    companyProfilePix: {
-      name: "",
-      raw: null,
-      url: null,
-    },
     profilePicture: {
+      raw: "",
+      url: "",
       name: "",
-      raw: null,
-      url: null,
     },
+    reviewSubmit: false
+  },
+
+  companyDetails: {
     companyName: "",
     companyNumber: "",
     companyAddress: "",
-    regCertificate: {
+    companyBio: "",
+    companyProfilePix: {
+      raw: "",
+      url: "",
       name: "",
-      raw: null,
-      url: null,
+    },
+    reviewSubmit: false
+  },
+  companyDocs: {
+    regCertificate: {
+      raw: "",
+      url: "",
+      name: "",
     },
     vehInsurance: {
+      raw: "",
+      url: "",
       name: "",
-      raw: null,
-      url: null,
     },
     pubInsurance: {
+      raw: "",
+      url: "",
       name: "",
-      raw: null,
-      url: null,
     },
     tranInsurance: {
+      raw: "",
+      url: "",
       name: "",
-      raw: null,
-      url: null,
     },
     drivingLicense: {
+      raw: "",
+      url: "",
       name: "",
-      raw: null,
-      url: null,
     },
+    reviewSubmit: false
   },
 };
 
@@ -63,50 +64,26 @@ export const moverSlice = createSlice({
   name: "mover",
   initialState,
   reducers: {
-    updateMoverPersonalDetails: (state, action) => {
-      state.personalDetails = action.payload;
-    },
     updateJustRegistered: (state, action) => {
       state.justRegistered = action.payload;
     },
-    updateFirebaseMoverDetails: (state, action) => {
-      state.firebaseMoverDetails = action.payload;
+    updatePersonalDetails: (state, action) => {
+      state.personalDetails = action.payload;
     },
-    updateFirebaseMoverDoc: (state, action) => {
-      state.firebaseMoverDoc = action.payload;
+    updateCompanyDetails: (state, action) => {
+      state.companyDetails = action.payload;
     },
-    updateFirebaseCompanyPix: (state, action) => {
-      state.firebaseCompanyPix = action.payload;
-    },
-    updateFirebaseRegCertificate: (state, action) => {
-      state.firebaseRegCertificate = action.payload;
-    },
-    updateFirebaseVehInsurance: (state, action) => {
-      state.firebaseVehInsurance = action.payload;
-    },
-    updateFirebasePubInsurance: (state, action) => {
-      state.firebasePubInsurance = action.payload;
-    },
-    updateFirebaseTranInsurance: (state, action) => {
-      state.firebaseTranInsurance = action.payload;
-    },
-    updateFirebaseDrivingLicense: (state, action) => {
-      state.firebaseDrivingLicense = action.payload;
+    updateCompanyDocs: (state, action) => {
+      state.companyDocs = action.payload;
     },
   },
 });
 
 export const {
-  updateMoverPersonalDetails,
   updateJustRegistered,
-  updateFirebaseMoverDetails,
-  updateFirebaseMoverDoc,
-  updateFirebaseCompanyPix,
-  updateFirebaseRegCertificate,
-  updateFirebaseVehInsurance,
-  updateFirebasePubInsurance,
-  updateFirebaseTranInsurance,
-  updateFirebaseDrivingLicense,
+  updatePersonalDetails,
+  updateCompanyDetails,
+  updateCompanyDocs,
 } = moverSlice.actions;
 
 export const getAllMoverDetails = (state) => state.mover;

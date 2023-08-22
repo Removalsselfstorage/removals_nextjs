@@ -48,6 +48,7 @@ export const AuthProvider = ({ children }) => {
   const router = useRouter();
 
   const details = useSelector(getAllMoverDetails);
+  // const moverDetails = useSelector(getAllMoverDetails);
 
   const dispatch = useDispatch();
 

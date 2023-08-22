@@ -34,7 +34,7 @@ import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import { UploadMoverPersonalDetails2 } from "@/lib/uploadMoverPersonalDetails2";
 import { combineInitials } from "@/utils/logics";
 
-const EditProfile = ({ userData, uid }) => {
+const EditProfile = () => {
   const router = useRouter();
   const userDetails = useSelector(getAllUserDetails);
 
@@ -49,37 +49,41 @@ const EditProfile = ({ userData, uid }) => {
   //   details.firebaseMoverDetails?.profileImagePreviewUrl ||
   //     details.personalDetails.profilePicture?.url
   // );
-  const [previewUrl, setPreviewUrl] = useState(userData.profileImagePreviewUrl);
+  const [previewUrl, setPreviewUrl] = useState(
+    details.personalDetails.profilePicture.url
+  );
 
   // const [personalBio, setPersonalBio] = useState(
   //   details.firebaseMoverDetails?.personalBio ||
   //     details.personalDetails.personalBio
   // );
-  const [personalBio, setPersonalBio] = useState(userData.personalBio);
+  const [personalBio, setPersonalBio] = useState(
+    details.personalDetails.personalBio
+  );
 
   // const [address, setAddress] = useState(
   //   details.firebaseMoverDetails?.address || details.personalDetails?.address
   // );
-  const [address, setAddress] = useState(userData.address);
+  const [address, setAddress] = useState(details.personalDetails.address);
 
   // const [firstName, setFirstName] = useState(
   //   details.firebaseMoverDetails?.firstName ||
   //     details.personalDetails?.firstName
   // );
-  const [firstName, setFirstName] = useState(userData.firstName);
+  const [firstName, setFirstName] = useState(details.personalDetails.firstName);
   // const [lastName, setLastName] = useState(
   //   details.firebaseMoverDetails?.lastName || details.personalDetails?.lastName
   // );
-  const [lastName, setLastName] = useState(userData.lastName);
+  const [lastName, setLastName] = useState(details.personalDetails.lastName);
   // const [email, setEmail] = useState(
   //   details.firebaseMoverDetails?.email || details.personalDetails?.email
   // );
-  const [email, setEmail] = useState(userData.email);
+  const [email, setEmail] = useState(details.personalDetails.email);
   const [emailError, setEmailError] = useState(true);
   // const [phone, setPhone] = useState(
   //   details.firebaseMoverDetails?.phone || details.personalDetails?.phone
   // );
-  const [phone, setPhone] = useState(userData.phone);
+  const [phone, setPhone] = useState(details.personalDetails.phone);
   const [phoneError, setPhoneError] = useState(true);
   const [submitError, setSubmitError] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
@@ -126,7 +130,7 @@ const EditProfile = ({ userData, uid }) => {
     }
   };
 
-  // const uid = userDetails.userDetails?.uid;
+  const uid = userDetails.userDetails?.uid;
 
   // const readMoversData = async () => {
   //   const res = await fetchMoverDetails3(uid);
@@ -159,7 +163,7 @@ const EditProfile = ({ userData, uid }) => {
         profilePicture: {
           raw: imageUpload,
           url: previewUrl,
-          name: imageUpload?.name,
+          name: imageUpload.name,
         },
         address,
         personalBio,
@@ -167,6 +171,7 @@ const EditProfile = ({ userData, uid }) => {
         lastName,
         email,
         phone,
+        reviewSubmit: true,
 
         uid,
       };
@@ -174,38 +179,39 @@ const EditProfile = ({ userData, uid }) => {
       // const profilePixName = imageUpload.name;
       // const uid = userDetails.userDetails.uid;
       const result = await UploadMoverPersonalDetails2(moveObj);
+      console.log(result);
 
-      dispatch(
-        updateMoverPersonalDetails({
-          firstName,
-          lastName,
-          email,
-          phone,
-          address,
-          personalBio,
-          // profilePictureRaw: imageUpload,
-          // profilePicture: previewUrl,
-          profilePicture: {
-            raw: imageUpload,
-            url: previewUrl,
-            name: imageUpload?.name,
-          },
-          companyName: details.personalDetails.companyName,
-          companyNumber: details.personalDetails.companyNumber,
-          companyAddress: details.personalDetails.companyAddress,
-          regCertificate: details.personalDetails.regCertificate,
-          vehInsurance: details.personalDetails.vehInsurance,
-          pubInsurance: details.personalDetails.pubInsurance,
-          tranInsurance: details.personalDetails.tranInsurance,
-          drivingLicense: details.personalDetails.drivingLicense,
-        })
-      );
+      // dispatch(
+      //   updateMoverPersonalDetails({
+      //     firstName,
+      //     lastName,
+      //     email,
+      //     phone,
+      //     address,
+      //     personalBio,
+      //     // profilePictureRaw: imageUpload,
+      //     // profilePicture: previewUrl,
+      //     profilePicture: {
+      //       raw: imageUpload,
+      //       url: previewUrl,
+      //       name: imageUpload?.name,
+      //     },
+      //     companyName: details.personalDetails.companyName,
+      //     companyNumber: details.personalDetails.companyNumber,
+      //     companyAddress: details.personalDetails.companyAddress,
+      //     regCertificate: details.personalDetails.regCertificate,
+      //     vehInsurance: details.personalDetails.vehInsurance,
+      //     pubInsurance: details.personalDetails.pubInsurance,
+      //     tranInsurance: details.personalDetails.tranInsurance,
+      //     drivingLicense: details.personalDetails.drivingLicense,
+      //   })
+      // );
       // readMoversData();
 
       setSubmitSuccess(true);
 
       setSubmitLoading(false);
-      window.location.reload();
+      // window.location.reload();
     }
   };
 
@@ -213,8 +219,10 @@ const EditProfile = ({ userData, uid }) => {
   //   readMoversData();
   // }, []);
 
+  console.log(details);
+
   return (
-    <MoverLayout data={userData}>
+    <MoverLayout>
       <Head>
         <title>Mover Profile - Edit Profile</title>
         <meta name="description" content="Rss removal and storage website" />
@@ -231,6 +239,19 @@ const EditProfile = ({ userData, uid }) => {
             </p>
           </div>
         </section>
+
+        {(submitSuccess || details.personalDetails.reviewSubmit) && (
+          <section className="mb-[30px] px-[30px] ">
+            <div className="flex items-center bg-primary/10 rounded-[10px] px-[20px] py-[15px] space-x-[20px]">
+              <IoMdNotificationsOutline className="text-primary text-[40px]" />
+              <div className="flex flex-col">
+                <p className="font-bold text-primary">
+                  Your update has been submitted for review!
+                </p>
+              </div>
+            </div>
+          </section>
+        )}
 
         <div className="  flex flex-col-reverse  xl:space-y-0 xl:flex-row xl:space-x-[20px] mx-[10px] md:mx-[30px]">
           {/* left */}
@@ -272,7 +293,7 @@ const EditProfile = ({ userData, uid }) => {
                           imageUpload={imageUpload}
                           setFileUploadError={setFileUploadError}
                           fileUploadError={fileUploadError}
-                          data={userData}
+                          data={details}
                         />
                       </div>
                       {!fileUploadError && (
@@ -482,7 +503,7 @@ const EditProfile = ({ userData, uid }) => {
                   onKeyDown={handleKeyDown}
                 ></textarea>
                 <p className="text-gray-500 mb-[10px] text-[15px] mt-[5px]">
-                  {personalBio.length} / {bioMaxLength} Characters
+                  {personalBio?.length} / {bioMaxLength} Characters
                 </p>
               </div>
             </div>
@@ -495,7 +516,7 @@ const EditProfile = ({ userData, uid }) => {
               )}
               {submitSuccess && !submitError && !submitLoading && (
                 <p className="text-[16px] text-primary mt-[15px]">
-                  Profile successfully updated
+                  Profile successfully submitted
                 </p>
               )}
               {submitLoading && !submitError && !submitSuccess && (
@@ -596,24 +617,24 @@ const EditProfile = ({ userData, uid }) => {
 
 export default EditProfile;
 
-export async function getServerSideProps(context) {
-  const { uid } = context.params; // Access the UID from the URL
-  let userData = null;
+// export async function getServerSideProps(context) {
+//   const { uid } = context.params; // Access the UID from the URL
+//   let userData = null;
 
-  // console.log({uid})
+//   // console.log({uid})
 
-  // const res = await fetchMoverDetails3("5L2jQzETlfTusrd5GE48eS08r3H2");
-  const res = await fetchMoverDetails3(uid);
-  if (res) {
-    userData = res;
-  } else {
-    console.log("No data");
-  }
+//   // const res = await fetchMoverDetails3("5L2jQzETlfTusrd5GE48eS08r3H2");
+//   const res = await fetchMoverDetails3(uid);
+//   if (res) {
+//     userData = res;
+//   } else {
+//     console.log("No data");
+//   }
 
-  return {
-    props: {
-      userData,
-      uid,
-    },
-  };
-}
+//   return {
+//     props: {
+//       userData,
+//       uid,
+//     },
+//   };
+// }

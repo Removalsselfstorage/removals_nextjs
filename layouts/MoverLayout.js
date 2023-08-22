@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { textFont } from "@/utils/fonts";
@@ -24,8 +24,13 @@ import { getAllUserDetails } from "@/store/userSlice";
 const MoverLayout = ({ children, data }) => {
   const router = useRouter();
   const userDetails = useSelector(getAllUserDetails);
+  const [clicked, setClicked] = useState(false);
 
   const uid = userDetails?.userDetails?.uid;
+
+  const showLoader = () => {
+    setClicked(true);
+  };
 
   useEffect(() => {
     if (!userDetails.userDetails) {
@@ -37,7 +42,7 @@ const MoverLayout = ({ children, data }) => {
     <div className={`${textFont.variable} font-sans `}>
       {userDetails.userDetails ? (
         <>
-          <Navbar3 data={data}/>
+          <Navbar3 data={data} />
           <div className="flex bg-base-200  pt-[50px]   lg:pt-[50px] ">
             <aside className=" hidden md:flex md:flex-[0.4] lg:flex-[0.4] border border-r-[2px] md:flex-col lg:w-[300px] ">
               <ul className="   pt-[30px] pb-[10px]  shadow-xl bg-base-100 text-[16px] px-[10px] border-b">
@@ -57,11 +62,16 @@ const MoverLayout = ({ children, data }) => {
                         ? "bg-primary/10 text-primary"
                         : ""
                     } flex items-center btn-dash py-[15px] px-[20px] rounded-[10px] w-full`}
+                    // onClick={()=> {setClicked(true)}}
                   >
                     <span className="text-[25px] mr-[10px]">
                       <AiOutlineHome />
                     </span>
                     <p className="hidden lg:flex">Dashboard</p>
+                    {/* {clicked &&
+                      router.pathname !== `/mover-profile/dashboard/[uid]` && (
+                        <span className="loading loading-spinner text-primary"></span>
+                      )} */}
                   </Link>
                 </li>
 

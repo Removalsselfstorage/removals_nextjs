@@ -47,15 +47,15 @@ const MoverLayout = ({ children, data }) => {
             <aside className=" hidden md:flex md:flex-[0.4] lg:flex-[0.4] border border-r-[2px] md:flex-col lg:w-[300px] ">
               <ul className="   pt-[30px] pb-[10px]  shadow-xl bg-base-100 text-[16px] px-[10px] border-b">
                 <li className=" my-[10px] px-[0px] w-full">
-                  {/* <Link
-                    href="/mover-profile"
+                  <Link
+                    href="/mover-profile/dashboard"
                     className={`${
-                      router.pathname === "/mover-profile"
+                      router.pathname === "/mover-profile/dashboard"
                         ? "bg-primary/10 text-primary"
                         : ""
                     } flex items-center btn-dash py-[15px] px-[20px] rounded-[10px] w-full`}
-                  > */}
-                  <Link
+                  >
+                  {/* <Link
                     href={`/mover-profile/dashboard/${uid}`}
                     className={`${
                       router.pathname === `/mover-profile/dashboard/[uid]`
@@ -63,7 +63,7 @@ const MoverLayout = ({ children, data }) => {
                         : ""
                     } flex items-center btn-dash py-[15px] px-[20px] rounded-[10px] w-full`}
                     // onClick={()=> {setClicked(true)}}
-                  >
+                  > */}
                     <span className="text-[25px] mr-[10px]">
                       <AiOutlineHome />
                     </span>
@@ -76,22 +76,22 @@ const MoverLayout = ({ children, data }) => {
                 </li>
 
                 <li className=" my-[10px] px-[0px] w-full">
-                  {/* <Link
+                  <Link
                     href="/mover-profile/appointments"
                     className={`${
                       router.pathname === "/mover-profile/appointments"
                         ? "bg-primary/10 text-primary"
                         : ""
                     } flex items-center btn-dash py-[15px] px-[20px] rounded-[10px] w-full`}
-                  > */}
-                  <Link
+                  >
+                  {/* <Link
                     href={`/mover-profile/appointments/${uid}`}
                     className={`${
                       router.pathname === `/mover-profile/appointments/[uid]`
                         ? "bg-primary/10 text-primary"
                         : ""
                     } flex items-center btn-dash py-[15px] px-[20px] rounded-[10px] w-full`}
-                  >
+                  > */}
                     <span className="text-[25px] mr-[10px]">
                       <LiaUserClockSolid />
                     </span>
@@ -100,22 +100,22 @@ const MoverLayout = ({ children, data }) => {
                 </li>
 
                 <li className=" my-[10px] px-[0px] w-full">
-                  {/* <Link
+                  <Link
                     href="/mover-profile/job-board"
                     className={`${
                       router.pathname === "/mover-profile/job-board"
                         ? "bg-primary/10 text-primary"
                         : ""
                     } flex items-center btn-dash py-[15px] px-[20px] rounded-[10px] w-full`}
-                  > */}
-                  <Link
+                  >
+                  {/* <Link
                     href={`/mover-profile/job-board/${uid}`}
                     className={`${
                       router.pathname === `/mover-profile/job-board/[uid]`
                         ? "bg-primary/10 text-primary"
                         : ""
                     } flex items-center btn-dash py-[15px] px-[20px] rounded-[10px] w-full`}
-                  >
+                  > */}
                     <span className="text-[25px] mr-[10px]">
                       <MdWorkOutline />
                     </span>
@@ -124,22 +124,22 @@ const MoverLayout = ({ children, data }) => {
                 </li>
 
                 <li className=" my-[10px] px-[0px] w-full">
-                  {/* <Link
+                  <Link
                     href="/mover-profile/inbox"
                     className={`${
                       router.pathname === "/mover-profile/inbox"
                         ? "bg-primary/10 text-primary"
                         : ""
                     } flex items-center btn-dash py-[15px] px-[20px] rounded-[10px] w-full`}
-                  > */}
-                  <Link
+                  >
+                  {/* <Link
                     href={`/mover-profile/inbox/${uid}`}
                     className={`${
                       router.pathname === `/mover-profile/inbox/[uid]`
                         ? "bg-primary/10 text-primary"
                         : ""
                     } flex items-center btn-dash py-[15px] px-[20px] rounded-[10px] w-full`}
-                  >
+                  > */}
                     <span className="text-[25px] mr-[10px]">
                       <HiOutlineInboxArrowDown />
                     </span>
@@ -151,22 +151,22 @@ const MoverLayout = ({ children, data }) => {
               <ul className=" py-[15px]  shadow-xl bg-base-100 grow  text-[16px] px-[10px]  pb-[200px]">
                 {/* portfolio */}
                 <li className=" my-[10px] px-[0px] w-full">
-                  {/* <Link
+                  <Link
                     href="/mover-profile/calendar"
                     className={`${
                       router.pathname === "/mover-profile/calendar"
                         ? "bg-primary/10 text-primary"
                         : ""
                     } flex items-center btn-dash py-[15px] px-[20px] rounded-[10px] w-full`}
-                  > */}
-                  <Link
+                  >
+                  {/* <Link
                     href={`/mover-profile/calendar/${uid}`}
                     className={`${
                       router.pathname === `/mover-profile/calendar/[uid]`
                         ? "bg-primary/10 text-primary"
                         : ""
                     } flex items-center btn-dash py-[15px] px-[20px] rounded-[10px] w-full`}
-                  >
+                  > */}
                     <span className="text-[25px] mr-[10px]">
                       <FaRegCalendarAlt />
                     </span>
@@ -176,22 +176,22 @@ const MoverLayout = ({ children, data }) => {
 
                 {/* portfolio */}
                 <li className=" my-[10px] px-[0px] w-full">
-                  {/* <Link
+                  <Link
                     href="/mover-profile/portfolio"
                     className={`${
                       router.pathname === "/mover-profile/portfolio"
                         ? "bg-primary/10 text-primary"
                         : ""
                     } flex items-center btn-dash py-[15px] px-[20px] rounded-[10px] w-full`}
-                  > */}
-                  <Link
+                  >
+                  {/* <Link
                     href={`/mover-profile/portfolio/${uid}`}
                     className={`${
                       router.pathname === `/mover-profile/portfolio/[uid]`
                         ? "bg-primary/10 text-primary"
                         : ""
                     } flex items-center btn-dash py-[15px] px-[20px] rounded-[10px] w-full`}
-                  >
+                  > */}
                     <span className="text-[25px] mr-[10px]">
                       <BsImages />
                     </span>
@@ -200,22 +200,22 @@ const MoverLayout = ({ children, data }) => {
                 </li>
 
                 <li className=" my-[10px] px-[0px] w-full">
-                  {/* <Link
+                  <Link
                     href="/mover-profile/edit-profile"
                     className={`${
                       router.pathname === "/mover-profile/edit-profile"
                         ? "bg-primary/10 text-primary"
                         : ""
                     } flex items-center btn-dash py-[15px] px-[20px] rounded-[10px] w-full`}
-                  > */}
-                  <Link
+                  >
+                  {/* <Link
                     href={`/mover-profile/edit-profile/${uid}`}
                     className={`${
                       router.pathname === `/mover-profile/edit-profile/[uid]`
                         ? "bg-primary/10 text-primary"
                         : ""
                     } flex items-center btn-dash py-[15px] px-[20px] rounded-[10px] w-full`}
-                  >
+                  > */}
                     <span className="text-[25px] mr-[10px]">
                       <FiSettings />
                     </span>
@@ -224,22 +224,22 @@ const MoverLayout = ({ children, data }) => {
                 </li>
 
                 <li className=" my-[10px] px-[0px] w-full">
-                  {/* <Link
-                    href="/mover-profile/documentation"
+                  <Link
+                    href="/mover-profile/documentations"
                     className={`${
-                      router.pathname === "/mover-profile/documentation"
+                      router.pathname === "/mover-profile/documentations"
                         ? "bg-primary/10 text-primary"
                         : ""
                     } flex items-center btn-dash py-[15px] px-[20px] rounded-[10px] w-full`}
-                  > */}
-                  <Link
+                  >
+                  {/* <Link
                     href={`/mover-profile/documentations/${uid}`}
                     className={`${
                       router.pathname === `/mover-profile/documentations/[uid]`
                         ? "bg-primary/10 text-primary"
                         : ""
                     } flex items-center btn-dash py-[15px] px-[20px] rounded-[10px] w-full`}
-                  >
+                  > */}
                     <span className="text-[25px] mr-[10px]">
                       <HiDocumentDuplicate />
                     </span>
@@ -248,14 +248,22 @@ const MoverLayout = ({ children, data }) => {
                 </li>
 
                 <li className=" my-[10px] px-[0px] w-full">
-                  <Link
+                <Link
+                    href="/mover-profile/billing"
+                    className={`${
+                      router.pathname === "/mover-profile/billing"
+                        ? "bg-primary/10 text-primary"
+                        : ""
+                    } flex items-center btn-dash py-[15px] px-[20px] rounded-[10px] w-full`}
+                  >
+                  {/* <Link
                     href={`/mover-profile/billing/${uid}`}
                     className={`${
                       router.pathname === `/mover-profile/billing/[uid]`
                         ? "bg-primary/10 text-primary"
                         : ""
                     } flex items-center btn-dash py-[15px] px-[20px] rounded-[10px] w-full`}
-                  >
+                  > */}
                     <span className="text-[25px] mr-[10px]">
                       <BiSolidBank />
                     </span>
@@ -264,22 +272,22 @@ const MoverLayout = ({ children, data }) => {
                 </li>
 
                 <li className=" my-[10px] px-[0px] w-full">
-                  {/* <Link
+                  <Link
                     href="/mover-profile/reviews"
                     className={`${
                       router.pathname === "/mover-profile/reviews"
                         ? "bg-primary/10 text-primary"
                         : ""
                     } flex items-center btn-dash py-[15px] px-[20px] rounded-[10px] w-full`}
-                  > */}
-                  <Link
+                  >
+                  {/* <Link
                     href={`/mover-profile/reviews/${uid}`}
                     className={`${
                       router.pathname === `/mover-profile/reviews/[uid]`
                         ? "bg-primary/10 text-primary"
                         : ""
                     } flex items-center btn-dash py-[15px] px-[20px] rounded-[10px] w-full`}
-                  >
+                  > */}
                     <span className="text-[25px] mr-[10px]">
                       <TfiComments />
                     </span>

@@ -28,7 +28,7 @@ const Navbar = () => {
 
   const firstName = moverDetails.personalDetails.firstName;
   const lastName = moverDetails.personalDetails.lastName;
-  const previewUrl = moverDetails.personalDetails.profilePicture.url
+  const previewUrl = moverDetails.personalDetails.profilePicture.url;
 
   const [shadow, setShadow] = useState(false);
   const [showNav, setShowNav] = useState(true);
@@ -257,9 +257,10 @@ const Navbar = () => {
                         //   My Dashboard
                         // </Link>
                         <Link
-                          href={`/mover-profile/dashboard/${uid}`}
+                          // href={`/mover-profile/dashboard/${uid}`}
+                          href={`/mover-profile/dashboard`}
                           className={`${
-                            router.pathname === "/mover-profile/dashboard/[uid]"
+                            router.pathname === "/mover-profile/dashboard"
                               ? "border-b-[5px] border-primary text-primary"
                               : ""
                           } btn-navs`}
@@ -293,11 +294,7 @@ const Navbar = () => {
                         {previewUrl ? (
                           <label className="avatar cursor-pointer" tabIndex={0}>
                             <div className="w-[40px] rounded-full  border-primary border-[3px]">
-                              <img
-                                src={
-                                  previewUrl || "/userPlaceholder.png"
-                                }
-                              />
+                              <img src={previewUrl || "/userPlaceholder.png"} />
                             </div>
                           </label>
                         ) : (

@@ -30,6 +30,7 @@ import useAuth from "@/hooks/useAuth";
 import toast, { Toaster } from "react-hot-toast";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "@/firebase";
+import { fetchAllMoversDetails } from "@/lib/fetchData2";
 
 // const Login = ({ providers, csrfToken, callbackUrl }) => {
 const MoverLogin = () => {
@@ -46,6 +47,8 @@ const MoverLogin = () => {
     success: "",
     error: "",
   };
+
+  const uid = userDetails.userDetails?.uid;
 
   // const [field, meta] = useField(props);
   const { signIn, signUp, resendEmailVerification } = useAuth();
@@ -81,6 +84,7 @@ const MoverLogin = () => {
       login_email: "",
       login_password: "",
     });
+    // const userData = await fetchAllMoversDetails(uid);
     setSubmitLoading(false);
     // actions.setSubmitting(false);
   };

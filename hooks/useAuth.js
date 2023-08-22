@@ -28,9 +28,13 @@ import {
 import { activateEmailTemplate } from "@/emails/activateEmailTemplate";
 import {
   getAllMoverDetails,
+  updateCompanyDetails,
+  updateCompanyDocs,
   updateJustRegistered,
   updateMoverPersonalDetails,
+  updatePersonalDetails,
 } from "@/store/moverSlice";
+import { fetchAllMoversDetails } from "@/lib/fetchData2";
 
 const AuthContext = createContext({
   user: null,
@@ -171,6 +175,70 @@ export const AuthProvider = ({ children }) => {
         if (details.justRegistered) {
           router.push("/onboarding/personal-details");
         } else {
+          const userData = await fetchAllMoversDetails(userCredential.user.uid);
+          dispatch(
+            updatePersonalDetails({
+              firstName: userData?.personalDetails.firstName,
+              lastName: userData?.personalDetails.lastName,
+              email: userData?.personalDetails.email,
+              phone: userData?.personalDetails.phone,
+              address: userData?.personalDetails.address,
+              personalBio: userData?.personalDetails.personalBio,
+              profilePicture: {
+                raw: userData?.personalDetails.profileImagePreviewUrl,
+                url: userData?.personalDetails.profileImagePreviewUrl,
+                name: userData?.personalDetails.profilePictureName,
+              },
+              reviewSubmit: userData?.personalDetails.reviewSubmit,
+            })
+          );
+          dispatch(
+            updateCompanyDetails({
+              companyName: userData.companyDetails.companyName,
+              companyNumber: userData.companyDetails.companyNumber,
+              companyAddress: userData.companyDetails.companyAddress,
+              companyBio: userData.companyDetails.companyBio,
+              companyProfilePix: {
+                raw: userData.CompanyPix.companyProfilePixPreviewUrl,
+                url: userData.CompanyPix.companyProfilePixPreviewUrl,
+                name: userData.CompanyPix.companyProfilePixName,
+              },
+              reviewSubmit: userData?.companyDetails.reviewSubmit,
+            })
+          );
+          dispatch(
+            updateCompanyDocs({
+              regCertificate: {
+                raw: userData.RegCertificate.regCertificatePreviewUrl,
+                url: userData.RegCertificate.regCertificatePreviewUrl,
+                name: userData.RegCertificate.regCertificateName,
+              },
+              // vehInsurance: vehInsuranceUploadurl,
+              vehInsurance: {
+                raw: userData.VehInsurance.vehInsurancePreviewUrl,
+                url: userData.VehInsurance.vehInsurancePreviewUrl,
+                name: userData.VehInsurance.vehInsuranceName,
+              },
+              // pubInsurance: pubInsuranceUploadurl,
+              pubInsurance: {
+                raw: userData.PubInsurance.pubInsurancePreviewUrl,
+                url: userData.PubInsurance.pubInsurancePreviewUrl,
+                name: userData.PubInsurance.pubInsuranceName,
+              },
+              // tranInsurance: tranInsuranceUploadurl,
+              tranInsurance: {
+                raw: userData.TranInsurance.tranInsurancePreviewUrl,
+                url: userData.TranInsurance.tranInsurancePreviewUrl,
+                name: userData.TranInsurance.tranInsuranceName,
+              },
+              // drivingLicense: drivingLicenseUploadurl,
+              drivingLicense: {
+                raw: userData.DrivingLicense.drivingLicensePreviewUrl,
+                url: userData.DrivingLicense.drivingLicensePreviewUrl,
+                name: userData.DrivingLicense.drivingLicenseName,
+              },
+            })
+          );
           router.push(`/mover-profile/dashboard/${userCredential.user.uid}`);
         }
       } else {

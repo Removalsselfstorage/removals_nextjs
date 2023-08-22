@@ -239,7 +239,8 @@ export const AuthProvider = ({ children }) => {
               },
             })
           );
-          router.push(`/mover-profile/dashboard/${userCredential.user.uid}`);
+          // router.push(`/mover-profile/dashboard/${userCredential.user.uid}`);
+          router.push(`/mover-profile/dashboard`);
         }
       } else {
         setUser(userCredential.user);

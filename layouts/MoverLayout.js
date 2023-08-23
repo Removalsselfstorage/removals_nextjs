@@ -20,11 +20,14 @@ import { FiSettings } from "react-icons/fi";
 import { TfiComments } from "react-icons/tfi";
 import { useSelector } from "react-redux";
 import { getAllUserDetails } from "@/store/userSlice";
+import { getAllMoverDetails } from "@/store/moverSlice";
 
 const MoverLayout = ({ children, data }) => {
   const router = useRouter();
   const userDetails = useSelector(getAllUserDetails);
   const [clicked, setClicked] = useState(false);
+  const details = useSelector(getAllMoverDetails);
+  const [showloader, setShowloader] = useState(true);
 
   const uid = userDetails?.userDetails?.uid;
 
@@ -34,13 +37,24 @@ const MoverLayout = ({ children, data }) => {
 
   useEffect(() => {
     if (!userDetails.userDetails) {
+      setShowloader(true);
       router.push("/");
+    } else if (details.justRegistered === true) {
+      router.push("/onboarding/personal-details");
+    } else {
+      setShowloader(false);
     }
   }, []);
 
+  // useEffect(() => {
+  //   if (!userDetails.userDetails) {
+  //     router.push("/");
+  //   }
+  // }, []);
+
   return (
     <div className={`${textFont.variable} font-sans `}>
-      {userDetails.userDetails ? (
+      {userDetails.userDetails && details.justRegistered === false && (
         <>
           <Navbar3 data={data} />
           <div className="flex bg-base-200  pt-[50px]   lg:pt-[50px] ">
@@ -55,7 +69,7 @@ const MoverLayout = ({ children, data }) => {
                         : ""
                     } flex items-center btn-dash py-[15px] px-[20px] rounded-[10px] w-full`}
                   >
-                  {/* <Link
+                    {/* <Link
                     href={`/mover-profile/dashboard/${uid}`}
                     className={`${
                       router.pathname === `/mover-profile/dashboard/[uid]`
@@ -84,7 +98,7 @@ const MoverLayout = ({ children, data }) => {
                         : ""
                     } flex items-center btn-dash py-[15px] px-[20px] rounded-[10px] w-full`}
                   >
-                  {/* <Link
+                    {/* <Link
                     href={`/mover-profile/appointments/${uid}`}
                     className={`${
                       router.pathname === `/mover-profile/appointments/[uid]`
@@ -108,7 +122,7 @@ const MoverLayout = ({ children, data }) => {
                         : ""
                     } flex items-center btn-dash py-[15px] px-[20px] rounded-[10px] w-full`}
                   >
-                  {/* <Link
+                    {/* <Link
                     href={`/mover-profile/job-board/${uid}`}
                     className={`${
                       router.pathname === `/mover-profile/job-board/[uid]`
@@ -132,7 +146,7 @@ const MoverLayout = ({ children, data }) => {
                         : ""
                     } flex items-center btn-dash py-[15px] px-[20px] rounded-[10px] w-full`}
                   >
-                  {/* <Link
+                    {/* <Link
                     href={`/mover-profile/inbox/${uid}`}
                     className={`${
                       router.pathname === `/mover-profile/inbox/[uid]`
@@ -159,7 +173,7 @@ const MoverLayout = ({ children, data }) => {
                         : ""
                     } flex items-center btn-dash py-[15px] px-[20px] rounded-[10px] w-full`}
                   >
-                  {/* <Link
+                    {/* <Link
                     href={`/mover-profile/calendar/${uid}`}
                     className={`${
                       router.pathname === `/mover-profile/calendar/[uid]`
@@ -184,7 +198,7 @@ const MoverLayout = ({ children, data }) => {
                         : ""
                     } flex items-center btn-dash py-[15px] px-[20px] rounded-[10px] w-full`}
                   >
-                  {/* <Link
+                    {/* <Link
                     href={`/mover-profile/portfolio/${uid}`}
                     className={`${
                       router.pathname === `/mover-profile/portfolio/[uid]`
@@ -208,7 +222,7 @@ const MoverLayout = ({ children, data }) => {
                         : ""
                     } flex items-center btn-dash py-[15px] px-[20px] rounded-[10px] w-full`}
                   >
-                  {/* <Link
+                    {/* <Link
                     href={`/mover-profile/edit-profile/${uid}`}
                     className={`${
                       router.pathname === `/mover-profile/edit-profile/[uid]`
@@ -232,7 +246,7 @@ const MoverLayout = ({ children, data }) => {
                         : ""
                     } flex items-center btn-dash py-[15px] px-[20px] rounded-[10px] w-full`}
                   >
-                  {/* <Link
+                    {/* <Link
                     href={`/mover-profile/documentations/${uid}`}
                     className={`${
                       router.pathname === `/mover-profile/documentations/[uid]`
@@ -248,7 +262,7 @@ const MoverLayout = ({ children, data }) => {
                 </li>
 
                 <li className=" my-[10px] px-[0px] w-full">
-                <Link
+                  <Link
                     href="/mover-profile/billing"
                     className={`${
                       router.pathname === "/mover-profile/billing"
@@ -256,7 +270,7 @@ const MoverLayout = ({ children, data }) => {
                         : ""
                     } flex items-center btn-dash py-[15px] px-[20px] rounded-[10px] w-full`}
                   >
-                  {/* <Link
+                    {/* <Link
                     href={`/mover-profile/billing/${uid}`}
                     className={`${
                       router.pathname === `/mover-profile/billing/[uid]`
@@ -280,7 +294,7 @@ const MoverLayout = ({ children, data }) => {
                         : ""
                     } flex items-center btn-dash py-[15px] px-[20px] rounded-[10px] w-full`}
                   >
-                  {/* <Link
+                    {/* <Link
                     href={`/mover-profile/reviews/${uid}`}
                     className={`${
                       router.pathname === `/mover-profile/reviews/[uid]`
@@ -300,7 +314,8 @@ const MoverLayout = ({ children, data }) => {
           </div>
           <Footer />
         </>
-      ) : (
+      )}
+      {showloader && (
         <div className="flex items-center justify-center h-[100vh] ">
           <span className="h-full loading loading-bars text-primary w-[40px] lg:w-[60px]"></span>
         </div>

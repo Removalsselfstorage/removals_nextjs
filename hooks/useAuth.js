@@ -35,6 +35,10 @@ import {
   updatePersonalDetails,
 } from "@/store/moverSlice";
 import { fetchAllMoversDetails } from "@/lib/fetchData2";
+import { UploadMoverPersonalDetails2 } from "@/lib/uploadMoverPersonalDetails2";
+import { UploadMoverDocumentation } from "@/lib/uploadMoverDocumentation";
+import { UploadMoverPersonalDetails3 } from "@/lib/uploadMoverPersonalDetails3";
+import { UploadMoverDocumentation2 } from "@/lib/uploadMoverDocumentation2";
 
 const AuthContext = createContext({
   user: null,
@@ -126,7 +130,132 @@ export const AuthProvider = ({ children }) => {
       //   })
       // );
 
-      dispatch(updateJustRegistered(true));
+      dispatch(
+        updatePersonalDetails({
+          firstName: firstName,
+          lastName: lastName,
+          email: email,
+          phone: "",
+          address: "",
+          personalBio: "",
+          profilePicture: {
+            raw: "",
+            url: "",
+            name: "",
+          },
+          reviewSubmit: false,
+          acceptedTerms: false,
+        })
+      );
+
+      dispatch(
+        updateCompanyDetails({
+          companyName: "",
+          generatedName: "",
+          companyNumber: "",
+          companyAddress: "",
+          companyBio: "",
+          companyProfilePix: {
+            raw: "",
+            url: "",
+            name: "",
+          },
+          reviewSubmit: false,
+        })
+      );
+
+      dispatch(
+        updateCompanyDocs({
+          regCertificate: {
+            raw: "",
+            url: "",
+            name: "",
+          },
+          vehInsurance: {
+            raw: "",
+            url: "",
+            name: "",
+          },
+          pubInsurance: {
+            raw: "",
+            url: "",
+            name: "",
+          },
+          tranInsurance: {
+            raw: "",
+            url: "",
+            name: "",
+          },
+          drivingLicense: {
+            raw: "",
+            url: "",
+            name: "",
+          },
+          reviewSubmit: false,
+        })
+      );
+
+      const moveObj = {
+        profilePicture: {
+          raw: "",
+          url: "",
+          name: "",
+        },
+        address: "",
+        personalBio: "",
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        phone: "",
+        reviewSubmit: false,
+        acceptedTerms: false,
+        justRegistered: true,
+        uid: userCredential.user.uid,
+      };
+      const result = await UploadMoverPersonalDetails3(moveObj);
+
+      const moveObj2 = {
+        companyName: "",
+        generatedName: "",
+        companyNumber: "",
+        companyAddress: "",
+        companyBio: "",
+        companyProfilePix: {
+          raw: "",
+          url: "",
+          name: "",
+        },
+        regCertificate: {
+          raw: "",
+          url: "",
+          name: "",
+        },
+        vehInsurance: {
+          raw: "",
+          url: "",
+          name: "",
+        },
+        pubInsurance: {
+          raw: "",
+          url: "",
+          name: "",
+        },
+        tranInsurance: {
+          raw: "",
+          url: "",
+          name: "",
+        },
+        drivingLicense: {
+          raw: "",
+          url: "",
+          name: "",
+        },
+        reviewSubmit: false,
+        uid: userCredential.user.uid,
+      };
+
+      const result2 = await UploadMoverDocumentation2(moveObj2);
+      // dispatch(updateJustRegistered(true));
 
       // toast(`Registration successful`, {
       //   duration: 8000,
@@ -169,77 +298,85 @@ export const AuthProvider = ({ children }) => {
         email,
         password
       );
+
+      dispatch(updateUserDetails(userCredential.user));
+
+      const userData = await fetchAllMoversDetails(userCredential.user.uid);
+      dispatch(updateJustRegistered(userData?.personalDetails.justRegistered));
+      dispatch(
+        updatePersonalDetails({
+          firstName: userData?.personalDetails.firstName,
+          lastName: userData?.personalDetails.lastName,
+          email: userData?.personalDetails.email,
+          phone: userData?.personalDetails.phone,
+          address: userData?.personalDetails.address,
+          personalBio: userData?.personalDetails.personalBio,
+          profilePicture: {
+            raw: userData?.personalDetails.profileImagePreviewUrl,
+            url: userData?.personalDetails.profileImagePreviewUrl,
+            name: userData?.personalDetails.profilePictureName,
+          },
+          reviewSubmit: userData?.personalDetails.reviewSubmit,
+          acceptedTerms: userData?.personalDetails.acceptedTerms,
+        })
+      );
+      dispatch(
+        updateCompanyDetails({
+          companyName: userData.companyDetails.companyName,
+          generatedName: userData.companyDetails.generatedName,
+          companyNumber: userData.companyDetails.companyNumber,
+          companyAddress: userData.companyDetails.companyAddress,
+          companyBio: userData.companyDetails.companyBio,
+          companyProfilePix: {
+            raw: userData.CompanyPix.companyProfilePixPreviewUrl,
+            url: userData.CompanyPix.companyProfilePixPreviewUrl,
+            name: userData.CompanyPix.companyProfilePixName,
+          },
+          reviewSubmit: userData?.companyDetails.reviewSubmit,
+        })
+      );
+      dispatch(
+        updateCompanyDocs({
+          regCertificate: {
+            raw: userData.RegCertificate.regCertificatePreviewUrl,
+            url: userData.RegCertificate.regCertificatePreviewUrl,
+            name: userData.RegCertificate.regCertificateName,
+          },
+          // vehInsurance: vehInsuranceUploadurl,
+          vehInsurance: {
+            raw: userData.VehInsurance.vehInsurancePreviewUrl,
+            url: userData.VehInsurance.vehInsurancePreviewUrl,
+            name: userData.VehInsurance.vehInsuranceName,
+          },
+          // pubInsurance: pubInsuranceUploadurl,
+          pubInsurance: {
+            raw: userData.PubInsurance.pubInsurancePreviewUrl,
+            url: userData.PubInsurance.pubInsurancePreviewUrl,
+            name: userData.PubInsurance.pubInsuranceName,
+          },
+          // tranInsurance: tranInsuranceUploadurl,
+          tranInsurance: {
+            raw: userData.TranInsurance.tranInsurancePreviewUrl,
+            url: userData.TranInsurance.tranInsurancePreviewUrl,
+            name: userData.TranInsurance.tranInsuranceName,
+          },
+          // drivingLicense: drivingLicenseUploadurl,
+          drivingLicense: {
+            raw: userData.DrivingLicense.drivingLicensePreviewUrl,
+            url: userData.DrivingLicense.drivingLicensePreviewUrl,
+            name: userData.DrivingLicense.drivingLicenseName,
+          },
+        })
+      );
+
       if (userCredential.user.emailVerified) {
         // setUser(userCredential.user);
-        dispatch(updateUserDetails(userCredential.user));
-        if (details.justRegistered) {
+
+        if (userData?.personalDetails.justRegistered === true) {
           router.push("/onboarding/personal-details");
-        } else {
-          const userData = await fetchAllMoversDetails(userCredential.user.uid);
-          dispatch(
-            updatePersonalDetails({
-              firstName: userData?.personalDetails.firstName,
-              lastName: userData?.personalDetails.lastName,
-              email: userData?.personalDetails.email,
-              phone: userData?.personalDetails.phone,
-              address: userData?.personalDetails.address,
-              personalBio: userData?.personalDetails.personalBio,
-              profilePicture: {
-                raw: userData?.personalDetails.profileImagePreviewUrl,
-                url: userData?.personalDetails.profileImagePreviewUrl,
-                name: userData?.personalDetails.profilePictureName,
-              },
-              reviewSubmit: userData?.personalDetails.reviewSubmit,
-            })
-          );
-          dispatch(
-            updateCompanyDetails({
-              companyName: userData.companyDetails.companyName,
-              companyNumber: userData.companyDetails.companyNumber,
-              companyAddress: userData.companyDetails.companyAddress,
-              companyBio: userData.companyDetails.companyBio,
-              companyProfilePix: {
-                raw: userData.CompanyPix.companyProfilePixPreviewUrl,
-                url: userData.CompanyPix.companyProfilePixPreviewUrl,
-                name: userData.CompanyPix.companyProfilePixName,
-              },
-              reviewSubmit: userData?.companyDetails.reviewSubmit,
-            })
-          );
-          dispatch(
-            updateCompanyDocs({
-              regCertificate: {
-                raw: userData.RegCertificate.regCertificatePreviewUrl,
-                url: userData.RegCertificate.regCertificatePreviewUrl,
-                name: userData.RegCertificate.regCertificateName,
-              },
-              // vehInsurance: vehInsuranceUploadurl,
-              vehInsurance: {
-                raw: userData.VehInsurance.vehInsurancePreviewUrl,
-                url: userData.VehInsurance.vehInsurancePreviewUrl,
-                name: userData.VehInsurance.vehInsuranceName,
-              },
-              // pubInsurance: pubInsuranceUploadurl,
-              pubInsurance: {
-                raw: userData.PubInsurance.pubInsurancePreviewUrl,
-                url: userData.PubInsurance.pubInsurancePreviewUrl,
-                name: userData.PubInsurance.pubInsuranceName,
-              },
-              // tranInsurance: tranInsuranceUploadurl,
-              tranInsurance: {
-                raw: userData.TranInsurance.tranInsurancePreviewUrl,
-                url: userData.TranInsurance.tranInsurancePreviewUrl,
-                name: userData.TranInsurance.tranInsuranceName,
-              },
-              // drivingLicense: drivingLicenseUploadurl,
-              drivingLicense: {
-                raw: userData.DrivingLicense.drivingLicensePreviewUrl,
-                url: userData.DrivingLicense.drivingLicensePreviewUrl,
-                name: userData.DrivingLicense.drivingLicenseName,
-              },
-            })
-          );
+        } else if (userData?.personalDetails.justRegistered === false) {
           // router.push(`/mover-profile/dashboard/${userCredential.user.uid}`);
+
           router.push(`/mover-profile/dashboard`);
         }
       } else {

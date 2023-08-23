@@ -1,3 +1,16 @@
+export const filterSections = (sections, condition1) => {
+  if (condition1) {
+    return sections.filter(section => section.title !== "Add a Profile Picture!");
+  }
+  // if (condition2) {
+  //   return sections.filter(section => section.title !== "Add a Profile Picture!");
+  // }
+  return sections;
+};
+
+
+
+
 export function combineInitials(firstName, lastName) {
   if (firstName?.length > 0 && lastName?.length > 0) {
     const combinedInitials = (firstName[0] + lastName[0]).toUpperCase();

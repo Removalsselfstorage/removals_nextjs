@@ -36,6 +36,7 @@ import {
 import { BsImages, BsTools } from "react-icons/bs";
 import { CgProfile } from "react-icons/cg";
 import { FaRegEdit, FaTruckMoving } from "react-icons/fa";
+import { HiDocumentDuplicate } from "react-icons/hi";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { TfiComments } from "react-icons/tfi";
 import { useDispatch, useSelector } from "react-redux";
@@ -54,6 +55,17 @@ const sections = [
   },
   {
     id: 1,
+    title: "Complete Documentation Process",
+    subText:
+      "By completing the documentation process you boast your profile integrity and activation process.",
+    icon: <HiDocumentDuplicate className="text-white text-[30px]" />,
+    buttonTitle: "Upload Documents",
+    navNumber: 2,
+    link: "documentations",
+    required: true,
+  },
+  {
+    id: 2,
     title: "Accept our Terms & Policies!",
     subText:
       "By accepting our Terms & Policies you have the legal right to use our website. You will also understand how your information will be used.",
@@ -64,7 +76,7 @@ const sections = [
     required: true,
   },
   {
-    id: 2,
+    id: 3,
     title: "Attract more Customers!",
     subText:
       "Add reviews from your previous jobs. They appear on your profile as reviews and get you more customers.",
@@ -75,7 +87,7 @@ const sections = [
     required: false,
   },
   {
-    id: 3,
+    id: 4,
     title: "Show off your work!",
     subText:
       "Upload a portfolio of work samples and other imagery that provide an overview of your abilities and qualifications.",
@@ -86,7 +98,7 @@ const sections = [
     required: false,
   },
   {
-    id: 4,
+    id: 5,
     title: "Enter Bank Account Details",
     subText:
       "Your payment will be deposited directly into your Bank Account every Monday at 6pm, and subject to the job being completed.",
@@ -102,24 +114,68 @@ const Dashboard = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const userDetails = useSelector(getAllUserDetails);
-  // const personalDetails = useSelector(getAllpersonalDetails);
   const details = useSelector(getAllMoverDetails);
 
-  // const firstName = moverDetails.firebaseMoverDetails?.firstName;
-  // const lastName = moverDetails.firebaseMoverDetails?.lastName;
+  const condition1 = details?.personalDetails?.profilePicture?.url;
+  const condition2 = details.personalDetails.acceptedTerms;
+  // const condition3 = details.companyDetails.companyProfilePix.url;
+
+  const filterSections = () => {
+    if (condition1 !== "" && condition2 === false) {
+      const newSections = sections.filter((section) => {
+        return (
+          section.title !== "Complete Documentation Process" &&
+          section.title !== "Add a Profile Picture!"
+          // section.title !== "Accept our Terms & Policies!"
+        );
+      });
+      return newSections;
+    } else if (condition1 !== "") {
+      const newSections = sections.filter((section) => {
+        return (
+          section.title !== "Complete Documentation Process" &&
+          section.title !== "Add a Profile Picture!"
+          // section.title !== "Accept our Terms & Policies!"
+        );
+      });
+      return newSections;
+    } else if (condition1 !== "" && condition2 === true) {
+      const newSections = sections.filter((section) => {
+        return (
+          section.title !== "Complete Documentation Process" &&
+          section.title !== "Add a Profile Picture!" &&
+          section.title !== "Accept our Terms & Policies!"
+        );
+      });
+      return newSections;
+    } else if (condition2 === true) {
+      const newSections = sections.filter((section) => {
+        return (
+          // section.title !== "Complete Documentation Process" &&
+          // section.title !== "Add a Profile Picture!"
+          section.title !== "Accept our Terms & Policies!"
+        );
+      });
+      return newSections;
+    } else {
+      return sections;
+    }
+  };
+
+  const sortedSections = filterSections();
 
   const firstName = details.personalDetails.firstName;
   const lastName = details.personalDetails.lastName;
 
   const [index, setIndex] = useState(0);
-  const [sectionData, setSectionData] = useState(sections);
+  const [sectionData, setSectionData] = useState(sortedSections);
 
   const [previewUrl, setPreviewUrl] = useState(
     details.personalDetails.profilePicture.url
   );
 
   useEffect(() => {
-    const lastIndex = sectionData.length - 1;
+    const lastIndex = sectionData?.length - 1;
     if (index < 0) {
       setIndex(lastIndex);
     }
@@ -136,84 +192,7 @@ const Dashboard = () => {
   //     clearInterval(slider);
   //   };
   // }, [index]);
-
-  // const uid = personalDetails?.personalDetails?.uid;
-  // let readMoversData = async () => {};
-  // if (uid) {
-  //   readMoversData = async () => {
-  //     const res = await fetchMoverDetails3(uid);
-  //     dispatch(updateFirebaseMoverDetails(res));
-  //   };
-  // }
-  // useEffect(() => {
-  //   // readMoversData();
-
-  //   dispatch(
-  //     updatePersonalDetails({
-  //       firstName: userData?.personalDetails.firstName,
-  //       lastName: userData?.personalDetails.lastName,
-  //       email: userData?.personalDetails.email,
-  //       phone: userData?.personalDetails.phone,
-  //       address: userData?.personalDetails.address,
-  //       personalBio: userData?.personalDetails.personalBio,
-  //       profilePicture: {
-  //         raw: userData?.personalDetails.profileImagePreviewUrl,
-  //         url: userData?.personalDetails.profileImagePreviewUrl,
-  //         name: userData?.personalDetails.profilePictureName,
-  //       },
-  //       reviewSubmit: userData?.personalDetails.reviewSubmit,
-  //     })
-  //   );
-  //   dispatch(
-  //     updateCompanyDetails({
-  //       companyName: userData.companyDetails.companyName,
-  //       companyNumber: userData.companyDetails.companyNumber,
-  //       companyAddress: userData.companyDetails.companyAddress,
-  //       companyBio: userData.companyDetails.companyBio,
-  //       companyProfilePix: {
-  //         raw: userData.CompanyPix.companyProfilePixPreviewUrl,
-  //         url: userData.CompanyPix.companyProfilePixPreviewUrl,
-  //         name: userData.CompanyPix.companyProfilePixName,
-  //       },
-  //       reviewSubmit: userData?.companyDetails.reviewSubmit,
-  //     })
-  //   );
-  //   dispatch(
-  //     updateCompanyDocs({
-  //       regCertificate: {
-  //         raw: userData.RegCertificate.regCertificatePreviewUrl,
-  //         url: userData.RegCertificate.regCertificatePreviewUrl,
-  //         name: userData.RegCertificate.regCertificateName,
-  //       },
-  //       // vehInsurance: vehInsuranceUploadurl,
-  //       vehInsurance: {
-  //         raw: userData.VehInsurance.vehInsurancePreviewUrl,
-  //         url: userData.VehInsurance.vehInsurancePreviewUrl,
-  //         name: userData.VehInsurance.vehInsuranceName,
-  //       },
-  //       // pubInsurance: pubInsuranceUploadurl,
-  //       pubInsurance: {
-  //         raw: userData.PubInsurance.pubInsurancePreviewUrl,
-  //         url: userData.PubInsurance.pubInsurancePreviewUrl,
-  //         name: userData.PubInsurance.pubInsuranceName,
-  //       },
-  //       // tranInsurance: tranInsuranceUploadurl,
-  //       tranInsurance: {
-  //         raw: userData.TranInsurance.tranInsurancePreviewUrl,
-  //         url: userData.TranInsurance.tranInsurancePreviewUrl,
-  //         name: userData.TranInsurance.tranInsuranceName,
-  //       },
-  //       // drivingLicense: drivingLicenseUploadurl,
-  //       drivingLicense: {
-  //         raw: userData.DrivingLicense.drivingLicensePreviewUrl,
-  //         url: userData.DrivingLicense.drivingLicensePreviewUrl,
-  //         name: userData.DrivingLicense.drivingLicenseName,
-  //       },
-  //     })
-  //   );
-  // }, []);
-
-  // console.log(userData);
+  console.log(sections);
 
   return (
     <MoverLayout>
@@ -227,7 +206,7 @@ const Dashboard = () => {
         <section className="mb-[30px]">
           <div className="flex flex-col">
             <p className="font-bold text-[25px] mb-[20px]">Dashboard</p>
-            <div className="flex flex-col space-y-[20px] lg:space-y-0 lg:flex-row lg:justify-between">
+            <div className="flex flex-col space-y-[20px] lg:space-y-0 lg:flex-row lg:space-x-[50px] lg:justify-between">
               <div className="flex items-center space-x-[30px]">
                 {previewUrl ? (
                   <div className="avatar ">
@@ -255,19 +234,21 @@ const Dashboard = () => {
               {/* mover details */}
               <div className="flex flex-col">
                 {/* mover name */}
-                <div className="flex items-center space-x-[15px] md:space-x-[5px]  sm:items-start  space-y-[0px] lg:space-y-[0px] lg:flex-row lg:items-center mb-[5px] sm:mb-[7px] lg:mb-[7px] text-[15px]">
-                  <p className="text-primary font-semibold hidden md:block">
+                <div className="flex items-center border border-primary px-[10px] py-[5px] rounded-[10px] space-x-[15px] md:space-x-[5px]  space-y-[0px] lg:space-y-[0px] lg:flex-row lg:items-center mb-[5px] sm:mb-[7px] lg:mb-[7px] text-[15px]">
+                  <p className="text-primary font-semibold  md:text-[18px] md:font-extrabold">
                     Mover Username:
                   </p>
-                  <p className=" font-semibold">Infinity Movers</p>
+                  <p className=" font-semibold">
+                    {details.companyDetails.generatedName}
+                  </p>
                 </div>
                 {/* mover rating */}
-                <div className="flex items-center space-x-[15px] md:space-x-[5px]  sm:items-start  space-y-[0px] lg:space-y-[0px] lg:flex-row lg:items-center mb-[5px] sm:mb-[7px] lg:mb-[7px] text-[15px]">
-                  <p className="text-primary font-semibold hidden md:block">
+                <div className="flex items-center border border-primary px-[10px] py-[5px] rounded-[10px] space-x-[15px] md:space-x-[5px]  space-y-[0px] lg:space-y-[0px] lg:flex-row lg:items-center mb-[5px] sm:mb-[7px] lg:mb-[7px] text-[15px]">
+                  <p className="text-primary font-semibold  md:text-[18px] md:font-extrabold">
                     Mover Rating:
                   </p>
-                  <div className="flex items-center space-x-[10px] mt-[0px] text-[15px]">
-                    <p className="font-semibold">0</p>
+                  <div className="flex items-center  space-x-[10px] mt-[0px] text-[15px]">
+                    <p className="font-semibold">0 / 5.0</p>
                     {/* <FullRating small value={rating} color="text-secondary" /> */}
                     <StarRating rating={0} size="text-secondary text-[16px]" />
                     {/* <p className="">{`- (0 Reviews)`}</p> */}
@@ -275,9 +256,9 @@ const Dashboard = () => {
                 </div>
 
                 {/* mover name */}
-                <div className="flex items-center space-x-[15px] md:space-x-[5px]  sm:items-start  space-y-[0px] lg:space-y-[0px] lg:flex-row lg:items-center mb-[5px] sm:mb-[7px] lg:mb-[7px] text-[15px]">
+                <div className="flex items-center border border-primary px-[10px] py-[5px] rounded-[10px] space-x-[15px] md:space-x-[5px]  sm:items-start  space-y-[0px] lg:space-y-[0px] lg:flex-row lg:items-center mb-[5px] sm:mb-[7px] lg:mb-[7px] text-[15px]">
                   <div className="flex items-center space-x-[5px]">
-                    <p className="text-primary font-semibold hidden md:block">
+                    <p className="text-primary font-semibold  md:text-[18px] md:font-extrabold">
                       Mover Hires:
                     </p>
                   </div>
@@ -302,10 +283,18 @@ const Dashboard = () => {
             </div>
           </div>
         </section>
+        {/* sections completed */}
+        <div className="flex flex-col md:flex-row border border-primary rounded-[20px] md:items-center md:justify-between bg-white px-[20px] py-[20px]">
+          <p className="font-bold text-[20px]">Set up your profile</p>
+          <p className="">
+            {sections.length + 1 - (sortedSections?.length + 1)} out of{" "}
+            {sections.length + 1} completed
+          </p>
+        </div>
 
         {/* scroll section */}
         <div className="w-[100%] h-[55vh] sm:h-[45vh]  lg:h-[35vh]  relative flex overflow-x-hidden overflow-auto scrollbar-thin scrollbar-track-gray-200 scrollbar-thumb-gray-400 scrollbar-default">
-          {sectionData.map((section, sectionIndex) => {
+          {sectionData?.map((section, sectionIndex) => {
             let position = "translate-x-[100%]";
             if (sectionIndex === index) {
               position = "opacity-100 translate-x-[0]";
@@ -319,12 +308,8 @@ const Dashboard = () => {
             return (
               <section
                 className={`${position} mb-[30px]  bg-gray-100/80  rounded-[10px] border pt-[10px] absolute top-0 left-0 w-[100%] h-[100%] opacity-0 transition-all flex flex-col `}
-                key={section.id}
+                key={sectionIndex}
               >
-                <div className="flex flex-col md:flex-row md:items-center md:justify-between bg-white px-[20px] py-[20px]">
-                  <p className="font-bold text-[20px]">Set up your profile</p>
-                  <p className="">0 out of 6 completed</p>
-                </div>
                 <div className="flex flex-col space-y-[20px] md:space-y-[0px] md:flex-row md:justify-between md:space-x-[50px] py-[20px] px-[20px]">
                   {/* left */}
                   <div className="flex space-x-[20px] ">
@@ -351,7 +336,9 @@ const Dashboard = () => {
                       >
                         <BiChevronLeft className="text-[25px]" />
                       </div>
-                      <p className="mx-[10px]">{section.navNumber} / 5</p>
+                      <p className="mx-[10px]">
+                        {sectionIndex + 1} / {sortedSections.length + 1}
+                      </p>
                       <div
                         className="cursor-pointer bg-secondary/20 rounded-full"
                         onClick={() => setIndex(index + 1)}

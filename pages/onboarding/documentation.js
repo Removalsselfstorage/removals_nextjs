@@ -209,6 +209,7 @@ const PersonalDetails = () => {
       const moveObj = {
         companyName,
         companyNumber,
+        generatedName: details.companyDetails.generatedName,
         companyAddress,
         companyBio,
         companyProfilePix: {
@@ -257,6 +258,7 @@ const PersonalDetails = () => {
       dispatch(
         updateCompanyDetails({
           companyName,
+          generatedName: details.companyDetails.generatedName,
           companyNumber,
           companyAddress,
           companyBio,

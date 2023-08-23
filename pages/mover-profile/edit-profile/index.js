@@ -172,7 +172,7 @@ const EditProfile = () => {
         email,
         phone,
         reviewSubmit: true,
-
+        acceptedTerms: details.personalDetails.acceptedTerms,
         uid,
       };
 

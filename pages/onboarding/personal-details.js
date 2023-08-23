@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { redirect, useRouter } from "next/navigation";
 import {
   getAllMoverDetails,
+  updateCompanyDetails,
   updateFirebaseMoverDetails,
   updateJustRegistered,
   updateMoverPersonalDetails,
@@ -27,21 +28,37 @@ import {
 import { combineInitials, trimToFirstLetter } from "@/utils/logics";
 import CustomFileInput from "@/components/Inputs/CustomFileInput";
 import { fetchMoverDetails } from "@/lib/fetchData";
-import { FetchMoverDetails2, fetchMoverDetails3 } from "@/lib/fetchData2";
+import {
+  FetchMoverDetails2,
+  fetchGeneratedNames,
+  fetchMoverDetails3,
+} from "@/lib/fetchData2";
 import {
   UploadMoverPersonalDetails2,
   uploadMoverPersonalDetails2,
 } from "@/lib/uploadMoverPersonalDetails2";
-import { collection, getDocs, onSnapshot, query } from "firebase/firestore";
+// import { db, storage } from "@/firebase";
+
+import {
+  collection,
+  addDoc,
+  getDocs,
+  onSnapshot,
+  query,
+} from "firebase/firestore";
 import { db } from "@/firebase";
+import { adjectives, nouns } from "@/dummyData/dummyData";
 
 // const PersonalDetails = ({ moverSyncDetails }) => {
-const PersonalDetails = () => {
+const PersonalDetails = ({ names }) => {
   const router = useRouter();
   const userDetails = useSelector(getAllUserDetails);
 
   const dispatch = useDispatch();
   const details = useSelector(getAllMoverDetails);
+
+  const [usedNames, setUsedNames] = useState([]);
+  const [companyName, setCompanyName] = useState("");
 
   const [imageUpload, setImageUpload] = useState(
     details.personalDetails.profilePicture?.raw || null
@@ -118,6 +135,57 @@ const PersonalDetails = () => {
 
   // const imgUrl = URL.createObjectURL(imageUpload);
 
+  const generateCompanyName = async () => {
+    let companyName = "";
+
+    do {
+      // to generate 2 words only
+      const adjective =
+        adjectives[Math.floor(Math.random() * adjectives.length)];
+      const noun = nouns[Math.floor(Math.random() * nouns.length)];
+      companyName = `${adjective} ${noun}`;
+
+      // To generate 1 or 2 words
+      // const useTwoWords = Math.random() < 0.5; // 50% chance for two words
+      // const firstWord = adjectives[Math.floor(Math.random() * adjectives.length)];
+      // const secondWord = useTwoWords ? nouns[Math.floor(Math.random() * nouns.length)] : '';
+
+      // companyName = useTwoWords ? `${firstWord} ${secondWord}` : firstWord;
+    } while (usedNames.includes(companyName));
+
+    const nameRef = collection(db, "generatedMoveNames");
+
+    try {
+      await addDoc(nameRef, {
+        name: companyName,
+      });
+    } catch (error) {
+      return false;
+    }
+
+    setCompanyName(companyName);
+
+    dispatch(
+      updateCompanyDetails({
+        companyName: details.companyDetails.companyName,
+        generatedName: companyName,
+        companyNumber: details.companyDetails.companyNumber,
+        companyAddress: details.companyDetails.companyAddress,
+        companyBio: details.companyDetails.companyBio,
+        companyProfilePix: {
+          raw: details.companyDetails.companyProfilePix.raw,
+          url: details.companyDetails.companyProfilePix.url,
+          name: details.companyDetails.companyProfilePix.name,
+        },
+        reviewSubmit: details?.companyDetails.reviewSubmit,
+      })
+    );
+
+    // alert(companyName);
+
+    // return companyName;
+  };
+
   const personalFormSubmit = async () => {
     setActivateError(true);
     setSubmitError(false);
@@ -137,6 +205,7 @@ const PersonalDetails = () => {
       setSubmitError(true);
     } else {
       setSubmitLoading(true);
+      dispatch(updateJustRegistered(false));
 
       const moveObj = {
         profilePicture: {
@@ -150,7 +219,9 @@ const PersonalDetails = () => {
         lastName,
         email,
         phone,
-
+        reviewSubmit: true,
+        acceptedTerms: false,
+        justRegistered: false,
         uid,
       };
 
@@ -158,30 +229,11 @@ const PersonalDetails = () => {
       // const uid = userDetails.userDetails.uid;
       const result = await UploadMoverPersonalDetails2(moveObj);
 
+      
+
+      generateCompanyName();
+
       dispatch(
-        // updateMoverPersonalDetails({
-        //   firstName,
-        //   lastName,
-        //   email,
-        //   phone,
-        //   address,
-        //   personalBio,
-        //   // profilePictureRaw: imageUpload,
-        //   // profilePicture: previewUrl,
-        //   profilePicture: {
-        //     raw: imageUpload,
-        //     url: previewUrl,
-        //     name: imageUpload?.name,
-        //   },
-        //   companyName: details.personalDetails.companyName,
-        //   companyNumber: details.personalDetails.companyNumber,
-        //   companyAddress: details.personalDetails.companyAddress,
-        //   regCertificate: details.personalDetails.regCertificate,
-        //   vehInsurance: details.personalDetails.vehInsurance,
-        //   pubInsurance: details.personalDetails.pubInsurance,
-        //   tranInsurance: details.personalDetails.tranInsurance,
-        //   drivingLicense: details.personalDetails.drivingLicense,
-        // })
         updatePersonalDetails({
           firstName,
           lastName,
@@ -195,17 +247,29 @@ const PersonalDetails = () => {
             name: imageUpload?.name,
           },
           reviewSubmit: false,
+          acceptedTerms: details.personalDetails.acceptedTerms,
         })
       );
+
       // readMoversData();
 
-      dispatch(updateJustRegistered(false));
+      
 
       // console.log(uid, result);
 
       router.push("/onboarding/documentation");
     }
   };
+
+  useEffect(() => {
+    const newNames = [];
+    names.forEach((nam) => {
+      newNames.push(nam.name);
+    });
+    setUsedNames(newNames);
+  }, []);
+
+  console.log(details);
 
   // useEffect(() => {
   //   readMoversData();
@@ -539,4 +603,12 @@ const PersonalDetails = () => {
 
 export default PersonalDetails;
 
+export async function getServerSideProps() {
+  const names = await fetchGeneratedNames();
 
+  return {
+    props: {
+      names,
+    },
+  };
+}

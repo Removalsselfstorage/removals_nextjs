@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  justRegistered: false,
+  justRegistered: true,
 
   personalDetails: {
     firstName: "",
@@ -15,11 +15,13 @@ const initialState = {
       url: "",
       name: "",
     },
-    reviewSubmit: false
+    reviewSubmit: false,
+    acceptedTerms: false
   },
 
   companyDetails: {
     companyName: "",
+    generatedName: "",
     companyNumber: "",
     companyAddress: "",
     companyBio: "",

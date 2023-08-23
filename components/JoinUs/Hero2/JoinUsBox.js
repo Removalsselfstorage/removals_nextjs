@@ -102,31 +102,6 @@ const JoinUsBox = () => {
     dispatch(updateSignupMessage(null));
     dispatch(updateSignupError(null));
 
-    dispatch(
-      // updateMoverPersonalDetails({
-      //   firstName: signup_firstname,
-      //   lastName: signup_lastname,
-      //   email: signup_email,
-      //   phone: details.personalDetails.phone,
-      //   address: details.personalDetails.address,
-      //   personalBio: details.personalDetails.personalBio,
-      //   profilePicture: details.personalDetails.profilePicture,
-      // })
-      updatePersonalDetails({
-        firstName: signup_firstname,
-        lastName: signup_lastname,
-        email: signup_email,
-        phone: details.personalDetails.phone,
-        address: details.personalDetails.address,
-        personalBio: details.personalDetails.personalBio,
-        profilePicture: {
-          raw: details.personalDetails.profilePicture.raw,
-          url: details.personalDetails.profilePicture.url,
-          name: details.personalDetails.profilePicture.name,
-        },
-        reviewSubmit: false,
-      })
-    );
     // alert(JSON.stringify(values, null, 2));
     await signUp(
       values.signup_email,
@@ -142,6 +117,31 @@ const JoinUsBox = () => {
       signup_firstname: "",
       signup_lastname: "",
     });
+    // dispatch(
+    //   // updateMoverPersonalDetails({
+    //   //   firstName: signup_firstname,
+    //   //   lastName: signup_lastname,
+    //   //   email: signup_email,
+    //   //   phone: details.personalDetails.phone,
+    //   //   address: details.personalDetails.address,
+    //   //   personalBio: details.personalDetails.personalBio,
+    //   //   profilePicture: details.personalDetails.profilePicture,
+    //   // })
+    //   updatePersonalDetails({
+    //     firstName: signup_firstname,
+    //     lastName: signup_lastname,
+    //     email: signup_email,
+    //     phone: details.personalDetails.phone,
+    //     address: details.personalDetails.address,
+    //     personalBio: details.personalDetails.personalBio,
+    //     profilePicture: {
+    //       raw: details.personalDetails.profilePicture.raw,
+    //       url: details.personalDetails.profilePicture.url,
+    //       name: details.personalDetails.profilePicture.name,
+    //     },
+    //     reviewSubmit: false,
+    //   })
+    // );
     setSubmitLoading(false);
 
     // toast(

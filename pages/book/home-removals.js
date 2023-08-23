@@ -154,7 +154,7 @@ const CompleteHouse = () => {
     setSubmitError(false);
 
     if (
-      propertyValue == "" ||
+      !propertyValue ||
       propertyValue == "Select" ||
       !address ||
       !address2 ||

@@ -230,8 +230,6 @@ const PersonalDetails = ({ names }) => {
       // const uid = userDetails.userDetails.uid;
       const result = await UploadMoverPersonalDetails2(moveObj);
 
-      
-
       generateCompanyName();
 
       dispatch(
@@ -254,8 +252,6 @@ const PersonalDetails = ({ names }) => {
       );
 
       // readMoversData();
-
-      
 
       // console.log(uid, result);
 
@@ -412,7 +408,7 @@ const PersonalDetails = ({ names }) => {
                       </label>
                       <input
                         type="text"
-                        placeholder="Type here"
+                        placeholder="First name"
                         className={`${
                           activateError && !firstName
                             ? "ring ring-secondary"
@@ -434,7 +430,7 @@ const PersonalDetails = ({ names }) => {
                       </label>
                       <input
                         type="text"
-                        placeholder="Type here"
+                        placeholder="Last name"
                         className={`${
                           activateError && !lastName
                             ? "ring ring-secondary"
@@ -460,7 +456,7 @@ const PersonalDetails = ({ names }) => {
                       </label>
                       <input
                         type="email"
-                        placeholder="Type here"
+                        placeholder="Email address"
                         className={`${
                           activateError && (!email || !emailError)
                             ? "ring ring-secondary"
@@ -490,7 +486,7 @@ const PersonalDetails = ({ names }) => {
                       </label>
                       <input
                         type="tel"
-                        placeholder="Type here"
+                        placeholder="Telephone number"
                         className={`${
                           activateError && (!phone || !phoneError)
                             ? "ring ring-secondary"

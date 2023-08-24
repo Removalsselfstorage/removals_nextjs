@@ -472,7 +472,7 @@ const ManAndVan = () => {
                       </label>
                       <input
                         type="text"
-                        placeholder="Type here"
+                        placeholder="First name"
                         className={`${
                           activateError && !firstName
                             ? "ring ring-secondary"
@@ -494,7 +494,7 @@ const ManAndVan = () => {
                       </label>
                       <input
                         type="text"
-                        placeholder="Type here"
+                        placeholder="Last name"
                         className={`${
                           activateError && !lastName
                             ? "ring ring-secondary"
@@ -520,7 +520,7 @@ const ManAndVan = () => {
                       </label>
                       <input
                         type="email"
-                        placeholder="Type here"
+                        placeholder="Email address"
                         className={`${
                           activateError && !email ? "ring ring-secondary" : ""
                         } input input-primary w-full h-[43px]`}
@@ -565,7 +565,7 @@ const ManAndVan = () => {
                       </label>
                       <input
                         type="tel"
-                        placeholder="Type here"
+                        placeholder="Telephone number"
                         className={`${
                           activateError && (!phone || !phoneError)
                             ? "ring ring-secondary"
@@ -725,7 +725,7 @@ const ManAndVan = () => {
                           type="number"
                           min="10"
                           step="5"
-                          placeholder="Type here"
+                          placeholder="Volume"
                           className={`${
                             activateError && !volume
                               ? "ring ring-secondary"

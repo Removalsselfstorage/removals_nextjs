@@ -171,6 +171,7 @@ const EditProfile = () => {
         lastName,
         email,
         phone,
+        registerDate: details.personalDetails.registerDate,
         reviewSubmit: true,
         acceptedTerms: details.personalDetails.acceptedTerms,
         justRegistered: details.justRegistered,
@@ -182,43 +183,12 @@ const EditProfile = () => {
       const result = await UploadMoverPersonalDetails2(moveObj);
       console.log(result);
 
-      // dispatch(
-      //   updateMoverPersonalDetails({
-      //     firstName,
-      //     lastName,
-      //     email,
-      //     phone,
-      //     address,
-      //     personalBio,
-      //     // profilePictureRaw: imageUpload,
-      //     // profilePicture: previewUrl,
-      //     profilePicture: {
-      //       raw: imageUpload,
-      //       url: previewUrl,
-      //       name: imageUpload?.name,
-      //     },
-      //     companyName: details.personalDetails.companyName,
-      //     companyNumber: details.personalDetails.companyNumber,
-      //     companyAddress: details.personalDetails.companyAddress,
-      //     regCertificate: details.personalDetails.regCertificate,
-      //     vehInsurance: details.personalDetails.vehInsurance,
-      //     pubInsurance: details.personalDetails.pubInsurance,
-      //     tranInsurance: details.personalDetails.tranInsurance,
-      //     drivingLicense: details.personalDetails.drivingLicense,
-      //   })
-      // );
-      // readMoversData();
-
       setSubmitSuccess(true);
 
       setSubmitLoading(false);
       // window.location.reload();
     }
   };
-
-  // useEffect(() => {
-  //   readMoversData();
-  // }, []);
 
   console.log(details);
 

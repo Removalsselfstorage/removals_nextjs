@@ -247,7 +247,7 @@ const PersonalDetails = ({ names }) => {
             url: previewUrl,
             name: imageUpload?.name,
           },
-          registerDate: userDetails.userDetails.metadata.creationTime,
+          registerDate: userDetails.userDetails.metadata?.creationTime,
           reviewSubmit: false,
           acceptedTerms: details.personalDetails.acceptedTerms,
         })

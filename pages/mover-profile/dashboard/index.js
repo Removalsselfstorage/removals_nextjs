@@ -22,7 +22,7 @@ import {
   updatePersonalDetails,
 } from "@/store/moverSlice";
 import { getAllUserDetails, getAllpersonalDetails } from "@/store/userSlice";
-import { combineInitials } from "@/utils/logics";
+import { combineInitials, convertUTCToLocal } from "@/utils/logics";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -167,6 +167,16 @@ const Dashboard = () => {
   const firstName = details.personalDetails.firstName;
   const lastName = details.personalDetails.lastName;
 
+  const registeredDate = Date.parse(
+    userDetails?.userDetails?.metadata?.creationTime
+  );
+  const lastSignIn = Date.parse(
+    userDetails?.userDetails?.metadata?.lastSignInTime
+  );
+
+  const localRegisteredDate = convertUTCToLocal(registeredDate);
+  const localLastSignIn = convertUTCToLocal(lastSignIn);
+
   const [index, setIndex] = useState(0);
   const [sectionData, setSectionData] = useState(sortedSections);
 
@@ -230,11 +240,13 @@ const Dashboard = () => {
                       {firstName} {lastName}
                     </p>
                   </div>
-                  <p className=" text-gray-400 ">
-                    <span className="font-bold">Registered:</span> {userDetails.userDetails.metadata.creationTime}
+                  <p className=" text-gray-400 text-[14px] md:text-[16px]">
+                    <span className="font-bold ">Registered:</span>{" "}
+                    {localRegisteredDate} GMT
                   </p>
-                  <p className=" text-gray-400 ">
-                    <span className="font-bold">Last Login:</span> {userDetails.userDetails.metadata.lastSignInTime}
+                  <p className=" text-gray-400 text-[14px] md:text-[16px]">
+                    <span className="font-bold">Last Login:</span>{" "}
+                    {localLastSignIn} GMT
                   </p>
                 </div>
               </div>

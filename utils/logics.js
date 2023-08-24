@@ -1,3 +1,21 @@
+export function convertUTCToLocal(utcTimestamp) {
+  const options = { timeZone: 'Africa/Lagos' };
+  const utcDate = new Date(utcTimestamp);
+  const localDate = new Date(utcDate.getTime() + (utcDate.getTimezoneOffset() * 60000)).toLocaleString(undefined, options);
+  return localDate;
+}
+
+export function convertToLagosTime(utcDateString) {
+  const utcDate = new Date(utcDateString);
+  const lagosOffset = 1; // Africa/Lagos is UTC+1
+
+  const localTime = new Date(utcDate.getTime() + lagosOffset * 3600000); // Convert milliseconds to hours
+
+  return localTime;
+}
+
+
+
 export const filterSections = (sections, condition1) => {
   if (condition1) {
     return sections.filter(section => section.title !== "Add a Profile Picture!");

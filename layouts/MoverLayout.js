@@ -56,7 +56,7 @@ const MoverLayout = ({ children, data }) => {
     <div className={`${textFont.variable} font-sans `}>
       {userDetails.userDetails && details.justRegistered === false && (
         <>
-          <Navbar3 data={data} />
+          <Navbar3  />
           <div className="flex bg-base-200  pt-[50px]   lg:pt-[50px] ">
             <aside className=" hidden md:flex md:flex-[0.4] lg:flex-[0.4] border border-r-[2px] md:flex-col lg:w-[300px] ">
               <ul className="   pt-[30px] pb-[10px]  shadow-xl bg-base-100 text-[16px] px-[10px] border-b">

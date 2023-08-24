@@ -17,7 +17,8 @@ const initialState = {
     },
     registerDate: "",
     reviewSubmit: false,
-    acceptedTerms: false
+    acceptedTerms: false,
+    // isAdmin: false,
   },
 
   companyDetails: {

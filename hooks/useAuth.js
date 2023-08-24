@@ -208,6 +208,7 @@ export const AuthProvider = ({ children }) => {
         lastName: lastName,
         email: email,
         phone: "",
+        registerDate: userCredential.user.metadata.creationTime,
         reviewSubmit: false,
         acceptedTerms: false,
         justRegistered: true,
@@ -300,9 +301,8 @@ export const AuthProvider = ({ children }) => {
         password
       );
 
-      dispatch(updateUserDetails(userCredential.user));
-
       const userData = await fetchAllMoversDetails(userCredential.user.uid);
+
       dispatch(updateJustRegistered(userData?.personalDetails.justRegistered));
       dispatch(
         updatePersonalDetails({
@@ -373,6 +373,7 @@ export const AuthProvider = ({ children }) => {
 
       if (userCredential.user.emailVerified) {
         // setUser(userCredential.user);
+        dispatch(updateUserDetails(userCredential.user));
 
         if (userData?.personalDetails.justRegistered === true) {
           router.push("/onboarding/personal-details");

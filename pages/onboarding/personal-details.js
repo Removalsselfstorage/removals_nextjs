@@ -219,6 +219,7 @@ const PersonalDetails = ({ names }) => {
         lastName,
         email,
         phone,
+        registerDate: userDetails.userDetails.metadata.creationTime,
         reviewSubmit: true,
         acceptedTerms: false,
         justRegistered: false,
@@ -246,6 +247,7 @@ const PersonalDetails = ({ names }) => {
             url: previewUrl,
             name: imageUpload?.name,
           },
+          registerDate: userDetails.userDetails.metadata.creationTime,
           reviewSubmit: false,
           acceptedTerms: details.personalDetails.acceptedTerms,
         })

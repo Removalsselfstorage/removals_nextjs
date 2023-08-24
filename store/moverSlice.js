@@ -15,6 +15,7 @@ const initialState = {
       url: "",
       name: "",
     },
+    registerDate: "",
     reviewSubmit: false,
     acceptedTerms: false
   },

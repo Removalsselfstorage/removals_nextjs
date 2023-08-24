@@ -143,6 +143,7 @@ export const AuthProvider = ({ children }) => {
             url: "",
             name: "",
           },
+          registerDate: userCredential.user.metadata.creationTime,
           reviewSubmit: false,
           acceptedTerms: false,
         })
@@ -316,6 +317,7 @@ export const AuthProvider = ({ children }) => {
             url: userData?.personalDetails.profileImagePreviewUrl,
             name: userData?.personalDetails.profilePictureName,
           },
+          registerDate: userCredential.user.metadata.creationTime,
           reviewSubmit: userData?.personalDetails.reviewSubmit,
           acceptedTerms: userData?.personalDetails.acceptedTerms,
         })

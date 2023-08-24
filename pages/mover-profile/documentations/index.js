@@ -53,8 +53,6 @@ const Documentations = () => {
   const dispatch = useDispatch();
   const details = useSelector(getAllMoverDetails);
 
- 
-
   const [companyBio, setCompanyBio] = useState(
     details.companyDetails.companyBio
   );
@@ -207,6 +205,7 @@ const Documentations = () => {
 
       const moveObj = {
         companyName,
+        generatedName: details.companyDetails.generatedName,
         companyNumber,
         companyAddress,
         companyBio,
@@ -313,10 +312,10 @@ const Documentations = () => {
     }
   };
 
-  console.log(details)
+  console.log(details);
 
   return (
-    <MoverLayout >
+    <MoverLayout>
       <Head>
         <title>Mover Profile - Documentation</title>
         <meta name="description" content="Rss removal and storage website" />
@@ -336,17 +335,17 @@ const Documentations = () => {
           </section>
 
           {(submitSuccess || details.companyDetails.reviewSubmit) && (
-          <section className="mb-[30px] px-[0px] ">
-            <div className="flex items-center bg-primary/10 rounded-[10px] px-[20px] py-[15px] space-x-[20px]">
-              <IoMdNotificationsOutline className="text-primary text-[40px]" />
-              <div className="flex flex-col">
-                <p className="font-bold text-primary">
-                  Your Update has been submitted for review!
-                </p>
+            <section className="mb-[30px] px-[0px] ">
+              <div className="flex items-center bg-primary/10 rounded-[10px] px-[20px] py-[15px] space-x-[20px]">
+                <IoMdNotificationsOutline className="text-primary text-[40px]" />
+                <div className="flex flex-col">
+                  <p className="font-bold text-primary">
+                    Your Update has been submitted for review!
+                  </p>
+                </div>
               </div>
-            </div>
-          </section>
-        )}
+            </section>
+          )}
           <div className="bg-white/70 border px-[20px] py-[30px] rounded-[10px] shadow-lg">
             {/* mandatory text */}
             <div className="flex flex-col w-full items-center  mb-[40px] mt-[20px]">

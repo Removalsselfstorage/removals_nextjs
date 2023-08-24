@@ -173,6 +173,7 @@ const EditProfile = () => {
         phone,
         reviewSubmit: true,
         acceptedTerms: details.personalDetails.acceptedTerms,
+        justRegistered: details.justRegistered,
         uid,
       };
 

@@ -192,7 +192,7 @@ const Dashboard = () => {
   //     clearInterval(slider);
   //   };
   // }, [index]);
-  console.log(sections);
+  console.log(userDetails);
 
   return (
     <MoverLayout>
@@ -223,12 +223,19 @@ const Dashboard = () => {
                     </div>
                   </div>
                 )}
-                <div className="flex flex-col">
-                  <p className="">Welcome,</p>
-                  <p className="font-bold text-[25px]">
-                    {firstName} {lastName}
+                <div className="flex flex-col md:space-y-[5px] justify-center">
+                  <div className="flex items-stretch space-x-[10px]">
+                    <p className="flex items-center text-[17px]">Welcome,</p>
+                    <p className="font-bold text-[25px] flex items-end">
+                      {firstName} {lastName}
+                    </p>
+                  </div>
+                  <p className=" text-gray-400 ">
+                    <span className="font-bold">Registered:</span> {userDetails.userDetails.metadata.creationTime}
                   </p>
-                  <p className="italic text-gray-400 ">No reviews yet</p>
+                  <p className=" text-gray-400 ">
+                    <span className="font-bold">Last Login:</span> {userDetails.userDetails.metadata.lastSignInTime}
+                  </p>
                 </div>
               </div>
               {/* mover details */}

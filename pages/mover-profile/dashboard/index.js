@@ -217,7 +217,7 @@ const Dashboard = () => {
           <div className="flex flex-col">
             <p className="font-bold text-[25px] mb-[20px]">Dashboard</p>
             <div className="flex flex-col space-y-[20px] lg:space-y-0 lg:flex-row lg:space-x-[50px] lg:justify-between">
-              <div className="flex items-center space-x-[30px]">
+              <div className="flex items-center space-x-[20px] md:space-x-[30px]">
                 {previewUrl ? (
                   <div className="avatar ">
                     <div className="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
@@ -242,11 +242,11 @@ const Dashboard = () => {
                   </div>
                   <p className=" text-gray-400 text-[14px] md:text-[16px]">
                     <span className="font-bold ">Registered:</span>{" "}
-                    {localRegisteredDate} GMT
+                    {userDetails?.userDetails?.metadata?.creationTime}
                   </p>
                   <p className=" text-gray-400 text-[14px] md:text-[16px]">
                     <span className="font-bold">Last Login:</span>{" "}
-                    {localLastSignIn} GMT
+                    {userDetails?.userDetails?.metadata?.lastSignInTime}
                   </p>
                 </div>
               </div>

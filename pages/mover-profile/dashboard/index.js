@@ -167,15 +167,15 @@ const Dashboard = () => {
   const firstName = details.personalDetails.firstName;
   const lastName = details.personalDetails.lastName;
 
-  const registeredDate = Date.parse(
-    userDetails?.userDetails?.metadata?.creationTime
-  );
-  const lastSignIn = Date.parse(
-    userDetails?.userDetails?.metadata?.lastSignInTime
-  );
+  // const registeredDate = Date.parse(
+  //   userDetails?.userDetails?.metadata?.creationTime
+  // );
+  // const lastSignIn = Date.parse(
+  //   userDetails?.userDetails?.metadata?.lastSignInTime
+  // );
 
-  const localRegisteredDate = convertUTCToLocal(registeredDate);
-  const localLastSignIn = convertUTCToLocal(lastSignIn);
+  // const localRegisteredDate = convertUTCToLocal(registeredDate);
+  // const localLastSignIn = convertUTCToLocal(lastSignIn);
 
   const [index, setIndex] = useState(0);
   const [sectionData, setSectionData] = useState(sortedSections);

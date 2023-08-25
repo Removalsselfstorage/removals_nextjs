@@ -27,6 +27,7 @@ import {
   getAllMoverDetails,
   updateFirebaseMoverDetails,
   updateMoverPersonalDetails,
+  updatePersonalDetails,
 } from "@/store/moverSlice";
 import CustomFileInput from "@/components/Inputs/CustomFileInput";
 import { fetchMoverDetails3 } from "@/lib/fetchData2";
@@ -132,13 +133,6 @@ const EditProfile = () => {
 
   const uid = userDetails.userDetails?.uid;
 
-  // const readMoversData = async () => {
-  //   const res = await fetchMoverDetails3(uid);
-  //   dispatch(updateFirebaseMoverDetails(res));
-  // };
-
-  // const imgUrl = URL.createObjectURL(imageUpload);
-
   const personalFormSubmit = async () => {
     setActivateError(true);
     setSubmitError(false);
@@ -178,10 +172,27 @@ const EditProfile = () => {
         uid,
       };
 
-      // const profilePixName = imageUpload.name;
-      // const uid = userDetails.userDetails.uid;
       const result = await UploadMoverPersonalDetails2(moveObj);
       console.log(result);
+
+      // dispatch(
+      //   updatePersonalDetails({
+      //     firstName,
+      //     lastName,
+      //     email,
+      //     phone,
+      //     address,
+      //     personalBio,
+      //     profilePicture: {
+      //       raw: imageUpload,
+      //       url: previewUrl,
+      //       name: imageUpload?.name,
+      //     },
+      //     registerDate: userDetails.userDetails.metadata?.creationTime,
+      //     reviewSubmit: true,
+      //     acceptedTerms: details.personalDetails.acceptedTerms,
+      //   })
+      // );
 
       setSubmitSuccess(true);
 

@@ -291,6 +291,8 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  
+
   const signIn = async (email, password) => {
     setLoading(true);
 

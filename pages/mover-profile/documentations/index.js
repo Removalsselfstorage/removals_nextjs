@@ -16,6 +16,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { redirect, useRouter } from "next/navigation";
 import {
   getAllMoverDetails,
+  updateCompanyDetails,
+  updateCompanyDocs,
   updateFirebaseCompanyPix,
   updateFirebaseDrivingLicense,
   updateFirebaseMoverDetails,
@@ -159,23 +161,6 @@ const Documentations = () => {
 
   const uid = userDetails.userDetails?.uid;
 
-  // const readMoversData = async () => {
-  //   const res1 = await fetchMoversDetails(uid);
-  //   const res2 = await fetchMoversCompanyPix(uid);
-  //   const res3 = await fetchMoversRegCertificate(uid);
-  //   const res4 = await fetchMoversVehInsurance(uid);
-  //   const res5 = await fetchMoversPubInsurance(uid);
-  //   const res6 = await fetchMoversTranInsurance(uid);
-  //   const res7 = await fetchMoversDrivingLicense(uid);
-  //   dispatch(updateFirebaseMoverDoc(res1));
-  //   dispatch(updateFirebaseCompanyPix(res2));
-  //   dispatch(updateFirebaseRegCertificate(res3));
-  //   dispatch(updateFirebaseVehInsurance(res4));
-  //   dispatch(updateFirebasePubInsurance(res5));
-  //   dispatch(updateFirebaseTranInsurance(res6));
-  //   dispatch(updateFirebaseDrivingLicense(res7));
-  // };
-
   const documentFormSubmit = async () => {
     setActivateError(true);
     setSubmitError(false);
@@ -229,11 +214,6 @@ const Documentations = () => {
           url: pubInsuranceUploadurl,
           name: pubInsuranceUpload?.name,
         },
-        pubInsurance: {
-          raw: pubInsuranceUpload,
-          url: pubInsuranceUploadurl,
-          name: pubInsuranceUpload?.name,
-        },
         tranInsurance: {
           raw: tranInsuranceUpload,
           url: tranInsuranceUploadurl,
@@ -252,6 +232,55 @@ const Documentations = () => {
       const result = await UploadMoverDocumentation(moveObj);
       console.log(result);
 
+      // dispatch(
+      //   updateCompanyDetails({
+      //     companyName,
+      //     generatedName: details.companyDetails.generatedName,
+      //     companyNumber,
+      //     companyAddress,
+      //     companyBio,
+      //     companyProfilePix: {
+      //       raw: companyProfilePix,
+      //       url: companyProfilePixurl,
+      //       name: companyProfilePix.name,
+      //     },
+      //     reviewSubmit: false,
+      //   })
+      // );
+
+      // dispatch(
+      //   updateCompanyDocs({
+      //     regCertificate: {
+      //       raw: regCertificateUpload,
+      //       url: regCertificateUploadurl,
+      //       name: regCertificateUpload.name,
+      //     },
+      //     // vehInsurance: vehInsuranceUploadurl,
+      //     vehInsurance: {
+      //       raw: vehInsuranceUpload,
+      //       url: vehInsuranceUploadurl,
+      //       name: vehInsuranceUpload.name,
+      //     },
+      //     // pubInsurance: pubInsuranceUploadurl,
+      //     pubInsurance: {
+      //       raw: pubInsuranceUpload,
+      //       url: pubInsuranceUploadurl,
+      //       name: pubInsuranceUpload.name,
+      //     },
+      //     // tranInsurance: tranInsuranceUploadurl,
+      //     tranInsurance: {
+      //       raw: tranInsuranceUpload,
+      //       url: tranInsuranceUploadurl,
+      //       name: tranInsuranceUpload.name,
+      //     },
+      //     // drivingLicense: drivingLicenseUploadurl,
+      //     drivingLicense: {
+      //       raw: drivingLicenseUpload,
+      //       url: drivingLicenseUploadurl,
+      //       name: drivingLicenseUpload.name,
+      //     },
+      //   })
+      // );
       // dispatch(
       //   updateMoverPersonalDetails({
       //     firstName: details.personalDetails.firstName,

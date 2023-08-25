@@ -47,7 +47,7 @@ import {
 } from "@/lib/fetchData2";
 import { UploadMoverDocumentation } from "@/lib/uploadMoverDocumentation";
 
-const PersonalDetails = () => {
+const Documentation = () => {
   // const { data: session } = useSession();
 
   const router = useRouter();
@@ -232,11 +232,6 @@ const PersonalDetails = () => {
           url: pubInsuranceUploadurl,
           name: pubInsuranceUpload?.name,
         },
-        pubInsurance: {
-          raw: pubInsuranceUpload,
-          url: pubInsuranceUploadurl,
-          name: pubInsuranceUpload?.name,
-        },
         tranInsurance: {
           raw: tranInsuranceUpload,
           url: tranInsuranceUploadurl,
@@ -304,57 +299,6 @@ const PersonalDetails = () => {
           },
         })
       );
-
-      // dispatch(
-      //   updateMoverPersonalDetails({
-      //     firstName: details.personalDetails.firstName,
-      //     lastName: details.personalDetails.lastName,
-      //     email: details.personalDetails.email,
-      //     phone: details.personalDetails.phone,
-      //     address: details.personalDetails.address,
-      //     profilePicture: details.personalDetails.profilePicture,
-      //     companyName,
-      //     companyNumber,
-      //     companyAddress,
-      //     companyBio,
-      //     companyProfilePix: {
-      //       raw: companyProfilePix,
-      //       url: companyProfilePixurl,
-      //       name: companyProfilePix?.name,
-      //     },
-      //     // regCertificate: regCertificateUploadurl,
-      //     regCertificate: {
-      //       raw: regCertificateUpload,
-      //       url: regCertificateUploadurl,
-      //       name: regCertificateUpload?.name,
-      //     },
-      //     // vehInsurance: vehInsuranceUploadurl,
-      //     vehInsurance: {
-      //       raw: vehInsuranceUpload,
-      //       url: vehInsuranceUploadurl,
-      //       name: vehInsuranceUpload?.name,
-      //     },
-      //     // pubInsurance: pubInsuranceUploadurl,
-      //     pubInsurance: {
-      //       raw: pubInsuranceUpload,
-      //       url: pubInsuranceUploadurl,
-      //       name: pubInsuranceUpload?.name,
-      //     },
-      //     // tranInsurance: tranInsuranceUploadurl,
-      //     tranInsurance: {
-      //       raw: tranInsuranceUpload,
-      //       url: tranInsuranceUploadurl,
-      //       name: tranInsuranceUpload?.name,
-      //     },
-      //     // drivingLicense: drivingLicenseUploadurl,
-      //     drivingLicense: {
-      //       raw: drivingLicenseUpload,
-      //       url: drivingLicenseUploadurl,
-      //       name: drivingLicenseUpload?.name,
-      //     },
-      //   })
-      // );
-      // readMoversData();
 
       setSubmitSuccess(true);
 
@@ -875,7 +819,7 @@ const PersonalDetails = () => {
   );
 };
 
-export default PersonalDetails;
+export default Documentation;
 
 // CompleteHouse.requireAuth = true;
 

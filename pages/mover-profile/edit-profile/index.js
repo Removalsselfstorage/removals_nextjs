@@ -166,6 +166,7 @@ const EditProfile = () => {
         email,
         phone,
         registerDate: details.personalDetails.registerDate,
+        lastLogin: details.personalDetails.lastLogin,
         reviewSubmit: true,
         acceptedTerms: details.personalDetails.acceptedTerms,
         justRegistered: details.justRegistered,

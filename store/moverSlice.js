@@ -4,6 +4,7 @@ const initialState = {
   justRegistered: true,
 
   personalDetails: {
+    uid: "",
     firstName: "",
     lastName: "",
     email: "",
@@ -16,6 +17,7 @@ const initialState = {
       name: "",
     },
     registerDate: "",
+    lastLogin: "",
     reviewSubmit: false,
     acceptedTerms: false,
     // isAdmin: false,

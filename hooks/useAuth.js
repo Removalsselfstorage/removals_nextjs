@@ -132,6 +132,7 @@ export const AuthProvider = ({ children }) => {
 
       dispatch(
         updatePersonalDetails({
+          uid: userCredential.user.uid,
           firstName: firstName,
           lastName: lastName,
           email: email,
@@ -144,6 +145,7 @@ export const AuthProvider = ({ children }) => {
             name: "",
           },
           registerDate: userCredential.user.metadata.creationTime,
+          lastLogin: userCredential.user.metadata.lastSignInTime,
           reviewSubmit: false,
           acceptedTerms: false,
         })
@@ -209,6 +211,7 @@ export const AuthProvider = ({ children }) => {
         email: email,
         phone: "",
         registerDate: userCredential.user.metadata.creationTime,
+        lastLogin: userCredential.user.metadata.lastSignInTime,
         reviewSubmit: false,
         acceptedTerms: false,
         justRegistered: true,
@@ -291,7 +294,7 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  
+
 
   const signIn = async (email, password) => {
     setLoading(true);
@@ -308,6 +311,7 @@ export const AuthProvider = ({ children }) => {
       dispatch(updateJustRegistered(userData?.personalDetails.justRegistered));
       dispatch(
         updatePersonalDetails({
+          uid:userData?.personalDetails.uid,
           firstName: userData?.personalDetails.firstName,
           lastName: userData?.personalDetails.lastName,
           email: userData?.personalDetails.email,
@@ -320,6 +324,7 @@ export const AuthProvider = ({ children }) => {
             name: userData?.personalDetails.profilePictureName,
           },
           registerDate: userCredential.user.metadata.creationTime,
+          lastLogin: userCredential.user.metadata.lastSignInTime,
           reviewSubmit: userData?.personalDetails.reviewSubmit,
           acceptedTerms: userData?.personalDetails.acceptedTerms,
         })

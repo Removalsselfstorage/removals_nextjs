@@ -243,7 +243,7 @@ const Documentation = () => {
           name: drivingLicenseUpload?.name,
         },
         email: details.personalDetails.email,
-        reviewSubmit: true,
+        reviewSubmit: false,
         uid,
       };
 

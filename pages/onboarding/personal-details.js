@@ -220,7 +220,8 @@ const PersonalDetails = ({ names }) => {
         email,
         phone,
         registerDate: userDetails.userDetails.metadata.creationTime,
-        reviewSubmit: true,
+        lastLogin: userDetails.userDetails.metadata.lastSignInTime,
+        reviewSubmit: false,
         acceptedTerms: false,
         justRegistered: false,
         uid,
@@ -234,6 +235,7 @@ const PersonalDetails = ({ names }) => {
 
       dispatch(
         updatePersonalDetails({
+          uid,
           firstName,
           lastName,
           email,
@@ -246,6 +248,7 @@ const PersonalDetails = ({ names }) => {
             name: imageUpload?.name,
           },
           registerDate: userDetails.userDetails.metadata?.creationTime,
+          lastLogin: userDetails.userDetails.metadata?.creationTime,
           reviewSubmit: false,
           acceptedTerms: details.personalDetails.acceptedTerms,
         })

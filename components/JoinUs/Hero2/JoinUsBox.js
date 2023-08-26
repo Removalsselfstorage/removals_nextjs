@@ -293,9 +293,16 @@ const JoinUsBox = () => {
                   </p>
                 )}
                 {userDetails.signupMessage && (
-                  <p className="text-center text-[15px] text-primary">
-                    {userDetails.signupMessage}
-                  </p>
+                  <>
+                    <p className="text-center text-[15px] text-primary">
+                      {userDetails.signupMessage}
+                    </p>
+                    <div className="toast toast-end">
+                      <div className="alert alert-success">
+                        <span>{userDetails.signupMessage}</span>
+                      </div>
+                    </div>
+                  </>
                 )}
 
                 {/* <div className={styles.account}>

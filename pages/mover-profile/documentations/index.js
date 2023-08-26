@@ -68,40 +68,40 @@ const Documentations = () => {
     details.companyDetails.companyAddress
   );
   const [companyProfilePix, setCompanyProfilePix] = useState(
-    details.companyDetails.companyProfilePix?.raw || null
+    null
   );
   const [companyProfilePixurl, setCompanyProfilePixurl] = useState(
-    details.companyDetails.companyProfilePix?.url
+    details.companyDetails.companyProfilePixUrl
   );
   const [regCertificateUpload, setRegCertificateUpload] = useState(
-    details.companyDocs.regCertificate?.raw || null
+   null
   );
   const [regCertificateUploadurl, setRegCertificateUploadurl] = useState(
-    details.companyDocs.regCertificate?.url
+    details.companyDocs.regCertificateUrl
   );
   const [vehInsuranceUpload, setVehInsuranceUpload] = useState(
-    details.companyDocs.vehInsurance?.raw || null
+    null
   );
   const [vehInsuranceUploadurl, setVehInsuranceUploadurl] = useState(
-    details.companyDocs.vehInsurance?.url
+    details.companyDocs.vehInsuranceUrl
   );
   const [pubInsuranceUpload, setPubInsuranceUpload] = useState(
-    details.companyDocs.pubInsurance?.raw || null
+    null
   );
   const [pubInsuranceUploadurl, setPubInsuranceUploadurl] = useState(
-    details.companyDocs.pubInsurance?.url
+    details.companyDocs.pubInsuranceUrl
   );
   const [tranInsuranceUpload, setTranInsuranceUpload] = useState(
-    details.companyDocs.tranInsurance?.raw || null
+    null
   );
   const [tranInsuranceUploadurl, setTranInsuranceUploadurl] = useState(
-    details.companyDocs.tranInsurance?.url
+    details.companyDocs.tranInsuranceUrl
   );
   const [drivingLicenseUpload, setDrivingLicenseUpload] = useState(
-    details.companyDocs.drivingLicense?.raw || null
+    null
   );
   const [drivingLicenseUploadurl, setDrivingLicenseUploadurl] = useState(
-    details.companyDocs.drivingLicense?.url
+    details.companyDocs.drivingLicenseUrl
   );
 
   const [phoneError, setPhoneError] = useState(true);
@@ -188,42 +188,37 @@ const Documentations = () => {
     } else {
       setSubmitLoading(true);
 
+      const cpName = companyProfilePix.name;
+      const rcName = regCertificateUpload.name;
+      const viName = vehInsuranceUpload.name;
+      const piName = pubInsuranceUpload.name;
+      const tiName = tranInsuranceUpload.name;
+      const dlName = drivingLicenseUpload.name;
+
       const moveObj = {
         companyName,
-        generatedName: details.companyDetails.generatedName,
         companyNumber,
+        generatedName: details.companyDetails.generatedName,
         companyAddress,
         companyBio,
-        companyProfilePix: {
-          raw: companyProfilePix,
-          url: companyProfilePixurl,
-          name: companyProfilePix?.name,
-        },
-        regCertificate: {
-          raw: regCertificateUpload,
-          url: regCertificateUploadurl,
-          name: regCertificateUpload?.name,
-        },
-        vehInsurance: {
-          raw: vehInsuranceUpload,
-          url: vehInsuranceUploadurl,
-          name: vehInsuranceUpload?.name,
-        },
-        pubInsurance: {
-          raw: pubInsuranceUpload,
-          url: pubInsuranceUploadurl,
-          name: pubInsuranceUpload?.name,
-        },
-        tranInsurance: {
-          raw: tranInsuranceUpload,
-          url: tranInsuranceUploadurl,
-          name: tranInsuranceUpload?.name,
-        },
-        drivingLicense: {
-          raw: drivingLicenseUpload,
-          url: drivingLicenseUploadurl,
-          name: drivingLicenseUpload?.name,
-        },
+        companyProfilePixRaw: companyProfilePix,
+        companyProfilePixUrl: companyProfilePixurl,
+        companyProfilePixName: cpName,
+        regCertificateRaw: regCertificateUpload,
+        regCertificateUrl: regCertificateUploadurl,
+        regCertificateName: rcName,
+        vehInsuranceRaw: vehInsuranceUpload,
+        vehInsuranceUrl: vehInsuranceUploadurl,
+        vehInsuranceName: viName,
+        pubInsuranceRaw: pubInsuranceUpload,
+        pubInsuranceUrl: pubInsuranceUploadurl,
+        pubInsuranceName: piName,
+        tranInsuranceRaw: tranInsuranceUpload,
+        tranInsuranceUrl: tranInsuranceUploadurl,
+        tranInsuranceName: tiName,
+        drivingLicenseRaw: drivingLicenseUpload,
+        drivingLicenseUrl: drivingLicenseUploadurl,
+        drivingLicenseName: dlName,
         email: details.personalDetails.email,
         reviewSubmit: true,
         uid,
@@ -239,49 +234,33 @@ const Documentations = () => {
           companyNumber,
           companyAddress,
           companyBio,
-          companyProfilePix: {
-            raw: companyProfilePix,
-            url: companyProfilePixurl,
-            name: companyProfilePix.name,
-          },
-          reviewSubmit: false,
+          // companyProfilePixRaw: companyProfilePix,
+          companyProfilePixUrl: companyProfilePixurl,
+          companyProfilePixName: cpName,
+          reviewSubmit: true,
         })
       );
 
       dispatch(
         updateCompanyDocs({
-          regCertificate: {
-            raw: regCertificateUpload,
-            url: regCertificateUploadurl,
-            name: regCertificateUpload.name,
-          },
-          // vehInsurance: vehInsuranceUploadurl,
-          vehInsurance: {
-            raw: vehInsuranceUpload,
-            url: vehInsuranceUploadurl,
-            name: vehInsuranceUpload.name,
-          },
-          // pubInsurance: pubInsuranceUploadurl,
-          pubInsurance: {
-            raw: pubInsuranceUpload,
-            url: pubInsuranceUploadurl,
-            name: pubInsuranceUpload.name,
-          },
-          // tranInsurance: tranInsuranceUploadurl,
-          tranInsurance: {
-            raw: tranInsuranceUpload,
-            url: tranInsuranceUploadurl,
-            name: tranInsuranceUpload.name,
-          },
-          // drivingLicense: drivingLicenseUploadurl,
-          drivingLicense: {
-            raw: drivingLicenseUpload,
-            url: drivingLicenseUploadurl,
-            name: drivingLicenseUpload.name,
-          },
+          // regCertificateRaw: regCertificateUpload,
+          regCertificateUrl: regCertificateUploadurl,
+          regCertificateName: rcName,
+          // vehInsuranceRaw: vehInsuranceUpload,
+          vehInsuranceUrl: vehInsuranceUploadurl,
+          vehInsuranceName: viName,
+          // pubInsuranceRaw: pubInsuranceUpload,
+          pubInsuranceUrl: pubInsuranceUploadurl,
+          pubInsuranceName: piName,
+          // tranInsuranceRaw: tranInsuranceUpload,
+          tranInsuranceUrl: tranInsuranceUploadurl,
+          tranInsuranceName: tiName,
+          // drivingLicenseRaw: drivingLicenseUpload,
+          drivingLicenseUrl: drivingLicenseUploadurl,
+          drivingLicenseName: dlName,
+          reviewSubmit: true,
         })
       );
-     
 
       setSubmitSuccess(true);
 
@@ -484,7 +463,7 @@ const Documentations = () => {
                       imageUpload={companyProfilePix}
                       fileUploadError={fileUploadErrorCP}
                       setFileUploadError={setFileUploadErrorCP}
-                      data={details}
+                      data={details.companyDetails.companyProfilePixName}
                     />
                     {fileUploadErrorCP && (
                       <p className=" text-secondary text-[14px] mt-[10px]">
@@ -525,7 +504,7 @@ const Documentations = () => {
                       setPreviewUrl={setDrivingLicenseUploadurl}
                       fileUploadError={fileUploadErrorDL}
                       setFileUploadError={setFileUploadErrorDL}
-                      data={details}
+                      data={details.companyDocs.drivingLicenseName}
                     />
                     {fileUploadErrorDL && (
                       <p className=" text-secondary text-[14px] mt-[10px]">
@@ -571,7 +550,7 @@ const Documentations = () => {
                       setPreviewUrl={setRegCertificateUploadurl}
                       fileUploadError={fileUploadErrorRC}
                       setFileUploadError={setFileUploadErrorRC}
-                      data={details}
+                      data={details.companyDocs.regCertificateName}
                     />
                     {fileUploadErrorRC && (
                       <p className=" text-secondary text-[14px] mt-[10px]">
@@ -612,7 +591,7 @@ const Documentations = () => {
                       setPreviewUrl={setVehInsuranceUploadurl}
                       fileUploadError={fileUploadErrorVI}
                       setFileUploadError={setFileUploadErrorVI}
-                      data={details}
+                      data={details.companyDocs.vehInsuranceName}
                     />
                     {fileUploadErrorVI && (
                       <p className=" text-secondary text-[14px] mt-[10px]">
@@ -658,7 +637,7 @@ const Documentations = () => {
                       setPreviewUrl={setPubInsuranceUploadurl}
                       fileUploadError={fileUploadErrorPI}
                       setFileUploadError={setFileUploadErrorPI}
-                      data={details}
+                      data={details.companyDocs.pubInsuranceName}
                     />
                     {fileUploadErrorPI && (
                       <p className=" text-secondary text-[14px] mt-[10px]">
@@ -699,7 +678,7 @@ const Documentations = () => {
                       setPreviewUrl={setTranInsuranceUploadurl}
                       fileUploadError={fileUploadErrorTI}
                       setFileUploadError={setFileUploadErrorTI}
-                      data={details}
+                      data={details.companyDocs.tranInsuranceName}
                     />
                     {fileUploadErrorTI && (
                       <p className=" text-secondary text-[14px] mt-[10px]">

@@ -116,9 +116,9 @@ const Dashboard = () => {
   const userDetails = useSelector(getAllUserDetails);
   const details = useSelector(getAllMoverDetails);
 
-  const condition1 = details?.personalDetails?.profilePicture?.url;
+  const condition1 = details?.personalDetails?.profilePictureUrl;
   const condition2 = details.personalDetails.acceptedTerms;
-  // const condition3 = details.companyDetails.companyProfilePix.url;
+  // const condition3 = details.companyDetails.companyProfilePixUrl;
 
   const filterSections = () => {
     if (condition1 !== "" && condition2 === false) {
@@ -181,7 +181,7 @@ const Dashboard = () => {
   const [sectionData, setSectionData] = useState(sortedSections);
 
   const [previewUrl, setPreviewUrl] = useState(
-    details.personalDetails.profilePicture.url
+    details.personalDetails.profilePictureUrl
   );
 
   useEffect(() => {
@@ -240,11 +240,11 @@ const Dashboard = () => {
                       {firstName} {lastName}
                     </p>
                   </div>
-                  <p className=" text-gray-400 text-[14px] md:text-[16px]">
+                  <p className=" text-gray-400 text-[13px] md:text-[14px]">
                     <span className="font-bold ">Registered:</span>{" "}
                     {userDetails?.userDetails?.metadata?.creationTime}
                   </p>
-                  <p className=" text-gray-400 text-[14px] md:text-[16px]">
+                  <p className=" text-gray-400 text-[13px] md:text-[14px]">
                     <span className="font-bold">Last Login:</span>{" "}
                     {userDetails?.userDetails?.metadata?.lastSignInTime}
                   </p>

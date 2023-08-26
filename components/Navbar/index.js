@@ -28,7 +28,7 @@ const Navbar = () => {
 
   const firstName = moverDetails.personalDetails.firstName;
   const lastName = moverDetails.personalDetails.lastName;
-  const previewUrl = moverDetails.personalDetails.profilePicture.url;
+  const previewUrl = moverDetails.personalDetails.profilePictureUrl;
 
   const [shadow, setShadow] = useState(false);
   const [showNav, setShowNav] = useState(true);

@@ -140,11 +140,9 @@ export const AuthProvider = ({ children }) => {
           phone: "",
           address: "",
           personalBio: "",
-          profilePicture: {
-            raw: "",
-            url: "",
-            name: "",
-          },
+          // profilePictureRaw: "",
+          profilePictureUrl: "",
+          profilePictureName: "",
           registerDate: userCredential.user.metadata.creationTime,
           lastLogin: userCredential.user.metadata.lastSignInTime,
           reviewSubmit: false,
@@ -159,52 +157,38 @@ export const AuthProvider = ({ children }) => {
           companyNumber: "",
           companyAddress: "",
           companyBio: "",
-          companyProfilePix: {
-            raw: "",
-            url: "",
-            name: "",
-          },
+          // companyProfilePixRaw: "",
+          companyProfilePixUrl: "",
+          companyProfilePixName: "",
           reviewSubmit: false,
         })
       );
 
       dispatch(
         updateCompanyDocs({
-          regCertificate: {
-            raw: "",
-            url: "",
-            name: "",
-          },
-          vehInsurance: {
-            raw: "",
-            url: "",
-            name: "",
-          },
-          pubInsurance: {
-            raw: "",
-            url: "",
-            name: "",
-          },
-          tranInsurance: {
-            raw: "",
-            url: "",
-            name: "",
-          },
-          drivingLicense: {
-            raw: "",
-            url: "",
-            name: "",
-          },
+          // regCertificateRaw: "",
+          regCertificateUrl: "",
+          regCertificateName: "",
+          // vehInsuranceRaw: "",
+          vehInsuranceUrl: "",
+          vehInsuranceName: "",
+          // pubInsuranceRaw: "",
+          pubInsuranceUrl: "",
+          pubInsuranceName: "",
+          // tranInsuranceRaw: "",
+          tranInsuranceUrl: "",
+          tranInsuranceName: "",
+          // drivingLicenseRaw: "",
+          drivingLicenseUrl: "",
+          drivingLicenseName: "",
           reviewSubmit: false,
         })
       );
 
       const moveObj = {
-        profilePicture: {
-          raw: "",
-          url: "",
-          name: "",
-        },
+        profilePictureRaw: "",
+        profilePictureUrl: "",
+        profilePictureName: "",
         address: "",
         personalBio: "",
         firstName: firstName,
@@ -227,36 +211,24 @@ export const AuthProvider = ({ children }) => {
         companyNumber: "",
         companyAddress: "",
         companyBio: "",
-        companyProfilePix: {
-          raw: "",
-          url: "",
-          name: "",
-        },
-        regCertificate: {
-          raw: "",
-          url: "",
-          name: "",
-        },
-        vehInsurance: {
-          raw: "",
-          url: "",
-          name: "",
-        },
-        pubInsurance: {
-          raw: "",
-          url: "",
-          name: "",
-        },
-        tranInsurance: {
-          raw: "",
-          url: "",
-          name: "",
-        },
-        drivingLicense: {
-          raw: "",
-          url: "",
-          name: "",
-        },
+        companyProfilePixRaw: "",
+        companyProfilePixUrl: "",
+        companyProfilePixName: "",
+        regCertificateRaw: "",
+        regCertificateUrl: "",
+        regCertificateName: "",
+        vehInsuranceRaw: "",
+        vehInsuranceUrl: "",
+        vehInsuranceName: "",
+        pubInsuranceRaw: "",
+        pubInsuranceUrl: "",
+        pubInsuranceName: "",
+        tranInsuranceRaw: "",
+        tranInsuranceUrl: "",
+        tranInsuranceName: "",
+        drivingLicenseRaw: "",
+        drivingLicenseUrl: "",
+        drivingLicenseName: "",
         reviewSubmit: false,
         uid: userCredential.user.uid,
       };
@@ -296,8 +268,6 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-
-
   const signIn = async (email, password) => {
     setLoading(true);
 
@@ -313,19 +283,17 @@ export const AuthProvider = ({ children }) => {
       dispatch(updateJustRegistered(userData?.personalDetails.justRegistered));
       dispatch(
         updatePersonalDetails({
-          uid:userData?.personalDetails.uid,
+          uid: userData?.personalDetails.uid,
           firstName: userData?.personalDetails.firstName,
           lastName: userData?.personalDetails.lastName,
-          generatedName:userData?.personalDetails.generatedName,
+          generatedName: userData?.personalDetails.generatedName,
           email: userData?.personalDetails.email,
           phone: userData?.personalDetails.phone,
           address: userData?.personalDetails.address,
           personalBio: userData?.personalDetails.personalBio,
-          profilePicture: {
-            raw: userData?.personalDetails.profileImagePreviewUrl,
-            url: userData?.personalDetails.profileImagePreviewUrl,
-            name: userData?.personalDetails.profilePictureName,
-          },
+          // profilePictureRaw: "",
+          profilePictureUrl: userData?.personalDetails.profileImageUrl,
+          profilePictureName: userData?.personalDetails.profilePictureName,
           registerDate: userCredential.user.metadata.creationTime,
           lastLogin: userCredential.user.metadata.lastSignInTime,
           reviewSubmit: userData?.personalDetails.reviewSubmit,
@@ -339,45 +307,35 @@ export const AuthProvider = ({ children }) => {
           companyNumber: userData.companyDetails.companyNumber,
           companyAddress: userData.companyDetails.companyAddress,
           companyBio: userData.companyDetails.companyBio,
-          companyProfilePix: {
-            raw: userData.CompanyPix.companyProfilePixPreviewUrl,
-            url: userData.CompanyPix.companyProfilePixPreviewUrl,
-            name: userData.CompanyPix.companyProfilePixName,
-          },
+          // companyProfilePixRaw: userData.CompanyPix.companyProfilePixPreviewUrl,
+          // companyProfilePixRaw: "",
+          companyProfilePixUrl: userData.CompanyPix.companyProfilePixPreviewUrl,
+          companyProfilePixName: userData.CompanyPix.companyProfilePixName,
           reviewSubmit: userData?.companyDetails.reviewSubmit,
         })
       );
       dispatch(
         updateCompanyDocs({
-          regCertificate: {
-            raw: userData.RegCertificate.regCertificatePreviewUrl,
-            url: userData.RegCertificate.regCertificatePreviewUrl,
-            name: userData.RegCertificate.regCertificateName,
-          },
-          // vehInsurance: vehInsuranceUploadurl,
-          vehInsurance: {
-            raw: userData.VehInsurance.vehInsurancePreviewUrl,
-            url: userData.VehInsurance.vehInsurancePreviewUrl,
-            name: userData.VehInsurance.vehInsuranceName,
-          },
-          // pubInsurance: pubInsuranceUploadurl,
-          pubInsurance: {
-            raw: userData.PubInsurance.pubInsurancePreviewUrl,
-            url: userData.PubInsurance.pubInsurancePreviewUrl,
-            name: userData.PubInsurance.pubInsuranceName,
-          },
-          // tranInsurance: tranInsuranceUploadurl,
-          tranInsurance: {
-            raw: userData.TranInsurance.tranInsurancePreviewUrl,
-            url: userData.TranInsurance.tranInsurancePreviewUrl,
-            name: userData.TranInsurance.tranInsuranceName,
-          },
-          // drivingLicense: drivingLicenseUploadurl,
-          drivingLicense: {
-            raw: userData.DrivingLicense.drivingLicensePreviewUrl,
-            url: userData.DrivingLicense.drivingLicensePreviewUrl,
-            name: userData.DrivingLicense.drivingLicenseName,
-          },
+          // regCertificateRaw: userData.RegCertificate.regCertificatePreviewUrl,
+          // regCertificateRaw: "",
+          regCertificateUrl: userData.RegCertificate.regCertificatePreviewUrl,
+          regCertificateName: userData.RegCertificate.regCertificateName,
+          // vehInsuranceRaw: userData.VehInsurance.vehInsurancePreviewUrl,
+          // vehInsuranceRaw: "",
+          vehInsuranceUrl: userData.VehInsurance.vehInsurancePreviewUrl,
+          vehInsuranceName: userData.VehInsurance.vehInsuranceName,
+          // pubInsuranceRaw: userData.PubInsurance.pubInsurancePreviewUrl,
+          // pubInsuranceRaw: "",
+          pubInsuranceUrl: userData.PubInsurance.pubInsurancePreviewUrl,
+          pubInsuranceName: userData.PubInsurance.pubInsuranceName,
+          // tranInsuranceRaw: userData.TranInsurance.tranInsurancePreviewUrl,
+          // tranInsuranceRaw: "",
+          tranInsuranceUrl: userData.TranInsurance.tranInsurancePreviewUrl,
+          tranInsuranceName: userData.TranInsurance.tranInsuranceName,
+          // drivingLicenseRaw: userData.DrivingLicense.drivingLicensePreviewUrl,
+          // drivingLicenseRaw: "",
+          drivingLicenseUrl: userData.DrivingLicense.drivingLicensePreviewUrl,
+          drivingLicenseName: userData.DrivingLicense.drivingLicenseName,
         })
       );
 
@@ -400,37 +358,6 @@ export const AuthProvider = ({ children }) => {
           )
         );
       }
-      // switch (userCredential.user.emailVerified) {
-      //   case true:
-      //     dispatch(updateUserDetails(userCredential.user));
-      //     switch (details.personalDetails.phone) {
-      //       case true:
-      //         router.back();
-
-      //         break;
-      //       case null:
-      //         router.push("/onboarding/personal-details");
-      //         break;
-
-      //       default:
-      //         break;
-      //     }
-
-      //     break;
-
-      //   case false:
-      //     setUser(userCredential.user);
-      //     dispatch(
-      //       updateVerificationMessage(
-      //         "Please verify your email via link sent to your mail, to login."
-      //       )
-      //     );
-
-      //     break;
-
-      //   default:
-      //     break;
-      // }
     } catch (error) {
       setError(error.message);
       dispatch(updateLoginError(error.message));

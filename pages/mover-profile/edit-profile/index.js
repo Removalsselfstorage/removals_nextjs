@@ -43,15 +43,15 @@ const EditProfile = () => {
   const details = useSelector(getAllMoverDetails);
 
   const [imageUpload, setImageUpload] = useState(
-    details.personalDetails.profilePicture?.raw || null
+    null
   );
 
   // const [previewUrl, setPreviewUrl] = useState(
   //   details.firebaseMoverDetails?.profileImagePreviewUrl ||
-  //     details.personalDetails.profilePicture?.url
+  //     details.personalDetails.profilePictureUrl
   // );
   const [previewUrl, setPreviewUrl] = useState(
-    details.personalDetails.profilePicture.url
+    details.personalDetails.profilePictureUrl
   );
 
   // const [personalBio, setPersonalBio] = useState(
@@ -153,12 +153,12 @@ const EditProfile = () => {
     } else {
       setSubmitLoading(true);
 
+      const imageName = imageUpload?.name;
+
       const moveObj = {
-        profilePicture: {
-          raw: imageUpload,
-          url: previewUrl,
-          name: imageUpload.name,
-        },
+        profilePictureRaw: imageUpload,
+        profilePictureUrl: previewUrl,
+        profilePictureName: imageName,
         address,
         personalBio,
         firstName,
@@ -187,36 +187,15 @@ const EditProfile = () => {
           phone,
           address,
           personalBio,
-          profilePicture: {
-            raw: imageUpload,
-            url: previewUrl,
-            name: imageUpload?.name,
-          },
+          // profilePictureRaw: imageUpload,
+          profilePictureUrl: previewUrl,
+          profilePictureName: imageName,
           registerDate: userDetails.userDetails.metadata?.creationTime,
           lastLogin: userDetails.userDetails.metadata?.creationTime,
           reviewSubmit: true,
           acceptedTerms: details.personalDetails.acceptedTerms,
         })
       );
-
-      // dispatch(
-      //   updatePersonalDetails({
-      //     firstName,
-      //     lastName,
-      //     email,
-      //     phone,
-      //     address,
-      //     personalBio,
-      //     profilePicture: {
-      //       raw: imageUpload,
-      //       url: previewUrl,
-      //       name: imageUpload?.name,
-      //     },
-      //     registerDate: userDetails.userDetails.metadata?.creationTime,
-      //     reviewSubmit: true,
-      //     acceptedTerms: details.personalDetails.acceptedTerms,
-      //   })
-      // );
 
       setSubmitSuccess(true);
 
@@ -299,7 +278,7 @@ const EditProfile = () => {
                           imageUpload={imageUpload}
                           setFileUploadError={setFileUploadError}
                           fileUploadError={fileUploadError}
-                          data={details}
+                          data={details.personalDetails.profilePictureName}
                         />
                       </div>
                       {!fileUploadError && (

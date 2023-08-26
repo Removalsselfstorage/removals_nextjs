@@ -40,7 +40,7 @@ const Navbar3 = ({ data }) => {
   //   moverDetails?.personalDetails.lastName;
   const firstName = moverDetails.personalDetails.firstName;
   const lastName = moverDetails.personalDetails.lastName;
-  const previewUrl = moverDetails.personalDetails.profilePicture.url
+  const previewUrl = moverDetails.personalDetails.profilePictureUrl
 
   // const uid = users.userDetails?.uid;
   // const readMoversData = async () => {

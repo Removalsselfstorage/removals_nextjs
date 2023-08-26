@@ -61,11 +61,11 @@ const PersonalDetails = ({ names }) => {
   const [genCompanyName, setGenCompanyName] = useState("");
 
   const [imageUpload, setImageUpload] = useState(
-    details.personalDetails.profilePicture?.raw || null
+    null
   );
 
   const [previewUrl, setPreviewUrl] = useState(
-    details.personalDetails.profilePicture?.url
+    details.personalDetails.profilePictureUrl
   );
 
   const [personalBio, setPersonalBio] = useState(
@@ -165,27 +165,8 @@ const PersonalDetails = ({ names }) => {
 
     setGenCompanyName(companyName);
 
-    // dispatch(
-    //   updatePersonalDetails({
-    //     uid: details.personalDetails.uid,
-    //     firstName: details.personalDetails.firstName,
-    //     lastName: details.personalDetails.lastName,
-    //     generatedName: companyName,
-    //     email: details.personalDetails.email,
-    //     phone: details.personalDetails.phone,
-    //     address: details.personalDetails.address,
-    //     personalBio: details.personalDetails.personalBio,
-    //     profilePicture: {
-    //       raw: details.personalDetails.profilePicture.raw,
-    //       url: details.personalDetails.profilePicture.url,
-    //       name: details.personalDetails.profilePicture.name,
-    //     },
-    //     registerDate: details.personalDetails.registerDate,
-    //     lastLogin: details.personalDetails.lastLogin,
-    //     reviewSubmit: details.personalDetails.reviewSubmit,
-    //     acceptedTerms: details.personalDetails.acceptedTerms,
-    //   })
-    // );
+   
+    const imageName = imageUpload?.name;
 
     dispatch(
       updatePersonalDetails({
@@ -197,11 +178,9 @@ const PersonalDetails = ({ names }) => {
         phone,
         address,
         personalBio,
-        profilePicture: {
-          raw: imageUpload,
-          url: previewUrl,
-          name: imageUpload?.name,
-        },
+        // profilePictureRaw: imageUpload,
+        profilePictureUrl: previewUrl,
+        profilePictureName: imageName,
         registerDate: userDetails.userDetails.metadata?.creationTime,
         lastLogin: userDetails.userDetails.metadata?.creationTime,
         reviewSubmit: false,
@@ -216,21 +195,17 @@ const PersonalDetails = ({ names }) => {
         companyNumber: details.companyDetails.companyNumber,
         companyAddress: details.companyDetails.companyAddress,
         companyBio: details.companyDetails.companyBio,
-        companyProfilePix: {
-          raw: details.companyDetails.companyProfilePix.raw,
-          url: details.companyDetails.companyProfilePix.url,
-          name: details.companyDetails.companyProfilePix.name,
-        },
+        // companyProfilePixRaw: details.companyDetails.companyProfilePixRaw,
+        companyProfilePixUrl: details.companyDetails.companyProfilePixUrl,
+        companyProfilePixName: details.companyDetails.companyProfilePix?.name,
         reviewSubmit: details?.companyDetails.reviewSubmit,
       })
     );
 
     const moveObj = {
-      profilePicture: {
-        raw: imageUpload,
-        url: previewUrl,
-        name: imageUpload?.name,
-      },
+      profilePictureRaw: imageUpload,
+      profilePictureUrl: previewUrl,
+      profilePictureName: imageName,
       address,
       personalBio,
       firstName,
@@ -379,7 +354,7 @@ const PersonalDetails = ({ names }) => {
                             imageUpload={imageUpload}
                             setFileUploadError={setFileUploadError}
                             fileUploadError={fileUploadError}
-                            data={details}
+                            data={details.personalDetails.profilePictureName}
                           />
                         </div>
                         {!fileUploadError && (

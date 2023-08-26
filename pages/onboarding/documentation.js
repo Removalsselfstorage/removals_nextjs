@@ -305,10 +305,11 @@ const Documentation = () => {
       setSubmitLoading(false);
 
       // router.push("/mover-profile");
-      setTimeout(() => {
-        // router.push("/onboarding/personal-details");
-        router.push("/mover-profile/dashboard");
-      }, 1500);
+      // setTimeout(() => {
+      //   // router.push("/onboarding/personal-details");
+      //   router.push("/mover-profile/dashboard");
+      // }, 1500);
+      router.push("/mover-profile/dashboard");
     }
   };
 
@@ -320,7 +321,7 @@ const Documentation = () => {
 
   //   console.log(details.moveDetails.moveDate);
   //   console.log(dateValue);
-  // console.log(details);
+  console.log(details);
 
   return (
     <MoverLayout2>
@@ -472,7 +473,7 @@ const Documentation = () => {
               {/* mandatory text */}
               <div className="flex flex-col w-full items-center  mb-[40px] mt-[0px]">
                 <p className=" text-gray-400  text-[14px] mt-[10px]">
-                  (Accepted file types: PNG, JPG; Maximum file size: 3MB)
+                  (Accepted file types: PNG, JPG; Maximum file size: 2MB)
                 </p>
               </div>
 

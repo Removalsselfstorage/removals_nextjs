@@ -7,6 +7,7 @@ const initialState = {
     uid: "",
     firstName: "",
     lastName: "",
+    generatedName: "",
     email: "",
     phone: "",
     address: "",

@@ -232,105 +232,56 @@ const Documentations = () => {
       const result = await UploadMoverDocumentation(moveObj);
       console.log(result);
 
-      // dispatch(
-      //   updateCompanyDetails({
-      //     companyName,
-      //     generatedName: details.companyDetails.generatedName,
-      //     companyNumber,
-      //     companyAddress,
-      //     companyBio,
-      //     companyProfilePix: {
-      //       raw: companyProfilePix,
-      //       url: companyProfilePixurl,
-      //       name: companyProfilePix.name,
-      //     },
-      //     reviewSubmit: false,
-      //   })
-      // );
+      dispatch(
+        updateCompanyDetails({
+          companyName,
+          generatedName: details.companyDetails.generatedName,
+          companyNumber,
+          companyAddress,
+          companyBio,
+          companyProfilePix: {
+            raw: companyProfilePix,
+            url: companyProfilePixurl,
+            name: companyProfilePix.name,
+          },
+          reviewSubmit: false,
+        })
+      );
 
-      // dispatch(
-      //   updateCompanyDocs({
-      //     regCertificate: {
-      //       raw: regCertificateUpload,
-      //       url: regCertificateUploadurl,
-      //       name: regCertificateUpload.name,
-      //     },
-      //     // vehInsurance: vehInsuranceUploadurl,
-      //     vehInsurance: {
-      //       raw: vehInsuranceUpload,
-      //       url: vehInsuranceUploadurl,
-      //       name: vehInsuranceUpload.name,
-      //     },
-      //     // pubInsurance: pubInsuranceUploadurl,
-      //     pubInsurance: {
-      //       raw: pubInsuranceUpload,
-      //       url: pubInsuranceUploadurl,
-      //       name: pubInsuranceUpload.name,
-      //     },
-      //     // tranInsurance: tranInsuranceUploadurl,
-      //     tranInsurance: {
-      //       raw: tranInsuranceUpload,
-      //       url: tranInsuranceUploadurl,
-      //       name: tranInsuranceUpload.name,
-      //     },
-      //     // drivingLicense: drivingLicenseUploadurl,
-      //     drivingLicense: {
-      //       raw: drivingLicenseUpload,
-      //       url: drivingLicenseUploadurl,
-      //       name: drivingLicenseUpload.name,
-      //     },
-      //   })
-      // );
-      // dispatch(
-      //   updateMoverPersonalDetails({
-      //     firstName: details.personalDetails.firstName,
-      //     lastName: details.personalDetails.lastName,
-      //     email: details.personalDetails.email,
-      //     phone: details.personalDetails.phone,
-      //     address: details.personalDetails.address,
-      //     profilePicture: details.personalDetails.profilePicture,
-      //     companyName,
-      //     companyNumber,
-      //     companyAddress,
-      //     companyBio,
-      //     companyProfilePix: {
-      //       raw: companyProfilePix,
-      //       url: companyProfilePixurl,
-      //       name: companyProfilePix?.name,
-      //     },
-      //     // regCertificate: regCertificateUploadurl,
-      //     regCertificate: {
-      //       raw: regCertificateUpload,
-      //       url: regCertificateUploadurl,
-      //       name: regCertificateUpload?.name,
-      //     },
-      //     // vehInsurance: vehInsuranceUploadurl,
-      //     vehInsurance: {
-      //       raw: vehInsuranceUpload,
-      //       url: vehInsuranceUploadurl,
-      //       name: vehInsuranceUpload?.name,
-      //     },
-      //     // pubInsurance: pubInsuranceUploadurl,
-      //     pubInsurance: {
-      //       raw: pubInsuranceUpload,
-      //       url: pubInsuranceUploadurl,
-      //       name: pubInsuranceUpload?.name,
-      //     },
-      //     // tranInsurance: tranInsuranceUploadurl,
-      //     tranInsurance: {
-      //       raw: tranInsuranceUpload,
-      //       url: tranInsuranceUploadurl,
-      //       name: tranInsuranceUpload?.name,
-      //     },
-      //     // drivingLicense: drivingLicenseUploadurl,
-      //     drivingLicense: {
-      //       raw: drivingLicenseUpload,
-      //       url: drivingLicenseUploadurl,
-      //       name: drivingLicenseUpload?.name,
-      //     },
-      //   })
-      // );
-      // readMoversData();
+      dispatch(
+        updateCompanyDocs({
+          regCertificate: {
+            raw: regCertificateUpload,
+            url: regCertificateUploadurl,
+            name: regCertificateUpload.name,
+          },
+          // vehInsurance: vehInsuranceUploadurl,
+          vehInsurance: {
+            raw: vehInsuranceUpload,
+            url: vehInsuranceUploadurl,
+            name: vehInsuranceUpload.name,
+          },
+          // pubInsurance: pubInsuranceUploadurl,
+          pubInsurance: {
+            raw: pubInsuranceUpload,
+            url: pubInsuranceUploadurl,
+            name: pubInsuranceUpload.name,
+          },
+          // tranInsurance: tranInsuranceUploadurl,
+          tranInsurance: {
+            raw: tranInsuranceUpload,
+            url: tranInsuranceUploadurl,
+            name: tranInsuranceUpload.name,
+          },
+          // drivingLicense: drivingLicenseUploadurl,
+          drivingLicense: {
+            raw: drivingLicenseUpload,
+            url: drivingLicenseUploadurl,
+            name: drivingLicenseUpload.name,
+          },
+        })
+      );
+     
 
       setSubmitSuccess(true);
 
@@ -480,7 +431,7 @@ const Documentations = () => {
             {/* mandatory text */}
             <div className="flex flex-col w-full items-center  mb-[40px] mt-[0px]">
               <p className=" text-gray-400  text-[14px] mt-[10px]">
-                (Accepted file types: PNG, JPG; Maximum file size: 3MB)
+                (Accepted file types: PNG, JPG; Maximum file size: 2MB)
               </p>
             </div>
             {/* image upload 1*/}

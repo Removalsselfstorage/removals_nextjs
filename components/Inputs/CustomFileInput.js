@@ -36,7 +36,7 @@ const CustomFileInput = ({
     // }
     if (file) {
       //   if (file.size <= 1024 * 1024) {
-      if (file.size <= 1024 * 1024 * 3) {
+      if (file.size <= 1024 * 1024 * 2) {
         // 1MB as an example size limit
         setImageUpload(file);
         console.log(file);

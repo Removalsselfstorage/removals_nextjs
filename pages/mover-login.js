@@ -177,7 +177,6 @@ const MoverLogin = () => {
                               placeholder="Password"
                               onChange={handleChange}
                               value={user.login_password}
-                              password
                               // className="form-control'
                             />
                           </div>

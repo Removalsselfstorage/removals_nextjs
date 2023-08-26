@@ -259,7 +259,6 @@ const JoinUsBox = () => {
                       placeholder="Confirm Password"
                       onChange={handleChange}
                       value={signup_passwordConfirm}
-                      password
                     />
                   </div>
                   <span
@@ -297,11 +296,11 @@ const JoinUsBox = () => {
                     <p className="text-center text-[15px] text-primary">
                       {userDetails.signupMessage}
                     </p>
-                    <div className="toast toast-end">
+                    {/* <div className="toast toast-end">
                       <div className="alert alert-success">
                         <span>{userDetails.signupMessage}</span>
                       </div>
-                    </div>
+                    </div> */}
                   </>
                 )}
 

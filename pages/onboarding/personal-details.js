@@ -58,7 +58,7 @@ const PersonalDetails = ({ names }) => {
   const details = useSelector(getAllMoverDetails);
 
   const [usedNames, setUsedNames] = useState([]);
-  const [companyName, setCompanyName] = useState("");
+  const [genCompanyName, setGenCompanyName] = useState("");
 
   const [imageUpload, setImageUpload] = useState(
     details.personalDetails.profilePicture?.raw || null
@@ -163,7 +163,51 @@ const PersonalDetails = ({ names }) => {
       return false;
     }
 
-    setCompanyName(companyName);
+    setGenCompanyName(companyName);
+
+    // dispatch(
+    //   updatePersonalDetails({
+    //     uid: details.personalDetails.uid,
+    //     firstName: details.personalDetails.firstName,
+    //     lastName: details.personalDetails.lastName,
+    //     generatedName: companyName,
+    //     email: details.personalDetails.email,
+    //     phone: details.personalDetails.phone,
+    //     address: details.personalDetails.address,
+    //     personalBio: details.personalDetails.personalBio,
+    //     profilePicture: {
+    //       raw: details.personalDetails.profilePicture.raw,
+    //       url: details.personalDetails.profilePicture.url,
+    //       name: details.personalDetails.profilePicture.name,
+    //     },
+    //     registerDate: details.personalDetails.registerDate,
+    //     lastLogin: details.personalDetails.lastLogin,
+    //     reviewSubmit: details.personalDetails.reviewSubmit,
+    //     acceptedTerms: details.personalDetails.acceptedTerms,
+    //   })
+    // );
+
+    dispatch(
+      updatePersonalDetails({
+        uid,
+        firstName,
+        lastName,
+        generatedName: companyName,
+        email,
+        phone,
+        address,
+        personalBio,
+        profilePicture: {
+          raw: imageUpload,
+          url: previewUrl,
+          name: imageUpload?.name,
+        },
+        registerDate: userDetails.userDetails.metadata?.creationTime,
+        lastLogin: userDetails.userDetails.metadata?.creationTime,
+        reviewSubmit: false,
+        acceptedTerms: details.personalDetails.acceptedTerms,
+      })
+    );
 
     dispatch(
       updateCompanyDetails({
@@ -180,6 +224,31 @@ const PersonalDetails = ({ names }) => {
         reviewSubmit: details?.companyDetails.reviewSubmit,
       })
     );
+
+    const moveObj = {
+      profilePicture: {
+        raw: imageUpload,
+        url: previewUrl,
+        name: imageUpload?.name,
+      },
+      address,
+      personalBio,
+      firstName,
+      lastName,
+      generatedName: companyName,
+      email,
+      phone,
+      registerDate: userDetails.userDetails.metadata.creationTime,
+      lastLogin: userDetails.userDetails.metadata.lastSignInTime,
+      reviewSubmit: false,
+      acceptedTerms: false,
+      justRegistered: false,
+      uid,
+    };
+
+    // const profilePixName = imageUpload.name;
+    // const uid = userDetails.userDetails.uid;
+    const result = await UploadMoverPersonalDetails2(moveObj);
 
     // alert(companyName);
 
@@ -207,52 +276,7 @@ const PersonalDetails = ({ names }) => {
       setSubmitLoading(true);
       dispatch(updateJustRegistered(false));
 
-      const moveObj = {
-        profilePicture: {
-          raw: imageUpload,
-          url: previewUrl,
-          name: imageUpload?.name,
-        },
-        address,
-        personalBio,
-        firstName,
-        lastName,
-        email,
-        phone,
-        registerDate: userDetails.userDetails.metadata.creationTime,
-        lastLogin: userDetails.userDetails.metadata.lastSignInTime,
-        reviewSubmit: false,
-        acceptedTerms: false,
-        justRegistered: false,
-        uid,
-      };
-
-      // const profilePixName = imageUpload.name;
-      // const uid = userDetails.userDetails.uid;
-      const result = await UploadMoverPersonalDetails2(moveObj);
-
       generateCompanyName();
-
-      dispatch(
-        updatePersonalDetails({
-          uid,
-          firstName,
-          lastName,
-          email,
-          phone,
-          address,
-          personalBio,
-          profilePicture: {
-            raw: imageUpload,
-            url: previewUrl,
-            name: imageUpload?.name,
-          },
-          registerDate: userDetails.userDetails.metadata?.creationTime,
-          lastLogin: userDetails.userDetails.metadata?.creationTime,
-          reviewSubmit: false,
-          acceptedTerms: details.personalDetails.acceptedTerms,
-        })
-      );
 
       // readMoversData();
 
@@ -360,7 +384,7 @@ const PersonalDetails = ({ names }) => {
                         </div>
                         {!fileUploadError && (
                           <p className=" text-gray-400  text-[14px] mt-[10px]">
-                            Accepted file types: PNG, JPG, JPEG; File size: 3MB
+                            Accepted file types: PNG, JPG, JPEG; File size: 2MB
                             max.
                           </p>
                         )}

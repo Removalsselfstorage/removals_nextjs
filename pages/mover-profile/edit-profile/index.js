@@ -163,6 +163,7 @@ const EditProfile = () => {
         personalBio,
         firstName,
         lastName,
+        generatedName: details.companyDetails.generatedName,
         email,
         phone,
         registerDate: details.personalDetails.registerDate,
@@ -175,6 +176,28 @@ const EditProfile = () => {
 
       const result = await UploadMoverPersonalDetails2(moveObj);
       console.log(result);
+
+      dispatch(
+        updatePersonalDetails({
+          uid,
+          firstName,
+          lastName,
+          generatedName: details.companyDetails.generatedName,
+          email,
+          phone,
+          address,
+          personalBio,
+          profilePicture: {
+            raw: imageUpload,
+            url: previewUrl,
+            name: imageUpload?.name,
+          },
+          registerDate: userDetails.userDetails.metadata?.creationTime,
+          lastLogin: userDetails.userDetails.metadata?.creationTime,
+          reviewSubmit: true,
+          acceptedTerms: details.personalDetails.acceptedTerms,
+        })
+      );
 
       // dispatch(
       //   updatePersonalDetails({
@@ -281,7 +304,7 @@ const EditProfile = () => {
                       </div>
                       {!fileUploadError && (
                         <p className=" text-gray-400  text-[14px] mt-[10px]">
-                          Accepted file types: PNG, JPG, JPEG; File size: 3MB
+                          Accepted file types: PNG, JPG, JPEG; File size: 2MB
                           max.
                         </p>
                       )}

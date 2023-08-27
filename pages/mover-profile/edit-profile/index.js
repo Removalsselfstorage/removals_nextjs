@@ -46,44 +46,24 @@ const EditProfile = () => {
     null
   );
 
-  // const [previewUrl, setPreviewUrl] = useState(
-  //   details.firebaseMoverDetails?.profileImagePreviewUrl ||
-  //     details.personalDetails.profilePictureUrl
-  // );
+ 
   const [previewUrl, setPreviewUrl] = useState(
     details.personalDetails.profilePictureUrl
   );
+  const [imageName, setImageName] = useState(
+    details.personalDetails.profilePictureName
+  );
 
-  // const [personalBio, setPersonalBio] = useState(
-  //   details.firebaseMoverDetails?.personalBio ||
-  //     details.personalDetails.personalBio
-  // );
   const [personalBio, setPersonalBio] = useState(
     details.personalDetails.personalBio
   );
 
-  // const [address, setAddress] = useState(
-  //   details.firebaseMoverDetails?.address || details.personalDetails?.address
-  // );
   const [address, setAddress] = useState(details.personalDetails.address);
 
-  // const [firstName, setFirstName] = useState(
-  //   details.firebaseMoverDetails?.firstName ||
-  //     details.personalDetails?.firstName
-  // );
   const [firstName, setFirstName] = useState(details.personalDetails.firstName);
-  // const [lastName, setLastName] = useState(
-  //   details.firebaseMoverDetails?.lastName || details.personalDetails?.lastName
-  // );
   const [lastName, setLastName] = useState(details.personalDetails.lastName);
-  // const [email, setEmail] = useState(
-  //   details.firebaseMoverDetails?.email || details.personalDetails?.email
-  // );
   const [email, setEmail] = useState(details.personalDetails.email);
   const [emailError, setEmailError] = useState(true);
-  // const [phone, setPhone] = useState(
-  //   details.firebaseMoverDetails?.phone || details.personalDetails?.phone
-  // );
   const [phone, setPhone] = useState(details.personalDetails.phone);
   const [phoneError, setPhoneError] = useState(true);
   const [submitError, setSubmitError] = useState(false);
@@ -153,7 +133,7 @@ const EditProfile = () => {
     } else {
       setSubmitLoading(true);
 
-      const imageName = imageUpload?.name;
+      // const imageName = imageUpload?.name;
 
       const moveObj = {
         profilePictureRaw: imageUpload,
@@ -278,7 +258,9 @@ const EditProfile = () => {
                           imageUpload={imageUpload}
                           setFileUploadError={setFileUploadError}
                           fileUploadError={fileUploadError}
-                          data={details.personalDetails.profilePictureName}
+                          imageName={imageName}
+                          setImageName={setImageName}
+                          // data={details.personalDetails.profilePictureName}
                         />
                       </div>
                       {!fileUploadError && (

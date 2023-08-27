@@ -8,9 +8,11 @@ const CustomFileInput = ({
   setPreviewUrl,
   setImageUpload,
   imageUpload,
+  imageName,
+  setImageName,
   setFileUploadError,
   fileUploadError,
-  data,
+  // data,
   //   handleButtonClick,
   //   handleFileInputChange,
   //   fileInputRef,
@@ -39,7 +41,9 @@ const CustomFileInput = ({
       if (file.size <= 1024 * 1024 * 2) {
         // 1MB as an example size limit
         setImageUpload(file);
-        console.log(file);
+        setImageName(file.name)
+
+        // console.log(file);
         const reader = new FileReader();
         reader.onload = () => {
           setPreviewUrl(reader.result);
@@ -82,8 +86,7 @@ const CustomFileInput = ({
         <p className="truncate ... px-[10px] text-[14px] w-[255px]">
           {previewUrl && !fileUploadError
             ? // ? imageUpload?.name || details.firebaseMoverDetails.profilePictureName
-              imageUpload?.name ||
-              data
+            imageName
               // data?.personalDetails.profilePicture.name ||
               // data?.companyDetails.companyProfilePix.name ||
               // data?.companyDocs.regCertificate.name ||

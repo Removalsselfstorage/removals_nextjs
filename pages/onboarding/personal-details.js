@@ -60,12 +60,14 @@ const PersonalDetails = ({ names }) => {
   const [usedNames, setUsedNames] = useState([]);
   const [genCompanyName, setGenCompanyName] = useState("");
 
-  const [imageUpload, setImageUpload] = useState(
-    null
-  );
+  const [imageUpload, setImageUpload] = useState(null);
 
   const [previewUrl, setPreviewUrl] = useState(
     details.personalDetails.profilePictureUrl
+  );
+
+  const [imageName, setImageName] = useState(
+    details.personalDetails.profilePictureName
   );
 
   const [personalBio, setPersonalBio] = useState(
@@ -128,13 +130,6 @@ const PersonalDetails = ({ names }) => {
 
   const uid = userDetails.userDetails?.uid;
 
-  // const readMoversData = async () => {
-  //   const res = await fetchMoverDetails3(uid);
-  //   dispatch(updateFirebaseMoverDetails(res));
-  // };
-
-  // const imgUrl = URL.createObjectURL(imageUpload);
-
   const generateCompanyName = async () => {
     let companyName = "";
 
@@ -165,8 +160,6 @@ const PersonalDetails = ({ names }) => {
 
     setGenCompanyName(companyName);
 
-   
-    const imageName = imageUpload?.name;
 
     dispatch(
       updatePersonalDetails({
@@ -354,7 +347,9 @@ const PersonalDetails = ({ names }) => {
                             imageUpload={imageUpload}
                             setFileUploadError={setFileUploadError}
                             fileUploadError={fileUploadError}
-                            data={details.personalDetails.profilePictureName}
+                            imageName={imageName}
+                            setImageName={setImageName}
+                            // data={details.personalDetails.profilePictureName}
                           />
                         </div>
                         {!fileUploadError && (

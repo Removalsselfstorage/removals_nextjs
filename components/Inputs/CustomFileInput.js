@@ -87,13 +87,7 @@ const CustomFileInput = ({
           {previewUrl && !fileUploadError
             ? // ? imageUpload?.name || details.firebaseMoverDetails.profilePictureName
             imageName
-              // data?.personalDetails.profilePicture.name ||
-              // data?.companyDetails.companyProfilePix.name ||
-              // data?.companyDocs.regCertificate.name ||
-              // data?.companyDocs.vehInsurance.name ||
-              // data?.companyDocs.pubInsurance.name ||
-              // data?.companyDocs.tranInsurance.name ||
-              // data?.companyDocs.drivingLicense.name
+             
             : "No file selected"}
         </p>
       </div>

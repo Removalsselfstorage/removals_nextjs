@@ -42,11 +42,8 @@ const EditProfile = () => {
   const dispatch = useDispatch();
   const details = useSelector(getAllMoverDetails);
 
-  const [imageUpload, setImageUpload] = useState(
-    null
-  );
+  const [imageUpload, setImageUpload] = useState(null);
 
- 
   const [previewUrl, setPreviewUrl] = useState(
     details.personalDetails.profilePictureUrl
   );
@@ -174,6 +171,9 @@ const EditProfile = () => {
           lastLogin: userDetails.userDetails.metadata?.creationTime,
           reviewSubmit: true,
           acceptedTerms: details.personalDetails.acceptedTerms,
+          approvalStatus: details.personalDetails.approvalStatus,
+          rating: details.personalDetails.rating,
+          ratingCount: details.personalDetails.ratingCount,
         })
       );
 

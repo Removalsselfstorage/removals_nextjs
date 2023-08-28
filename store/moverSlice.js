@@ -19,6 +19,9 @@ const initialState = {
     lastLogin: "",
     reviewSubmit: false,
     acceptedTerms: false,
+    approvalStatus: "UNAPPROVED",
+    rating: 0,
+    ratingCount: 0,
     // isAdmin: false,
   },
 

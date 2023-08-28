@@ -12,9 +12,7 @@ import { MdKeyboardArrowRight } from "react-icons/md";
 import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
 import {
   getAllDetails,
-  updateLocationDetails,
-  updateMoveDetails,
-  updatePersonalDetails,
+  
 } from "@/store/quoteSlice";
 import { useDispatch, useSelector } from "react-redux";
 

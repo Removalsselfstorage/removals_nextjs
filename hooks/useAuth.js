@@ -147,6 +147,9 @@ export const AuthProvider = ({ children }) => {
           lastLogin: userCredential.user.metadata.lastSignInTime,
           reviewSubmit: false,
           acceptedTerms: false,
+          approvalStatus: "UNAPPROVED",
+          rating: 0,
+          ratingCount: 0,
         })
       );
 
@@ -298,6 +301,9 @@ export const AuthProvider = ({ children }) => {
           lastLogin: userCredential.user.metadata.lastSignInTime,
           reviewSubmit: userData?.personalDetails.reviewSubmit,
           acceptedTerms: userData?.personalDetails.acceptedTerms,
+          approvalStatus: userData?.personalDetails.approvalStatus,
+          rating: userData?.personalDetails.rating,
+          ratingCount: userData?.personalDetails.ratingCount,
         })
       );
       dispatch(

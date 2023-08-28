@@ -160,7 +160,6 @@ const PersonalDetails = ({ names }) => {
 
     setGenCompanyName(companyName);
 
-
     dispatch(
       updatePersonalDetails({
         uid,
@@ -178,6 +177,9 @@ const PersonalDetails = ({ names }) => {
         lastLogin: userDetails.userDetails.metadata?.creationTime,
         reviewSubmit: false,
         acceptedTerms: details.personalDetails.acceptedTerms,
+        approvalStatus: details.personalDetails.approvalStatus,
+        rating: details.personalDetails.rating,
+        ratingCount: details.personalDetails.ratingCount,
       })
     );
 

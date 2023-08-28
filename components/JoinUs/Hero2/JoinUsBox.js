@@ -23,11 +23,7 @@ import {
   updateUserNames,
 } from "@/store/userSlice";
 import toast, { Toaster } from "react-hot-toast";
-import {
-  getAllMoverDetails,
-  updateMoverPersonalDetails,
-  updatePersonalDetails,
-} from "@/store/moverSlice";
+import { getAllMoverDetails } from "@/store/moverSlice";
 
 // const JoinUsBox = ({ providers, csrfToken, callbackUrl }) => {
 const JoinUsBox = () => {
@@ -117,7 +113,7 @@ const JoinUsBox = () => {
       signup_firstname: "",
       signup_lastname: "",
     });
-   
+
     setSubmitLoading(false);
 
     // toast(

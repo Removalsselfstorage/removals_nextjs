@@ -29,10 +29,9 @@ import {
 import DatePicker2 from "@/components/DatePicker/DatePicker2";
 import dayjs from "dayjs";
 import { redirect, useRouter } from "next/navigation";
+import emailjs from "@emailjs/browser";
 
 const CompleteHouse = () => {
-
-
   const router = useRouter();
 
   const dispatch = useDispatch();
@@ -116,7 +115,6 @@ const CompleteHouse = () => {
   const date = dayjs(dateValue).format("YYYY/MM/DD");
   const date2 = dayjs(dateValue).format("dddd, MMMM D, YYYY");
 
-
   const selectDefaultValue = () => {
     const option = serviceOptions2.filter(
       (opt) => opt.value == details.moveDetails.propertyType
@@ -147,7 +145,11 @@ const CompleteHouse = () => {
     return option;
   };
 
-
+  const templateParams = {
+    firstName,
+    lastName,
+    email,
+  };
 
   const removalFormSubmit = () => {
     setActivateError(true);
@@ -245,11 +247,26 @@ const CompleteHouse = () => {
           dateId: 1,
         })
       );
+
+      emailjs
+        .send(
+          "service_oz8gmaw",
+          "template_p8lx33l",
+          templateParams,
+          "bpJZGidQYxKuIrEhN"
+        )
+        .then(
+          (response) => {
+            console.log("SUCCESS!", response.status, response.text);
+          },
+          (err) => {
+            console.log("FAILED...", err);
+          }
+        );
+
       router.push("/book/move-package");
     }
   };
-
-
 
   return (
     <BookingLayout>
@@ -310,7 +327,9 @@ const CompleteHouse = () => {
                     {/* floor */}
                     <div className="flex flex-col w-full flex-[1] ">
                       <label className="label">
-                        <span className="label-text font-semibold">Floor<span className="text-secondary">*</span></span>
+                        <span className="label-text font-semibold">
+                          Floor<span className="text-secondary">*</span>
+                        </span>
                       </label>
                       <div className="flex items-center space-x-[5px]">
                         <div
@@ -392,7 +411,9 @@ const CompleteHouse = () => {
                     {/* floor */}
                     <div className="flex flex-col w-full flex-[1] ">
                       <label className="label">
-                        <span className="label-text font-semibold">Floor<span className="text-secondary">*</span></span>
+                        <span className="label-text font-semibold">
+                          Floor<span className="text-secondary">*</span>
+                        </span>
                       </label>
                       <div className="flex items-center space-x-[5px]">
                         <div
@@ -502,7 +523,9 @@ const CompleteHouse = () => {
                     {/* email */}
                     <div className="form-control w-full ">
                       <label className="label">
-                        <span className="label-text font-semibold">Email<span className="text-secondary">*</span></span>
+                        <span className="label-text font-semibold">
+                          Email<span className="text-secondary">*</span>
+                        </span>
                       </label>
                       <input
                         type="email"
@@ -608,7 +631,8 @@ const CompleteHouse = () => {
                     <div className="form-control w-full ">
                       <label className="label">
                         <span className="label-text font-semibold">
-                          Number of Movers<span className="text-secondary">*</span>
+                          Number of Movers
+                          <span className="text-secondary">*</span>
                         </span>
                       </label>
                       <div className="w-full">

@@ -25,6 +25,10 @@ const MovePackage = () => {
   const dispatch = useDispatch();
   const details = useSelector(getAllDetails);
 
+  // const onPackageClick = async () => {
+
+  // }
+
   useEffect(() => {
     if (!details.moveDetails.moveDate) {
       router.push("/");

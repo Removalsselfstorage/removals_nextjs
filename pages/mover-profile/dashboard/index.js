@@ -12,10 +12,7 @@ import {
   fetchMoversTranInsurance,
   fetchMoversVehInsurance,
 } from "@/lib/fetchData2";
-import {
-  getAllMoverDetails,
- 
-} from "@/store/moverSlice";
+import { getAllMoverDetails } from "@/store/moverSlice";
 import { getAllUserDetails, getAllpersonalDetails } from "@/store/userSlice";
 import { combineInitials, convertUTCToLocal } from "@/utils/logics";
 import Head from "next/head";
@@ -284,29 +281,34 @@ const Dashboard = () => {
         </section>
 
         <section className="mb-[30px]">
-         {details.personalDetails.approvalStatus === "UNAPPROVED" && <div className="flex items-center bg-secondary/10 rounded-[10px] px-[20px] py-[15px] space-x-[20px]">
-            <IoMdNotificationsOutline className="text-secondary text-[40px]" />
-            <div className="flex flex-col">
-              <p className="font-bold text-secondary">
-                Your profile is pending activation!
-              </p>
-              <p className="text-[13px] text-secondary">
-                Make sure to complete all the required steps (in red) in the
-                "Set up your profile" section below.
-              </p>
+          {details.personalDetails.approvalStatus === "UNAPPROVED" && (
+            <div className="flex items-center bg-secondary/10 rounded-[10px] px-[20px] py-[15px] space-x-[20px]">
+              <IoMdNotificationsOutline className="text-secondary text-[40px]" />
+              <div className="flex flex-col">
+                <p className="font-bold text-secondary">
+                  Your profile is pending activation!
+                </p>
+                <p className="text-[13px] text-secondary">
+                  Make sure to complete all the required steps (in red) in the
+                  "Set up your profile" section below.
+                </p>
+              </div>
             </div>
-          </div>}
-         {details.personalDetails.approvalStatus === "APPROVED" && <div className="flex items-center bg-primary/10 rounded-[10px] px-[20px] py-[15px] space-x-[20px]">
-            <IoMdNotificationsOutline className="text-primary text-[40px]" />
-            <div className="flex flex-col">
-              <p className="font-bold text-primary">
-                Your profile is activated!
-              </p>
-              <p className="text-[13px] text-primary">
-                You're now live in the Removal & Self Storage movers list page.
-              </p>
+          )}
+          {details.personalDetails.approvalStatus === "APPROVED" && (
+            <div className="flex items-center bg-primary/10 rounded-[10px] px-[20px] py-[15px] space-x-[20px]">
+              <IoMdNotificationsOutline className="text-primary text-[40px]" />
+              <div className="flex flex-col">
+                <p className="font-bold text-primary">
+                  Your profile is activated!
+                </p>
+                <p className="text-[13px] text-primary">
+                  You're now live in the Removal & Self Storage movers list
+                  page.
+                </p>
+              </div>
             </div>
-          </div>}
+          )}
         </section>
         {/* sections completed */}
         <div className="flex flex-col md:flex-row border border-primary rounded-[20px] md:items-center md:justify-between bg-white px-[20px] py-[20px]">

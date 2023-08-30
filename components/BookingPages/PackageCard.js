@@ -13,6 +13,8 @@ import { moveRate, priceCalc, priceCalc2 } from "@/utils/moversLogic";
 import { FaBusAlt, FaTruckMoving } from "react-icons/fa";
 import { IoMdMan } from "react-icons/io";
 import { FiCheckCircle } from "react-icons/fi";
+import { fetchAllMoversDetailsArray } from "@/lib/fetchData2";
+import { updateAllMoverData } from "@/store/moverSlice";
 
 const PackageCard = ({
   image,
@@ -178,7 +180,23 @@ const PackageCard = ({
     }
   };
 
-  const onBookNow = () => {
+  const onBookNow = async () => {
+    const userData = await fetchAllMoversDetailsArray();
+    console.log(userData)
+    dispatch(
+      updateAllMoverData({
+        allPersonalDetails: userData?.personalDetails,
+        allCompanyDetails: userData?.companyDetails,
+        allCompanyPix: userData?.CompanyPix,
+        allCompanyDocs: {
+          regCertificates: userData?.RegCertificate,
+          vehInsurances: userData?.VehInsurance,
+          pubInsurances: userData?.PubInsurance,
+          tranInsurances: userData?.TranInsurance,
+          drivingLicenses: userData?.DrivingLicense,
+        },
+      })
+    );
     dispatch(
       updateMoveDetails({
         propertyType: details.moveDetails.propertyType,
@@ -193,6 +211,7 @@ const PackageCard = ({
         initialPackagePrice: totalPrice(totalMileage),
       })
     );
+
     router.push(`/book/movers`);
   };
 

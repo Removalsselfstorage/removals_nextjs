@@ -749,11 +749,11 @@ export function sortByRatingAndHireCount(movers) {
 export function getFirstSortedHomeMover(movers) {
   movers.sort((a, b) => {
     // Sort by highest rating first
-    if (a.rating !== b.rating) {
-      return b.rating - a.rating;
-    }
+    // if (a.rating !== b.rating) {
+    //   return b.rating - a.rating;
+    // }
     // If ratings are equal, sort by highest hireCount
-    return b.hireCount - a.hireCount;
+    return b.score - a.score;
   });
 
   return movers[0];

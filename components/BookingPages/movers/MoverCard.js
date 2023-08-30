@@ -215,7 +215,7 @@ const MoverCard = ({
                   {/* rating / reviews */}
                   <div className="flex flex-col lg:flex-row lg:items-center space-y-[5px] lg:space-y-0 lg:space-x-[10px] mt-[0px] text-[15px] mb-[7px]">
                     <div className="flex items-center space-x-[10px] mt-[0px] text-[15px]">
-                      <p className="font-semibold">{rating.toFixed(1)}</p>
+                      <p className="font-semibold">{rating?.toFixed(1)}</p>
                       {/* <FullRating small value={rating} color="text-secondary" /> */}
                       <StarRating
                         rating={rating}

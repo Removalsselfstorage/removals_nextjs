@@ -54,6 +54,19 @@ const initialState = {
     drivingLicenseName: "",
     reviewSubmit: false,
   },
+
+  allMoverData: {
+    allPersonalDetails: [],
+    allCompanyDetails: [],
+    allCompanyPix: [],
+    allCompanyDocs: {
+      regCertificates: [],
+      vehInsurances: [],
+      pubInsurances: [],
+      tranInsurances: [],
+      drivingLicenses: [],
+    },
+  },
 };
 
 export const moverSlice = createSlice({
@@ -72,6 +85,9 @@ export const moverSlice = createSlice({
     updateCompanyDocs: (state, action) => {
       state.companyDocs = action.payload;
     },
+    updateAllMoverData: (state, action) => {
+      state.allMoverData = action.payload;
+    },
   },
 });
 
@@ -80,6 +96,7 @@ export const {
   updatePersonalDetails,
   updateCompanyDetails,
   updateCompanyDocs,
+  updateAllMoverData,
 } = moverSlice.actions;
 
 export const getAllMoverDetails = (state) => state.mover;

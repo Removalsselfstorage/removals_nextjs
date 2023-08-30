@@ -30,11 +30,19 @@ import Loader1 from "@/components/loaders/loader1";
 import dayjs from "dayjs";
 import { useRouter } from "next/navigation";
 import SideDrawer from "@/components/BookingPages/movers/SideDrawer";
+import { getAllMoverDetails } from "@/store/moverSlice";
 
 const Movers = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const details = useSelector(getAllDetails);
+  const moverDetails = useSelector(getAllMoverDetails);
+  const { allMoverData } = moverDetails;
+
+  const [allPersonalDetails, setAllPersonalDetails] = useState([]);
+  const [allCompanyDetails, setAllCompanyDetails] = useState([]);
+  const [allCompanyPix, setAllCompanyPix] = useState([]);
+  const [newMovers, setNewMovers] = useState([]);
 
   useEffect(() => {
     const priceFirstDay = details.moveDetails.initialPackagePrice;
@@ -60,6 +68,33 @@ const Movers = () => {
     ).toFixed();
 
     dispatch(updatePickPrice(priceFirstDay));
+
+    const allPersonalDetails = allMoverData?.allPersonalDetails;
+    const allCompanyDetails = allMoverData?.allCompanyDetails;
+    const allCompanyPix = allMoverData?.allCompanyPix;
+
+    const newMov = allPersonalDetails.map((pd, index) => ({
+      name: pd.generatedName,
+      phone: pd.phone,
+      email: pd.email,
+      loadArea: "H-2.1m, L-3.2m, W-2.1m",
+      rating: pd.rating,
+      reviewCount: pd.reviewCount,
+      hireCount: pd.hireCount,
+      score: pd.score,
+      companyDescription: allCompanyDetails[index].companyBio,
+      imageUrl: allCompanyPix[index].companyProfilePixUrl,
+      approved: pd.approvalStatus,
+    }));
+
+    const filteredNewMov = newMov.filter(
+      (item) => item.approved === "APPROVED"
+    );
+
+    setAllPersonalDetails(allMoverData?.allPersonalDetails);
+    setAllCompanyDetails(allMoverData?.allCompanyDetails);
+    setAllCompanyPix(allMoverData?.allCompanyPix);
+    setNewMovers(filteredNewMov);
   }, []);
 
   const [scriptLoaded, setScriptLoaded] = useState(false);
@@ -87,9 +122,9 @@ const Movers = () => {
   const [timeValue, setTimeValue] = useState("");
   const [clickedModalOpen, setClickedModalOpen] = useState(false);
 
-  const firstCard = getFirstSortedHomeMover(homeMovers);
+  const firstCard = getFirstSortedHomeMover(newMovers);
 
-  const otherCards = sortHomeMoversAndExcludeHighest(homeMovers);
+  const otherCards = sortHomeMoversAndExcludeHighest(newMovers);
 
   useEffect(() => {
     addPaypalScript();
@@ -113,7 +148,12 @@ const Movers = () => {
 
   // const [pickPrice, setPickPrice] = useState(priceThirdDay)
 
-  // console.log(details.moverDetails.pickPrice);
+  console.log(allPersonalDetails);
+  console.log(allCompanyDetails);
+  console.log(allCompanyPix);
+  console.log(newMovers);
+  console.log(firstCard);
+  console.log(otherCards);
 
   return (
     <>
@@ -159,7 +199,7 @@ const Movers = () => {
                         <span className="text-primary">
                           {todayPick
                             ? "Movers are unavailable for hire today"
-                            : `You've been matched with ${homeMovers.length} verified movers`}
+                            : `You've been matched with ${newMovers.length} verified movers`}
                           .{/* {homeMovers.length} verified movers. */}
                         </span>
                       </h1>
@@ -170,7 +210,7 @@ const Movers = () => {
                     )}
                     {!showLoader &&
                       !todayPick &&
-                      homeMovers.map((mv, index) => {
+                      newMovers.map((mv, index) => {
                         if (index === 0) {
                           return (
                             <div
@@ -179,18 +219,18 @@ const Movers = () => {
                             >
                               {/* mover 1 */}
                               <MoverCard
-                                image={firstCard.imageUrl}
-                                name={firstCard.name}
-                                phone={firstCard.phone}
-                                email={firstCard.email}
-                                loadArea={firstCard.loadArea}
-                                rating={firstCard.rating}
-                                reviewCount={firstCard.reviewCount}
+                                image={firstCard?.imageUrl}
+                                name={firstCard?.name}
+                                phone={firstCard?.phone}
+                                email={firstCard?.email}
+                                loadArea={firstCard?.loadArea}
+                                rating={firstCard?.rating}
+                                reviewCount={firstCard?.reviewCount}
                                 price={details.moverDetails.pickPrice}
                                 // price={priceThirdDay}
-                                hiresCount={firstCard.hireCount}
-                                description={firstCard.companyDescription}
-                                score={firstCard.score}
+                                hiresCount={firstCard?.hireCount}
+                                description={firstCard?.companyDescription}
+                                score={firstCard?.score}
                                 setShowLoader2={setShowLoader2}
                                 showLoader2={showLoader2}
                                 clickedModalOpen={clickedModalOpen}
@@ -209,17 +249,17 @@ const Movers = () => {
                           bookSmart
                           image=""
                           name="Smart Booking"
-                          phone={firstCard.phone}
-                          email={firstCard.email}
-                          loadArea={firstCard.loadArea}
-                          rating={firstCard.rating}
-                          reviewCount={firstCard.reviewCount}
+                          phone={firstCard?.phone}
+                          email={firstCard?.email}
+                          loadArea={firstCard?.loadArea}
+                          rating={firstCard?.rating}
+                          reviewCount={firstCard?.reviewCount}
                           price={(
                             details.moverDetails.pickPrice * 0.79
                           ).toFixed()}
-                          hiresCount={firstCard.hireCount}
-                          description={firstCard.companyDescription}
-                          score={firstCard.score}
+                          hiresCount={firstCard?.hireCount}
+                          description={firstCard?.companyDescription}
+                          score={firstCard?.score}
                           setShowLoader2={setShowLoader2}
                           showLoader2={showLoader2}
                           // pickPrice={pickPrice} setPickPrice={setPickPrice}
@@ -236,21 +276,21 @@ const Movers = () => {
                           >
                             {/* mover 2 */}
                             <MoverCard
-                              image={mv.imageUrl}
-                              name={mv.name}
-                              phone={mv.phone}
-                              email={mv.email}
-                              loadArea={mv.loadArea}
-                              rating={mv.rating}
-                              reviewCount={mv.reviewCount}
+                              image={mv?.imageUrl}
+                              name={mv?.name}
+                              phone={mv?.phone}
+                              email={mv?.email}
+                              loadArea={mv?.loadArea}
+                              rating={mv?.rating}
+                              reviewCount={mv?.reviewCount}
                               price={calculateMoverPrice(
                                 details.moverDetails.pickPrice,
-                                mv.score,
+                                mv?.score,
                                 0.052
                               ).toFixed()}
-                              hiresCount={mv.hireCount}
-                              description={mv.companyDescription}
-                              score={mv.score}
+                              hiresCount={mv?.hireCount}
+                              description={mv?.companyDescription}
+                              score={mv?.score}
                               setShowLoader2={setShowLoader2}
                               showLoader2={showLoader2}
                               // pickPrice={pickPrice} setPickPrice={setPickPrice}

@@ -10,7 +10,7 @@ import {
 
 import { useRouter } from "next/router";
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
-import { auth } from "@/firebase";
+import { auth, db } from "@/firebase";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getAllUserDetails,
@@ -39,6 +39,7 @@ import { UploadMoverPersonalDetails2 } from "@/lib/uploadMoverPersonalDetails2";
 import { UploadMoverDocumentation } from "@/lib/uploadMoverDocumentation";
 import { UploadMoverPersonalDetails3 } from "@/lib/uploadMoverPersonalDetails3";
 import { UploadMoverDocumentation2 } from "@/lib/uploadMoverDocumentation2";
+import { doc, setDoc } from "firebase/firestore";
 
 const AuthContext = createContext({
   user: null,
@@ -281,6 +282,17 @@ export const AuthProvider = ({ children }) => {
         password
       );
 
+      // const moversRef = doc(db, "moversData", userCredential.user.uid);
+
+      // await setDoc(
+      //   moversRef,
+
+      //   {
+      //     lastLogin: userCredential.user.metadata.lastSignInTime,
+      //   },
+      //   { merge: true }
+      // );
+
       const userData = await fetchAllMoversDetails(userCredential.user.uid);
 
       dispatch(updateJustRegistered(userData?.personalDetails.justRegistered));
@@ -368,6 +380,23 @@ export const AuthProvider = ({ children }) => {
       setError(error.message);
       dispatch(updateLoginError(error.message));
       setLoading(false);
+    }
+
+    const moversRef = doc(db, "moversData", details.personalDetails.uid);
+
+    try {
+      await setDoc(
+        moversRef,
+
+        {
+          lastLogin: details.personalDetails.lastLogin,
+        },
+        { merge: true }
+      );
+    } catch (error) {
+      console.log(error);
+      // setSubmitError(true);
+      return false;
     }
   };
 

@@ -14,6 +14,7 @@ import {
   calculatePrice,
   calculatePriceChange,
   calculatePriceDecrease,
+  convertDateFormat,
   decreaseByPercentage,
   generatePriceArray,
   generatePriceList,
@@ -28,10 +29,18 @@ import { formatDate } from "@/utils/moversLogic";
 
 const PriceDatePick = ({ setShowLoader, setTodayPick }) => {
   const details = useSelector(getAllDetails);
-  const dayOfWeek = dayjs(details.moveDetails.moveDateRaw).format("ddd");
-  const month = dayjs(details.moveDetails.moveDateRaw).format("MMM");
-  const dayNumber = dayjs(details.moveDetails.moveDateRaw).format("D");
-  const year = dayjs(details.moveDetails.moveDateRaw).format("YYYY");
+  const dayOfWeek = dayjs(
+    convertDateFormat(details.moverDetails.moveDate)
+  ).format("ddd");
+  const month = dayjs(convertDateFormat(details.moverDetails.moveDate)).format(
+    "MMM"
+  );
+  const dayNumber = dayjs(
+    convertDateFormat(details.moverDetails.moveDate)
+  ).format("D");
+  const year = dayjs(convertDateFormat(details.moverDetails.moveDate)).format(
+    "YYYY"
+  );
 
   const priceFirstDay = details.moveDetails.initialPackagePrice;
   const priceFridays = priceFirstDay;
@@ -112,18 +121,7 @@ const PriceDatePick = ({ setShowLoader, setTodayPick }) => {
     }
   };
 
-  // const today2 = getFormattedTodayDate();
-
-  // const date2 = dayjs(details.moveDetails.moveDateRaw).format("ddd MMM D");
-  // useEffect(() => {
-  //   if (today2 == trimDate(date2)) {
-  //     setTodayPick(true);
-  //   } else {
-  //     setTodayPick(false);
-  //   }
-  // }, []);
-
-  // console.log({ today2, date2 });
+  console.log({ result2 });
 
   return (
     <div className="group mr-[20px] ml-[5px] relative border-b border-white/20 pb-[0px]  md:pb-[0px] mt-[10px] ">

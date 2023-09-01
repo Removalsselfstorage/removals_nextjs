@@ -37,7 +37,7 @@ import {
   UploadBookingProgress,
   UploadBookingProgress1,
 } from "@/lib/uploadBookingProgress";
-import { generateRandomValues } from "@/utils/logics";
+import { generateRandomValues, generateSecureId } from "@/utils/logics";
 
 const CompleteHouse = ({ emails }) => {
   const router = useRouter();
@@ -229,6 +229,8 @@ const CompleteHouse = ({ emails }) => {
 
       const randomRefValue = generateRandomValues();
 
+      const bookingId = generateSecureId();
+
       dispatch(
         updateLocationDetails({
           locationFrom: {
@@ -272,6 +274,7 @@ const CompleteHouse = ({ emails }) => {
       );
       dispatch(
         updateMoveDetails({
+          bookingId,
           propertyType: propertyValue,
           numberOfMovers: menValue,
           mileage: mileageValue,
@@ -326,6 +329,7 @@ const CompleteHouse = ({ emails }) => {
           telephone: phone,
         },
         moveDetails: {
+          bookingId,
           propertyType: propertyValue,
           numberOfMovers: menValue,
           mileage: mileageValue,
@@ -337,6 +341,7 @@ const CompleteHouse = ({ emails }) => {
           quoteRef: randomRefValue,
           initialPackagePrice: details.moveDetails.initialPackagePrice,
         },
+
         stage: "book/home-removals",
       };
       const result = await UploadBookingProgress1(moveObj);

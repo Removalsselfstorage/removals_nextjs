@@ -84,6 +84,7 @@ const HeroInputBox = () => {
         case "Office removals":
           dispatch(
             updateMoveDetails({
+              bookingId: details.moveDetails.bookingId,
               propertyType: selectValue,
               numberOfMovers: details.moveDetails.numberOfMovers,
               mileage: details.moveDetails.mileage,
@@ -101,6 +102,7 @@ const HeroInputBox = () => {
         case "Man and van":
           dispatch(
             updateMoveDetails({
+              bookingId: details.moveDetails.bookingId,
               propertyType: selectValue,
               numberOfMovers: details.moveDetails.numberOfMovers,
               mileage: details.moveDetails.mileage,
@@ -118,6 +120,7 @@ const HeroInputBox = () => {
         case "Studio flat":
           dispatch(
             updateMoveDetails({
+              bookingId: details.moveDetails.bookingId,
               propertyType: selectValue,
               numberOfMovers: details.moveDetails.numberOfMovers,
               mileage: details.moveDetails.mileage,
@@ -135,6 +138,7 @@ const HeroInputBox = () => {
         case "Furniture & Appliances":
           dispatch(
             updateMoveDetails({
+              bookingId: details.moveDetails.bookingId,
               propertyType: selectValue,
               numberOfMovers: details.moveDetails.numberOfMovers,
               mileage: details.moveDetails.mileage,
@@ -158,6 +162,7 @@ const HeroInputBox = () => {
         case "1 bed property":
           dispatch(
             updateMoveDetails({
+              bookingId: details.moveDetails.bookingId,
               propertyType: selectValue,
               numberOfMovers: details.moveDetails.numberOfMovers,
               mileage: details.moveDetails.mileage,
@@ -175,6 +180,7 @@ const HeroInputBox = () => {
         case "2 bed property":
           dispatch(
             updateMoveDetails({
+              bookingId: details.moveDetails.bookingId,
               propertyType: selectValue,
               numberOfMovers: details.moveDetails.numberOfMovers,
               mileage: details.moveDetails.mileage,
@@ -192,6 +198,7 @@ const HeroInputBox = () => {
         case "3 bed property":
           dispatch(
             updateMoveDetails({
+              bookingId: details.moveDetails.bookingId,
               propertyType: selectValue,
               numberOfMovers: details.moveDetails.numberOfMovers,
               mileage: details.moveDetails.mileage,
@@ -209,6 +216,7 @@ const HeroInputBox = () => {
         case "4 bed property":
           dispatch(
             updateMoveDetails({
+              bookingId: details.moveDetails.bookingId,
               propertyType: selectValue,
               numberOfMovers: details.moveDetails.numberOfMovers,
               mileage: details.moveDetails.mileage,

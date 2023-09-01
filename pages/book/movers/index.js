@@ -19,6 +19,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { homeMovers } from "@/dummyData/dummyData";
 import {
   calculateMoverPrice,
+  convertDateFormat,
   decreaseByPercentage,
   getFirstSortedHomeMover,
   getFormattedTodayDate,
@@ -31,6 +32,7 @@ import dayjs from "dayjs";
 import { useRouter } from "next/navigation";
 import SideDrawer from "@/components/BookingPages/movers/SideDrawer";
 import { getAllMoverDetails } from "@/store/moverSlice";
+import emailjs from "@emailjs/browser";
 
 const Movers = () => {
   const router = useRouter();
@@ -121,6 +123,8 @@ const Movers = () => {
   const [selectedTime, setSelectedTime] = useState(null);
   const [timeValue, setTimeValue] = useState("");
   const [clickedModalOpen, setClickedModalOpen] = useState(false);
+  const [progressLoading, setProgressLoading] = useState(false);
+  const [showProgressMessage, setShowProgressMessage] = useState(false);
 
   const firstCard = getFirstSortedHomeMover(newMovers);
 
@@ -146,6 +150,37 @@ const Movers = () => {
     }
   }, []);
 
+  const templateParams = {
+    firstName: details.personalDetails.firstName,
+    lastName: details.personalDetails.lastName,
+    email: details.personalDetails.email,
+    quoteRef: details.moveDetails.quoteRef,
+    progressLink: `http://localhost:3000/book/movers/${details.moveDetails.bookingId}`,
+    address1: details.serviceLocation.locationFrom.name,
+    address2: details.serviceLocation.locationTo.name,
+  };
+
+  const sendProgressMail = async () => {
+    setProgressLoading(true);
+    emailjs
+      .send(
+        "service_oz8gmaw",
+        "template_krdi5hs",
+        templateParams,
+        "bpJZGidQYxKuIrEhN"
+      )
+      .then(
+        (response) => {
+          console.log("SUCCESS!", response.status, response.text);
+          setProgressLoading(false);
+          setShowProgressMessage(true);
+        },
+        (err) => {
+          console.log("FAILED...", err);
+        }
+      );
+  };
+
   // const [pickPrice, setPickPrice] = useState(priceThirdDay)
 
   // console.log(allPersonalDetails);
@@ -154,7 +189,7 @@ const Movers = () => {
   // console.log(newMovers);
   // console.log(firstCard);
   // console.log(otherCards);
-  console.log({details})
+  console.log({ details });
 
   return (
     <>
@@ -237,10 +272,29 @@ const Movers = () => {
                               continue booking right where you left off.
                             </p>
                             <div className="flex w-full justify-center my-[20px]">
-                              <div className="btn btn-secondary">
-                                Save my progress
+                              <div
+                                onClick={sendProgressMail}
+                                type="submit"
+                                className="btn btn-secondary flex items-center space-x-[5px]"
+                                disabled={progressLoading}
+                              >
+                                {!progressLoading && (
+                                  <span className="">Send Progress</span>
+                                )}
+                                {progressLoading && (
+                                  <>
+                                    <span className="">Sending Progress</span>
+                                    <span className="loading loading-spinner loading-md text-white"></span>
+                                  </>
+                                )}
                               </div>
                             </div>
+                            {showProgressMessage && (
+                              <p className="text-center text-[13px] text-secondary">
+                                Progress link has been sent to{" "}
+                                {details.personalDetails.email}
+                              </p>
+                            )}
                           </form>
                           <form method="dialog" className="modal-backdrop">
                             <button>close</button>

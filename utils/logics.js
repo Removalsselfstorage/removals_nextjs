@@ -1,7 +1,31 @@
+export function generateSecureId(length = 25) {
+  const characters = "abcdefghijklmnopqrstuvwxyz0123456789";
+  let secureId = "";
+
+  for (let i = 0; i < length; i++) {
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    secureId += characters.charAt(randomIndex);
+  }
+
+  return secureId;
+}
+
+// Example usage:
+const secureId = generateSecureId();
+// console.log(secureId);
+
+export function convertDateFormat(inputDate) {
+  // Use the replace method to replace '/' with '-'
+  var formattedDate = inputDate?.replace(/\//g, "-");
+  return formattedDate;
+}
+
 export function convertUTCToLocal(utcTimestamp) {
-  const options = { timeZone: 'Africa/Lagos' };
+  const options = { timeZone: "Africa/Lagos" };
   const utcDate = new Date(utcTimestamp);
-  const localDate = new Date(utcDate.getTime() + (utcDate.getTimezoneOffset() * 60000)).toLocaleString(undefined, options);
+  const localDate = new Date(
+    utcDate.getTime() + utcDate.getTimezoneOffset() * 60000
+  ).toLocaleString(undefined, options);
   return localDate;
 }
 
@@ -14,11 +38,11 @@ export function convertToLagosTime(utcDateString) {
   return localTime;
 }
 
-
-
 export const filterSections = (sections, condition1) => {
   if (condition1) {
-    return sections.filter(section => section.title !== "Add a Profile Picture!");
+    return sections.filter(
+      (section) => section.title !== "Add a Profile Picture!"
+    );
   }
   // if (condition2) {
   //   return sections.filter(section => section.title !== "Add a Profile Picture!");
@@ -26,15 +50,14 @@ export const filterSections = (sections, condition1) => {
   return sections;
 };
 
-
-
-
 export function combineInitials(firstName, lastName) {
   if (firstName?.length > 0 && lastName?.length > 0) {
     const combinedInitials = (firstName[0] + lastName[0]).toUpperCase();
     return combinedInitials;
   } else {
-    console.log("Both first name and last name must have at least one character.");
+    console.log(
+      "Both first name and last name must have at least one character."
+    );
     return null;
   }
 }
@@ -48,7 +71,7 @@ export function trimToFirstLetter(word) {
 }
 
 export function trimFirstTwoLetters(word) {
-  if (typeof word !== 'string' || word.length < 2) {
+  if (typeof word !== "string" || word.length < 2) {
     return word;
   }
 
@@ -840,11 +863,12 @@ export function changeFontWeight2(sentence, targetPhrase) {
   return modifiedSentence;
 }
 
-
-
 function boldenPhrase(sentence, phrase) {
   // Use a regular expression to globally replace the phrase with a bold version
-  const boldenedSentence = sentence.replace(new RegExp(phrase, 'gi'), '<strong>$&</strong>');
+  const boldenedSentence = sentence.replace(
+    new RegExp(phrase, "gi"),
+    "<strong>$&</strong>"
+  );
   return boldenedSentence;
 }
 

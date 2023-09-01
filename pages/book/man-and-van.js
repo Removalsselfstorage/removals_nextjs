@@ -228,6 +228,7 @@ const ManAndVan = ({ emails }) => {
       sendWelcomeMail();
 
       const randomRefValue = generateRandomValues();
+      const bookingId = generateSecureId();
 
       dispatch(
         updateLocationDetails({
@@ -272,6 +273,7 @@ const ManAndVan = ({ emails }) => {
       );
       dispatch(
         updateMoveDetails({
+          bookingId,
           propertyType: propertyValue,
           numberOfMovers: menValue,
           mileage: mileageValue,

@@ -207,6 +207,7 @@ const PackageCard = ({
     );
     dispatch(
       updateMoveDetails({
+        bookingId: details.moveDetails.bookingId,
         propertyType: details.moveDetails.propertyType,
         numberOfMovers: details.moveDetails.numberOfMovers,
         mileage: details.moveDetails.mileage,
@@ -220,8 +221,7 @@ const PackageCard = ({
       })
     );
 
-    const bookingId =
-      details.personalDetails.email + "_" + details.moveDetails.quoteRef;
+    const bookingId = details.moveDetails.bookingId;
 
     const bookingRef = doc(db, "bookingData", bookingId);
 

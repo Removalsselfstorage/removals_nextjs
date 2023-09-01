@@ -12,6 +12,7 @@ import { BiSolidPhoneCall } from "react-icons/bi";
 import { getAllDetails } from "@/store/quoteSlice";
 import { useDispatch, useSelector } from "react-redux";
 import dayjs from "dayjs";
+import { convertDateFormat } from "@/utils/logics";
 
 const MoveDetails = () => {
   const details = useSelector(getAllDetails);
@@ -120,7 +121,7 @@ const MoveDetails = () => {
               </p>
               <p className="font-semibold text-[13.5px] ">
                 {!details.moverDetails.moveDateFormatted
-                  ? dayjs(details.moveDetails.moveDateRaw).format(
+                  ? dayjs( convertDateFormat(details.moverDetails.moveDate)).format(
                       "dddd, MMMM D, YYYY"
                     )
                   : details.moverDetails.moveDateFormatted}

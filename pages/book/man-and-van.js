@@ -13,7 +13,7 @@ import BookingLayout from "@/layouts/BookingLayout";
 import { titleFont } from "@/utils/fonts";
 import Head from "next/head";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FiEdit } from "react-icons/fi";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
@@ -28,8 +28,17 @@ import {
 } from "@/store/quoteSlice";
 import dayjs from "dayjs";
 import { useRouter } from "next/navigation";
+import emailjs from "@emailjs/browser";
+import { fetchWelcomedEmails } from "@/lib/fetchData2";
+import { db } from "@/firebase";
+import { addDoc, collection } from "firebase/firestore";
+import {
+  UploadBookingProgress,
+  UploadBookingProgress1,
+} from "@/lib/uploadBookingProgress";
+import { generateRandomValues } from "@/utils/logics";
 
-const ManAndVan = () => {
+const ManAndVan = ({ emails }) => {
   const router = useRouter();
 
   const dispatch = useDispatch();
@@ -84,19 +93,12 @@ const ManAndVan = () => {
   const [submitError, setSubmitError] = useState(false);
   const [submitLoading, setSubmitLoading] = useState(false);
   const [activateError, setActivateError] = useState(false);
+  const [usedEmails, setUsedEmails] = useState([]);
 
   const hourValue = durationCount <= 1 ? "hour" : "hours";
 
   const durationCalculation = (duration) => {
     let price = 1;
-    // switch (durationCount) {
-    //   case 3:
-    //     price += (57.99 * 3)
-    //     break;
-
-    //   default:
-    //     break;
-    // }
     const newPrice = price * duration;
     return newPrice;
   };
@@ -160,12 +162,46 @@ const ManAndVan = () => {
     return option;
   };
 
-  const FormSubmit = () => {
+  const templateParams = {
+    firstName,
+    lastName,
+    email,
+  };
+
+  const sendWelcomeMail = async () => {
+    if (!usedEmails.includes(email)) {
+      emailjs
+        .send(
+          "service_oz8gmaw",
+          "template_p8lx33l",
+          templateParams,
+          "bpJZGidQYxKuIrEhN"
+        )
+        .then(
+          (response) => {
+            console.log("SUCCESS!", response.status, response.text);
+          },
+          (err) => {
+            console.log("FAILED...", err);
+          }
+        );
+
+      const emailRef = collection(db, "welcomedEmails");
+
+      try {
+        await addDoc(emailRef, {
+          email,
+        });
+      } catch (error) {
+        return false;
+      }
+    }
+  };
+
+  const FormSubmit = async () => {
     setActivateError(true);
     setSubmitError(false);
     if (
-      //   !floorCount ||
-      //   !floorCount2 ||
       propertyValue == "" ||
       propertyValue == "Select" ||
       !address ||
@@ -188,6 +224,11 @@ const ManAndVan = () => {
       setSubmitError(true);
     } else {
       setSubmitLoading(true);
+
+      sendWelcomeMail();
+
+      const randomRefValue = generateRandomValues();
+
       dispatch(
         updateLocationDetails({
           locationFrom: {
@@ -258,9 +299,62 @@ const ManAndVan = () => {
         })
       );
 
+      const moveObj = {
+        serviceLocation: {
+          locationFrom: {
+            name: address,
+            postCode: addressDetails.zip || "",
+            city: addressDetails.city || "",
+            country: addressDetails.country || "",
+            floor: floorCount,
+            liftAvailable: lift,
+          },
+          locationTo: {
+            name: address2,
+            postCode: addressDetails2.zip || "",
+            city: addressDetails2.city || "",
+            country: addressDetails2.country || "",
+            floor: floorCount2,
+            liftAvailable: lift2,
+          },
+        },
+        personalDetails: {
+          firstName,
+          lastName,
+          email,
+          countryCode: phoneValue || details.personalDetails.countryCode,
+          telephone: phone,
+        },
+        moveDetails: {
+          propertyType: propertyValue,
+          numberOfMovers: menValue,
+          mileage: mileageValue,
+          volume: volume,
+          duration: durationCount,
+          moveDate: date,
+          // moveDateRaw: dateValue || "",
+          movePackage: details.moveDetails.movePackage,
+          quoteRef: randomRefValue,
+          initialPackagePrice: details.moveDetails.initialPackagePrice,
+        },
+        stage: "book/man-and-van",
+      };
+      const result = await UploadBookingProgress1(moveObj);
+
+      console.log({ bookingprogressupload: result ? "successful" : "failed" });
+      console.log({ moveObj });
+
       router.push("/book/move-package");
     }
   };
+
+  useEffect(() => {
+    const newEmails = [];
+    emails.forEach((em) => {
+      newEmails.push(em.email);
+    });
+    setUsedEmails(newEmails);
+  }, []);
 
   return (
     <BookingLayout>
@@ -718,7 +812,8 @@ const ManAndVan = () => {
                       <div className="flex flex-col w-full">
                         <label className="label">
                           <span className="label-text font-semibold">
-                            Volume: CU/FT<span className="text-secondary">*</span>
+                            Volume: CU/FT
+                            <span className="text-secondary">*</span>
                           </span>
                         </label>
                         <input
@@ -761,8 +856,8 @@ const ManAndVan = () => {
                         {/* <p className="">{dateValue}</p> */}
                         {/* <DatePicker2 /> */}
                         {/* <div className="bg-white border rounded-[8px] border-primary">
-                        <BasicDatePicker />
-                      </div> */}
+                          <BasicDatePicker />
+                        </div> */}
                       </div>
                     </div>
                   </div>
@@ -822,3 +917,13 @@ const ManAndVan = () => {
 };
 
 export default ManAndVan;
+
+export async function getServerSideProps() {
+  const emails = await fetchWelcomedEmails();
+
+  return {
+    props: {
+      emails,
+    },
+  };
+}

@@ -30,8 +30,16 @@ import DatePicker2 from "@/components/DatePicker/DatePicker2";
 import dayjs from "dayjs";
 import { redirect, useRouter } from "next/navigation";
 import emailjs from "@emailjs/browser";
+import { fetchWelcomedEmails } from "@/lib/fetchData2";
+import { db } from "@/firebase";
+import { addDoc, collection } from "firebase/firestore";
+import {
+  UploadBookingProgress,
+  UploadBookingProgress1,
+} from "@/lib/uploadBookingProgress";
+import { generateRandomValues } from "@/utils/logics";
 
-const CompleteHouse = () => {
+const CompleteHouse = ({ emails }) => {
   const router = useRouter();
 
   const dispatch = useDispatch();
@@ -84,6 +92,7 @@ const CompleteHouse = () => {
   const [submitError, setSubmitError] = useState(false);
   const [submitLoading, setSubmitLoading] = useState(false);
   const [activateError, setActivateError] = useState(false);
+  const [usedEmails, setUsedEmails] = useState([]);
 
   //   Email validation
   const handleEmailChange = (e) => {
@@ -151,7 +160,45 @@ const CompleteHouse = () => {
     email,
   };
 
-  const removalFormSubmit = () => {
+  const sendWelcomeMail = async () => {
+    if (!usedEmails.includes(email)) {
+      emailjs
+        .send(
+          "service_oz8gmaw",
+          "template_p8lx33l",
+          templateParams,
+          "bpJZGidQYxKuIrEhN"
+        )
+        .then(
+          (response) => {
+            console.log("SUCCESS!", response.status, response.text);
+          },
+          (err) => {
+            console.log("FAILED...", err);
+          }
+        );
+
+      const emailRef = collection(db, "welcomedEmails");
+
+      try {
+        await addDoc(emailRef, {
+          email,
+        });
+      } catch (error) {
+        return false;
+      }
+    }
+  };
+
+  useEffect(() => {
+    const newEmails = [];
+    emails.forEach((em) => {
+      newEmails.push(em.email);
+    });
+    setUsedEmails(newEmails);
+  }, []);
+
+  const removalFormSubmit = async () => {
     setActivateError(true);
     setSubmitError(false);
 
@@ -177,6 +224,10 @@ const CompleteHouse = () => {
       setSubmitError(true);
     } else {
       setSubmitLoading(true);
+
+      sendWelcomeMail();
+
+      const randomRefValue = generateRandomValues();
 
       dispatch(
         updateLocationDetails({
@@ -229,7 +280,7 @@ const CompleteHouse = () => {
           moveDate: date,
           moveDateRaw: dateValue,
           movePackage: details.moveDetails.movePackage,
-          quoteRef: details.moveDetails.quoteRef,
+          quoteRef: randomRefValue,
           initialPackagePrice: details.moveDetails.initialPackagePrice,
         })
       );
@@ -248,25 +299,56 @@ const CompleteHouse = () => {
         })
       );
 
-      emailjs
-        .send(
-          "service_oz8gmaw",
-          "template_p8lx33l",
-          templateParams,
-          "bpJZGidQYxKuIrEhN"
-        )
-        .then(
-          (response) => {
-            console.log("SUCCESS!", response.status, response.text);
+      const moveObj = {
+        serviceLocation: {
+          locationFrom: {
+            name: address,
+            postCode: addressDetails.zip || "",
+            city: addressDetails.city || "",
+            country: addressDetails.country || "",
+            floor: floorCount,
+            liftAvailable: lift,
           },
-          (err) => {
-            console.log("FAILED...", err);
-          }
-        );
+          locationTo: {
+            name: address2,
+            postCode: addressDetails2.zip || "",
+            city: addressDetails2.city || "",
+            country: addressDetails2.country || "",
+            floor: floorCount2,
+            liftAvailable: lift2,
+          },
+        },
+        personalDetails: {
+          firstName,
+          lastName,
+          email,
+          countryCode: phoneValue || details.personalDetails.countryCode,
+          telephone: phone,
+        },
+        moveDetails: {
+          propertyType: propertyValue,
+          numberOfMovers: menValue,
+          mileage: mileageValue,
+          volume: volume,
+          duration: details.moveDetails.duration,
+          moveDate: date,
+          // moveDateRaw: dateValue || "",
+          movePackage: details.moveDetails.movePackage,
+          quoteRef: randomRefValue,
+          initialPackagePrice: details.moveDetails.initialPackagePrice,
+        },
+        stage: "book/home-removals",
+      };
+      const result = await UploadBookingProgress1(moveObj);
+
+      console.log({ bookingprogressupload: result ? "successful" : "failed" });
+      console.log({ moveObj });
 
       router.push("/book/move-package");
     }
   };
+
+  console.log({ details });
 
   return (
     <BookingLayout>
@@ -794,3 +876,13 @@ const CompleteHouse = () => {
 export default CompleteHouse;
 
 // CompleteHouse.requireAuth = true;
+
+export async function getServerSideProps() {
+  const emails = await fetchWelcomedEmails();
+
+  return {
+    props: {
+      emails,
+    },
+  };
+}

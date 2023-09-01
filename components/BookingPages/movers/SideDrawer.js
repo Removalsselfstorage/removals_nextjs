@@ -94,7 +94,7 @@ const SideDrawer = ({
   const textDescription = sideDetails?.description;
   const moverName = sideDetails?.name;
 
-  const modalContentRef = useRef(null);
+  // const modalContentRef = useRef(null);
 
   useEffect(() => {
     setTimeout(() => {
@@ -105,16 +105,16 @@ const SideDrawer = ({
     }, 500);
   }, [showLoader2]);
 
-  useEffect(() => {
-    if (modalContentRef.current) {
-      modalContentRef.current.scrollTop = 0;
-    }
-  }, [clickedModalOpen]);
+  // useEffect(() => {
+  //   if (modalContentRef.current) {
+  //     modalContentRef.current.scrollTop = 0;
+  //   }
+  // }, [clickedModalOpen]);
 
   // console.log(sideDetails);
 
   return (
-    <div className="drawer drawer-end" ref={modalContentRef}>
+    <div className="drawer drawer-end">
       <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
       <div className="drawer-side z-[99999] h-[100vh]">
         <label htmlFor="my-drawer-4" className="drawer-overlay"></label>

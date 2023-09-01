@@ -326,7 +326,7 @@ const Navbar = () => {
                                 <span className="text-[20px] mr-[10px]">
                                   <FiSettings />
                                 </span>
-                                <a className="">Edit Profile</a>
+                                <p className="">Edit Profile</p>
                               </div>
                             </Link>
                           </li>
@@ -338,7 +338,7 @@ const Navbar = () => {
                               <span className="text-[20px] mr-[10px]">
                                 <BiLogOut />
                               </span>
-                              <a className="">Log Out</a>
+                              <p className="">Log Out</p>
                             </div>
                           </li>
                         </ul>
@@ -393,22 +393,22 @@ const Navbar = () => {
                     </Link>
                   </li>
                   <li>
-                    <a className="btn-nav">Storage & Self Storage</a>
+                    <p className="btn-nav">Storage & Self Storage</p>
                   </li>
                   <li className="border-b-[2px] pb-[10px]">
-                    <a className="btn-nav">Handy Man / Packing</a>
+                    <p className="btn-nav">Handy Man / Packing</p>
                   </li>
                   <li>
-                    <a className="btn-nav">Locations</a>
+                    <p className="btn-nav">Locations</p>
                   </li>
                   <li>
-                    <a className="btn-nav">Moving Tips</a>
+                    <p className="btn-nav">Moving Tips</p>
                   </li>
                   <li>
-                    <a className="btn-nav">About Us</a>
+                    <p className="btn-nav">About Us</p>
                   </li>
                   <li>
-                    <a className="btn-nav">Contact Us</a>
+                    <p className="btn-nav">Contact Us</p>
                   </li>
                   {/* <li className="border-b-[2px] pb-[10px]">
                     <a className="btn-nav">Blog</a>
@@ -429,7 +429,7 @@ const Navbar = () => {
                   )}
                   {users.userDetails && (
                     <li>
-                      <a className="btn-nav">My Profile</a>
+                      <p className="btn-nav">My Profile</p>
                     </li>
                   )}
                   {users.userDetails && (
@@ -438,7 +438,7 @@ const Navbar = () => {
                         logout();
                       }}
                     >
-                      <a className="btn-nav">Log Out</a>
+                      <p className="btn-nav">Log Out</p>
                     </li>
                   )}
                 </ul>

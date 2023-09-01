@@ -15,6 +15,14 @@ import { IoMdMan } from "react-icons/io";
 import { FiCheckCircle } from "react-icons/fi";
 import { fetchAllMoversDetailsArray } from "@/lib/fetchData2";
 import { updateAllMoverData } from "@/store/moverSlice";
+import emailjs from "@emailjs/browser";
+import { fetchWelcomedEmails } from "@/lib/fetchData2";
+import { db } from "@/firebase";
+import { addDoc, collection, doc, setDoc } from "firebase/firestore";
+import {
+  UploadBookingProgress,
+  UploadBookingProgress1,
+} from "@/lib/uploadBookingProgress";
 
 const PackageCard = ({
   image,
@@ -182,7 +190,7 @@ const PackageCard = ({
 
   const onBookNow = async () => {
     const userData = await fetchAllMoversDetailsArray();
-    console.log(userData)
+    console.log(userData);
     dispatch(
       updateAllMoverData({
         allPersonalDetails: userData?.personalDetails,
@@ -207,10 +215,34 @@ const PackageCard = ({
         moveDate: details.moveDetails.moveDate,
         moveDateRaw: details.moveDetails.moveDateRaw,
         movePackage: convertToSentenceCase(title),
-        quoteRef: randomRefValue,
+        quoteRef: details.moveDetails.quoteRef,
         initialPackagePrice: totalPrice(totalMileage),
       })
     );
+
+    const bookingId =
+      details.personalDetails.email + "_" + details.moveDetails.quoteRef;
+
+    const bookingRef = doc(db, "bookingData", bookingId);
+
+    try {
+      await setDoc(
+        bookingRef,
+
+        {
+          movePackage: convertToSentenceCase(title),
+          initialPackagePrice: totalPrice(totalMileage),
+          // stage: ""
+        },
+        { merge: true }
+      );
+      // return true;
+      console.log("booking update was successful @ movePackage");
+    } catch (error) {
+      console.log(error);
+      // return false;
+      console.log("booking update was unsuccessful @ movePackage");
+    }
 
     router.push(`/book/movers`);
   };

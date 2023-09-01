@@ -8,7 +8,7 @@ import PriceDatePick from "@/components/BookingPages/movers/PriceDatePick";
 import FeaturesScroll from "@/components/BookingPages/movers/FeaturesScroll";
 import FullRating from "@/components/Rating/FullRating";
 import MoverCard from "@/components/BookingPages/movers/MoverCard";
-import { BiSolidPhoneCall } from "react-icons/bi";
+import { BiSave, BiSolidPhoneCall } from "react-icons/bi";
 import MoveDetails from "@/components/BookingPages/movers/MoveDetails";
 import {
   getAllDetails,
@@ -148,12 +148,13 @@ const Movers = () => {
 
   // const [pickPrice, setPickPrice] = useState(priceThirdDay)
 
-  console.log(allPersonalDetails);
-  console.log(allCompanyDetails);
-  console.log(allCompanyPix);
-  console.log(newMovers);
-  console.log(firstCard);
-  console.log(otherCards);
+  // console.log(allPersonalDetails);
+  // console.log(allCompanyDetails);
+  // console.log(allCompanyPix);
+  // console.log(newMovers);
+  // console.log(firstCard);
+  // console.log(otherCards);
+  console.log({details})
 
   return (
     <>
@@ -195,14 +196,57 @@ const Movers = () => {
                   {/* right section */}
                   <div className="bg-white shadow-lg rounded-[30px] lg:flex-[3] py-[30px] md:px-[30px] w-full">
                     {!showLoader ? (
-                      <h1 className="text-2xl font-bold mb-[30px] px-[20px]">
-                        <span className="text-primary">
-                          {todayPick
-                            ? "Movers are unavailable for hire today"
-                            : `You've been matched with ${newMovers.length} verified movers`}
-                          .{/* {homeMovers.length} verified movers. */}
-                        </span>
-                      </h1>
+                      <div className="flex flex-col space-y-[10px]  md:space-y-0 md:flex-row md:items-center md:justify-between mb-[40px] px-[20px]">
+                        <h1 className="text-2xl font-bold mb-[0px] ">
+                          <span className="text-primary">
+                            {todayPick
+                              ? "Movers are unavailable for hire today"
+                              : `You've been matched with ${newMovers.length} verified movers`}
+                            .{/* {homeMovers.length} verified movers. */}
+                          </span>
+                        </h1>
+
+                        <div
+                          onClick={() => window.my_modal_11.showModal()}
+                          className="flex justify-center items-center space-x-[10px] border rounded-[10px] border-primary px-[10px] py-[10px] text-primary font-bold cursor-pointer"
+                        >
+                          <BiSave className="text-[24px]" />
+                          <p className="whitespace-nowrap">Save Quote</p>
+                        </div>
+
+                        {/* modal */}
+                        <dialog
+                          id="my_modal_11"
+                          className="modal py-[20px] px-[10px]"
+                        >
+                          <form method="dialog" className="modal-box px-[20px]">
+                            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 border border-primary text-primary">
+                              ✕
+                            </button>
+
+                            <div className="w-full flex justify-center mb-[20px]">
+                              <div className="text-secondary bg-secondary/10 flex justify-center items-center w-[60px] h-[60px] rounded-full">
+                                <BiSave className="text-[30px] " />
+                              </div>
+                            </div>
+                            <h3 className="font-bold text-[24px] text-primary text-center">
+                              Save your progress!
+                            </h3>
+                            <p className="py-4 text-center text-primary px-[30px]">
+                              Need more time to decide? Save your progress and
+                              continue booking right where you left off.
+                            </p>
+                            <div className="flex w-full justify-center my-[20px]">
+                              <div className="btn btn-secondary">
+                                Save my progress
+                              </div>
+                            </div>
+                          </form>
+                          <form method="dialog" className="modal-backdrop">
+                            <button>close</button>
+                          </form>
+                        </dialog>
+                      </div>
                     ) : (
                       <h1 className="text-2xl font-bold mb-[30px] px-[20px]">
                         Matching Movers ...

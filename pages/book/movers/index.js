@@ -125,10 +125,24 @@ const Movers = () => {
   const [clickedModalOpen, setClickedModalOpen] = useState(false);
   const [progressLoading, setProgressLoading] = useState(false);
   const [showProgressMessage, setShowProgressMessage] = useState(false);
+  const [email, setEmail] = useState("");
+  const [submitError, setSubmitError] = useState(false);
+  const [emailError, setEmailError] = useState(true);
+  const [activateError, setActivateError] = useState(false);
 
   const firstCard = getFirstSortedHomeMover(newMovers);
 
   const otherCards = sortHomeMoversAndExcludeHighest(newMovers);
+
+  const handleEmailChange = (e) => {
+    // const inputValue = e.target.value;
+    setEmail(e.target.value);
+
+    // Regular expression to validate email format
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    // setIsValid(emailPattern.test(inputValue));
+    setEmailError(emailPattern.test(e.target.value));
+  };
 
   useEffect(() => {
     addPaypalScript();
@@ -153,32 +167,44 @@ const Movers = () => {
   const templateParams = {
     firstName: details.personalDetails.firstName,
     lastName: details.personalDetails.lastName,
-    email: details.personalDetails.email,
+    email: email,
     quoteRef: details.moveDetails.quoteRef,
-    progressLink: `http://localhost:3000/book/movers/${details.moveDetails.bookingId}`,
+    progressLink: `https://removalstorage.vercel.app/book/movers/${details.moveDetails.bookingId}`,
     address1: details.serviceLocation.locationFrom.name,
     address2: details.serviceLocation.locationTo.name,
   };
 
   const sendProgressMail = async () => {
-    setProgressLoading(true);
-    emailjs
-      .send(
-        "service_oz8gmaw",
-        "template_krdi5hs",
-        templateParams,
-        "bpJZGidQYxKuIrEhN"
-      )
-      .then(
-        (response) => {
-          console.log("SUCCESS!", response.status, response.text);
-          setProgressLoading(false);
-          setShowProgressMessage(true);
-        },
-        (err) => {
-          console.log("FAILED...", err);
-        }
-      );
+    setActivateError(true);
+    setSubmitError(false);
+
+    if (!email || !emailError) {
+      setSubmitError(true);
+      setEmailError(false);
+    } else {
+      setProgressLoading(true);
+      setEmailError(true);
+      emailjs
+        .send(
+          "service_oz8gmaw",
+          "template_krdi5hs",
+          templateParams,
+          "bpJZGidQYxKuIrEhN"
+        )
+        .then(
+          (response) => {
+            console.log("SUCCESS!", response.status, response.text);
+            setProgressLoading(false);
+            setShowProgressMessage(true);
+          },
+          (err) => {
+            console.log("FAILED...", err);
+          }
+        );
+      setTimeout(() => {
+        setShowProgressMessage(false);
+      }, 8000);
+    }
   };
 
   // const [pickPrice, setPickPrice] = useState(priceThirdDay)
@@ -189,7 +215,7 @@ const Movers = () => {
   // console.log(newMovers);
   // console.log(firstCard);
   // console.log(otherCards);
-  console.log({ details });
+  console.log({ email });
 
   return (
     <>
@@ -271,6 +297,26 @@ const Movers = () => {
                               Need more time to decide? Save your progress and
                               continue booking right where you left off.
                             </p>
+                            <div className="px-[30px] ">
+                              <input
+                                type="email"
+                                placeholder="Email address"
+                                className={`${
+                                  activateError && (!email || !emailError)
+                                    ? "ring ring-secondary"
+                                    : ""
+                                } input input-primary w-full h-[43px] `}
+                                onChange={handleEmailChange}
+                                defaultValue={email}
+                              />
+                              <div className="w-full text-center">
+                                {!emailError && (
+                                  <p className="text-[14px] text-secondary mt-[5px]">
+                                    Please enter a valid email
+                                  </p>
+                                )}
+                              </div>
+                            </div>
                             <div className="flex w-full justify-center my-[20px]">
                               <div
                                 onClick={sendProgressMail}
@@ -290,9 +336,8 @@ const Movers = () => {
                               </div>
                             </div>
                             {showProgressMessage && (
-                              <p className="text-center text-[13px] text-secondary">
-                                Progress link has been sent to{" "}
-                                {details.personalDetails.email}
+                              <p className="text-center text-[13px] text-primary">
+                                Progress link has been sent to {email}
                               </p>
                             )}
                           </form>

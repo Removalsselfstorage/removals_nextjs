@@ -1,5 +1,5 @@
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import {
   getAllDetails,
   updateLocationDetails,
@@ -47,6 +47,8 @@ const PackageCard = ({
   const router = useRouter();
   const dispatch = useDispatch();
   const details = useSelector(getAllDetails);
+
+  const [submitLoading, setSubmitLoading] = useState(false);
 
   const randomRefValue = generateRandomValues();
 
@@ -189,6 +191,7 @@ const PackageCard = ({
   };
 
   const onBookNow = async () => {
+    setSubmitLoading(true);
     const userData = await fetchAllMoversDetailsArray();
     console.log(userData);
     dispatch(
@@ -450,9 +453,19 @@ const PackageCard = ({
         onClick={onBookNow}
         className={`btn ${
           preferred ? "btn-secondary " : "btn-primary btn-outline"
-        }  px-[30px] mb-[50px]`}
+        }  px-[30px] mb-[50px] group`}
       >
-        Book Now
+        {!submitLoading && <span className=""> Book Now</span>}
+        {submitLoading && (
+          <>
+            <span>Booking</span>
+            <span
+              className={`loading loading-dots loading-md ${
+                preferred ? "text-white " : "text-primary group-hover:text-white"
+              }`}
+            ></span>
+          </>
+        )}
       </button>
     </div>
   );

@@ -38,6 +38,7 @@ import {
   UploadBookingProgress1,
 } from "@/lib/uploadBookingProgress";
 import { generateRandomValues, generateSecureId } from "@/utils/logics";
+import { sendCustomEmail, welcomeEmail } from "@/lib/sendCustomEmail";
 
 const CompleteHouse = ({ emails }) => {
   const router = useRouter();
@@ -190,6 +191,19 @@ const CompleteHouse = ({ emails }) => {
     }
   };
 
+  const SUBJECT = "Welcome onboard";
+  const MESSAGE = "What is going on";
+  const EMAIL = email;
+  const params = {
+    firstName,
+    lastName,
+    email,
+  };
+
+  const sendWelcomeMail2 = async () => {
+    await welcomeEmail(email, params);
+  };
+
   useEffect(() => {
     const newEmails = [];
     emails.forEach((em) => {
@@ -226,6 +240,8 @@ const CompleteHouse = ({ emails }) => {
       setSubmitLoading(true);
 
       sendWelcomeMail();
+
+      sendWelcomeMail2();
 
       const randomRefValue = generateRandomValues();
 

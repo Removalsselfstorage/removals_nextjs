@@ -15,44 +15,51 @@ import NormalLayout from "@/layouts/NormalLayout";
 import { getAllUserDetails } from "@/store/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import MuiModal from "@/components/Modal/MuiModal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { getAllMoverDetails } from "@/store/moverSlice";
 
 export default function Home() {
-
   const dispatch = useDispatch();
 
   const users = useSelector(getAllUserDetails);
   const moverDetails = useSelector(getAllMoverDetails);
 
+  const [initialLoading, setInitialLoading] = useState(true);
 
-  const [open, setOpen] = useState(false);
+  useEffect(() => {
+    setTimeout(() => {
+      setInitialLoading(false);
+    }, 0);
+  }, []);
 
   return (
-    <NormalLayout>
-      <Head>
-        <title>
-          Removals and Selfstorage - Book Movers & Moving Help Online
-        </title>
-        <meta name="description" content="Rss removal and storage website" />
-        <link rel="icon" href="/rrs_favicon.svg" />
-      </Head>
+    <>
+    {/* {initialLoading ? "" : ""} */}
+      <NormalLayout>
+        <Head>
+          <title>
+            Removals and Selfstorage - Book Movers & Moving Help Online
+          </title>
+          <meta name="description" content="Rss removal and storage website" />
+          <link rel="icon" href="/rrs_favicon.svg" />
+        </Head>
 
-      <main className="">
-        <Hero />
-        <Features />
-        {/* <MuiModal open={open} setOpen={setOpen}>
+        <main className="">
+          <Hero />
+          <Features />
+          {/* <MuiModal open={open} setOpen={setOpen}>
           <p className="text-2xl font-bold text-black">Hello World</p>
         </MuiModal>
         <button onClick={()=> setOpen(true)}>Open Modal</button> */}
-        <OurServices />
-        <HowItWorks />
-        <WhyChooseUs />
-        <AboutUs />
-        <OurReviews />
-        <FeaturedCompanies />
-        <FAQ />
-      </main>
-    </NormalLayout>
+          <OurServices />
+          <HowItWorks />
+          <WhyChooseUs />
+          <AboutUs />
+          <OurReviews />
+          <FeaturedCompanies />
+          <FAQ />
+        </main>
+      </NormalLayout>
+    </>
   );
 }

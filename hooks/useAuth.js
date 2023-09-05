@@ -40,6 +40,14 @@ import { UploadMoverDocumentation } from "@/lib/uploadMoverDocumentation";
 import { UploadMoverPersonalDetails3 } from "@/lib/uploadMoverPersonalDetails3";
 import { UploadMoverDocumentation2 } from "@/lib/uploadMoverDocumentation2";
 import { doc, setDoc } from "firebase/firestore";
+import {
+  useQuery,
+  useMutation,
+  useQueryClient,
+  QueryClient,
+  QueryClientProvider,
+} from "@tanstack/react-query";
+import { ToastContainer, toast } from 'react-toastify';
 
 const AuthContext = createContext({
   user: null,
@@ -77,18 +85,18 @@ export const AuthProvider = ({ children }) => {
           // Logged in...
           // setUser(user);
           dispatch(updateUserDetails(userDetails));
-          setLoading(false);
+          // setLoading(false);
         } else {
           // Not logged in...
           // setUser(null);
           dispatch(updateUserDetails(null));
           // dispatch(updateUserDetails(null));
           // setLoading(true);
-          // router.push("/login");
+          // router.push("/mover-login");
         }
         // setError("");
 
-        setInitialLoading(false);
+        // setInitialLoading(false);
       }),
     [auth]
   );

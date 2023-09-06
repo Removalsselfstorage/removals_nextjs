@@ -281,7 +281,7 @@ export const AuthProvider = ({ children }) => {
       setLoading(false);
     } catch (error) {
       toast.error(`Email already in use.`, {
-        duration: 6000,
+        duration: 4000,
       });
 
       console.log("SignupError", error);

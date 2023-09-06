@@ -78,14 +78,16 @@ const MoverLogin = () => {
     dispatch(updateLoginError(null));
     dispatch(updateVerificationMessage(null));
 
-    await signIn(values.login_email, values.login_password);
-    setUser({
-      ...user,
-      login_email: "",
-      login_password: "",
+    signIn(values.login_email, values.login_password).then(() => {
+      setUser({
+        ...user,
+        login_email: "",
+        login_password: "",
+      });
+      setSubmitLoading(false);
     });
     // const userData = await fetchAllMoversDetails(uid);
-    setSubmitLoading(false);
+
     // actions.setSubmitting(false);
   };
 
@@ -97,6 +99,9 @@ const MoverLogin = () => {
     await resendEmailVerification();
     setSubmitLoading(false);
     setShowResendMessage(true);
+    toast.success(` Email verification link sent`, {
+      duration: 6000,
+    });
   };
 
   useEffect(() => {
@@ -205,10 +210,12 @@ const MoverLogin = () => {
                             // onClick={() => {}}
                             type="submit"
                             className="btn btn-primary flex items-center space-x-[5px]"
-                            disabled={submitLoading}
+                            disabled={form.isSubmitting}
                           >
-                            {!submitLoading && <span className="">Login</span>}
-                            {submitLoading && (
+                            {!form.isSubmitting && (
+                              <span className="">Login</span>
+                            )}
+                            {form.isSubmitting && (
                               <span className="loading loading-dots loading-md text-white"></span>
                             )}
                           </button>
@@ -226,11 +233,11 @@ const MoverLogin = () => {
                             </span>
                           </p>
                         )}
-                        {showResendMessage && (
+                        {/* {showResendMessage && (
                           <p className="text-center text-[15px] text-primary">
                             Email verification link sent
                           </p>
-                        )}
+                        )} */}
                         {/* {userDetails.loginError && (
                           <p className="text-center text-[15px] text-secondary">
                             Email / password is invalid

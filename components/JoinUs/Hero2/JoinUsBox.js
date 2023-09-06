@@ -258,7 +258,7 @@ const JoinUsBox = () => {
                     )}
                   </button>
                 </div>
-                {userDetails.signupError && !userDetails.signupMessage && (
+                {/* {userDetails.signupError && !userDetails.signupMessage && (
                   <p className="text-center text-[15px] text-secondary">
                     Email already in use
                   </p>
@@ -268,24 +268,10 @@ const JoinUsBox = () => {
                     <p className="text-center text-[15px] text-primary">
                       {userDetails.signupMessage}
                     </p>
-                    {/* <div className="toast toast-end">
-                      <div className="alert alert-success">
-                        <span>{userDetails.signupMessage}</span>
-                      </div>
-                    </div> */}
                   </>
-                )}
+                )} */}
 
-                {/* <div className={styles.account}>
-                      <Link href="/auth/forgot" className={styles.forgot}>
-                        Forgot password?
-                      </Link>{" "}
-                      |
-                      <Link href="/signup" className={styles.forgot}>
-                        {" "}
-                        Sign Up
-                      </Link>
-                    </div> */}
+                
               </Form>
             )}
           </Formik>

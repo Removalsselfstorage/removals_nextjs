@@ -231,11 +231,11 @@ const MoverLogin = () => {
                             Email verification link sent
                           </p>
                         )}
-                        {userDetails.loginError && (
+                        {/* {userDetails.loginError && (
                           <p className="text-center text-[15px] text-secondary">
                             Email / password is invalid
                           </p>
-                        )}
+                        )} */}
                         <div className="mt-[20px] text-[14px] flex items-center justify-center mx-[0px]">
                           <p className="w-[50px]">Don't have an account yet?</p>
                           <Link

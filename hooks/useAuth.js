@@ -47,7 +47,7 @@ import {
   QueryClient,
   QueryClientProvider,
 } from "@tanstack/react-query";
-import { ToastContainer, toast } from 'react-toastify';
+import toast, { Toaster } from "react-hot-toast";
 
 const AuthContext = createContext({
   user: null,
@@ -84,12 +84,16 @@ export const AuthProvider = ({ children }) => {
         if (userDetails?.emailVerified) {
           // Logged in...
           // setUser(user);
+
           dispatch(updateUserDetails(userDetails));
+
           // setLoading(false);
         } else {
           // Not logged in...
           // setUser(null);
+
           dispatch(updateUserDetails(null));
+
           // dispatch(updateUserDetails(null));
           // setLoading(true);
           // router.push("/mover-login");
@@ -256,6 +260,13 @@ export const AuthProvider = ({ children }) => {
 
       // Delay the router push by 3 seconds
 
+      toast.success(
+        `Registered successfully! Please activate your email to get started.`,
+        {
+          duration: 6000,
+        }
+      );
+
       dispatch(
         updateSignupMessage(
           "Registered successfully! Please activate your email to get started"
@@ -269,6 +280,10 @@ export const AuthProvider = ({ children }) => {
 
       setLoading(false);
     } catch (error) {
+      toast.error(`Email already in use.`, {
+        duration: 6000,
+      });
+
       console.log("SignupError", error);
       setError(error.message);
       dispatch(updateSignupError(error.message));
@@ -378,6 +393,12 @@ export const AuthProvider = ({ children }) => {
         }
       } else {
         setUser(userCredential.user);
+        toast.error(
+          `Please verify your email to login.`,
+          {
+            duration: 6000,
+          }
+        );
         dispatch(
           updateVerificationMessage(
             "Please verify your email via link sent to your mail, to login."
@@ -385,6 +406,9 @@ export const AuthProvider = ({ children }) => {
         );
       }
     } catch (error) {
+      toast.error(`Email / password is invalid`, {
+        duration: 4000,
+      });
       setError(error.message);
       dispatch(updateLoginError(error.message));
       setLoading(false);

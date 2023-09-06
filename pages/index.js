@@ -17,24 +17,64 @@ import { useDispatch, useSelector } from "react-redux";
 import MuiModal from "@/components/Modal/MuiModal";
 import { useEffect, useState } from "react";
 import { getAllMoverDetails } from "@/store/moverSlice";
+import { AiOutlineCloseCircle } from "react-icons/ai";
+import { getAllDetails } from "@/store/quoteSlice";
+import Link from "next/link";
 
 export default function Home() {
   const dispatch = useDispatch();
 
   const users = useSelector(getAllUserDetails);
   const moverDetails = useSelector(getAllMoverDetails);
+  const details = useSelector(getAllDetails);
+
+  const bookStageBoolean = () => {
+    switch (details.bookStage) {
+      case "home-removals":
+        return true;
+        break;
+      case "man-van":
+        return true;
+        break;
+      case "move-package":
+        return true;
+        break;
+
+      default:
+        return false;
+        break;
+    }
+  };
+
+  const bookStageLink = () => {
+    switch (details.bookStage) {
+      case "home-removals":
+        return "book/move-package";
+        break;
+      case "man-van":
+        return "book/move-package";
+        break;
+      case "move-package":
+        return "book/movers";
+        break;
+      case "movers":
+        return "book/checkout";
+        break;
+    }
+  };
 
   const [initialLoading, setInitialLoading] = useState(true);
+  const [showProgressMenu, setShowProgressMenu] = useState(bookStageBoolean());
 
-  useEffect(() => {
-    setTimeout(() => {
-      setInitialLoading(false);
-    }, 0);
-  }, []);
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setInitialLoading(false);
+  //   }, 0);
+  // }, []);
 
   return (
     <>
-    {/* {initialLoading ? "" : ""} */}
+      {/* {initialLoading ? "" : ""} */}
       <NormalLayout>
         <Head>
           <title>
@@ -45,6 +85,53 @@ export default function Home() {
         </Head>
 
         <main className="">
+          {showProgressMenu && (
+            <div className="w-full bg-secondary/10 border-t-[2px] py-[20px]  mt-[100px]  md:mt-[100px] lg:mt-[100px]">
+              <div className="w-full md:max-w-7xl mx-auto px-[20px] flex flex-col space-y-[10px] lg:space-y-[0px] lg:flex-row lg:justify-between">
+                <div className="flex flex-col">
+                  <p className="font-bold line-clamp-1">
+                    {details.moveDetails.propertyType}{" "}
+                    {details.moveDetails.movePackage} move with{" "}
+                    {details.moveDetails.numberOfMovers} and Jumbo Van
+                  </p>
+                  <p className="line-clamp-1">
+                    Delivery from {details.serviceLocation.locationFrom.name} to{" "}
+                    {details.serviceLocation.locationTo.name}
+                  </p>
+                </div>
+                <div className="flex items-center justify-between">
+                  {details.moveDetails.initialPackagePrice !== 0 && (
+                    <p className="font-bold text-[20px] mr-[30px]">
+                      from{" "}
+                      <span className="font-extrabold text-[24px]">
+                        ₤{details.moveDetails.initialPackagePrice}
+                      </span>
+                    </p>
+                  )}
+                  <div className="flex items">
+                    <Link
+                      href={`/${bookStageLink()}`}
+                      className="btn btn-secondary  mr-[10px]"
+                    >
+                      Continue Quote
+                    </Link>
+                    <div
+                      className="cursor-pointer"
+                      onClick={() => setShowProgressMenu(false)}
+                    >
+                      <AiOutlineCloseCircle
+                        size={30}
+                        className="text-secondary"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+          {!showProgressMenu && (
+            <div className="w-full  border-t-[2px]   border-black mt-[100px]  md:mt-[70px] lg:mt-[100px]"></div>
+          )}
           <Hero />
           <Features />
           {/* <MuiModal open={open} setOpen={setOpen}>

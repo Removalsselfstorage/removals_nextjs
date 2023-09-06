@@ -159,7 +159,7 @@ const HeroInputBox = () => {
         case "Home removals":
           router.push("/book/home-removals");
           break;
-        case "1 bed property":
+        case "1 Bed property":
           dispatch(
             updateMoveDetails({
               bookingId: details.moveDetails.bookingId,
@@ -177,7 +177,7 @@ const HeroInputBox = () => {
           );
           router.push("/book/home-removals");
           break;
-        case "2 bed property":
+        case "2 Bed property":
           dispatch(
             updateMoveDetails({
               bookingId: details.moveDetails.bookingId,
@@ -195,7 +195,7 @@ const HeroInputBox = () => {
           );
           router.push("/book/home-removals");
           break;
-        case "3 bed property":
+        case "3 Bed property":
           dispatch(
             updateMoveDetails({
               bookingId: details.moveDetails.bookingId,
@@ -213,7 +213,7 @@ const HeroInputBox = () => {
           );
           router.push("/book/home-removals");
           break;
-        case "4 bed property":
+        case "4 Bed property":
           dispatch(
             updateMoveDetails({
               bookingId: details.moveDetails.bookingId,

@@ -96,7 +96,7 @@ export const priceCalc = (title, duration, movers) => {
 
 export const priceCalc2 = (title, mileage, movers, propertyType) => {
   switch (propertyType) {
-    case "1 bed property":
+    case "1 Bed property":
       switch (title) {
         case "STANDARD":
           switch (movers) {
@@ -164,7 +164,7 @@ export const priceCalc2 = (title, mileage, movers, propertyType) => {
           break;
       }
       break;
-    case "2 bed property":
+    case "2 Bed property":
       switch (title) {
         case "STANDARD":
           switch (movers) {
@@ -232,7 +232,7 @@ export const priceCalc2 = (title, mileage, movers, propertyType) => {
           break;
       }
       break;
-    case "3 bed property":
+    case "3 Bed property":
       switch (title) {
         case "STANDARD":
           switch (movers) {
@@ -300,7 +300,7 @@ export const priceCalc2 = (title, mileage, movers, propertyType) => {
           break;
       }
       break;
-    case "4 bed property":
+    case "4 Bed property":
       switch (title) {
         case "STANDARD":
           switch (movers) {
@@ -620,7 +620,7 @@ export const moveDesciptionsCalc = (title, propertyType) => {
           break;
       }
       break;
-    case "1 bed property":
+    case "1 Bed property":
       switch (title) {
         case "STANDARD":
           return {
@@ -684,7 +684,7 @@ export const moveDesciptionsCalc = (title, propertyType) => {
           break;
       }
       break;
-    case "2 bed property":
+    case "2 Bed property":
       switch (title) {
         case "STANDARD":
           return {
@@ -748,7 +748,7 @@ export const moveDesciptionsCalc = (title, propertyType) => {
           break;
       }
       break;
-    case "3 bed property":
+    case "3 Bed property":
       switch (title) {
         case "STANDARD":
           return {
@@ -812,7 +812,7 @@ export const moveDesciptionsCalc = (title, propertyType) => {
           break;
       }
       break;
-    case "4 bed property":
+    case "4 Bed property":
       switch (title) {
         case "STANDARD":
           return {
@@ -1135,7 +1135,7 @@ export const moveDesciptionsCalc2 = (title, propertyType) => {
           break;
       }
       break;
-    case "1 bed property":
+    case "1 Bed property":
       switch (title) {
         case "Standard":
           return {
@@ -1199,7 +1199,7 @@ export const moveDesciptionsCalc2 = (title, propertyType) => {
           break;
       }
       break;
-    case "2 bed property":
+    case "2 Bed property":
       switch (title) {
         case "Standard":
           return {
@@ -1263,7 +1263,7 @@ export const moveDesciptionsCalc2 = (title, propertyType) => {
           break;
       }
       break;
-    case "3 bed property":
+    case "3 Bed property":
       switch (title) {
         case "Standard":
           return {
@@ -1327,7 +1327,7 @@ export const moveDesciptionsCalc2 = (title, propertyType) => {
           break;
       }
       break;
-    case "4 bed property":
+    case "4 Bed property":
       switch (title) {
         case "Standard":
           return {

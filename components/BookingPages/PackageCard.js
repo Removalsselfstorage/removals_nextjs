@@ -2,6 +2,7 @@ import Link from "next/link";
 import React, { useState } from "react";
 import {
   getAllDetails,
+  updateBookStage,
   updateLocationDetails,
   updateMoveDetails,
   updatePersonalDetails,
@@ -193,7 +194,9 @@ const PackageCard = ({
   const onBookNow = async () => {
     setSubmitLoading(true);
     const userData = await fetchAllMoversDetailsArray();
-    console.log(userData);
+    // console.log(userData);
+
+    dispatch(updateBookStage("move-package"));
     dispatch(
       updateAllMoverData({
         allPersonalDetails: userData?.personalDetails,

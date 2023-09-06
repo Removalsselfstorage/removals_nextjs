@@ -62,7 +62,7 @@ const initialState = {
     description: "",
     selectedTime: null,
     selectedTime2: null,
-    timeValue: null
+    timeValue: null,
   },
 
   // moverDetails
@@ -86,7 +86,10 @@ const initialState = {
     paymentMethod: "",
     paidPart: false,
     paidFull: false,
+    completedBook: false,
   },
+
+  bookStage: "",
 };
 
 export const quoteSlice = createSlice({
@@ -114,6 +117,9 @@ export const quoteSlice = createSlice({
     updateMoverSideDetails: (state, action) => {
       state.moverSideDetails = action.payload;
     },
+    updateBookStage: (state, action) => {
+      state.bookStage = action.payload;
+    },
   },
 });
 
@@ -125,6 +131,7 @@ export const {
   updatePaymentDetails,
   updatePickPrice,
   updateMoverSideDetails,
+  updateBookStage,
 } = quoteSlice.actions;
 
 export const getAllDetails = (state) => state.quote;

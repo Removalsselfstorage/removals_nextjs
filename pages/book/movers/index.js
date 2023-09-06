@@ -33,6 +33,11 @@ import { useRouter } from "next/navigation";
 import SideDrawer from "@/components/BookingPages/movers/SideDrawer";
 import { getAllMoverDetails } from "@/store/moverSlice";
 import emailjs from "@emailjs/browser";
+import { progressEmail } from "@/lib/sendCustomEmail";
+// import { ToastContainer, toast, Bounce, Slide, Zoom } from "react-toastify";
+// import "react-toastify/dist/ReactToastify.css";
+
+import toast, { Toaster } from "react-hot-toast";
 
 const Movers = () => {
   const router = useRouter();
@@ -164,7 +169,7 @@ const Movers = () => {
     }
   }, []);
 
-  const templateParams = {
+  const params = {
     firstName: details.personalDetails.firstName,
     lastName: details.personalDetails.lastName,
     email: email,
@@ -181,29 +186,40 @@ const Movers = () => {
     if (!email || !emailError) {
       setSubmitError(true);
       setEmailError(false);
+      toast.error(`Please enter a valid email`, {
+        duration: 4000,
+      });
     } else {
       setProgressLoading(true);
       setEmailError(true);
-      emailjs
-        .send(
-          "service_oz8gmaw",
-          "template_krdi5hs",
-          templateParams,
-          "bpJZGidQYxKuIrEhN"
-        )
-        .then(
-          (response) => {
-            console.log("SUCCESS!", response.status, response.text);
-            setProgressLoading(false);
-            setShowProgressMessage(true);
-          },
-          (err) => {
-            console.log("FAILED...", err);
-          }
-        );
-      setTimeout(() => {
-        setShowProgressMessage(false);
-      }, 8000);
+
+      // emailjs.send(
+      //   "service_oz8gmaw",
+      //   "template_krdi5hs",
+      //   templateParams,
+      //   "bpJZGidQYxKuIrEhN"
+      // );
+      let variable1 = email;
+      let variable2 = variable1;
+
+      try {
+        await progressEmail(email, params);
+        setEmail("");
+        setActivateError(false);
+        setProgressLoading(false);
+        setShowProgressMessage(true);
+        toast.success(`Progress link has been sent`, {
+          duration: 8000,
+        });
+
+        // toast.success(`Progress link has been sent to ${email}`);
+        setTimeout(() => {
+          setShowProgressMessage(false);
+          // setEmail("");
+        }, 8000);
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
@@ -215,7 +231,7 @@ const Movers = () => {
   // console.log(newMovers);
   // console.log(firstCard);
   // console.log(otherCards);
-  console.log({ email });
+  console.log({ details });
 
   return (
     <>
@@ -275,6 +291,10 @@ const Movers = () => {
                           <p className="whitespace-nowrap">Save Quote</p>
                         </div>
 
+                        {/* <button onClick={notify} className="btn btn-primary">
+                          Notify !
+                        </button> */}
+
                         {/* modal */}
                         <dialog
                           id="my_modal_11"
@@ -291,7 +311,7 @@ const Movers = () => {
                               </div>
                             </div>
                             <h3 className="font-bold text-[24px] text-primary text-center">
-                              Save your progress!
+                              Save your quote!
                             </h3>
                             <p className="py-4 text-center text-primary px-[30px]">
                               Need more time to decide? Save your progress and
@@ -301,21 +321,17 @@ const Movers = () => {
                               <input
                                 type="email"
                                 placeholder="Email address"
-                                className={`${
-                                  activateError && (!email || !emailError)
-                                    ? "ring ring-secondary"
-                                    : ""
-                                } input input-primary w-full h-[43px] `}
+                                className={` input input-primary w-full h-[43px] `}
                                 onChange={handleEmailChange}
-                                defaultValue={email}
+                                value={email}
                               />
-                              <div className="w-full text-center">
-                                {!emailError && (
+                              {/* <div className="w-full text-center">
+                                {!emailError && activateError && (
                                   <p className="text-[14px] text-secondary mt-[5px]">
                                     Please enter a valid email
                                   </p>
                                 )}
-                              </div>
+                              </div> */}
                             </div>
                             <div className="flex w-full justify-center my-[20px]">
                               <div
@@ -335,11 +351,12 @@ const Movers = () => {
                                 )}
                               </div>
                             </div>
-                            {showProgressMessage && (
-                              <p className="text-center text-[13px] text-primary">
+
+                            {/* {showProgressMessage && (
+                              <p className="text-center text-[16px] text-primary">
                                 Progress link has been sent to {email}
                               </p>
-                            )}
+                            )} */}
                           </form>
                           <form method="dialog" className="modal-backdrop">
                             <button>close</button>

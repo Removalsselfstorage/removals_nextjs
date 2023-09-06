@@ -21,6 +21,7 @@ import GoogleSearchInput from "@/components/Inputs/GoogleSearchInput";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getAllDetails,
+  updateBookStage,
   updateLocationDetails,
   updateMoveDetails,
   updateMoverDetails,
@@ -37,6 +38,8 @@ import {
   UploadBookingProgress1,
 } from "@/lib/uploadBookingProgress";
 import { generateRandomValues } from "@/utils/logics";
+import { welcomeEmail } from "@/lib/sendCustomEmail";
+import toast, { Toaster } from "react-hot-toast";
 
 const ManAndVan = ({ emails }) => {
   const router = useRouter();
@@ -170,21 +173,7 @@ const ManAndVan = ({ emails }) => {
 
   const sendWelcomeMail = async () => {
     if (!usedEmails.includes(email)) {
-      emailjs
-        .send(
-          "service_oz8gmaw",
-          "template_p8lx33l",
-          templateParams,
-          "bpJZGidQYxKuIrEhN"
-        )
-        .then(
-          (response) => {
-            console.log("SUCCESS!", response.status, response.text);
-          },
-          (err) => {
-            console.log("FAILED...", err);
-          }
-        );
+      await welcomeEmail(email, params);
 
       const emailRef = collection(db, "welcomedEmails");
 
@@ -222,13 +211,25 @@ const ManAndVan = ({ emails }) => {
       !agreeTermsValue
     ) {
       setSubmitError(true);
+      toast.error(`Please fill all mandatory fields`, {
+        duration: 2000,
+        position: "top-center",
+      });
     } else {
+      toast.remove();
       setSubmitLoading(true);
 
       sendWelcomeMail();
 
-      const randomRefValue = generateRandomValues();
-      const bookingId = generateSecureId();
+      let bookingId = details.moveDetails.bookingId;
+      let quoteRef = details.moveDetails.quoteRef;
+
+      if (details.moveDetails.bookingId === "") {
+        bookingId = generateSecureId();
+        quoteRef = generateRandomValues();
+      }
+
+      dispatch(updateBookStage("man-van"));
 
       dispatch(
         updateLocationDetails({
@@ -282,7 +283,7 @@ const ManAndVan = ({ emails }) => {
           moveDate: date,
           moveDateRaw: dateValue,
           movePackage: details.moveDetails.movePackage,
-          quoteRef: details.moveDetails.quoteRef,
+          quoteRef,
           initialPackagePrice: durationCalculation(durationCount),
         })
       );
@@ -328,6 +329,7 @@ const ManAndVan = ({ emails }) => {
           telephone: phone,
         },
         moveDetails: {
+          bookingId,
           propertyType: propertyValue,
           numberOfMovers: menValue,
           mileage: mileageValue,
@@ -336,7 +338,7 @@ const ManAndVan = ({ emails }) => {
           moveDate: date,
           // moveDateRaw: dateValue || "",
           movePackage: details.moveDetails.movePackage,
-          quoteRef: randomRefValue,
+          quoteRef,
           initialPackagePrice: details.moveDetails.initialPackagePrice,
         },
         stage: "book/man-and-van",
@@ -903,11 +905,11 @@ const ManAndVan = ({ emails }) => {
                       </span>
                     )}
                   </button>
-                  {submitError && (
+                  {/* {submitError && (
                     <p className="text-[16px] text-secondary mt-[15px]">
                       Please fill all mandatory fields
                     </p>
-                  )}
+                  )} */}
                 </div>
               </div>
             </div>

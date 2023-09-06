@@ -21,6 +21,7 @@ import GoogleSearchInput from "@/components/Inputs/GoogleSearchInput";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getAllDetails,
+  updateBookStage,
   updateLocationDetails,
   updateMoveDetails,
   updateMoverDetails,
@@ -39,6 +40,7 @@ import {
 } from "@/lib/uploadBookingProgress";
 import { generateRandomValues, generateSecureId } from "@/utils/logics";
 import { sendCustomEmail, welcomeEmail } from "@/lib/sendCustomEmail";
+import toast, { Toaster } from "react-hot-toast";
 
 const CompleteHouse = ({ emails }) => {
   const router = useRouter();
@@ -155,7 +157,13 @@ const CompleteHouse = ({ emails }) => {
     return option;
   };
 
-  const templateParams = {
+  // const templateParams = {
+  //   firstName,
+  //   lastName,
+  //   email,
+  // };
+
+  const params = {
     firstName,
     lastName,
     email,
@@ -163,21 +171,22 @@ const CompleteHouse = ({ emails }) => {
 
   const sendWelcomeMail = async () => {
     if (!usedEmails.includes(email)) {
-      emailjs
-        .send(
-          "service_oz8gmaw",
-          "template_p8lx33l",
-          templateParams,
-          "bpJZGidQYxKuIrEhN"
-        )
-        .then(
-          (response) => {
-            console.log("SUCCESS!", response.status, response.text);
-          },
-          (err) => {
-            console.log("FAILED...", err);
-          }
-        );
+      // emailjs
+      //   .send(
+      //     "service_oz8gmaw",
+      //     "template_p8lx33l",
+      //     templateParams,
+      //     "bpJZGidQYxKuIrEhN"
+      //   )
+      //   .then(
+      //     (response) => {
+      //       console.log("SUCCESS!", response.status, response.text);
+      //     },
+      //     (err) => {
+      //       console.log("FAILED...", err);
+      //     }
+      //   );
+      await welcomeEmail(email, params);
 
       const emailRef = collection(db, "welcomedEmails");
 
@@ -191,18 +200,13 @@ const CompleteHouse = ({ emails }) => {
     }
   };
 
-  const SUBJECT = "Welcome onboard";
-  const MESSAGE = "What is going on";
-  const EMAIL = email;
-  const params = {
-    firstName,
-    lastName,
-    email,
-  };
+  // const SUBJECT = "Welcome onboard";
+  // const MESSAGE = "What is going on";
+  // const EMAIL = email;
 
-  const sendWelcomeMail2 = async () => {
-    await welcomeEmail(email, params);
-  };
+  // const sendWelcomeMail2 = async () => {
+  //   await welcomeEmail(email, params);
+  // };
 
   useEffect(() => {
     const newEmails = [];
@@ -236,16 +240,29 @@ const CompleteHouse = ({ emails }) => {
       !agreeTermsValue
     ) {
       setSubmitError(true);
+      toast.error(`Please fill all mandatory fields`, {
+        duration: 2000,
+        position: "top-center",
+      });
     } else {
+      toast.remove();
       setSubmitLoading(true);
 
       sendWelcomeMail();
 
-      sendWelcomeMail2();
+      // sendWelcomeMail2();
 
-      const randomRefValue = generateRandomValues();
+      // const randomRefValue = generateRandomValues();
 
-      const bookingId = generateSecureId();
+      let bookingId = details.moveDetails.bookingId;
+      let quoteRef = details.moveDetails.quoteRef;
+
+      if (details.moveDetails.bookingId === "") {
+        bookingId = generateSecureId();
+        quoteRef = generateRandomValues();
+      }
+
+      dispatch(updateBookStage("home-removals"));
 
       dispatch(
         updateLocationDetails({
@@ -299,7 +316,7 @@ const CompleteHouse = ({ emails }) => {
           moveDate: date,
           moveDateRaw: dateValue,
           movePackage: details.moveDetails.movePackage,
-          quoteRef: randomRefValue,
+          quoteRef,
           initialPackagePrice: details.moveDetails.initialPackagePrice,
         })
       );
@@ -354,7 +371,7 @@ const CompleteHouse = ({ emails }) => {
           moveDate: date,
           // moveDateRaw: dateValue || "",
           movePackage: details.moveDetails.movePackage,
-          quoteRef: randomRefValue,
+          quoteRef,
           initialPackagePrice: details.moveDetails.initialPackagePrice,
         },
 
@@ -879,11 +896,11 @@ const CompleteHouse = ({ emails }) => {
                       </span>
                     )}
                   </button>
-                  {submitError && (
+                  {/* {submitError && (
                     <p className="text-[16px] text-secondary mt-[15px]">
                       Please fill all mandatory fields
                     </p>
-                  )}
+                  )} */}
                 </div>
               </div>
             </div>

@@ -18,6 +18,9 @@ import {
   QueryClientProvider,
 } from "@tanstack/react-query";
 import Head from "next/head";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
+import toast, { ToastBar, Toaster } from "react-hot-toast";
 
 let persistor = persistStore(store);
 
@@ -35,12 +38,37 @@ export default function App({ Component, pageProps: { ...pageProps } }) {
       <Head>
         <link rel="icon" href="/rrs_favicon.svg" />
       </Head>
-      
+
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
           <QueryClientProvider client={queryClient}>
             <AuthProvider>
               <Component {...pageProps} />
+              <Toaster
+                position="bottom-center"
+                // reverseOrder={false}
+                gutter={8}
+                containerClassName=""
+                containerStyle={{}}
+                toastOptions={{
+                  // Define default options
+                  className: "",
+                  // duration: 5000,
+                  style: {
+                    background: "#363636",
+                    color: "#fff",
+                  },
+
+                  // Default options for specific types
+                  // success: {
+                  //   duration: 3000,
+                  //   theme: {
+                  //     primary: "green",
+                  //     secondary: "black",
+                  //   },
+                  // },
+                }}
+              />
             </AuthProvider>
           </QueryClientProvider>
         </PersistGate>

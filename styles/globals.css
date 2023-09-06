@@ -1,6 +1,9 @@
+/* import "react-toastify/dist/ReactToastify.css"; */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* import "react-toastify/dist/ReactToastify.css"; */
 
 /* import '@fortawesome/fontawesome-free/css/all.css'; */
 

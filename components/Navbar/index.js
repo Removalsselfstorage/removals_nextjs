@@ -77,7 +77,7 @@ const Navbar = () => {
           shadow
             ? "shadow-lg fixed left-0 right-0 top-0 z-50 border-b-[1.8px]"
             : "fixed left-0 right-0 top-0 z-50 border-b-[1.8px]"
-        } flex flex-col items-center`}
+        } flex flex-col items-center `}
       >
         {/* Top Nav */}
         {showNav && (
@@ -237,7 +237,7 @@ const Navbar = () => {
                       </Link>
                     </li>
                     <li>
-                      {!users.userDetails && (
+                      {!users.userDetails?.emailVerified && (
                         // <Link href="/reserve-login" className="btn-nav">
                         //   My Reservation
                         // </Link>
@@ -252,7 +252,7 @@ const Navbar = () => {
                           My Reservation
                         </Link>
                       )}
-                      {users.userDetails && (
+                      {users.userDetails?.emailVerified && (
                         // <Link href="/mover-profile" className="btn-nav">
                         //   My Dashboard
                         // </Link>
@@ -274,7 +274,7 @@ const Navbar = () => {
 
                 {/* nav right */}
                 <div className="navbar-end  lg:w-[40%] flex  space-x-[10px]">
-                  {!users.userDetails && (
+                  {!users.userDetails?.emailVerified && (
                     <div className=" lg:space-x-[10px] hidden lg:flex">
                       <Link
                         href="/join-us"
@@ -288,7 +288,7 @@ const Navbar = () => {
                       {/* <a className="btn btn-primary">Mover Login</a> */}
                     </div>
                   )}
-                  {users.userDetails && (
+                  {users.userDetails?.emailVerified && (
                     <ul className="  px-1 text-[16px] hidden lg:flex ">
                       <li className="dropdown  dropdown-end">
                         {previewUrl ? (

@@ -17,6 +17,7 @@ import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getAllDetails,
+  updateBookStage,
   updateMoverDetails,
   updateMoverSideDetails,
 } from "@/store/quoteSlice";
@@ -26,6 +27,7 @@ import {
   convertToFloatOrRound,
   convertToFloatWithOneDecimal,
 } from "@/utils/logics";
+import { toast } from "react-hot-toast";
 // import SideDrawer from "./sideDrawer";
 
 const MoverCard = ({
@@ -124,8 +126,14 @@ const MoverCard = ({
     setSubmitError(true);
     if (timeValue == "") {
       setSubmitError(false);
+      toast.error(`Please pick a move time`, {
+        duration: 2000,
+        // position: 'top-center',
+      });
     } else {
       setSubmitLoading(true);
+
+      dispatch(updateBookStage("movers"));
       dispatch(
         updateMoverDetails({
           moverName: name,
@@ -360,11 +368,11 @@ const MoverCard = ({
                   <span className="loading loading-dots loading-md text-white"></span>
                 )}
               </button>
-              {!submitError && (
+              {/* {!submitError && (
                 <p className="text-[14px] text-secondary mt-[5px]">
                   Please choose time
                 </p>
-              )}
+              )} */}
             </div>
           </div>
         </div>

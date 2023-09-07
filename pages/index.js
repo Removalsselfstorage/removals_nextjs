@@ -45,6 +45,27 @@ export default function Home() {
         break;
     }
   };
+  const bookStageBoolean2 = () => {
+    switch (details.bookStage) {
+      case "home-removals":
+        return false;
+        break;
+      case "man-van":
+        return false;
+        break;
+      case "move-package":
+        return true;
+        break;
+
+      case "movers":
+        return true;
+        break;
+
+      default:
+        return false;
+        break;
+    }
+  };
 
   const bookStageLink = () => {
     switch (details.bookStage) {
@@ -100,7 +121,7 @@ export default function Home() {
                   </p>
                 </div>
                 <div className="flex items-center justify-between">
-                  {details.moveDetails.initialPackagePrice !== 0 && (
+                  {bookStageBoolean2() && (
                     <p className="font-bold text-[20px] mr-[30px]">
                       from{" "}
                       <span className="font-extrabold text-[24px]">

@@ -39,6 +39,9 @@ export default function Home() {
       case "move-package":
         return true;
         break;
+      case "movers":
+        return true;
+        break;
 
       default:
         return false;

@@ -69,7 +69,9 @@ export const AuthProvider = ({ children }) => {
 
   const dispatch = useDispatch();
 
-  const { userDetails } = useSelector(getAllUserDetails);
+  const userDetails = useSelector(getAllUserDetails);
+
+  console.log(userDetails);
 
   const [user, setUser] = useState(null);
   const [error, setError] = useState(null);
@@ -86,6 +88,7 @@ export const AuthProvider = ({ children }) => {
           // setUser(user);
 
           dispatch(updateUserDetails(userDetails));
+          // router.push("/");
 
           // setLoading(false);
         } else {
@@ -393,12 +396,9 @@ export const AuthProvider = ({ children }) => {
         }
       } else {
         setUser(userCredential.user);
-        toast.error(
-          `Please verify your email to login.`,
-          {
-            duration: 6000,
-          }
-        );
+        toast.error(`Please verify your email to login.`, {
+          duration: 6000,
+        });
         dispatch(
           updateVerificationMessage(
             "Please verify your email via link sent to your mail, to login."

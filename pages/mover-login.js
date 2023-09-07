@@ -31,6 +31,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "@/firebase";
 import { fetchAllMoversDetails } from "@/lib/fetchData2";
+// import { auth, db } from "@/firebase";
 
 // const Login = ({ providers, csrfToken, callbackUrl }) => {
 const MoverLogin = () => {
@@ -114,6 +115,14 @@ const MoverLogin = () => {
       router.push("/");
     }
   }, []);
+
+  // useEffect(() => {
+  //   if (!userDetails.userDetails) {
+  //     router.push("/mover-login");
+  //   } else {
+  //     router.push("/");
+  //   }
+  // });
 
   return (
     <>

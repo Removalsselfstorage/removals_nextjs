@@ -100,9 +100,9 @@ const MoverLogin = () => {
     await resendEmailVerification();
     setSubmitLoading(false);
     setShowResendMessage(true);
-    toast.success(` Email verification link sent`, {
-      duration: 6000,
-    });
+    // toast.success(` Email verification link sent`, {
+    //   duration: 6000,
+    // });
   };
 
   useEffect(() => {
@@ -219,39 +219,37 @@ const MoverLogin = () => {
                             // onClick={() => {}}
                             type="submit"
                             className="btn btn-primary flex items-center space-x-[5px]"
-                            disabled={form.isSubmitting}
+                            disabled={submitLoading}
                           >
-                            {!form.isSubmitting && (
-                              <span className="">Login</span>
-                            )}
-                            {form.isSubmitting && (
+                            {!submitLoading && <span className="">Login</span>}
+                            {submitLoading && (
                               <span className="loading loading-dots loading-md text-white"></span>
                             )}
                           </button>
                         </div>
                         {userDetails.verificationMessage && (
-                          <p className="text-center text-[15px] text-primary">
+                          <div className="text-center text-[15px] text-primary ">
                             {userDetails.verificationMessage}{" "}
                             <span
-                              className="font-bold cursor-pointer"
+                              className="font-extrabold cursor-pointer "
                               onClick={() => {
                                 resendLinkHandler();
                               }}
                             >
                               Resend link?
                             </span>
-                          </p>
+                          </div>
                         )}
-                        {/* {showResendMessage && (
-                          <p className="text-center text-[15px] text-primary">
+                        {showResendMessage && (
+                          <div className="text-center text-[15px] text-primary  mt-[15px] bg-primary/20 rounded-[10px] py-[10px] px-[30px]">
                             Email verification link sent
-                          </p>
-                        )} */}
-                        {/* {userDetails.loginError && (
-                          <p className="text-center text-[15px] text-secondary">
+                          </div>
+                        )}
+                        {userDetails.loginError && (
+                          <div className="text-[14px] text-center mt-[15px] text-secondary bg-secondary/20 rounded-[10px] py-[10px] px-[30px]">
                             Email / password is invalid
-                          </p>
-                        )} */}
+                          </div>
+                        )}
                         <div className="mt-[20px] text-[14px] flex items-center justify-center mx-[0px]">
                           <p className="w-[50px]">Don't have an account yet?</p>
                           <Link
@@ -264,16 +262,6 @@ const MoverLogin = () => {
                             <FaArrowRight className="text-primary" />
                           </Link>
                         </div>
-                        {/* <div className={styles.account}>
-                        <Link href="/auth/forgot" className={styles.forgot}>
-                          Forgot password?
-                        </Link>{" "}
-                        |
-                        <Link href="/signup" className={styles.forgot}>
-                          {" "}
-                          Sign Up
-                        </Link>
-                      </div> */}
                       </Form>
                     )}
                   </Formik>

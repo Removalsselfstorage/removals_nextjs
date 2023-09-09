@@ -10,10 +10,7 @@ import React, { useEffect, useState } from "react";
 import { FiEdit } from "react-icons/fi";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
-import {
-  getAllDetails,
-  
-} from "@/store/quoteSlice";
+import { getAllDetails } from "@/store/quoteSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 import PackageCard from "@/components/BookingPages/PackageCard";
@@ -24,6 +21,55 @@ const MovePackage = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const details = useSelector(getAllDetails);
+
+  const moveUrl = () => {
+    switch (details.moveDetails.propertyType) {
+      case "Office removals":
+        return "man-and-van";
+
+        break;
+      case "Man and van":
+        return "man-and-van";
+
+        break;
+      case "Studio flat":
+        return "man-and-van";
+
+        break;
+      case "Furniture & Appliances":
+        return "man-and-van";
+
+        break;
+      case "Storage":
+        return "man-and-van";
+
+        break;
+      case "Home removals":
+        return "home-removals";
+
+        break;
+      case "1 Bed property":
+        return "home-removals";
+
+        break;
+      case "2 Bed property":
+        return "home-removals";
+
+        break;
+      case "3 Bed property":
+        return "home-removals";
+
+        break;
+      case "4 Bed property":
+        return "home-removals";
+
+        break;
+
+      default:
+        // router.push("/book");
+        break;
+    }
+  };
 
   // const onPackageClick = async () => {
 
@@ -48,16 +94,29 @@ const MovePackage = () => {
           <main>
             <div className="mb-[70px] lg:mb-[100px] pt-[70px]">
               <div className="md:max-w-7xl mx-auto">
-                {/* Title */}
-                <div className="w-full flex justify-center py-[30px] md:py-[40px] mb-[30px]">
-                  {/* <h3 className="text-4xl font-extrabold">Our Services</h3> */}
-                  <h3
-                    className={`${titleFont.variable} font-sans2 text-2xl lg:text-4xl font-extrabold flex-col items-center justify-center`}
-                  >
-                    <p className="">Choose a Move Package</p>{" "}
-                    <div className="w-full bg-primary/20 h-[20px] mt-[-12px] "></div>
-                  </h3>
+                {/* stepper */}
+                <div className="w-full flex justify-center mt-[20px] mb-[80px]">
+                  <ul className="steps">
+                    <li
+                      onClick={() => {
+                        router.push(`/book/${moveUrl()}`);
+                      }}
+                      className="step step-primary px-[50px] font-bold text-[16px] leading-[20px] cursor-pointer"
+                    >
+                      Move Details
+                    </li>
+                    <li className="step step-primary font-bold text-[16px] leading-[25px]">
+                      Move Package
+                    </li>
+                    <li className="step  font-bold text-[16px] leading-[25px] text-gray-300">
+                      Choose Mover
+                    </li>
+                    <li className="step  font-bold text-[16px] leading-[25px] text-gray-300">
+                      Checkout
+                    </li>
+                  </ul>
                 </div>
+
                 {/* move packages */}
                 <div className="py-[0px] px-[20px] lg:px-[100px] xl:px-[20px] grid md:grid-cols-2  lg:grid-cols-2 xl:grid-cols-4 justify-center lg:gap-x-[20px] lg:gap-y-[50px] gap-x-[20px] gap-y-[50px]">
                   <PackageCard

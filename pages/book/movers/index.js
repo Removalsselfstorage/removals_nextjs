@@ -189,9 +189,9 @@ const Movers = () => {
     if (!email || !emailError) {
       setSubmitError(true);
       setEmailError(false);
-      toast.error(`Please enter a valid email`, {
-        duration: 4000,
-      });
+      // toast.error(`Please enter a valid email`, {
+      //   duration: 4000,
+      // });
     } else {
       setProgressLoading(true);
       setEmailError(true);
@@ -232,14 +232,55 @@ const Movers = () => {
     }, 500);
   };
 
-  // const [pickPrice, setPickPrice] = useState(priceThirdDay)
+  const moveUrl = () => {
+    switch (details.moveDetails.propertyType) {
+      case "Office removals":
+        return "man-and-van";
 
-  // console.log(allPersonalDetails);
-  // console.log(allCompanyDetails);
-  // console.log(allCompanyPix);
-  // console.log(newMovers);
-  // console.log(firstCard);
-  // console.log(otherCards);
+        break;
+      case "Man and van":
+        return "man-and-van";
+
+        break;
+      case "Studio flat":
+        return "man-and-van";
+
+        break;
+      case "Furniture & Appliances":
+        return "man-and-van";
+
+        break;
+      case "Storage":
+        return "man-and-van";
+
+        break;
+      case "Home removals":
+        return "home-removals";
+
+        break;
+      case "1 Bed property":
+        return "home-removals";
+
+        break;
+      case "2 Bed property":
+        return "home-removals";
+
+        break;
+      case "3 Bed property":
+        return "home-removals";
+
+        break;
+      case "4 Bed property":
+        return "home-removals";
+
+        break;
+
+      default:
+        // router.push("/book");
+        break;
+    }
+  };
+
   console.log({ details });
 
   return (
@@ -253,7 +294,7 @@ const Movers = () => {
       {details.moveDetails.initialPackagePrice ? (
         <BookingLayout>
           <main className="">
-            <div className="mb-[70px] lg:mb-[100px] pt-[80px] md:pt-[100px] ">
+            <div className="mb-[70px] lg:mb-[100px] pt-[80px] md:pt-[80px] ">
               <SideDrawer
                 showLoader2={showLoader2}
                 selectedTime={selectedTime}
@@ -266,8 +307,37 @@ const Movers = () => {
               {showLoader && <Loader1 />}
               {/* {showLoader2 && <Loader1 />} */}
               <div className="md:max-w-7xl mx-auto">
+                {/* stepper */}
+                <div className="w-full flex justify-center mb-[20px]">
+                  <ul className="steps">
+                    <li
+                      onClick={() => {
+                        router.push(`/book/${moveUrl()}`);
+                      }}
+                      className="step step-primary px-[50px] font-bold text-[14px] md:text-[16px] leading-[20px] cursor-pointer"
+                    >
+                      Move Details
+                    </li>
+                    <li
+                      onClick={() => {
+                        router.push(`/book/move-package`);
+                      }}
+                      className="step step-primary font-bold text-[14px] md:text-[16px] leading-[25px] cursor-pointer"
+                    >
+                      Move Package
+                    </li>
+                    <li className="step step-primary font-bold text-[14px] md:text-[16px] leading-[25px] ">
+                      Choose Mover
+                    </li>
+                    <li className="step  font-bold text-[14px] md:text-[16px] leading-[25px] text-gray-300">
+                      Checkout
+                    </li>
+                  </ul>
+                </div>
                 {/* features links */}
-                <FeaturesScroll />
+                {/* <FeaturesScroll /> */}
+
+
                 {/* price date pick */}
                 <PriceDatePick
                   setShowLoader={setShowLoader}
@@ -343,9 +413,9 @@ const Movers = () => {
                                   />
                                   <div className="w-full text-center">
                                     {!emailError && activateError && (
-                                      <p className="text-[14px] text-secondary mt-[5px]">
+                                      <div className="text-[14px] text-secondary mt-[10px] bg-secondary/20 rounded-[10px] py-[10px] px-[20px]">
                                         Please enter a valid email
-                                      </p>
+                                      </div>
                                     )}
                                   </div>
                                 </div>
@@ -403,11 +473,6 @@ const Movers = () => {
                                 </div>
                               </div>
                             )}
-                            {/* {showProgressMessage && (
-                              <p className="text-center text-[16px] text-primary">
-                                Progress link has been sent
-                              </p>
-                            )} */}
                           </form>
                           <form method="dialog">
                             <button>close</button>

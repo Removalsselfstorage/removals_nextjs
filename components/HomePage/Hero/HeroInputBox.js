@@ -246,13 +246,6 @@ const HeroInputBox = () => {
     return option;
   };
 
-  //   console.log(address);
-  //   console.log(addressDetails)
-  //   console.log(address2)
-  //   console.log(addressDetails2)
-  //   console.log(selectValue);
-  //   console.log(addressDetails);
-  //   console.log(addressDetails);
   // console.log(details);
 
   return (

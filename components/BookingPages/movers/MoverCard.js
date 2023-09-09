@@ -127,10 +127,11 @@ const MoverCard = ({
     if (timeValue == "") {
       setSubmitError(false);
       toast.error(`Please pick a move time`, {
-        duration: 2000,
+        duration: 6000,
         // position: 'top-center',
       });
     } else {
+      toast.remove();
       setSubmitLoading(true);
 
       dispatch(updateBookStage("movers"));

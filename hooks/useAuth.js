@@ -35,7 +35,10 @@ import {
   updatePersonalDetails,
 } from "@/store/moverSlice";
 import { fetchAllMoversDetails } from "@/lib/fetchData2";
-import { UploadMoverPersonalDetails2 } from "@/lib/uploadMoverPersonalDetails2";
+import {
+  UploadMoverData,
+  UploadMoverPersonalDetails2,
+} from "@/lib/uploadMoverPersonalDetails2";
 import { UploadMoverDocumentation } from "@/lib/uploadMoverDocumentation";
 import { UploadMoverPersonalDetails3 } from "@/lib/uploadMoverPersonalDetails3";
 import { UploadMoverDocumentation2 } from "@/lib/uploadMoverDocumentation2";
@@ -71,7 +74,7 @@ export const AuthProvider = ({ children }) => {
 
   const userDetails = useSelector(getAllUserDetails);
 
-  console.log(userDetails);
+  // console.log(userDetails);
 
   const [user, setUser] = useState(null);
   const [error, setError] = useState(null);
@@ -263,12 +266,12 @@ export const AuthProvider = ({ children }) => {
 
       // Delay the router push by 3 seconds
 
-      toast.success(
-        `Registered successfully! Please activate your email to get started.`,
-        {
-          duration: 6000,
-        }
-      );
+      // toast.success(
+      //   `Registered successfully! Please activate your email to get started.`,
+      //   {
+      //     duration: 6000,
+      //   }
+      // );
 
       dispatch(
         updateSignupMessage(
@@ -283,9 +286,9 @@ export const AuthProvider = ({ children }) => {
 
       setLoading(false);
     } catch (error) {
-      toast.error(`Email already in use.`, {
-        duration: 6000,
-      });
+      // toast.error(`Email already in use.`, {
+      //   duration: 6000,
+      // });
 
       console.log("SignupError", error);
       setError(error.message);
@@ -396,9 +399,11 @@ export const AuthProvider = ({ children }) => {
         }
       } else {
         setUser(userCredential.user);
-        toast.error(`Please verify your email to login.`, {
-          duration: 6000,
-        });
+
+        // toast.error(`Please verify your email to login.`, {
+        //   duration: 6000,
+        // });
+
         dispatch(
           updateVerificationMessage(
             "Please verify your email via link sent to your mail, to login."
@@ -406,29 +411,12 @@ export const AuthProvider = ({ children }) => {
         );
       }
     } catch (error) {
-      toast.error(`Email / password is invalid`, {
-        duration: 6000,
-      });
+      // toast.error(`Email / password is invalid`, {
+      //   duration: 6000,
+      // });
       setError(error.message);
       dispatch(updateLoginError(error.message));
       setLoading(false);
-    }
-
-    const moversRef = doc(db, "moversData", details.personalDetails.uid);
-
-    try {
-      await setDoc(
-        moversRef,
-
-        {
-          lastLogin: details.personalDetails.lastLogin,
-        },
-        { merge: true }
-      );
-    } catch (error) {
-      console.log(error);
-      // setSubmitError(true);
-      return false;
     }
   };
 

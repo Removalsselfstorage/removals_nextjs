@@ -258,20 +258,19 @@ const JoinUsBox = () => {
                     )}
                   </button>
                 </div>
-                {/* {userDetails.signupError && !userDetails.signupMessage && (
-                  <p className="text-center text-[15px] text-secondary">
+
+                {userDetails.signupError && !userDetails.signupMessage && (
+                  <div className="text-[14px] text-center mt-[15px] text-secondary bg-secondary/20 rounded-[10px] py-[10px] px-[30px]">
                     Email already in use
-                  </p>
+                  </div>
                 )}
                 {userDetails.signupMessage && (
                   <>
-                    <p className="text-center text-[15px] text-primary">
+                    <p className="text-center text-[14px] text-primary mt-[15px] bg-primary/20 rounded-[10px] py-[10px] px-[30px]">
                       {userDetails.signupMessage}
                     </p>
                   </>
-                )} */}
-
-                
+                )}
               </Form>
             )}
           </Formik>

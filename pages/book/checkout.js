@@ -33,6 +33,55 @@ const Checkout = () => {
   // console.log(depositPart);
   // console.log(depositFull);
 
+  const moveUrl = () => {
+    switch (details.moveDetails.propertyType) {
+      case "Office removals":
+        return "man-and-van";
+
+        break;
+      case "Man and van":
+        return "man-and-van";
+
+        break;
+      case "Studio flat":
+        return "man-and-van";
+
+        break;
+      case "Furniture & Appliances":
+        return "man-and-van";
+
+        break;
+      case "Storage":
+        return "man-and-van";
+
+        break;
+      case "Home removals":
+        return "home-removals";
+
+        break;
+      case "1 Bed property":
+        return "home-removals";
+
+        break;
+      case "2 Bed property":
+        return "home-removals";
+
+        break;
+      case "3 Bed property":
+        return "home-removals";
+
+        break;
+      case "4 Bed property":
+        return "home-removals";
+
+        break;
+
+      default:
+        // router.push("/book");
+        break;
+    }
+  };
+
   const cardOnchange = (e) => {
     setCard(e.target.checked);
     setPaypal(false);
@@ -57,24 +106,53 @@ const Checkout = () => {
       </Head>
 
       {details.moverDetails.moverName ? (
-        <BookingLayout >
+        <BookingLayout>
           <main className="">
             <div className="mb-[70px] lg:mb-[100px] pt-[80px] md:pt-[100px] ">
               <div className="md:max-w-7xl mx-auto">
+                {/* stepper */}
+                <div className="w-full flex justify-center mb-[40px]">
+                  <ul className="steps">
+                    <li
+                      onClick={() => {
+                        router.push(`/book/${moveUrl()}`);
+                      }}
+                      className="step step-primary px-[50px] font-bold text-[14px] md:text-[16px] leading-[20px] cursor-pointer"
+                    >
+                      Move Details
+                    </li>
+                    <li
+                      onClick={() => {
+                        router.push(`/book/move-package`);
+                      }}
+                      className="step step-primary font-bold text-[14px] md:text-[16px] leading-[25px] cursor-pointer"
+                    >
+                      Move Package
+                    </li>
+                    <li onClick={() => {
+                        router.push(`/book/movers`);
+                      }} className="step step-primary font-bold text-[14px] md:text-[16px] leading-[25px] cursor-pointer">
+                      Choose Mover
+                    </li>
+                    <li className="step step-primary font-bold text-[14px] md:text-[16px] leading-[25px] ">
+                      Checkout
+                    </li>
+                  </ul>
+                </div>
+
                 {/* features links */}
                 <FeaturesScroll />
                 {/* Title */}
-                <div className="w-full flex justify-center py-[30px] md:py-[40px]">
-                  {/* <h3 className="text-4xl font-extrabold">Our Services</h3> */}
+                {/* <div className="w-full flex justify-center py-[30px] md:py-[40px]">
                   <h3
                     className={`${titleFont.variable} font-sans2 text-2xl md:text-4xl font-extrabold flex-col items-center justify-center`}
                   >
                     <p className="">Check-out</p>{" "}
                     <div className="w-full bg-primary/20 h-[20px] mt-[-12px] "></div>
                   </h3>
-                </div>
+                </div> */}
                 {/* checkout section*/}
-                <div className="flex flex-col-reverse   lg:space-y-0 lg:flex-row lg:space-x-[10px] mx-[10px] md:mx-[20px]">
+                <div className="flex flex-col-reverse mt-[30px]  lg:space-y-0 lg:flex-row lg:space-x-[10px] mx-[10px] md:mx-[20px]">
                   {/* left section - pament form */}
                   <div className="lg:flex-[1.3] w-full">
                     <CheckoutForm

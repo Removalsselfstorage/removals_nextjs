@@ -171,21 +171,6 @@ const CompleteHouse = ({ emails }) => {
 
   const sendWelcomeMail = async () => {
     if (!usedEmails.includes(email)) {
-      // emailjs
-      //   .send(
-      //     "service_oz8gmaw",
-      //     "template_p8lx33l",
-      //     templateParams,
-      //     "bpJZGidQYxKuIrEhN"
-      //   )
-      //   .then(
-      //     (response) => {
-      //       console.log("SUCCESS!", response.status, response.text);
-      //     },
-      //     (err) => {
-      //       console.log("FAILED...", err);
-      //     }
-      //   );
       await welcomeEmail(email, params);
 
       const emailRef = collection(db, "welcomedEmails");
@@ -240,12 +225,12 @@ const CompleteHouse = ({ emails }) => {
       !agreeTermsValue
     ) {
       setSubmitError(true);
-      toast.error(`Please fill all mandatory fields`, {
-        duration: 2000,
-        position: "top-center",
-      });
+      // toast.error(`Please fill all mandatory fields`, {
+      //   duration: 2000,
+      //   position: "top-center",
+      // });
     } else {
-      toast.remove();
+      // toast.remove();
       setSubmitLoading(true);
 
       sendWelcomeMail();
@@ -399,14 +384,22 @@ const CompleteHouse = ({ emails }) => {
       <main>
         <div className="mb-[70px] lg:mb-[100px] pt-[70px]">
           <div className="md:max-w-7xl mx-auto">
-            {/* Title */}
-            <div className="w-full flex justify-center py-[30px] md:py-[40px]">
-              <h3
-                className={`${titleFont.variable} font-sans2 text-3xl lg:text-4xl font-extrabold flex-col items-center justify-center`}
-              >
-                <p className="">Your Move Details</p>{" "}
-                <div className="w-full bg-primary/20 h-[20px] mt-[-12px] "></div>
-              </h3>
+            {/* stepper */}
+            <div className="w-full flex justify-center mt-[20px] mb-[50px]">
+              <ul className="steps">
+                <li className="step step-primary px-[50px] font-bold text-[14px] md:text-[16px] leading-[20px]">
+                  Move Details
+                </li>
+                <li className="step  font-bold text-[14px] md:text-[16px] leading-[25px] text-gray-300">
+                  Move Package
+                </li>
+                <li className="step  font-bold text-[14px] md:text-[16px] leading-[25px] text-gray-300">
+                  Choose Mover
+                </li>
+                <li className="step  font-bold text-[14px] md:text-[16px] leading-[25px] text-gray-300">
+                  Checkout
+                </li>
+              </ul>
             </div>
 
             {/* <div className="">{session?.data?.user?.email}</div>
@@ -896,11 +889,11 @@ const CompleteHouse = ({ emails }) => {
                       </span>
                     )}
                   </button>
-                  {/* {submitError && (
-                    <p className="text-[16px] text-secondary mt-[15px]">
+                  {submitError && (
+                    <div className="text-[14px] mt-[15px] text-secondary bg-secondary/20 rounded-[10px] py-[10px] px-[30px]">
                       Please fill all mandatory fields
-                    </p>
-                  )} */}
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

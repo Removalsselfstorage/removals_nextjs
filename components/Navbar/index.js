@@ -26,15 +26,15 @@ const Navbar = () => {
   const users = useSelector(getAllUserDetails);
   const moverDetails = useSelector(getAllMoverDetails);
 
-  const firstName = moverDetails.personalDetails?.firstName;
-  const lastName = moverDetails.personalDetails?.lastName;
-  const previewUrl = moverDetails.personalDetails?.profilePictureUrl;
+  const firstName = moverDetails?.personalDetails?.firstName;
+  const lastName = moverDetails?.personalDetails?.lastName;
+  const previewUrl = moverDetails?.personalDetails?.profilePictureUrl;
 
   const [shadow, setShadow] = useState(false);
   const [showNav, setShowNav] = useState(true);
   const { user, logout, loading } = useAuth();
 
-  const uid = users.userDetails?.uid;
+  const uid = users?.userDetails?.uid;
   // const readMoversData = async () => {
   //   const res = await fetchMoverDetails3(uid);
   //   dispatch(updateFirebaseMoverDetails(res));
@@ -237,7 +237,7 @@ const Navbar = () => {
                       </Link>
                     </li>
                     <li>
-                      {!users.userDetails?.emailVerified && (
+                      {!users?.userDetails?.emailVerified && (
                         // <Link href="/reserve-login" className="btn-nav">
                         //   My Reservation
                         // </Link>
@@ -252,7 +252,7 @@ const Navbar = () => {
                           My Reservation
                         </Link>
                       )}
-                      {users.userDetails?.emailVerified && (
+                      {users?.userDetails?.emailVerified && (
                         // <Link href="/mover-profile" className="btn-nav">
                         //   My Dashboard
                         // </Link>
@@ -274,7 +274,7 @@ const Navbar = () => {
 
                 {/* nav right */}
                 <div className="navbar-end  lg:w-[40%] flex  space-x-[10px]">
-                  {!users.userDetails?.emailVerified && (
+                  {!users?.userDetails?.emailVerified && (
                     <div className=" lg:space-x-[10px] hidden lg:flex">
                       <Link
                         href="/join-us"
@@ -288,7 +288,7 @@ const Navbar = () => {
                       {/* <a className="btn btn-primary">Mover Login</a> */}
                     </div>
                   )}
-                  {users.userDetails?.emailVerified && (
+                  {users?.userDetails?.emailVerified && (
                     <ul className="  px-1 text-[16px] hidden lg:flex ">
                       <li className="dropdown  dropdown-end">
                         {previewUrl ? (
@@ -413,26 +413,26 @@ const Navbar = () => {
                   {/* <li className="border-b-[2px] pb-[10px]">
                     <a className="btn-nav">Blog</a>
                   </li> */}
-                  {!users.userDetails && (
+                  {!users?.userDetails && (
                     <li>
                       <Link href="/join-us" className="btn-nav">
                         Become a Mover
                       </Link>
                     </li>
                   )}
-                  {!users.userDetails && (
+                  {!users?.userDetails && (
                     <li>
                       <Link href="/mover-login" className="btn-nav">
                         Mover Login
                       </Link>
                     </li>
                   )}
-                  {users.userDetails && (
+                  {users?.userDetails && (
                     <li>
                       <p className="btn-nav">My Profile</p>
                     </li>
                   )}
-                  {users.userDetails && (
+                  {users?.userDetails && (
                     <li
                       onClick={() => {
                         logout();

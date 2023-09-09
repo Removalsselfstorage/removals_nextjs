@@ -45,7 +45,7 @@ export default function App({ Component, pageProps: { ...pageProps } }) {
             <AuthProvider>
               <Component {...pageProps} />
               <Toaster
-                position="bottom-center"
+                position="top-center"
                 // reverseOrder={false}
                 gutter={8}
                 containerClassName=""

@@ -29,7 +29,7 @@ export default function Home() {
   const details = useSelector(getAllDetails);
 
   const bookStageBoolean = () => {
-    switch (details.bookStage) {
+    switch (details?.bookStage) {
       case "home-removals":
         return true;
         break;

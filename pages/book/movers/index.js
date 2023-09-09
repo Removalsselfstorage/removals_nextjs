@@ -34,6 +34,8 @@ import SideDrawer from "@/components/BookingPages/movers/SideDrawer";
 import { getAllMoverDetails } from "@/store/moverSlice";
 import emailjs from "@emailjs/browser";
 import { progressEmail } from "@/lib/sendCustomEmail";
+import Lottie from "lottie-react";
+import EmailSent from "@/lottieJsons/EmailSent2.json";
 // import { ToastContainer, toast, Bounce, Slide, Zoom } from "react-toastify";
 // import "react-toastify/dist/ReactToastify.css";
 
@@ -134,6 +136,7 @@ const Movers = () => {
   const [submitError, setSubmitError] = useState(false);
   const [emailError, setEmailError] = useState(true);
   const [activateError, setActivateError] = useState(false);
+  const [showSent, setShowSent] = useState(false);
 
   const firstCard = getFirstSortedHomeMover(newMovers);
 
@@ -208,19 +211,25 @@ const Movers = () => {
         setActivateError(false);
         setProgressLoading(false);
         setShowProgressMessage(true);
-        toast.success(`Progress link has been sent`, {
-          duration: 8000,
-        });
+        setShowSent(true);
+        // toast.success(`Progress link has been sent`, {
+        //   duration: 8000,
+        // });
 
         // toast.success(`Progress link has been sent to ${email}`);
-        setTimeout(() => {
-          setShowProgressMessage(false);
-          // setEmail("");
-        }, 8000);
       } catch (error) {
         console.log(error);
       }
     }
+  };
+
+  const closeModal = () => {
+    window.my_modal_1.close();
+    setTimeout(() => {
+      setShowProgressMessage(false);
+      setShowSent(false);
+      // setEmail("");
+    }, 500);
   };
 
   // const [pickPrice, setPickPrice] = useState(priceThirdDay)
@@ -284,7 +293,7 @@ const Movers = () => {
                         </h1>
 
                         <div
-                          onClick={() => window.my_modal_11.showModal()}
+                          onClick={() => window.my_modal_1.showModal()}
                           className="flex justify-center items-center space-x-[10px] border rounded-[10px] border-primary px-[10px] py-[10px] text-primary font-bold cursor-pointer"
                         >
                           <BiSave className="text-[24px]" />
@@ -297,70 +306,115 @@ const Movers = () => {
 
                         {/* modal */}
                         <dialog
-                          id="my_modal_11"
+                          id="my_modal_1"
                           className="modal py-[20px] px-[10px]"
                         >
                           <form method="dialog" className="modal-box px-[20px]">
-                            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 border border-primary text-primary">
+                            <div
+                              onClick={closeModal}
+                              className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 border border-primary text-primary"
+                            >
                               ✕
-                            </button>
-
-                            <div className="w-full flex justify-center mb-[20px]">
-                              <div className="text-secondary bg-secondary/10 flex justify-center items-center w-[60px] h-[60px] rounded-full">
-                                <BiSave className="text-[30px] " />
-                              </div>
-                            </div>
-                            <h3 className="font-bold text-[24px] text-primary text-center">
-                              Save your quote!
-                            </h3>
-                            <p className="py-4 text-center text-primary px-[30px]">
-                              Need more time to decide? Save your progress and
-                              continue booking right where you left off.
-                            </p>
-                            <div className="px-[30px] ">
-                              <input
-                                type="email"
-                                placeholder="Email address"
-                                className={` input input-primary w-full h-[43px] `}
-                                onChange={handleEmailChange}
-                                value={email}
-                              />
-                              {/* <div className="w-full text-center">
-                                {!emailError && activateError && (
-                                  <p className="text-[14px] text-secondary mt-[5px]">
-                                    Please enter a valid email
-                                  </p>
-                                )}
-                              </div> */}
-                            </div>
-                            <div className="flex w-full justify-center my-[20px]">
-                              <div
-                                onClick={sendProgressMail}
-                                type="submit"
-                                className="btn btn-secondary flex items-center space-x-[5px]"
-                                disabled={progressLoading}
-                              >
-                                {!progressLoading && (
-                                  <span className="">Send Progress</span>
-                                )}
-                                {progressLoading && (
-                                  <>
-                                    <span className="">Sending Progress</span>
-                                    <span className="loading loading-spinner loading-md text-white"></span>
-                                  </>
-                                )}
-                              </div>
                             </div>
 
+                            {!showProgressMessage && (
+                              <div className="">
+                                <div className="w-full flex justify-center mb-[20px]">
+                                  <div className="text-secondary bg-secondary/10 flex justify-center items-center w-[60px] h-[60px] rounded-full">
+                                    <BiSave className="text-[30px] " />
+                                  </div>
+                                </div>
+
+                                <h3 className="font-bold text-[24px] text-primary text-center">
+                                  Save your quote!
+                                </h3>
+
+                                <p className="py-4 text-center text-primary px-[30px]">
+                                  Need more time to decide? Save your progress
+                                  and continue booking right where you left off.
+                                </p>
+                                <div className="px-[30px] ">
+                                  <input
+                                    type="email"
+                                    placeholder="Email address"
+                                    className={` input input-primary w-full h-[43px] `}
+                                    onChange={handleEmailChange}
+                                    value={email}
+                                  />
+                                  <div className="w-full text-center">
+                                    {!emailError && activateError && (
+                                      <p className="text-[14px] text-secondary mt-[5px]">
+                                        Please enter a valid email
+                                      </p>
+                                    )}
+                                  </div>
+                                </div>
+                                <div className="flex w-full justify-center my-[20px]">
+                                  <div
+                                    onClick={sendProgressMail}
+                                    type="submit"
+                                    className="btn btn-secondary flex items-center space-x-[5px]"
+                                    disabled={progressLoading}
+                                  >
+                                    {!progressLoading && (
+                                      <span className="">Send Progress</span>
+                                    )}
+                                    {progressLoading && (
+                                      <>
+                                        <span className="">
+                                          Sending Progress
+                                        </span>
+                                        <span className="loading loading-spinner loading-md text-white"></span>
+                                      </>
+                                    )}
+                                  </div>
+                                </div>
+                              </div>
+                            )}
+
+                            {showProgressMessage && showSent && (
+                              <div className="py-[50px]">
+                                <div className="flex justify-center w-full">
+                                  <Lottie
+                                    animationData={EmailSent}
+                                    className="w-[200px]"
+                                  />
+                                </div>
+                                <h3
+                                  onClick={() => window.my_modal_1.close()}
+                                  className="font-bold text-[24px] mt-[10px] text-primary text-center"
+                                >
+                                  Progress Link sent
+                                </h3>
+                                <p className="py-4 text-center text-primary px-[30px]">
+                                  Continue booking with link sent to the email
+                                  provided.
+                                </p>
+                                {/* button */}
+                                <div className="flex w-full justify-center my-[20px]">
+                                  <div
+                                    onClick={closeModal}
+                                    type="submit"
+                                    className="btn btn-secondary btn-wide flex items-center space-x-[5px]"
+                                    // disabled={progressLoading}
+                                  >
+                                    Close
+                                  </div>
+                                </div>
+                              </div>
+                            )}
                             {/* {showProgressMessage && (
                               <p className="text-center text-[16px] text-primary">
-                                Progress link has been sent to {email}
+                                Progress link has been sent
                               </p>
                             )} */}
                           </form>
-                          <form method="dialog" className="modal-backdrop">
+                          <form method="dialog">
                             <button>close</button>
                           </form>
+                          {/* <form method="dialog" className="modal-backdrop">
+                            <button>close</button>
+                          </form> */}
                         </dialog>
                       </div>
                     ) : (

@@ -196,7 +196,7 @@ const PackageCard = ({
     const userData = await fetchAllMoversDetailsArray();
     // console.log(userData);
 
-    dispatch(updateBookStage("move-package"));
+    dispatch(updateBookStage("book/move-package"));
     dispatch(
       updateAllMoverData({
         allPersonalDetails: userData?.personalDetails,
@@ -238,7 +238,7 @@ const PackageCard = ({
         {
           movePackage: convertToSentenceCase(title),
           initialPackagePrice: totalPrice(totalMileage),
-          // stage: ""
+          stage: details.bookStage,
         },
         { merge: true }
       );
@@ -464,7 +464,9 @@ const PackageCard = ({
             <span>Booking</span>
             <span
               className={`loading loading-dots loading-md ${
-                preferred ? "text-white " : "text-primary group-hover:text-white"
+                preferred
+                  ? "text-white "
+                  : "text-primary group-hover:text-white"
               }`}
             ></span>
           </>

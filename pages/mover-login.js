@@ -210,10 +210,7 @@ const MoverLogin = () => {
                             Forgot password?
                           </p>
                         </Link>
-                        {/* <div className={styles.button}>
-                        <CircledIconBtn type="submit" text="Sign In" />
-                        {error && <span className={styles.error}>{error}</span>}
-                      </div> */}
+                      
                         <div className="form-control mt-6 mb-[10px]">
                           <button
                             // onClick={() => {}}

@@ -101,7 +101,7 @@ const MovePackage = () => {
                       onClick={() => {
                         router.push(`/book/${moveUrl()}`);
                       }}
-                      className="step step-primary px-[50px] font-bold text-[16px] leading-[20px] cursor-pointer"
+                      className="step step-primary px-[10px] md:px-[40px] font-bold text-[16px] leading-[20px] cursor-pointer"
                     >
                       Move Details
                     </li>

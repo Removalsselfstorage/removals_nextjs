@@ -37,7 +37,7 @@ import {
   UploadBookingProgress,
   UploadBookingProgress1,
 } from "@/lib/uploadBookingProgress";
-import { generateRandomValues } from "@/utils/logics";
+import { generateRandomValues, generateSecureId } from "@/utils/logics";
 import { welcomeEmail } from "@/lib/sendCustomEmail";
 import toast, { Toaster } from "react-hot-toast";
 
@@ -171,6 +171,12 @@ const ManAndVan = ({ emails }) => {
     email,
   };
 
+  const params = {
+    firstName,
+    lastName,
+    email,
+  };
+
   const sendWelcomeMail = async () => {
     if (!usedEmails.includes(email)) {
       await welcomeEmail(email, params);
@@ -229,7 +235,7 @@ const ManAndVan = ({ emails }) => {
         quoteRef = generateRandomValues();
       }
 
-      dispatch(updateBookStage("man-van"));
+      dispatch(updateBookStage("book/man-van"));
 
       dispatch(
         updateLocationDetails({
@@ -383,7 +389,7 @@ const ManAndVan = ({ emails }) => {
             {/* stepper */}
             <div className="w-full flex justify-center mt-[20px] mb-[50px]">
               <ul className="steps">
-                <li className="step step-primary px-[50px] font-bold text-[14px] md:text-[16px] leading-[20px]">
+                <li className="step step-primary px-[10px] md:px-[40px] font-bold text-[14px] md:text-[16px] leading-[20px]">
                   Move Details
                 </li>
                 <li className="step  font-bold text-[14px] md:text-[16px] leading-[25px] text-gray-300">

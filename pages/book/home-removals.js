@@ -247,7 +247,7 @@ const CompleteHouse = ({ emails }) => {
         quoteRef = generateRandomValues();
       }
 
-      dispatch(updateBookStage("home-removals"));
+      dispatch(updateBookStage("book/home-removals"));
 
       dispatch(
         updateLocationDetails({
@@ -387,7 +387,7 @@ const CompleteHouse = ({ emails }) => {
             {/* stepper */}
             <div className="w-full flex justify-center mt-[20px] mb-[50px]">
               <ul className="steps">
-                <li className="step step-primary px-[50px] font-bold text-[14px] md:text-[16px] leading-[20px]">
+                <li className="step step-primary px-[10px] md:px-[40px] font-bold text-[14px] md:text-[16px] leading-[20px]">
                   Move Details
                 </li>
                 <li className="step  font-bold text-[14px] md:text-[16px] leading-[25px] text-gray-300">

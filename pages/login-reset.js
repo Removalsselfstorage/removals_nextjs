@@ -170,12 +170,12 @@ const LoginReset = () => {
                     )} */}
                     {userDetails.passwordResetError &&
                       !userDetails.passwordResetMessage && (
-                        <p className="text-center text-[15px] text-secondary">
+                        <p className="text-[14px] text-center mt-[15px] text-secondary bg-secondary/20 rounded-[10px] py-[10px] px-[30px]">
                           Account with the email doesn't exist
                         </p>
                       )}
                     {userDetails.passwordResetMessage && (
-                      <p className="text-center text-[15px] text-primary">
+                      <p className="text-center text-[15px] text-primary  mt-[15px] bg-primary/20 rounded-[10px] py-[10px] px-[30px]">
                         {userDetails.passwordResetMessage}
                       </p>
                     )}

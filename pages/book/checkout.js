@@ -117,7 +117,7 @@ const Checkout = () => {
                       onClick={() => {
                         router.push(`/book/${moveUrl()}`);
                       }}
-                      className="step step-primary px-[50px] font-bold text-[14px] md:text-[16px] leading-[20px] cursor-pointer"
+                      className="step step-primary px-[10px] md:px-[40px] font-bold text-[14px] md:text-[16px] leading-[20px] cursor-pointer"
                     >
                       Move Details
                     </li>
@@ -125,13 +125,16 @@ const Checkout = () => {
                       onClick={() => {
                         router.push(`/book/move-package`);
                       }}
-                      className="step step-primary font-bold text-[14px] md:text-[16px] leading-[25px] cursor-pointer"
+                      className="step step-primary  font-bold text-[14px] md:text-[16px] leading-[25px] cursor-pointer"
                     >
                       Move Package
                     </li>
-                    <li onClick={() => {
+                    <li
+                      onClick={() => {
                         router.push(`/book/movers`);
-                      }} className="step step-primary font-bold text-[14px] md:text-[16px] leading-[25px] cursor-pointer">
+                      }}
+                      className="step step-primary font-bold text-[14px] md:text-[16px] leading-[25px] cursor-pointer"
+                    >
                       Choose Mover
                     </li>
                     <li className="step step-primary font-bold text-[14px] md:text-[16px] leading-[25px] ">

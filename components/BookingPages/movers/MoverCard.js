@@ -28,6 +28,8 @@ import {
   convertToFloatWithOneDecimal,
 } from "@/utils/logics";
 import { toast } from "react-hot-toast";
+import { doc, setDoc } from "firebase/firestore";
+import { db } from "@/firebase";
 // import SideDrawer from "./sideDrawer";
 
 const MoverCard = ({
@@ -122,7 +124,7 @@ const MoverCard = ({
     setTimeValue(time);
   };
 
-  const onCheckout = () => {
+  const onCheckout = async () => {
     setSubmitError(true);
     if (timeValue == "") {
       setSubmitError(false);
@@ -134,7 +136,7 @@ const MoverCard = ({
       toast.remove();
       setSubmitLoading(true);
 
-      dispatch(updateBookStage("movers"));
+      dispatch(updateBookStage("book/movers"));
       dispatch(
         updateMoverDetails({
           moverName: name,
@@ -145,9 +147,34 @@ const MoverCard = ({
           dateId: details.moverDetails.dateId,
         })
       );
+
+      const bookingId = details.moveDetails.bookingId;
+
+      const bookingRef = doc(db, "bookingData", bookingId);
+
+      try {
+        await setDoc(
+          bookingRef,
+
+          {
+            moverName: name,
+            moverTime: timeValue,
+            moverPrice: price,
+            stage: details.bookStage,
+          },
+          { merge: true }
+        );
+        // return true;
+        console.log("booking update was successful @ movers");
+      } catch (error) {
+        console.log(error);
+        // return false;
+        console.log("booking update was unsuccessful @ movers");
+      }
       router.push("/book/checkout");
     }
   };
+
   useEffect(() => {
     dispatch(
       updateMoverSideDetails({

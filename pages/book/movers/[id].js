@@ -38,6 +38,9 @@ import { getAllMoverDetails, updateAllMoverData } from "@/store/moverSlice";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "@/firebase";
 import { fetchAllMoversDetailsArray } from "@/lib/fetchData2";
+import { progressEmail } from "@/lib/sendCustomEmail";
+import Lottie from "lottie-react";
+import EmailSent from "@/lottieJsons/EmailSent2.json";
 
 const Movers = ({ progressUrl, progressData, userData }) => {
   const router = useRouter();
@@ -191,10 +194,27 @@ const Movers = ({ progressUrl, progressData, userData }) => {
   const [selectedTime, setSelectedTime] = useState(null);
   const [timeValue, setTimeValue] = useState("");
   const [clickedModalOpen, setClickedModalOpen] = useState(false);
+  const [progressLoading, setProgressLoading] = useState(false);
+  const [showProgressMessage, setShowProgressMessage] = useState(false);
+  const [email, setEmail] = useState("");
+  const [submitError, setSubmitError] = useState(false);
+  const [emailError, setEmailError] = useState(true);
+  const [activateError, setActivateError] = useState(false);
+  const [showSent, setShowSent] = useState(false);
 
   const firstCard = getFirstSortedHomeMover(newMovers);
 
   const otherCards = sortHomeMoversAndExcludeHighest(newMovers);
+
+  const handleEmailChange = (e) => {
+    // const inputValue = e.target.value;
+    setEmail(e.target.value);
+
+    // Regular expression to validate email format
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    // setIsValid(emailPattern.test(inputValue));
+    setEmailError(emailPattern.test(e.target.value));
+  };
 
   useEffect(() => {
     addPaypalScript();
@@ -215,6 +235,115 @@ const Movers = ({ progressUrl, progressData, userData }) => {
       router.push("/");
     }
   }, []);
+
+  const params = {
+    firstName: details.personalDetails.firstName,
+    lastName: details.personalDetails.lastName,
+    email: email,
+    quoteRef: details.moveDetails.quoteRef,
+    progressLink: `https://removalstorage.vercel.app/book/movers/${details.moveDetails.bookingId}`,
+    address1: details.serviceLocation.locationFrom.name,
+    address2: details.serviceLocation.locationTo.name,
+  };
+
+  const sendProgressMail = async () => {
+    setActivateError(true);
+    setSubmitError(false);
+
+    if (!email || !emailError) {
+      setSubmitError(true);
+      setEmailError(false);
+      // toast.error(`Please enter a valid email`, {
+      //   duration: 4000,
+      // });
+    } else {
+      setProgressLoading(true);
+      setEmailError(true);
+
+      // emailjs.send(
+      //   "service_oz8gmaw",
+      //   "template_krdi5hs",
+      //   templateParams,
+      //   "bpJZGidQYxKuIrEhN"
+      // );
+      let variable1 = email;
+      let variable2 = variable1;
+
+      try {
+        await progressEmail(email, params);
+        setEmail("");
+        setActivateError(false);
+        setProgressLoading(false);
+        setShowProgressMessage(true);
+        setShowSent(true);
+        // toast.success(`Progress link has been sent`, {
+        //   duration: 8000,
+        // });
+
+        // toast.success(`Progress link has been sent to ${email}`);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
+  const closeModal = () => {
+    window.my_modal_1.close();
+    setTimeout(() => {
+      setShowProgressMessage(false);
+      setShowSent(false);
+      // setEmail("");
+    }, 500);
+  };
+
+  const moveUrl = () => {
+    switch (details.moveDetails.propertyType) {
+      case "Office removals":
+        return "man-and-van";
+
+        break;
+      case "Man and van":
+        return "man-and-van";
+
+        break;
+      case "Studio flat":
+        return "man-and-van";
+
+        break;
+      case "Furniture & Appliances":
+        return "man-and-van";
+
+        break;
+      case "Storage":
+        return "man-and-van";
+
+        break;
+      case "Home removals":
+        return "home-removals";
+
+        break;
+      case "1 Bed property":
+        return "home-removals";
+
+        break;
+      case "2 Bed property":
+        return "home-removals";
+
+        break;
+      case "3 Bed property":
+        return "home-removals";
+
+        break;
+      case "4 Bed property":
+        return "home-removals";
+
+        break;
+
+      default:
+        // router.push("/book");
+        break;
+    }
+  };
 
   // const [pickPrice, setPickPrice] = useState(priceThirdDay)
 
@@ -237,7 +366,7 @@ const Movers = ({ progressUrl, progressData, userData }) => {
       {details.moveDetails.initialPackagePrice ? (
         <BookingLayout>
           <main className="">
-            <div className="mb-[70px] lg:mb-[100px] pt-[80px] md:pt-[100px] ">
+            <div className="mb-[70px] lg:mb-[100px] pt-[80px] md:pt-[80px] ">
               <SideDrawer
                 showLoader2={showLoader2}
                 selectedTime={selectedTime}
@@ -250,8 +379,36 @@ const Movers = ({ progressUrl, progressData, userData }) => {
               {showLoader && <Loader1 />}
               {/* {showLoader2 && <Loader1 />} */}
               <div className="md:max-w-7xl mx-auto">
+                {/* stepper */}
+                <div className="w-full flex justify-center mb-[20px]">
+                  <ul className="steps">
+                    <li
+                      onClick={() => {
+                        router.push(`/book/${moveUrl()}`);
+                      }}
+                      className="step step-primary px-[50px] font-bold text-[14px] md:text-[16px] leading-[20px] cursor-pointer"
+                    >
+                      Move Details
+                    </li>
+                    <li
+                      onClick={() => {
+                        router.push(`/book/move-package`);
+                      }}
+                      className="step step-primary font-bold text-[14px] md:text-[16px] leading-[25px] cursor-pointer"
+                    >
+                      Move Package
+                    </li>
+                    <li className="step step-primary font-bold text-[14px] md:text-[16px] leading-[25px] ">
+                      Choose Mover
+                    </li>
+                    <li className="step  font-bold text-[14px] md:text-[16px] leading-[25px] text-gray-300">
+                      Checkout
+                    </li>
+                  </ul>
+                </div>
                 {/* features links */}
-                <FeaturesScroll />
+                {/* <FeaturesScroll /> */}
+
                 {/* price date pick */}
                 <PriceDatePick
                   setShowLoader={setShowLoader}
@@ -290,29 +447,101 @@ const Movers = ({ progressUrl, progressData, userData }) => {
                           className="modal py-[20px] px-[10px]"
                         >
                           <form method="dialog" className="modal-box px-[20px]">
-                            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 border border-primary text-primary">
+                            <div
+                              onClick={closeModal}
+                              className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 border border-primary text-primary"
+                            >
                               ✕
-                            </button>
+                            </div>
 
-                            <div className="w-full flex justify-center mb-[20px]">
-                              <div className="text-secondary bg-secondary/10 flex justify-center items-center w-[60px] h-[60px] rounded-full">
-                                <BiSave className="text-[30px] " />
+                            {!showProgressMessage && (
+                              <div className="">
+                                <div className="w-full flex justify-center mb-[20px]">
+                                  <div className="text-secondary bg-secondary/10 flex justify-center items-center w-[60px] h-[60px] rounded-full">
+                                    <BiSave className="text-[30px] " />
+                                  </div>
+                                </div>
+
+                                <h3 className="font-bold text-[24px] text-primary text-center">
+                                  Save your quote!
+                                </h3>
+
+                                <p className="py-4 text-center text-primary px-[30px]">
+                                  Need more time to decide? Save your progress
+                                  and continue booking right where you left off.
+                                </p>
+                                <div className="px-[30px] ">
+                                  <input
+                                    type="email"
+                                    placeholder="Email address"
+                                    className={` input input-primary w-full h-[43px] `}
+                                    onChange={handleEmailChange}
+                                    value={email}
+                                  />
+                                  <div className="w-full text-center">
+                                    {!emailError && activateError && (
+                                      <div className="text-[14px] text-secondary mt-[10px] bg-secondary/20 rounded-[10px] py-[10px] px-[20px]">
+                                        Please enter a valid email
+                                      </div>
+                                    )}
+                                  </div>
+                                </div>
+                                <div className="flex w-full justify-center my-[20px]">
+                                  <div
+                                    onClick={sendProgressMail}
+                                    type="submit"
+                                    className="btn btn-secondary flex items-center space-x-[5px]"
+                                    disabled={progressLoading}
+                                  >
+                                    {!progressLoading && (
+                                      <span className="">Send Progress</span>
+                                    )}
+                                    {progressLoading && (
+                                      <>
+                                        <span className="">
+                                          Sending Progress
+                                        </span>
+                                        <span className="loading loading-spinner loading-md text-white"></span>
+                                      </>
+                                    )}
+                                  </div>
+                                </div>
                               </div>
-                            </div>
-                            <h3 className="font-bold text-[24px] text-primary text-center">
-                              Save your progress!
-                            </h3>
-                            <p className="py-4 text-center text-primary px-[30px]">
-                              Need more time to decide? Save your progress and
-                              continue booking right where you left off.
-                            </p>
-                            <div className="flex w-full justify-center my-[20px]">
-                              <div className="btn btn-secondary">
-                                Save my progress
+                            )}
+
+                            {showProgressMessage && showSent && (
+                              <div className="py-[50px]">
+                                <div className="flex justify-center w-full">
+                                  <Lottie
+                                    animationData={EmailSent}
+                                    className="w-[200px]"
+                                  />
+                                </div>
+                                <h3
+                                  onClick={() => window.my_modal_1.close()}
+                                  className="font-bold text-[24px] mt-[10px] text-primary text-center"
+                                >
+                                  Progress Link sent
+                                </h3>
+                                <p className="py-4 text-center text-primary px-[30px]">
+                                  Continue booking with link sent to the email
+                                  provided.
+                                </p>
+                                {/* button */}
+                                <div className="flex w-full justify-center my-[20px]">
+                                  <div
+                                    onClick={closeModal}
+                                    type="submit"
+                                    className="btn btn-secondary btn-wide flex items-center space-x-[5px]"
+                                    // disabled={progressLoading}
+                                  >
+                                    Close
+                                  </div>
+                                </div>
                               </div>
-                            </div>
+                            )}
                           </form>
-                          <form method="dialog" className="modal-backdrop">
+                          <form method="dialog">
                             <button>close</button>
                           </form>
                         </dialog>

@@ -337,7 +337,6 @@ const Movers = () => {
                 {/* features links */}
                 {/* <FeaturesScroll /> */}
 
-
                 {/* price date pick */}
                 <PriceDatePick
                   setShowLoader={setShowLoader}

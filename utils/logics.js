@@ -1,3 +1,28 @@
+export function getCurrentDateFormatted() {
+  const months = [
+    "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+  ];
+
+  const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+  const now = new Date();
+  const dayOfWeek = days[now.getUTCDay()];
+  const dayOfMonth = now.getUTCDate();
+  const month = months[now.getUTCMonth()];
+  const year = now.getUTCFullYear();
+  const hours = String(now.getUTCHours()).padStart(2, "0");
+  const minutes = String(now.getUTCMinutes()).padStart(2, "0");
+  const seconds = String(now.getUTCSeconds()).padStart(2, "0");
+
+  return `${dayOfWeek}, ${dayOfMonth} ${month} ${year} ${hours}:${minutes}:${seconds} GMT`;
+}
+
+
+
+
+
+
 export function generateSecureId(length = 25) {
   const characters = "abcdefghijklmnopqrstuvwxyz0123456789";
   let secureId = "";

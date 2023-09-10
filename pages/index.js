@@ -30,16 +30,16 @@ export default function Home() {
 
   const bookStageBoolean = () => {
     switch (details?.bookStage) {
-      case "home-removals":
+      case "book/home-removals":
         return true;
         break;
-      case "man-van":
+      case "book/man-van":
         return true;
         break;
-      case "move-package":
+      case "book/move-package":
         return true;
         break;
-      case "movers":
+      case "book/movers":
         return true;
         break;
 
@@ -50,17 +50,17 @@ export default function Home() {
   };
   const bookStageBoolean2 = () => {
     switch (details.bookStage) {
-      case "home-removals":
+      case "book/home-removals":
         return false;
         break;
-      case "man-van":
+      case "book/man-van":
         return false;
         break;
-      case "move-package":
+      case "book/move-package":
         return true;
         break;
 
-      case "movers":
+      case "book/movers":
         return true;
         break;
 
@@ -72,16 +72,16 @@ export default function Home() {
 
   const bookStageLink = () => {
     switch (details.bookStage) {
-      case "home-removals":
+      case "book/home-removals":
         return "book/move-package";
         break;
-      case "man-van":
+      case "book/man-van":
         return "book/move-package";
         break;
-      case "move-package":
+      case "book/move-package":
         return "book/movers";
         break;
-      case "movers":
+      case "book/movers":
         return "book/checkout";
         break;
     }
@@ -115,7 +115,7 @@ export default function Home() {
                 <div className="flex flex-col">
                   <p className="font-bold line-clamp-1">
                     {details.moveDetails.propertyType}{" "}
-                    {details.moveDetails.movePackage} move with{" "}
+                    {details.moveDetails.movePackage} Package with{" "}
                     {details.moveDetails.numberOfMovers} and Jumbo Van
                   </p>
                   <p className="line-clamp-1">

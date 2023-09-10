@@ -288,7 +288,7 @@ const Movers = ({ progressUrl, progressData, userData }) => {
   };
 
   const closeModal = () => {
-    window.my_modal_1.close();
+    window.my_modal_11.close();
     setTimeout(() => {
       setShowProgressMessage(false);
       setShowSent(false);

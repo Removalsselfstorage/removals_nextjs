@@ -39,7 +39,6 @@ import { doc, getDoc } from "firebase/firestore";
 import { db } from "@/firebase";
 import { fetchAllMoversDetailsArray } from "@/lib/fetchData2";
 import { progressEmail } from "@/lib/sendCustomEmail";
-import Lottie from "lottie-react";
 import EmailSent from "@/lottieJsons/EmailSent2.json";
 import Lottie from "lottie-react";
 import movingVan from "@/lottieJsons/movingVan.json";

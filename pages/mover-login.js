@@ -113,12 +113,9 @@ const MoverLogin = () => {
 
   useEffect(() => {
     if (userDetails.userDetails) {
-      setTimeout(() => {
-        router.push("/");
-        // router.push("/mover-login");
-      }, 3000);
+      router.push("/");
     }
-  }, [userDetails.userDetails]);
+  }, [auth]);
 
   // useEffect(() => {
   //   if (!userDetails.userDetails) {

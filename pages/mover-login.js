@@ -113,9 +113,12 @@ const MoverLogin = () => {
 
   useEffect(() => {
     if (userDetails.userDetails) {
-      router.push("/");
+      setTimeout(() => {
+        router.push("/");
+        // router.push("/mover-login");
+      }, 3000);
     }
-  }, []);
+  }, [userDetails.userDetails]);
 
   // useEffect(() => {
   //   if (!userDetails.userDetails) {

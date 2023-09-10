@@ -99,10 +99,12 @@ export const AuthProvider = ({ children }) => {
           // setUser(null);
 
           dispatch(updateUserDetails(null));
+          // window.location.reload();
 
           // dispatch(updateUserDetails(null));
           // setLoading(true);
-          // router.push("/mover-login");
+          router.push("/mover-login");
+          // router.push("/");
         }
         // setError("");
 

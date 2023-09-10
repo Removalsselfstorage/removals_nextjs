@@ -22,6 +22,8 @@ import { useSelector } from "react-redux";
 import { getAllUserDetails } from "@/store/userSlice";
 import { getAllMoverDetails } from "@/store/moverSlice";
 import { FaTruckFront } from "react-icons/fa6";
+import Lottie from "lottie-react";
+import movingVan from "@/lottieJsons/movingVan.json";
 
 const AdminLayout = ({ children, data }) => {
   const router = useRouter();
@@ -99,7 +101,6 @@ const AdminLayout = ({ children, data }) => {
                         : ""
                     } flex items-center btn-dash py-[15px] px-[20px] rounded-[10px] w-full`}
                   >
-                  
                     <span className="text-[25px] mr-[10px]">
                       <FaUsers />
                     </span>
@@ -116,7 +117,6 @@ const AdminLayout = ({ children, data }) => {
                         : ""
                     } flex items-center btn-dash py-[15px] px-[20px] rounded-[10px] w-full`}
                   >
-                  
                     <span className="text-[25px] mr-[10px]">
                       <FaTruckFront />
                     </span>
@@ -133,15 +133,12 @@ const AdminLayout = ({ children, data }) => {
                         : ""
                     } flex items-center btn-dash py-[15px] px-[20px] rounded-[10px] w-full`}
                   >
-                  
                     <span className="text-[25px] mr-[10px]">
                       <MdNotificationsActive />
                     </span>
                     <p className="hidden lg:flex">Notifications</p>
                   </Link>
                 </li>
-
-                
               </ul>
             </aside>
             <main className="md:flex-[1] lg:flex-[1]">{children}</main>
@@ -151,7 +148,10 @@ const AdminLayout = ({ children, data }) => {
       )}
       {showloader && (
         <div className="flex items-center justify-center h-[100vh] ">
-          <span className="h-full loading loading-bars text-primary w-[40px] lg:w-[60px]"></span>
+          <div className="flex justify-center w-full">
+            <Lottie animationData={movingVan} className="w-[400px]" />
+          </div>
+          {/* <span className="h-full loading loading-bars text-primary w-[40px] lg:w-[60px]"></span> */}
         </div>
       )}
     </div>

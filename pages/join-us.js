@@ -10,7 +10,8 @@ import Head from "next/head";
 import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
+import Lottie from "lottie-react";
+import movingVan from "@/lottieJsons/movingVan.json";
 // const JoinUs = ({ providers, csrfToken, callbackUrl }) => {
 const JoinUs = () => {
   const router = useRouter();
@@ -42,7 +43,10 @@ const JoinUs = () => {
         </main>
       ) : (
         <div className="flex items-center justify-center h-[100vh] ">
-          <span className="h-full loading loading-bars text-primary w-[40px] lg:w-[60px]"></span>
+          <div className="flex justify-center w-full">
+            <Lottie animationData={movingVan} className="w-[400px]" />
+          </div>
+          {/* <span className="h-full loading loading-bars text-primary w-[40px] lg:w-[60px]"></span> */}
         </div>
       )}
     </NormalLayout>

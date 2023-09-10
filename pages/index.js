@@ -20,8 +20,8 @@ import { getAllMoverDetails } from "@/store/moverSlice";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import { getAllDetails } from "@/store/quoteSlice";
 import Link from "next/link";
-import Lottie from "lottie-react";
 import EmailSent from "@/lottieJsons/EmailSent2.json";
+import Lottie from "lottie-react";
 import movingVan from "@/lottieJsons/movingVan.json";
 
 export default function Home() {

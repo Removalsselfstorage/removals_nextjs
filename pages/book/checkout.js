@@ -16,6 +16,8 @@ import { getAllDetails } from "@/store/quoteSlice";
 import { useDispatch, useSelector } from "react-redux";
 import dayjs from "dayjs";
 import { useRouter } from "next/navigation";
+import Lottie from "lottie-react";
+import movingVan from "@/lottieJsons/movingVan.json";
 
 const Checkout = () => {
   const [showModal, setShowModal] = useState(false);
@@ -189,7 +191,10 @@ const Checkout = () => {
         </BookingLayout>
       ) : (
         <div className="flex items-center justify-center h-[100vh] ">
-          <span className="h-full loading loading-bars text-primary w-[40px] lg:w-[60px]"></span>
+          <div className="flex justify-center w-full">
+            <Lottie animationData={movingVan} className="w-[400px]" />
+          </div>
+          {/* <span className="h-full loading loading-bars text-primary w-[40px] lg:w-[60px]"></span> */}
         </div>
       )}
     </>

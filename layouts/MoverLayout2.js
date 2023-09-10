@@ -20,6 +20,8 @@ import { TfiComments } from "react-icons/tfi";
 import { useSelector } from "react-redux";
 import { getAllUserDetails } from "@/store/userSlice";
 import { fetchMoverDetails3 } from "@/lib/fetchData2";
+import Lottie from "lottie-react";
+import movingVan from "@/lottieJsons/movingVan.json";
 
 const MoverLayout2 = ({ children }) => {
   const router = useRouter();
@@ -43,7 +45,10 @@ const MoverLayout2 = ({ children }) => {
         </>
       ) : (
         <div className="flex items-center justify-center h-[100vh] ">
-          <span className="h-full loading loading-bars text-primary w-[40px] lg:w-[60px]"></span>
+          <div className="flex justify-center w-full">
+            <Lottie animationData={movingVan} className="w-[400px]" />
+          </div>
+          {/* <span className="h-full loading loading-bars text-primary w-[40px] lg:w-[60px]"></span> */}
         </div>
       )}
     </div>

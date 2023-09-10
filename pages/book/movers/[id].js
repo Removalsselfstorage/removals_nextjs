@@ -41,6 +41,8 @@ import { fetchAllMoversDetailsArray } from "@/lib/fetchData2";
 import { progressEmail } from "@/lib/sendCustomEmail";
 import Lottie from "lottie-react";
 import EmailSent from "@/lottieJsons/EmailSent2.json";
+import Lottie from "lottie-react";
+import movingVan from "@/lottieJsons/movingVan.json";
 
 const Movers = ({ progressUrl, progressData, userData }) => {
   const router = useRouter();
@@ -652,7 +654,11 @@ const Movers = ({ progressUrl, progressData, userData }) => {
         </BookingLayout>
       ) : (
         <div className="flex items-center justify-center h-[100vh] ">
-          <span className="h-full loading loading-bars text-primary w-[40px] lg:w-[60px]"></span>
+          <div className="flex justify-center w-full">
+            <Lottie animationData={movingVan} className="w-[400px]" />
+          </div>
+
+          {/* <span className="h-full loading loading-bars text-primary w-[40px] lg:w-[60px]"></span> */}
         </div>
       )}
     </>

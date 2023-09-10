@@ -32,7 +32,8 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "@/firebase";
 import { fetchAllMoversDetails } from "@/lib/fetchData2";
 // import { auth, db } from "@/firebase";
-
+import Lottie from "lottie-react";
+import movingVan from "@/lottieJsons/movingVan.json";
 // const Login = ({ providers, csrfToken, callbackUrl }) => {
 const MoverLogin = () => {
   const router = useRouter();
@@ -210,7 +211,7 @@ const MoverLogin = () => {
                             Forgot password?
                           </p>
                         </Link>
-                      
+
                         <div className="form-control mt-6 mb-[10px]">
                           <button
                             // onClick={() => {}}
@@ -269,7 +270,10 @@ const MoverLogin = () => {
         </BookingLayout>
       ) : (
         <div className="flex items-center justify-center h-[100vh] ">
-          <span className="h-full loading loading-bars text-primary w-[40px] lg:w-[60px]"></span>
+          <div className="flex justify-center w-full">
+            <Lottie animationData={movingVan} className="w-[400px]" />
+          </div>
+          {/* <span className="h-full loading loading-bars text-primary w-[40px] lg:w-[60px]"></span> */}
         </div>
       )}
     </>

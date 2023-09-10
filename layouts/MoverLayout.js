@@ -21,6 +21,8 @@ import { TfiComments } from "react-icons/tfi";
 import { useSelector } from "react-redux";
 import { getAllUserDetails } from "@/store/userSlice";
 import { getAllMoverDetails } from "@/store/moverSlice";
+import Lottie from "lottie-react";
+import movingVan from "@/lottieJsons/movingVan.json";
 
 const MoverLayout = ({ children, data }) => {
   const router = useRouter();
@@ -56,7 +58,7 @@ const MoverLayout = ({ children, data }) => {
     <div className={`${textFont.variable} font-sans `}>
       {userDetails.userDetails && details.justRegistered === false && (
         <>
-          <Navbar3  />
+          <Navbar3 />
           <div className="flex bg-base-200  pt-[50px]   lg:pt-[50px] ">
             <aside className=" hidden md:flex md:flex-[0.4] lg:flex-[0.4] border border-r-[2px] md:flex-col lg:w-[300px] ">
               <ul className="   pt-[30px] pb-[10px]  shadow-xl bg-base-100 text-[16px] px-[10px] border-b">
@@ -317,7 +319,10 @@ const MoverLayout = ({ children, data }) => {
       )}
       {showloader && (
         <div className="flex items-center justify-center h-[100vh] ">
-          <span className="h-full loading loading-bars text-primary w-[40px] lg:w-[60px]"></span>
+          <div className="flex justify-center w-full">
+            <Lottie animationData={movingVan} className="w-[400px]" />
+          </div>
+          {/* <span className="h-full loading loading-bars text-primary w-[40px] lg:w-[60px]"></span> */}
         </div>
       )}
     </div>

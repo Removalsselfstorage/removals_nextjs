@@ -12,7 +12,8 @@ import { MdKeyboardArrowRight } from "react-icons/md";
 import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
 import { getAllDetails } from "@/store/quoteSlice";
 import { useDispatch, useSelector } from "react-redux";
-
+import Lottie from "lottie-react";
+import movingVan from "@/lottieJsons/movingVan.json";
 import PackageCard from "@/components/BookingPages/PackageCard";
 import { moveDesciptionsCalc } from "@/utils/moversLogic";
 import { useRouter } from "next/navigation";
@@ -401,7 +402,10 @@ const MovePackage = () => {
         </BookingLayout>
       ) : (
         <div className="flex items-center justify-center h-[100vh] ">
-          <span className="h-full loading loading-bars text-primary w-[40px] lg:w-[60px]"></span>
+          <div className="flex justify-center w-full">
+            <Lottie animationData={movingVan} className="w-[400px]" />
+          </div>
+          {/* <span className="h-full loading loading-bars text-primary w-[40px] lg:w-[60px]"></span> */}
         </div>
       )}
     </>

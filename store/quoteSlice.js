@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  isAMover: false,
   // LocationDetails
   serviceLocation: {
     // moveService: '',
@@ -87,6 +86,7 @@ const initialState = {
     paidPart: false,
     paidFull: false,
     completedBook: false,
+    paidPrice: null,
   },
 
   bookStage: "",
@@ -96,42 +96,160 @@ export const quoteSlice = createSlice({
   name: "quote",
   initialState,
   reducers: {
-    updateLocationDetails: (state, action) => {
-      state.serviceLocation = action.payload;
+    updateLocationFromDetails: (state, action) => {
+      // state.serviceLocation = action.payload;
+      Object.assign(state.serviceLocation.locationFrom, action.payload);
     },
+    resetLocationFromDetails: (state, action) => {
+      state.serviceLocation.locationFrom = {
+        name: "",
+        postCode: "",
+        city: "",
+        state: "",
+        country: "",
+        floor: 0,
+        liftAvailable: false,
+      };
+    },
+    updateLocationToDetails: (state, action) => {
+      Object.assign(state.serviceLocation.locationTo, action.payload);
+    },
+    resetLocationToDetails: (state, action) => {
+      state.serviceLocation.locationTo = {
+        name: "",
+        postCode: "",
+        city: "",
+        state: "",
+        country: "",
+        floor: 0,
+        liftAvailable: false,
+      };
+    },
+
     updatePersonalDetails: (state, action) => {
-      state.personalDetails = action.payload;
+      Object.assign(state.personalDetails, action.payload);
     },
+    resetPersonalDetails: (state, action) => {
+      state.personalDetails = {
+        firstName: "",
+        lastName: "",
+        email: "",
+        countryCode: "",
+        telephone: "",
+      };
+    },
+
     updateMoveDetails: (state, action) => {
-      state.moveDetails = action.payload;
+      Object.assign(state.moveDetails, action.payload);
     },
+    resetMoveDetails: (state, action) => {
+      state.moveDetails = {
+        bookingId: "",
+        propertyType: "",
+        numberOfMovers: "",
+        mileage: "",
+        volume: "",
+        duration: 3,
+        moveDate: "",
+        moveDateRaw: "",
+        movePackage: "",
+        quoteRef: "",
+        initialPackagePrice: 0,
+      };
+    },
+
     updateMoverDetails: (state, action) => {
-      state.moverDetails = action.payload;
+      Object.assign(state.moverDetails, action.payload);
     },
+    resetMoverDetails: (state, action) => {
+      state.moverDetails = {
+        moverName: "",
+        moverTime: "",
+        moverPrice: "",
+        priceSecondDay: "",
+        priceThirdDay: "",
+        priceOtherDays: "",
+        priceSundays: "",
+        pickPrice: 0,
+        moveDateFormatted: "",
+        dateId: 1,
+      };
+    },
+
     updatePaymentDetails: (state, action) => {
-      state.paymentDetails = action.payload;
+      Object.assign(state.paymentDetails, action.payload);
     },
+    resetPaymentDetails: (state, action) => {
+      state.paymentDetails = {
+        comment: "",
+        createAccount: true,
+        paymentMethod: "",
+        paidPart: false,
+        paidFull: false,
+        completedBook: false,
+        paidPrice: null,
+      };
+    },
+
     updatePickPrice: (state, action) => {
       state.moverDetails.pickPrice = action.payload;
     },
+
     updateMoverSideDetails: (state, action) => {
-      state.moverSideDetails = action.payload;
+      Object.assign(state.moverSideDetails, action.payload);
     },
+
+    resetMoverSideDetails: (state, action) => {
+      state.paymentDetails = {
+        image: "",
+        name: "",
+        loadArea: "",
+        rating: 0,
+        reviewCount: 0,
+        price: 0,
+        hiresCount: 0,
+        description: "",
+        selectedTime: null,
+        selectedTime2: null,
+        timeValue: null,
+      };
+    },
+
     updateBookStage: (state, action) => {
       state.bookStage = action.payload;
+    },
+    resetBookStage: (state, action) => {
+      state.bookStage = "";
     },
   },
 });
 
 export const {
-  updateLocationDetails,
+  updateLocationFromDetails,
+  resetLocationFromDetails,
+
+  updateLocationToDetails,
+  resetLocationToDetails,
+
   updatePersonalDetails,
+  resetPersonalDetails,
+
   updateMoveDetails,
+  resetMoveDetails,
+
   updateMoverDetails,
+  resetMoverDetails,
+
   updatePaymentDetails,
+  resetPaymentDetails,
+
   updatePickPrice,
+
   updateMoverSideDetails,
+  resetMoverSideDetails,
+
   updateBookStage,
+  resetBookStage,
 } = quoteSlice.actions;
 
 export const getAllDetails = (state) => state.quote;

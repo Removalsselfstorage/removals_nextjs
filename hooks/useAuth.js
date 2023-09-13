@@ -103,7 +103,7 @@ export const AuthProvider = ({ children }) => {
 
           // dispatch(updateUserDetails(null));
           // setLoading(true);
-          router.push("/mover-login");
+          // router.push("/mover-login");
           // router.push("/");
         }
         // setError("");

@@ -39,59 +39,74 @@ import {
 } from "@/lib/uploadBookingProgress";
 import { generateRandomValues, generateSecureId } from "@/utils/logics";
 import { welcomeEmail } from "@/lib/sendCustomEmail";
-import toast, { Toaster } from "react-hot-toast";
+import useQuote from "@/hooks/useQuote";
 
 const ManAndVan = ({ emails }) => {
-  const router = useRouter();
-
-  const dispatch = useDispatch();
-  const details = useSelector(getAllDetails);
+  const {
+    serviceLocation,
+    personalDetails,
+    moveDetails,
+    moverSideDetails,
+    moverDetails,
+    paymentDetails,
+    bookStage,
+    updateLocationFrom,
+    resetLocationFrom,
+    updateLocationTo,
+    resetLocationTo,
+    updatePersonal,
+    resetPersonal,
+    updateMove,
+    resetMove,
+    updateMover,
+    resetMover,
+    updatePayment,
+    resetPayment,
+    updatePickP,
+    updateMoverSide,
+    resetMoverSide,
+    updateBookS,
+    resetBookS,
+    router,
+  } = useQuote();
 
   const [floorCount, setFloorCount] = useState(
-    details.serviceLocation.locationFrom.floor || 0
+    serviceLocation?.locationFrom?.floor || 0
   );
   const [floorCount2, setFloorCount2] = useState(
-    details.serviceLocation.locationTo.floor || 0
+    serviceLocation?.locationTo?.floor || 0
   );
   const [lift, setLift] = useState(
-    details.serviceLocation.locationFrom.liftAvailable || false
+    serviceLocation?.locationFrom?.liftAvailable || false
   );
   const [lift2, setLift2] = useState(
-    details.serviceLocation.locationTo.liftAvailable || false
+    serviceLocation?.locationTo?.liftAvailable || false
   );
   const [durationCount, setDurationCount] = useState(
-    details.moveDetails.duration || 3
+    moveDetails?.duration || 3
   );
   const [address, setAddress] = useState("");
   const [addressDetails, setAddressDetails] = useState("");
   const [address2, setAddress2] = useState("");
   const [addressDetails2, setAddressDetails2] = useState("");
   const [propertyValue, setPropertyValue] = useState(
-    details.moveDetails.propertyType || ""
+    moveDetails?.propertyType || ""
   );
   const [phoneValue, setPhoneValue] = useState(
-    details.personalDetails.countryCode || ""
+    personalDetails?.countryCode || ""
   );
-  const [menValue, setMenValue] = useState(
-    details.moveDetails.numberOfMovers || ""
-  );
+  const [menValue, setMenValue] = useState(moveDetails?.numberOfMovers || "");
   const [agreeTermsValue, setAgreeTermsValue] = useState(false);
-  const [mileageValue, setMileageValue] = useState(
-    details.moveDetails.mileage || ""
-  );
+  const [mileageValue, setMileageValue] = useState(moveDetails?.mileage || "");
   const [dateValue, setDateValue] = useState(
-    dayjs(`'${details.moveDetails.moveDate}'`)
+    dayjs(`'${moveDetails?.moveDate}'`)
   );
-  const [firstName, setFirstName] = useState(
-    details.personalDetails.firstName || ""
-  );
-  const [lastName, setLastName] = useState(
-    details.personalDetails.lastName || ""
-  );
-  const [email, setEmail] = useState(details.personalDetails.email || "");
+  const [firstName, setFirstName] = useState(personalDetails?.firstName || "");
+  const [lastName, setLastName] = useState(personalDetails?.lastName || "");
+  const [email, setEmail] = useState(personalDetails?.email || "");
   const [emailError, setEmailError] = useState(true);
-  const [volume, setVolume] = useState(details.moveDetails.volume || "");
-  const [phone, setPhone] = useState(details.personalDetails.telephone || "");
+  const [volume, setVolume] = useState(moveDetails?.volume || "");
+  const [phone, setPhone] = useState(personalDetails?.telephone || "");
   const [phoneError, setPhoneError] = useState(true);
   const [submitError, setSubmitError] = useState(false);
   const [submitLoading, setSubmitLoading] = useState(false);
@@ -138,20 +153,20 @@ const ManAndVan = ({ emails }) => {
 
   const selectDefaultValue = () => {
     const option = serviceOptions3.filter(
-      (opt) => opt.value == details.moveDetails.propertyType
+      (opt) => opt.value == moveDetails?.propertyType
     );
     return option;
   };
 
   const defaultMenValue = () => {
     const option = menOptions.filter(
-      (opt) => opt.value == details.moveDetails.numberOfMovers
+      (opt) => opt.value == moveDetails?.numberOfMovers
     );
     return option;
   };
   const defaultMileageValue = () => {
     const option = mileageOptions.filter(
-      (opt) => opt.value == details.moveDetails.mileage
+      (opt) => opt.value == moveDetails?.mileage
     );
     return option;
   };
@@ -159,8 +174,7 @@ const ManAndVan = ({ emails }) => {
   const defaultPhoneValue = () => {
     const option = phoneCodesOptions.filter(
       (opt) =>
-        opt.value == "United Kingdom (+44)" ||
-        details.personalDetails.countryCode
+        opt.value == "United Kingdom (+44)" || personalDetails?.countryCode
     );
     return option;
   };
@@ -227,86 +241,63 @@ const ManAndVan = ({ emails }) => {
 
       sendWelcomeMail();
 
-      let bookingId = details.moveDetails.bookingId;
-      let quoteRef = details.moveDetails.quoteRef;
+      let bookingId = moveDetails?.bookingId;
+      let quoteRef = moveDetails?.quoteRef;
 
-      if (details.moveDetails.bookingId === "") {
+      if (moveDetails?.bookingId === "") {
         bookingId = generateSecureId();
         quoteRef = generateRandomValues();
       }
 
-      dispatch(updateBookStage("book/man-van"));
+      updateBookS("book/man-van");
 
-      dispatch(
-        updateLocationDetails({
-          locationFrom: {
-            name: address,
-            postCode: addressDetails
-              ? addressDetails.zip
-              : details.serviceLocation.locationFrom.postCode,
-            city: addressDetails
-              ? addressDetails.city
-              : details.serviceLocation.locationTo.city,
-            country: addressDetails
-              ? addressDetails.country
-              : details.serviceLocation.locationTo.country,
-            floor: floorCount,
-            liftAvailable: lift,
-          },
-          locationTo: {
-            name: address2,
-            postCode: addressDetails2
-              ? addressDetails2.zip
-              : details.serviceLocation.locationTo.postCode,
-            city: addressDetails2
-              ? addressDetails2.city
-              : details.serviceLocation.locationTo.city,
-            country: addressDetails2
-              ? addressDetails2.country
-              : details.serviceLocation.locationTo.country,
-            floor: floorCount2,
-            liftAvailable: lift2,
-          },
-        })
-      );
-      dispatch(
-        updatePersonalDetails({
+      updateLocationFrom({
+        name: address,
+        postCode: addressDetails
+          ? addressDetails.zip
+          : serviceLocation?.locationFrom?.postCode,
+        city: addressDetails
+          ? addressDetails.city
+          : serviceLocation?.locationFrom?.city,
+        country: addressDetails
+          ? addressDetails.country
+          : serviceLocation?.locationFrom?.country,
+        floor: floorCount,
+        liftAvailable: lift,
+      });
+      updateLocationTo({
+        name: address2,
+        postCode: addressDetails2
+          ? addressDetails2.zip
+          : serviceLocation?.locationTo?.postCode,
+        city: addressDetails2
+          ? addressDetails2.city
+          : serviceLocation?.locationTo?.city,
+        country: addressDetails2
+          ? addressDetails2.country
+          : serviceLocation?.locationTo?.country,
+        floor: floorCount2,
+        liftAvailable: lift2,
+      }),
+        updatePersonal({
           firstName,
           lastName,
           email,
           countryCode: phoneValue,
           telephone: phone,
-        })
-      );
-      dispatch(
-        updateMoveDetails({
-          bookingId,
-          propertyType: propertyValue,
-          numberOfMovers: menValue,
-          mileage: mileageValue,
-          volume: volume,
-          duration: durationCount,
-          moveDate: date,
-          moveDateRaw: dateValue,
-          movePackage: details.moveDetails.movePackage,
-          quoteRef,
-          initialPackagePrice: durationCalculation(durationCount),
-        })
-      );
-      dispatch(
-        updateMoverDetails({
-          moverName: "",
-          moverTime: "",
-          moverPrice: "",
-          priceSecondDay: "",
-          priceThirdDay: "",
-          priceOtherDays: "",
-          priceSundays: "",
-          pickPrice: 0,
-          moveDateFormatted: "",
-          dateId: 1,
-        })
-      );
+        });
+      updateMove({
+        bookingId,
+        propertyType: propertyValue,
+        numberOfMovers: menValue,
+        mileage: mileageValue,
+        volume: volume,
+        duration: durationCount,
+        moveDate: date,
+        moveDateRaw: dateValue,
+        quoteRef,
+        initialPackagePrice: durationCalculation(durationCount),
+      });
 
       const moveObj = {
         serviceLocation: {
@@ -331,7 +322,7 @@ const ManAndVan = ({ emails }) => {
           firstName,
           lastName,
           email,
-          countryCode: phoneValue || details.personalDetails.countryCode,
+          countryCode: phoneValue || personalDetails?.countryCode,
           telephone: phone,
         },
         moveDetails: {
@@ -343,16 +334,15 @@ const ManAndVan = ({ emails }) => {
           duration: durationCount,
           moveDate: date,
           // moveDateRaw: dateValue || "",
-          movePackage: details.moveDetails.movePackage,
+          movePackage: moveDetails?.movePackage,
           quoteRef,
-          initialPackagePrice: details.moveDetails.initialPackagePrice,
+          initialPackagePrice: moveDetails?.initialPackagePrice,
         },
         stage: "book/man-and-van",
       };
       const result = await UploadBookingProgress1(moveObj);
 
       console.log({ bookingprogressupload: result ? "successful" : "failed" });
-      console.log({ moveObj });
 
       router.push("/book/move-package");
     }
@@ -428,7 +418,7 @@ const ManAndVan = ({ emails }) => {
                         addressDetails={addressDetails}
                         setAddressDetails={setAddressDetails}
                         placeholder="Search location..."
-                        defaultValue={details.serviceLocation.locationFrom.name}
+                        defaultValue={serviceLocation?.locationFrom.name}
                         errorCheck={activateError && !address}
                       />
                     </div>
@@ -512,7 +502,7 @@ const ManAndVan = ({ emails }) => {
                         addressDetails={addressDetails2}
                         setAddressDetails={setAddressDetails2}
                         placeholder="Search location..."
-                        defaultValue={details.serviceLocation.locationTo.name}
+                        defaultValue={serviceLocation?.locationTo?.name}
                         errorCheck={activateError && !address2}
                       />
                     </div>
@@ -915,6 +905,7 @@ const ManAndVan = ({ emails }) => {
                 <div className="flex flex-col items-center justify-center">
                   <button
                     onClick={FormSubmit}
+                    disabled={submitLoading}
                     className="btn btn-primary btn-wide flex items-center space-x-[5px] h-[60px]"
                   >
                     {!submitLoading && <span className="">Get Prices</span>}

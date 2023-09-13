@@ -3,7 +3,6 @@ import { titleFont } from "@/utils/fonts";
 import Head from "next/head";
 import Link from "next/link";
 import React, { useEffect, useRef, useState } from "react";
-
 import PriceDatePick from "@/components/BookingPages/movers/PriceDatePick";
 import FeaturesScroll from "@/components/BookingPages/movers/FeaturesScroll";
 import FullRating from "@/components/Rating/FullRating";
@@ -37,17 +36,57 @@ import { progressEmail } from "@/lib/sendCustomEmail";
 import Lottie from "lottie-react";
 import EmailSent from "@/lottieJsons/EmailSent2.json";
 import movingVan from "@/lottieJsons/movingVan.json";
-// import { ToastContainer, toast, Bounce, Slide, Zoom } from "react-toastify";
-// import "react-toastify/dist/ReactToastify.css";
 
 import toast, { Toaster } from "react-hot-toast";
+import useQuote from "@/hooks/useQuote";
+import useMover from "@/hooks/useMover";
 
 const Movers = () => {
-  const router = useRouter();
-  const dispatch = useDispatch();
-  const details = useSelector(getAllDetails);
-  const moverDetails = useSelector(getAllMoverDetails);
-  const { allMoverData } = moverDetails;
+  const {
+    serviceLocation,
+    personalDetails,
+    moveDetails,
+    moverSideDetails,
+    moverDetails,
+    paymentDetails,
+    bookStage,
+    updateLocationFrom,
+    resetLocationFrom,
+    updateLocationTo,
+    resetLocationTo,
+    updatePersonal,
+    resetPersonal,
+    updateMove,
+    resetMove,
+    updateMover,
+    resetMover,
+    updatePayment,
+    resetPayment,
+    updatePickP,
+    updateMoverSide,
+    resetMoverSide,
+    updateBookS,
+    resetBookS,
+    router,
+  } = useQuote();
+
+  const {
+    justRegistered,
+    personalMoverDetails,
+    companyDetails,
+    companyDocs,
+    allMoverData,
+    updateJustR,
+    resetJustR,
+    updatePersonalMover,
+    resetPersonalMover,
+    updateCompanyDe,
+    resetCompanyDe,
+    updateCompanyDo,
+    resetCompanyDo,
+    updateAllMoverD,
+    resetAllMoverD,
+  } = useMover();
 
   const [allPersonalDetails, setAllPersonalDetails] = useState([]);
   const [allCompanyDetails, setAllCompanyDetails] = useState([]);
@@ -55,7 +94,7 @@ const Movers = () => {
   const [newMovers, setNewMovers] = useState([]);
 
   useEffect(() => {
-    const priceFirstDay = details.moveDetails.initialPackagePrice;
+    const priceFirstDay = moveDetails?.initialPackagePrice;
     const priceFridays = priceFirstDay;
     const priceSaturdays = priceFirstDay;
     const priceSundays = increaseByPercentage(priceFirstDay, 4).toFixed();
@@ -77,7 +116,7 @@ const Movers = () => {
       3
     ).toFixed();
 
-    dispatch(updatePickPrice(priceFirstDay));
+    updatePickP(priceFirstDay);
 
     const allPersonalDetails = allMoverData?.allPersonalDetails;
     const allCompanyDetails = allMoverData?.allCompanyDetails;
@@ -158,7 +197,7 @@ const Movers = () => {
 
     const today2 = getFormattedTodayDate();
 
-    const date2 = dayjs(details.moveDetails.moveDateRaw).format("ddd MMM D");
+    const date2 = dayjs(moveDetails?.moveDateRaw).format("ddd MMM D");
     if (today2 === date2) {
       setTodayPick(true);
     } else {
@@ -168,19 +207,19 @@ const Movers = () => {
   }, []);
 
   useEffect(() => {
-    if (!details.moveDetails.initialPackagePrice) {
+    if (!moveDetails?.initialPackagePrice) {
       router.push("/");
     }
   }, []);
 
   const params = {
-    firstName: details.personalDetails.firstName,
-    lastName: details.personalDetails.lastName,
+    firstName: personalDetails?.firstName,
+    lastName: personalDetails?.lastName,
     email: email,
-    quoteRef: details.moveDetails.quoteRef,
-    progressLink: `https://removalstorage.vercel.app/book/movers/${details.moveDetails.bookingId}`,
-    address1: details.serviceLocation.locationFrom.name,
-    address2: details.serviceLocation.locationTo.name,
+    quoteRef: moveDetails?.quoteRef,
+    progressLink: `https://removalstorage.vercel.app/book/movers/${moveDetails?.bookingId}`,
+    address1: serviceLocation?.locationFrom?.name,
+    address2: serviceLocation?.locationTo?.name,
   };
 
   const sendProgressMail = async () => {
@@ -234,7 +273,7 @@ const Movers = () => {
   };
 
   const moveUrl = () => {
-    switch (details.moveDetails.propertyType) {
+    switch (moveDetails?.propertyType) {
       case "Office removals":
         return "man-and-van";
 
@@ -282,8 +321,6 @@ const Movers = () => {
     }
   };
 
-  console.log({ details });
-
   return (
     <>
       <Head>
@@ -292,7 +329,7 @@ const Movers = () => {
         <link rel="icon" href="/rrs_favicon.svg" />
       </Head>
 
-      {details.moveDetails.initialPackagePrice ? (
+      {moveDetails?.initialPackagePrice ? (
         <BookingLayout>
           <main className="">
             <div className="mb-[70px] lg:mb-[100px] pt-[80px] md:pt-[80px] ">
@@ -505,7 +542,7 @@ const Movers = () => {
                                 loadArea={firstCard?.loadArea}
                                 rating={firstCard?.rating}
                                 reviewCount={firstCard?.reviewCount}
-                                price={details.moverDetails.pickPrice}
+                                price={moverDetails?.pickPrice}
                                 // price={priceThirdDay}
                                 hiresCount={firstCard?.hireCount}
                                 description={firstCard?.companyDescription}
@@ -533,9 +570,7 @@ const Movers = () => {
                           loadArea={firstCard?.loadArea}
                           rating={firstCard?.rating}
                           reviewCount={firstCard?.reviewCount}
-                          price={(
-                            details.moverDetails.pickPrice * 0.79
-                          ).toFixed()}
+                          price={(moverDetails?.pickPrice * 0.79).toFixed()}
                           hiresCount={firstCard?.hireCount}
                           description={firstCard?.companyDescription}
                           score={firstCard?.score}
@@ -563,7 +598,7 @@ const Movers = () => {
                               rating={mv?.rating}
                               reviewCount={mv?.reviewCount}
                               price={calculateMoverPrice(
-                                details.moverDetails.pickPrice,
+                                moverDetails?.pickPrice,
                                 mv?.score,
                                 0.052
                               ).toFixed()}

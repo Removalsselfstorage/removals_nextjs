@@ -1,29 +1,22 @@
 import React, { useEffect, useRef, useState } from "react";
 import { FiEdit } from "react-icons/fi";
-import FullRating from "../../Rating/FullRating";
-import { useDispatch, useSelector } from "react-redux";
 
 import SelectSearch from "@/components/Inputs/SelectSearch";
 import { citiesOptions, serviceOptions } from "@/dummyData/inputData";
 import GoogleSearchInput from "@/components/Inputs/GoogleSearchInput";
-import useGoogleSearch from "@/utils/useGoogleSearch";
-import {
-  getAllDetails,
-  updateLocationDetails,
-  updateMoveDetails,
-} from "@/store/quoteSlice";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
+
 import StarRating from "@/components/Rating/EditHalfStars2";
+import useQuote from "@/hooks/useQuote";
 
 const HeroInputBox = () => {
-  const router = useRouter();
-
-  //   const { mapApiJs, geocodeJson, loadAsyncScript, extractAddress } =
-  //     useGoogleSearch();
-  const dispatch = useDispatch();
-
-  const details = useSelector(getAllDetails);
+  const {
+    serviceLocation,
+    moveDetails,
+    updateLocationFrom,
+    updateLocationTo,
+    updateMove,
+    router,
+  } = useQuote();
 
   const [address, setAddress] = useState("");
   const [addressDetails, setAddressDetails] = useState("");
@@ -32,20 +25,9 @@ const HeroInputBox = () => {
   const [submitLoading, setSubmitLoading] = useState(false);
 
   const [selectValue, setSelectValue] = useState(
-    details.moveDetails.propertyType || ""
+    moveDetails?.propertyType || ""
   );
   const [error, setError] = useState(false);
-
-  const durationCalculation = () => {
-    let price = 0;
-    switch (key) {
-      case value:
-        break;
-
-      default:
-        break;
-    }
-  };
 
   const heroFormSubmit = () => {
     setError(false);
@@ -53,104 +35,53 @@ const HeroInputBox = () => {
       setError(true);
     } else {
       setSubmitLoading(true);
-      dispatch(
-        updateLocationDetails({
-          //   moveService: details.serviceLocation.moveService,
-          locationFrom: {
-            name: address,
-            postCode: addressDetails
-              ? addressDetails.zip
-              : details.serviceLocation.locationFrom.postCode,
-            city: addressDetails
-              ? addressDetails.city
-              : details.serviceLocation.locationTo.city,
-            country: addressDetails
-              ? addressDetails.country
-              : details.serviceLocation.locationTo.country,
-            floor: details.serviceLocation.locationFrom.floor,
-            liftAvailable: details.serviceLocation.locationFrom.liftAvailable,
-          },
-          locationTo: {
-            name: address2,
-            postCode: addressDetails2.zip,
-            city: addressDetails2.city,
-            country: addressDetails2.country,
-            floor: details.serviceLocation.locationTo.floor,
-            liftAvailable: details.serviceLocation.locationTo.liftAvailable,
-          },
-        })
-      );
+      updateLocationFrom({
+        name: address,
+        postCode: addressDetails
+          ? addressDetails.zip
+          : serviceLocation?.locationFrom?.postCode,
+        city: addressDetails
+          ? addressDetails.city
+          : serviceLocation?.locationFrom?.city,
+        country: addressDetails
+          ? addressDetails.country
+          : serviceLocation?.locationFrom?.country,
+      });
+      updateLocationTo({
+        name: address2,
+        postCode: addressDetails2
+          ? addressDetails2.zip
+          : serviceLocation?.locationTo?.postCode,
+        city: addressDetails
+          ? addressDetails.city
+          : serviceLocation?.locationTo?.city,
+        country: addressDetails
+          ? addressDetails.country
+          : serviceLocation?.locationTo?.country,
+      });
       switch (selectValue) {
         case "Office removals":
-          dispatch(
-            updateMoveDetails({
-              bookingId: details.moveDetails.bookingId,
-              propertyType: selectValue,
-              numberOfMovers: details.moveDetails.numberOfMovers,
-              mileage: details.moveDetails.mileage,
-              volume: details.moveDetails.volume,
-              duration: details.moveDetails.duration,
-              moveDate: details.moveDetails.moveDate,
-              moveDateRaw: details.moveDetails.moveDateRaw,
-              movePackage: details.moveDetails.movePackage,
-              quoteRef: details.moveDetails.quoteRef,
-              initialPackagePrice: details.moveDetails.initialPackagePrice,
-            })
-          );
+          updateMove({
+            propertyType: selectValue,
+          });
           router.push("/book/man-and-van");
           break;
         case "Man and van":
-          dispatch(
-            updateMoveDetails({
-              bookingId: details.moveDetails.bookingId,
-              propertyType: selectValue,
-              numberOfMovers: details.moveDetails.numberOfMovers,
-              mileage: details.moveDetails.mileage,
-              volume: details.moveDetails.volume,
-              duration: details.moveDetails.duration,
-              moveDate: details.moveDetails.moveDate,
-              moveDateRaw: details.moveDetails.moveDateRaw,
-              movePackage: details.moveDetails.movePackage,
-              quoteRef: details.moveDetails.quoteRef,
-              initialPackagePrice: details.moveDetails.initialPackagePrice,
-            })
-          );
+          updateMove({
+            propertyType: selectValue,
+          });
           router.push("/book/man-and-van");
           break;
         case "Studio flat":
-          dispatch(
-            updateMoveDetails({
-              bookingId: details.moveDetails.bookingId,
-              propertyType: selectValue,
-              numberOfMovers: details.moveDetails.numberOfMovers,
-              mileage: details.moveDetails.mileage,
-              volume: details.moveDetails.volume,
-              duration: details.moveDetails.duration,
-              moveDate: details.moveDetails.moveDate,
-              moveDateRaw: details.moveDetails.moveDateRaw,
-              movePackage: details.moveDetails.movePackage,
-              quoteRef: details.moveDetails.quoteRef,
-              initialPackagePrice: details.moveDetails.initialPackagePrice,
-            })
-          );
+          updateMove({
+            propertyType: selectValue,
+          });
           router.push("/book/man-and-van");
           break;
         case "Furniture & Appliances":
-          dispatch(
-            updateMoveDetails({
-              bookingId: details.moveDetails.bookingId,
-              propertyType: selectValue,
-              numberOfMovers: details.moveDetails.numberOfMovers,
-              mileage: details.moveDetails.mileage,
-              volume: details.moveDetails.volume,
-              duration: details.moveDetails.duration,
-              moveDate: details.moveDetails.moveDate,
-              moveDateRaw: details.moveDetails.moveDateRaw,
-              movePackage: details.moveDetails.movePackage,
-              quoteRef: details.moveDetails.quoteRef,
-              initialPackagePrice: details.moveDetails.initialPackagePrice,
-            })
-          );
+          updateMove({
+            propertyType: selectValue,
+          });
           router.push("/book/man-and-van");
           break;
         case "Storage":
@@ -160,75 +91,27 @@ const HeroInputBox = () => {
           router.push("/book/home-removals");
           break;
         case "1 Bed property":
-          dispatch(
-            updateMoveDetails({
-              bookingId: details.moveDetails.bookingId,
-              propertyType: selectValue,
-              numberOfMovers: details.moveDetails.numberOfMovers,
-              mileage: details.moveDetails.mileage,
-              volume: details.moveDetails.volume,
-              duration: details.moveDetails.duration,
-              moveDate: details.moveDetails.moveDate,
-              moveDateRaw: details.moveDetails.moveDateRaw,
-              movePackage: details.moveDetails.movePackage,
-              quoteRef: details.moveDetails.quoteRef,
-              initialPackagePrice: details.moveDetails.initialPackagePrice,
-            })
-          );
+          updateMove({
+            propertyType: selectValue,
+          });
           router.push("/book/home-removals");
           break;
         case "2 Bed property":
-          dispatch(
-            updateMoveDetails({
-              bookingId: details.moveDetails.bookingId,
-              propertyType: selectValue,
-              numberOfMovers: details.moveDetails.numberOfMovers,
-              mileage: details.moveDetails.mileage,
-              volume: details.moveDetails.volume,
-              duration: details.moveDetails.duration,
-              moveDate: details.moveDetails.moveDate,
-              moveDateRaw: details.moveDetails.moveDateRaw,
-              movePackage: details.moveDetails.movePackage,
-              quoteRef: details.moveDetails.quoteRef,
-              initialPackagePrice: details.moveDetails.initialPackagePrice,
-            })
-          );
+          updateMove({
+            propertyType: selectValue,
+          });
           router.push("/book/home-removals");
           break;
         case "3 Bed property":
-          dispatch(
-            updateMoveDetails({
-              bookingId: details.moveDetails.bookingId,
-              propertyType: selectValue,
-              numberOfMovers: details.moveDetails.numberOfMovers,
-              mileage: details.moveDetails.mileage,
-              volume: details.moveDetails.volume,
-              duration: details.moveDetails.duration,
-              moveDate: details.moveDetails.moveDate,
-              moveDateRaw: details.moveDetails.moveDateRaw,
-              movePackage: details.moveDetails.movePackage,
-              quoteRef: details.moveDetails.quoteRef,
-              initialPackagePrice: details.moveDetails.initialPackagePrice,
-            })
-          );
+          updateMove({
+            propertyType: selectValue,
+          });
           router.push("/book/home-removals");
           break;
         case "4 Bed property":
-          dispatch(
-            updateMoveDetails({
-              bookingId: details.moveDetails.bookingId,
-              propertyType: selectValue,
-              numberOfMovers: details.moveDetails.numberOfMovers,
-              mileage: details.moveDetails.mileage,
-              volume: details.moveDetails.volume,
-              duration: details.moveDetails.duration,
-              moveDate: details.moveDetails.moveDate,
-              moveDateRaw: details.moveDetails.moveDateRaw,
-              movePackage: details.moveDetails.movePackage,
-              quoteRef: details.moveDetails.quoteRef,
-              initialPackagePrice: details.moveDetails.initialPackagePrice,
-            })
-          );
+          updateMove({
+            propertyType: selectValue,
+          });
           router.push("/book/home-removals");
           break;
 
@@ -241,7 +124,7 @@ const HeroInputBox = () => {
 
   const selectDefaultValue = () => {
     const option = serviceOptions.filter(
-      (opt) => opt.value == details.moveDetails.propertyType
+      (opt) => opt.value == moveDetails?.propertyType
     );
     return option;
   };
@@ -266,10 +149,6 @@ const HeroInputBox = () => {
           Get a Free Quote
         </h3>
         <div className="w-full">
-          {/* what are you moving */}
-          {/* <label className="label">
-              <span className="font-semibold">What are you moving?</span>
-            </label> */}
           <div className="w-full mb-[20px]">
             <SelectSearch
               placeholder="What are you moving?"
@@ -282,60 +161,29 @@ const HeroInputBox = () => {
             />
           </div>
           <div className="form-control mb-[20px]">
-            {/* <label className="label">
-              <span className="font-semibold">Where are you moving from?</span>
-            </label> */}
-            {/* <SelectSearch
-              placeholder="Location"
-              options={citiesOptions}
-              isSearchable={true}
-              name="location1"
-            /> */}
-            {/* <input ref={searchInput} type="text" placeholder="Search location...." className='border-primary border rounded-[10px] py-[10px] px-[10px] outline-none focus:border-[2px] active:border-[2px]'/> */}
-
             <GoogleSearchInput
               styles="py-[10px] px-[10px]"
               setAddress={setAddress}
               addressDetails={addressDetails}
               setAddressDetails={setAddressDetails}
               placeholder="Where are you moving from?"
-              defaultValue={details.serviceLocation.locationFrom.name || null}
+              defaultValue={serviceLocation?.locationFrom?.name}
             />
-            {/* <input
-              ref={searchInput}
-              type="text"
-              placeholder="Search location..."
-              className="border-primary border rounded-[10px] py-[10px] px-[10px] outline-none focus:border-[2px] active:border-[2px]"
-            /> */}
           </div>
           <div className="form-control">
-            {/* <label className="label">
-              <span className="font-semibold">Where are you moving to?</span>
-            </label> */}
-            {/* <SelectSearch
-              placeholder="Location"
-              options={citiesOptions}
-              isSearchable={true}
-              name="location2"
-            /> */}
-            {/* <input
-              ref={searchInput}
-              type="text"
-              placeholder="Search location..."
-              className="border-primary border rounded-[10px] py-[10px] px-[10px] outline-none focus:border-[2px] active:border-[2px]"
-            /> */}
             <GoogleSearchInput
               styles="py-[10px] px-[10px]"
               setAddress={setAddress2}
               addressDetails={addressDetails2}
               setAddressDetails={setAddressDetails2}
               placeholder="Where are you moving to?"
-              defaultValue={details.serviceLocation.locationTo.name || null}
+              defaultValue={serviceLocation?.locationTo?.name}
             />
           </div>
           <div className="form-control mt-6">
             <button
               onClick={heroFormSubmit}
+              disabled={submitLoading}
               className="btn btn-primary flex items-center space-x-[5px]"
             >
               {!submitLoading && <span className="">Get Quote</span>}

@@ -1,7 +1,19 @@
+// Outputs: "Wednesday, 20 September, 2023"
+
 export function getCurrentDateFormatted() {
   const months = [
-    "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
   ];
 
   const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -17,11 +29,6 @@ export function getCurrentDateFormatted() {
 
   return `${dayOfWeek}, ${dayOfMonth} ${month} ${year} ${hours}:${minutes}:${seconds} GMT`;
 }
-
-
-
-
-
 
 export function generateSecureId(length = 25) {
   const characters = "abcdefghijklmnopqrstuvwxyz0123456789";
@@ -750,6 +757,7 @@ const dayOfWeek = "Mon"; // Monday (Abbreviated string format)
 const dayNumber = 1;
 const month = "Aug"; // August (Abbreviated string format)
 const year = 2023;
+
 const prices = generatePrices(
   dayOfWeek,
   dayNumber,

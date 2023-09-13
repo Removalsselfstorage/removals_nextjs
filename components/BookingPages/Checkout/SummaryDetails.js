@@ -27,6 +27,8 @@ const SummaryDetails = ({
   // const [details2, setDetails2] = useState(null);
   const details = useSelector(getAllDetails);
 
+  const { paidPart, paidFull } = details?.paymentDetails;
+
   const partDepositOnchange = (e) => {
     setDepositPart(e.target.checked);
     setDepositFull(false);
@@ -127,9 +129,9 @@ const SummaryDetails = ({
             Payment Method:
           </h2>
           <div className="flex flex-col items-end">
-            {depositPart && <h2 className="text-[16px] font-bold ">20%</h2>}
-            {depositFull && <h2 className="text-[16px] font-bold ">100%</h2>}
-            {!depositFull && !depositPart && (
+            {paidPart && <h2 className="text-[16px] font-bold ">20%</h2>}
+            {paidFull && <h2 className="text-[16px] font-bold ">100%</h2>}
+            {!paidFull && !paidPart && (
               <h2 className="text-[16px] font-bold ">--</h2>
             )}
           </div>
@@ -140,17 +142,13 @@ const SummaryDetails = ({
             Final Price:
           </h2>
           <div className="flex flex-col items-end">
-            {depositPart && (
+            {details.paymentDetails.paidPrice && (
               <h2 className="text-[25px] font-bold ">
-                ₤ {(details.moverDetails.moverPrice * 0.2).toFixed()}
+                ₤ {details.paymentDetails.paidPrice}
               </h2>
             )}
-            {depositFull && (
-              <h2 className="text-[25px] font-bold ">
-                ₤ {(details.moverDetails.moverPrice * 1).toFixed()}
-              </h2>
-            )}
-            {!depositFull && !depositPart && (
+
+            {!details.paymentDetails.paidPrice && (
               <h2 className="text-[25px] font-bold ">--</h2>
             )}
           </div>

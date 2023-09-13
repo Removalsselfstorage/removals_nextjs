@@ -26,10 +26,12 @@ import { useRouter } from "next/navigation";
 import {
   convertToFloatOrRound,
   convertToFloatWithOneDecimal,
+  getCurrentDateFormatted,
 } from "@/utils/logics";
 import { toast } from "react-hot-toast";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, serverTimestamp, setDoc } from "firebase/firestore";
 import { db } from "@/firebase";
+import useQuote from "@/hooks/useQuote";
 // import SideDrawer from "./sideDrawer";
 
 const MoverCard = ({
@@ -51,9 +53,33 @@ const MoverCard = ({
   clickedModalOpen,
   setClickedModalOpen,
 }) => {
-  const router = useRouter();
-  const dispatch = useDispatch();
-  const details = useSelector(getAllDetails);
+  const {
+    serviceLocation,
+    personalDetails,
+    moveDetails,
+    moverSideDetails,
+    moverDetails,
+    paymentDetails,
+    bookStage,
+    updateLocationFrom,
+    resetLocationFrom,
+    updateLocationTo,
+    resetLocationTo,
+    updatePersonal,
+    resetPersonal,
+    updateMove,
+    resetMove,
+    updateMover,
+    resetMover,
+    updatePayment,
+    resetPayment,
+    updatePickP,
+    updateMoverSide,
+    resetMoverSide,
+    updateBookS,
+    resetBookS,
+    router,
+  } = useQuote();
 
   const sideBarDispatch = () => {
     setTimeout(() => {
@@ -63,23 +89,21 @@ const MoverCard = ({
       setShowLoader2(false);
     }, 500);
     // setClickedModalOpen((prev)=>!prev);
-    dispatch(
-      updateMoverSideDetails({
-        image,
-        name,
-        loadArea,
-        rating,
-        reviewCount,
-        price,
-        hiresCount,
-        description,
-        selectedTime,
-        timeValue,
-      })
-    );
+    updateMoverSide({
+      image,
+      name,
+      loadArea,
+      rating,
+      reviewCount,
+      price,
+      hiresCount,
+      description,
+      selectedTime,
+      timeValue,
+    });
   };
 
-  const priceFirstDay = details.moveDetails.initialPackagePrice;
+  const priceFirstDay = moveDetails?.initialPackagePrice;
   const priceSecondDay = (priceFirstDay * 0.559).toFixed(); //74
   const priceThirdDay = (priceFirstDay * 0.495).toFixed(); //107
   const priceSaturdays = (priceFirstDay * 0.441).toFixed(); //60
@@ -106,21 +130,19 @@ const MoverCard = ({
 
   const onTimeHandle = (id, time) => {
     setSelectedTime(id);
-    dispatch(
-      updateMoverSideDetails({
-        image,
-        name,
-        loadArea,
-        rating,
-        reviewCount,
-        price,
-        hiresCount,
-        description,
-        selectedTime: id,
-        selectedTime2: details.moverSideDetails.selectedTime2,
-        timeValue: time,
-      })
-    );
+    updateMoverSide({
+      image,
+      name,
+      loadArea,
+      rating,
+      reviewCount,
+      price,
+      hiresCount,
+      description,
+      selectedTime: id,
+      selectedTime2: moverSideDetails?.selectedTime2,
+      timeValue: time,
+    });
     setTimeValue(time);
   };
 
@@ -136,19 +158,17 @@ const MoverCard = ({
       toast.remove();
       setSubmitLoading(true);
 
-      dispatch(updateBookStage("book/movers"));
-      dispatch(
-        updateMoverDetails({
-          moverName: name,
-          moverTime: timeValue,
-          moverPrice: price,
-          pickPrice: details.moverDetails.pickPrice,
-          moveDateFormatted: details.moverDetails.moveDateFormatted,
-          dateId: details.moverDetails.dateId,
-        })
-      );
+      updateBookS("book/movers");
+      updateMover({
+        moverName: name,
+        moverTime: timeValue,
+        moverPrice: price,
+        pickPrice: moverDetails?.pickPrice,
+        moveDateFormatted: moverDetails?.moveDateFormatted,
+        dateId: moverDetails?.dateId,
+      });
 
-      const bookingId = details.moveDetails.bookingId;
+      const bookingId = moveDetails?.bookingId;
 
       const bookingRef = doc(db, "bookingData", bookingId);
 
@@ -157,10 +177,12 @@ const MoverCard = ({
           bookingRef,
 
           {
+            date: getCurrentDateFormatted(),
             moverName: name,
             moverTime: timeValue,
             moverPrice: price,
-            stage: details.bookStage,
+            stage: "book/movers",
+            createdAt: serverTimestamp(),
           },
           { merge: true }
         );
@@ -176,24 +198,20 @@ const MoverCard = ({
   };
 
   useEffect(() => {
-    dispatch(
-      updateMoverSideDetails({
-        image: details.moverSideDetails.image,
-        name: details.moverSideDetails.name,
-        loadArea: details.moverSideDetails.loadArea,
-        rating: details.moverSideDetails.rating,
-        reviewCount: details.moverSideDetails.reviewCount,
-        price: details.moverSideDetails.price,
-        hiresCount: details.moverSideDetails.hiresCount,
-        description: details.moverSideDetails.description,
-        selectedTime: null,
-        selectedTime2: null,
-        timeValue: null,
-      })
-    );
+    updateMoverSide({
+      image: moverSideDetails?.image,
+      name: moverSideDetails?.name,
+      loadArea: moverSideDetails?.loadArea,
+      rating: moverSideDetails?.rating,
+      reviewCount: moverSideDetails?.reviewCount,
+      price: moverSideDetails?.price,
+      hiresCount: moverSideDetails?.hiresCount,
+      description: moverSideDetails?.description,
+      selectedTime: null,
+      selectedTime2: null,
+      timeValue: null,
+    });
   }, []);
-
-  // console.log(clickedModalOpen)
 
   return (
     <>
@@ -268,7 +286,7 @@ const MoverCard = ({
                   {/* package type */}
                   <div className="flex justify-center items-center py-[3px] px-[10px] bg-secondary/20 rounded-[10px] max-w-[200px]">
                     <p className="text-secondary font-semibold text-[15px]">
-                      {details.moveDetails.movePackage} Package
+                      {moveDetails?.movePackage} Package
                     </p>
                   </div>
                 </div>
@@ -388,6 +406,7 @@ const MoverCard = ({
             {/* check out */}
             <div className="flex flex-col items-center justify-center">
               <button
+                disabled={submitLoading}
                 onClick={onCheckout}
                 className="btn btn-primary w-full lg:w-[150px]"
               >

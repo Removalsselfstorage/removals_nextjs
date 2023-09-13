@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   justRegistered: true,
 
-  personalDetails: {
+  personalMoverDetails: {
     uid: "",
     firstName: "",
     lastName: "",
@@ -12,7 +12,6 @@ const initialState = {
     phone: "",
     address: "",
     personalBio: "",
-    // profilePictureRaw: "",
     profilePictureUrl: "",
     profilePictureName: "",
     registerDate: "",
@@ -22,7 +21,6 @@ const initialState = {
     approvalStatus: "UNAPPROVED",
     rating: 0,
     ratingCount: 0,
-    // isAdmin: false,
   },
 
   companyDetails: {
@@ -31,25 +29,19 @@ const initialState = {
     companyNumber: "",
     companyAddress: "",
     companyBio: "",
-    // companyProfilePixRaw: "",
     companyProfilePixUrl: "",
     companyProfilePixName: "",
     reviewSubmit: false,
   },
   companyDocs: {
-    // regCertificateRaw: "",
     regCertificateUrl: "",
     regCertificateName: "",
-    // vehInsuranceRaw: "",
     vehInsuranceUrl: "",
     vehInsuranceName: "",
-    // pubInsuranceRaw: "",
     pubInsuranceUrl: "",
     pubInsuranceName: "",
-    // tranInsuranceRaw: "",
     tranInsuranceUrl: "",
     tranInsuranceName: "",
-    // drivingLicenseRaw: "",
     drivingLicenseUrl: "",
     drivingLicenseName: "",
     reviewSubmit: false,
@@ -74,29 +66,108 @@ export const moverSlice = createSlice({
   initialState,
   reducers: {
     updateJustRegistered: (state, action) => {
-      state.justRegistered = action.payload;
+      Object.assign(state.justRegistered, action.payload);
     },
-    updatePersonalDetails: (state, action) => {
-      state.personalDetails = action.payload;
+
+    resetJustRegistered: (state, action) => {
+      state.justRegistered = true;
     },
+
+    updatePersonalMoverDetails: (state, action) => {
+      Object.assign(state.personalMoverDetails, action.payload);
+    },
+
+    resetPersonalMoverDetails: (state, action) => {
+      state.personalMoverDetails = {
+        uid: "",
+        firstName: "",
+        lastName: "",
+        generatedName: "",
+        email: "",
+        phone: "",
+        address: "",
+        personalBio: "",
+        profilePictureUrl: "",
+        profilePictureName: "",
+        registerDate: "",
+        lastLogin: "",
+        reviewSubmit: false,
+        acceptedTerms: false,
+        approvalStatus: "UNAPPROVED",
+        rating: 0,
+        ratingCount: 0,
+      };
+    },
+
     updateCompanyDetails: (state, action) => {
-      state.companyDetails = action.payload;
+      Object.assign(state.companyDetails, action.payload);
     },
+
+    resetCompanyDetails: (state, action) => {
+      state.companyDetails = {
+        companyName: "",
+        generatedName: "",
+        companyNumber: "",
+        companyAddress: "",
+        companyBio: "",
+        companyProfilePixUrl: "",
+        companyProfilePixName: "",
+        reviewSubmit: false,
+      };
+    },
+
     updateCompanyDocs: (state, action) => {
-      state.companyDocs = action.payload;
+      Object.assign(state.companyDocs, action.payload);
     },
+
+    resetCompanyDocs: (state, action) => {
+      state.companyDocs = {
+        regCertificateUrl: "",
+        regCertificateName: "",
+        vehInsuranceUrl: "",
+        vehInsuranceName: "",
+        pubInsuranceUrl: "",
+        pubInsuranceName: "",
+        tranInsuranceUrl: "",
+        tranInsuranceName: "",
+        drivingLicenseUrl: "",
+        drivingLicenseName: "",
+        reviewSubmit: false,
+      };
+    },
+
     updateAllMoverData: (state, action) => {
-      state.allMoverData = action.payload;
+      Object.assign(state.allMoverData, action.payload);
+    },
+    
+    resetAllMoverData: (state, action) => {
+      state.allMoverData = {
+        allPersonalDetails: [],
+        allCompanyDetails: [],
+        allCompanyPix: [],
+        allCompanyDocs: {
+          regCertificates: [],
+          vehInsurances: [],
+          pubInsurances: [],
+          tranInsurances: [],
+          drivingLicenses: [],
+        },
+      };
     },
   },
 });
 
 export const {
   updateJustRegistered,
-  updatePersonalDetails,
+  resetJustRegistered,
+  updatePersonalMoverDetails,
+  resetPersonalMoverDetails,
   updateCompanyDetails,
+  resetCompanyDetails,
   updateCompanyDocs,
+  resetCompanyDocs,
   updateAllMoverData,
+  resetAllMoverData,
 } = moverSlice.actions;
 
 export const getAllMoverDetails = (state) => state.mover;

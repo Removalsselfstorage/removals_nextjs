@@ -9,7 +9,11 @@ import {
 } from "@/store/quoteSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
-import { convertToSentenceCase, generateRandomValues } from "@/utils/logics";
+import {
+  convertToSentenceCase,
+  generateRandomValues,
+  getCurrentDateFormatted,
+} from "@/utils/logics";
 import { moveRate, priceCalc, priceCalc2 } from "@/utils/moversLogic";
 import { FaBusAlt, FaTruckMoving } from "react-icons/fa";
 import { IoMdMan } from "react-icons/io";
@@ -19,11 +23,19 @@ import { updateAllMoverData } from "@/store/moverSlice";
 import emailjs from "@emailjs/browser";
 import { fetchWelcomedEmails } from "@/lib/fetchData2";
 import { db } from "@/firebase";
-import { addDoc, collection, doc, setDoc } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  doc,
+  serverTimestamp,
+  setDoc,
+} from "firebase/firestore";
 import {
   UploadBookingProgress,
   UploadBookingProgress1,
 } from "@/lib/uploadBookingProgress";
+import useQuote from "@/hooks/useQuote";
+import useMover from "@/hooks/useMover";
 
 const PackageCard = ({
   image,
@@ -45,16 +57,58 @@ const PackageCard = ({
   link,
   preferred,
 }) => {
-  const router = useRouter();
-  const dispatch = useDispatch();
-  const details = useSelector(getAllDetails);
+  const {
+    serviceLocation,
+    personalDetails,
+    moveDetails,
+    moverSideDetails,
+    moverDetails,
+    paymentDetails,
+    bookStage,
+    updateLocationFrom,
+    resetLocationFrom,
+    updateLocationTo,
+    resetLocationTo,
+    updatePersonal,
+    resetPersonal,
+    updateMove,
+    resetMove,
+    updateMover,
+    resetMover,
+    updatePayment,
+    resetPayment,
+    updatePickP,
+    updateMoverSide,
+    resetMoverSide,
+    updateBookS,
+    resetBookS,
+    router,
+  } = useQuote();
+
+  const {
+    justRegistered,
+    personalMoverDetails,
+    companyDetails,
+    companyDocs,
+    allMoverData,
+    updateJustR,
+    resetJustR,
+    updatePersonalMover,
+    resetPersonalMover,
+    updateCompanyDe,
+    resetCompanyDe,
+    updateCompanyDo,
+    resetCompanyDo,
+    updateAllMoverD,
+    resetAllMoverD,
+  } = useMover();
 
   const [submitLoading, setSubmitLoading] = useState(false);
 
   const randomRefValue = generateRandomValues();
 
   const moveMen = () => {
-    switch (details.moveDetails.numberOfMovers) {
+    switch (moveDetails?.numberOfMovers) {
       case "1 Man":
         return 1;
         break;
@@ -73,7 +127,7 @@ const PackageCard = ({
   const imageArray = new Array(moveMen()).fill(null);
 
   const checkPropertyType = () => {
-    switch (details.moveDetails.propertyType) {
+    switch (moveDetails?.propertyType) {
       case "Man and van":
         return true;
         break;
@@ -148,35 +202,35 @@ const PackageCard = ({
     }
   };
 
-  const totalMileage = mileageValueCalc(details.moveDetails.mileage);
+  const totalMileage = mileageValueCalc(moveDetails?.mileage);
   const totalPrice = (totalMileage) => {
-    switch (details.moveDetails.propertyType) {
+    switch (moveDetails?.propertyType) {
       case "Man and van":
         return priceCalc(
           title,
-          details.moveDetails.duration,
-          details.moveDetails.numberOfMovers
+          moveDetails?.duration,
+          moveDetails?.numberOfMovers
         );
         break;
       case "Office removals":
         return priceCalc(
           title,
-          details.moveDetails.duration,
-          details.moveDetails.numberOfMovers
+          moveDetails?.duration,
+          moveDetails?.numberOfMovers
         );
         break;
       case "Studio flat":
         return priceCalc(
           title,
-          details.moveDetails.duration,
-          details.moveDetails.numberOfMovers
+          moveDetails?.duration,
+          moveDetails?.numberOfMovers
         );
         break;
       case "Furniture & Appliances":
         return priceCalc(
           title,
-          details.moveDetails.duration,
-          details.moveDetails.numberOfMovers
+          moveDetails?.duration,
+          moveDetails?.numberOfMovers
         );
         break;
 
@@ -184,8 +238,8 @@ const PackageCard = ({
         return priceCalc2(
           title,
           totalMileage,
-          details.moveDetails.numberOfMovers,
-          details.moveDetails.propertyType
+          moveDetails?.numberOfMovers,
+          moveDetails?.propertyType
         );
         break;
     }
@@ -194,40 +248,28 @@ const PackageCard = ({
   const onBookNow = async () => {
     setSubmitLoading(true);
     const userData = await fetchAllMoversDetailsArray();
-    // console.log(userData);
 
-    dispatch(updateBookStage("book/move-package"));
-    dispatch(
-      updateAllMoverData({
-        allPersonalDetails: userData?.personalDetails,
-        allCompanyDetails: userData?.companyDetails,
-        allCompanyPix: userData?.CompanyPix,
-        allCompanyDocs: {
-          regCertificates: userData?.RegCertificate,
-          vehInsurances: userData?.VehInsurance,
-          pubInsurances: userData?.PubInsurance,
-          tranInsurances: userData?.TranInsurance,
-          drivingLicenses: userData?.DrivingLicense,
-        },
-      })
-    );
-    dispatch(
-      updateMoveDetails({
-        bookingId: details.moveDetails.bookingId,
-        propertyType: details.moveDetails.propertyType,
-        numberOfMovers: details.moveDetails.numberOfMovers,
-        mileage: details.moveDetails.mileage,
-        volume: details.moveDetails.volume,
-        duration: details.moveDetails.duration,
-        moveDate: details.moveDetails.moveDate,
-        moveDateRaw: details.moveDetails.moveDateRaw,
-        movePackage: convertToSentenceCase(title),
-        quoteRef: details.moveDetails.quoteRef,
-        initialPackagePrice: totalPrice(totalMileage),
-      })
-    );
+    updateBookS("book/move-package");
+    updateAllMoverD({
+      allPersonalDetails: userData?.personalDetails,
+      allCompanyDetails: userData?.companyDetails,
+      allCompanyPix: userData?.CompanyPix,
+      allCompanyDocs: {
+        regCertificates: userData?.RegCertificate,
+        vehInsurances: userData?.VehInsurance,
+        pubInsurances: userData?.PubInsurance,
+        tranInsurances: userData?.TranInsurance,
+        drivingLicenses: userData?.DrivingLicense,
+      },
+    });
+    updateMove({
+      movePackage: convertToSentenceCase(title),
+      initialPackagePrice: totalPrice(totalMileage),
+    });
 
-    const bookingId = details.moveDetails.bookingId;
+    
+
+    const bookingId = moveDetails?.bookingId;
 
     const bookingRef = doc(db, "bookingData", bookingId);
 
@@ -236,9 +278,11 @@ const PackageCard = ({
         bookingRef,
 
         {
+          date: getCurrentDateFormatted(),
           movePackage: convertToSentenceCase(title),
           initialPackagePrice: totalPrice(totalMileage),
-          stage: details.bookStage,
+          stage: "book/move-package",
+          createdAt: serverTimestamp(),
         },
         { merge: true }
       );
@@ -284,7 +328,7 @@ const PackageCard = ({
           </p>
           {/* <p className="">₤{price}</p> */}
           <div className="flex flex-col space-y-[5px] ">
-            <p className="font-bold">*{details.moveDetails.propertyType}*</p>
+            <p className="font-bold">*{moveDetails?.propertyType}*</p>
             <div className="flex items-center justify-center text-gray-500 ">
               {imageArray.map((_, index) => (
                 <IoMdMan
@@ -303,16 +347,16 @@ const PackageCard = ({
               />
             </div>
             <p className="font-semibold text-[15px] text-gray-500 pt-[7px]">
-              {details.moveDetails.numberOfMovers} and Jumbo Van
+              {moveDetails?.numberOfMovers} and Jumbo Van
             </p>
             {checkPropertyType() && (
               <p className="font-semibold text-[15px] text-gray-500">
-                For a {details.moveDetails.duration} hours move
+                For a {moveDetails?.duration} hours move
               </p>
             )}
             {checkPropertyType() && (
               <p className="font-bold">
-                {moveRate(title, details.moveDetails.numberOfMovers)}
+                {moveRate(title, moveDetails?.numberOfMovers)}
               </p>
             )}
           </div>
@@ -454,9 +498,10 @@ const PackageCard = ({
       </div>
       <button
         onClick={onBookNow}
+        disabled={submitLoading}
         className={`btn ${
           preferred ? "btn-secondary " : "btn-primary btn-outline"
-        }  px-[30px] mb-[50px] group`}
+        }  px-[30px] mb-[50px] group focus:text-white active:text-white`}
       >
         {!submitLoading && <span className=""> Book Now</span>}
         {submitLoading && (
@@ -464,10 +509,12 @@ const PackageCard = ({
             <span>Booking</span>
             <span
               className={`loading loading-dots loading-md ${
-                preferred
+                submitLoading && "text-white"
+              } ${
+                preferred && !submitLoading
                   ? "text-white "
-                  : "text-primary group-hover:text-white"
-              }`}
+                  : "text-primary  group-hover:text-white"
+              } `}
             ></span>
           </>
         )}

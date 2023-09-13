@@ -45,10 +45,13 @@ export default function Home() {
       case "book/movers":
         return true;
         break;
-
-      default:
-        return false;
+      case "book/checkout":
+        return true;
         break;
+
+      // default:
+      //   return false;
+      //   break;
     }
   };
   const bookStageBoolean2 = () => {
@@ -67,9 +70,13 @@ export default function Home() {
         return true;
         break;
 
-      default:
-        return false;
+      case "book/checkout":
+        return true;
         break;
+
+      // default:
+      //   return false;
+      //   break;
     }
   };
 
@@ -87,6 +94,9 @@ export default function Home() {
       case "book/movers":
         return "book/checkout";
         break;
+      case "book/checkout":
+        return "book/checkout";
+        break;
     }
   };
 
@@ -98,6 +108,8 @@ export default function Home() {
       setInitialLoading(false);
     }, 2000);
   }, []);
+
+  console.log({ details });
 
   return (
     <>

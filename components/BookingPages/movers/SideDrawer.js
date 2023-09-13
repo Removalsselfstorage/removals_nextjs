@@ -1,6 +1,7 @@
 import ReviewCard2 from "@/components/HomePage/OurReviews/ReviewCard2";
 import StarRating from "@/components/Rating/EditHalfStars2";
 import { reviews } from "@/dummyData/dummyData";
+import useQuote from "@/hooks/useQuote";
 import {
   getAllDetails,
   updateMoverDetails,
@@ -9,6 +10,7 @@ import {
 import { changeFontWeight, changeFontWeight2 } from "@/utils/logics";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
+import toast from "react-hot-toast";
 import { FaTruckMoving } from "react-icons/fa";
 import { FiCheckCircle } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
@@ -23,25 +25,46 @@ const SideDrawer = ({
   // timeValue,
   // setTimeValue,
 }) => {
-  const details = useSelector(getAllDetails);
+  const {
+    serviceLocation,
+    personalDetails,
+    moveDetails,
+    moverSideDetails,
+    moverDetails,
+    paymentDetails,
+    bookStage,
+    updateLocationFrom,
+    resetLocationFrom,
+    updateLocationTo,
+    resetLocationTo,
+    updatePersonal,
+    resetPersonal,
+    updateMove,
+    resetMove,
+    updateMover,
+    resetMover,
+    updatePayment,
+    resetPayment,
+    updatePickP,
+    updateMoverSide,
+    resetMoverSide,
+    updateBookS,
+    resetBookS,
+    router,
+  } = useQuote();
 
   const [sideDetails, setSideDetails] = useState({});
   const [initialLoader, setInitialLoader] = useState(true);
   // const [selectedTime, setSelectedTime] = useState(
   //   details.moverSideDetails.selectedTime
   // );
-  const [timeValue, setTimeValue] = useState(
-    details.moverSideDetails.timeValue
-  );
+  const [timeValue, setTimeValue] = useState("");
   const [submitError, setSubmitError] = useState(true);
   const [submitLoading, setSubmitLoading] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
 
-  const router = useRouter();
-  const dispatch = useDispatch();
-
   useEffect(() => {
-    setSideDetails(details.moverSideDetails);
+    setSideDetails(moverSideDetails);
   }, [showLoader2]);
 
   const allTime = [
@@ -54,39 +77,38 @@ const SideDrawer = ({
   const onTimeHandle = (id, time) => {
     setSelectedTime(null);
     setTimeValue(time);
-    dispatch(
-      updateMoverSideDetails({
-        image: details.moverSideDetails.image,
-        name: details.moverSideDetails.name,
-        loadArea: details.moverSideDetails.loadArea,
-        rating: details.moverSideDetails.rating,
-        reviewCount: details.moverSideDetails.reviewCount,
-        price: details.moverSideDetails.price,
-        hiresCount: details.moverSideDetails.hiresCount,
-        description: details.moverSideDetails.description,
-        selectedTime: id,
-        selectedTime2: id,
-        timeValue: time,
-      })
-    );
+    updateMoverSide({
+      image: moverSideDetails?.image,
+      name: moverSideDetails?.name,
+      loadArea: moverSideDetails?.loadArea,
+      rating: moverSideDetails?.rating,
+      reviewCount: moverSideDetails?.reviewCount,
+      price: moverSideDetails?.price,
+      hiresCount: moverSideDetails?.hiresCount,
+      description: moverSideDetails?.description,
+      selectedTime: id,
+      selectedTime2: id,
+      timeValue: time,
+    });
   };
 
   const onCheckout = () => {
     setSubmitError(true);
     if (timeValue == "") {
       setSubmitError(false);
+      toast.error(`Please pick a move time`, {
+        duration: 6000,
+      });
     } else {
       setSubmitLoading(true);
-      dispatch(
-        updateMoverDetails({
-          moverName: sideDetails.name,
-          moverTime: timeValue,
-          moverPrice: sideDetails.price,
-          pickPrice: details.moverDetails.pickPrice,
-          moveDateFormatted: details.moverDetails.moveDateFormatted,
-          dateId: details.moverDetails.dateId,
-        })
-      );
+      updateMover({
+        moverName: sideDetails?.name,
+        moverTime: timeValue,
+        moverPrice: sideDetails?.price,
+        pickPrice: moverDetails?.pickPrice,
+        moveDateFormatted: moverDetails?.moveDateFormatted,
+        dateId: moverDetails?.dateId,
+      });
       router.push("/book/checkout");
     }
   };
@@ -111,7 +133,7 @@ const SideDrawer = ({
   //   }
   // }, [clickedModalOpen]);
 
-  // console.log(sideDetails);
+  console.log(timeValue);
 
   return (
     <div className="drawer drawer-end">
@@ -162,7 +184,7 @@ const SideDrawer = ({
                 {/* package type */}
                 <div className="flex justify-center items-center py-[3px] px-[10px] bg-secondary/20 rounded-[10px] max-w-[200px]">
                   <p className="text-secondary font-semibold text-[15px]">
-                    {details.moveDetails.movePackage} Package
+                    {moveDetails?.movePackage} Package
                   </p>
                 </div>
               </div>
@@ -298,8 +320,7 @@ const SideDrawer = ({
                 {/* time */}
                 <div className="grid grid-cols-2 justify-center gap-x-[10px] gap-y-[10px] xl:grid-cols-4 w-auto xl:w-[450px]">
                   {allTime.map((tm, index) => {
-                    let isActive =
-                      tm.id == details.moverSideDetails.selectedTime;
+                    let isActive = tm.id == moverSideDetails?.selectedTime;
                     return (
                       <div
                         key={index}
@@ -331,6 +352,7 @@ const SideDrawer = ({
           {/* check out */}
           <div className="flex flex-col items-center justify-center mt-[30px] mb-[20px]">
             <button
+              disabled={submitLoading}
               onClick={onCheckout}
               className="btn btn-primary w-full lg:w-[150px]"
             >

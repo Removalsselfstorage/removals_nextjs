@@ -20,7 +20,7 @@ export function formatDate(inputDate) {
   const day = parts[2];
 
   return `${year}-${month}-${day}`;
-}
+};
 
 export const priceCalc = (title, duration, movers) => {
   switch (title) {
@@ -881,6 +881,7 @@ export const moveDesciptionsCalc = (title, propertyType) => {
       break;
   }
 };
+
 export const moveDesciptionsCalc2 = (title, propertyType) => {
   switch (propertyType) {
     case "Man and van":

@@ -12,7 +12,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import Lottie from "lottie-react";
 import EmailSent from "@/lottieJsons/EmailSent2.json";
-import movingVan from "@/lottieJsons/movingVan.json";
+import success from "@/lottieJsons/success.json";
 import { useRouter } from "next/router";
 import { doc, serverTimestamp, setDoc } from "firebase/firestore";
 import { getCurrentDateFormatted } from "@/utils/logics";
@@ -54,6 +54,7 @@ const CheckoutForm = ({ cardOnchange, paypalOnchange, scriptLoaded }) => {
   const [inventConfirm, setInventConfirm] = useState(false);
   const [comments, setComments] = useState("");
   const [submitLoading, setSubmitLoading] = useState(false);
+  const [submitLoading2, setSubmitLoading2] = useState(false);
 
   const { paidPart, paidFull, paidPrice } = paymentDetails;
 
@@ -154,7 +155,7 @@ const CheckoutForm = ({ cardOnchange, paypalOnchange, scriptLoaded }) => {
 
   const reservationSubmit = () => {
     // window.my_modal_13.close();
-    setSubmitLoading(true);
+    setSubmitLoading2(true);
 
     setTimeout(() => {
       // setShowProgressMessage(false);
@@ -358,7 +359,7 @@ const CheckoutForm = ({ cardOnchange, paypalOnchange, scriptLoaded }) => {
 
           <div className="py-[50px]">
             <div className="flex justify-center w-full">
-              <Lottie animationData={EmailSent} className="w-[200px]" />
+              <Lottie animationData={success} className="w-[200px]" />
             </div>
             <h3
               onClick={() => window.my_modal_13.close()}
@@ -374,15 +375,15 @@ const CheckoutForm = ({ cardOnchange, paypalOnchange, scriptLoaded }) => {
             <div className="flex w-full justify-center my-[20px]">
               <div
                 onClick={reservationSubmit}
-                disabled={submitLoading}
+                disabled={submitLoading2}
                 type="submit"
                 className="btn btn-secondary btn-wide flex items-center space-x-[5px]"
                 // disabled={progressLoading}
               >
-                {!submitLoading && (
+                {!submitLoading2 && (
                   <span className=""> Reservation Dashboard</span>
                 )}
-                {submitLoading && (
+                {submitLoading2 && (
                   <span className="loading loading-dots loading-md text-white"></span>
                 )}
               </div>

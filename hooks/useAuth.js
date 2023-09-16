@@ -284,16 +284,6 @@ export const AuthProvider = ({ children }) => {
         password
       );
 
-      // const moversRef = doc(db, "moversData", userCredential.user.uid);
-
-      // await setDoc(
-      //   moversRef,
-
-      //   {
-      //     lastLogin: userCredential.user.metadata.lastSignInTime,
-      //   },
-      //   { merge: true }
-      // );
 
       const userData = await fetchAllMoversDetails(userCredential.user.uid);
 

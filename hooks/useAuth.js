@@ -92,7 +92,7 @@ export const AuthProvider = ({ children }) => {
 
   const dispatch = useDispatch();
 
-  const userDetails = useSelector(getAllUserDetails);
+  const { userDetails } = useSelector(getAllUserDetails);
 
   // console.log(userDetails);
 
@@ -103,7 +103,7 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(
     () =>
-      onAuthStateChanged(auth, (userDetails) => {
+      onAuthStateChanged(auth, () => {
         // if (userDetails) {
 
         if (userDetails?.emailVerified) {

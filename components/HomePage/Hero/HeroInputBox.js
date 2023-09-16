@@ -198,7 +198,7 @@ const HeroInputBox = () => {
             </button>
           </div>
           {error && (
-            <p className="text-secondary w-full text-center mt-[10px]">
+            <p className="text-[14px] text-center mt-[15px] text-secondary bg-secondary/20 rounded-[10px] py-[10px] px-[30px]">
               Please input all fields
             </p>
           )}

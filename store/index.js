@@ -16,7 +16,7 @@ import {
   PURGE,
   REGISTER,
 } from "redux-persist";
-import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
+import autoMergeLevel2 from "redux-persist/lib/stateReconciler/autoMergeLevel2";
 import hardSet from "redux-persist/lib/stateReconciler/hardSet";
 import createWebStorage from "redux-persist/lib/storage/createWebStorage";
 import cartReducer from "./userSlice";
@@ -57,6 +57,7 @@ const persistConfig = {
   storage: localforage,
   // storage: storageSession,
   stateReconciler: hardSet,
+  // blacklist: ["mover"],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

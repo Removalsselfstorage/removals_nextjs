@@ -332,7 +332,7 @@ export const AuthProvider = ({ children }) => {
         drivingLicenseName: userData.DrivingLicense.drivingLicenseName,
       });
 
-      if (userCredential.user.emailVerified) {
+      if (userCredential?.user?.emailVerified) {
         // setUser(userCredential.user);
         dispatch(updateUserDetails(userCredential.user));
 

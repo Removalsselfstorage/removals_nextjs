@@ -171,6 +171,6 @@ export const {
   resetAllMoverData,
 } = moverSlice.actions;
 
-export const getAllMoverDetails = (state) => state.mover;
+export const getAllMoverDetails = (state) => state?.mover;
 
 export default moverSlice.reducer;

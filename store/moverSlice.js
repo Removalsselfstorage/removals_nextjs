@@ -60,7 +60,6 @@ const initialState = {
       drivingLicenses: [],
     },
   },
-  
 };
 
 export const moverSlice = createSlice({

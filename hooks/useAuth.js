@@ -33,6 +33,7 @@ import {
   updateJustRegistered,
   updateMoverPersonalDetails,
   updatePersonalDetails,
+  updatePersonalMoverDetails,
 } from "@/store/moverSlice";
 import { fetchAllMoversDetails } from "@/lib/fetchData2";
 import {
@@ -51,7 +52,6 @@ import {
   QueryClientProvider,
 } from "@tanstack/react-query";
 import toast, { Toaster } from "react-hot-toast";
-import useMover from "./useMover";
 
 const AuthContext = createContext({
   user: null,
@@ -62,32 +62,13 @@ const AuthContext = createContext({
   resendEmailVerification: async () => {},
   error: null,
   loading: false,
-  // justRegistered: false,
+  justRegistered: false,
 });
 
 export const AuthProvider = ({ children }) => {
-  const {
-    // justRegistered,
-    personalMoverDetails,
-    companyDetails,
-    companyDocs,
-    allMoverData,
-    updateJustR,
-    resetJustR,
-    updatePersonalMover,
-    resetPersonalMover,
-    updateCompanyDe,
-    resetCompanyDe,
-    updateCompanyDo,
-    resetCompanyDo,
-    updateAllMoverD,
-    resetAllMoverD,
-    router,
-  } = useMover();
+  const router = useRouter();
 
-  // const router = useRouter();
-
-  // const details = useSelector(getAllMoverDetails);
+  const details = useSelector(getAllMoverDetails);
   // const moverDetails = useSelector(getAllMoverDetails);
 
   const dispatch = useDispatch();
@@ -171,14 +152,63 @@ export const AuthProvider = ({ children }) => {
       //   })
       // );
 
-      updatePersonalMover({
-        uid: userCredential.user.uid,
-        firstName: firstName,
-        lastName: lastName,
-        email: email,
-        registerDate: userCredential.user.metadata.creationTime,
-        lastLogin: userCredential.user.metadata.lastSignInTime,
-      });
+      dispatch(
+        updatePersonalMoverDetails({
+          uid: userCredential.user.uid,
+          firstName: firstName,
+          lastName: lastName,
+          generatedName: "",
+          email: email,
+          phone: "",
+          address: "",
+          personalBio: "",
+          // profilePictureRaw: "",
+          profilePictureUrl: "",
+          profilePictureName: "",
+          registerDate: userCredential.user.metadata.creationTime,
+          lastLogin: userCredential.user.metadata.lastSignInTime,
+          reviewSubmit: false,
+          acceptedTerms: false,
+          approvalStatus: "UNAPPROVED",
+          rating: 0,
+          ratingCount: 0,
+        })
+      );
+
+      dispatch(
+        updateCompanyDetails({
+          companyName: "",
+          generatedName: "",
+          companyNumber: "",
+          companyAddress: "",
+          companyBio: "",
+          // companyProfilePixRaw: "",
+          companyProfilePixUrl: "",
+          companyProfilePixName: "",
+          reviewSubmit: false,
+        })
+      );
+
+      dispatch(
+        updateCompanyDocs({
+          // regCertificateRaw: "",
+          regCertificateUrl: "",
+          regCertificateName: "",
+          // vehInsuranceRaw: "",
+          vehInsuranceUrl: "",
+          vehInsuranceName: "",
+          // pubInsuranceRaw: "",
+          pubInsuranceUrl: "",
+          pubInsuranceName: "",
+          // tranInsuranceRaw: "",
+          tranInsuranceUrl: "",
+          tranInsuranceName: "",
+          // drivingLicenseRaw: "",
+          drivingLicenseUrl: "",
+          drivingLicenseName: "",
+          reviewSubmit: false,
+        })
+      );
 
       const moveObj = {
         profilePictureRaw: "",
@@ -284,54 +314,80 @@ export const AuthProvider = ({ children }) => {
         password
       );
 
+      // const moversRef = doc(db, "moversData", userCredential.user.uid);
+
+      // await setDoc(
+      //   moversRef,
+
+      //   {
+      //     lastLogin: userCredential.user.metadata.lastSignInTime,
+      //   },
+      //   { merge: true }
+      // );
 
       const userData = await fetchAllMoversDetails(userCredential.user.uid);
 
-      updateJustR(userData?.personalDetails.justRegistered);
-      updatePersonalMover({
-        uid: userData?.personalDetails.uid,
-        firstName: userData?.personalDetails.firstName,
-        lastName: userData?.personalDetails.lastName,
-        generatedName: userData?.personalDetails.generatedName,
-        email: userData?.personalDetails.email,
-        phone: userData?.personalDetails.phone,
-        address: userData?.personalDetails.address,
-        personalBio: userData?.personalDetails.personalBio,
-        // profilePictureRaw: "",
-        profilePictureUrl: userData?.personalDetails.profileImageUrl,
-        profilePictureName: userData?.personalDetails.profilePictureName,
-        registerDate: userCredential.user.metadata.creationTime,
-        lastLogin: userCredential.user.metadata.lastSignInTime,
-        reviewSubmit: userData?.personalDetails.reviewSubmit,
-        acceptedTerms: userData?.personalDetails.acceptedTerms,
-        approvalStatus: userData?.personalDetails.approvalStatus,
-        rating: userData?.personalDetails.rating,
-        ratingCount: userData?.personalDetails.ratingCount,
-      });
-      updateCompanyDe({
-        companyName: userData.companyDetails.companyName,
-        generatedName: userData.companyDetails.generatedName,
-        companyNumber: userData.companyDetails.companyNumber,
-        companyAddress: userData.companyDetails.companyAddress,
-        companyBio: userData.companyDetails.companyBio,
-        // companyProfilePixRaw: userData.CompanyPix.companyProfilePixPreviewUrl,
-        // companyProfilePixRaw: "",
-        companyProfilePixUrl: userData.CompanyPix.companyProfilePixUrl,
-        companyProfilePixName: userData.CompanyPix.companyProfilePixName,
-        reviewSubmit: userData?.companyDetails.reviewSubmit,
-      });
-      updateCompanyDo({
-        regCertificateUrl: userData.RegCertificate.regCertificateUrl,
-        regCertificateName: userData.RegCertificate.regCertificateName,
-        vehInsuranceUrl: userData.VehInsurance.vehInsuranceUrl,
-        vehInsuranceName: userData.VehInsurance.vehInsuranceName,
-        pubInsuranceUrl: userData.PubInsurance.pubInsuranceUrl,
-        pubInsuranceName: userData.PubInsurance.pubInsuranceName,
-        tranInsuranceUrl: userData.TranInsurance.tranInsuranceUrl,
-        tranInsuranceName: userData.TranInsurance.tranInsuranceName,
-        drivingLicenseUrl: userData.DrivingLicense.drivingLicenseUrl,
-        drivingLicenseName: userData.DrivingLicense.drivingLicenseName,
-      });
+      dispatch(updateJustRegistered(userData?.personalDetails.justRegistered));
+      dispatch(
+        updatePersonalMoverDetails({
+          uid: userData?.personalDetails.uid,
+          firstName: userData?.personalDetails.firstName,
+          lastName: userData?.personalDetails.lastName,
+          generatedName: userData?.personalDetails.generatedName,
+          email: userData?.personalDetails.email,
+          phone: userData?.personalDetails.phone,
+          address: userData?.personalDetails.address,
+          personalBio: userData?.personalDetails.personalBio,
+          // profilePictureRaw: "",
+          profilePictureUrl: userData?.personalDetails.profileImageUrl,
+          profilePictureName: userData?.personalDetails.profilePictureName,
+          registerDate: userCredential.user.metadata.creationTime,
+          lastLogin: userCredential.user.metadata.lastSignInTime,
+          reviewSubmit: userData?.personalDetails.reviewSubmit,
+          acceptedTerms: userData?.personalDetails.acceptedTerms,
+          approvalStatus: userData?.personalDetails.approvalStatus,
+          rating: userData?.personalDetails.rating,
+          ratingCount: userData?.personalDetails.ratingCount,
+        })
+      );
+      dispatch(
+        updateCompanyDetails({
+          companyName: userData.companyDetails.companyName,
+          generatedName: userData.companyDetails.generatedName,
+          companyNumber: userData.companyDetails.companyNumber,
+          companyAddress: userData.companyDetails.companyAddress,
+          companyBio: userData.companyDetails.companyBio,
+          // companyProfilePixRaw: userData.CompanyPix.companyProfilePixPreviewUrl,
+          // companyProfilePixRaw: "",
+          companyProfilePixUrl: userData.CompanyPix.companyProfilePixUrl,
+          companyProfilePixName: userData.CompanyPix.companyProfilePixName,
+          reviewSubmit: userData?.companyDetails.reviewSubmit,
+        })
+      );
+      dispatch(
+        updateCompanyDocs({
+          // regCertificateRaw: userData.RegCertificate.regCertificatePreviewUrl,
+          // regCertificateRaw: "",
+          regCertificateUrl: userData.RegCertificate.regCertificateUrl,
+          regCertificateName: userData.RegCertificate.regCertificateName,
+          // vehInsuranceRaw: userData.VehInsurance.vehInsurancePreviewUrl,
+          // vehInsuranceRaw: "",
+          vehInsuranceUrl: userData.VehInsurance.vehInsuranceUrl,
+          vehInsuranceName: userData.VehInsurance.vehInsuranceName,
+          // pubInsuranceRaw: userData.PubInsurance.pubInsurancePreviewUrl,
+          // pubInsuranceRaw: "",
+          pubInsuranceUrl: userData.PubInsurance.pubInsuranceUrl,
+          pubInsuranceName: userData.PubInsurance.pubInsuranceName,
+          // tranInsuranceRaw: userData.TranInsurance.tranInsurancePreviewUrl,
+          // tranInsuranceRaw: "",
+          tranInsuranceUrl: userData.TranInsurance.tranInsuranceUrl,
+          tranInsuranceName: userData.TranInsurance.tranInsuranceName,
+          // drivingLicenseRaw: userData.DrivingLicense.drivingLicensePreviewUrl,
+          // drivingLicenseRaw: "",
+          drivingLicenseUrl: userData.DrivingLicense.drivingLicenseUrl,
+          drivingLicenseName: userData.DrivingLicense.drivingLicenseName,
+        })
+      );
 
       if (userCredential.user.emailVerified) {
         // setUser(userCredential.user);

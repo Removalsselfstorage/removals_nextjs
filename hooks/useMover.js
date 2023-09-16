@@ -73,6 +73,7 @@ const useMover = () => {
     resetCompanyDo,
     updateAllMoverD,
     resetAllMoverD,
+    router,
   };
 };
 

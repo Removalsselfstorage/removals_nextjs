@@ -66,7 +66,7 @@ export const moverSlice = createSlice({
   initialState,
   reducers: {
     updateJustRegistered: (state, action) => {
-      Object.assign(state.justRegistered, action.payload);
+      state.justRegistered = action.payload;
     },
 
     resetJustRegistered: (state, action) => {
@@ -139,7 +139,7 @@ export const moverSlice = createSlice({
     updateAllMoverData: (state, action) => {
       Object.assign(state.allMoverData, action.payload);
     },
-    
+
     resetAllMoverData: (state, action) => {
       state.allMoverData = {
         allPersonalDetails: [],

@@ -38,9 +38,9 @@ const Navbar3 = ({ data }) => {
   // const lastName =
   //   moverDetails?.firebaseMoverDetails?.lastName ||
   //   moverDetails?.personalDetails.lastName;
-  const firstName = moverDetails.personalDetails.firstName;
-  const lastName = moverDetails.personalDetails.lastName;
-  const previewUrl = moverDetails.personalDetails.profilePictureUrl
+  const firstName = moverDetails?.personalMoverDetails?.firstName;
+  const lastName = moverDetails?.personalMoverDetails?.lastName;
+  const previewUrl = moverDetails?.personalMoverDetails?.profilePictureUrl;
 
   // const uid = users.userDetails?.uid;
   // const readMoversData = async () => {
@@ -96,10 +96,7 @@ const Navbar3 = ({ data }) => {
                             >
                               <div className="w-[40px] rounded-full  border-primary border-[3px]">
                                 <img
-                                  src={
-                                    previewUrl ||
-                                    "/userPlaceholder.png"
-                                  }
+                                  src={previewUrl || "/userPlaceholder.png"}
                                 />
                               </div>
                             </label>

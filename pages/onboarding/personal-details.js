@@ -48,14 +48,35 @@ import {
 } from "firebase/firestore";
 import { db } from "@/firebase";
 import { adjectives, nouns } from "@/dummyData/dummyData";
+import useMover from "@/hooks/useMover";
+import useQuote from "@/hooks/useQuote";
 
 // const PersonalDetails = ({ moverSyncDetails }) => {
 const PersonalDetails = ({ names }) => {
-  const router = useRouter();
-  const userDetails = useSelector(getAllUserDetails);
+  const {
+    justRegistered,
+    personalMoverDetails,
+    companyDetails,
+    companyDocs,
+    allMoverData,
+    updateJustR,
+    resetJustR,
+    updatePersonalMover,
+    resetPersonalMover,
+    updateCompanyDe,
+    resetCompanyDe,
+    updateCompanyDo,
+    resetCompanyDo,
+    updateAllMoverD,
+    resetAllMoverD,
+    router,
+  } = useMover();
 
-  const dispatch = useDispatch();
-  const details = useSelector(getAllMoverDetails);
+  // const router = useRouter();
+  const { userDetails } = useSelector(getAllUserDetails);
+
+  // const dispatch = useDispatch();
+  // const details = useSelector(getAllMoverDetails);
 
   const [usedNames, setUsedNames] = useState([]);
   const [genCompanyName, setGenCompanyName] = useState("");
@@ -63,26 +84,24 @@ const PersonalDetails = ({ names }) => {
   const [imageUpload, setImageUpload] = useState(null);
 
   const [previewUrl, setPreviewUrl] = useState(
-    details.personalDetails.profilePictureUrl
+    personalMoverDetails?.profilePictureUrl
   );
 
   const [imageName, setImageName] = useState(
-    details.personalDetails.profilePictureName
+    personalMoverDetails?.profilePictureName
   );
 
   const [personalBio, setPersonalBio] = useState(
-    details.personalDetails.personalBio
+    personalMoverDetails?.personalBio
   );
 
-  const [address, setAddress] = useState(details.personalDetails?.address);
+  const [address, setAddress] = useState(personalMoverDetails?.address);
 
-  const [firstName, setFirstName] = useState(
-    details.personalDetails?.firstName
-  );
-  const [lastName, setLastName] = useState(details.personalDetails?.lastName);
-  const [email, setEmail] = useState(details.personalDetails?.email);
+  const [firstName, setFirstName] = useState(personalMoverDetails?.firstName);
+  const [lastName, setLastName] = useState(personalMoverDetails?.lastName);
+  const [email, setEmail] = useState(personalMoverDetails?.email);
   const [emailError, setEmailError] = useState(true);
-  const [phone, setPhone] = useState(details.personalDetails?.phone);
+  const [phone, setPhone] = useState(personalMoverDetails?.phone);
   const [phoneError, setPhoneError] = useState(true);
   const [submitError, setSubmitError] = useState(false);
   const [submitLoading, setSubmitLoading] = useState(false);
@@ -128,7 +147,7 @@ const PersonalDetails = ({ names }) => {
     }
   };
 
-  const uid = userDetails.userDetails?.uid;
+  const uid = userDetails?.uid;
 
   const generateCompanyName = async () => {
     let companyName = "";
@@ -160,42 +179,38 @@ const PersonalDetails = ({ names }) => {
 
     setGenCompanyName(companyName);
 
-    dispatch(
-      updatePersonalDetails({
-        uid,
-        firstName,
-        lastName,
-        generatedName: companyName,
-        email,
-        phone,
-        address,
-        personalBio,
-        // profilePictureRaw: imageUpload,
-        profilePictureUrl: previewUrl,
-        profilePictureName: imageName,
-        registerDate: userDetails.userDetails.metadata?.creationTime,
-        lastLogin: userDetails.userDetails.metadata?.creationTime,
-        reviewSubmit: false,
-        acceptedTerms: details.personalDetails.acceptedTerms,
-        approvalStatus: details.personalDetails.approvalStatus,
-        rating: details.personalDetails.rating,
-        ratingCount: details.personalDetails.ratingCount,
-      })
-    );
+    updatePersonalMover({
+      uid,
+      firstName,
+      lastName,
+      generatedName: companyName,
+      email,
+      phone,
+      address,
+      personalBio,
+      // profilePictureRaw: imageUpload,
+      profilePictureUrl: previewUrl,
+      profilePictureName: imageName,
+      registerDate: userDetails?.metadata?.creationTime,
+      lastLogin: userDetails?.metadata?.creationTime,
+      reviewSubmit: false,
+      // acceptedTerms: personalMoverDetails?.acceptedTerms,
+      // approvalStatus: personalMoverDetails?.approvalStatus,
+      // rating: personalMoverDetails?.rating,
+      // ratingCount: personalMoverDetails?.ratingCount,
+    });
 
-    dispatch(
-      updateCompanyDetails({
-        companyName: details.companyDetails.companyName,
-        generatedName: companyName,
-        companyNumber: details.companyDetails.companyNumber,
-        companyAddress: details.companyDetails.companyAddress,
-        companyBio: details.companyDetails.companyBio,
-        // companyProfilePixRaw: details.companyDetails.companyProfilePixRaw,
-        companyProfilePixUrl: details.companyDetails.companyProfilePixUrl,
-        companyProfilePixName: details.companyDetails.companyProfilePix?.name,
-        reviewSubmit: details?.companyDetails.reviewSubmit,
-      })
-    );
+    updateCompanyDe({
+      // companyName: companyDetails?.companyName,
+      generatedName: companyName,
+      // companyNumber: companyDetails?.companyNumber,
+      // companyAddress: companyDetails?.companyAddress,
+      // companyBio: companyDetails?.companyBio,
+      // // companyProfilePixRaw: details.companyDetails.companyProfilePixRaw,
+      // companyProfilePixUrl: companyDetails?.companyProfilePixUrl,
+      // companyProfilePixName: companyDetails?.companyProfilePix?.name,
+      // reviewSubmit: companyDetails?.reviewSubmit,
+    });
 
     const moveObj = {
       profilePictureRaw: imageUpload,
@@ -208,8 +223,8 @@ const PersonalDetails = ({ names }) => {
       generatedName: companyName,
       email,
       phone,
-      registerDate: userDetails.userDetails.metadata.creationTime,
-      lastLogin: userDetails.userDetails.metadata.lastSignInTime,
+      registerDate: userDetails?.metadata?.creationTime,
+      lastLogin: userDetails?.metadata?.lastSignInTime,
       reviewSubmit: false,
       acceptedTerms: false,
       justRegistered: false,
@@ -244,8 +259,7 @@ const PersonalDetails = ({ names }) => {
       setSubmitError(true);
     } else {
       setSubmitLoading(true);
-      dispatch(updateJustRegistered(false));
-
+      updateJustR(false);
       generateCompanyName();
 
       // readMoversData();
@@ -264,11 +278,10 @@ const PersonalDetails = ({ names }) => {
     setUsedNames(newNames);
   }, []);
 
-  console.log(details);
-
   // useEffect(() => {
   //   readMoversData();
   // }, []);
+  console.log({ justRegistered });
 
   return (
     <MoverLayout2>
@@ -543,7 +556,7 @@ const PersonalDetails = ({ names }) => {
                     onKeyDown={handleKeyDown}
                   ></textarea>
                   <p className="text-gray-500 mb-[10px] text-[15px] mt-[5px]">
-                    {personalBio.length} / {bioMaxLength} Characters
+                    {personalBio?.length} / {bioMaxLength} Characters
                   </p>
                 </div>
               </div>

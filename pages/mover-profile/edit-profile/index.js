@@ -34,34 +34,59 @@ import { fetchMoverDetails3 } from "@/lib/fetchData2";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import { UploadMoverPersonalDetails2 } from "@/lib/uploadMoverPersonalDetails2";
 import { combineInitials } from "@/utils/logics";
+import useMover from "@/hooks/useMover";
 
 const EditProfile = () => {
-  const router = useRouter();
+  const {
+    justRegistered,
+    personalMoverDetails,
+    companyDetails,
+    companyDocs,
+    allMoverData,
+    updateJustR,
+    resetJustR,
+    updatePersonalMover,
+    resetPersonalMover,
+    updateCompanyDe,
+    resetCompanyDe,
+    updateCompanyDo,
+    resetCompanyDo,
+    updateAllMoverD,
+    resetAllMoverD,
+    router,
+  } = useMover();
+
+
   const userDetails = useSelector(getAllUserDetails);
 
-  const dispatch = useDispatch();
-  const details = useSelector(getAllMoverDetails);
+  // const details = useSelector(getAllMoverDetails);
 
   const [imageUpload, setImageUpload] = useState(null);
 
   const [previewUrl, setPreviewUrl] = useState(
-    details.personalDetails.profilePictureUrl
+    personalMoverDetails?.profilePictureUrl
   );
   const [imageName, setImageName] = useState(
-    details.personalDetails.profilePictureName
+    personalMoverDetails?.profilePictureName
   );
 
   const [personalBio, setPersonalBio] = useState(
-    details.personalDetails.personalBio
+    personalMoverDetails?.personalBio
   );
 
-  const [address, setAddress] = useState(details.personalDetails.address);
+  const [address, setAddress] = useState(
+    personalMoverDetails?.address
+  );
 
-  const [firstName, setFirstName] = useState(details.personalDetails.firstName);
-  const [lastName, setLastName] = useState(details.personalDetails.lastName);
-  const [email, setEmail] = useState(details.personalDetails.email);
+  const [firstName, setFirstName] = useState(
+    personalMoverDetails?.firstName
+  );
+  const [lastName, setLastName] = useState(
+   personalMoverDetails?.lastName
+  );
+  const [email, setEmail] = useState(personalMoverDetails?.email);
   const [emailError, setEmailError] = useState(true);
-  const [phone, setPhone] = useState(details.personalDetails.phone);
+  const [phone, setPhone] = useState(personalMoverDetails?.phone);
   const [phoneError, setPhoneError] = useState(true);
   const [submitError, setSubmitError] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
@@ -140,42 +165,40 @@ const EditProfile = () => {
         personalBio,
         firstName,
         lastName,
-        generatedName: details.companyDetails.generatedName,
+        generatedName: companyDetails?.generatedName,
         email,
         phone,
-        registerDate: details.personalDetails.registerDate,
-        lastLogin: details.personalDetails.lastLogin,
+        registerDate: personalMoverDetails?.registerDate,
+        lastLogin: personalMoverDetails?.lastLogin,
         reviewSubmit: true,
-        acceptedTerms: details.personalDetails.acceptedTerms,
-        justRegistered: details.justRegistered,
+        acceptedTerms: personalMoverDetails?.acceptedTerms,
+        justRegistered: justRegistered,
         uid,
       };
 
       const result = await UploadMoverPersonalDetails2(moveObj);
       console.log(result);
 
-      dispatch(
-        updatePersonalDetails({
-          uid,
-          firstName,
-          lastName,
-          generatedName: details.companyDetails.generatedName,
-          email,
-          phone,
-          address,
-          personalBio,
-          // profilePictureRaw: imageUpload,
-          profilePictureUrl: previewUrl,
-          profilePictureName: imageName,
-          registerDate: userDetails.userDetails.metadata?.creationTime,
-          lastLogin: userDetails.userDetails.metadata?.creationTime,
-          reviewSubmit: true,
-          acceptedTerms: details.personalDetails.acceptedTerms,
-          approvalStatus: details.personalDetails.approvalStatus,
-          rating: details.personalDetails.rating,
-          ratingCount: details.personalDetails.ratingCount,
-        })
-      );
+      updatePersonalMover({
+        uid,
+        firstName,
+        lastName,
+        // generatedName: details.companyDetails.generatedName,
+        email,
+        phone,
+        address,
+        personalBio,
+        // profilePictureRaw: imageUpload,
+        profilePictureUrl: previewUrl,
+        profilePictureName: imageName,
+        registerDate: userDetails.userDetails.metadata?.creationTime,
+        lastLogin: userDetails.userDetails.metadata?.creationTime,
+        reviewSubmit: true,
+        // acceptedTerms: details?.personalMoverDetails?.acceptedTerms,
+        // approvalStatus: details?.personalMoverDetails?.approvalStatus,
+        // rating: details?.personalMoverDetails?.rating,
+        // ratingCount: details?.personalMoverDetails?.ratingCount,
+      })
 
       setSubmitSuccess(true);
 
@@ -184,7 +207,7 @@ const EditProfile = () => {
     }
   };
 
-  console.log(details);
+  // console.log(details);
 
   return (
     <MoverLayout>
@@ -205,7 +228,7 @@ const EditProfile = () => {
           </div>
         </section>
 
-        {(submitSuccess || details.personalDetails.reviewSubmit) && (
+        {(submitSuccess || personalMoverDetails?.reviewSubmit) && (
           <section className="mb-[30px] px-[30px] ">
             <div className="flex items-center bg-primary/10 rounded-[10px] px-[20px] py-[15px] space-x-[20px]">
               <IoMdNotificationsOutline className="text-primary text-[40px]" />

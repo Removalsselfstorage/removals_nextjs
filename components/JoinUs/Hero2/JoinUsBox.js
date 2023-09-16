@@ -250,6 +250,7 @@ const JoinUsBox = () => {
                   <button
                     // onClick={() => {}}
                     type="submit"
+                    disabled={submitLoading}
                     className="btn btn-primary flex items-center space-x-[5px]"
                   >
                     {!submitLoading && <span className="">Register</span>}

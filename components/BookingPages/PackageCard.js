@@ -267,8 +267,6 @@ const PackageCard = ({
       initialPackagePrice: totalPrice(totalMileage),
     });
 
-    
-
     const bookingId = moveDetails?.bookingId;
 
     const bookingRef = doc(db, "bookingData", bookingId);

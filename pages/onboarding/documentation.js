@@ -46,70 +46,85 @@ import {
   fetchMoversVehInsurance,
 } from "@/lib/fetchData2";
 import { UploadMoverDocumentation } from "@/lib/uploadMoverDocumentation";
+import useMover from "@/hooks/useMover";
 
 const Documentation = () => {
+  const {
+    justRegistered,
+    personalMoverDetails,
+    companyDetails,
+    companyDocs,
+    allMoverData,
+    updateJustR,
+    resetJustR,
+    updatePersonalMover,
+    resetPersonalMover,
+    updateCompanyDe,
+    resetCompanyDe,
+    updateCompanyDo,
+    resetCompanyDo,
+    updateAllMoverD,
+    resetAllMoverD,
+    router,
+  } = useMover();
   // const { data: session } = useSession();
 
-  const router = useRouter();
+  // const router = useRouter();
   const userDetails = useSelector(getAllUserDetails);
 
-  const dispatch = useDispatch();
-  const details = useSelector(getAllMoverDetails);
+  // const dispatch = useDispatch();
+  // const details = useSelector(getAllMoverDetails);
 
   //   states
-  const [companyBio, setCompanyBio] = useState(
-    details.companyDetails.companyBio
-  );
-  const [companyName, setCompanyName] = useState(
-    details.companyDetails.companyName
-  );
+  const [companyBio, setCompanyBio] = useState(companyDetails?.companyBio);
+  const [companyName, setCompanyName] = useState(companyDetails?.companyName);
   const [companyNumber, setCompanyNumber] = useState(
-    details.companyDetails.companyNumber
+    companyDetails?.companyNumber
   );
   const [companyAddress, setCompanyAddress] = useState(
-    details.companyDetails.companyAddress
+    companyDetails?.companyAddress
   );
   const [companyProfilePix, setCompanyProfilePix] = useState(null);
   const [companyProfilePixurl, setCompanyProfilePixurl] = useState(
-    details.companyDetails.companyProfilePixUrl
+    companyDetails?.companyProfilePixUrl
   );
   const [companyProfilePixname, setCompanyProfilePixname] = useState(
-    details.companyDetails.companyProfilePixName
+    companyDetails?.companyProfilePixName
   );
   const [regCertificateUpload, setRegCertificateUpload] = useState(null);
   const [regCertificateUploadurl, setRegCertificateUploadurl] = useState(
-    details.companyDocs.regCertificateUrl
+    companyDocs?.regCertificateUrl
   );
   const [regCertificateUploadname, setRegCertificateUploadname] = useState(
-    details.companyDocs.regCertificateName
+    companyDocs?.regCertificateName
   );
   const [vehInsuranceUpload, setVehInsuranceUpload] = useState(null);
   const [vehInsuranceUploadurl, setVehInsuranceUploadurl] = useState(
-    details.companyDocs.vehInsuranceUrl
+    companyDocs?.vehInsuranceUrl
   );
   const [vehInsuranceUploadname, setVehInsuranceUploadname] = useState(
-    details.companyDocs.vehInsuranceName
+    companyDocs?.vehInsuranceName
   );
   const [pubInsuranceUpload, setPubInsuranceUpload] = useState(null);
   const [pubInsuranceUploadurl, setPubInsuranceUploadurl] = useState(
-    details.companyDocs.pubInsuranceUrl
+    companyDocs?.pubInsuranceUrl
   );
   const [pubInsuranceUploadname, setPubInsuranceUploadname] = useState(
-    details.companyDocs.pubInsuranceName
+    companyDocs?.pubInsuranceName
   );
   const [tranInsuranceUpload, setTranInsuranceUpload] = useState(null);
   const [tranInsuranceUploadurl, setTranInsuranceUploadurl] = useState(
-    details.companyDocs.tranInsuranceUrl
+    companyDocs?.tranInsuranceUrl
   );
   const [tranInsuranceUploadname, setTranInsuranceUploadname] = useState(
-    details.companyDocs.tranInsuranceName
+    companyDocs?.tranInsuranceName
   );
   const [drivingLicenseUpload, setDrivingLicenseUpload] = useState(null);
   const [drivingLicenseUploadurl, setDrivingLicenseUploadurl] = useState(
-    details.companyDocs.drivingLicenseUrl
+    companyDocs?.drivingLicenseUrl
   );
   const [drivingLicenseUploadname, setDrivingLicenseUploadname] = useState(
-    details.companyDocs.drivingLicenseName
+    companyDocs?.drivingLicenseName
   );
 
   const [phoneError, setPhoneError] = useState(true);
@@ -167,7 +182,7 @@ const Documentation = () => {
     }
   };
 
-  const uid = userDetails.userDetails?.uid;
+  const uid = userDetails?.userDetails?.uid;
 
   const documentFormSubmit = async () => {
     setActivateError(true);
@@ -198,7 +213,7 @@ const Documentation = () => {
       const moveObj = {
         companyName,
         companyNumber,
-        generatedName: details.companyDetails.generatedName,
+        generatedName: companyDetails.generatedName,
         companyAddress,
         companyBio,
         companyProfilePixRaw: companyProfilePix,
@@ -219,7 +234,7 @@ const Documentation = () => {
         drivingLicenseRaw: drivingLicenseUpload,
         drivingLicenseUrl: drivingLicenseUploadurl,
         drivingLicenseName: drivingLicenseUploadname,
-        email: details.personalDetails.email,
+        email: personalMoverDetails?.email,
         reviewSubmit: false,
         uid,
       };
@@ -227,40 +242,36 @@ const Documentation = () => {
       const result = await UploadMoverDocumentation(moveObj);
       console.log(result);
 
-      dispatch(
-        updateCompanyDetails({
-          companyName,
-          generatedName: details.companyDetails.generatedName,
-          companyNumber,
-          companyAddress,
-          companyBio,
-          // companyProfilePixRaw: companyProfilePix,
-          companyProfilePixUrl: companyProfilePixurl,
-          companyProfilePixName: companyProfilePixname,
-          reviewSubmit: false,
-        })
-      );
+      updateCompanyDe({
+        companyName,
+        // generatedName: details.companyDetails.generatedName,
+        companyNumber,
+        companyAddress,
+        companyBio,
+        // companyProfilePixRaw: companyProfilePix,
+        companyProfilePixUrl: companyProfilePixurl,
+        companyProfilePixName: companyProfilePixname,
+        reviewSubmit: false,
+      });
 
-      dispatch(
-        updateCompanyDocs({
-          // regCertificateRaw: regCertificateUpload,
-          regCertificateUrl: regCertificateUploadurl,
-          regCertificateName: regCertificateUploadname,
-          // vehInsuranceRaw: vehInsuranceUpload,
-          vehInsuranceUrl: vehInsuranceUploadurl,
-          vehInsuranceName: vehInsuranceUploadname,
-          // pubInsuranceRaw: pubInsuranceUpload,
-          pubInsuranceUrl: pubInsuranceUploadurl,
-          pubInsuranceName: pubInsuranceUploadname,
-          // tranInsuranceRaw: tranInsuranceUpload,
-          tranInsuranceUrl: tranInsuranceUploadurl,
-          tranInsuranceName: tranInsuranceUploadname,
-          // drivingLicenseRaw: drivingLicenseUpload,
-          drivingLicenseUrl: drivingLicenseUploadurl,
-          drivingLicenseName: drivingLicenseUploadname,
-          reviewSubmit: false,
-        })
-      );
+      updateCompanyDo({
+        // regCertificateRaw: regCertificateUpload,
+        regCertificateUrl: regCertificateUploadurl,
+        regCertificateName: regCertificateUploadname,
+        // vehInsuranceRaw: vehInsuranceUpload,
+        vehInsuranceUrl: vehInsuranceUploadurl,
+        vehInsuranceName: vehInsuranceUploadname,
+        // pubInsuranceRaw: pubInsuranceUpload,
+        pubInsuranceUrl: pubInsuranceUploadurl,
+        pubInsuranceName: pubInsuranceUploadname,
+        // tranInsuranceRaw: tranInsuranceUpload,
+        tranInsuranceUrl: tranInsuranceUploadurl,
+        tranInsuranceName: tranInsuranceUploadname,
+        // drivingLicenseRaw: drivingLicenseUpload,
+        drivingLicenseUrl: drivingLicenseUploadurl,
+        drivingLicenseName: drivingLicenseUploadname,
+        reviewSubmit: false,
+      });
 
       setSubmitSuccess(true);
 
@@ -283,7 +294,6 @@ const Documentation = () => {
 
   //   console.log(details.moveDetails.moveDate);
   //   console.log(dateValue);
-  console.log(details);
 
   return (
     <MoverLayout2>

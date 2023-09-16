@@ -26,9 +26,9 @@ const Navbar = () => {
   const users = useSelector(getAllUserDetails);
   const moverDetails = useSelector(getAllMoverDetails);
 
-  const firstName = moverDetails?.personalDetails?.firstName;
-  const lastName = moverDetails?.personalDetails?.lastName;
-  const previewUrl = moverDetails?.personalDetails?.profilePictureUrl;
+  const firstName = moverDetails?.personalMoverDetails?.firstName;
+  const lastName = moverDetails?.personalMoverDetails?.lastName;
+  const previewUrl = moverDetails?.personalMoverDetails?.profilePictureUrl;
 
   const [shadow, setShadow] = useState(false);
   const [showNav, setShowNav] = useState(true);

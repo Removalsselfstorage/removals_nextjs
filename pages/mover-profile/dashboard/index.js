@@ -1,4 +1,5 @@
 import StarRating from "@/components/Rating/EditHalfStars2";
+import useMover from "@/hooks/useMover";
 import MoverLayout from "@/layouts/MoverLayout";
 import NormalLayout from "@/layouts/NormalLayout";
 import {
@@ -103,13 +104,32 @@ const sections = [
 ];
 
 const Dashboard = () => {
-  const router = useRouter();
-  const dispatch = useDispatch();
-  const userDetails = useSelector(getAllUserDetails);
-  const details = useSelector(getAllMoverDetails);
+  const {
+    justRegistered,
+    personalMoverDetails,
+    companyDetails,
+    companyDocs,
+    allMoverData,
+    updateJustR,
+    resetJustR,
+    updatePersonalMover,
+    resetPersonalMover,
+    updateCompanyDe,
+    resetCompanyDe,
+    updateCompanyDo,
+    resetCompanyDo,
+    updateAllMoverD,
+    resetAllMoverD,
+    router,
+  } = useMover();
 
-  const condition1 = details?.personalDetails?.profilePictureUrl;
-  const condition2 = details.personalDetails.acceptedTerms;
+  // const router = useRouter();
+  // const dispatch = useDispatch();
+  const userDetails = useSelector(getAllUserDetails);
+  // const details = useSelector(getAllMoverDetails);
+
+  const condition1 = personalMoverDetails?.profilePictureUrl;
+  const condition2 = personalMoverDetails?.acceptedTerms;
   // const condition3 = details.companyDetails.companyProfilePixUrl;
 
   const filterSections = () => {
@@ -156,8 +176,8 @@ const Dashboard = () => {
 
   const sortedSections = filterSections();
 
-  const firstName = details.personalDetails.firstName;
-  const lastName = details.personalDetails.lastName;
+  const firstName = personalMoverDetails?.firstName;
+  const lastName = personalMoverDetails?.lastName;
 
   // const registeredDate = Date.parse(
   //   userDetails?.userDetails?.metadata?.creationTime
@@ -173,7 +193,7 @@ const Dashboard = () => {
   const [sectionData, setSectionData] = useState(sortedSections);
 
   const [previewUrl, setPreviewUrl] = useState(
-    details.personalDetails.profilePictureUrl
+    personalMoverDetails?.profilePictureUrl
   );
 
   useEffect(() => {
@@ -194,7 +214,7 @@ const Dashboard = () => {
   //     clearInterval(slider);
   //   };
   // }, [index]);
-  console.log(userDetails);
+  // console.log(userDetails);
 
   return (
     <MoverLayout>
@@ -250,7 +270,7 @@ const Dashboard = () => {
                     Mover Username:
                   </p>
                   <p className=" font-semibold">
-                    {details.personalDetails.generatedName}
+                    {personalMoverDetails?.generatedName}
                   </p>
                 </div>
                 {/* mover rating */}
@@ -281,7 +301,7 @@ const Dashboard = () => {
         </section>
 
         <section className="mb-[30px]">
-          {details.personalDetails.approvalStatus === "UNAPPROVED" && (
+          {personalMoverDetails?.approvalStatus === "UNAPPROVED" && (
             <div className="flex items-center bg-secondary/10 rounded-[10px] px-[20px] py-[15px] space-x-[20px]">
               <IoMdNotificationsOutline className="text-secondary text-[40px]" />
               <div className="flex flex-col">
@@ -295,7 +315,7 @@ const Dashboard = () => {
               </div>
             </div>
           )}
-          {details.personalDetails.approvalStatus === "APPROVED" && (
+          {personalMoverDetails?.approvalStatus === "APPROVED" && (
             <div className="flex items-center bg-primary/10 rounded-[10px] px-[20px] py-[15px] space-x-[20px]">
               <IoMdNotificationsOutline className="text-primary text-[40px]" />
               <div className="flex flex-col">

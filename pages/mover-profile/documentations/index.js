@@ -225,7 +225,7 @@ const Documentations = () => {
         drivingLicenseRaw: drivingLicenseUpload,
         drivingLicenseUrl: drivingLicenseUploadurl,
         drivingLicenseName: drivingLicenseUploadname,
-        email: details.personalDetails.email,
+        email: details.personalMoverDetails.email,
         reviewSubmit: true,
         uid,
       };
@@ -450,7 +450,7 @@ const Documentations = () => {
                         </div>
                       )}
                     </div>
-                    
+
                     <CustomFileInput
                       activateError={activateError}
                       previewUrl={companyProfilePixurl}

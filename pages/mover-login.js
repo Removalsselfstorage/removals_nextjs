@@ -244,8 +244,7 @@ const MoverLogin = () => {
                       )}
                       {userDetails.loginError && (
                         <div className="text-[14px] text-center mt-[15px] text-secondary bg-secondary/20 rounded-[10px] py-[10px] px-[30px]">
-                          {/* Email / password is invalid */}
-                          {userDetails.loginError}
+                          Email / password is invalid
                         </div>
                       )}
                       <div className="mt-[20px] text-[14px] flex items-center justify-center mx-[0px]">

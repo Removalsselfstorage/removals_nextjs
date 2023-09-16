@@ -87,9 +87,9 @@ export function combineInitials(firstName, lastName) {
     const combinedInitials = (firstName[0] + lastName[0]).toUpperCase();
     return combinedInitials;
   } else {
-    console.log(
-      "Both first name and last name must have at least one character."
-    );
+    // console.log(
+    //   "Both first name and last name must have at least one character."
+    // );
     return null;
   }
 }

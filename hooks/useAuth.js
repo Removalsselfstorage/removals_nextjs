@@ -286,7 +286,7 @@ export const AuthProvider = ({ children }) => {
 
       const userData = await fetchAllMoversDetails(userCredential.user.uid);
 
-      updateJustR(userData?.personalDetails.justRegistered);
+      updateJustR(userData?.personalDetails?.justRegistered);
       updatePersonalMover({
         uid: userData?.personalDetails.uid,
         firstName: userData?.personalDetails.firstName,
@@ -336,7 +336,7 @@ export const AuthProvider = ({ children }) => {
         // setUser(userCredential.user);
         dispatch(updateUserDetails(userCredential.user));
 
-        if (userData?.personalDetails.justRegistered === true) {
+        if (userData?.personalDetails?.justRegistered === true) {
           router.push("/onboarding/personal-details");
         } else if (userData?.personalDetails.justRegistered === false) {
           // router.push(`/mover-profile/dashboard/${userCredential.user.uid}`);

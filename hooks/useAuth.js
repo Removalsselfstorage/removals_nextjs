@@ -62,12 +62,12 @@ const AuthContext = createContext({
   resendEmailVerification: async () => {},
   error: null,
   loading: false,
-  justRegistered: false,
+  // justRegistered: false,
 });
 
 export const AuthProvider = ({ children }) => {
   const {
-    justRegistered,
+    // justRegistered,
     personalMoverDetails,
     companyDetails,
     companyDocs,

@@ -33,6 +33,7 @@ const initialState = {
     companyProfilePixName: "",
     reviewSubmit: false,
   },
+
   companyDocs: {
     regCertificateUrl: "",
     regCertificateName: "",
@@ -59,6 +60,7 @@ const initialState = {
       drivingLicenses: [],
     },
   },
+  
 };
 
 export const moverSlice = createSlice({

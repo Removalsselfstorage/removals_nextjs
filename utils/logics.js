@@ -792,7 +792,7 @@ export function validatePhoneNumber(phoneNumber) {
 }
 
 export function sortByRatingAndHireCount(movers) {
-  movers.sort((a, b) => {
+  movers?.sort((a, b) => {
     // Sort by highest rating first
     if (a.rating !== b.rating) {
       return b.rating - a.rating;
@@ -803,7 +803,7 @@ export function sortByRatingAndHireCount(movers) {
 }
 
 export function getFirstSortedHomeMover(movers) {
-  movers.sort((a, b) => {
+  movers?.sort((a, b) => {
     // Sort by highest rating first
     // if (a.rating !== b.rating) {
     //   return b.rating - a.rating;
@@ -816,7 +816,7 @@ export function getFirstSortedHomeMover(movers) {
 }
 
 export function sortHomeMoversAndExcludeHighest(movers) {
-  movers.sort((a, b) => {
+  movers?.sort((a, b) => {
     const averageA = (a.rating + a.hireCount) / 2;
     const averageB = (b.rating + b.hireCount) / 2;
 

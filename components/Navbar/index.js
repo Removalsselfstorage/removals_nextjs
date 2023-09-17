@@ -18,6 +18,7 @@ import {
   updateFirebaseMoverDetails,
 } from "@/store/moverSlice";
 import { fetchMoverDetails3 } from "@/lib/fetchData2";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 // import ScrollUpMenuNav from '../ScrollUpMenuNav';
 
 const Navbar = () => {
@@ -43,7 +44,7 @@ const Navbar = () => {
   //   readMoversData();
   // }, []);
 
-  // console.log(users);
+  console.log({ previewUrl, moverDetails });
   // console.log(users.userDetails?.email);
 
   useEffect(() => {

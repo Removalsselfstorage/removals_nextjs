@@ -245,6 +245,8 @@ const PackageCard = ({
     }
   };
 
+ 
+
   const onBookNow = async () => {
     setSubmitLoading(true);
     const userData = await fetchAllMoversDetailsArray();
@@ -280,7 +282,7 @@ const PackageCard = ({
           movePackage: convertToSentenceCase(title),
           initialPackagePrice: totalPrice(totalMileage),
           stage: "book/move-package",
-          createdAt: serverTimestamp(),
+          // createdAt: serverTimestamp(),
         },
         { merge: true }
       );

@@ -32,7 +32,7 @@ import { useRouter } from "next/navigation";
 import SideDrawer from "@/components/BookingPages/movers/SideDrawer";
 import { getAllMoverDetails } from "@/store/moverSlice";
 import emailjs from "@emailjs/browser";
-import { progressEmail } from "@/lib/sendCustomEmail";
+import { moversPageEmail, progressEmail } from "@/lib/sendCustomEmail";
 import Lottie from "lottie-react";
 import EmailSent from "@/lottieJsons/EmailSent2.json";
 import movingVan from "@/lottieJsons/movingVan.json";
@@ -122,7 +122,7 @@ const Movers = () => {
     const allCompanyDetails = allMoverData?.allCompanyDetails;
     const allCompanyPix = allMoverData?.allCompanyPix;
 
-    const newMov = allPersonalDetails.map((pd, index) => ({
+    const newMov = allPersonalDetails?.map((pd, index) => ({
       name: pd.generatedName,
       phone: pd.phone,
       email: pd.email,
@@ -212,6 +212,74 @@ const Movers = () => {
     }
   }, []);
 
+  const PP = moverDetails?.pickPrice;
+
+  // useEffect(() => {
+  //   window.addEventListener("beforeunload", handleBeforeUnload);
+
+  //   return () => {
+  //     window.removeEventListener("beforeunload", handleBeforeUnload);
+  //   };
+  // }, []);
+
+  // const handleBeforeUnload = (e) => {
+  //   You can add custom code here to prompt the user before leaving the page.
+  //   alert("Please don't go");
+  //   // For example:
+  //   e.preventDefault();
+  //   e.returnValue = ""; // This is necessary for some older browsers.
+  // };
+  const otherMovers = otherCards.map((om, index) => {
+    // const key = `mover${3 + index}`;
+    return {
+      mover: om?.name,
+      price: calculateMoverPrice(
+        moverDetails?.pickPrice,
+        om?.score,
+        0.052
+      ).toFixed(),
+    };
+  });
+
+  const listOfMovers = [
+    {
+      mover: firstCard?.name,
+      price: moverDetails?.pickPrice,
+    },
+    {
+      mover: "Smart Booking",
+      price: (moverDetails?.pickPrice * 0.79).toFixed(),
+    },
+    ...otherMovers,
+  ];
+
+  const params2 = {
+    firstName: personalDetails?.firstName,
+    lastName: personalDetails?.lastName,
+    email: personalDetails?.email,
+    quoteRef: moveDetails?.quoteRef,
+    progressLink: `https://removalstorage.vercel.app/book/movers/${moveDetails?.bookingId}`,
+    address1: serviceLocation?.locationFrom?.name,
+    address2: serviceLocation?.locationTo?.name,
+    initialPackagePrice: moveDetails?.initialPackagePrice,
+    pickPrice: moverDetails?.pickPrice,
+    propertyType: moveDetails?.propertyType,
+    numberOfMovers: moveDetails?.numberOfMovers,
+    mileage: moveDetails?.mileage,
+    volume: moveDetails?.volume,
+    duration: moveDetails?.duration,
+    moveDate: moveDetails?.moveDate,
+    movePackage: moveDetails?.movePackage,
+    mover1Name: listOfMovers[0]?.mover,
+    mover1Price: listOfMovers[0]?.price,
+    mover2Name: listOfMovers[1]?.mover,
+    mover2Price: listOfMovers[1]?.price,
+    mover3Name: listOfMovers[2]?.mover,
+    mover3Price: listOfMovers[2]?.price,
+    mover4Name: listOfMovers[3]?.mover,
+    mover4Price: listOfMovers[3]?.price,
+  };
+
   const params = {
     firstName: personalDetails?.firstName,
     lastName: personalDetails?.lastName,
@@ -262,6 +330,20 @@ const Movers = () => {
       }
     }
   };
+
+  const sendMoverPageMail = async () => {
+    try {
+      await moversPageEmail(personalDetails?.email, params2);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // const listOfMovers = newMovers.map((nm, index)=> {
+  //   return {
+  //     mover1: firstCard?.name
+  //   }
+  // })
 
   const closeModal = () => {
     window.my_modal_1.close();
@@ -320,6 +402,14 @@ const Movers = () => {
         break;
     }
   };
+
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     sendMoverPageMail();
+  //   }, 5000);
+  // }, [PP]);
+
+  console.log({ listOfMovers, params2 });
 
   return (
     <>
@@ -551,6 +641,7 @@ const Movers = () => {
                                 showLoader2={showLoader2}
                                 clickedModalOpen={clickedModalOpen}
                                 setClickedModalOpen={setClickedModalOpen}
+                                sendMoverPageMail={sendMoverPageMail}
                                 // timeValue={timeValue}
                                 // setTimeValue={setTimeValue}
                                 // pickPrice={pickPrice} setPickPrice={setPickPrice}
@@ -576,6 +667,7 @@ const Movers = () => {
                           score={firstCard?.score}
                           setShowLoader2={setShowLoader2}
                           showLoader2={showLoader2}
+                          sendMoverPageMail={sendMoverPageMail}
                           // pickPrice={pickPrice} setPickPrice={setPickPrice}
                         />
                       </div>
@@ -607,6 +699,7 @@ const Movers = () => {
                               score={mv?.score}
                               setShowLoader2={setShowLoader2}
                               showLoader2={showLoader2}
+                              sendMoverPageMail={sendMoverPageMail}
                               // pickPrice={pickPrice} setPickPrice={setPickPrice}
                             />
                           </div>

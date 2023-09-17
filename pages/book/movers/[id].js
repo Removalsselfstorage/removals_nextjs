@@ -42,20 +42,111 @@ import { progressEmail } from "@/lib/sendCustomEmail";
 import EmailSent from "@/lottieJsons/EmailSent2.json";
 import Lottie from "lottie-react";
 import movingVan from "@/lottieJsons/movingVan.json";
+import useQuote from "@/hooks/useQuote";
+import useMover from "@/hooks/useMover";
 
 const Movers = ({ progressUrl, progressData, userData }) => {
-  const router = useRouter();
-  const dispatch = useDispatch();
-  const details = useSelector(getAllDetails);
-  const moverDetails = useSelector(getAllMoverDetails);
-  const { allMoverData } = moverDetails;
+  const [progressData2, setProgressdata2] = useState([]);
+  const {
+    serviceLocation,
+    personalDetails,
+    moveDetails,
+    moverSideDetails,
+    moverDetails,
+    paymentDetails,
+    bookStage,
+    updateLocationFrom,
+    resetLocationFrom,
+    updateLocationTo,
+    resetLocationTo,
+    updatePersonal,
+    resetPersonal,
+    updateMove,
+    resetMove,
+    updateMover,
+    resetMover,
+    updatePayment,
+    resetPayment,
+    updatePickP,
+    updateMoverSide,
+    resetMoverSide,
+    updateBookS,
+    resetBookS,
+    router,
+  } = useQuote();
+
+  const {
+    justRegistered,
+    personalMoverDetails,
+    companyDetails,
+    companyDocs,
+    allMoverData,
+    updateJustR,
+    resetJustR,
+    updatePersonalMover,
+    resetPersonalMover,
+    updateCompanyDe,
+    resetCompanyDe,
+    updateCompanyDo,
+    resetCompanyDo,
+    updateAllMoverD,
+    resetAllMoverD,
+  } = useMover();
 
   const [allPersonalDetails, setAllPersonalDetails] = useState([]);
   const [allCompanyDetails, setAllCompanyDetails] = useState([]);
   const [allCompanyPix, setAllCompanyPix] = useState([]);
   const [newMovers, setNewMovers] = useState([]);
 
+  // const fetchUserData = async () => {
+  //   try {
+  //     await fetchAllMoversDetailsArray();
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+  // const fetchProgressData = async () => {
+  //   try {
+  //     const bookingRef = doc(db, "bookingData", progressUrl);
+  //     const docSnap = await getDoc(bookingRef);
+
+  //     return docSnap.data();
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
   useEffect(() => {
+    // const userData = await fetchAllMoversDetailsArray();
+
+    // const bookingRef = doc(db, "bookingData", progressUrl);
+    // const docSnap = await getDoc(bookingRef);
+
+    // const progressData = docSnap.data();
+    // const fetchUserData = async () => {
+    //   try {
+    //     await fetchAllMoversDetailsArray();
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // };
+    // const fetchProgressData = async () => {
+    //   try {
+    //     const bookingRef = doc(db, "bookingData", progressUrl);
+    //     const docSnap = await getDoc(bookingRef);
+
+    //     return docSnap.data();
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // };
+
+    // const userData = fetchUserData();
+
+    // const progressData = fetchProgressData();
+
+    // setProgressdata2(progressData);
+
     const priceFirstDay = progressData.initialPackagePrice;
     const priceFridays = priceFirstDay;
     const priceSaturdays = priceFirstDay;
@@ -78,13 +169,13 @@ const Movers = ({ progressUrl, progressData, userData }) => {
       3
     ).toFixed();
 
-    dispatch(updatePickPrice(priceFirstDay));
+    updatePickP(priceFirstDay);
 
     const allPersonalDetails = userData?.personalDetails;
     const allCompanyDetails = userData?.companyDetails;
     const allCompanyPix = userData?.CompanyPix;
 
-    const newMov = allPersonalDetails.map((pd, index) => ({
+    const newMov = allPersonalDetails?.map((pd, index) => ({
       name: pd.generatedName,
       phone: pd.phone,
       email: pd.email,
@@ -98,77 +189,69 @@ const Movers = ({ progressUrl, progressData, userData }) => {
       approved: pd.approvalStatus,
     }));
 
-    const filteredNewMov = newMov.filter(
+    const filteredNewMov = newMov?.filter(
       (item) => item.approved === "APPROVED"
     );
+
+    console.log({ userData });
 
     setAllPersonalDetails(userData?.personalDetails);
     setAllCompanyDetails(userData?.companyDetails);
     setAllCompanyPix(userData?.CompanyPix);
     setNewMovers(filteredNewMov);
-  }, []);
 
-  useEffect(() => {
-    dispatch(
-      updateAllMoverData({
-        allPersonalDetails: userData?.personalDetails,
-        allCompanyDetails: userData?.companyDetails,
-        allCompanyPix: userData?.CompanyPix,
-        allCompanyDocs: {
-          regCertificates: userData?.RegCertificate,
-          vehInsurances: userData?.VehInsurance,
-          pubInsurances: userData?.PubInsurance,
-          tranInsurances: userData?.TranInsurance,
-          drivingLicenses: userData?.DrivingLicense,
-        },
-      })
-    );
-    dispatch(
-      updateLocationDetails({
-        locationFrom: {
-          name: progressData?.address1,
-          postCode: progressData?.postCode1,
-          city: progressData?.city1,
-          country: progressData?.country1,
-          floor: progressData?.floor1,
-          liftAvailable: progressData?.liftAvailable1,
-        },
-        locationTo: {
-          name: progressData?.address2,
-          postCode: progressData?.postCode2,
-          city: progressData?.city2,
-          country: progressData?.country2,
-          floor: progressData?.floor2,
-          liftAvailable: progressData?.liftAvailable2,
-        },
-      })
-    );
+    updateAllMoverD({
+      allPersonalDetails: userData?.personalDetails,
+      allCompanyDetails: userData?.companyDetails,
+      allCompanyPix: userData?.CompanyPix,
+      allCompanyDocs: {
+        regCertificates: userData?.RegCertificate,
+        vehInsurances: userData?.VehInsurance,
+        pubInsurances: userData?.PubInsurance,
+        tranInsurances: userData?.TranInsurance,
+        drivingLicenses: userData?.DrivingLicense,
+      },
+    });
 
-    dispatch(
-      updatePersonalDetails({
-        firstName: progressData?.firstName,
-        lastName: progressData?.lastName,
-        email: progressData?.email,
-        countryCode: progressData?.countryCode,
-        telephone: progressData?.telephone,
-      })
-    );
+    updateLocationFrom({
+      name: progressData?.address1,
+      postCode: progressData?.postCode1,
+      city: progressData?.city1,
+      country: progressData?.country1,
+      floor: progressData?.floor1,
+      liftAvailable: progressData?.liftAvailable1,
+    });
 
-    dispatch(
-      updateMoveDetails({
-        bookingId: progressData?.bookingId,
-        propertyType: progressData?.propertyType,
-        numberOfMovers: progressData?.numberOfMovers,
-        mileage: progressData?.mileage,
-        volume: progressData?.volume,
-        duration: progressData?.duration,
-        moveDate: progressData?.moveDate,
-        moveDateRaw: null,
-        movePackage: progressData?.movePackage,
-        quoteRef: progressData?.quoteRef,
-        initialPackagePrice: progressData?.initialPackagePrice,
-      })
-    );
+    updateLocationTo({
+      name: progressData?.address2,
+      postCode: progressData?.postCode2,
+      city: progressData?.city2,
+      country: progressData?.country2,
+      floor: progressData?.floor2,
+      liftAvailable: progressData?.liftAvailable2,
+    });
+
+    updatePersonal({
+      firstName: progressData?.firstName,
+      lastName: progressData?.lastName,
+      email: progressData?.email,
+      countryCode: progressData?.countryCode,
+      telephone: progressData?.telephone,
+    });
+
+    updateMove({
+      bookingId: progressData?.bookingId,
+      propertyType: progressData?.propertyType,
+      numberOfMovers: progressData?.numberOfMovers,
+      mileage: progressData?.mileage,
+      volume: progressData?.volume,
+      duration: progressData?.duration,
+      moveDate: progressData?.moveDate,
+      moveDateRaw: null,
+      movePackage: progressData?.movePackage,
+      quoteRef: progressData?.quoteRef,
+      initialPackagePrice: progressData?.initialPackagePrice,
+    });
   }, []);
 
   const [scriptLoaded, setScriptLoaded] = useState(false);
@@ -222,7 +305,7 @@ const Movers = ({ progressUrl, progressData, userData }) => {
 
     const today2 = getFormattedTodayDate();
 
-    const date2 = dayjs(details.moveDetails.moveDateRaw).format("ddd MMM D");
+    const date2 = dayjs(moveDetails?.moveDateRaw).format("ddd MMM D");
     if (today2 === date2) {
       setTodayPick(true);
     } else {
@@ -231,20 +314,20 @@ const Movers = ({ progressUrl, progressData, userData }) => {
     // console.log(today2 == date2);
   }, []);
 
-  useEffect(() => {
-    if (!progressData) {
-      router.push("/");
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (!progressData2) {
+  //     router.push("/");
+  //   }
+  // }, []);
 
   const params = {
-    firstName: details.personalDetails.firstName,
-    lastName: details.personalDetails.lastName,
+    firstName: personalDetails.firstName,
+    lastName: personalDetails.lastName,
     email: email,
-    quoteRef: details.moveDetails.quoteRef,
-    progressLink: `https://removalstorage.vercel.app/book/movers/${details.moveDetails.bookingId}`,
-    address1: details.serviceLocation.locationFrom.name,
-    address2: details.serviceLocation.locationTo.name,
+    quoteRef: moveDetails.quoteRef,
+    progressLink: `https://removalstorage.vercel.app/book/movers/${moveDetails.bookingId}`,
+    address1: serviceLocation.locationFrom.name,
+    address2: serviceLocation.locationTo.name,
   };
 
   const sendProgressMail = async () => {
@@ -298,7 +381,7 @@ const Movers = ({ progressUrl, progressData, userData }) => {
   };
 
   const moveUrl = () => {
-    switch (details.moveDetails.propertyType) {
+    switch (moveDetails?.propertyType) {
       case "Office removals":
         return "man-and-van";
 
@@ -345,16 +428,7 @@ const Movers = ({ progressUrl, progressData, userData }) => {
         break;
     }
   };
-
-  // const [pickPrice, setPickPrice] = useState(priceThirdDay)
-
-  // console.log(allPersonalDetails);
-  // console.log(allCompanyDetails);
-  // console.log(allCompanyPix);
-  // console.log(newMovers);
-  // console.log(firstCard);
-  // console.log(otherCards);
-  console.log({ userData });
+  // console.log({ moveDetails });
 
   return (
     <>
@@ -364,7 +438,7 @@ const Movers = ({ progressUrl, progressData, userData }) => {
         <link rel="icon" href="/rrs_favicon.svg" />
       </Head>
 
-      {details.moveDetails.initialPackagePrice ? (
+      {moveDetails?.initialPackagePrice ? (
         <BookingLayout>
           <main className="">
             <div className="mb-[70px] lg:mb-[100px] pt-[80px] md:pt-[80px] ">
@@ -570,7 +644,7 @@ const Movers = ({ progressUrl, progressData, userData }) => {
                                 loadArea={firstCard?.loadArea}
                                 rating={firstCard?.rating}
                                 reviewCount={firstCard?.reviewCount}
-                                price={details.moverDetails.pickPrice}
+                                price={moverDetails.pickPrice}
                                 // price={priceThirdDay}
                                 hiresCount={firstCard?.hireCount}
                                 description={firstCard?.companyDescription}
@@ -598,9 +672,7 @@ const Movers = ({ progressUrl, progressData, userData }) => {
                           loadArea={firstCard?.loadArea}
                           rating={firstCard?.rating}
                           reviewCount={firstCard?.reviewCount}
-                          price={(
-                            details.moverDetails.pickPrice * 0.79
-                          ).toFixed()}
+                          price={(moverDetails.pickPrice * 0.79).toFixed()}
                           hiresCount={firstCard?.hireCount}
                           description={firstCard?.companyDescription}
                           score={firstCard?.score}
@@ -628,7 +700,7 @@ const Movers = ({ progressUrl, progressData, userData }) => {
                               rating={mv?.rating}
                               reviewCount={mv?.reviewCount}
                               price={calculateMoverPrice(
-                                details.moverDetails.pickPrice,
+                                moverDetails.pickPrice,
                                 mv?.score,
                                 0.052
                               ).toFixed()}
@@ -674,6 +746,8 @@ export async function getServerSideProps(context) {
   const docSnap = await getDoc(bookingRef);
 
   const progressData = docSnap.data();
+
+  console.log({ progressData });
 
   return {
     props: {

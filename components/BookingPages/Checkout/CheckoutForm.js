@@ -132,7 +132,7 @@ const CheckoutForm = ({ cardOnchange, paypalOnchange, scriptLoaded }) => {
         {
           date: getCurrentDateFormatted(),
           stage: "book/checkout",
-          createdAt: serverTimestamp(),
+          // createdAt: serverTimestamp(),
           comments,
           paymentMethod: "",
           paidPart,

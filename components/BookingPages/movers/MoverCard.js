@@ -52,6 +52,7 @@ const MoverCard = ({
   score,
   clickedModalOpen,
   setClickedModalOpen,
+  sendMoverPageMail,
 }) => {
   const {
     serviceLocation,
@@ -157,6 +158,7 @@ const MoverCard = ({
     } else {
       toast.remove();
       setSubmitLoading(true);
+      sendMoverPageMail();
 
       updateBookS("book/movers");
       updateMover({
@@ -182,7 +184,7 @@ const MoverCard = ({
             moverTime: timeValue,
             moverPrice: price,
             stage: "book/movers",
-            createdAt: serverTimestamp(),
+            // createdAt: serverTimestamp(),
           },
           { merge: true }
         );

@@ -33,6 +33,7 @@ import { HiDocumentDuplicate } from "react-icons/hi";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { TfiComments } from "react-icons/tfi";
 import { useDispatch, useSelector } from "react-redux";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 const sections = [
   {
@@ -215,6 +216,23 @@ const Dashboard = () => {
   //   };
   // }, [index]);
   // console.log(userDetails);
+
+  const auth = getAuth();
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // User is signed in, see docs for a list of available properties
+        // https://firebase.google.com/docs/reference/js/auth.user
+        const uid = user.uid;
+        // ...
+      } else {
+        // User is signed out
+        // ...
+        router.push("/mover-login");
+      }
+    });
+  }, [auth]);
 
   return (
     <MoverLayout>

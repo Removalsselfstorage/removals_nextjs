@@ -121,7 +121,7 @@ const PriceDatePick = ({ setShowLoader, setTodayPick }) => {
     }
   };
 
-  console.log({ result2 });
+  // console.log({ result2 });
 
   return (
     <div className="group mr-[20px] ml-[5px] relative border-b border-white/20 pb-[0px]  md:pb-[0px] mt-[10px] ">

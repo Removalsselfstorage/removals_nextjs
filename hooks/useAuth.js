@@ -6,6 +6,7 @@ import {
   sendPasswordResetEmail,
   User,
   sendEmailVerification,
+  getAuth,
 } from "firebase/auth";
 
 import { useRouter } from "next/router";
@@ -101,34 +102,24 @@ export const AuthProvider = ({ children }) => {
   const [initialLoading, setInitialLoading] = useState();
   const [loading, setLoading] = useState(false);
 
+  const auth = getAuth();
+
   useEffect(
     () =>
-      onAuthStateChanged(auth, (userDetails) => {
-        // if (userDetails) {
+      onAuthStateChanged(auth, (authUser) => {
+       
+        if (authUser) {
+         
 
-        if (userDetails?.emailVerified) {
-          // Logged in...
-          // setUser(user);
-
-          dispatch(updateUserDetails(userDetails));
-          // router.push("/");
-
-          // setLoading(false);
+          dispatch(updateUserDetails(authUser));
+          
         } else {
-          // Not logged in...
-          // setUser(null);
+          
 
           dispatch(updateUserDetails(null));
-          // window.location.reload();
-
-          // dispatch(updateUserDetails(null));
-          // setLoading(true);
-          // router.push("/mover-login");
-          // router.push("/");
+      
         }
-        // setError("");
-
-        // setInitialLoading(false);
+        
       }),
     [auth]
   );

@@ -38,7 +38,7 @@ import {
   UploadBookingProgress1,
 } from "@/lib/uploadBookingProgress";
 import { generateRandomValues, generateSecureId } from "@/utils/logics";
-import { welcomeEmail } from "@/lib/sendCustomEmail";
+import { addContact, welcomeEmail } from "@/lib/sendCustomEmail";
 import useQuote from "@/hooks/useQuote";
 
 const ManAndVan = ({ emails }) => {

@@ -18,13 +18,15 @@ import { useDispatch, useSelector } from "react-redux";
 const useMover = () => {
   const dispatch = useDispatch();
   const router = useRouter();
+  const MD = useSelector(getAllMoverDetails);
+
   const {
     justRegistered,
     personalMoverDetails,
     companyDetails,
     companyDocs,
     allMoverData,
-  } = useSelector(getAllMoverDetails);
+  } = MD;
 
   const updateJustR = (payload) => {
     dispatch(updateJustRegistered(payload));
@@ -56,6 +58,8 @@ const useMover = () => {
   const resetAllMoverD = () => {
     dispatch(resetAllMoverData());
   };
+
+  console.log({ MD });
 
   return {
     justRegistered,

@@ -158,7 +158,7 @@ const MoverCard = ({
     } else {
       toast.remove();
       setSubmitLoading(true);
-      sendMoverPageMail();
+      // sendMoverPageMail();
 
       updateBookS("book/movers");
       updateMover({

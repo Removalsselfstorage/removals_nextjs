@@ -403,13 +403,13 @@ const Movers = () => {
     }
   };
 
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     sendMoverPageMail();
-  //   }, 5000);
-  // }, [PP]);
+  useEffect(() => {
+    setTimeout(() => {
+      sendMoverPageMail();
+    }, 10000);
+  }, []);
 
-  console.log({ listOfMovers, params2 });
+  // console.log({ listOfMovers, params2 });
 
   return (
     <>

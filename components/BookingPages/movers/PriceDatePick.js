@@ -30,15 +30,15 @@ import { formatDate } from "@/utils/moversLogic";
 const PriceDatePick = ({ setShowLoader, setTodayPick }) => {
   const details = useSelector(getAllDetails);
   const dayOfWeek = dayjs(
-    convertDateFormat(details.moverDetails.moveDate)
+    convertDateFormat(details.moveDetails.moveDate)
   ).format("ddd");
-  const month = dayjs(convertDateFormat(details.moverDetails.moveDate)).format(
+  const month = dayjs(convertDateFormat(details.moveDetails.moveDate)).format(
     "MMM"
   );
   const dayNumber = dayjs(
-    convertDateFormat(details.moverDetails.moveDate)
+    convertDateFormat(details.moveDetails.moveDate)
   ).format("D");
-  const year = dayjs(convertDateFormat(details.moverDetails.moveDate)).format(
+  const year = dayjs(convertDateFormat(details.moveDetails.moveDate)).format(
     "YYYY"
   );
 
@@ -164,17 +164,10 @@ const PriceDatePick = ({ setShowLoader, setTodayPick }) => {
                 dateId: pr.id,
               })
             );
-            // if (index == 0) {
-            //   dispatch(updatePickPrice(pr.price));
-            // } else if (index == 1) {
-            //   dispatch(updatePickPrice(pr.price));
-            // } else if (index == 2) {
-            //   dispatch(updatePickPrice(pr.price));
-            // } else {
-            //   // setPickPrice(priceThirdDay)
-            //   dispatch(updatePickPrice(priceFirstDay));
-            // }
-            dispatch(updatePickPrice(pr.price));
+            setTimeout(() => {
+              dispatch(updatePickPrice(pr.price));
+            }, 500);
+
             if (today == trimDate(pr.date)) {
               setTodayPick(true);
             } else {

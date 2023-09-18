@@ -401,10 +401,12 @@ const Movers = () => {
   };
 
   useEffect(() => {
-    setTimeout(() => {
+    // setTimeout(() => {
+    // }, 10000);
+    if (newMovers.length > 0) {
       sendMoverPageMail();
-    }, 10000);
-  }, []);
+    }
+  }, [newMovers]);
 
   // console.log({ listOfMovers, params2 });
 

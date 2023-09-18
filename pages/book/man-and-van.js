@@ -207,6 +207,22 @@ const ManAndVan = ({ emails }) => {
     }
   };
 
+  const contactData = {
+    email,
+    firstName,
+    lastName,
+    phone: phone.toString(),
+    phoneValue,
+  };
+
+  useEffect(() => {
+    const newEmails = [];
+    emails.forEach((em) => {
+      newEmails.push(em.email);
+    });
+    setUsedEmails(newEmails);
+  }, []);
+
   const FormSubmit = async () => {
     setActivateError(true);
     setSubmitError(false);
@@ -240,6 +256,8 @@ const ManAndVan = ({ emails }) => {
       setSubmitLoading(true);
 
       sendWelcomeMail();
+
+      await addContact(contactData);
 
       let bookingId = moveDetails?.bookingId;
       let quoteRef = moveDetails?.quoteRef;
@@ -347,14 +365,6 @@ const ManAndVan = ({ emails }) => {
       router.push("/book/move-package");
     }
   };
-
-  useEffect(() => {
-    const newEmails = [];
-    emails.forEach((em) => {
-      newEmails.push(em.email);
-    });
-    setUsedEmails(newEmails);
-  }, []);
 
   return (
     <BookingLayout>

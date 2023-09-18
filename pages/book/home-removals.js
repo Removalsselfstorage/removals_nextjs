@@ -27,7 +27,11 @@ import {
   UploadBookingProgress1,
 } from "@/lib/uploadBookingProgress";
 import { generateRandomValues, generateSecureId } from "@/utils/logics";
-import { sendCustomEmail, welcomeEmail } from "@/lib/sendCustomEmail";
+import {
+  addContact,
+  sendCustomEmail,
+  welcomeEmail,
+} from "@/lib/sendCustomEmail";
 import useQuote from "@/hooks/useQuote";
 
 const CompleteHouse = ({ emails }) => {
@@ -179,6 +183,14 @@ const CompleteHouse = ({ emails }) => {
     }
   };
 
+  const contactData = {
+    email,
+    firstName,
+    lastName,
+    phone: phone.toString(),
+    phoneValue,
+  };
+
   useEffect(() => {
     const newEmails = [];
     emails.forEach((em) => {
@@ -215,6 +227,8 @@ const CompleteHouse = ({ emails }) => {
       setSubmitLoading(true);
 
       sendWelcomeMail();
+
+      await addContact(contactData);
 
       let bookingId = moveDetails?.bookingId;
       let quoteRef = moveDetails?.quoteRef;

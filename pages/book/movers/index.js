@@ -297,9 +297,6 @@ const Movers = () => {
     if (!email || !emailError) {
       setSubmitError(true);
       setEmailError(false);
-      // toast.error(`Please enter a valid email`, {
-      //   duration: 4000,
-      // });
     } else {
       setProgressLoading(true);
       setEmailError(true);

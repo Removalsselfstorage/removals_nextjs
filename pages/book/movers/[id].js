@@ -38,7 +38,7 @@ import { getAllMoverDetails, updateAllMoverData } from "@/store/moverSlice";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "@/firebase";
 import { fetchAllMoversDetailsArray } from "@/lib/fetchData2";
-import { progressEmail } from "@/lib/sendCustomEmail";
+import { moversPageEmail, progressEmail } from "@/lib/sendCustomEmail";
 import EmailSent from "@/lottieJsons/EmailSent2.json";
 import Lottie from "lottie-react";
 import movingVan from "@/lottieJsons/movingVan.json";
@@ -440,13 +440,13 @@ const Movers = ({ progressUrl, progressData, userData }) => {
     }
   };
 
-  useEffect(() => {
-    // setTimeout(() => {
-    // }, 10000);
-    if (newMovers.length > 0) {
-      sendMoverPageMail();
-    }
-  }, [newMovers]);
+  // useEffect(() => {
+  //   // setTimeout(() => {
+  //   // }, 10000);
+  //   if (newMovers.length > 0) {
+  //     sendMoverPageMail();
+  //   }
+  // }, [newMovers]);
   // console.log({ moveDetails });
 
   return (

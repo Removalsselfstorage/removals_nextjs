@@ -149,13 +149,6 @@ const MoverCard = ({
     setTimeValue(time);
   };
 
-  // const sortedListOfMovers = () => {
-  //   const fs = listOfMovers.filter(
-  //     (lm) => lm.mover !== moverDetails?.moverName
-  //   );
-  //   return fs;
-  // };
-
   const sortedListOfMovers = listOfMovers.filter((lm) => lm.mover !== name);
 
   const params = {

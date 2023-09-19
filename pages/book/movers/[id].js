@@ -117,35 +117,7 @@ const Movers = ({ progressUrl, progressData, userData }) => {
   // };
 
   useEffect(() => {
-    // const userData = await fetchAllMoversDetailsArray();
-
-    // const bookingRef = doc(db, "bookingData", progressUrl);
-    // const docSnap = await getDoc(bookingRef);
-
-    // const progressData = docSnap.data();
-    // const fetchUserData = async () => {
-    //   try {
-    //     await fetchAllMoversDetailsArray();
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // };
-    // const fetchProgressData = async () => {
-    //   try {
-    //     const bookingRef = doc(db, "bookingData", progressUrl);
-    //     const docSnap = await getDoc(bookingRef);
-
-    //     return docSnap.data();
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // };
-
-    // const userData = fetchUserData();
-
-    // const progressData = fetchProgressData();
-
-    // setProgressdata2(progressData);
+   
 
     const priceFirstDay = progressData.initialPackagePrice;
     const priceFridays = priceFirstDay;
@@ -193,7 +165,7 @@ const Movers = ({ progressUrl, progressData, userData }) => {
       (item) => item.approved === "APPROVED"
     );
 
-    console.log({ userData });
+    // console.log({ userData });
 
     setAllPersonalDetails(userData?.personalDetails);
     setAllCompanyDetails(userData?.companyDetails);

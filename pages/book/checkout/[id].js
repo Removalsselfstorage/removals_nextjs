@@ -18,12 +18,68 @@ import dayjs from "dayjs";
 import { useRouter } from "next/navigation";
 import Lottie from "lottie-react";
 import movingVan from "@/lottieJsons/movingVan.json";
+import { fetchAllMoversDetailsArray } from "@/lib/fetchData2";
+import useQuote from "@/hooks/useQuote";
+import useMover from "@/hooks/useMover";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "@/firebase";
 
-const Checkout = () => {
+const Checkout = ({ progressUrl, progressData, userData }) => {
+  const {
+    serviceLocation,
+    personalDetails,
+    moveDetails,
+    moverSideDetails,
+    moverDetails,
+    paymentDetails,
+    bookStage,
+    updateLocationFrom,
+    resetLocationFrom,
+    updateLocationTo,
+    resetLocationTo,
+    updatePersonal,
+    resetPersonal,
+    updateMove,
+    resetMove,
+    updateMover,
+    resetMover,
+    updatePayment,
+    resetPayment,
+    updatePickP,
+    updateMoverSide,
+    resetMoverSide,
+    updateBookS,
+    resetBookS,
+    router,
+  } = useQuote();
+
+  const {
+    justRegistered,
+    personalMoverDetails,
+    companyDetails,
+    companyDocs,
+    allMoverData,
+    updateJustR,
+    resetJustR,
+    updatePersonalMover,
+    resetPersonalMover,
+    updateCompanyDe,
+    resetCompanyDe,
+    updateCompanyDo,
+    resetCompanyDo,
+    updateAllMoverD,
+    resetAllMoverD,
+  } = useMover();
+
+  const [allPersonalDetails, setAllPersonalDetails] = useState([]);
+  const [allCompanyDetails, setAllCompanyDetails] = useState([]);
+  const [allCompanyPix, setAllCompanyPix] = useState([]);
+  const [newMovers, setNewMovers] = useState([]);
+
   const [showModal, setShowModal] = useState(false);
-  const details = useSelector(getAllDetails);
+  // const details = useSelector(getAllDetails);
 
-  const router = useRouter();
+  // const router = useRouter();
 
   const [payType, setPayType] = useState("");
   const [depositPart, setDepositPart] = useState(false);
@@ -36,7 +92,7 @@ const Checkout = () => {
   // console.log(depositFull);
 
   const moveUrl = () => {
-    switch (details.moveDetails.propertyType) {
+    switch (moveDetails.propertyType) {
       case "Office removals":
         return "man-and-van";
 
@@ -94,7 +150,62 @@ const Checkout = () => {
   };
 
   useEffect(() => {
-    if (!details.moverDetails.moverName) {
+    updateAllMoverD({
+      allPersonalDetails: userData?.personalDetails,
+      allCompanyDetails: userData?.companyDetails,
+      allCompanyPix: userData?.CompanyPix,
+      allCompanyDocs: {
+        regCertificates: userData?.RegCertificate,
+        vehInsurances: userData?.VehInsurance,
+        pubInsurances: userData?.PubInsurance,
+        tranInsurances: userData?.TranInsurance,
+        drivingLicenses: userData?.DrivingLicense,
+      },
+    });
+
+    updateLocationFrom({
+      name: progressData?.address1,
+      postCode: progressData?.postCode1,
+      city: progressData?.city1,
+      country: progressData?.country1,
+      floor: progressData?.floor1,
+      liftAvailable: progressData?.liftAvailable1,
+    });
+
+    updateLocationTo({
+      name: progressData?.address2,
+      postCode: progressData?.postCode2,
+      city: progressData?.city2,
+      country: progressData?.country2,
+      floor: progressData?.floor2,
+      liftAvailable: progressData?.liftAvailable2,
+    });
+
+    updatePersonal({
+      firstName: progressData?.firstName,
+      lastName: progressData?.lastName,
+      email: progressData?.email,
+      countryCode: progressData?.countryCode,
+      telephone: progressData?.telephone,
+    });
+
+    updateMove({
+      bookingId: progressData?.bookingId,
+      propertyType: progressData?.propertyType,
+      numberOfMovers: progressData?.numberOfMovers,
+      mileage: progressData?.mileage,
+      volume: progressData?.volume,
+      duration: progressData?.duration,
+      moveDate: progressData?.moveDate,
+      moveDateRaw: null,
+      movePackage: progressData?.movePackage,
+      quoteRef: progressData?.quoteRef,
+      initialPackagePrice: progressData?.initialPackagePrice,
+    });
+  }, []);
+
+  useEffect(() => {
+    if (!moverDetails.moverName) {
       router.push("/");
     }
   }, []);
@@ -107,7 +218,7 @@ const Checkout = () => {
         <link rel="icon" href="/rrs_favicon.svg" />
       </Head>
 
-      {details.moverDetails.moverName ? (
+      {moverDetails?.moverName ? (
         <BookingLayout>
           <main className="">
             <div className="mb-[70px] lg:mb-[100px] pt-[80px] md:pt-[100px] ">
@@ -161,24 +272,24 @@ const Checkout = () => {
                   {/* left section - pament form */}
                   <div className="lg:flex-[1.3] w-full">
                     <CheckoutForm
-                      cardOnchange={cardOnchange}
-                      paypalOnchange={paypalOnchange}
-                      depositFull={depositFull}
-                      depositPart={depositPart}
-                      setDepositFull={setDepositFull}
-                      setDepositPart={setDepositPart}
-                      // scriptLoaded={scriptLoaded}
+                    // cardOnchange={cardOnchange}
+                    // paypalOnchange={paypalOnchange}
+                    // depositFull={depositFull}
+                    // depositPart={depositPart}
+                    // setDepositFull={setDepositFull}
+                    // setDepositPart={setDepositPart}
+                    // scriptLoaded={scriptLoaded}
                     />
                   </div>
                   {/* right section - Move summary */}
                   <div className="lg:flex-[1] w-full mb-[30px] lg:mb-[0px]">
                     <SummaryDetails
-                      card={card}
-                      paypal={paypal}
-                      depositFull={depositFull}
-                      depositPart={depositPart}
-                      setDepositFull={setDepositFull}
-                      setDepositPart={setDepositPart}
+                    // card={card}
+                    // paypal={paypal}
+                    // depositFull={depositFull}
+                    // depositPart={depositPart}
+                    // setDepositFull={setDepositFull}
+                    // setDepositPart={setDepositPart}
                     />
                   </div>
                 </div>
@@ -202,3 +313,24 @@ const Checkout = () => {
 };
 
 export default Checkout;
+
+export async function getServerSideProps(context) {
+  const { id } = context.params; // Access the UID from the URL
+  const userData = await fetchAllMoversDetailsArray();
+
+  const bookingRef = doc(db, "bookingData", id);
+  const docSnap = await getDoc(bookingRef);
+
+  const progressData = docSnap.data();
+
+  console.log({ progressData });
+
+  return {
+    props: {
+      // userData,
+      progressUrl: id,
+      progressData,
+      userData,
+    },
+  };
+}

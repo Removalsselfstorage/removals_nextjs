@@ -15,28 +15,29 @@ import dayjs from "dayjs";
 import { moveDesciptionsCalc, moveDesciptionsCalc2 } from "@/utils/moversLogic";
 import { FiCheckCircle } from "react-icons/fi";
 
-const SummaryDetails = ({
-  depositFull,
-  depositPart,
-  card,
-  paypal,
-
-  setDepositFull,
-  setDepositPart,
-}) => {
+const SummaryDetails = (
+  {
+    // depositFull,
+    // depositPart,
+    // card,
+    // paypal,
+    // setDepositFull,
+    // setDepositPart,
+  }
+) => {
   // const [details2, setDetails2] = useState(null);
   const details = useSelector(getAllDetails);
 
   const { paidPart, paidFull } = details?.paymentDetails;
 
-  const partDepositOnchange = (e) => {
-    setDepositPart(e.target.checked);
-    setDepositFull(false);
-  };
-  const fullDepositOnchange = (e) => {
-    setDepositFull(e.target.checked);
-    setDepositPart(false);
-  };
+  // const partDepositOnchange = (e) => {
+  //   setDepositPart(e.target.checked);
+  //   setDepositFull(false);
+  // };
+  // const fullDepositOnchange = (e) => {
+  //   setDepositFull(e.target.checked);
+  //   setDepositPart(false);
+  // };
 
   const checkDuration = () => {
     switch (details.moveDetails.propertyType) {

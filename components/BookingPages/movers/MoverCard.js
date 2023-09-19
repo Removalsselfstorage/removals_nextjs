@@ -32,6 +32,7 @@ import { toast } from "react-hot-toast";
 import { doc, serverTimestamp, setDoc } from "firebase/firestore";
 import { db } from "@/firebase";
 import useQuote from "@/hooks/useQuote";
+import { checkoutPageEmail, moversPageEmail } from "@/lib/sendCustomEmail";
 // import SideDrawer from "./sideDrawer";
 
 const MoverCard = ({
@@ -53,6 +54,7 @@ const MoverCard = ({
   clickedModalOpen,
   setClickedModalOpen,
   sendMoverPageMail,
+  listOfMovers,
 }) => {
   const {
     serviceLocation,
@@ -147,6 +149,54 @@ const MoverCard = ({
     setTimeValue(time);
   };
 
+  // const sortedListOfMovers = () => {
+  //   const fs = listOfMovers.filter(
+  //     (lm) => lm.mover !== moverDetails?.moverName
+  //   );
+  //   return fs;
+  // };
+
+  const sortedListOfMovers = listOfMovers.filter((lm) => lm.mover !== name);
+
+  const params = {
+    firstName: personalDetails?.firstName,
+    lastName: personalDetails?.lastName,
+    email: personalDetails?.email,
+    quoteRef: moveDetails?.quoteRef,
+    progressLink: `https://removalstorage.vercel.app/book/checkout/${moveDetails?.bookingId}`,
+    progressLink2: `https://removalstorage.vercel.app/book/movers/${moveDetails?.bookingId}`,
+    // progressLink2: `https://removalstorage.vercel.app/book/checkout`,
+    address1: serviceLocation?.locationFrom?.name,
+    address2: serviceLocation?.locationTo?.name,
+    initialPackagePrice: moveDetails?.initialPackagePrice,
+    pickPrice: moverDetails?.pickPrice,
+    propertyType: moveDetails?.propertyType,
+    numberOfMovers: moveDetails?.numberOfMovers,
+    mileage: moveDetails?.mileage,
+    volume: moveDetails?.volume,
+    duration: moveDetails?.duration,
+    moveDate: moveDetails?.moveDate,
+    movePackage: moveDetails?.movePackage,
+    moverName: name,
+    moverPrice: price,
+    mover1Name: sortedListOfMovers[0]?.mover,
+    mover1Price: sortedListOfMovers[0]?.price,
+    mover2Name: sortedListOfMovers[1]?.mover,
+    mover2Price: sortedListOfMovers[1]?.price,
+    mover3Name: sortedListOfMovers[2]?.mover,
+    mover3Price: sortedListOfMovers[2]?.price,
+    mover4Name: sortedListOfMovers[3]?.mover,
+    mover4Price: sortedListOfMovers[3]?.price,
+  };
+
+  const sendCheckoutPageMail = async () => {
+    try {
+      await checkoutPageEmail(personalDetails?.email, params);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const onCheckout = async () => {
     setSubmitError(true);
     if (timeValue == "") {
@@ -159,6 +209,7 @@ const MoverCard = ({
       toast.remove();
       setSubmitLoading(true);
       // sendMoverPageMail();
+      sendCheckoutPageMail();
 
       updateBookS("book/movers");
       updateMover({
@@ -214,6 +265,7 @@ const MoverCard = ({
       timeValue: null,
     });
   }, []);
+  // console.log({ sl: sortedListOfMovers() });
 
   return (
     <>

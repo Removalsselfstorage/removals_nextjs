@@ -18,8 +18,9 @@ import { doc, serverTimestamp, setDoc } from "firebase/firestore";
 import { getCurrentDateFormatted } from "@/utils/logics";
 import useQuote from "@/hooks/useQuote";
 import { db } from "@/firebase";
+import { bookedEmail } from "@/lib/sendCustomEmail";
 
-const CheckoutForm = ({ cardOnchange, paypalOnchange, scriptLoaded }) => {
+const CheckoutForm = () => {
   const {
     serviceLocation,
     personalDetails,
@@ -56,7 +57,7 @@ const CheckoutForm = ({ cardOnchange, paypalOnchange, scriptLoaded }) => {
   const [submitLoading, setSubmitLoading] = useState(false);
   const [submitLoading2, setSubmitLoading2] = useState(false);
 
-  const { paidPart, paidFull, paidPrice } = paymentDetails;
+  const { paidPart, paidFull, paidPrice, paymentType } = paymentDetails;
 
   const bioMaxLength = 200;
   const handleComment = (e) => {
@@ -112,13 +113,50 @@ const CheckoutForm = ({ cardOnchange, paypalOnchange, scriptLoaded }) => {
   //   email,
   // };
 
+  const params3 = {
+    firstName: personalDetails?.firstName,
+    lastName: personalDetails?.lastName,
+    email: personalDetails?.email,
+    quoteRef: moveDetails?.quoteRef,
+    progressLink: `https://removalstorage.vercel.app/book/checkout/${moveDetails?.bookingId}`,
+    // progressLink2: `https://removalstorage.vercel.app/book/checkout/${moveDetails?.bookingId}`,
+    progressLink2: `https://removalstorage.vercel.app/reservations`,
+    address1: serviceLocation?.locationFrom?.name,
+    address2: serviceLocation?.locationTo?.name,
+    initialPackagePrice: moveDetails?.initialPackagePrice,
+    pickPrice: moverDetails?.pickPrice,
+    propertyType: moveDetails?.propertyType,
+    numberOfMovers: moveDetails?.numberOfMovers,
+    mileage: moveDetails?.mileage,
+    volume: moveDetails?.volume,
+    duration: moveDetails?.duration,
+    moveDate: moveDetails?.moveDate,
+    movePackage: moveDetails?.movePackage,
+    moverName: moverDetails?.moverName,
+    moverPrice: moverDetails?.moverPrice,
+    paidPrice: paymentDetails?.paidPrice,
+    paymentType: paidPart ? "20%" : paidFull ? "full" : "",
+    bookingId: moveDetails?.bookingId,
+  };
+
+  const sendBookedMail = async () => {
+    try {
+      await bookedEmail(personalDetails?.email, params3);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const completeCheckout = async () => {
     // setProgressLoading(true);
     updateBookS("book/checkout");
 
+    sendBookedMail();
+
     updatePayment({
       comment: comments,
       completedBook: true,
+      paymentType: paidPart ? "20%" : paidFull ? "Full" : "",
     });
 
     const bookingId = moveDetails?.bookingId;
@@ -139,6 +177,7 @@ const CheckoutForm = ({ cardOnchange, paypalOnchange, scriptLoaded }) => {
           paidFull,
           completedBook: true,
           paidPrice,
+          paymentType,
         },
         { merge: true }
       );
@@ -175,7 +214,7 @@ const CheckoutForm = ({ cardOnchange, paypalOnchange, scriptLoaded }) => {
     }, 5000);
   };
 
-  // console.log({ depositFull, depositPart, inventConfirm });
+  console.log({ paymentDetails });
 
   return (
     <div className="lg:sticky lg:top-[80px] bg-white shadow-lg rounded-[30px] lg:flex-[2] py-[30px] px-[30px] md:px-[50px] w-full">

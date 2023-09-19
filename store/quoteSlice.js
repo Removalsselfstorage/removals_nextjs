@@ -86,6 +86,7 @@ const initialState = {
     paidPart: false,
     paidFull: false,
     completedBook: false,
+    paymentType: "",
     paidPrice: null,
   },
 

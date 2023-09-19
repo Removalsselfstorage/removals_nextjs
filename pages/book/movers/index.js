@@ -641,6 +641,7 @@ const Movers = () => {
                                 clickedModalOpen={clickedModalOpen}
                                 setClickedModalOpen={setClickedModalOpen}
                                 sendMoverPageMail={sendMoverPageMail}
+                                listOfMovers={listOfMovers}
                                 // timeValue={timeValue}
                                 // setTimeValue={setTimeValue}
                                 // pickPrice={pickPrice} setPickPrice={setPickPrice}
@@ -667,6 +668,7 @@ const Movers = () => {
                           setShowLoader2={setShowLoader2}
                           showLoader2={showLoader2}
                           sendMoverPageMail={sendMoverPageMail}
+                          listOfMovers={listOfMovers}
                           // pickPrice={pickPrice} setPickPrice={setPickPrice}
                         />
                       </div>
@@ -699,6 +701,7 @@ const Movers = () => {
                               setShowLoader2={setShowLoader2}
                               showLoader2={showLoader2}
                               sendMoverPageMail={sendMoverPageMail}
+                              listOfMovers={listOfMovers}
                               // pickPrice={pickPrice} setPickPrice={setPickPrice}
                             />
                           </div>

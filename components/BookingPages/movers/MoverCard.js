@@ -149,7 +149,7 @@ const MoverCard = ({
     setTimeValue(time);
   };
 
-  const sortedListOfMovers = listOfMovers.filter((lm) => lm.mover !== name);
+  const sortedListOfMovers = listOfMovers?.filter((lm) => lm.mover !== name);
 
   const params = {
     firstName: personalDetails?.firstName,

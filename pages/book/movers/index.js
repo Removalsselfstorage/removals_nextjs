@@ -36,8 +36,6 @@ import { moversPageEmail, progressEmail } from "@/lib/sendCustomEmail";
 import Lottie from "lottie-react";
 import EmailSent from "@/lottieJsons/EmailSent2.json";
 import movingVan from "@/lottieJsons/movingVan.json";
-
-import toast, { Toaster } from "react-hot-toast";
 import useQuote from "@/hooks/useQuote";
 import useMover from "@/hooks/useMover";
 

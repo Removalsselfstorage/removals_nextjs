@@ -98,27 +98,7 @@ const Movers = ({ progressUrl, progressData, userData }) => {
   const [allCompanyPix, setAllCompanyPix] = useState([]);
   const [newMovers, setNewMovers] = useState([]);
 
-  // const fetchUserData = async () => {
-  //   try {
-  //     await fetchAllMoversDetailsArray();
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-  // const fetchProgressData = async () => {
-  //   try {
-  //     const bookingRef = doc(db, "bookingData", progressUrl);
-  //     const docSnap = await getDoc(bookingRef);
-
-  //     return docSnap.data();
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
   useEffect(() => {
-   
-
     const priceFirstDay = progressData.initialPackagePrice;
     const priceFridays = priceFirstDay;
     const priceSaturdays = priceFirstDay;
@@ -292,6 +272,57 @@ const Movers = ({ progressUrl, progressData, userData }) => {
   //   }
   // }, []);
 
+  const otherMovers = otherCards.map((om, index) => {
+    // const key = `mover${3 + index}`;
+    return {
+      mover: om?.name,
+      price: calculateMoverPrice(
+        moverDetails?.pickPrice,
+        om?.score,
+        0.052
+      ).toFixed(),
+    };
+  });
+
+  const listOfMovers = [
+    {
+      mover: firstCard?.name,
+      price: moverDetails?.pickPrice,
+    },
+    {
+      mover: "Smart Booking",
+      price: (moverDetails?.pickPrice * 0.79).toFixed(),
+    },
+    ...otherMovers,
+  ];
+
+  const params2 = {
+    firstName: personalDetails?.firstName,
+    lastName: personalDetails?.lastName,
+    email: personalDetails?.email,
+    quoteRef: moveDetails?.quoteRef,
+    progressLink: `https://removalstorage.vercel.app/book/movers/${moveDetails?.bookingId}`,
+    address1: serviceLocation?.locationFrom?.name,
+    address2: serviceLocation?.locationTo?.name,
+    initialPackagePrice: moveDetails?.initialPackagePrice,
+    pickPrice: moverDetails?.pickPrice,
+    propertyType: moveDetails?.propertyType,
+    numberOfMovers: moveDetails?.numberOfMovers,
+    mileage: moveDetails?.mileage,
+    volume: moveDetails?.volume,
+    duration: moveDetails?.duration,
+    moveDate: moveDetails?.moveDate,
+    movePackage: moveDetails?.movePackage,
+    mover1Name: listOfMovers[0]?.mover,
+    mover1Price: listOfMovers[0]?.price,
+    mover2Name: listOfMovers[1]?.mover,
+    mover2Price: listOfMovers[1]?.price,
+    mover3Name: listOfMovers[2]?.mover,
+    mover3Price: listOfMovers[2]?.price,
+    mover4Name: listOfMovers[3]?.mover,
+    mover4Price: listOfMovers[3]?.price,
+  };
+
   const params = {
     firstName: personalDetails.firstName,
     lastName: personalDetails.lastName,
@@ -340,6 +371,14 @@ const Movers = ({ progressUrl, progressData, userData }) => {
       } catch (error) {
         console.log(error);
       }
+    }
+  };
+
+  const sendMoverPageMail = async () => {
+    try {
+      await moversPageEmail(personalDetails?.email, params2);
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -400,6 +439,14 @@ const Movers = ({ progressUrl, progressData, userData }) => {
         break;
     }
   };
+
+  useEffect(() => {
+    // setTimeout(() => {
+    // }, 10000);
+    if (newMovers.length > 0) {
+      sendMoverPageMail();
+    }
+  }, [newMovers]);
   // console.log({ moveDetails });
 
   return (
@@ -625,6 +672,8 @@ const Movers = ({ progressUrl, progressData, userData }) => {
                                 showLoader2={showLoader2}
                                 clickedModalOpen={clickedModalOpen}
                                 setClickedModalOpen={setClickedModalOpen}
+                                sendMoverPageMail={sendMoverPageMail}
+                                listOfMovers={listOfMovers}
                                 // timeValue={timeValue}
                                 // setTimeValue={setTimeValue}
                                 // pickPrice={pickPrice} setPickPrice={setPickPrice}
@@ -650,6 +699,8 @@ const Movers = ({ progressUrl, progressData, userData }) => {
                           score={firstCard?.score}
                           setShowLoader2={setShowLoader2}
                           showLoader2={showLoader2}
+                          sendMoverPageMail={sendMoverPageMail}
+                          listOfMovers={listOfMovers}
                           // pickPrice={pickPrice} setPickPrice={setPickPrice}
                         />
                       </div>
@@ -681,6 +732,8 @@ const Movers = ({ progressUrl, progressData, userData }) => {
                               score={mv?.score}
                               setShowLoader2={setShowLoader2}
                               showLoader2={showLoader2}
+                              sendMoverPageMail={sendMoverPageMail}
+                              listOfMovers={listOfMovers}
                               // pickPrice={pickPrice} setPickPrice={setPickPrice}
                             />
                           </div>

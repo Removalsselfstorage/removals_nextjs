@@ -204,11 +204,11 @@ const Checkout = ({ progressUrl, progressData, userData }) => {
     });
   }, []);
 
-  useEffect(() => {
-    if (!moverDetails.moverName) {
-      router.push("/");
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (!moverDetails.moverName) {
+  //     router.push("/");
+  //   }
+  // }, []);
 
   return (
     <>

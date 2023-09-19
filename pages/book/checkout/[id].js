@@ -214,6 +214,11 @@ const Checkout = ({ progressUrl, progressData, userData }) => {
       moveDateFormatted: progressData?.moveDateFormatted,
       dateId: progressData?.dateId,
     });
+    updatePayment({
+      paidPart: progressData?.paidPart,
+      paidFull: progressData?.paidFull,
+      paidPrice: progressData?.paidPrice,
+    });
   }, []);
 
   useEffect(() => {

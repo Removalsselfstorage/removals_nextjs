@@ -147,6 +147,10 @@ const CheckoutForm = () => {
     }
   };
 
+  const bookingId = moveDetails?.bookingId;
+
+  const bookingRef = doc(db, "bookingData", bookingId);
+
   const completeCheckout = async () => {
     // setProgressLoading(true);
     updateBookS("book/checkout");
@@ -158,10 +162,6 @@ const CheckoutForm = () => {
       completedBook: true,
       paymentType: paidPart ? "20%" : paidFull ? "Full" : "",
     });
-
-    const bookingId = moveDetails?.bookingId;
-
-    const bookingRef = doc(db, "bookingData", bookingId);
 
     try {
       await setDoc(
@@ -184,11 +184,11 @@ const CheckoutForm = () => {
 
       window.my_modal_13.showModal();
       // return true;
-      console.log("booking update was successful @ movers");
+      console.log("booking update was successful @ checkout");
     } catch (error) {
       console.log(error);
       // return false;
-      console.log("booking update was unsuccessful @ movers");
+      console.log("booking update was unsuccessful @ checkout");
     }
   };
 
@@ -229,12 +229,34 @@ const CheckoutForm = () => {
                 type="radio"
                 name="radio-1"
                 className="radio radio-primary"
-                onChange={(e) => {
+                onChange={async (e) => {
                   updatePayment({
                     paidPart: e.target.checked,
                     paidFull: false,
                     paidPrice: (moverDetails?.moverPrice * 0.2).toFixed(),
                   });
+                  try {
+                    await setDoc(
+                      bookingRef,
+
+                      {
+                        date: getCurrentDateFormatted(),
+                        paymentMethod: "",
+                        paidPart: e.target.checked,
+                        paidFull: false,
+                        paidPrice: (moverDetails?.moverPrice * 0.2).toFixed(),
+                      },
+                      { merge: true }
+                    );
+
+                    window.my_modal_13.showModal();
+                    // return true;
+                    console.log("booking update was successful @ checkout");
+                  } catch (error) {
+                    console.log(error);
+                    // return false;
+                    console.log("booking update was unsuccessful @ checkout");
+                  }
                 }}
                 checked={paidPart}
               />
@@ -250,12 +272,34 @@ const CheckoutForm = () => {
                 type="radio"
                 name="radio-1"
                 className="radio radio-primary"
-                onChange={(e) => {
+                onChange={async (e) => {
                   updatePayment({
                     paidPart: false,
                     paidFull: e.target.checked,
                     paidPrice: (moverDetails?.moverPrice * 1).toFixed(),
                   });
+                  try {
+                    await setDoc(
+                      bookingRef,
+
+                      {
+                        date: getCurrentDateFormatted(),
+                        paymentMethod: "",
+                        paidPart: false,
+                        paidFull: e.target.checked,
+                        paidPrice: (moverDetails?.moverPrice * 1).toFixed(),
+                      },
+                      { merge: true }
+                    );
+
+                    window.my_modal_13.showModal();
+                    // return true;
+                    console.log("booking update was successful @ checkout");
+                  } catch (error) {
+                    console.log(error);
+                    // return false;
+                    console.log("booking update was unsuccessful @ checkout");
+                  }
                 }}
                 checked={paidFull}
               />

@@ -202,13 +202,25 @@ const Checkout = ({ progressUrl, progressData, userData }) => {
       quoteRef: progressData?.quoteRef,
       initialPackagePrice: progressData?.initialPackagePrice,
     });
+    updateMover({
+      moverName: progressData?.moverName,
+      moverTime: progressData?.moverTime,
+      moverPrice: progressData?.moverPrice,
+      priceSecondDay: progressData?.moverName,
+      priceThirdDay: progressData?.moverName,
+      priceOtherDays: progressData?.moverName,
+      priceSundays: progressData?.moverName,
+      pickPrice: progressData?.pickPrice,
+      moveDateFormatted: progressData?.moveDateFormatted,
+      dateId: progressData?.dateId,
+    });
   }, []);
 
-  // useEffect(() => {
-  //   if (!moverDetails.moverName) {
-  //     router.push("/");
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (!moverDetails.moverName) {
+      router.push("/");
+    }
+  }, []);
 
   return (
     <>

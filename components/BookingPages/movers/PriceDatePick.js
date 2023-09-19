@@ -21,11 +21,14 @@ import {
   generatePriceList2,
   generatePriceList3,
   generatePrices,
+  getCurrentDateFormatted,
   getFormattedTodayDate,
   increaseByPercentage,
   trimDate,
 } from "@/utils/logics";
 import { formatDate } from "@/utils/moversLogic";
+import { doc, setDoc } from "firebase/firestore";
+import { db } from "@/firebase";
 
 const PriceDatePick = ({ setShowLoader, setTodayPick }) => {
   const details = useSelector(getAllDetails);
@@ -146,7 +149,7 @@ const PriceDatePick = ({ setShowLoader, setTodayPick }) => {
           const date = dayjs(`${date2}`).format("dddd, MMMM D, YYYY");
           const today = getFormattedTodayDate();
 
-          const selectPrice = () => {
+          const selectPrice = async () => {
             setSelectedPrice(pr.id);
             setTimeout(() => {
               setShowLoader(true);
@@ -172,6 +175,32 @@ const PriceDatePick = ({ setShowLoader, setTodayPick }) => {
               setTodayPick(true);
             } else {
               setTodayPick(false);
+            }
+
+            const bookingId = details?.moveDetails?.bookingId;
+
+            const bookingRef = doc(db, "bookingData", bookingId);
+
+            try {
+              await setDoc(
+                bookingRef,
+
+                {
+                  date: getCurrentDateFormatted(),
+                  pickPrice: pr.price,
+                  moveDateFormatted: date,
+                  dateId: pr.id,
+                  stage: "book/movers",
+                  // createdAt: serverTimestamp(),
+                },
+                { merge: true }
+              );
+              // return true;
+              console.log("booking update was successful @ movers");
+            } catch (error) {
+              console.log(error);
+              // return false;
+              console.log("booking update was unsuccessful @ movers");
             }
           };
 

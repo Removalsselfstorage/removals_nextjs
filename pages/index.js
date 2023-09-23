@@ -141,10 +141,18 @@ export default function Home() {
                   <div className="flex items-center justify-between">
                     {bookStageBoolean2() && (
                       <p className="font-bold text-[20px] mr-[30px]">
-                        from{" "}
-                        <span className="font-extrabold text-[24px]">
-                          ₤{details.moveDetails.initialPackagePrice}
-                        </span>
+                        {details.bookStage === "book/checkout" ? (
+                          <span className="">
+                            ₤{details.paymentDetails.paidPrice}
+                          </span>
+                        ) : (
+                          <span className="">
+                            from{" "}
+                            <span className="font-extrabold text-[24px]">
+                              ₤{details.moveDetails.initialPackagePrice}
+                            </span>
+                          </span>
+                        )}
                       </p>
                     )}
                     <div className="flex items">

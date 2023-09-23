@@ -90,8 +90,7 @@ const CheckoutForm = () => {
   const activateCheckout = () => {
     if (
       (paymentDetails?.paidPart || paymentDetails?.paidFull) &&
-      inventConfirm &&
-      comments
+      inventConfirm
     ) {
       return false;
     } else return true;
@@ -235,6 +234,7 @@ const CheckoutForm = () => {
                     paidFull: false,
                     paidPrice: (moverDetails?.moverPrice * 0.2).toFixed(),
                   });
+                  updateBookS("book/checkout");
                   try {
                     await setDoc(
                       bookingRef,
@@ -245,11 +245,12 @@ const CheckoutForm = () => {
                         paidPart: e.target.checked,
                         paidFull: false,
                         paidPrice: (moverDetails?.moverPrice * 0.2).toFixed(),
+                        stage: "book/checkout",
                       },
                       { merge: true }
                     );
 
-                    window.my_modal_13.showModal();
+                    // window.my_modal_13.showModal();
                     // return true;
                     console.log("booking update was successful @ checkout");
                   } catch (error) {
@@ -278,6 +279,7 @@ const CheckoutForm = () => {
                     paidFull: e.target.checked,
                     paidPrice: (moverDetails?.moverPrice * 1).toFixed(),
                   });
+                  updateBookS("book/checkout");
                   try {
                     await setDoc(
                       bookingRef,
@@ -288,11 +290,12 @@ const CheckoutForm = () => {
                         paidPart: false,
                         paidFull: e.target.checked,
                         paidPrice: (moverDetails?.moverPrice * 1).toFixed(),
+                        stage: "book/checkout",
                       },
                       { merge: true }
                     );
 
-                    window.my_modal_13.showModal();
+                    // window.my_modal_13.showModal();
                     // return true;
                     console.log("booking update was successful @ checkout");
                   } catch (error) {

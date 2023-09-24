@@ -18,6 +18,9 @@ import {
   updateBookStage,
   resetBookStage,
   updateReserveId,
+  setReserveDetails,
+  updateReserveDetails,
+  resetReserveDetails,
   getAllDetails,
 } from "@/store/quoteSlice";
 import { useRouter } from "next/navigation";
@@ -35,8 +38,18 @@ const useQuote = () => {
     paymentDetails,
     bookStage,
     reserveId,
+    reserveDetails,
   } = useSelector(getAllDetails);
 
+  const setReserveDetailsFxn = (payload) => {
+    dispatch(setReserveDetails(payload));
+  };
+  const updateReserveDetailsFxn = (payload) => {
+    dispatch(updateReserveDetails(payload));
+  };
+  const resetReserveDetailsFxn = () => {
+    dispatch(resetReserveDetails());
+  };
   const updateReserveIdFxn = (payload) => {
     dispatch(updateReserveId(payload));
   };
@@ -93,6 +106,10 @@ const useQuote = () => {
   };
 
   return {
+    setReserveDetailsFxn,
+    updateReserveDetailsFxn,
+    resetReserveDetailsFxn,
+    reserveDetails,
     updateReserveIdFxn,
     reserveId,
     serviceLocation,

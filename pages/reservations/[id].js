@@ -48,6 +48,10 @@ import { FiEdit } from "react-icons/fi";
 
 const Reservations = ({ progressUrl, progressData }) => {
   const {
+    setReserveDetailsFxn,
+    updateReserveDetailsFxn,
+    resetReserveDetailsFxn,
+    reserveDetails,
     serviceLocation,
     personalDetails,
     moveDetails,
@@ -96,33 +100,24 @@ const Reservations = ({ progressUrl, progressData }) => {
   } = useMover();
 
   useEffect(() => {
-    updateLocationFrom({
-      name: progressData?.address1,
-      postCode: progressData?.postCode1,
-      city: progressData?.city1,
-      country: progressData?.country1,
-      floor: progressData?.floor1,
-      liftAvailable: progressData?.liftAvailable1,
-    });
-
-    updateLocationTo({
-      name: progressData?.address2,
-      postCode: progressData?.postCode2,
-      city: progressData?.city2,
-      country: progressData?.country2,
-      floor: progressData?.floor2,
-      liftAvailable: progressData?.liftAvailable2,
-    });
-
-    updatePersonal({
+    setReserveDetailsFxn({
+      address1: progressData?.address1,
+      postCode1: progressData?.postCode1,
+      city1: progressData?.city1,
+      country1: progressData?.country1,
+      floor1: progressData?.floor1,
+      liftAvailable1: progressData?.liftAvailable1,
+      address2: progressData?.address2,
+      postCode2: progressData?.postCode2,
+      city2: progressData?.city2,
+      country2: progressData?.country2,
+      floor2: progressData?.floor2,
+      liftAvailable2: progressData?.liftAvailable2,
       firstName: progressData?.firstName,
       lastName: progressData?.lastName,
       email: progressData?.email,
       countryCode: progressData?.countryCode,
       telephone: progressData?.telephone,
-    });
-
-    updateMove({
       bookingId: progressData?.bookingId,
       propertyType: progressData?.propertyType,
       numberOfMovers: progressData?.numberOfMovers,
@@ -130,32 +125,81 @@ const Reservations = ({ progressUrl, progressData }) => {
       volume: progressData?.volume,
       duration: progressData?.duration,
       moveDate: progressData?.moveDate,
-      moveDateRaw: null,
       movePackage: progressData?.movePackage,
       quoteRef: progressData?.quoteRef,
       initialPackagePrice: progressData?.initialPackagePrice,
-    });
-    updateMover({
       moverName: progressData?.moverName,
       moverTime: progressData?.moverTime,
       moverPrice: progressData?.moverPrice,
-      //   priceSecondDay: progressData?.moverName,
-      //   priceThirdDay: progressData?.moverName,
-      //   priceOtherDays: progressData?.moverName,
-      //   priceSundays: progressData?.moverName,
       pickPrice: progressData?.pickPrice,
       moveDateFormatted: progressData?.moveDateFormatted,
       dateId: progressData?.dateId,
-    });
-    updatePayment({
       paidPart: progressData?.paidPart,
       paidFull: progressData?.paidFull,
       paidPrice: progressData?.paidPrice,
       paymentType: progressData?.paymentType,
     });
+
+    // updateLocationFrom({
+    //   name: progressData?.address1,
+    //   postCode: progressData?.postCode1,
+    //   city: progressData?.city1,
+    //   country: progressData?.country1,
+    //   floor: progressData?.floor1,
+    //   liftAvailable: progressData?.liftAvailable1,
+    // });
+
+    // updateLocationTo({
+    //   name: progressData?.address2,
+    //   postCode: progressData?.postCode2,
+    //   city: progressData?.city2,
+    //   country: progressData?.country2,
+    //   floor: progressData?.floor2,
+    //   liftAvailable: progressData?.liftAvailable2,
+    // });
+
+    // updatePersonal({
+    //   firstName: progressData?.firstName,
+    //   lastName: progressData?.lastName,
+    //   email: progressData?.email,
+    //   countryCode: progressData?.countryCode,
+    //   telephone: progressData?.telephone,
+    // });
+
+    // updateMove({
+    //   bookingId: progressData?.bookingId,
+    //   propertyType: progressData?.propertyType,
+    //   numberOfMovers: progressData?.numberOfMovers,
+    //   mileage: progressData?.mileage,
+    //   volume: progressData?.volume,
+    //   duration: progressData?.duration,
+    //   moveDate: progressData?.moveDate,
+    //   moveDateRaw: null,
+    //   movePackage: progressData?.movePackage,
+    //   quoteRef: progressData?.quoteRef,
+    //   initialPackagePrice: progressData?.initialPackagePrice,
+    // });
+    // updateMover({
+    //   moverName: progressData?.moverName,
+    //   moverTime: progressData?.moverTime,
+    //   moverPrice: progressData?.moverPrice,
+    //   //   priceSecondDay: progressData?.moverName,
+    //   //   priceThirdDay: progressData?.moverName,
+    //   //   priceOtherDays: progressData?.moverName,
+    //   //   priceSundays: progressData?.moverName,
+    //   pickPrice: progressData?.pickPrice,
+    //   moveDateFormatted: progressData?.moveDateFormatted,
+    //   dateId: progressData?.dateId,
+    // });
+    // updatePayment({
+    //   paidPart: progressData?.paidPart,
+    //   paidFull: progressData?.paidFull,
+    //   paidPrice: progressData?.paidPrice,
+    //   paymentType: progressData?.paymentType,
+    // });
   }, []);
 
-  console.log({ reserveId });
+  console.log({ reserveDetails });
 
   return (
     <>
@@ -164,7 +208,7 @@ const Reservations = ({ progressUrl, progressData }) => {
         <meta name="description" content="Rss removal and storage website" />
         <link rel="icon" href="/rrs_favicon.svg" />
       </Head>
-      {true ? (
+      {reserveDetails ? (
         <BookingLayout>
           <main className="">
             <div className="mb-[70px] lg:mb-[100px] pt-[80px] md:pt-[80px] ">
@@ -193,8 +237,8 @@ const Reservations = ({ progressUrl, progressData }) => {
                         <p className="text-[40px]">👋</p>
                         <div className="">
                           <h1 className="text-2xl font-bold mb-[10px] md:mb-[0px] text-secondary">
-                            Welcome {personalDetails.firstName}{" "}
-                            {personalDetails.lastName},
+                            Welcome {reserveDetails.firstName}{" "}
+                            {reserveDetails.lastName},
                           </h1>
                           <p className="text-gray-500 font-semibold">
                             Thank you for choosing Removals & Self Storage
@@ -205,6 +249,9 @@ const Reservations = ({ progressUrl, progressData }) => {
                         onClick={() => {
                           router.push("/reserve-login");
                           updateReserveIdFxn("");
+                          // setTimeout(() => {
+                          //   resetReserveDetailsFxn();
+                          // }, 2000);
                         }}
                         className="btn btn-secondary"
                       >
@@ -221,11 +268,11 @@ const Reservations = ({ progressUrl, progressData }) => {
                             Payment made
                           </div>
                           <div className="stat-value">
-                            ₤{paymentDetails?.paidPrice}
+                            ₤{reserveDetails?.paidPrice}
                           </div>
                           <div className="stat-actions">
                             <div className="text-white font-semibold">
-                              ({paymentDetails?.paymentType} Deposit)
+                              ({reserveDetails?.paymentType} Deposit)
                             </div>
                           </div>
                         </div>
@@ -236,8 +283,8 @@ const Reservations = ({ progressUrl, progressData }) => {
                           </div>
                           <div className="stat-value">
                             ₤
-                            {moverDetails?.moverPrice -
-                              paymentDetails?.paidPrice}
+                            {reserveDetails?.moverPrice -
+                              reserveDetails?.paidPrice}
                           </div>
                           <div className="stat-actions space-x-[10px]">
                             <button className="btn btn-sm">
@@ -246,18 +293,18 @@ const Reservations = ({ progressUrl, progressData }) => {
                           </div>
                         </div>
                       </div>
-                      {moveDetails?.moveDate && (
+                      {reserveDetails?.moveDate && (
                         <div className="flex flex-col space-y-[10px]">
                           <p className="font-bold text-[20px]">
                             Move Day Countdown
                           </p>
                           <Countdown
-                            date={moveDetails?.moveDate}
+                            date={reserveDetails?.moveDate}
                             // time={moverDetails?.moverTime}
                           />
                           <p className="font-bold text-[15px] text-gray-500">
                             {dayjs(
-                              convertDateFormat(moveDetails.moveDate)
+                              convertDateFormat(reserveDetails.moveDate)
                             ).format("dddd, MMMM D, YYYY")}
                           </p>
                         </div>

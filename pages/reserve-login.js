@@ -25,7 +25,7 @@ import useQuote from "@/hooks/useQuote";
 
 // const Login = ({ providers, csrfToken, callbackUrl }) => {
 const ReserveLogin = ({ data }) => {
-  const { updateReserveIdFxn, reserveId, router } = useQuote();
+  const { updateReserveIdFxn, reserveId,reserveDetails, router } = useQuote();
 
   // const router = useRouter();
 
@@ -85,7 +85,7 @@ const ReserveLogin = ({ data }) => {
   };
 
   //phone number validation
-  console.log({ reserveId });
+  console.log({ reserveDetails, reserveId });
 
   return (
     <NormalLayout>

@@ -17,6 +17,11 @@ import useQuote from "@/hooks/useQuote";
 
 const ReserveSide = () => {
   const {
+    setReserveDetailsFxn,
+    updateReserveDetailsFxn,
+    resetReserveDetailsFxn,
+    reserveDetails,
+    reserveId,
     serviceLocation,
     personalDetails,
     moveDetails,
@@ -47,7 +52,7 @@ const ReserveSide = () => {
   // const details = useSelector(getAllDetails);
 
   const checkDuration = () => {
-    switch (moveDetails.propertyType) {
+    switch (reserveDetails.propertyType) {
       case "Office removals":
         return true;
         break;
@@ -78,19 +83,19 @@ const ReserveSide = () => {
                 Quote Ref:
               </p>
               <p className="font-semibold text-[13.5px] ">
-                {moveDetails.quoteRef}
+                {reserveDetails.quoteRef}
               </p>
             </div>
             <div className="flex flex-col space-y-[5px]">
               <p className="text-primary font-semibold text-[18px]">Mover:</p>
               <p className="font-semibold text-[13.5px] ">
-                {moverDetails.moverName}
+                {reserveDetails.moverName}
               </p>
             </div>
             <div className="flex flex-col space-y-[5px]">
               <p className="text-primary font-semibold text-[18px]">Package:</p>
               <p className="font-semibold text-[13.5px] ">
-                {moveDetails.propertyType} - ({moveDetails.movePackage})
+                {reserveDetails.propertyType} - ({reserveDetails.movePackage})
               </p>
             </div>
             <div className="flex flex-col space-y-[5px]">
@@ -98,13 +103,13 @@ const ReserveSide = () => {
                 Pick-up Details:
               </p>
               <p className="font-semibold text-[13.5px] ">
-                {serviceLocation.locationFrom.name}{" "}
-                {serviceLocation.locationFrom.postCode &&
-                  `(${serviceLocation.locationFrom.postCode})`}
+                {reserveDetails.address1}{" "}
+                {reserveDetails.postCode1 &&
+                  `(${reserveDetails.postCode1})`}
               </p>
               <p className="font-semibold text-[13.5px]">
-                Floor ({serviceLocation.locationFrom.floor}),{" "}
-                {serviceLocation.locationFrom.liftAvailable
+                Floor ({reserveDetails.floor1}),{" "}
+                {reserveDetails.liftAvailable1
                   ? "Lift available"
                   : "Lift not available"}
               </p>
@@ -114,13 +119,13 @@ const ReserveSide = () => {
                 Drop-off Details:
               </p>
               <p className="font-semibold text-[13.5px] ">
-                {serviceLocation.locationTo.name}{" "}
-                {serviceLocation.locationTo.postCode &&
-                  `(${serviceLocation.locationTo.postCode})`}
+                {reserveDetails.address2}{" "}
+                {reserveDetails.postCode2 &&
+                  `(${reserveDetails.postCode2})`}
               </p>
               <p className="font-semibold text-[13.5px]">
-                Floor ({serviceLocation.locationTo.floor}),{" "}
-                {serviceLocation.locationTo.liftAvailable
+                Floor ({reserveDetails.floor2}),{" "}
+                {reserveDetails.liftAvailable2
                   ? "Lift available"
                   : "Lift not available"}
               </p>
@@ -130,13 +135,13 @@ const ReserveSide = () => {
                 Travel Distance:
               </p>
               <p className="font-semibold text-[13.5px] ">
-                {moveDetails.mileage} miles
+                {reserveDetails.mileage} miles
               </p>
             </div>
             <div className="flex flex-col space-y-[5px]">
               <p className="text-primary font-semibold text-[18px]">Volume:</p>
               <p className="font-semibold text-[13.5px] ">
-                {moveDetails.volume} CU/FT
+                {reserveDetails.volume} CU/FT
               </p>
             </div>
             {checkDuration() && (
@@ -145,7 +150,7 @@ const ReserveSide = () => {
                   Duration:
                 </p>
                 <p className="font-semibold text-[13.5px] ">
-                  {moveDetails.duration} hours
+                  {reserveDetails.duration} hours
                 </p>
               </div>
             )}
@@ -154,11 +159,11 @@ const ReserveSide = () => {
                 Move date:
               </p>
               <p className="font-semibold text-[13.5px] ">
-                {!moverDetails.moveDateFormatted
-                  ? dayjs(convertDateFormat(moveDetails.moveDate)).format(
+                {!reserveDetails.moveDateFormatted
+                  ? dayjs(convertDateFormat(reserveDetails.moveDate)).format(
                       "dddd, MMMM D, YYYY"
                     )
-                  : moverDetails.moveDateFormatted}
+                  : reserveDetails.moveDateFormatted}
               </p>
             </div>
             <div className="flex flex-col space-y-[5px]">
@@ -166,7 +171,7 @@ const ReserveSide = () => {
                 Move Time:
               </p>
               <p className="font-semibold text-[13.5px] ">
-                {moverDetails.moverTime}
+                {reserveDetails.moverTime}
               </p>
             </div>
           </div>

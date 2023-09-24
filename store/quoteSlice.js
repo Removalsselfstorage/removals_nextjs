@@ -93,12 +93,25 @@ const initialState = {
   bookStage: "",
 
   reserveId: "",
+
+  reserveDetails: {},
 };
 
 export const quoteSlice = createSlice({
   name: "quote",
   initialState,
   reducers: {
+    setReserveDetails: (state, action) => {
+      state.reserveDetails = action.payload;
+      // Object.assign(state.reserveDetails, action.payload);
+    },
+    updateReserveDetails: (state, action) => {
+      // state.serviceLocation = action.payload;
+      Object.assign(state.reserveDetails, action.payload);
+    },
+    resetReserveDetails: (state, action) => {
+      state.reserveDetails = {};
+    },
     updateLocationFromDetails: (state, action) => {
       // state.serviceLocation = action.payload;
       Object.assign(state.serviceLocation.locationFrom, action.payload);
@@ -231,6 +244,7 @@ export const quoteSlice = createSlice({
 });
 
 export const {
+  
   updateLocationFromDetails,
   resetLocationFromDetails,
 
@@ -253,6 +267,10 @@ export const {
 
   updateMoverSideDetails,
   resetMoverSideDetails,
+
+  setReserveDetails,
+  updateReserveDetails,
+  resetReserveDetails,
 
   updateBookStage,
   resetBookStage,

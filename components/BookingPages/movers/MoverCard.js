@@ -219,7 +219,7 @@ const MoverCard = ({
     // page: "checkout page",
   };
 
-  const notificationEmail = "ifeanyi4umeh@gmail.com";
+  const notificationEmail = "removalsselfstorage@gmail.com";
 
   const sendPickMoverEmail = async () => {
     try {

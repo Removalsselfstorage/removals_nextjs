@@ -32,7 +32,12 @@ import { toast } from "react-hot-toast";
 import { doc, serverTimestamp, setDoc } from "firebase/firestore";
 import { db } from "@/firebase";
 import useQuote from "@/hooks/useQuote";
-import { checkoutPageEmail, moversPageEmail } from "@/lib/sendCustomEmail";
+import {
+  checkoutPageEmail,
+  moversPageEmail,
+  pickMoverEmail,
+  userNotificationEmail,
+} from "@/lib/sendCustomEmail";
 // import SideDrawer from "./sideDrawer";
 
 const MoverCard = ({
@@ -190,6 +195,40 @@ const MoverCard = ({
     }
   };
 
+  const notificationParams = {
+    firstName: personalDetails?.firstName,
+    lastName: personalDetails?.lastName,
+    email: personalDetails?.email,
+    phone: personalDetails?.telephone,
+    quoteRef: moveDetails?.quoteRef,
+    address1: serviceLocation?.locationFrom?.name,
+    address2: serviceLocation?.locationTo?.name,
+    initialPackagePrice: moveDetails?.initialPackagePrice,
+    pickPrice: moverDetails?.pickPrice,
+    propertyType: moveDetails?.propertyType,
+    numberOfMovers: moveDetails?.numberOfMovers,
+    mileage: moveDetails?.mileage,
+    volume: moveDetails?.volume,
+    duration: moveDetails?.duration,
+    moveDate: moveDetails?.moveDate,
+    movePackage: moveDetails?.movePackage,
+    moverName: name,
+    moverPrice: price,
+    bookLink: `https://rss-admin.vercel.app/secret-admin/users/booking/${moveDetails?.bookingId}`,
+    bookingId: moveDetails?.bookingId,
+    // page: "checkout page",
+  };
+
+  const notificationEmail = "ifeanyi4umeh@gmail.com";
+
+  const sendPickMoverEmail = async () => {
+    try {
+      await pickMoverEmail(notificationEmail, notificationParams);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const onCheckout = async () => {
     setSubmitError(true);
     if (timeValue == "") {
@@ -203,6 +242,7 @@ const MoverCard = ({
       setSubmitLoading(true);
       // sendMoverPageMail();
       sendCheckoutPageMail();
+      sendPickMoverEmail();
 
       updateBookS("book/movers");
       updateMover({

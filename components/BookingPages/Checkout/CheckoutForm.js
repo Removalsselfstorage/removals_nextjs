@@ -46,6 +46,8 @@ const CheckoutForm = () => {
     resetMoverSide,
     updateBookS,
     resetBookS,
+    updateReserveIdFxn,
+    reserveId,
     router,
   } = useQuote();
 
@@ -210,6 +212,7 @@ const CheckoutForm = () => {
     }, 5000);
     setTimeout(() => {
       router.push(`/reservations/${moveDetails?.bookingId}`);
+      updateReserveIdFxn(moveDetails?.bookingId);
     }, 5000);
   };
 

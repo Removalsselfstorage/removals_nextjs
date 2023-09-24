@@ -17,6 +17,7 @@ import {
   resetMoverSideDetails,
   updateBookStage,
   resetBookStage,
+  updateReserveId,
   getAllDetails,
 } from "@/store/quoteSlice";
 import { useRouter } from "next/navigation";
@@ -33,8 +34,12 @@ const useQuote = () => {
     moverDetails,
     paymentDetails,
     bookStage,
+    reserveId,
   } = useSelector(getAllDetails);
 
+  const updateReserveIdFxn = (payload) => {
+    dispatch(updateReserveId(payload));
+  };
   const updateLocationFrom = (payload) => {
     dispatch(updateLocationFromDetails(payload));
   };
@@ -88,6 +93,8 @@ const useQuote = () => {
   };
 
   return {
+    updateReserveIdFxn,
+    reserveId,
     serviceLocation,
     personalDetails,
     moveDetails,

@@ -1,16 +1,16 @@
-import React from 'react';
-import HeroInputBox from './HeroInputBox';
-import Typed from 'react-typed';
-import { titleFont } from '@/utils/fonts';
-import { RiCustomerService2Fill } from 'react-icons/ri';
-import Link from 'next/link';
+import React from "react";
+import HeroInputBox from "./HeroInputBox";
+import Typed from "react-typed";
+import { titleFont } from "@/utils/fonts";
+import { RiCustomerService2Fill } from "react-icons/ri";
+import Link from "next/link";
 
 const Hero = () => {
   return (
     <div className=" bg-base-200 ">
       <div
         className="hero min-h-[80vh] md:min-h-[80vh] lg:min-h-[80vh] 2xl:min-h-[80vh] bg-black/80"
-        style={{ backgroundImage: 'url(/hero_bg.jpg)' }}
+        style={{ backgroundImage: "url(/hero_bg.jpg)" }}
       >
         <div className="hero-overlay bg-black/70 "></div>
         <div className="hero-content flex-col text-white lg:flex-row md:space-x-[50px] space-y-[0px] md:px-[50px] md:max-w-7xl mx-auto pt-[70px] lg:pt-[10px]">

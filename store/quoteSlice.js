@@ -69,10 +69,10 @@ const initialState = {
     moverName: "",
     moverTime: "",
     moverPrice: "",
-    priceSecondDay: "",
-    priceThirdDay: "",
-    priceOtherDays: "",
-    priceSundays: "",
+    // priceSecondDay: "",
+    // priceThirdDay: "",
+    // priceOtherDays: "",
+    // priceSundays: "",
     pickPrice: 0,
     moveDateFormatted: "",
     dateId: 1,
@@ -91,6 +91,8 @@ const initialState = {
   },
 
   bookStage: "",
+
+  reserveId: "",
 };
 
 export const quoteSlice = createSlice({
@@ -219,6 +221,9 @@ export const quoteSlice = createSlice({
     updateBookStage: (state, action) => {
       state.bookStage = action.payload;
     },
+    updateReserveId: (state, action) => {
+      state.reserveId = action.payload;
+    },
     resetBookStage: (state, action) => {
       state.bookStage = "";
     },
@@ -251,6 +256,8 @@ export const {
 
   updateBookStage,
   resetBookStage,
+
+  updateReserveId,
 } = quoteSlice.actions;
 
 export const getAllDetails = (state) => state.quote;

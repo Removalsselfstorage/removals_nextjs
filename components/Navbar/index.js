@@ -19,10 +19,12 @@ import {
 } from "@/store/moverSlice";
 import { fetchMoverDetails3 } from "@/lib/fetchData2";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import useQuote from "@/hooks/useQuote";
 // import ScrollUpMenuNav from '../ScrollUpMenuNav';
 
 const Navbar = () => {
-  const router = useRouter();
+  const { updateReserveIdFxn, reserveId, router } = useQuote();
+  // const router = useRouter();
   const dispatch = useDispatch();
   const users = useSelector(getAllUserDetails);
   const moverDetails = useSelector(getAllMoverDetails);
@@ -243,7 +245,7 @@ const Navbar = () => {
                         //   My Reservation
                         // </Link>
                         <Link
-                          href="/reserve-login"
+                          href={`${reserveId === "" ? "/reserve-login" : `/reservations/${reserveId}`}`}
                           className={`${
                             router.pathname === "/reserve-login"
                               ? "border-b-[5px] border-primary text-primary"

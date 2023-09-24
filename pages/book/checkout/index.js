@@ -32,10 +32,7 @@ const Checkout = () => {
   const [card, setCard] = useState(false);
   const [paypal, setPaypal] = useState(false);
 
-  // console.log(depositPart);
-  // console.log(depositFull);
-
-  const moveUrl = () => {
+   const moveUrl = () => {
     switch (details.moveDetails.propertyType) {
       case "Office removals":
         return "man-and-van";

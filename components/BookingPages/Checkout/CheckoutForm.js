@@ -176,7 +176,7 @@ const CheckoutForm = () => {
           paidFull,
           completedBook: true,
           paidPrice,
-          paymentType,
+          paymentType: paidPart ? "20%" : paidFull ? "Full" : "",
         },
         { merge: true }
       );
@@ -209,11 +209,11 @@ const CheckoutForm = () => {
       // setEmail("");
     }, 5000);
     setTimeout(() => {
-      router.push("/reservations");
+      router.push(`/reservations/${moveDetails?.bookingId}`);
     }, 5000);
   };
 
-  console.log({ paymentDetails });
+  console.log({ paymentDetails, moveDetails });
 
   return (
     <div className="lg:sticky lg:top-[80px] bg-white shadow-lg rounded-[30px] lg:flex-[2] py-[30px] px-[30px] md:px-[50px] w-full">

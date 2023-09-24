@@ -20,17 +20,21 @@ import { Form, Formik, useField } from "formik";
 import LoginInput from "@/components/LoginInput";
 import { BiRightArrowAlt } from "react-icons/bi";
 import { FaArrowRight } from "react-icons/fa";
+import { fetchAllBookings } from "@/lib/fetchData2";
+import useQuote from "@/hooks/useQuote";
 
 // const Login = ({ providers, csrfToken, callbackUrl }) => {
-const ReserveLogin = () => {
-  const router = useRouter();
+const ReserveLogin = ({ data }) => {
+  const { updateReserveIdFxn, reserveId, router } = useQuote();
 
-  const dispatch = useDispatch();
+  // const router = useRouter();
 
-  const details = useSelector(getAllDetails);
+  // const dispatch = useDispatch();
+
+  // const details = useSelector(getAllDetails);
 
   const initialValues = {
-    login_email: "",
+    // login_email: "",
     login_ref: "",
     success: "",
     error: "",
@@ -41,50 +45,47 @@ const ReserveLogin = () => {
   const [user, setUser] = useState(initialValues);
   const [showPassword, setShowPassword] = useState(false);
   const [submitLoading, setSubmitLoading] = useState(false);
-  const { login_email, login_ref, success, error } = user;
+  const [errorMessage, setErrorMessage] = useState("");
+  const [showError, setShowError] = useState(false);
+
+  const { login_ref, success, error } = user;
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setUser({ ...user, [name]: value });
   };
 
   const loginValidation = Yup.object().shape({
-    login_email: Yup.string()
-      .email("Please enter a valid email address")
-      .required("Email address is required"),
-    login_ref: Yup.string()
-      .required("Please enter a quote reference code")
-      .min(12, "Quote code must be 12 characters")
-      .max(12, `Quote code must be 12 characters`),
+    // login_email: Yup.string()
+    //   .email("Please enter a valid email address")
+    //   .required("Email address is required"),
+    login_ref: Yup.string().required("Please enter a booking ID"),
+    // .min(25, "Booking ID must be 25 characters")
+    // .max(25, `Booking ID must be 25 characters`),
   });
 
   const signInHandler = (values, actions) => {
-    // setLoading(true);
-    // let options = {
-    //   redirect: false,
-    //   email: login_email,
-    //   password: login_ref,
-    // };
-    // const res = await signIn('credentials', options);
-    // setUser({ ...user, success: '', error: '' });
+    setSubmitLoading(true);
 
-    // if (res?.error) {
-    //   setLoading(false);
-    //   setUser({ ...user, error: res?.error });
-    // } else {
-    //   setLoading(false);
+    const findBookingId = data.find((bk) => bk.bookingId === values.login_ref);
 
-    //   return router.push(callbackUrl || '/');
-    // }
-    // setTimeout(() => {
-    //   alert(JSON.stringify(values, null, 2));
-    //   actions.setSubmitting(false);
-    // }, 1000);
-    // alert("values");
-    alert(JSON.stringify(values, null, 2));
-    actions.setSubmitting(false);
+    if (findBookingId) {
+      // console.log({ findBookingId });
+      router.push(`/reservations/${findBookingId.bookingId}`);
+      setUser({
+        ...user,
+        login_ref: "",
+      });
+      setSubmitLoading(false);
+      updateReserveIdFxn(findBookingId.bookingId);
+    } else if (!findBookingId) {
+      setErrorMessage("Booking with this Id doesn't exist");
+      setSubmitLoading(false);
+    }
   };
 
   //phone number validation
+  console.log({ reserveId });
 
   return (
     <NormalLayout>
@@ -104,16 +105,13 @@ const ReserveLogin = () => {
       >
         <div className="card shadow-2xl bg-base-100 justify-center text-black w-full md:w-[400px] mx-[20px] px-[20px] pt-[10px] pb-[30px]">
           <div className="card-body ">
-            <h3 className="text-2xl font-extrabold text-primary uppercase mt-[0px] mb-[0px] text-center">
-              Welcome back
+            <h3 className="text-2xl font-extrabold text-primary uppercase mt-[0px] mb-[20px] text-center">
+              Welcome Back
             </h3>
-            <p className="text-[20px] font-bold w-full text-center mb-[0px]">
-              Sign in to your dashboard.
-            </p>
-            <p className="w-full text-center mb-[15px] text-[14px]">
-              Enter your email address and quote reference code (this code can
-              be found in your confirmation email).
-            </p>
+            {/* <p className="text-[20px] font-bold w-full text-center mb-[0px]">
+              Reservation dashboard.
+            </p> */}
+
             <div className="w-full">
               <Formik
                 enableReinitialize
@@ -124,48 +122,30 @@ const ReserveLogin = () => {
                 }}
               >
                 {(form) => (
-                  <Form >
-                    {/* <input
-                      type="hidden"
-                      name="csrfToken"
-                      defaultValue={csrfToken}
-                    /> */}
-                    {/* email */}
-                    <div className="mb-[10px]">
-                      <LoginInput
-                        type="text"
-                        name="login_email"
-                        // icon="email"
-                        placeholder="Email Address"
-                        onChange={handleChange}
-                      />
-                    </div>
-                    {/* password */}
-                    {/* <div className="mb-[10px]">
-                      <LoginInput
-                        type="password"
-                        name="login_ref"
-                        placeholder="Password"
-                        onChange={handleChange}
-                      />
-                    </div> */}
-                    <div className="mb-[10px]">
+                  <Form>
+                    <div className="mt-[10px]">
                       <LoginInput
                         type="text"
                         name="login_ref"
                         // icon="email"
-                        placeholder="Quote Reference Code"
+                        placeholder="Enter your Booking ID"
                         onChange={handleChange}
                       />
                     </div>
+
+                    <p className="w-full text-center text-primary mb-[5px] text-[14px]">
+                      (Booking ID can be found in the confirmation email
+                      received after booking)
+                    </p>
                     {/* <div className={styles.button}>
                       <CircledIconBtn type="submit" text="Sign In" />
                       {error && <span className={styles.error}>{error}</span>}
                     </div> */}
                     <div className="form-control mt-6">
                       <button
-                        onClick={() => {}}
+                        // onClick={() => {}}
                         type="submit"
+                        disabled={submitLoading}
                         className="btn btn-primary flex items-center space-x-[5px]"
                       >
                         {!submitLoading && (
@@ -176,9 +156,14 @@ const ReserveLogin = () => {
                         )}
                       </button>
                     </div>
+                    {errorMessage && (
+                      <div className="text-[14px] text-center mt-[15px] text-secondary bg-secondary/20 rounded-[10px] py-[10px] px-[30px]">
+                        {errorMessage}
+                      </div>
+                    )}
 
                     <div className="mt-[20px] text-[14px] flex items-center justify-center mx-[0px]">
-                      <p className="w-[50px]">Don't have a reservation?</p>
+                      <p className="w-[50px]">Don't have a Booking ID?</p>
                       <Link
                         href="/book"
                         className="flex items-center space-x-[5px] cursor-pointer"
@@ -212,28 +197,22 @@ const ReserveLogin = () => {
 
 export default ReserveLogin;
 
-// export async function getServerSideProps(context) {
-//   const { req, query } = context;
+export async function getServerSideProps(context) {
+  // const { id } = context.params; // Access the UID from the URL
+  const bookingsData = await fetchAllBookings();
 
-//   const session = await getSession({ req });
-//   // const { callbackUrl } = query;
+  const completedBookings = bookingsData?.bookings?.filter(
+    (bk) => bk.completedBook === true
+  );
 
-//   if (session) {
-//     return {
-//       redirect: {
-//         destination: `${callbackUrl}`,
-//         permanent: false,
-//       },
-//     };
-//   }
-//   const csrfToken = await getCsrfToken(context);
+  // const sortedData = [...completedBookings].sort((a, b) => {
+  //   return new Date(b.date) - new Date(a.date);
+  // });
 
-//   const providers = Object.values(await getProviders());
-//   return {
-//     props: {
-//       providers,
-//       csrfToken,
-//       // callbackUrl,
-//     },
-//   };
-// }
+  return {
+    props: {
+      // userData,
+      data: completedBookings,
+    },
+  };
+}

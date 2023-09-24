@@ -13,12 +13,41 @@ import { getAllDetails } from "@/store/quoteSlice";
 import { useDispatch, useSelector } from "react-redux";
 import dayjs from "dayjs";
 import { convertDateFormat } from "@/utils/logics";
+import useQuote from "@/hooks/useQuote";
 
-const MoveDetails = () => {
-  const details = useSelector(getAllDetails);
+const ReserveSide = () => {
+  const {
+    serviceLocation,
+    personalDetails,
+    moveDetails,
+    moverSideDetails,
+    moverDetails,
+    paymentDetails,
+    bookStage,
+    updateLocationFrom,
+    resetLocationFrom,
+    updateLocationTo,
+    resetLocationTo,
+    updatePersonal,
+    resetPersonal,
+    updateMove,
+    resetMove,
+    updateMover,
+    resetMover,
+    updatePayment,
+    resetPayment,
+    updatePickP,
+    updateMoverSide,
+    resetMoverSide,
+    updateBookS,
+    resetBookS,
+    router,
+  } = useQuote();
+
+  // const details = useSelector(getAllDetails);
 
   const checkDuration = () => {
-    switch (details.moveDetails.propertyType) {
+    switch (moveDetails.propertyType) {
       case "Office removals":
         return true;
         break;
@@ -35,12 +64,12 @@ const MoveDetails = () => {
     }
   };
 
-  console.log(details);
+  //   console.log(details);
   return (
     <div className="bg-white shadow-lg rounded-[30px] py-[30px] px-[20px] md:px-[30px] w-full lg:sticky lg:top-[80px]">
       <div className="">
         <h1 className="text-2xl font-bold mb-[10px] md:mb-[20px]">
-          Your Move Details
+          Book Summary
         </h1>
         <div className="relative">
           <div className="grid md:grid-cols-3 lg:grid-cols-1 gap-y-[10px] gap-x-[10px] overflow-auto scrollbar-thin scrollbar-track-gray-200/50 scrollbar-thumb-gray-500/20 scrollbar-default h-[200px] md:h-full">
@@ -49,14 +78,19 @@ const MoveDetails = () => {
                 Quote Ref:
               </p>
               <p className="font-semibold text-[13.5px] ">
-                {details.moveDetails.quoteRef}
+                {moveDetails.quoteRef}
+              </p>
+            </div>
+            <div className="flex flex-col space-y-[5px]">
+              <p className="text-primary font-semibold text-[18px]">Mover:</p>
+              <p className="font-semibold text-[13.5px] ">
+                {moverDetails.moverName}
               </p>
             </div>
             <div className="flex flex-col space-y-[5px]">
               <p className="text-primary font-semibold text-[18px]">Package:</p>
               <p className="font-semibold text-[13.5px] ">
-                {details.moveDetails.propertyType} - (
-                {details.moveDetails.movePackage})
+                {moveDetails.propertyType} - ({moveDetails.movePackage})
               </p>
             </div>
             <div className="flex flex-col space-y-[5px]">
@@ -64,13 +98,13 @@ const MoveDetails = () => {
                 Pick-up Details:
               </p>
               <p className="font-semibold text-[13.5px] ">
-                {details.serviceLocation.locationFrom.name}{" "}
-                {details.serviceLocation.locationFrom.postCode &&
-                  `(${details.serviceLocation.locationFrom.postCode})`}
+                {serviceLocation.locationFrom.name}{" "}
+                {serviceLocation.locationFrom.postCode &&
+                  `(${serviceLocation.locationFrom.postCode})`}
               </p>
               <p className="font-semibold text-[13.5px]">
-                Floor ({details.serviceLocation.locationFrom.floor}),{" "}
-                {details.serviceLocation.locationFrom.liftAvailable
+                Floor ({serviceLocation.locationFrom.floor}),{" "}
+                {serviceLocation.locationFrom.liftAvailable
                   ? "Lift available"
                   : "Lift not available"}
               </p>
@@ -80,13 +114,13 @@ const MoveDetails = () => {
                 Drop-off Details:
               </p>
               <p className="font-semibold text-[13.5px] ">
-                {details.serviceLocation.locationTo.name}{" "}
-                {details.serviceLocation.locationTo.postCode &&
-                  `(${details.serviceLocation.locationTo.postCode})`}
+                {serviceLocation.locationTo.name}{" "}
+                {serviceLocation.locationTo.postCode &&
+                  `(${serviceLocation.locationTo.postCode})`}
               </p>
               <p className="font-semibold text-[13.5px]">
-                Floor ({details.serviceLocation.locationTo.floor}),{" "}
-                {details.serviceLocation.locationTo.liftAvailable
+                Floor ({serviceLocation.locationTo.floor}),{" "}
+                {serviceLocation.locationTo.liftAvailable
                   ? "Lift available"
                   : "Lift not available"}
               </p>
@@ -96,13 +130,13 @@ const MoveDetails = () => {
                 Travel Distance:
               </p>
               <p className="font-semibold text-[13.5px] ">
-                {details.moveDetails.mileage} miles
+                {moveDetails.mileage} miles
               </p>
             </div>
             <div className="flex flex-col space-y-[5px]">
               <p className="text-primary font-semibold text-[18px]">Volume:</p>
               <p className="font-semibold text-[13.5px] ">
-                {details.moveDetails.volume} CU/FT
+                {moveDetails.volume} CU/FT
               </p>
             </div>
             {checkDuration() && (
@@ -111,7 +145,7 @@ const MoveDetails = () => {
                   Duration:
                 </p>
                 <p className="font-semibold text-[13.5px] ">
-                  {details.moveDetails.duration} hours
+                  {moveDetails.duration} hours
                 </p>
               </div>
             )}
@@ -120,11 +154,19 @@ const MoveDetails = () => {
                 Move date:
               </p>
               <p className="font-semibold text-[13.5px] ">
-                {!details.moverDetails.moveDateFormatted
-                  ? dayjs(
-                      convertDateFormat(details.moveDetails.moveDate)
-                    ).format("dddd, MMMM D, YYYY")
-                  : details.moverDetails.moveDateFormatted}
+                {!moverDetails.moveDateFormatted
+                  ? dayjs(convertDateFormat(moveDetails.moveDate)).format(
+                      "dddd, MMMM D, YYYY"
+                    )
+                  : moverDetails.moveDateFormatted}
+              </p>
+            </div>
+            <div className="flex flex-col space-y-[5px]">
+              <p className="text-primary font-semibold text-[18px]">
+                Move Time:
+              </p>
+              <p className="font-semibold text-[13.5px] ">
+                {moverDetails.moverTime}
               </p>
             </div>
           </div>
@@ -135,4 +177,4 @@ const MoveDetails = () => {
   );
 };
 
-export default MoveDetails;
+export default ReserveSide;

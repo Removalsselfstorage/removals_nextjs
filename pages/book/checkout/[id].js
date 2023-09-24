@@ -221,11 +221,11 @@ const Checkout = ({ progressUrl, progressData, userData }) => {
     });
   }, []);
 
-  useEffect(() => {
-    if (!moverDetails.moverName) {
-      router.push("/");
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (!moverDetails.moverName) {
+  //     router.push("/");
+  //   }
+  // }, []);
 
   return (
     <>
@@ -340,7 +340,7 @@ export async function getServerSideProps(context) {
 
   const progressData = docSnap.data();
 
-  console.log({ progressData });
+  // console.log({ progressData });
 
   return {
     props: {

@@ -36,6 +36,7 @@ import {
   checkoutPageEmail,
   moversPageEmail,
   pickMoverEmail,
+  pickMoverEmail2,
   userNotificationEmail,
 } from "@/lib/sendCustomEmail";
 // import SideDrawer from "./sideDrawer";
@@ -219,11 +220,15 @@ const MoverCard = ({
     // page: "checkout page",
   };
 
-  const notificationEmail = "removalsselfstorage@gmail.com";
+  // const notificationEmail = "removalsselfstorage@gmail.com";
+  const notificationEmail = [
+    { email: "ifeanyi4umeh@gmail.com" },
+    { email: "removalsselfstorage@gmail.com" },
+  ];
 
   const sendPickMoverEmail = async () => {
     try {
-      await pickMoverEmail(notificationEmail, notificationParams);
+      await pickMoverEmail2(notificationEmail, notificationParams);
     } catch (error) {
       console.log(error);
     }

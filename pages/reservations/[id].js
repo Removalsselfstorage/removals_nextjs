@@ -101,6 +101,7 @@ const Reservations = ({ progressUrl, progressData }) => {
 
   useEffect(() => {
     setReserveDetailsFxn({
+      bookDate: progressData?.date,
       address1: progressData?.address1,
       postCode1: progressData?.postCode1,
       city1: progressData?.city1,

@@ -80,22 +80,36 @@ const ReserveSide = () => {
           <div className="grid md:grid-cols-3 lg:grid-cols-1 gap-y-[10px] gap-x-[10px] overflow-auto scrollbar-thin scrollbar-track-gray-200/50 scrollbar-thumb-gray-500/20 scrollbar-default h-[200px] md:h-full">
             <div className="flex flex-col space-y-[5px]">
               <p className="text-primary font-semibold text-[18px]">
+                Book Date:
+              </p>
+              <p className="font-semibold text-[13.5px] ">
+                {reserveDetails?.bookDate}
+              </p>
+            </div>
+            <div className="flex flex-col space-y-[5px]">
+              <p className="text-primary font-semibold text-[18px]">Book Id:</p>
+              <p className="font-semibold text-[13.5px] ">
+                {reserveDetails?.bookingId}
+              </p>
+            </div>
+            <div className="flex flex-col space-y-[5px]">
+              <p className="text-primary font-semibold text-[18px]">
                 Quote Ref:
               </p>
               <p className="font-semibold text-[13.5px] ">
-                {reserveDetails.quoteRef}
+                {reserveDetails?.quoteRef}
               </p>
             </div>
             <div className="flex flex-col space-y-[5px]">
               <p className="text-primary font-semibold text-[18px]">Mover:</p>
               <p className="font-semibold text-[13.5px] ">
-                {reserveDetails.moverName}
+                {reserveDetails?.moverName}
               </p>
             </div>
             <div className="flex flex-col space-y-[5px]">
               <p className="text-primary font-semibold text-[18px]">Package:</p>
               <p className="font-semibold text-[13.5px] ">
-                {reserveDetails.propertyType} - ({reserveDetails.movePackage})
+                {reserveDetails?.propertyType} - ({reserveDetails?.movePackage})
               </p>
             </div>
             <div className="flex flex-col space-y-[5px]">
@@ -103,13 +117,12 @@ const ReserveSide = () => {
                 Pick-up Details:
               </p>
               <p className="font-semibold text-[13.5px] ">
-                {reserveDetails.address1}{" "}
-                {reserveDetails.postCode1 &&
-                  `(${reserveDetails.postCode1})`}
+                {reserveDetails?.address1}{" "}
+                {reserveDetails?.postCode1 && `(${reserveDetails?.postCode1})`}
               </p>
               <p className="font-semibold text-[13.5px]">
-                Floor ({reserveDetails.floor1}),{" "}
-                {reserveDetails.liftAvailable1
+                Floor ({reserveDetails?.floor1}),{" "}
+                {reserveDetails?.liftAvailable1
                   ? "Lift available"
                   : "Lift not available"}
               </p>
@@ -119,13 +132,12 @@ const ReserveSide = () => {
                 Drop-off Details:
               </p>
               <p className="font-semibold text-[13.5px] ">
-                {reserveDetails.address2}{" "}
-                {reserveDetails.postCode2 &&
-                  `(${reserveDetails.postCode2})`}
+                {reserveDetails?.address2}{" "}
+                {reserveDetails?.postCode2 && `(${reserveDetails?.postCode2})`}
               </p>
               <p className="font-semibold text-[13.5px]">
-                Floor ({reserveDetails.floor2}),{" "}
-                {reserveDetails.liftAvailable2
+                Floor ({reserveDetails?.floor2}),{" "}
+                {reserveDetails?.liftAvailable2
                   ? "Lift available"
                   : "Lift not available"}
               </p>
@@ -135,13 +147,13 @@ const ReserveSide = () => {
                 Travel Distance:
               </p>
               <p className="font-semibold text-[13.5px] ">
-                {reserveDetails.mileage} miles
+                {reserveDetails?.mileage} miles
               </p>
             </div>
             <div className="flex flex-col space-y-[5px]">
               <p className="text-primary font-semibold text-[18px]">Volume:</p>
               <p className="font-semibold text-[13.5px] ">
-                {reserveDetails.volume} CU/FT
+                {reserveDetails?.volume} CU/FT
               </p>
             </div>
             {checkDuration() && (
@@ -150,7 +162,7 @@ const ReserveSide = () => {
                   Duration:
                 </p>
                 <p className="font-semibold text-[13.5px] ">
-                  {reserveDetails.duration} hours
+                  {reserveDetails?.duration} hours
                 </p>
               </div>
             )}
@@ -159,11 +171,11 @@ const ReserveSide = () => {
                 Move date:
               </p>
               <p className="font-semibold text-[13.5px] ">
-                {!reserveDetails.moveDateFormatted
-                  ? dayjs(convertDateFormat(reserveDetails.moveDate)).format(
+                {!reserveDetails?.moveDateFormatted
+                  ? dayjs(convertDateFormat(reserveDetails?.moveDate)).format(
                       "dddd, MMMM D, YYYY"
                     )
-                  : reserveDetails.moveDateFormatted}
+                  : reserveDetails?.moveDateFormatted}
               </p>
             </div>
             <div className="flex flex-col space-y-[5px]">
@@ -171,7 +183,7 @@ const ReserveSide = () => {
                 Move Time:
               </p>
               <p className="font-semibold text-[13.5px] ">
-                {reserveDetails.moverTime}
+                {reserveDetails?.moverTime}
               </p>
             </div>
           </div>

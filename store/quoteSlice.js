@@ -109,6 +109,10 @@ export const quoteSlice = createSlice({
       // state.serviceLocation = action.payload;
       Object.assign(state.reserveDetails, action.payload);
     },
+    // updateReserveDetails: (state, action) => {
+    //   // state.serviceLocation = action.payload;
+    //   Object.assign(state.reserveDetails, action.payload);
+    // },
     resetReserveDetails: (state, action) => {
       state.reserveDetails = {};
     },
@@ -244,7 +248,6 @@ export const quoteSlice = createSlice({
 });
 
 export const {
-  
   updateLocationFromDetails,
   resetLocationFromDetails,
 

@@ -1,32 +1,31 @@
 import React, { useState, useEffect } from "react";
 
 const Countdown = ({ date }) => {
-  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
+  const targetDate = new Date(date).getTime();
+  const [countdown, setCountdown] = useState(calculateCountdown());
 
-  function calculateTimeLeft() {
-    const endDate = new Date(date).getTime();
-    const now = new Date().getTime();
-    const timeDifference = endDate - now;
+  function calculateCountdown() {
+    const currentDate = new Date().getTime();
+    const timeRemaining = targetDate - currentDate;
 
-    if (timeDifference <= 0) {
-      return { days: 0, hours: 0, minutes: 0, seconds: 0 };
-    }
-
-    const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+    const months = Math.floor(timeRemaining / (1000 * 60 * 60 * 24 * 30));
+    const days = Math.floor(
+      (timeRemaining % (1000 * 60 * 60 * 24 * 30)) / (1000 * 60 * 60 * 24)
+    );
     const hours = Math.floor(
-      (timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+      (timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
     );
     const minutes = Math.floor(
-      (timeDifference % (1000 * 60 * 60)) / (1000 * 60)
+      (timeRemaining % (1000 * 60 * 60)) / (1000 * 60)
     );
-    const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+    const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
 
-    return { days, hours, minutes, seconds };
+    return { months, days, hours, minutes, seconds };
   }
 
   useEffect(() => {
     const countdownInterval = setInterval(() => {
-      setTimeLeft(calculateTimeLeft());
+      setCountdown(calculateCountdown());
     }, 1000);
 
     return () => {
@@ -55,21 +54,29 @@ const Countdown = ({ date }) => {
     //     </div>
     //   </div>
     // </div>
-    <div className="grid grid-flow-col gap-5 text-center auto-cols-max">
+    <div className="grid grid-flow-col gap-[10px] text-center auto-cols-max">
       <div className="flex flex-col p-2 bg-neutral rounded-box text-neutral-content">
-        <span className="countdown font-mono text-5xl">{timeLeft.days}</span>
+        <span className="countdown font-mono text-5xl">{countdown.months}</span>
+        month(s)
+      </div>
+      <div className="flex flex-col p-2 bg-neutral rounded-box text-neutral-content">
+        <span className="countdown font-mono text-5xl">{countdown.days}</span>
         day(s)
       </div>
       <div className="flex flex-col p-2 bg-neutral rounded-box text-neutral-content">
-        <span className="countdown font-mono text-5xl">{timeLeft.hours}</span>
+        <span className="countdown font-mono text-5xl">{countdown.hours}</span>
         hour(s)
       </div>
       <div className="flex flex-col p-2 bg-neutral rounded-box text-neutral-content">
-        <span className="countdown font-mono text-5xl">{timeLeft.minutes}</span>
+        <span className="countdown font-mono text-5xl">
+          {countdown.minutes}
+        </span>
         min
       </div>
       <div className="flex flex-col p-2 bg-neutral rounded-box text-neutral-content">
-        <span className="countdown font-mono text-5xl">{timeLeft.seconds}</span>
+        <span className="countdown font-mono text-5xl">
+          {countdown.seconds}
+        </span>
         sec
       </div>
     </div>

@@ -45,6 +45,11 @@ import CountDown from "@/components/Reservations/countDown";
 import Countdown from "@/components/Reservations/countDown";
 import FeaturesScroll2 from "@/components/Reservations/FeaturesScroll2";
 import { FiEdit } from "react-icons/fi";
+import NumberInput from "@/components/Reservations/numberInput";
+import { FaHouseLaptop } from "react-icons/fa6";
+import { FaBed } from "react-icons/fa";
+import PickUpItems from "@/components/Reservations/pickUpItems";
+import BuyItems from "@/components/Reservations/BuyItems";
 
 const Reservations = ({ progressUrl, progressData }) => {
   const {
@@ -99,6 +104,8 @@ const Reservations = ({ progressUrl, progressData }) => {
     resetAllMoverD,
   } = useMover();
 
+  //setBedRoom
+
   useEffect(() => {
     setReserveDetailsFxn({
       bookDate: progressData?.date,
@@ -140,67 +147,21 @@ const Reservations = ({ progressUrl, progressData }) => {
       paidPrice: progressData?.paidPrice,
       paymentType: progressData?.paymentType,
     });
-
-    // updateLocationFrom({
-    //   name: progressData?.address1,
-    //   postCode: progressData?.postCode1,
-    //   city: progressData?.city1,
-    //   country: progressData?.country1,
-    //   floor: progressData?.floor1,
-    //   liftAvailable: progressData?.liftAvailable1,
-    // });
-
-    // updateLocationTo({
-    //   name: progressData?.address2,
-    //   postCode: progressData?.postCode2,
-    //   city: progressData?.city2,
-    //   country: progressData?.country2,
-    //   floor: progressData?.floor2,
-    //   liftAvailable: progressData?.liftAvailable2,
-    // });
-
-    // updatePersonal({
-    //   firstName: progressData?.firstName,
-    //   lastName: progressData?.lastName,
-    //   email: progressData?.email,
-    //   countryCode: progressData?.countryCode,
-    //   telephone: progressData?.telephone,
-    // });
-
-    // updateMove({
-    //   bookingId: progressData?.bookingId,
-    //   propertyType: progressData?.propertyType,
-    //   numberOfMovers: progressData?.numberOfMovers,
-    //   mileage: progressData?.mileage,
-    //   volume: progressData?.volume,
-    //   duration: progressData?.duration,
-    //   moveDate: progressData?.moveDate,
-    //   moveDateRaw: null,
-    //   movePackage: progressData?.movePackage,
-    //   quoteRef: progressData?.quoteRef,
-    //   initialPackagePrice: progressData?.initialPackagePrice,
-    // });
-    // updateMover({
-    //   moverName: progressData?.moverName,
-    //   moverTime: progressData?.moverTime,
-    //   moverPrice: progressData?.moverPrice,
-    //   //   priceSecondDay: progressData?.moverName,
-    //   //   priceThirdDay: progressData?.moverName,
-    //   //   priceOtherDays: progressData?.moverName,
-    //   //   priceSundays: progressData?.moverName,
-    //   pickPrice: progressData?.pickPrice,
-    //   moveDateFormatted: progressData?.moveDateFormatted,
-    //   dateId: progressData?.dateId,
-    // });
-    // updatePayment({
-    //   paidPart: progressData?.paidPart,
-    //   paidFull: progressData?.paidFull,
-    //   paidPrice: progressData?.paidPrice,
-    //   paymentType: progressData?.paymentType,
-    // });
   }, []);
 
-  console.log({ reserveDetails });
+  const currentDate = new Date();
+
+  const givenDateString = dayjs(
+    convertDateFormat(reserveDetails.moveDate)
+  ).format("dddd, MMMM D, YYYY");
+  const givenDate = new Date(givenDateString);
+
+  // Compare the two dates
+  const isGivenDateGreaterThanCurrent = givenDate > currentDate;
+
+  // const {} = reserveDetails
+
+  console.log({ reserveDetails, isGivenDateGreaterThanCurrent });
 
   return (
     <>
@@ -216,14 +177,7 @@ const Reservations = ({ progressUrl, progressData }) => {
               <div className="md:max-w-7xl mx-auto">
                 {/* stepper */}
                 <FeaturesScroll2 />
-                {/* features links */}
-                {/* <FeaturesScroll /> */}
 
-                {/* price date pick */}
-                {/* <PriceDatePick
-                  setShowLoader={setShowLoader}
-                  setTodayPick={setTodayPick}
-                /> */}
                 {/* movers list row */}
                 <div className="flex flex-col mt-[20px] space-y-[10px] lg:space-y-0 lg:flex-row lg:space-x-[10px] mx-[10px] md:mx-[20px]">
                   {/* left section */}
@@ -231,7 +185,7 @@ const Reservations = ({ progressUrl, progressData }) => {
                     <ReserveSide />
                   </div>
                   {/* right section */}
-                  <div className="bg-white shadow-lg rounded-[30px] lg:flex-[3] px-[20px] py-[30px] md:px-[30px] w-full">
+                  <div className="bg-white shadow-lg rounded-[30px] lg:flex-[3] px-[20px] py-[30px] md:px-[30px] w-full ">
                     {/* heading */}
                     <div className="flex flex-col space-y-[10px] md:flex-row md:space-y-0 md:justify-between md:items-center">
                       <div className="flex items-center space-x-[15px]">
@@ -246,23 +200,43 @@ const Reservations = ({ progressUrl, progressData }) => {
                           </p>
                         </div>
                       </div>
-                      <div
-                        onClick={() => {
-                          router.push("/reserve-login");
-                          updateReserveIdFxn("");
-                          // setTimeout(() => {
-                          //   resetReserveDetailsFxn();
-                          // }, 2000);
-                        }}
-                        className="btn btn-secondary"
-                      >
-                        <span className="">
-                          <BiLogOut className="text-[20px]" />
-                        </span>
-                        <span className="">Log Out</span>
+                      <div className="flex items-center space-x-[10px]">
+                        {/* book again button */}
+                        <div
+                          onClick={() => {
+                            router.push("/book");
+                            updateReserveIdFxn("");
+                            // setTimeout(() => {
+                            //   resetReserveDetailsFxn();
+                            // }, 2000);
+                          }}
+                          className="btn btn-secondary"
+                        >
+                          {/* <span className="">
+                            <BiLogOut className="text-[20px]" />
+                          </span> */}
+                          <span className="">Book A New Move</span>
+                        </div>
+                        {/* logout button */}
+                        <div
+                          onClick={() => {
+                            router.push("/reserve-login");
+                            updateReserveIdFxn("");
+                            // setTimeout(() => {
+                            //   resetReserveDetailsFxn();
+                            // }, 2000);
+                          }}
+                          className="btn btn-secondary btn-outline"
+                        >
+                          {/* <span className="">
+                            <BiLogOut className="text-[20px]" />
+                          </span> */}
+                          <span className="">Log Out</span>
+                        </div>
                       </div>
                     </div>
-                    <div className="flex flex-col space-y-[20px] lg:space-y-0 lg:flex-row lg:space-x-[40px]  mt-[30px]">
+                    {/* payment dashboard */}
+                    <div className="flex flex-col space-y-[20px] lg:space-y-0 lg:flex-row lg:space-x-[40px]  mt-[30px] mb-[30px]">
                       <div className="stats bg-primary text-white ">
                         <div className="stat">
                           <div className="stat-title text-white">
@@ -294,22 +268,33 @@ const Reservations = ({ progressUrl, progressData }) => {
                           </div>
                         </div>
                       </div>
-                      {reserveDetails?.moveDate && (
-                        <div className="flex flex-col space-y-[10px]">
-                          <p className="font-bold text-[20px]">
-                            Move Day Countdown
-                          </p>
-                          <Countdown
-                            date={reserveDetails?.moveDate}
-                            // time={moverDetails?.moverTime}
-                          />
-                          <p className="font-bold text-[15px] text-gray-500">
-                            {dayjs(
-                              convertDateFormat(reserveDetails.moveDate)
-                            ).format("dddd, MMMM D, YYYY")}
-                          </p>
-                        </div>
-                      )}
+                      {reserveDetails?.moveDate &&
+                        isGivenDateGreaterThanCurrent && (
+                          <div className="flex flex-col space-y-[10px]">
+                            <p className="font-bold text-[20px]">
+                              Move Day Countdown
+                            </p>
+                            <Countdown
+                              date={reserveDetails?.moveDate}
+                              // time={moverDetails?.moverTime}
+                            />
+                            <p className="font-bold text-[15px] text-gray-500">
+                              {dayjs(
+                                convertDateFormat(reserveDetails.moveDate)
+                              ).format("dddd, MMMM D, YYYY")}
+                            </p>
+                          </div>
+                        )}
+                    </div>
+
+                    {/* pick items */}
+                    <div className="mb-[30px]">
+                      <PickUpItems />
+                    </div>
+
+                    {/* buy items */}
+                    <div className="">
+                      <BuyItems />
                     </div>
                   </div>
                 </div>

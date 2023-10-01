@@ -73,9 +73,9 @@ const ReserveSide = () => {
   return (
     <div className="bg-white shadow-lg rounded-[30px] py-[30px] px-[20px] md:px-[30px] w-full lg:sticky lg:top-[80px]">
       <div className="">
-        <h1 className="text-2xl font-bold mb-[10px] md:mb-[20px]">
+        <p className="text-2xl font-bold mb-[10px] md:mb-[20px]">
           Book Summary
-        </h1>
+        </p>
         <div className="relative">
           <div className="grid md:grid-cols-3 lg:grid-cols-1 gap-y-[10px] gap-x-[10px] overflow-auto scrollbar-thin scrollbar-track-gray-200/50 scrollbar-thumb-gray-500/20 scrollbar-default h-[200px] md:h-full">
             <div className="flex flex-col space-y-[5px]">

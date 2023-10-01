@@ -3,11 +3,11 @@ import NumberInput from "./numberInput";
 
 const ProductCard = ({ product, image, name, price }) => {
   return (
-    <div className="flex flex-col items-center justify-center w-[250px] py-[20px]  px-[10px] my-[10px] border border-gray-100  bg-white rounded-md shadow- hover:shadow-lg transition-all duration-300">
+    <div className="flex flex-col items-center justify-center w-[250px] py-[20px]  px-[10px] my-[10px] border border-gray-100  bg-white rounded-md shadow-md hover:shadow-lg transition-all duration-300">
       <img
         src={product?.image}
         alt={name}
-        className="w-fit h-[200px] object-contain select-none"
+        className="w-fit h-[200px] object-contain select-none hover:scale-[1.1] transition-all duration-300"
       />
       <p className="mt-4 text-[14px] text-center line-clamp-2 ">
         {product?.name}

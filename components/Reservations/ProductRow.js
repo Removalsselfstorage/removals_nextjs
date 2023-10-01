@@ -32,7 +32,7 @@ const ProductRow = ({ products, id }) => {
           onClick={() => handleClick("left")}
         />
         <div
-          className="flex w-[900px] space-x-[20px] overflow-hidden overflow-x-scroll scrollbar-hide md:space-x-[20px]"
+          className="flex w-full lg:w-[900px] space-x-[20px] overflow-hidden overflow-x-scroll scrollbar-hide md:space-x-[20px]"
           ref={rowRef}
         >
           {products.map((product) => (

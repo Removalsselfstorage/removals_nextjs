@@ -1,6 +1,7 @@
 import NormalLayout from "@/layouts/NormalLayout";
 import Layout from "@/layouts/NormalLayout";
 import "@/styles/globals.css";
+import "@/styles/nprogress.css";
 import { Provider, useSelector } from "react-redux";
 import store from "@/store";
 import { PersistGate } from "redux-persist/integration/react";
@@ -24,6 +25,8 @@ import toast, { ToastBar, Toaster } from "react-hot-toast";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Loader1 from "@/components/loaders/loader1";
+import nProgress from "nprogress";
+import Router from "next/router";
 
 let persistor = persistStore(store);
 
@@ -34,6 +37,10 @@ let persistor = persistStore(store);
 
 // Create a client
 const queryClient = new QueryClient();
+
+Router.events.on("routeChangeStart", nProgress.start);
+Router.events.on("routeChangeError", nProgress.done);
+Router.events.on("routeChangeComplete", nProgress.done);
 
 export default function App({ Component, pageProps: { ...pageProps } }) {
   const [loading, setLoading] = useState(false);

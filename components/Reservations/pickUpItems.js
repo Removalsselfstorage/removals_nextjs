@@ -182,7 +182,7 @@ const PickUpItems = () => {
           </div>
         </div>
         {/* item display */}
-        <p className="text-[14px] font-semibold">
+        <div className="text-[14px] font-semibold">
           <div className="mb-[10px]">
             {hasQtyGreaterThanOne(moveItems?.office) && (
               <span className="text-secondary">Office: </span>
@@ -295,7 +295,7 @@ const PickUpItems = () => {
               );
             })}
           </div>
-        </p>
+        </div>
       </div>
 
       {/* Office */}

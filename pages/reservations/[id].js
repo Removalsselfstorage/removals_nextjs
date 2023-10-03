@@ -176,7 +176,7 @@ const Reservations = ({ progressUrl, progressData }) => {
 
   // const {} = reserveDetails
 
-  console.log({ progressData });
+  console.log({ progressData, moveItems });
 
   return (
     <>

@@ -18,15 +18,14 @@ import { useDispatch, useSelector } from "react-redux";
 const useMover = () => {
   const dispatch = useDispatch();
   const router = useRouter();
-  const MD = useSelector(getAllMoverDetails);
-
-  const {
-    justRegistered,
-    personalMoverDetails,
-    companyDetails,
-    companyDocs,
-    allMoverData,
-  } = MD;
+  const ab = useSelector(getAllMoverDetails);
+  // const {
+  //   justRegistered,
+  //   personalMoverDetails,
+  //   companyDetails,
+  //   companyDocs,
+  //   allMoverData,
+  // } = useSelector(getAllMoverDetails);
 
   const updateJustR = (payload) => {
     dispatch(updateJustRegistered(payload));
@@ -59,14 +58,14 @@ const useMover = () => {
     dispatch(resetAllMoverData());
   };
 
-  console.log({ MD });
+  // console.log({ justRegistered });
 
   return {
-    justRegistered,
-    personalMoverDetails,
-    companyDetails,
-    companyDocs,
-    allMoverData,
+    justRegistered: ab?.justRegistered,
+    personalMoverDetails: ab?.personalMoverDetails,
+    companyDetails: ab?.companyDetails,
+    companyDocs: ab?.companyDocs,
+    allMoverData: ab?.allMoverData,
     updateJustR,
     resetJustR,
     updatePersonalMover,

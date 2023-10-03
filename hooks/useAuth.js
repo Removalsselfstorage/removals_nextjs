@@ -93,7 +93,7 @@ export const AuthProvider = ({ children }) => {
 
   const dispatch = useDispatch();
 
-  const { userDetails } = useSelector(getAllUserDetails);
+  // const { userDetails } = useSelector(getAllUserDetails);
 
   // console.log(userDetails);
 
@@ -107,19 +107,11 @@ export const AuthProvider = ({ children }) => {
   useEffect(
     () =>
       onAuthStateChanged(auth, (authUser) => {
-       
         if (authUser) {
-         
-
           dispatch(updateUserDetails(authUser));
-          
         } else {
-          
-
           dispatch(updateUserDetails(null));
-      
         }
-        
       }),
     [auth]
   );

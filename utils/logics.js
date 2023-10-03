@@ -1,11 +1,16 @@
 // Outputs: "Wednesday, 20 September, 2023"
 
+export function hasQtyGreaterThanOne(arr) {
+  // Iterate through the array and check if any object has qty greater than 1
+  for (let i = 0; i < arr?.length; i++) {
+    if (arr[i]?.qty > 0) {
+      return true; // Found an object with qty > 1, return true
+    }
+  }
 
-
-
-
-
-
+  // If we reach here, no object had qty > 1
+  return false;
+}
 
 export function getCurrentDateFormatted() {
   const months = [

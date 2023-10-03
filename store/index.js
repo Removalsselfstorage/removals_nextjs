@@ -23,6 +23,7 @@ import cartReducer from "./userSlice";
 import quoteReducer from "./quoteSlice";
 import userReducer from "./userSlice";
 import moverReducer from "./moverSlice";
+import moveItemsReducer from "./moveItemsSlice";
 
 ////////////
 // const createNoopStorage = () => {
@@ -49,6 +50,7 @@ const rootReducer = combineReducers({
   quote: quoteReducer,
   user: userReducer,
   mover: moverReducer,
+  moveItems: moveItemsReducer,
 });
 
 const persistConfig = {
@@ -57,6 +59,7 @@ const persistConfig = {
   storage: localforage,
   // storage: storageSession,
   stateReconciler: hardSet,
+  blacklist: ["moveItems"],
   // blacklist: ["mover"],
 };
 

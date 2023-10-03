@@ -29,17 +29,18 @@ import { useDispatch, useSelector } from "react-redux";
 const useQuote = () => {
   const dispatch = useDispatch();
   const router = useRouter();
-  const {
-    serviceLocation,
-    personalDetails,
-    moveDetails,
-    moverSideDetails,
-    moverDetails,
-    paymentDetails,
-    bookStage,
-    reserveId,
-    reserveDetails,
-  } = useSelector(getAllDetails);
+  const ab = useSelector(getAllDetails);
+  // const {
+  //   serviceLocation,
+  //   personalDetails,
+  //   moveDetails,
+  //   moverSideDetails,
+  //   moverDetails,
+  //   paymentDetails,
+  //   bookStage,
+  //   reserveId,
+  //   reserveDetails,
+  // } = useSelector(getAllDetails);
 
   const setReserveDetailsFxn = (payload) => {
     dispatch(setReserveDetails(payload));
@@ -105,20 +106,24 @@ const useQuote = () => {
     dispatch(resetBookStage());
   };
 
+  // console.log({ab})
+
   return {
+    reserveDetails: ab?.reserveDetails,
+    reserveId: ab?.reserveId,
+    serviceLocation: ab?.serviceLocation,
+    personalDetails: ab?.personalDetails,
+    moveDetails: ab?.moveDetails,
+    moverSideDetails: ab?.moverSideDetails,
+    moverDetails: ab?.moverDetails,
+    paymentDetails: ab?.paymentDetails,
+    bookStage: ab?.bookStage,
+    //
     setReserveDetailsFxn,
     updateReserveDetailsFxn,
     resetReserveDetailsFxn,
-    reserveDetails,
     updateReserveIdFxn,
-    reserveId,
-    serviceLocation,
-    personalDetails,
-    moveDetails,
-    moverSideDetails,
-    moverDetails,
-    paymentDetails,
-    bookStage,
+    //
     updateLocationFrom,
     resetLocationFrom,
     updateLocationTo,

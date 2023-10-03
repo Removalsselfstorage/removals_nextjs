@@ -105,6 +105,9 @@ export const quoteSlice = createSlice({
       state.reserveDetails = action.payload;
       // Object.assign(state.reserveDetails, action.payload);
     },
+    updateMoveItems: (state, action) => {
+      Object.assign(state.reserveDetails, action.payload);
+    },
     updateReserveDetails: (state, action) => {
       // state.serviceLocation = action.payload;
       Object.assign(state.reserveDetails, action.payload);

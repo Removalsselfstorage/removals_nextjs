@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import dayjs from "dayjs";
 import { convertDateFormat } from "@/utils/logics";
 import useQuote from "@/hooks/useQuote";
+import useMoveItems from "@/hooks/useMoveItems";
 
 const ReserveSide = () => {
   const {
@@ -49,10 +50,27 @@ const ReserveSide = () => {
     router,
   } = useQuote();
 
+  const {
+    moveItems,
+
+    // BEDROOM
+    updateQtyInBedroomFxn,
+    increaseQtyInBedroomFxn,
+    decreaseQtyInBedroomFxn,
+    addNewItemToBedroomFxn,
+
+    //LIVING
+    increaseQtyInLivingFxn,
+    decreaseQtyInLivingFxn,
+    addNewItemToLivingFxn,
+
+    //
+  } = useMoveItems();
+
   // const details = useSelector(getAllDetails);
 
   const checkDuration = () => {
-    switch (reserveDetails.propertyType) {
+    switch (reserveDetails?.propertyType) {
       case "Office removals":
         return true;
         break;
@@ -92,6 +110,35 @@ const ReserveSide = () => {
                 {reserveDetails?.bookingId}
               </p>
             </div>
+            {/* <div className="flex flex-col space-y-[5px]">
+              <p className="text-primary font-semibold text-[18px]">
+                Items to Move:
+              </p>
+              <div className="font-semibold text-[13.5px] ">
+                {moveItems?.living.map((mi, index) => {
+                  return (
+                    <div className="" key={index}>
+                      {mi.qty > 0 && (
+                        <p>
+                          {mi.qty} x {mi.name}
+                        </p>
+                      )}
+                    </div>
+                  );
+                })}
+                {moveItems?.bedRoom.map((mi, index) => {
+                  return (
+                    <div className="" key={index}>
+                      {mi.qty > 0 && (
+                        <p>
+                          {mi.qty} x {mi.name}
+                        </p>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            </div> */}
             <div className="flex flex-col space-y-[5px]">
               <p className="text-primary font-semibold text-[18px]">
                 Quote Ref:

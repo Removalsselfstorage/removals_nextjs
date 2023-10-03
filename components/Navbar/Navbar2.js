@@ -103,26 +103,26 @@ const Navbar2 = () => {
                   {/* <li className="border-b-[2px] pb-[10px]">
                     <a className="btn-nav">Blog</a>
                   </li> */}
-                  {!users.userDetails && (
+                  {!users?.userDetails && (
                     <li>
                       <Link href="/join-us" className="btn-nav">
                         Become a Mover
                       </Link>
                     </li>
                   )}
-                  {!users.userDetails && (
+                  {!users?.userDetails && (
                     <li>
                       <Link href="/mover-login" className="btn-nav">
                         Mover Login
                       </Link>
                     </li>
                   )}
-                  {users.userDetails && (
+                  {users?.userDetails && (
                     <li>
                       <a className="btn-nav">My Profile</a>
                     </li>
                   )}
-                  {users.userDetails && (
+                  {users?.userDetails && (
                     <li
                       onClick={() => {
                         logout();

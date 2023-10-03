@@ -50,6 +50,7 @@ import { FaHouseLaptop } from "react-icons/fa6";
 import { FaBed } from "react-icons/fa";
 import PickUpItems from "@/components/Reservations/pickUpItems";
 import BuyItems from "@/components/Reservations/BuyItems";
+import useMoveItems from "@/hooks/useMoveItems";
 
 const Reservations = ({ progressUrl, progressData }) => {
   const {
@@ -87,6 +88,13 @@ const Reservations = ({ progressUrl, progressData }) => {
   } = useQuote();
 
   const {
+    updateQtyInBedroomFxn,
+    moveItems,
+    resetMoveItemsFxn,
+    //
+  } = useMoveItems();
+
+  const {
     justRegistered,
     personalMoverDetails,
     companyDetails,
@@ -107,6 +115,13 @@ const Reservations = ({ progressUrl, progressData }) => {
   //setBedRoom
 
   useEffect(() => {
+    if (reserveId === "") {
+      router.push("/reserve-login");
+    }
+  }, []);
+
+  useEffect(() => {
+    progressData?.moveItems && resetMoveItemsFxn(progressData?.moveItems);
     setReserveDetailsFxn({
       bookDate: progressData?.date,
       address1: progressData?.address1,
@@ -152,7 +167,7 @@ const Reservations = ({ progressUrl, progressData }) => {
   const currentDate = new Date();
 
   const givenDateString = dayjs(
-    convertDateFormat(reserveDetails.moveDate)
+    convertDateFormat(reserveDetails?.moveDate)
   ).format("dddd, MMMM D, YYYY");
   const givenDate = new Date(givenDateString);
 
@@ -161,7 +176,7 @@ const Reservations = ({ progressUrl, progressData }) => {
 
   // const {} = reserveDetails
 
-  console.log({ reserveDetails, isGivenDateGreaterThanCurrent });
+  console.log({ progressData });
 
   return (
     <>
@@ -170,7 +185,7 @@ const Reservations = ({ progressUrl, progressData }) => {
         <meta name="description" content="Rss removal and storage website" />
         <link rel="icon" href="/rrs_favicon.svg" />
       </Head>
-      {reserveDetails ? (
+      {reserveId !== "" ? (
         <BookingLayout>
           <main className="">
             <div className="mb-[70px] lg:mb-[100px] pt-[80px] md:pt-[80px] ">
@@ -192,8 +207,8 @@ const Reservations = ({ progressUrl, progressData }) => {
                         <p className="text-[40px]">👋</p>
                         <div className="">
                           <h1 className="text-2xl font-bold mb-[10px] md:mb-[0px] text-secondary">
-                            Welcome {reserveDetails.firstName}{" "}
-                            {reserveDetails.lastName},
+                            Welcome {reserveDetails?.firstName}{" "}
+                            {reserveDetails?.lastName},
                           </h1>
                           <p className="text-gray-500 font-semibold">
                             Thank you for choosing Removals & Self Storage
@@ -280,7 +295,7 @@ const Reservations = ({ progressUrl, progressData }) => {
                             />
                             <p className="font-bold text-[15px] text-gray-500">
                               {dayjs(
-                                convertDateFormat(reserveDetails.moveDate)
+                                convertDateFormat(reserveDetails?.moveDate)
                               ).format("dddd, MMMM D, YYYY")}
                             </p>
                           </div>
@@ -288,7 +303,7 @@ const Reservations = ({ progressUrl, progressData }) => {
                     </div>
 
                     {/* pick items */}
-                    <div className="mb-[30px]">
+                    <div className="mb-[30px] lg:mb-[40px]">
                       <PickUpItems />
                     </div>
 

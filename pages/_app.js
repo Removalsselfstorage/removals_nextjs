@@ -21,6 +21,9 @@ import Head from "next/head";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import toast, { ToastBar, Toaster } from "react-hot-toast";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import Loader1 from "@/components/loaders/loader1";
 
 let persistor = persistStore(store);
 
@@ -33,44 +36,69 @@ let persistor = persistStore(store);
 const queryClient = new QueryClient();
 
 export default function App({ Component, pageProps: { ...pageProps } }) {
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
+
+  useEffect(() => {
+    const handleStart = () => {
+      setLoading(true);
+    };
+    const handleComplete = () => {
+      setLoading(false);
+    };
+
+    router.events.on("routeChangeStart", handleStart);
+    router.events.on("routeChangeComplete", handleComplete);
+    router.events.on("routeChangeError", handleComplete);
+
+    return () => {
+      router.events.off("routeChangeStart", handleStart);
+      router.events.off("routeChangeComplete", handleComplete);
+      router.events.off("routeChangeError", handleComplete);
+    };
+  }, [router]);
+
   return (
     <>
-      <Head>
+      {/* <Head>
         <link rel="icon" href="/rrs_favicon.svg" />
-      </Head>
+      </Head> */}
 
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-          <QueryClientProvider client={queryClient}>
-            <AuthProvider>
+          {/* <QueryClientProvider client={queryClient}> */}
+          <AuthProvider>
+            <div className="">
+              {loading && <Loader1 />}
               <Component {...pageProps} />
-              <Toaster
-                position="top-center"
-                // reverseOrder={false}
-                gutter={8}
-                containerClassName=""
-                containerStyle={{}}
-                toastOptions={{
-                  // Define default options
-                  className: "",
-                  // duration: 5000,
-                  style: {
-                    background: "#363636",
-                    color: "#fff",
-                  },
+            </div>
+            <Toaster
+              position="top-center"
+              // reverseOrder={false}
+              gutter={8}
+              containerClassName=""
+              containerStyle={{}}
+              toastOptions={{
+                // Define default options
+                className: "",
+                // duration: 5000,
+                style: {
+                  background: "#363636",
+                  color: "#fff",
+                },
 
-                  // Default options for specific types
-                  // success: {
-                  //   duration: 3000,
-                  //   theme: {
-                  //     primary: "green",
-                  //     secondary: "black",
-                  //   },
-                  // },
-                }}
-              />
-            </AuthProvider>
-          </QueryClientProvider>
+                // Default options for specific types
+                // success: {
+                //   duration: 3000,
+                //   theme: {
+                //     primary: "green",
+                //     secondary: "black",
+                //   },
+                // },
+              }}
+            />
+          </AuthProvider>
+          {/* </QueryClientProvider> */}
         </PersistGate>
       </Provider>
     </>

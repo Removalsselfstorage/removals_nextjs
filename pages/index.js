@@ -121,8 +121,7 @@ export default function Home() {
         <meta name="description" content="Rss removal and storage website" />
         <link rel="icon" href="/rrs_favicon.svg" />
       </Head>
-      {!initialLoading ? (
-        <NormalLayout>
+       <NormalLayout>
           <main className="">
             {showProgressMenu && (
               <div className="w-full bg-secondary/10 border-t-[2px] py-[20px]  mt-[100px]  md:mt-[100px] lg:mt-[100px]">
@@ -194,14 +193,6 @@ export default function Home() {
             <FAQ />
           </main>
         </NormalLayout>
-      ) : (
-        <div className="flex items-center justify-center h-[100vh] ">
-          <div className="flex justify-center w-full">
-            <Lottie animationData={movingVan} className="w-[400px]" />
-          </div>
-          {/* <span className="h-full loading loading-bars text-primary w-[40px] lg:w-[60px]"></span> */}
-        </div>
-      )}
     </>
   );
 }

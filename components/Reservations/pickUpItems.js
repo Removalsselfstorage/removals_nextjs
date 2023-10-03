@@ -135,21 +135,21 @@ const PickUpItems = () => {
 
   const bookingId = reserveDetails?.bookingId;
 
-  const bookingRef = doc(db, "bookingData", bookingId);
+  // const bookingRef2 = doc(db, "bookingData", bookingId);
 
   const submitList = async () => {
     setSubmitLoading(true);
     try {
-      await setDoc(
-        bookingRef,
+      // await setDoc(
+      //   bookingRef2,
 
-        {
-          date: getCurrentDateFormatted(),
-          stage: "book/checkout",
-          moveItems: ab?.moveItems,
-        },
-        { merge: true }
-      );
+      //   {
+      //     date: getCurrentDateFormatted(),
+      //     stage: "book/checkout",
+      //     moveItems: ab?.moveItems,
+      //   },
+      //   { merge: true }
+      // );
 
       setSubmitLoading(false);
       setSubmitted(true);

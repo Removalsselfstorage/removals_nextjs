@@ -306,7 +306,7 @@ export const moveItemsSlice = createSlice({
     // BEDROOM
     updateQtyInBedroom: (state, action) => {
       const { itemName, newQty } = action.payload;
-      const bedRoomItems = state.moveItems.bedRoom;
+      const bedRoomItems = state?.moveItems?.bedRoom;
 
       // Find the index of the item with the given name in the bedRoom array
       const itemIndex = bedRoomItems.findIndex(
@@ -320,7 +320,7 @@ export const moveItemsSlice = createSlice({
     },
     increaseQtyInBedroom: (state, action) => {
       const { itemName } = action.payload;
-      const bedRoomItems = state.moveItems.bedRoom;
+      const bedRoomItems = state?.moveItems?.bedRoom;
 
       // Find the index of the item with the given name in the bedRoom array
       const itemIndex = bedRoomItems.findIndex(
@@ -334,7 +334,7 @@ export const moveItemsSlice = createSlice({
     },
     decreaseQtyInBedroom: (state, action) => {
       const { itemName } = action.payload;
-      const bedRoomItems = state.moveItems.bedRoom;
+      const bedRoomItems = state?.moveItems?.bedRoom;
 
       // Find the index of the item with the given name in the bedRoom array
       const itemIndex = bedRoomItems.findIndex(
@@ -354,12 +354,12 @@ export const moveItemsSlice = createSlice({
     },
     addNewItemToBedroom: (state, action) => {
       const newItem = action.payload;
-      state.moveItems.bedRoom.push(newItem);
+      state?.moveItems?.bedRoom.push(newItem);
     },
     // LIVING
     increaseQtyInLiving: (state, action) => {
       const { itemName } = action.payload;
-      const livingItems = state.moveItems.living;
+      const livingItems = state?.moveItems?.living;
 
       // Find the index of the item with the given name in the bedRoom array
       const itemIndex = livingItems.findIndex((item) => item.name === itemName);
@@ -371,7 +371,7 @@ export const moveItemsSlice = createSlice({
     },
     decreaseQtyInLiving: (state, action) => {
       const { itemName } = action.payload;
-      const livingItems = state.moveItems.living;
+      const livingItems = state?.moveItems?.living;
 
       // Find the index of the item with the given name in the living array
       const itemIndex = livingItems.findIndex((item) => item.name === itemName);
@@ -389,13 +389,13 @@ export const moveItemsSlice = createSlice({
     },
     addNewItemToLiving: (state, action) => {
       const newItem = action.payload;
-      state.moveItems.living.push(newItem);
+      state.moveItems?.living.push(newItem);
     },
 
     // DINING
     increaseQtyInDining: (state, action) => {
       const { itemName } = action.payload;
-      const diningItems = state.moveItems.dining;
+      const diningItems = state.moveItems?.dining;
 
       // Find the index of the item with the given name in the bedRoom array
       const itemIndex = diningItems.findIndex((item) => item.name === itemName);
@@ -407,7 +407,7 @@ export const moveItemsSlice = createSlice({
     },
     decreaseQtyInDining: (state, action) => {
       const { itemName } = action.payload;
-      const diningItems = state.moveItems.dining;
+      const diningItems = state.moveItems?.dining;
 
       // Find the index of the item with the given name in the living array
       const itemIndex = diningItems.findIndex((item) => item.name === itemName);
@@ -425,13 +425,13 @@ export const moveItemsSlice = createSlice({
     },
     addNewItemToDining: (state, action) => {
       const newItem = action.payload;
-      state.moveItems.dining.push(newItem);
+      state.moveItems?.dining.push(newItem);
     },
 
     // KITCHEN
     increaseQtyInKitchen: (state, action) => {
       const { itemName } = action.payload;
-      const kitchenItems = state.moveItems.kitchen;
+      const kitchenItems = state.moveItems?.kitchen;
 
       // Find the index of the item with the given name in the bedRoom array
       const itemIndex = kitchenItems.findIndex(
@@ -445,7 +445,7 @@ export const moveItemsSlice = createSlice({
     },
     decreaseQtyInKitchen: (state, action) => {
       const { itemName } = action.payload;
-      const kitchenItems = state.moveItems.kitchen;
+      const kitchenItems = state.moveItems?.kitchen;
 
       // Find the index of the item with the given name in the living array
       const itemIndex = kitchenItems.findIndex(
@@ -465,13 +465,13 @@ export const moveItemsSlice = createSlice({
     },
     addNewItemToKitchen: (state, action) => {
       const newItem = action.payload;
-      state.moveItems.kitchen.push(newItem);
+      state.moveItems?.kitchen.push(newItem);
     },
 
     // OFFICE
     increaseQtyInOffice: (state, action) => {
       const { itemName } = action.payload;
-      const officeItems = state.moveItems.office;
+      const officeItems = state.moveItems?.office;
 
       // Find the index of the item with the given name in the bedRoom array
       const itemIndex = officeItems.findIndex((item) => item.name === itemName);
@@ -483,7 +483,7 @@ export const moveItemsSlice = createSlice({
     },
     decreaseQtyInOffice: (state, action) => {
       const { itemName } = action.payload;
-      const officeItems = state.moveItems.office;
+      const officeItems = state.moveItems?.office;
 
       // Find the index of the item with the given name in the living array
       const itemIndex = officeItems.findIndex((item) => item.name === itemName);
@@ -501,13 +501,13 @@ export const moveItemsSlice = createSlice({
     },
     addNewItemToOffice: (state, action) => {
       const newItem = action.payload;
-      state.moveItems.office.push(newItem);
+      state.moveItems?.office.push(newItem);
     },
 
     // BATHROOM
     increaseQtyInBathRoom: (state, action) => {
       const { itemName } = action.payload;
-      const bathRoomItems = state.moveItems.bathRoom;
+      const bathRoomItems = state.moveItems?.bathRoom;
 
       // Find the index of the item with the given name in the bedRoom array
       const itemIndex = bathRoomItems.findIndex(
@@ -521,7 +521,7 @@ export const moveItemsSlice = createSlice({
     },
     decreaseQtyInBathRoom: (state, action) => {
       const { itemName } = action.payload;
-      const bathRoomItems = state.moveItems.bathRoom;
+      const bathRoomItems = state.moveItems?.bathRoom;
 
       // Find the index of the item with the given name in the living array
       const itemIndex = bathRoomItems.findIndex(
@@ -541,13 +541,13 @@ export const moveItemsSlice = createSlice({
     },
     addNewItemToBathRoom: (state, action) => {
       const newItem = action.payload;
-      state.moveItems.bathRoom.push(newItem);
+      state.moveItems?.bathRoom.push(newItem);
     },
 
     // GARDEN
     increaseQtyInGarden: (state, action) => {
       const { itemName } = action.payload;
-      const gardenItems = state.moveItems.garden;
+      const gardenItems = state.moveItems?.garden;
 
       // Find the index of the item with the given name in the garden array
       const itemIndex = gardenItems.findIndex((item) => item.name === itemName);
@@ -559,7 +559,7 @@ export const moveItemsSlice = createSlice({
     },
     decreaseQtyInGarden: (state, action) => {
       const { itemName } = action.payload;
-      const gardenItems = state.moveItems.garden;
+      const gardenItems = state.moveItems?.garden;
 
       // Find the index of the item with the given name in the living array
       const itemIndex = gardenItems.findIndex((item) => item.name === itemName);
@@ -577,7 +577,7 @@ export const moveItemsSlice = createSlice({
     },
     addNewItemToGarden: (state, action) => {
       const newItem = action.payload;
-      state.moveItems.garden.push(newItem);
+      state.moveItems?.garden.push(newItem);
     },
   },
 });

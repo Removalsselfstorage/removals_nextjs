@@ -36,14 +36,14 @@ let persistor = persistStore(store);
 // });
 
 // Create a client
-const queryClient = new QueryClient();
+// const queryClient = new QueryClient();
 
 Router.events.on("routeChangeStart", nProgress.start);
 Router.events.on("routeChangeError", nProgress.done);
 Router.events.on("routeChangeComplete", nProgress.done);
 
 export default function App({ Component, pageProps: { ...pageProps } }) {
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
   // const router = useRouter();
 
   // useEffect(() => {

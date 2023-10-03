@@ -140,16 +140,16 @@ const PickUpItems = () => {
   const submitList = async () => {
     setSubmitLoading(true);
     try {
-      // await setDoc(
-      //   bookingRef2,
+      await setDoc(
+        doc(db, "bookingData", bookingId),
 
-      //   {
-      //     date: getCurrentDateFormatted(),
-      //     stage: "book/checkout",
-      //     moveItems: ab?.moveItems,
-      //   },
-      //   { merge: true }
-      // );
+        {
+          date: getCurrentDateFormatted(),
+          stage: "book/checkout",
+          moveItems: ab?.moveItems,
+        },
+        { merge: true }
+      );
 
       setSubmitLoading(false);
       setSubmitted(true);

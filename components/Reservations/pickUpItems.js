@@ -19,6 +19,8 @@ const PickUpItems = () => {
   const { reserveDetails, resetBookS, router, reserveId, updateReserveIdFxn } =
     useQuote();
 
+  const ab = useMoveItems();
+
   const {
     moveItems,
 
@@ -144,7 +146,7 @@ const PickUpItems = () => {
         {
           date: getCurrentDateFormatted(),
           stage: "book/checkout",
-          moveItems,
+          moveItems: ab?.moveItems,
         },
         { merge: true }
       );

@@ -54,30 +54,36 @@ const Countdown = ({ date }) => {
     //     </div>
     //   </div>
     // </div>
-    <div className="grid grid-flow-col gap-[10px] text-center auto-cols-max">
+    <div className="grid grid-flow-col gap-[5px] text-center auto-cols-max">
       <div className="flex flex-col p-2 bg-neutral rounded-box text-neutral-content">
-        <span className="countdown font-mono text-5xl">{countdown.months}</span>
-        month(s)
+        <span className="countdown font-mono font-bold text-2xl lg:text-3xl">
+          {countdown.months}
+        </span>
+        <span className="text-[15px]">month(s)</span>
       </div>
       <div className="flex flex-col p-2 bg-neutral rounded-box text-neutral-content">
-        <span className="countdown font-mono text-5xl">{countdown.days}</span>
-        day(s)
+        <span className="countdown font-mono font-bold text-2xl lg:text-3xl">
+          {countdown.days}
+        </span>
+        <span className="text-[15px]">day(s)</span>
       </div>
       <div className="flex flex-col p-2 bg-neutral rounded-box text-neutral-content">
-        <span className="countdown font-mono text-5xl">{countdown.hours}</span>
-        hour(s)
+        <span className="countdown font-mono font-bold text-2xl lg:text-3xl">
+          {countdown.hours}
+        </span>
+        <span className="text-[15px]">hour(s)</span>
       </div>
       <div className="flex flex-col p-2 bg-neutral rounded-box text-neutral-content">
-        <span className="countdown font-mono text-5xl">
+        <span className="countdown font-mono font-bold text-2xl lg:text-3xl">
           {countdown.minutes}
         </span>
-        min
+        <span className="text-[15px]">min</span>
       </div>
       <div className="flex flex-col p-2 bg-neutral rounded-box text-neutral-content">
-        <span className="countdown font-mono text-5xl">
+        <span className="countdown font-mono font-bold text-2xl lg:text-3xl">
           {countdown.seconds}
         </span>
-        sec
+        <span className="text-[15px]">sec</span>
       </div>
     </div>
   );

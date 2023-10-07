@@ -172,13 +172,15 @@ const PickUpItems = () => {
   return (
     <div className="">
       <div className="mb-[10px] md:mb-[20px]">
-        <div className="text-2xl font-bold mb-[10px] flex items-center space-x-[10px]">
+        <div className="text-2xl font-bold mb-[15px] flex flex-col space-y-[10px] lg:space-y-0 lg:flex-row lg:items-center lg:space-x-[10px]">
           <p className="">What are you moving</p>
           <div
-            className="tooltip cursor-pointer"
-            data-tip="Please always submit after adding items"
+            className="flex items-center space-x-[5px]"
+            // className="tooltip cursor-pointer"
+            // data-tip="Please always submit after adding items"
           >
             <BiHelpCircle className="font-bold text-[25px] text-secondary" />
+            <p className="text-[14px] text-secondary italic">Please always submit after you're done adding items</p>
           </div>
         </div>
         {/* item display */}

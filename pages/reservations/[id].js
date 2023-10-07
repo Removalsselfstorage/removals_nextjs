@@ -251,13 +251,12 @@ const Reservations = ({ progressUrl, progressData }) => {
                       </div>
                     </div>
                     {/* payment dashboard */}
-                    <div className="flex flex-col space-y-[20px] lg:space-y-0 lg:flex-row lg:space-x-[40px]  mt-[30px] mb-[30px]">
+                    <div className="flex flex-col space-y-[20px] lg:space-y-0 lg:flex-row lg:justify-between  mt-[30px] mb-[30px]">
                       <div className="stats bg-primary text-white ">
-                        <div className="stat">
-                          <div className="stat-title text-white">
-                            Payment made
-                          </div>
-                          <div className="stat-value">
+                        {/* payment made */}
+                        <div className="flex flex-col px-[20px] py-[30px]">
+                          <div className="">Payment made</div>
+                          <div className="font-bold text-[30px]">
                             ₤{reserveDetails?.paidPrice}
                           </div>
                           <div className="stat-actions">
@@ -266,12 +265,27 @@ const Reservations = ({ progressUrl, progressData }) => {
                             </div>
                           </div>
                         </div>
-                        {/* payment stat */}
-                        <div className="stat ">
+
+                        {/* Extra payment */}
+                        <div className="flex flex-col px-[20px] py-[30px]">
+                          <div className="">Extra Payment</div>
+                          <div className="font-bold text-[30px]">
+                            ₤0.00
+                            {/* {reserveDetails?.moverPrice -
+                              reserveDetails?.paidPrice} */}
+                          </div>
+                          {/* <div className="stat-actions space-x-[10px]">
+                            <button className="btn btn-sm">
+                              Pay Outstanding
+                            </button>
+                          </div> */}
+                        </div>
+                        {/*  outstanding payment */}
+                        <div className="flex flex-col px-[20px] py-[30px]">
                           <div className="stat-title text-white">
                             Outstanding Payment
                           </div>
-                          <div className="stat-value">
+                          <div className="font-bold text-[30px]">
                             ₤
                             {reserveDetails?.moverPrice -
                               reserveDetails?.paidPrice}
@@ -302,14 +316,14 @@ const Reservations = ({ progressUrl, progressData }) => {
                         )}
                     </div>
 
-                    {/* pick items */}
-                    <div className="mb-[30px] lg:mb-[40px]">
-                      <PickUpItems />
-                    </div>
-
                     {/* buy items */}
                     <div className="">
                       <BuyItems />
+                    </div>
+
+                    {/* pick items */}
+                    <div className="mb-[30px] lg:mb-[40px]">
+                      <PickUpItems />
                     </div>
                   </div>
                 </div>

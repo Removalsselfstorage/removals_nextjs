@@ -8,7 +8,7 @@ const BuyItems = () => {
       id: 1,
       image:
         "https://www.globepackaging.co.uk/images/Large%20Wardrobe%20Box%20Hanging%20Garment%20Carrier%20Moving%20Clothes.jpg",
-      name: `5 x Standard Large Size Double Wall Wardrobe Removal Boxes 20"x19"x38"`,
+      name: `Standard Large Size Double Wall Wardrobe Removal Boxes 20"x19"x38"`,
       price: "£20.50",
     },
     {
@@ -22,7 +22,7 @@ const BuyItems = () => {
       id: 3,
       image:
         "https://lirp.cdn-website.com/5499e577/dms3rep/multi/opt/6-640w.jpg",
-      name: `5 x Double Wall Medium Storage Packing Boxes 18"x12"x12"`,
+      name: `Double Wall Medium Storage Packing Boxes 18"x12"x12"`,
       price: "£5.99",
     },
     {
@@ -36,28 +36,28 @@ const BuyItems = () => {
       id: 5,
       image:
         "https://www.globepackaging.co.uk/images/Mattress%20cover%20latest%20site.jpg",
-      name: "1 x Heavy Duty King Size Mattress Removal Poly Cover Bag",
+      name: "Heavy Duty King Size Mattress Removal Poly Cover Bag",
       price: "£10.99",
     },
     {
       id: 6,
       image:
         "https://www.globepackaging.co.uk/images/sofa%20cover%20latest%20SITE%20RS.jpg",
-      name: "1 x Heavy Duty Four Seat Sofa Removal Poly Cover Storage Bag",
+      name: "Heavy Duty Four Seat Sofa Removal Poly Cover Storage Bag",
       price: "£10.99",
     },
     {
       id: 7,
       image:
         "https://www.globepackaging.co.uk/images/ProLoc%20low%20noise%20tape%20BROWN%20for%20use.jpg",
-      name: "6 x Rolls ProLoc Low Noise Brown Packing Tape 48mm x 66M",
+      name: "Rolls ProLoc Low Noise Brown Packing Tape 48mm x 66M",
       price: "£2.99",
     },
     {
       id: 8,
       image:
         "https://www.globepackaging.co.uk/images/Fragile%20tape%20site.jpg",
-      name: "Pro6 x Rolls Of FRAGILE Low Noise Printed Packing Tape 48mm x 66M",
+      name: "Rolls Of FRAGILE Low Noise Printed Packing Tape 48mm x 66M",
       price: "£3.99",
     },
   ];

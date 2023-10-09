@@ -1,5 +1,43 @@
 // Outputs: "Wednesday, 20 September, 2023"
 
+// export function formatPrice(price) {
+//   // Check if the input is a valid number
+//   if (typeof price !== 'number') {
+//     return 'Invalid input';
+//   }
+
+//   // Convert the number to a fixed 2 decimal places string
+//   const formattedPrice = price.toFixed(2);
+
+//   // Add the currency symbol (in this case, £)
+//   const formattedPriceWithSymbol = '£' + formattedPrice;
+
+//   // Use regular expressions to add thousands separator
+//   return formattedPriceWithSymbol.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+// }
+
+export function formatPrice(price) {
+  // Check if the price is a valid number
+  if (typeof price !== "number") {
+    return "Invalid Price";
+  }
+
+  // Create a formatter using the user's locale (e.g., en-US for US English)
+  const formatter = new Intl.NumberFormat("en-GB", {
+    style: "currency",
+    currency: "GBP", // Change this to the appropriate currency code
+    minimumFractionDigits: 2, // Ensure two decimal places
+  });
+
+  // Format the price
+  return formatter.format(price);
+}
+
+// const originalPrice = 1184.22;
+// const formattedPrice = formatPrice(originalPrice);
+
+// console.log(formattedPrice); // Output: £1,184.22
+
 export function hasQtyGreaterThanOne(arr) {
   // Iterate through the array and check if any object has qty greater than 1
   for (let i = 0; i < arr?.length; i++) {

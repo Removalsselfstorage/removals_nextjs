@@ -1,8 +1,27 @@
 import React, { useRef, useState } from "react";
 import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
 import ProductCard from "./ProductCard";
+import useProductCart from "@/hooks/useProductCart";
 
 const ProductRow = ({ products, id }) => {
+  const {
+    allProducts,
+    allCartProducts,
+
+    // All Products
+    increaseProductQtyFxn,
+    decreaseProductQtyFxn,
+
+    // Cart Products
+    addToCartFxn,
+    increaseQuantityFxn,
+    decreaseQuantityFxn,
+    deleteProductFxn,
+    resetCartFxn,
+
+    router,
+  } = useProductCart();
+
   const rowRef = useRef(null);
   const [isMoved, setIsMoved] = useState(false);
 
@@ -18,6 +37,8 @@ const ProductRow = ({ products, id }) => {
       rowRef.current.scrollTo({ left: scrollTo, behavior: "smooth" });
     }
   };
+
+  console.log({ allProducts });
 
   return (
     <div id={id} className="">
@@ -35,7 +56,7 @@ const ProductRow = ({ products, id }) => {
           className="flex w-full lg:w-[900px] space-x-[20px] overflow-hidden overflow-x-scroll scrollbar-hide md:space-x-[20px]"
           ref={rowRef}
         >
-          {products.map((product) => (
+          {allProducts?.map((product) => (
             <div className="" key={product.id}>
               <ProductCard product={product} />
             </div>

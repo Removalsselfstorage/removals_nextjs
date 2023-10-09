@@ -167,7 +167,7 @@ const PickUpItems = () => {
     }
   };
 
-  console.log({ reserveDetails, moveItems });
+  // console.log({ reserveDetails, moveItems });
 
   return (
     <div className="">
@@ -180,7 +180,9 @@ const PickUpItems = () => {
             // data-tip="Please always submit after adding items"
           >
             <BiHelpCircle className="font-bold text-[25px] text-secondary" />
-            <p className="text-[14px] text-secondary italic">Please always submit after you're done adding items</p>
+            <p className="text-[14px] text-secondary italic">
+              Please always submit after you're done adding items
+            </p>
           </div>
         </div>
         {/* item display */}

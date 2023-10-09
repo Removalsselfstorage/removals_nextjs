@@ -19,6 +19,8 @@ import { getCurrentDateFormatted } from "@/utils/logics";
 import useQuote from "@/hooks/useQuote";
 import { db } from "@/firebase";
 import { bookedEmail } from "@/lib/sendCustomEmail";
+import getStripe from "@/lib/get-stripe";
+import axios from "axios";
 
 const CheckoutForm = () => {
   const {
@@ -216,6 +218,22 @@ const CheckoutForm = () => {
     }, 5000);
   };
 
+  //paymentDetails.paidPrice
+
+  const redirectToCheckout = async () => {
+    const {
+      data: { id },
+    } = await axios.post("/api/checkout_sessions", {
+      items: {
+        id: price_1Nyjx0A4LmEvtWCnozYnkIE3,
+        quantity: 1,
+      },
+    });
+
+    const stripe = await getStripe();
+    await stripe.redirectToCheckout({ sessionId: id });
+  };
+
   console.log({ paymentDetails, moveDetails });
 
   return (
@@ -372,6 +390,9 @@ const CheckoutForm = () => {
           <PayPalScriptProvider options={initialOptions}>
             <PayPalButtons style={{ layout: "vertical" }} />
           </PayPalScriptProvider>
+        </div>
+        <div className="btn btn-primary" onClick={redirectToCheckout}>
+          Stripe payment
         </div>
         <div className="w-full flex justify-center">
           <img

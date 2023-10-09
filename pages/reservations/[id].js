@@ -51,6 +51,7 @@ import { FaBed } from "react-icons/fa";
 import PickUpItems from "@/components/Reservations/pickUpItems";
 import BuyItems from "@/components/Reservations/BuyItems";
 import useMoveItems from "@/hooks/useMoveItems";
+import CartSideDrawer from "@/components/Reservations/CartSideDrawer";
 
 const Reservations = ({ progressUrl, progressData }) => {
   const {
@@ -111,6 +112,8 @@ const Reservations = ({ progressUrl, progressData }) => {
     updateAllMoverD,
     resetAllMoverD,
   } = useMover();
+
+  const [clickedModalOpen, setClickedModalOpen] = useState(false);
 
   //setBedRoom
 
@@ -201,6 +204,8 @@ const Reservations = ({ progressUrl, progressData }) => {
                   </div>
                   {/* right section */}
                   <div className="bg-white shadow-lg rounded-[30px] lg:flex-[3] px-[20px] py-[30px] md:px-[30px] w-full ">
+                    {/* side drawer */}
+                    <CartSideDrawer/>
                     {/* heading */}
                     <div className="flex flex-col space-y-[10px] md:flex-row md:space-y-0 md:justify-between md:items-center">
                       <div className="flex items-center space-x-[15px]">
@@ -318,7 +323,8 @@ const Reservations = ({ progressUrl, progressData }) => {
 
                     {/* buy items */}
                     <div className="">
-                      <BuyItems />
+                      <BuyItems clickedModalOpen={clickedModalOpen}
+                                setClickedModalOpen={setClickedModalOpen} />
                     </div>
 
                     {/* pick items */}

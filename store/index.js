@@ -19,11 +19,12 @@ import {
 import autoMergeLevel2 from "redux-persist/lib/stateReconciler/autoMergeLevel2";
 import hardSet from "redux-persist/lib/stateReconciler/hardSet";
 import createWebStorage from "redux-persist/lib/storage/createWebStorage";
-import cartReducer from "./userSlice";
 import quoteReducer from "./quoteSlice";
 import userReducer from "./userSlice";
 import moverReducer from "./moverSlice";
 import moveItemsReducer from "./moveItemsSlice";
+import cartReducer from "./cartSlice";
+import packagingReducer from "./packagingSlice";
 
 ////////////
 // const createNoopStorage = () => {
@@ -51,6 +52,8 @@ const rootReducer = combineReducers({
   user: userReducer,
   mover: moverReducer,
   moveItems: moveItemsReducer,
+  cart: cartReducer,
+  packaging: packagingReducer,
 });
 
 const persistConfig = {
@@ -59,7 +62,7 @@ const persistConfig = {
   storage: localforage,
   // storage: storageSession,
   stateReconciler: hardSet,
-  blacklist: ["moveItems"],
+  blacklist: ["moveItems", "packaging"],
   // blacklist: ["mover"],
 };
 

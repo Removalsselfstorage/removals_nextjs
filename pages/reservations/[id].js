@@ -52,8 +52,9 @@ import PickUpItems from "@/components/Reservations/pickUpItems";
 import BuyItems from "@/components/Reservations/BuyItems";
 import useMoveItems from "@/hooks/useMoveItems";
 import CartSideDrawer from "@/components/Reservations/CartSideDrawer";
+import Stripe from "stripe";
 
-const Reservations = ({ progressUrl, progressData }) => {
+const Reservations = ({ progressUrl, progressData, prices }) => {
   const {
     setReserveDetailsFxn,
     updateReserveDetailsFxn,
@@ -179,7 +180,8 @@ const Reservations = ({ progressUrl, progressData }) => {
 
   // const {} = reserveDetails
 
-  console.log({ progressData, moveItems });
+  // console.log({ progressData, moveItems });
+  console.log({ prices });
 
   return (
     <>
@@ -356,6 +358,12 @@ export default Reservations;
 
 export async function getServerSideProps(context) {
   const { id } = context.params; // Access the UID from the URL
+  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
+  const {data: prices} = await stripe.prices.list({
+    active: true,
+    limit: 10,
+    expand: ['data.product'],
+  })
   // const userData = await fetchAllMoversDetailsArray();
 
   const bookingRef = doc(db, "bookingData", id);
@@ -370,6 +378,7 @@ export async function getServerSideProps(context) {
       // userData,
       progressUrl: id,
       progressData,
+      prices,
       // userData,
     },
   };

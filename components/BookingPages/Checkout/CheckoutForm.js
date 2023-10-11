@@ -391,9 +391,9 @@ const CheckoutForm = () => {
             <PayPalButtons style={{ layout: "vertical" }} />
           </PayPalScriptProvider>
         </div>
-        <div className="btn btn-primary" onClick={redirectToCheckout}>
+        {/* <div className="btn btn-primary" onClick={redirectToCheckout}>
           Stripe payment
-        </div>
+        </div> */}
         <div className="w-full flex justify-center">
           <img
             src="/svg/cards.svg"

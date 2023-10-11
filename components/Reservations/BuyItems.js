@@ -4,6 +4,10 @@ import ProductRow from "./ProductRow";
 import { MdNotificationsActive } from "react-icons/md";
 import { BsCart4 } from "react-icons/bs";
 import useProductCart from "@/hooks/useProductCart";
+import { doc, setDoc } from "firebase/firestore";
+import { db } from "@/firebase";
+import useQuote from "@/hooks/useQuote";
+import { getCurrentDateFormatted } from "@/utils/logics";
 
 const BuyItems = ({
   image,
@@ -101,6 +105,34 @@ const BuyItems = ({
     router,
   } = useProductCart();
 
+  const { reserveDetails, resetBookS, reserveId, updateReserveIdFxn } =
+    useQuote();
+
+  const bookingId = reserveDetails?.bookingId;
+
+  const handleCart = async () => {
+    try {
+      await setDoc(
+        doc(db, "bookingData", bookingId),
+
+        {
+          date: getCurrentDateFormatted(),
+          stage: "reservation",
+          cartCheckedOut: "NO",
+          cartItems: allCartProducts,
+        },
+        { merge: true }
+      );
+
+      // return true;
+      console.log("cart items update was successful @ reservation");
+    } catch (error) {
+      console.log(error);
+      // return false;
+      console.log("cart items update was unsuccessful @ reservation");
+    }
+  };
+
   // const [allProducts, setAllProducts] = useState(products);
 
   return (
@@ -113,7 +145,7 @@ const BuyItems = ({
           <label
             htmlFor="my_drawer_44"
             className="drawer-button  flex items-center relative cursor-pointer"
-            // onClick={setClickedModalOpen(true)}
+            onClick={handleCart}
           >
             <span className="text-[25px] mr-[10px] ">
               <BsCart4 />
@@ -127,7 +159,7 @@ const BuyItems = ({
           <label
             htmlFor="my_drawer_44"
             className="drawer-button btn btn-outline btn-primary  flex items-center relative cursor-pointer"
-            // onClick={setClickedModalOpen(true)}
+            onClick={handleCart}
           >
             CheckOut Cart
           </label>

@@ -1,17 +1,19 @@
 import ReviewCard2 from "@/components/HomePage/OurReviews/ReviewCard2";
 import StarRating from "@/components/Rating/EditHalfStars2";
 import { reviews } from "@/dummyData/dummyData";
+import { doc, setDoc } from "firebase/firestore";
+import { db } from "@/firebase";
 import useQuote from "@/hooks/useQuote";
 import {
   getAllDetails,
   updateMoverDetails,
   updateMoverSideDetails,
 } from "@/store/quoteSlice";
-import { changeFontWeight, changeFontWeight2 } from "@/utils/logics";
+import { changeFontWeight, changeFontWeight2, getCurrentDateFormatted } from "@/utils/logics";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
-import { FaTruckMoving } from "react-icons/fa";
+import { FaArrowRight, FaTruckMoving } from "react-icons/fa";
 import { FiCheckCircle } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
 import NumberInput from "./numberInput";
@@ -21,6 +23,7 @@ import useProductCart from "@/hooks/useProductCart";
 import NumberInputPackaging from "./numberInputPackaging";
 import { BsCart4 } from "react-icons/bs";
 import { formatPrice } from "@/utils/logics";
+import { packagingCheckout } from "@/lib/packagingCheckout";
 
 const CartSideDrawer = ({
   image,
@@ -54,6 +57,9 @@ const CartSideDrawer = ({
 
     router,
   } = useProductCart();
+
+  const { reserveDetails, resetBookS, reserveId, updateReserveIdFxn } =
+    useQuote();
 
   const products = [
     {
@@ -136,6 +142,42 @@ const CartSideDrawer = ({
     return formatPrice(totalPrice);
   };
 
+  const bookingId = reserveDetails?.bookingId;
+
+  const handleCart = async () => {
+    try {
+      await setDoc(
+        doc(db, "bookingData", bookingId),
+
+        {
+          date: getCurrentDateFormatted(),
+          stage: "shopping cart checkout",
+          cartItems: allCartProducts,
+          cartCheckedOut: "YES",
+          cartPaymentStatus: "INITIATED",
+        },
+        { merge: true }
+      );
+
+      // return true;
+      console.log("cart items update was successful @ Shopping Cart");
+    } catch (error) {
+      console.log(error);
+      // return false;
+      console.log("cart items update was unsuccessful @ Shopping Cart");
+    }
+  };
+
+  const handleCheckout = (event) => {
+    event.preventDefault();
+    setSubmitLoading(true);
+    packagingCheckout(allCartProducts);
+    handleCart();
+    // resetCartFxn();
+  };
+
+  // console.log({ allCartProducts });
+
   return (
     <div className="drawer drawer-end">
       <input
@@ -149,14 +191,14 @@ const CartSideDrawer = ({
         <label htmlFor="my_drawer_44" className="drawer-overlay"></label>
         <div className="lg:w-[50vw] w-[90vw]  md:w-[70vw] px-[20px]  bg-white text-base-content min-h-screen">
           <div className="flex flex-col  overflow-auto-y py-[30px]">
-            <div
-              className="mb-[30px] flex space-x-[30px] items-center border-b py-[10px]"
-              onClick={handleClick}
-            >
-              <span className="text-[40px] text-primary cursor-pointer">
+            <div className="mb-[30px] flex justify-between items-center border-b py-[10px]">
+              <p className="text-2xl font-bold mb-[0px] ">Shopping Cart</p>
+              <div
+                className="text-[40px] text-primary cursor-pointer"
+                onClick={handleClick}
+              >
                 <AiOutlineCloseCircle />
-              </span>
-              <p className="text-2xl font-bold mb-[0px] ">Cart Checkout</p>
+              </div>
             </div>
 
             {allCartProducts?.map((cp, index) => {
@@ -212,13 +254,21 @@ const CartSideDrawer = ({
             })}
 
             {allCartProducts?.length > 0 && (
-              <div className="flex items-center justify-between mt-[20px] px-[10px]">
+              <div className="flex items-start justify-between mt-[20px] px-[10px]">
                 <div className="flex items-center space-x-[10px] flex-[1]">
-                  <p className="line-clamp-2 font-bold text-[20px] text-primary">
-                    Total Price
-                  </p>
+                  <div className="flex flex-col space-y-[0px]">
+                    <p className="line-clamp-2 font-bold text-[20px] text-primary">
+                      SubTotal
+                    </p>
+                    <p className="line-clamp-2 text-[14px] text-gray-500">
+                      VAT included
+                    </p>
+                  </div>
                 </div>
-                <div className="flex flex-col items-center ml-[30px]">
+                <div className="flex items-center space-x-[20px]">
+                  {/* <p className="line-clamp-2 font-bold text-[20px] text-primary">
+                    Total Price:
+                  </p> */}
                   <p className="font-bold text-[20px]">{totalPrice()}</p>
                 </div>
               </div>
@@ -235,24 +285,37 @@ const CartSideDrawer = ({
 
             {/* check out */}
             {allCartProducts?.length > 0 && (
-              <div className="flex flex-col space-y-[10px] md:space-y-0 md:flex-row  items-center md:space-x-[20px] justify-center mt-[30px] mb-[20px]">
-                <button
-                  // disabled={submitLoading}
-                  onClick={() => resetCartFxn()}
-                  className="btn btn-primary btn-outline btn-wide  "
+              <div className="flex flex-col space-y-[10px] items-center">
+                <div className="flex flex-col space-y-[10px] md:space-y-0 md:flex-row  md:items-center md:space-x-[20px] justify-center mt-[30px] mb-[20px]">
+                  <button
+                    disabled={submitLoading}
+                    onClick={() => resetCartFxn()}
+                    className="btn btn-primary btn-outline xl:btn-wide  "
+                  >
+                    Clear All Cart
+                  </button>
+                  <button
+                    disabled={submitLoading}
+                    onClick={handleCheckout}
+                    className="btn btn-primary xl:btn-wide  "
+                  >
+                    {!submitLoading && <span className="">Check Out</span>}
+                    {submitLoading && (
+                      <span className="loading loading-dots loading-md text-white"></span>
+                    )}
+                  </button>
+                </div>
+                <div
+                  className="flex items-center space-x-[10px] flex-[1] w-full justify-center  cursor-pointer"
+                  onClick={handleClick}
                 >
-                  Clear All Cart
-                </button>
-                <button
-                  // disabled={submitLoading}
-                  // onClick={onCheckout}
-                  className="btn btn-primary btn-wide  "
-                >
-                  {!submitLoading && <span className="">Check Out</span>}
-                  {submitLoading && (
-                    <span className="loading loading-dots loading-md text-white"></span>
-                  )}
-                </button>
+                  <p className="text-[14px] line-clamp-2  ">
+                    Or <span className="text-primary">continue Shopping</span>
+                  </p>
+                  <span className="text-[14px] text-primary">
+                    <FaArrowRight />
+                  </span>
+                </div>
               </div>
             )}
           </div>

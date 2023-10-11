@@ -120,7 +120,7 @@ const ReservationCheckoutSuccess = () => {
 
   const notificationEmail = [
     { email: "ifeanyi4umeh@gmail.com" },
-    // { email: "removalsselfstorage@gmail.com" },
+    { email: "removalsselfstorage@gmail.com" },
   ];
 
   const notificationParams = {
@@ -278,10 +278,10 @@ const ReservationCheckoutSuccess = () => {
                         <span className="font-bold">Email:</span>{" "}
                         {customer?.email}
                       </span>
-                      <span className="block">
+                      {customer?.address.country && <span className="block">
                         <span className="font-bold">Country:</span>{" "}
                         {customer?.address.country}
-                      </span>
+                      </span>}
 
                       {customer?.address.postal_code && (
                         <span className="block">

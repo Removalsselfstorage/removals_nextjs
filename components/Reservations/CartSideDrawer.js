@@ -135,7 +135,7 @@ const CartSideDrawer = ({
 
   const notificationEmail = [
     { email: "ifeanyi4umeh@gmail.com" },
-    // { email: "removalsselfstorage@gmail.com" },
+    { email: "removalsselfstorage@gmail.com" },
   ];
 
   const notificationParams = {

@@ -8,6 +8,7 @@ import useQuote from "@/hooks/useQuote";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "@/firebase";
 import { getCurrentDateFormatted } from "@/utils/logics";
+import { allNotificationEmail } from "@/lib/sendCustomEmail";
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
@@ -117,11 +118,36 @@ const ReservationCheckoutSuccess = () => {
     }
   };
 
+  const notificationEmail = [
+    { email: "ifeanyi4umeh@gmail.com" },
+    // { email: "removalsselfstorage@gmail.com" },
+  ];
+
+  const notificationParams = {
+    // firstName: reserveDetails?.firstName,
+    // lastName: reserveDetails?.lastName,
+    // itemNumber: products?.length,
+    // totalPrice: total,
+    message: `User ${reserveDetails?.firstName} ${reserveDetails?.lastName} with booking ID ${reserveDetails?.bookingId} just successfully paid for ${products?.length} packaging items(s) with a total price of ${total}.`,
+    subject: `Successful packaging items payment by user ${reserveDetails?.firstName} ${reserveDetails?.lastName}`,
+    bookLink: `https://rss-admin.vercel.app/secret-admin/users/booking/${reserveDetails?.bookingId}`,
+    bookingId: reserveDetails?.bookingId,
+    // page: "checkout page",
+  };
+
+  const sendAllNotificationEmail = async () => {
+    try {
+      await allNotificationEmail(notificationEmail, notificationParams);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     resetCartFxn();
-    if (customer) {
-      sendStripe();
-    }
+    // if (customer) {
+    //   sendStripe();
+    // }
     // setTimeout(() => {
     // }, 3000);
   }, []);
@@ -129,6 +155,7 @@ const ReservationCheckoutSuccess = () => {
   useEffect(() => {
     if (customer) {
       sendStripe();
+      sendAllNotificationEmail();
     }
     // setTimeout(() => {
     // }, 3000);

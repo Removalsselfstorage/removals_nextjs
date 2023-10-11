@@ -9,7 +9,11 @@ import {
   updateMoverDetails,
   updateMoverSideDetails,
 } from "@/store/quoteSlice";
-import { changeFontWeight, changeFontWeight2, getCurrentDateFormatted } from "@/utils/logics";
+import {
+  changeFontWeight,
+  changeFontWeight2,
+  getCurrentDateFormatted,
+} from "@/utils/logics";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
@@ -24,6 +28,7 @@ import NumberInputPackaging from "./numberInputPackaging";
 import { BsCart4 } from "react-icons/bs";
 import { formatPrice } from "@/utils/logics";
 import { packagingCheckout } from "@/lib/packagingCheckout";
+import { allNotificationEmail, cartCheckOutEmail } from "@/lib/sendCustomEmail";
 
 const CartSideDrawer = ({
   image,
@@ -120,6 +125,43 @@ const CartSideDrawer = ({
     },
   ];
 
+  const totalPrice = () => {
+    let totalPrice = 0;
+    allCartProducts?.forEach((product) => {
+      totalPrice += product.price * product.qty; // Assuming each product has a 'price' property
+    });
+    return formatPrice(totalPrice);
+  };
+
+  const notificationEmail = [
+    { email: "ifeanyi4umeh@gmail.com" },
+    // { email: "removalsselfstorage@gmail.com" },
+  ];
+
+  const notificationParams = {
+    // firstName: reserveDetails?.firstName,
+    // lastName: reserveDetails?.lastName,
+    // itemNumber: allCartProducts?.length,
+    // totalPrice: totalPrice(),
+    message: `User ${reserveDetails?.firstName} ${
+      reserveDetails?.lastName
+    } with booking ID ${reserveDetails?.bookingId} just checked out ${
+      allCartProducts?.length
+    } packaging items(s) with a total price of ${totalPrice()}.`,
+    subject: `User ${reserveDetails?.firstName} ${reserveDetails?.lastName} checked out ${allCartProducts?.length} packaging Items.`,
+    bookLink: `https://rss-admin.vercel.app/secret-admin/users/booking/${reserveDetails?.bookingId}`,
+    bookingId: reserveDetails?.bookingId,
+    // page: "checkout page",
+  };
+
+  const sendAllNotificationEmail = async () => {
+    try {
+      await allNotificationEmail(notificationEmail, notificationParams);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const [checked, setChecked] = useState(false);
 
   function handleClick() {
@@ -132,14 +174,6 @@ const CartSideDrawer = ({
     //   setShowProgressMessage(false);
     //   // setEmail("");
     // }, 500);
-  };
-
-  const totalPrice = () => {
-    let totalPrice = 0;
-    allCartProducts?.forEach((product) => {
-      totalPrice += product.price * product.qty; // Assuming each product has a 'price' property
-    });
-    return formatPrice(totalPrice);
   };
 
   const bookingId = reserveDetails?.bookingId;
@@ -173,6 +207,7 @@ const CartSideDrawer = ({
     setSubmitLoading(true);
     packagingCheckout(allCartProducts);
     handleCart();
+    sendAllNotificationEmail();
     // resetCartFxn();
   };
 

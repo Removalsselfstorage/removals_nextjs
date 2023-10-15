@@ -16,7 +16,7 @@ const initialState = {
       stripe_id: "price_1NzkoAA4LmEvtWCn8SymUqKp",
       image:
         "https://www.globepackaging.co.uk/images/Removal%20kit%20no%201%20GP%20site.jpg",
-      name: "House Moving Removal Kit No 1 (40 Cardboard Boxes + Materials)",
+      name: "House Moving Removal Kit No 1 (Cardboard Boxes + Materials)",
       price: "39.99",
       qty: 1,
     },

@@ -16,6 +16,7 @@ import {
   calculatePriceDecrease,
   convertDateFormat,
   decreaseByPercentage,
+  formatMovePrice,
   generatePriceArray,
   generatePriceList,
   generatePriceList2,
@@ -225,7 +226,8 @@ const PriceDatePick = ({ setShowLoader, setTodayPick }) => {
                   {trimDate(pr.date)}
                 </p>
                 <p className="font-bold text-[20px] md:text-[22px] whitespace-nowrap">
-                  ₤ {pr.price}
+                  {/* ₤  */}
+                  {formatMovePrice(pr.price)}
                 </p>
               </div>
             </div>

@@ -11,6 +11,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import {
   convertToSentenceCase,
+  formatMovePrice,
+  formatPrice,
   generateRandomValues,
   getCurrentDateFormatted,
 } from "@/utils/logics";
@@ -245,8 +247,6 @@ const PackageCard = ({
     }
   };
 
- 
-
   const onBookNow = async () => {
     setSubmitLoading(true);
     const userData = await fetchAllMoversDetailsArray();
@@ -324,7 +324,8 @@ const PackageCard = ({
               preferred ? "text-secondary" : "text-primary"
             }  text-[30px] mb-[10px] font-extrabold`}
           >
-            ₤ {totalPrice(totalMileage)}
+            {/* ₤  */}
+            {formatMovePrice(totalPrice(totalMileage))}
           </p>
           {/* <p className="">₤{price}</p> */}
           <div className="flex flex-col space-y-[5px] ">

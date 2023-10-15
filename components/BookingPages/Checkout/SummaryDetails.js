@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import dayjs from "dayjs";
 import { moveDesciptionsCalc, moveDesciptionsCalc2 } from "@/utils/moversLogic";
 import { FiCheckCircle } from "react-icons/fi";
+import { formatMovePrice } from "@/utils/logics";
 
 const SummaryDetails = (
   {
@@ -111,7 +112,8 @@ const SummaryDetails = (
           </h2>
           <div className="flex flex-col items-end">
             <h2 className="text-[16px] font-bold ">
-              ₤ {details.moverDetails.moverPrice}
+              {formatMovePrice(details.moverDetails.moverPrice)}
+              {/* ₤ {details.moverDetails.moverPrice} */}
             </h2>
             {/* <p className="text-[12px] text-gray-500">VAT included</p> */}
           </div>
@@ -145,7 +147,8 @@ const SummaryDetails = (
           <div className="flex flex-col items-end">
             {details.paymentDetails.paidPrice && (
               <h2 className="text-[25px] font-bold ">
-                ₤ {details.paymentDetails.paidPrice}
+                {formatMovePrice(details.paymentDetails.paidPrice)}
+                {/* ₤ {details.paymentDetails.paidPrice} */}
               </h2>
             )}
 

@@ -165,6 +165,9 @@ const Reservations = ({ progressUrl, progressData, prices }) => {
       paidFull: progressData?.paidFull,
       paidPrice: progressData?.paidPrice,
       paymentType: progressData?.paymentType,
+      cartItems: progressData?.cartItems,
+      stripeCartProducts: progressData?.cartStripeProducts,
+      stripeCartDetails: progressData?.cartStripeDetails,
     });
   }, []);
 
@@ -181,7 +184,7 @@ const Reservations = ({ progressUrl, progressData, prices }) => {
   // const {} = reserveDetails
 
   // console.log({ progressData, moveItems });
-  console.log({ prices });
+  // console.log({ progressData });
 
   return (
     <>
@@ -207,7 +210,7 @@ const Reservations = ({ progressUrl, progressData, prices }) => {
                   {/* right section */}
                   <div className="bg-white shadow-lg rounded-[30px] lg:flex-[3] px-[20px] py-[30px] md:px-[30px] w-full ">
                     {/* side drawer */}
-                    <CartSideDrawer/>
+                    <CartSideDrawer />
                     {/* heading */}
                     <div className="flex flex-col space-y-[10px] md:flex-row md:space-y-0 md:justify-between md:items-center">
                       <div className="flex items-center space-x-[15px]">
@@ -325,8 +328,10 @@ const Reservations = ({ progressUrl, progressData, prices }) => {
 
                     {/* buy items */}
                     <div className="">
-                      <BuyItems clickedModalOpen={clickedModalOpen}
-                                setClickedModalOpen={setClickedModalOpen} />
+                      <BuyItems
+                        clickedModalOpen={clickedModalOpen}
+                        setClickedModalOpen={setClickedModalOpen}
+                      />
                     </div>
 
                     {/* pick items */}
@@ -358,12 +363,12 @@ export default Reservations;
 
 export async function getServerSideProps(context) {
   const { id } = context.params; // Access the UID from the URL
-  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
-  const {data: prices} = await stripe.prices.list({
+  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+  const { data: prices } = await stripe.prices.list({
     active: true,
     limit: 10,
-    expand: ['data.product'],
-  })
+    expand: ["data.product"],
+  });
   // const userData = await fetchAllMoversDetailsArray();
 
   const bookingRef = doc(db, "bookingData", id);

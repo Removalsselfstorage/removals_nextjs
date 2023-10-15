@@ -34,7 +34,7 @@ const ProductCard = ({ product, image, name, price }) => {
     });
   };
 
-  console.log({ allCartProducts });
+  // console.log({ allCartProducts });
 
   return (
     <div className="flex flex-col items-center justify-center w-[250px] py-[20px]  px-[10px] my-[10px] border border-gray-100  bg-white rounded-md shadow-md hover:shadow-lg transition-all duration-300">

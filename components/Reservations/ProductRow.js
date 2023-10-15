@@ -38,7 +38,7 @@ const ProductRow = ({ products, id }) => {
     }
   };
 
-  console.log({ allProducts });
+  // console.log({ allProducts });
 
   return (
     <div id={id} className="">

@@ -18,9 +18,10 @@ import { doc, serverTimestamp, setDoc } from "firebase/firestore";
 import { getCurrentDateFormatted } from "@/utils/logics";
 import useQuote from "@/hooks/useQuote";
 import { db } from "@/firebase";
-import { bookedEmail } from "@/lib/sendCustomEmail";
+import { allNotificationEmail, bookedEmail } from "@/lib/sendCustomEmail";
 import getStripe from "@/lib/get-stripe";
 import axios from "axios";
+import { moveCheckout } from "@/lib/moveCheckout";
 
 const CheckoutForm = () => {
   const {
@@ -150,15 +151,69 @@ const CheckoutForm = () => {
     }
   };
 
+  const notificationEmail = [
+    { email: "ifeanyi4umeh@gmail.com" },
+    // { email: "removalsselfstorage@gmail.com" },
+  ];
+
+  const notificationParams = {
+    // firstName: reserveDetails?.firstName,
+    // lastName: reserveDetails?.lastName,
+    // itemNumber: allCartProducts?.length,
+    // totalPrice: totalPrice(),
+    message: `User ${personalDetails?.firstName} ${personalDetails?.lastName} with booking ID ${moveDetails?.bookingId} just checked out payment for ${moveDetails?.propertyType} ${moveDetails?.movePackage} Package with ${moveDetails?.numberOfMovers} and Jumbo Van with a total price of ₤${paymentDetails?.paidPrice} out of ₤${moverDetails?.moverPrice}.`,
+    subject: `User ${personalDetails?.firstName} ${personalDetails?.lastName} checked out ${moveDetails?.propertyType} ${moveDetails?.movePackage} package`,
+    bookLink: `https://rss-admin.vercel.app/secret-admin/users/booking/${moveDetails?.bookingId}`,
+    bookingId: moveDetails?.bookingId,
+    // page: "checkout page",
+  };
+
+  const sendAllNotificationEmail = async () => {
+    try {
+      await allNotificationEmail(notificationEmail, notificationParams);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const bookingId = moveDetails?.bookingId;
 
   const bookingRef = doc(db, "bookingData", bookingId);
 
+  const computePriceId = () => {
+    switch (moveDetails?.movePackage) {
+      case "Standard":
+        return "price_1O1VVhA4LmEvtWCnWuQno1NU";
+        break;
+
+      case "Gold":
+        return "price_1O1VWrA4LmEvtWCnAJCO7fUY";
+        break;
+
+      case "Premium":
+        return "price_1O1VXKA4LmEvtWCnNCaYJQyG";
+        break;
+
+      case "Premium plus":
+        return "price_1O1VYAA4LmEvtWCnXFzwlz8L";
+        break;
+
+      default:
+        break;
+    }
+  };
+
+  const stripeProductId = computePriceId()
+
   const completeCheckout = async () => {
     // setProgressLoading(true);
+
+    setSubmitLoading(true);
     updateBookS("book/checkout");
 
-    sendBookedMail();
+    // sendBookedMail();
+
+    sendAllNotificationEmail();
 
     updatePayment({
       comment: comments,
@@ -181,11 +236,13 @@ const CheckoutForm = () => {
           completedBook: true,
           paidPrice,
           paymentType: paidPart ? "20%" : paidFull ? "Full" : "",
+          moveCheckedOut: "YES",
+          movePaymentStatus: "INITIATED",
         },
         { merge: true }
       );
 
-      window.my_modal_13.showModal();
+      // window.my_modal_13.showModal();
       // return true;
       console.log("booking update was successful @ checkout");
     } catch (error) {
@@ -193,6 +250,8 @@ const CheckoutForm = () => {
       // return false;
       console.log("booking update was unsuccessful @ checkout");
     }
+
+    moveCheckout(moveDetails, stripeProductId);
   };
 
   const reservationSubmit = () => {
@@ -220,19 +279,9 @@ const CheckoutForm = () => {
 
   //paymentDetails.paidPrice
 
-  const redirectToCheckout = async () => {
-    const {
-      data: { id },
-    } = await axios.post("/api/checkout_sessions", {
-      items: {
-        id: price_1Nyjx0A4LmEvtWCnozYnkIE3,
-        quantity: 1,
-      },
-    });
+ 
 
-    const stripe = await getStripe();
-    await stripe.redirectToCheckout({ sessionId: id });
-  };
+ 
 
   console.log({ paymentDetails, moveDetails });
 
@@ -380,20 +429,18 @@ const CheckoutForm = () => {
           </div>
         </div>
       </div>
+
       {/* full payment row */}
-      <div className="mt-[30px] md:mt-[50px]">
+      {/* <div className="mt-[30px] md:mt-[50px]">
         <h1 className="text-xl font-bold mb-[20px] px-[0px]">
           Payment Method*
         </h1>
-        {/* row 1 */}
         <div className="w-full md:px-[100px]">
           <PayPalScriptProvider options={initialOptions}>
             <PayPalButtons style={{ layout: "vertical" }} />
           </PayPalScriptProvider>
         </div>
-        {/* <div className="btn btn-primary" onClick={redirectToCheckout}>
-          Stripe payment
-        </div> */}
+      
         <div className="w-full flex justify-center">
           <img
             src="/svg/cards.svg"
@@ -401,7 +448,8 @@ const CheckoutForm = () => {
             className="h-[15px] md:h-[25px] w-fit"
           />
         </div>
-      </div>
+      </div> */}
+
       {/* comment row */}
       <div className="mt-[30px] md:mt-[30px]">
         <h1 className="text-xl font-bold mb-[20px] px-[0px]">
@@ -449,7 +497,7 @@ const CheckoutForm = () => {
         {!submitLoading && <span className="">Complete Check-Out</span>}
         {submitLoading && (
           <>
-            <span>Booking</span>
+            <span>Checking Out</span>
             <span
               className={`loading loading-dots loading-md text-white`}
             ></span>

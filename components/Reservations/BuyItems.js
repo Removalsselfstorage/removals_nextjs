@@ -134,6 +134,7 @@ const BuyItems = ({
   };
 
   // const [allProducts, setAllProducts] = useState(products);
+  console.log({ reserveDetails });
 
   return (
     <div>
@@ -164,6 +165,19 @@ const BuyItems = ({
             CheckOut Cart
           </label>
         </div>
+      </div>
+
+      <div className="w-full mb-[20px]">
+        {reserveDetails?.stripeCartProducts?.length > 0 && (
+          <div className="text-secondary font-bold">Ordered Items: </div>
+        )}
+        {reserveDetails?.stripeCartProducts?.map((sp, index) => {
+          return (
+            <div className="text-[14px] font-semibold" key={index}>
+              {sp.quantity} x {sp.name},{" "}
+            </div>
+          );
+        })}
       </div>
 
       <ProductRow

@@ -8,9 +8,10 @@ import useQuote from "@/hooks/useQuote";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "@/firebase";
 import { getCurrentDateFormatted } from "@/utils/logics";
-import { allNotificationEmail } from "@/lib/sendCustomEmail";
+import { allNotificationEmail, bookedEmail } from "@/lib/sendCustomEmail";
 import Lottie from "lottie-react";
 import success from "@/lottieJsons/success.json";
+import { initializeApp } from "firebase/app";
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
@@ -32,13 +33,44 @@ const ReservationCheckoutSuccess = () => {
     resetCartFxn,
     calculateTotalPriceFxn,
 
-    router,
+    // router,
   } = useProductCart();
+
+  const {
+    serviceLocation,
+    personalDetails,
+    moveDetails,
+    moverSideDetails,
+    moverDetails,
+    paymentDetails,
+    bookStage,
+    updateLocationFrom,
+    resetLocationFrom,
+    updateLocationTo,
+    resetLocationTo,
+    updatePersonal,
+    resetPersonal,
+    updateMove,
+    resetMove,
+    updateMover,
+    resetMover,
+    updatePayment,
+    resetPayment,
+    updatePickP,
+    updateMoverSide,
+    resetMoverSide,
+    updateBookS,
+    resetBookS,
+    updateReserveIdFxn,
+    reserveId,
+    router,
+  } = useQuote();
+
+  // const { paidPart, paidFull, paidPrice, paymentType } = paymentDetails;
 
   const [submitLoading, setSubmitLoading] = useState(false);
 
   const { reserveDetails } = useQuote();
-  const bookingId = reserveDetails?.bookingId;
 
   const {
     query: { sessionId },
@@ -95,32 +127,29 @@ const ReservationCheckoutSuccess = () => {
 
         {
           date: getCurrentDateFormatted(),
-          stage: "cart checkout successful",
-          cartCheckedOut: "YES",
-          cartPaymentStatus: "PAID",
-          cartStripeDetails: {
-            stripeCartName: customer?.name,
-            stripeCartEmail: customer?.email,
-            stripeCartCountry: customer?.address.country,
-            // stripeCartProducts: products,
-            stripeCartPaymentType: payment,
-            stripeCartSubtotal: subtotal,
-            stripeCartTotal: total,
+          stage: "move checkout successful",
+          movePaymentStatus: "PAID",
+          moveStripeDetails: {
+            stripeName: customer?.name,
+            stripeEmail: customer?.email,
+            stripeCountry: customer?.address.country,
+            // stripeProducts: products,
+            stripePaymentType: payment,
+            stripeSubtotal: subtotal,
+            stripeTotal: total,
           },
-          cartStripeProducts:
-            reserveDetails?.stripeCartProducts?.length > 0
-              ? [...reserveDetails?.stripeCartProducts, ...products]
-              : products,
+          // moveStripeProducts: products,
+          moveStripePayments: [total],
         },
         { merge: true }
       );
 
       // return true;
-      console.log("cart items update was successful @ Shopping Cart");
+      console.log("move checkout update was successful @ Checkout success");
     } catch (error) {
       console.log(error);
       // return false;
-      console.log("cart items update was unsuccessful @ Shopping Cart");
+      console.log("move checkout update was unsuccessful @ Checkout success");
     }
   };
 
@@ -129,16 +158,82 @@ const ReservationCheckoutSuccess = () => {
     // { email: "removalsselfstorage@gmail.com" },
   ];
 
+  // const firstNameInit = personalDetails?.firstName;
+  // const firstName = firstNameInit;
+  // const lastNameInit = personalDetails?.lastName;
+  // const lastName = lastNameInit;
+  // const bookingIdInit = moveDetails?.bookingId;
+  // const bookingId = bookingIdInit;
+  // const propertyTypeInit = moveDetails?.propertyType;
+  // const propertyType = propertyTypeInit;
+  // const movePackageInit = moveDetails?.movePackage;
+  // const movePackage = movePackageInit;
+  // const numberOfMoversInit = moveDetails?.numberOfMovers;
+  // const numberOfMovers = numberOfMoversInit;
+  // const moverPriceInit = moverDetails?.moverPrice;
+  // const moverPrice = moverPriceInit;
+
+  const [details, setDetails] = useState({});
+
+  const {
+    firstName,
+    lastName,
+    bookingId,
+    propertyType,
+    movePackage,
+    numberOfMovers,
+    moverPrice,
+    paymentType,
+  } = details;
+
   const notificationParams = {
     // firstName: reserveDetails?.firstName,
     // lastName: reserveDetails?.lastName,
     // itemNumber: products?.length,
     // totalPrice: total,
-    message: `User ${reserveDetails?.firstName} ${reserveDetails?.lastName} with booking ID ${reserveDetails?.bookingId} just successfully paid for ${products?.length} packaging items(s) with a total price of ${total}.`,
-    subject: `Successful packaging items payment by user ${reserveDetails?.firstName} ${reserveDetails?.lastName}`,
-    bookLink: `https://rss-admin.vercel.app/secret-admin/users/booking/${reserveDetails?.bookingId}`,
-    bookingId: reserveDetails?.bookingId,
+    message: `User ${firstName} ${lastName} with booking ID ${bookingId} just successfully paid for ${propertyType} ${movePackage} Package with ${numberOfMovers} and Jumbo Van with a total price of ${total} out of ₤${moverPrice}.`,
+    subject: `Successful move payment by user ${firstName} ${lastName}`,
+    bookLink: `https://rss-admin.vercel.app/secret-admin/users/booking/${bookingId}`,
+    bookingId,
     // page: "checkout page",
+  };
+
+  const params3 = {
+    firstName: personalDetails?.firstName,
+    lastName: personalDetails?.lastName,
+    email: personalDetails?.email,
+    quoteRef: moveDetails?.quoteRef,
+    progressLink: `https://removalstorage.vercel.app/book/checkout/${moveDetails?.bookingId}`,
+    // progressLink2: `https://removalstorage.vercel.app/book/checkout/${moveDetails?.bookingId}`,
+    progressLink2: `https://removalstorage.vercel.app/reservations`,
+    address1: serviceLocation?.locationFrom?.name,
+    address2: serviceLocation?.locationTo?.name,
+    initialPackagePrice: moveDetails?.initialPackagePrice,
+    pickPrice: moverDetails?.pickPrice,
+    propertyType: moveDetails?.propertyType,
+    numberOfMovers: moveDetails?.numberOfMovers,
+    mileage: moveDetails?.mileage,
+    volume: moveDetails?.volume,
+    duration: moveDetails?.duration,
+    moveDate: moveDetails?.moveDate,
+    movePackage: moveDetails?.movePackage,
+    moverName: moverDetails?.moverName,
+    moverPrice: moverDetails?.moverPrice,
+    paidPrice: paymentDetails?.paidPrice,
+    paymentType: paymentDetails?.paidPrice
+      ? "20%"
+      : paymentDetails?.paidFull
+      ? "full"
+      : "",
+    bookingId: moveDetails?.bookingId,
+  };
+
+  const sendBookedMail = async () => {
+    try {
+      await bookedEmail(personalDetails?.email, params3);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const sendAllNotificationEmail = async () => {
@@ -150,46 +245,76 @@ const ReservationCheckoutSuccess = () => {
   };
 
   useEffect(() => {
-    resetCartFxn();
+    // resetCartFxn();
     // if (customer) {
     //   sendStripe();
     // }
-    // setTimeout(() => {
-    // }, 3000);
+    setDetails({
+      firstName: personalDetails?.firstName,
+      lastName: personalDetails?.lastName,
+      bookingId: moveDetails?.bookingId,
+      propertyType: moveDetails?.propertyType,
+      movePackage: moveDetails?.movePackage,
+      numberOfMovers: moveDetails?.numberOfMovers,
+      moverPrice: moverDetails?.moverPrice,
+      paymentType: paymentDetails?.paymentType,
+    });
+
+    if (
+      personalDetails &&
+      moveDetails &&
+      moverDetails &&
+      paymentDetails &&
+      serviceLocation
+    ) {
+      sendAllNotificationEmail();
+      sendBookedMail();
+    }
+
+    setTimeout(() => {
+      resetLocationFrom();
+      resetLocationTo();
+      resetPersonal();
+      resetMove();
+      resetMover();
+      resetPayment();
+      resetMoverSide();
+      resetBookS();
+    }, 5000);
   }, []);
 
   useEffect(() => {
     if (customer) {
       sendStripe();
-      sendAllNotificationEmail();
     }
     // setTimeout(() => {
     // }, 3000);
-  }, [customer]);
+  }, []);
 
   const handleDashboard = (event) => {
     event.preventDefault();
     setSubmitLoading(true);
-    router.push(`/reservations/${reserveDetails?.bookingId}`);
+    updateReserveIdFxn(bookingId);
+    router.push(`/reservations/${bookingId}`);
     // resetCartFxn();
   };
 
-  console.log({ reserveDetails });
+  console.log({ paymentType, bookingId });
 
   return (
     <BookingLayout>
       <div className="bg-white py-[20px]">
         <div className="max-w-3xl mx-auto px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
-        <div className="flex justify-center w-full">
+          <div className="flex justify-center w-full">
             <Lottie animationData={success} className="w-[200px]" />
           </div>
           <div className="max-w-xl">
             <h1 className="text-sm font-medium ">Payment successful</h1>
             <p className="mt-2 text-4xl font-extrabold tracking-tight text-primary sm:text-5xl">
-              Thanks for ordering
+              Thanks for Booking
             </p>
             <p className="mt-2 text-base text-gray-500">
-              We appreciate your order, we’re currently processing it. So hang
+              We appreciate your book, we’re currently processing it. So hang
               tight and we’ll send you confirmation very soon!
             </p>
 
@@ -203,9 +328,9 @@ const ReservationCheckoutSuccess = () => {
           </div>
 
           <div className="mt-10 border-t border-gray-200">
-            <h2 className="sr-only">Your order</h2>
+            <h2 className="mt-[20px] font-bold">Your Move Package:</h2>
 
-            <h3 className="sr-only">Items</h3>
+            {/* <h3 className="sr-only">Items</h3> */}
             {products?.map((product) => (
               <div
                 key={product.id}
@@ -221,25 +346,22 @@ const ReservationCheckoutSuccess = () => {
                     <h4 className="font-medium text-gray-900">
                       <a href={product.url}>{product.name}</a>
                     </h4>
-                    <p className="mt-2 text-sm text-gray-600">
+                    <p className="mt-2 text-sm text-gray-600 ">
                       {product.description}
                     </p>
                   </div>
                   <div className="mt-6 flex-1 flex items-end">
                     <dl className="flex text-sm divide-x divide-gray-200 space-x-4 sm:space-x-6">
-                      <div className="flex">
+                      {/* <div className="flex">
                         <dt className="font-medium text-gray-900">Quantity</dt>
                         <dd className="ml-2 text-gray-700">
                           {product.quantity}
                         </dd>
-                      </div>
-                      <div className="pl-4 flex sm:pl-6">
+                      </div> */}
+                      <div className="flex ">
                         <dt className="font-medium text-gray-900">Price</dt>
                         <dd className="ml-2 text-gray-700">
-                          {(product.price / 100).toLocaleString("en-GB", {
-                            style: "currency",
-                            currency: "GBP",
-                          })}
+                          {paymentType} Payment
                         </dd>
                       </div>
                     </dl>
@@ -340,7 +462,7 @@ const ReservationCheckoutSuccess = () => {
               className="btn btn-primary btn-wide"
             >
               {/* Return to Dashboard */}
-              {!submitLoading && <span className="">Return to Dashboard</span>}
+              {!submitLoading && <span className="">Go to Dashboard</span>}
               {submitLoading && (
                 <span className="loading loading-dots loading-md text-white"></span>
               )}

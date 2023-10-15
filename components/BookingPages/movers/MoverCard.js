@@ -26,6 +26,7 @@ import { useRouter } from "next/navigation";
 import {
   convertToFloatOrRound,
   convertToFloatWithOneDecimal,
+  formatMovePrice,
   getCurrentDateFormatted,
 } from "@/utils/logics";
 import { toast } from "react-hot-toast";
@@ -414,7 +415,8 @@ const MoverCard = ({
               >
                 <div className="flex flex-col items-center justify-center xl:items-center">
                   <p className="font-bold text-primary text-[24px] whitespace-nowrap">
-                    {`₤ ${price}`}
+                    {/* {`₤ ${price}`} */}
+                    {formatMovePrice(price)}
                   </p>
                   {/* <p className="text-[12px] text-gray-500">
                     Final price VAT included

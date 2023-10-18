@@ -72,7 +72,7 @@ const Reservations = ({ id, progressData, prices }) => {
     completedBook,
   } = useBookings();
 
-  // const [reserveDetails, setCompletedBooking] = useState({});
+  const [completedBooking, setCompletedBooking] = useState({});
   // const [extraPrice, setExtraPrice] = useState("");
 
   const {
@@ -105,7 +105,7 @@ const Reservations = ({ id, progressData, prices }) => {
   //setBedRoom
 
   useEffect(() => {
-    setReserveDetailsFxn(completedBook(id));
+    setCompletedBooking(completedBook(id));
   }, [completedBookings]);
 
   useEffect(() => {
@@ -115,52 +115,53 @@ const Reservations = ({ id, progressData, prices }) => {
   }, []);
 
   useEffect(() => {
-    progressData?.moveItems && resetMoveItemsFxn(progressData?.moveItems);
-    // setReserveDetailsFxn({
-    //   bookDate: progressData?.date,
-    //   address1: progressData?.address1,
-    //   postCode1: progressData?.postCode1,
-    //   city1: progressData?.city1,
-    //   country1: progressData?.country1,
-    //   floor1: progressData?.floor1,
-    //   liftAvailable1: progressData?.liftAvailable1,
-    //   address2: progressData?.address2,
-    //   postCode2: progressData?.postCode2,
-    //   city2: progressData?.city2,
-    //   country2: progressData?.country2,
-    //   floor2: progressData?.floor2,
-    //   liftAvailable2: progressData?.liftAvailable2,
-    //   firstName: progressData?.firstName,
-    //   lastName: progressData?.lastName,
-    //   email: progressData?.email,
-    //   countryCode: progressData?.countryCode,
-    //   telephone: progressData?.telephone,
-    //   bookingId: progressData?.bookingId,
-    //   propertyType: progressData?.propertyType,
-    //   numberOfMovers: progressData?.numberOfMovers,
-    //   mileage: progressData?.mileage,
-    //   volume: progressData?.volume,
-    //   duration: progressData?.duration,
-    //   moveDate: progressData?.moveDate,
-    //   movePackage: progressData?.movePackage,
-    //   quoteRef: progressData?.quoteRef,
-    //   initialPackagePrice: progressData?.initialPackagePrice,
-    //   moverName: progressData?.moverName,
-    //   moverTime: progressData?.moverTime,
-    //   moverPrice: progressData?.moverPrice,
-    //   pickPrice: progressData?.pickPrice,
-    //   moveDateFormatted: progressData?.moveDateFormatted,
-    //   dateId: progressData?.dateId,
-    //   paidPart: progressData?.paidPart,
-    //   paidFull: progressData?.paidFull,
-    //   paidPrice: progressData?.paidPrice,
-    //   paymentType: progressData?.paymentType,
-    //   cartItems: progressData?.cartItems,
-    //   stripeCartProducts: progressData?.cartStripeProducts,
-    //   stripeCartDetails: progressData?.cartStripeDetails,
-    //   extraPrice: progressData?.extraPrice,
-    // });
-  }, []);
+    completedBooking?.moveItems &&
+      resetMoveItemsFxn(completedBooking?.moveItems);
+    setReserveDetailsFxn({
+      bookDate: completedBooking?.date,
+      address1: completedBooking?.address1,
+      postCode1: completedBooking?.postCode1,
+      city1: completedBooking?.city1,
+      country1: completedBooking?.country1,
+      floor1: completedBooking?.floor1,
+      liftAvailable1: completedBooking?.liftAvailable1,
+      address2: completedBooking?.address2,
+      postCode2: completedBooking?.postCode2,
+      city2: completedBooking?.city2,
+      country2: completedBooking?.country2,
+      floor2: completedBooking?.floor2,
+      liftAvailable2: completedBooking?.liftAvailable2,
+      firstName: completedBooking?.firstName,
+      lastName: completedBooking?.lastName,
+      email: completedBooking?.email,
+      countryCode: completedBooking?.countryCode,
+      telephone: completedBooking?.telephone,
+      bookingId: completedBooking?.bookingId,
+      propertyType: completedBooking?.propertyType,
+      numberOfMovers: completedBooking?.numberOfMovers,
+      mileage: completedBooking?.mileage,
+      volume: completedBooking?.volume,
+      duration: completedBooking?.duration,
+      moveDate: completedBooking?.moveDate,
+      movePackage: completedBooking?.movePackage,
+      quoteRef: completedBooking?.quoteRef,
+      initialPackagePrice: completedBooking?.initialPackagePrice,
+      moverName: completedBooking?.moverName,
+      moverTime: completedBooking?.moverTime,
+      moverPrice: completedBooking?.moverPrice,
+      pickPrice: completedBooking?.pickPrice,
+      moveDateFormatted: completedBooking?.moveDateFormatted,
+      dateId: completedBooking?.dateId,
+      paidPart: completedBooking?.paidPart,
+      paidFull: completedBooking?.paidFull,
+      paidPrice: completedBooking?.paidPrice,
+      paymentType: completedBooking?.paymentType,
+      cartItems: completedBooking?.cartItems,
+      stripeCartProducts: completedBooking?.cartStripeProducts,
+      stripeCartDetails: completedBooking?.cartStripeDetails,
+      extraPrice: completedBooking?.extraPrice,
+    });
+  }, [completedBooking]);
 
   const currentDate = new Date();
 
@@ -175,7 +176,7 @@ const Reservations = ({ id, progressData, prices }) => {
   // const {} = reserveDetails
 
   // console.log({ progressData, moveItems });
-  console.log({ reserveDetails });
+  console.log({ completedBooking });
 
   return (
     <>

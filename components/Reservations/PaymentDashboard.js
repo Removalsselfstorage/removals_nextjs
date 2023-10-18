@@ -4,12 +4,12 @@ import { formatMovePrice } from "@/utils/logics";
 import React, { useEffect, useState } from "react";
 import { BiHelpCircle } from "react-icons/bi";
 
-const PaymentDashboard = ({ completedBooking, extraPrice }) => {
+const PaymentDashboard = () => {
   const {
     setReserveDetailsFxn,
     updateReserveDetailsFxn,
     resetReserveDetailsFxn,
-    // completedBooking,
+    reserveDetails,
     serviceLocation,
     personalDetails,
     moveDetails,
@@ -47,7 +47,7 @@ const PaymentDashboard = ({ completedBooking, extraPrice }) => {
   const [submitLoading2, setSubmitLoading2] = useState(false);
 
   const computeProductId = () => {
-    switch (completedBooking?.movePackage) {
+    switch (reserveDetails?.movePackage) {
       case "Standard":
         return "prod_Op9phPa4F3ONn6";
         break;
@@ -72,7 +72,7 @@ const PaymentDashboard = ({ completedBooking, extraPrice }) => {
   const stripeProductId = computeProductId();
 
   const stripeOutAmount = parseInt(
-    (completedBooking?.moverPrice - completedBooking?.paidPrice) * 100
+    (reserveDetails?.moverPrice - reserveDetails?.paidPrice) * 100
   );
 
   // useEffect(() => {
@@ -98,7 +98,7 @@ const PaymentDashboard = ({ completedBooking, extraPrice }) => {
 
   useEffect(() => {}, []);
 
-  console.log({ completedBooking });
+  console.log({ reserveDetails });
 
   return (
     <div className="flex flex-col space-y-[10px]">
@@ -107,12 +107,12 @@ const PaymentDashboard = ({ completedBooking, extraPrice }) => {
         <div className="flex flex-col px-[20px] py-[30px]">
           <div className="font-bold">Move Price</div>
           <div className="font-bold text-[30px]">
-            {/* ₤{completedBooking?.moverPrice} */}
-            {formatMovePrice(completedBooking?.moverPrice)}
+            {/* ₤{reserveDetails?.moverPrice} */}
+            {formatMovePrice(reserveDetails?.moverPrice)}
           </div>
           <div className="stat-actions">
             <div className="text-white font-semibold">
-              {completedBooking?.movePackage?.toUpperCase()}
+              {reserveDetails?.movePackage?.toUpperCase()}
             </div>
           </div>
         </div>
@@ -120,11 +120,11 @@ const PaymentDashboard = ({ completedBooking, extraPrice }) => {
         <div className="flex flex-col px-[20px] py-[30px]">
           <div className="font-bold">Payment made</div>
           <div className="font-bold text-[30px]">
-            {formatMovePrice(completedBooking?.paidPrice)}
+            {formatMovePrice(reserveDetails?.paidPrice)}
           </div>
           <div className="stat-actions">
             <div className="text-white font-semibold">
-              ({completedBooking?.paymentType} Deposit)
+              ({reserveDetails?.paymentType} Deposit)
             </div>
           </div>
         </div>
@@ -133,7 +133,7 @@ const PaymentDashboard = ({ completedBooking, extraPrice }) => {
           <div className="font-bold">Outstanding Payment</div>
           <div className="font-bold text-[30px]">
             {formatMovePrice(
-              completedBooking?.moverPrice - completedBooking?.paidPrice
+              reserveDetails?.moverPrice - reserveDetails?.paidPrice
             )}
           </div>
           <div className="stat-actions space-x-[10px]">
@@ -163,9 +163,9 @@ const PaymentDashboard = ({ completedBooking, extraPrice }) => {
         <div className="flex flex-col px-[20px] py-[30px]">
           <div className="font-bold">Extra Payment</div>
           <div className="font-bold text-[30px]">
-            {formatMovePrice(Number(completedBooking?.extraPrice) || 0.0)}
-            {/* {completedBooking?.moverPrice -
-            completedBooking?.paidPrice} */}
+            {formatMovePrice(Number(reserveDetails?.extraPrice) || 0.0)}
+            {/* {reserveDetails?.moverPrice -
+            reserveDetails?.paidPrice} */}
           </div>
           <div className="stat-actions space-x-[10px]">
             <button

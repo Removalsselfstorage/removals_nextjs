@@ -59,8 +59,7 @@ import useBookings from "@/hooks/useBookings";
 const Reservations = ({ id, progressData, prices }) => {
   const {
     setReserveDetailsFxn,
-   
-    
+    reserveDetails,
     router,
     reserveId,
     updateReserveIdFxn,
@@ -73,8 +72,8 @@ const Reservations = ({ id, progressData, prices }) => {
     completedBook,
   } = useBookings();
 
-  const [completedBooking, setCompletedBooking] = useState({});
-  const [extraPrice, setExtraPrice] = useState("");
+  // const [reserveDetails, setCompletedBooking] = useState({});
+  // const [extraPrice, setExtraPrice] = useState("");
 
   const {
     updateQtyInBedroomFxn,
@@ -106,8 +105,7 @@ const Reservations = ({ id, progressData, prices }) => {
   //setBedRoom
 
   useEffect(() => {
-    setCompletedBooking(completedBook(id));
-    setExtraPrice(completedBook(id)?.extraPrice);
+    setReserveDetailsFxn(completedBook(id));
   }, [completedBookings]);
 
   useEffect(() => {
@@ -167,17 +165,17 @@ const Reservations = ({ id, progressData, prices }) => {
   const currentDate = new Date();
 
   const givenDateString = dayjs(
-    convertDateFormat(completedBooking?.moveDate)
+    convertDateFormat(reserveDetails?.moveDate)
   ).format("dddd, MMMM D, YYYY");
   const givenDate = new Date(givenDateString);
 
   // Compare the two dates
   const isGivenDateGreaterThanCurrent = givenDate > currentDate;
 
-  // const {} = completedBooking
+  // const {} = reserveDetails
 
   // console.log({ progressData, moveItems });
-  // console.log({ progressData });
+  console.log({ reserveDetails });
 
   return (
     <>
@@ -186,7 +184,7 @@ const Reservations = ({ id, progressData, prices }) => {
         <meta name="description" content="Rss removal and storage website" />
         <link rel="icon" href="/rrs_favicon.svg" />
       </Head>
-      {reserveId !== "" ? (
+      {reserveId !== "" && !completedBookingsLoading ? (
         <BookingLayout>
           <main className="">
             <div className="mb-[70px] lg:mb-[100px] pt-[80px] md:pt-[80px] ">
@@ -210,8 +208,8 @@ const Reservations = ({ id, progressData, prices }) => {
                         <p className="text-[40px]">👋</p>
                         <div className="">
                           <h1 className="text-2xl font-bold mb-[10px] md:mb-[0px] text-secondary">
-                            Welcome {completedBooking?.firstName}{" "}
-                            {completedBooking?.lastName},
+                            Welcome {reserveDetails?.firstName}{" "}
+                            {reserveDetails?.lastName},
                           </h1>
                           <p className="text-gray-500 font-semibold">
                             Thank you for choosing Removals & Self Storage
@@ -256,10 +254,9 @@ const Reservations = ({ id, progressData, prices }) => {
                     {/* payment dashboard */}
                     <div className="flex flex-col space-y-[20px] mt-[30px] mb-[30px] ">
                       <div className="border-b-[2px] pb-[20px]">
-                        <PaymentDashboard completedBooking={completedBooking}
-                  extraPrice={extraPrice}/>
+                        <PaymentDashboard />
                       </div>
-                      {completedBooking?.moveDate &&
+                      {reserveDetails?.moveDate &&
                         isGivenDateGreaterThanCurrent && (
                           <div className="flex flex-col space-y-[10px] lg:space-y-0 lg:flex-row lg:space-x-[20px] lg:items-center border-b-[2px] pb-[20px]">
                             <div className="flex flex-col space-y-[5px]">
@@ -268,12 +265,12 @@ const Reservations = ({ id, progressData, prices }) => {
                               </p>
                               <p className="font-bold text-[15px] text-gray-500 ">
                                 {dayjs(
-                                  convertDateFormat(completedBooking?.moveDate)
+                                  convertDateFormat(reserveDetails?.moveDate)
                                 ).format("dddd, MMMM D, YYYY")}
                               </p>
                             </div>
                             <Countdown
-                              date={completedBooking?.moveDate}
+                              date={reserveDetails?.moveDate}
                               // time={moverDetails?.moverTime}
                             />
                           </div>

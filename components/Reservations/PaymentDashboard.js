@@ -170,7 +170,7 @@ const PaymentDashboard = () => {
           <div className="stat-actions space-x-[10px]">
             <button
               className=" bg-white hover:scale-[1.02] transition-all duration-300 focus:bg-white w-[200px] active:bg-white px-[10px] py-[5px] rounded-[5px] flex justify-center "
-              onClick={handleExtra}
+              // onClick={handleExtra}
               // disabled={submitLoading2}
             >
               {/* Pay Outstanding */}

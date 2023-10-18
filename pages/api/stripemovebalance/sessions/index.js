@@ -11,6 +11,7 @@ const handler = async (req, res) => {
   if (req.method === "POST") {
     try {
       const { lineItems } = req.body;
+
       if (!lineItems.length) {
         return res.status(400).json({ error: "Bad Request!" });
       }
@@ -19,9 +20,9 @@ const handler = async (req, res) => {
         line_items: lineItems,
         mode: "payment",
         payment_method_types: ["card", "paypal"],
-        success_url: `${req.headers.origin}/reservations/checkout/success?sessionId={CHECKOUT_SESSION_ID}`,
-        // cancel_url: `${req.headers.origin}/reservations/${reserveDetails?.bookingId}`,
-        cancel_url: `${req.headers.origin}/reservations/checkout/error`,
+        submit_type: "book",
+        success_url: `${req.headers.origin}/reservations/checkout/successbalance?sessionId={CHECKOUT_SESSION_ID}`,
+        cancel_url: `${req.headers.origin}/reservations/checkout/errorbalance`,
       });
 
       return res.status(201).json({ session });

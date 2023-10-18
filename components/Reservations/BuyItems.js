@@ -134,7 +134,7 @@ const BuyItems = ({
   };
 
   // const [allProducts, setAllProducts] = useState(products);
-  console.log({ reserveDetails });
+  // console.log({ reserveDetails });
 
   return (
     <div>

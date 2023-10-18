@@ -36,7 +36,7 @@ let persistor = persistStore(store);
 // });
 
 // Create a client
-// const queryClient = new QueryClient();
+const queryClient = new QueryClient();
 
 Router.events.on("routeChangeStart", nProgress.start);
 Router.events.on("routeChangeError", nProgress.done);
@@ -73,39 +73,39 @@ export default function App({ Component, pageProps: { ...pageProps } }) {
 
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-          {/* <QueryClientProvider client={queryClient}> */}
-          <AuthProvider>
-            <div className="">
-              {/* {loading && <Loader1 />} */}
-              <Component {...pageProps} />
-            </div>
-            <Toaster
-              position="top-center"
-              // reverseOrder={false}
-              gutter={8}
-              containerClassName=""
-              containerStyle={{}}
-              toastOptions={{
-                // Define default options
-                className: "",
-                // duration: 5000,
-                style: {
-                  background: "#363636",
-                  color: "#fff",
-                },
+          <QueryClientProvider client={queryClient}>
+            <AuthProvider>
+              <div className="">
+                {/* {loading && <Loader1 />} */}
+                <Component {...pageProps} />
+              </div>
+              <Toaster
+                position="top-center"
+                // reverseOrder={false}
+                gutter={8}
+                containerClassName=""
+                containerStyle={{}}
+                toastOptions={{
+                  // Define default options
+                  className: "",
+                  // duration: 5000,
+                  style: {
+                    background: "#363636",
+                    color: "#fff",
+                  },
 
-                // Default options for specific types
-                // success: {
-                //   duration: 3000,
-                //   theme: {
-                //     primary: "green",
-                //     secondary: "black",
-                //   },
-                // },
-              }}
-            />
-          </AuthProvider>
-          {/* </QueryClientProvider> */}
+                  // Default options for specific types
+                  // success: {
+                  //   duration: 3000,
+                  //   theme: {
+                  //     primary: "green",
+                  //     secondary: "black",
+                  //   },
+                  // },
+                }}
+              />
+            </AuthProvider>
+          </QueryClientProvider>
         </PersistGate>
       </Provider>
     </>

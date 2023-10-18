@@ -53,41 +53,28 @@ import BuyItems from "@/components/Reservations/BuyItems";
 import useMoveItems from "@/hooks/useMoveItems";
 import CartSideDrawer from "@/components/Reservations/CartSideDrawer";
 import Stripe from "stripe";
+import PaymentDashboard from "@/components/Reservations/PaymentDashboard";
+import useBookings from "@/hooks/useBookings";
 
-const Reservations = ({ progressUrl, progressData, prices }) => {
+const Reservations = ({ id, progressData, prices }) => {
   const {
     setReserveDetailsFxn,
-    updateReserveDetailsFxn,
-    resetReserveDetailsFxn,
-    reserveDetails,
-    serviceLocation,
-    personalDetails,
-    moveDetails,
-    moverSideDetails,
-    moverDetails,
-    paymentDetails,
-    bookStage,
-    updateLocationFrom,
-    resetLocationFrom,
-    updateLocationTo,
-    resetLocationTo,
-    updatePersonal,
-    resetPersonal,
-    updateMove,
-    resetMove,
-    updateMover,
-    resetMover,
-    updatePayment,
-    resetPayment,
-    updatePickP,
-    updateMoverSide,
-    resetMoverSide,
-    updateBookS,
-    resetBookS,
+   
+    
     router,
     reserveId,
     updateReserveIdFxn,
   } = useQuote();
+
+  const {
+    completedBookings,
+    completedBookingsLoading,
+    refetchCompletedBookings,
+    completedBook,
+  } = useBookings();
+
+  const [completedBooking, setCompletedBooking] = useState({});
+  const [extraPrice, setExtraPrice] = useState("");
 
   const {
     updateQtyInBedroomFxn,
@@ -119,6 +106,11 @@ const Reservations = ({ progressUrl, progressData, prices }) => {
   //setBedRoom
 
   useEffect(() => {
+    setCompletedBooking(completedBook(id));
+    setExtraPrice(completedBook(id)?.extraPrice);
+  }, [completedBookings]);
+
+  useEffect(() => {
     if (reserveId === "") {
       router.push("/reserve-login");
     }
@@ -126,62 +118,63 @@ const Reservations = ({ progressUrl, progressData, prices }) => {
 
   useEffect(() => {
     progressData?.moveItems && resetMoveItemsFxn(progressData?.moveItems);
-    setReserveDetailsFxn({
-      bookDate: progressData?.date,
-      address1: progressData?.address1,
-      postCode1: progressData?.postCode1,
-      city1: progressData?.city1,
-      country1: progressData?.country1,
-      floor1: progressData?.floor1,
-      liftAvailable1: progressData?.liftAvailable1,
-      address2: progressData?.address2,
-      postCode2: progressData?.postCode2,
-      city2: progressData?.city2,
-      country2: progressData?.country2,
-      floor2: progressData?.floor2,
-      liftAvailable2: progressData?.liftAvailable2,
-      firstName: progressData?.firstName,
-      lastName: progressData?.lastName,
-      email: progressData?.email,
-      countryCode: progressData?.countryCode,
-      telephone: progressData?.telephone,
-      bookingId: progressData?.bookingId,
-      propertyType: progressData?.propertyType,
-      numberOfMovers: progressData?.numberOfMovers,
-      mileage: progressData?.mileage,
-      volume: progressData?.volume,
-      duration: progressData?.duration,
-      moveDate: progressData?.moveDate,
-      movePackage: progressData?.movePackage,
-      quoteRef: progressData?.quoteRef,
-      initialPackagePrice: progressData?.initialPackagePrice,
-      moverName: progressData?.moverName,
-      moverTime: progressData?.moverTime,
-      moverPrice: progressData?.moverPrice,
-      pickPrice: progressData?.pickPrice,
-      moveDateFormatted: progressData?.moveDateFormatted,
-      dateId: progressData?.dateId,
-      paidPart: progressData?.paidPart,
-      paidFull: progressData?.paidFull,
-      paidPrice: progressData?.paidPrice,
-      paymentType: progressData?.paymentType,
-      cartItems: progressData?.cartItems,
-      stripeCartProducts: progressData?.cartStripeProducts,
-      stripeCartDetails: progressData?.cartStripeDetails,
-    });
+    // setReserveDetailsFxn({
+    //   bookDate: progressData?.date,
+    //   address1: progressData?.address1,
+    //   postCode1: progressData?.postCode1,
+    //   city1: progressData?.city1,
+    //   country1: progressData?.country1,
+    //   floor1: progressData?.floor1,
+    //   liftAvailable1: progressData?.liftAvailable1,
+    //   address2: progressData?.address2,
+    //   postCode2: progressData?.postCode2,
+    //   city2: progressData?.city2,
+    //   country2: progressData?.country2,
+    //   floor2: progressData?.floor2,
+    //   liftAvailable2: progressData?.liftAvailable2,
+    //   firstName: progressData?.firstName,
+    //   lastName: progressData?.lastName,
+    //   email: progressData?.email,
+    //   countryCode: progressData?.countryCode,
+    //   telephone: progressData?.telephone,
+    //   bookingId: progressData?.bookingId,
+    //   propertyType: progressData?.propertyType,
+    //   numberOfMovers: progressData?.numberOfMovers,
+    //   mileage: progressData?.mileage,
+    //   volume: progressData?.volume,
+    //   duration: progressData?.duration,
+    //   moveDate: progressData?.moveDate,
+    //   movePackage: progressData?.movePackage,
+    //   quoteRef: progressData?.quoteRef,
+    //   initialPackagePrice: progressData?.initialPackagePrice,
+    //   moverName: progressData?.moverName,
+    //   moverTime: progressData?.moverTime,
+    //   moverPrice: progressData?.moverPrice,
+    //   pickPrice: progressData?.pickPrice,
+    //   moveDateFormatted: progressData?.moveDateFormatted,
+    //   dateId: progressData?.dateId,
+    //   paidPart: progressData?.paidPart,
+    //   paidFull: progressData?.paidFull,
+    //   paidPrice: progressData?.paidPrice,
+    //   paymentType: progressData?.paymentType,
+    //   cartItems: progressData?.cartItems,
+    //   stripeCartProducts: progressData?.cartStripeProducts,
+    //   stripeCartDetails: progressData?.cartStripeDetails,
+    //   extraPrice: progressData?.extraPrice,
+    // });
   }, []);
 
   const currentDate = new Date();
 
   const givenDateString = dayjs(
-    convertDateFormat(reserveDetails?.moveDate)
+    convertDateFormat(completedBooking?.moveDate)
   ).format("dddd, MMMM D, YYYY");
   const givenDate = new Date(givenDateString);
 
   // Compare the two dates
   const isGivenDateGreaterThanCurrent = givenDate > currentDate;
 
-  // const {} = reserveDetails
+  // const {} = completedBooking
 
   // console.log({ progressData, moveItems });
   // console.log({ progressData });
@@ -212,13 +205,13 @@ const Reservations = ({ progressUrl, progressData, prices }) => {
                     {/* side drawer */}
                     <CartSideDrawer />
                     {/* heading */}
-                    <div className="flex flex-col space-y-[10px] md:flex-row md:space-y-0 md:justify-between md:items-center">
-                      <div className="flex items-center space-x-[15px]">
+                    <div className="flex flex-col   space-y-[10px] md:flex-row md:space-y-0 md:justify-between md:items-center border-b-[2px] pb-[20px]">
+                      <div className="flex items-center space-x-[15px] ">
                         <p className="text-[40px]">👋</p>
                         <div className="">
                           <h1 className="text-2xl font-bold mb-[10px] md:mb-[0px] text-secondary">
-                            Welcome {reserveDetails?.firstName}{" "}
-                            {reserveDetails?.lastName},
+                            Welcome {completedBooking?.firstName}{" "}
+                            {completedBooking?.lastName},
                           </h1>
                           <p className="text-gray-500 font-semibold">
                             Thank you for choosing Removals & Self Storage
@@ -261,73 +254,34 @@ const Reservations = ({ progressUrl, progressData, prices }) => {
                       </div>
                     </div>
                     {/* payment dashboard */}
-                    <div className="flex flex-col space-y-[20px] lg:space-y-0 lg:flex-row lg:justify-between  mt-[30px] mb-[30px]">
-                      <div className="stats bg-primary text-white ">
-                        {/* payment made */}
-                        <div className="flex flex-col px-[20px] py-[30px]">
-                          <div className="">Payment made</div>
-                          <div className="font-bold text-[30px]">
-                            ₤{reserveDetails?.paidPrice}
-                          </div>
-                          <div className="stat-actions">
-                            <div className="text-white font-semibold">
-                              ({reserveDetails?.paymentType} Deposit)
-                            </div>
-                          </div>
-                        </div>
-
-                        {/* Extra payment */}
-                        <div className="flex flex-col px-[20px] py-[30px]">
-                          <div className="">Extra Payment</div>
-                          <div className="font-bold text-[30px]">
-                            ₤0.00
-                            {/* {reserveDetails?.moverPrice -
-                              reserveDetails?.paidPrice} */}
-                          </div>
-                          {/* <div className="stat-actions space-x-[10px]">
-                            <button className="btn btn-sm">
-                              Pay Outstanding
-                            </button>
-                          </div> */}
-                        </div>
-                        {/*  outstanding payment */}
-                        <div className="flex flex-col px-[20px] py-[30px]">
-                          <div className="stat-title text-white">
-                            Outstanding Payment
-                          </div>
-                          <div className="font-bold text-[30px]">
-                            ₤
-                            {reserveDetails?.moverPrice -
-                              reserveDetails?.paidPrice}
-                          </div>
-                          <div className="stat-actions space-x-[10px]">
-                            <button className="btn btn-sm">
-                              Pay Outstanding
-                            </button>
-                          </div>
-                        </div>
+                    <div className="flex flex-col space-y-[20px] mt-[30px] mb-[30px] ">
+                      <div className="border-b-[2px] pb-[20px]">
+                        <PaymentDashboard completedBooking={completedBooking}
+                  extraPrice={extraPrice}/>
                       </div>
-                      {reserveDetails?.moveDate &&
+                      {completedBooking?.moveDate &&
                         isGivenDateGreaterThanCurrent && (
-                          <div className="flex flex-col space-y-[10px]">
-                            <p className="font-bold text-[20px]">
-                              Move Day Countdown
-                            </p>
+                          <div className="flex flex-col space-y-[10px] lg:space-y-0 lg:flex-row lg:space-x-[20px] lg:items-center border-b-[2px] pb-[20px]">
+                            <div className="flex flex-col space-y-[5px]">
+                              <p className="text-2xl font-bold mb-[0px] select-none">
+                                Move Day Countdown:
+                              </p>
+                              <p className="font-bold text-[15px] text-gray-500 ">
+                                {dayjs(
+                                  convertDateFormat(completedBooking?.moveDate)
+                                ).format("dddd, MMMM D, YYYY")}
+                              </p>
+                            </div>
                             <Countdown
-                              date={reserveDetails?.moveDate}
+                              date={completedBooking?.moveDate}
                               // time={moverDetails?.moverTime}
                             />
-                            <p className="font-bold text-[15px] text-gray-500">
-                              {dayjs(
-                                convertDateFormat(reserveDetails?.moveDate)
-                              ).format("dddd, MMMM D, YYYY")}
-                            </p>
                           </div>
                         )}
                     </div>
 
                     {/* buy items */}
-                    <div className="">
+                    <div className="border-b-[2px] pb-[0px] mb-[30px]">
                       <BuyItems
                         clickedModalOpen={clickedModalOpen}
                         setClickedModalOpen={setClickedModalOpen}
@@ -381,7 +335,7 @@ export async function getServerSideProps(context) {
   return {
     props: {
       // userData,
-      progressUrl: id,
+      id: id,
       progressData,
       prices,
       // userData,

@@ -203,7 +203,38 @@ const CheckoutForm = () => {
     }
   };
 
-  const stripeProductId = computePriceId()
+  const computeProductId = () => {
+    switch (moveDetails?.movePackage) {
+      case "Standard":
+        return "prod_Op9phPa4F3ONn6";
+        break;
+
+      case "Gold":
+        return "prod_Op9qBpiza2aiHw";
+        break;
+
+      case "Premium":
+        return "prod_Op9ri9qUNjyaMp";
+        break;
+
+      case "Premium plus":
+        return "prod_Op9rYIKw1kPhzB";
+        break;
+
+      default:
+        break;
+    }
+  };
+
+  const stripeProductId = computeProductId();
+
+  const stripeAmount = parseInt(paymentDetails?.paidPrice * 100);
+
+  console.log({
+    stripeProductId,
+    stripeAmount,
+    price: paymentDetails?.paidPrice,
+  });
 
   const completeCheckout = async () => {
     // setProgressLoading(true);
@@ -217,7 +248,7 @@ const CheckoutForm = () => {
 
     updatePayment({
       comment: comments,
-      completedBook: true,
+
       paymentType: paidPart ? "20%" : paidFull ? "Full" : "",
     });
 
@@ -233,7 +264,7 @@ const CheckoutForm = () => {
           paymentMethod: "",
           paidPart,
           paidFull,
-          completedBook: true,
+          // completedBook: true,
           paidPrice,
           paymentType: paidPart ? "20%" : paidFull ? "Full" : "",
           moveCheckedOut: "YES",
@@ -251,7 +282,7 @@ const CheckoutForm = () => {
       console.log("booking update was unsuccessful @ checkout");
     }
 
-    moveCheckout(moveDetails, stripeProductId);
+    moveCheckout(stripeProductId, stripeAmount);
   };
 
   const reservationSubmit = () => {
@@ -279,11 +310,7 @@ const CheckoutForm = () => {
 
   //paymentDetails.paidPrice
 
- 
-
- 
-
-  console.log({ paymentDetails, moveDetails });
+  // console.log({ paymentDetails, moveDetails });
 
   return (
     <div className="lg:sticky lg:top-[80px] bg-white shadow-lg rounded-[30px] lg:flex-[2] py-[30px] px-[30px] md:px-[50px] w-full">

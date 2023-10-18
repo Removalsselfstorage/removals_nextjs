@@ -8,10 +8,9 @@ import useQuote from "@/hooks/useQuote";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "@/firebase";
 import { getCurrentDateFormatted } from "@/utils/logics";
-import { allNotificationEmail, bookedEmail } from "@/lib/sendCustomEmail";
+import { allNotificationEmail } from "@/lib/sendCustomEmail";
 import Lottie from "lottie-react";
 import success from "@/lottieJsons/success.json";
-import { initializeApp } from "firebase/app";
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
@@ -33,44 +32,13 @@ const ReservationCheckoutSuccess = () => {
     resetCartFxn,
     calculateTotalPriceFxn,
 
-    // router,
-  } = useProductCart();
-
-  const {
-    serviceLocation,
-    personalDetails,
-    moveDetails,
-    moverSideDetails,
-    moverDetails,
-    paymentDetails,
-    bookStage,
-    updateLocationFrom,
-    resetLocationFrom,
-    updateLocationTo,
-    resetLocationTo,
-    updatePersonal,
-    resetPersonal,
-    updateMove,
-    resetMove,
-    updateMover,
-    resetMover,
-    updatePayment,
-    resetPayment,
-    updatePickP,
-    updateMoverSide,
-    resetMoverSide,
-    updateBookS,
-    resetBookS,
-    updateReserveIdFxn,
-    reserveId,
     router,
-  } = useQuote();
-
-  // const { paidPart, paidFull, paidPrice, paymentType } = paymentDetails;
+  } = useProductCart();
 
   const [submitLoading, setSubmitLoading] = useState(false);
 
   const { reserveDetails } = useQuote();
+  const bookingId = reserveDetails?.bookingId;
 
   const {
     query: { sessionId },
@@ -127,30 +95,32 @@ const ReservationCheckoutSuccess = () => {
 
         {
           date: getCurrentDateFormatted(),
-          stage: "move checkout successful",
-          completedBook: true,
-          movePaymentStatus: "PAID",
-          moveStripeDetails: {
-            stripeName: customer?.name,
-            stripeEmail: customer?.email,
-            stripeCountry: customer?.address.country,
-            // stripeProducts: products,
-            stripePaymentType: payment,
-            stripeSubtotal: subtotal,
-            stripeTotal: total,
+          stage: "cart checkout successful",
+          cartCheckedOut: "YES",
+          cartPaymentStatus: "PAID",
+          cartStripeDetails: {
+            stripeCartName: customer?.name,
+            stripeCartEmail: customer?.email,
+            stripeCartCountry: customer?.address.country,
+            // stripeCartProducts: products,
+            stripeCartPaymentType: payment,
+            stripeCartSubtotal: subtotal,
+            stripeCartTotal: total,
           },
-          // moveStripeProducts: products,
-          moveStripePayments: [total],
+          cartStripeProducts:
+            reserveDetails?.stripeCartProducts?.length > 0
+              ? [...reserveDetails?.stripeCartProducts, ...products]
+              : products,
         },
         { merge: true }
       );
 
       // return true;
-      console.log("move checkout update was successful @ Checkout success");
+      console.log("cart items update was successful @ Shopping Cart");
     } catch (error) {
       console.log(error);
       // return false;
-      console.log("move checkout update was unsuccessful @ Checkout success");
+      console.log("cart items update was unsuccessful @ Shopping Cart");
     }
   };
 
@@ -159,63 +129,16 @@ const ReservationCheckoutSuccess = () => {
     // { email: "removalsselfstorage@gmail.com" },
   ];
 
-  const [details, setDetails] = useState({});
-
-  const {
-    firstName,
-    lastName,
-    bookingId,
-    propertyType,
-    movePackage,
-    numberOfMovers,
-    moverPrice,
-    paymentType,
-  } = details;
-
   const notificationParams = {
-    message: `User ${personalDetails?.firstName} ${personalDetails?.lastName} with booking ID ${moveDetails?.bookingId} just successfully paid for ${moveDetails?.propertyType} ${moveDetails?.movePackage} Package with ${moveDetails?.numberOfMovers} and Jumbo Van with a total price of $₤{paymentDetails?.paidPrice} out of ₤${moverDetails?.moverPrice}.`,
-    subject: `Successful move payment by user ${personalDetails?.firstName} ${personalDetails?.lastName}`,
-    bookLink: `https://rss-admin.vercel.app/secret-admin/users/booking/${moveDetails?.bookingId}`,
-    bookingId,
+    // firstName: reserveDetails?.firstName,
+    // lastName: reserveDetails?.lastName,
+    // itemNumber: products?.length,
+    // totalPrice: total,
+    message: `User ${reserveDetails?.firstName} ${reserveDetails?.lastName} with booking ID ${reserveDetails?.bookingId} just successfully paid for ${products?.length} packaging items(s) with a total price of ${total}.`,
+    subject: `Successful packaging items payment by user ${reserveDetails?.firstName} ${reserveDetails?.lastName}`,
+    bookLink: `https://rss-admin.vercel.app/secret-admin/users/booking/${reserveDetails?.bookingId}`,
+    bookingId: reserveDetails?.bookingId,
     // page: "checkout page",
-  };
-
-  const params3 = {
-    firstName: personalDetails?.firstName,
-    lastName: personalDetails?.lastName,
-    email: personalDetails?.email,
-    quoteRef: moveDetails?.quoteRef,
-    progressLink: `https://removalstorage.vercel.app/book/checkout/${moveDetails?.bookingId}`,
-    // progressLink2: `https://removalstorage.vercel.app/book/checkout/${moveDetails?.bookingId}`,
-    progressLink2: `https://removalstorage.vercel.app/reservations`,
-    address1: serviceLocation?.locationFrom?.name,
-    address2: serviceLocation?.locationTo?.name,
-    initialPackagePrice: moveDetails?.initialPackagePrice,
-    pickPrice: moverDetails?.pickPrice,
-    propertyType: moveDetails?.propertyType,
-    numberOfMovers: moveDetails?.numberOfMovers,
-    mileage: moveDetails?.mileage,
-    volume: moveDetails?.volume,
-    duration: moveDetails?.duration,
-    moveDate: moveDetails?.moveDate,
-    movePackage: moveDetails?.movePackage,
-    moverName: moverDetails?.moverName,
-    moverPrice: moverDetails?.moverPrice,
-    paidPrice: paymentDetails?.paidPrice,
-    paymentType: paymentDetails?.paidPrice
-      ? "20%"
-      : paymentDetails?.paidFull
-      ? "full"
-      : "",
-    bookingId: moveDetails?.bookingId,
-  };
-
-  const sendBookedMail = async () => {
-    try {
-      await bookedEmail(personalDetails?.email, params3);
-    } catch (error) {
-      console.log(error);
-    }
   };
 
   const sendAllNotificationEmail = async () => {
@@ -226,55 +149,32 @@ const ReservationCheckoutSuccess = () => {
     }
   };
 
-  const reset = () => {
-    resetLocationFrom();
-    resetLocationTo();
-    resetPersonal();
-    resetMove();
-    resetMover();
-    resetPayment();
-    resetMoverSide();
-    resetBookS();
-  };
+  useEffect(() => {
+    resetCartFxn();
+    // if (customer) {
+    //   sendStripe();
+    // }
+    // setTimeout(() => {
+    // }, 3000);
+  }, []);
 
   useEffect(() => {
-    if (personalDetails?.firstName) {
-      setDetails({
-        firstName: personalDetails?.firstName,
-        lastName: personalDetails?.lastName,
-        bookingId: moveDetails?.bookingId,
-        propertyType: moveDetails?.propertyType,
-        movePackage: moveDetails?.movePackage,
-        numberOfMovers: moveDetails?.numberOfMovers,
-        moverPrice: moverDetails?.moverPrice,
-        paymentType: paymentDetails?.paymentType,
-      });
+    if (customer) {
       sendStripe();
       sendAllNotificationEmail();
-      sendBookedMail();
     }
-  }, []);
-
-  const router2 = useRouter();
-
-  useEffect(() => {
-    router2.beforePopState(reset);
-
-    return () => {
-      router2.beforePopState(null);
-    };
-  }, []);
+    // setTimeout(() => {
+    // }, 3000);
+  }, [customer]);
 
   const handleDashboard = (event) => {
     event.preventDefault();
     setSubmitLoading(true);
-    reset();
-    updateReserveIdFxn(bookingId);
-    router.push(`/reservations/${bookingId}`);
+    router.push(`/reservations/${reserveDetails?.bookingId}`);
     // resetCartFxn();
   };
 
-  console.log({ paymentType, bookingId });
+  console.log({ reserveDetails });
 
   return (
     <BookingLayout>
@@ -286,11 +186,11 @@ const ReservationCheckoutSuccess = () => {
           <div className="max-w-xl">
             <h1 className="text-sm font-medium ">Payment successful</h1>
             <p className="mt-2 text-4xl font-extrabold tracking-tight text-primary sm:text-5xl">
-              Thanks for Booking
+              Thanks for your Payment
             </p>
             <p className="mt-2 text-base text-gray-500">
-              We appreciate your book, we’re currently processing it. So hang
-              tight and we’ll send you confirmation very soon!
+              We appreciate your outstanding payment, we’re currently processing
+              it. So hang tight and we’ll send you confirmation very soon!
             </p>
 
             <dl className="mt-12 text-sm font-medium">
@@ -303,9 +203,9 @@ const ReservationCheckoutSuccess = () => {
           </div>
 
           <div className="mt-10 border-t border-gray-200">
-            <h2 className="mt-[20px] font-bold">Your Move Package:</h2>
+            <h2 className="sr-only">Your order</h2>
 
-            {/* <h3 className="sr-only">Items</h3> */}
+            <h3 className="sr-only">Items</h3>
             {products?.map((product) => (
               <div
                 key={product.id}
@@ -321,22 +221,25 @@ const ReservationCheckoutSuccess = () => {
                     <h4 className="font-medium text-gray-900">
                       <a href={product.url}>{product.name}</a>
                     </h4>
-                    <p className="mt-2 text-sm text-gray-600 ">
+                    <p className="mt-2 text-sm text-gray-600">
                       {product.description}
                     </p>
                   </div>
                   <div className="mt-6 flex-1 flex items-end">
                     <dl className="flex text-sm divide-x divide-gray-200 space-x-4 sm:space-x-6">
-                      {/* <div className="flex">
+                      <div className="flex">
                         <dt className="font-medium text-gray-900">Quantity</dt>
                         <dd className="ml-2 text-gray-700">
                           {product.quantity}
                         </dd>
-                      </div> */}
-                      <div className="flex ">
+                      </div>
+                      <div className="pl-4 flex sm:pl-6">
                         <dt className="font-medium text-gray-900">Price</dt>
                         <dd className="ml-2 text-gray-700">
-                          {paymentType} Payment
+                          {(product.price / 100).toLocaleString("en-GB", {
+                            style: "currency",
+                            currency: "GBP",
+                          })}
                         </dd>
                       </div>
                     </dl>
@@ -437,7 +340,7 @@ const ReservationCheckoutSuccess = () => {
               className="btn btn-primary btn-wide"
             >
               {/* Return to Dashboard */}
-              {!submitLoading && <span className="">Go to Dashboard</span>}
+              {!submitLoading && <span className="">Return to Dashboard</span>}
               {submitLoading && (
                 <span className="loading loading-dots loading-md text-white"></span>
               )}

@@ -180,7 +180,7 @@ const PickUpItems = () => {
             // data-tip="Please always submit after adding items"
           >
             <BiHelpCircle className="font-bold text-[25px] text-secondary" />
-            <p className="text-[14px] text-secondary italic">
+            <p className="text-[14px] text-secondary font-semibold">
               Please always submit after you're done adding items
             </p>
           </div>

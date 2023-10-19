@@ -124,48 +124,7 @@ const Reservations = ({ id, progressData, prices }) => {
     completedBook?.moveItems && resetMoveItemsFxn(completedBook?.moveItems);
     setReserveDetailsFxn({
       ...completedBook,
-      // bookDate: completedBook?.date,
-      // address1: completedBook?.address1,
-      // postCode1: completedBook?.postCode1,
-      // city1: completedBook?.city1,
-      // country1: completedBook?.country1,
-      // floor1: completedBook?.floor1,
-      // liftAvailable1: completedBook?.liftAvailable1,
-      // address2: completedBook?.address2,
-      // postCode2: completedBook?.postCode2,
-      // city2: completedBook?.city2,
-      // country2: completedBook?.country2,
-      // floor2: completedBook?.floor2,
-      // liftAvailable2: completedBook?.liftAvailable2,
-      // firstName: completedBook?.firstName,
-      // lastName: completedBook?.lastName,
-      // email: completedBook?.email,
-      // countryCode: completedBook?.countryCode,
-      // telephone: completedBook?.telephone,
-      // bookingId: completedBook?.bookingId,
-      // propertyType: completedBook?.propertyType,
-      // numberOfMovers: completedBook?.numberOfMovers,
-      // mileage: completedBook?.mileage,
-      // volume: completedBook?.volume,
-      // duration: completedBook?.duration,
-      // moveDate: completedBook?.moveDate,
-      // movePackage: completedBook?.movePackage,
-      // quoteRef: completedBook?.quoteRef,
-      // initialPackagePrice: completedBook?.initialPackagePrice,
-      // moverName: completedBook?.moverName,
-      // moverTime: completedBook?.moverTime,
-      // moverPrice: completedBook?.moverPrice,
-      // pickPrice: completedBook?.pickPrice,
-      // moveDateFormatted: completedBook?.moveDateFormatted,
-      // dateId: completedBook?.dateId,
-      // paidPart: completedBook?.paidPart,
-      // paidFull: completedBook?.paidFull,
-      // paidPrice: completedBook?.paidPrice,
-      // paymentType: completedBook?.paymentType,
-      // cartItems: completedBook?.cartItems,
-      // stripeCartProducts: completedBook?.cartStripeProducts,
-      // stripeCartDetails: completedBook?.cartStripeDetails,
-      // extraPrice: completedBook?.extraPrice,
+      
     });
   }, [completedBook]);
 
@@ -182,7 +141,7 @@ const Reservations = ({ id, progressData, prices }) => {
   // const {} = reserveDetails
 
   // console.log({ progressData, moveItems });
-  console.log({ reserveDetails });
+  console.log({ reserveDetails, reserveId });
 
   return (
     <>

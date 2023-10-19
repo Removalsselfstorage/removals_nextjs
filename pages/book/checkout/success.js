@@ -69,6 +69,7 @@ const ReservationCheckoutSuccess = () => {
   // const { paidPart, paidFull, paidPrice, paymentType } = paymentDetails;
 
   const [submitLoading, setSubmitLoading] = useState(false);
+  const [timer, setTimer] = useState(false);
 
   const { reserveDetails } = useQuote();
 
@@ -123,7 +124,7 @@ const ReservationCheckoutSuccess = () => {
   const sendStripe = async () => {
     try {
       await setDoc(
-        doc(db, "bookingData", bookingId),
+        doc(db, "bookingData", moveDetails?.bookingId),
 
         {
           date: getCurrentDateFormatted(),
@@ -252,21 +253,32 @@ const ReservationCheckoutSuccess = () => {
 
       updateReserveIdFxn(moveDetails?.bookingId);
 
-      sendStripe();
-      sendAllNotificationEmail();
-      sendBookedMail();
+      // sendStripe();
+      // sendAllNotificationEmail();
+      // sendBookedMail();
     }
+    setTimeout(() => {
+      setTimer(true);
+    }, 2000);
   }, []);
 
   const router2 = useRouter();
 
-  useEffect(() => {
-    router2.beforePopState(reset);
+  // useEffect(() => {
+  //   router2.beforePopState(reset);
 
-    return () => {
-      router2.beforePopState(null);
-    };
-  }, []);
+  //   return () => {
+  //     router2.beforePopState(null);
+  //   };
+  // }, []);
+
+  useEffect(() => {
+    if (timer) {
+      sendStripe();
+      sendAllNotificationEmail();
+      sendBookedMail();
+    }
+  }, [timer]);
 
   const handleDashboard = (event) => {
     event.preventDefault();
@@ -277,7 +289,8 @@ const ReservationCheckoutSuccess = () => {
     // resetCartFxn();
   };
 
-  console.log({ paymentType, bookingId });
+  console.log({ timer });
+  // console.log({ timer, moveDetails, paymentType, bookingId });
 
   return (
     <BookingLayout>

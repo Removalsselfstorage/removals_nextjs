@@ -25,7 +25,7 @@ const useBookings = () => {
 
       const filteredBook = cs?.find((obj) => obj.id === reserveId);
 
-      console.log({ data, cs });
+      console.log({ data, cs, reserveId, filteredBook });
       return filteredBook;
     },
     // onError(err) {
@@ -39,7 +39,7 @@ const useBookings = () => {
   //   return filteredBook;
   // };
 
-  console.log({ reserveId, completedBook });
+  // console.log({ reserveId, completedBook });
 
   return {
     completedBook,

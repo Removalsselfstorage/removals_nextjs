@@ -192,7 +192,7 @@ const Reservations = ({ id, progressData, prices }) => {
         <link rel="icon" href="/rrs_favicon.svg" />
       </Head>
       {/* {reserveId !== "" && !completedBookLoading ? ( */}
-      {reserveId !== "" && completedBook && !completedBookLoading && (
+      {reserveId !== "" && !completedBookLoading && (
         <BookingLayout>
           <main className="">
             <div className="mb-[70px] lg:mb-[100px] pt-[80px] md:pt-[80px] ">

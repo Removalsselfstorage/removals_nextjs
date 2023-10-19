@@ -173,7 +173,7 @@ const ReservationCheckoutSuccess = () => {
   } = details;
 
   const notificationParams = {
-    message: `User ${personalDetails?.firstName} ${personalDetails?.lastName} with booking ID ${moveDetails?.bookingId} just successfully paid for ${moveDetails?.propertyType} ${moveDetails?.movePackage} Package with ${moveDetails?.numberOfMovers} and Jumbo Van with a total price of $₤{paymentDetails?.paidPrice} out of ₤${moverDetails?.moverPrice}.`,
+    message: `User ${personalDetails?.firstName} ${personalDetails?.lastName} with booking ID ${moveDetails?.bookingId} just successfully paid for ${moveDetails?.propertyType} ${moveDetails?.movePackage} Package with ${moveDetails?.numberOfMovers} and Jumbo Van with a total price of ₤${paymentDetails?.paidPrice} out of ₤${moverDetails?.moverPrice}.`,
     subject: `Successful move payment by user ${personalDetails?.firstName} ${personalDetails?.lastName}`,
     bookLink: `https://rss-admin.vercel.app/secret-admin/users/booking/${moveDetails?.bookingId}`,
     bookingId,
@@ -249,6 +249,9 @@ const ReservationCheckoutSuccess = () => {
         moverPrice: moverDetails?.moverPrice,
         paymentType: paymentDetails?.paymentType,
       });
+
+      updateReserveIdFxn(moveDetails?.bookingId);
+
       sendStripe();
       sendAllNotificationEmail();
       sendBookedMail();
@@ -319,7 +322,7 @@ const ReservationCheckoutSuccess = () => {
                 <div className="flex-auto flex flex-col">
                   <div>
                     <h4 className="font-medium text-gray-900">
-                      <a href={product.url}>{product.name}</a>
+                      <p>{product.name}</p>
                     </h4>
                     <p className="mt-2 text-sm text-gray-600 ">
                       {product.description}

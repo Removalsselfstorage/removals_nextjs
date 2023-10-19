@@ -20,9 +20,9 @@ const handler = async (req, res) => {
         line_items: lineItems,
         mode: "payment",
         payment_method_types: ["card", "paypal"],
-        submit_type: "book",
-        success_url: `${req.headers.origin}/book/checkout/success?sessionId={CHECKOUT_SESSION_ID}`,
-        cancel_url: `${req.headers.origin}/book/checkout`,
+        // submit_type: "book",
+        success_url: `${req.headers.origin}/reservations/checkout/successextra?sessionId={CHECKOUT_SESSION_ID}`,
+        cancel_url: `${req.headers.origin}/reservations/checkout/errorextra`,
       });
 
       return res.status(201).json({ session });

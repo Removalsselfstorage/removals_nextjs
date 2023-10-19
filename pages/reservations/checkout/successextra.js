@@ -14,7 +14,7 @@ import success from "@/lottieJsons/success.json";
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
-const ReservationCheckoutSuccess = () => {
+const ReservationExtraSuccess = () => {
   const {
     allProducts,
     allCartProducts,
@@ -95,10 +95,9 @@ const ReservationCheckoutSuccess = () => {
 
         {
           date: getCurrentDateFormatted(),
-          stage: "cart checkout successful",
-          cartCheckedOut: "YES",
-          cartPaymentStatus: "PAID",
-          cartStripeDetails: {
+          stage: "paid move outstanding",
+          extraPricePaid: checkoutSession?.amount_total / 100,
+          extraStripeDetails: {
             stripeCartName: customer?.name,
             stripeCartEmail: customer?.email,
             stripeCartCountry: customer?.address.country,
@@ -107,20 +106,21 @@ const ReservationCheckoutSuccess = () => {
             stripeCartSubtotal: subtotal,
             stripeCartTotal: total,
           },
-          cartStripeProducts:
-            reserveDetails?.stripeCartProducts?.length > 0
-              ? [...reserveDetails?.stripeCartProducts, ...products]
-              : products,
+          extraStripeProducts: products,
         },
         { merge: true }
       );
 
       // return true;
-      console.log("cart items update was successful @ Shopping Cart");
+      console.log(
+        "extra payment update was successful @ extra success page"
+      );
     } catch (error) {
       console.log(error);
       // return false;
-      console.log("cart items update was unsuccessful @ Shopping Cart");
+      console.log(
+        "extra payment update was unsuccessful @ extra success page"
+      );
     }
   };
 
@@ -130,15 +130,10 @@ const ReservationCheckoutSuccess = () => {
   ];
 
   const notificationParams = {
-    // firstName: reserveDetails?.firstName,
-    // lastName: reserveDetails?.lastName,
-    // itemNumber: products?.length,
-    // totalPrice: total,
-    message: `User ${reserveDetails?.firstName} ${reserveDetails?.lastName} with booking ID ${reserveDetails?.bookingId} just successfully paid for ${products?.length} packaging items(s) with a total price of ${total}.`,
-    subject: `Successful packaging items payment by user ${reserveDetails?.firstName} ${reserveDetails?.lastName}`,
+    message: `User ${reserveDetails?.firstName} ${reserveDetails?.lastName} with booking ID ${reserveDetails?.bookingId} just successfully paid the extra fee for ${reserveDetails?.propertyType} ${reserveDetails?.movePackage} Package with ${reserveDetails?.numberOfMovers} and Jumbo Van with a total price of ${total}.`,
+    subject: `Successful extra payment by user ${reserveDetails?.firstName} ${reserveDetails?.lastName}`,
     bookLink: `https://rss-admin.vercel.app/secret-admin/users/booking/${reserveDetails?.bookingId}`,
-    bookingId: reserveDetails?.bookingId,
-    // page: "checkout page",
+    bookingId,
   };
 
   const sendAllNotificationEmail = async () => {
@@ -150,7 +145,7 @@ const ReservationCheckoutSuccess = () => {
   };
 
   useEffect(() => {
-    resetCartFxn();
+    // resetCartFxn();
     // if (customer) {
     //   sendStripe();
     // }
@@ -180,17 +175,17 @@ const ReservationCheckoutSuccess = () => {
     <BookingLayout>
       <div className="bg-white py-[20px]">
         <div className="max-w-3xl mx-auto px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
-        <div className="flex justify-center w-full">
+          <div className="flex justify-center w-full">
             <Lottie animationData={success} className="w-[200px]" />
           </div>
           <div className="max-w-xl">
             <h1 className="text-sm font-medium ">Payment successful</h1>
             <p className="mt-2 text-4xl font-extrabold tracking-tight text-primary sm:text-5xl">
-              Thanks for ordering
+              Payment Successful
             </p>
             <p className="mt-2 text-base text-gray-500">
-              We appreciate your order, we’re currently processing it. So hang
-              tight and we’ll send you confirmation very soon!
+              We appreciate your extra payment, we’re currently processing
+              it. So hang tight and we’ll send you confirmation very soon!
             </p>
 
             <dl className="mt-12 text-sm font-medium">
@@ -219,13 +214,13 @@ const ReservationCheckoutSuccess = () => {
                 <div className="flex-auto flex flex-col">
                   <div>
                     <h4 className="font-medium text-gray-900">
-                      <a href={product.url}>{product.name}</a>
+                      <p>{product.name}</p>
                     </h4>
                     <p className="mt-2 text-sm text-gray-600">
                       {product.description}
                     </p>
                   </div>
-                  <div className="mt-6 flex-1 flex items-end">
+                  {/* <div className="mt-6 flex-1 flex items-end">
                     <dl className="flex text-sm divide-x divide-gray-200 space-x-4 sm:space-x-6">
                       <div className="flex">
                         <dt className="font-medium text-gray-900">Quantity</dt>
@@ -243,7 +238,7 @@ const ReservationCheckoutSuccess = () => {
                         </dd>
                       </div>
                     </dl>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             ))}
@@ -352,4 +347,4 @@ const ReservationCheckoutSuccess = () => {
   );
 };
 
-export default ReservationCheckoutSuccess;
+export default ReservationExtraSuccess;

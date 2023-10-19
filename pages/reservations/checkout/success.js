@@ -108,8 +108,8 @@ const ReservationCheckoutSuccess = () => {
             stripeCartTotal: total,
           },
           cartStripeProducts:
-            reserveDetails?.stripeCartProducts?.length > 0
-              ? [...reserveDetails?.stripeCartProducts, ...products]
+            reserveDetails?.cartStripeProducts?.length > 0
+              ? [...reserveDetails?.cartStripeProducts, ...products]
               : products,
         },
         { merge: true }

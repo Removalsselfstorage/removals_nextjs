@@ -66,18 +66,13 @@ const Reservations = ({ id, progressData, prices }) => {
   } = useQuote();
 
   const {
-    completedBookings,
-    completedBookingsLoading,
-    refetchCompletedBookings,
+    // completedBookings,
+    // completedBookLoading,
+    // refetchCompletedBookings,
     completedBook,
+    completedBookLoading,
+    refetchCompletedBook,
   } = useBookings();
-
-  const filteredBook = completedBookings?.find((obj) => obj.id === id);
-
-  const [completedBooking, setCompletedBooking] = useState(filteredBook);
-
-  // const [initialLoading, setInitialLoading] = useState(true);
-  // const [extraPrice, setExtraPrice] = useState("");
 
   const {
     updateQtyInBedroomFxn,
@@ -115,7 +110,8 @@ const Reservations = ({ id, progressData, prices }) => {
   // }, []);
 
   // useEffect(() => {
-  //   setCompletedBooking(completedBook(id));
+  //   let filteredBook = completedBookings?.find((obj) => obj.id === id);
+  //   setCompletedBooking(filteredBook);
   // }, [completedBookings]);
 
   useEffect(() => {
@@ -125,52 +121,53 @@ const Reservations = ({ id, progressData, prices }) => {
   }, []);
 
   useEffect(() => {
-    filteredBook?.moveItems && resetMoveItemsFxn(filteredBook?.moveItems);
+    completedBook?.moveItems && resetMoveItemsFxn(completedBook?.moveItems);
     setReserveDetailsFxn({
-      bookDate: filteredBook?.date,
-      address1: filteredBook?.address1,
-      postCode1: filteredBook?.postCode1,
-      city1: filteredBook?.city1,
-      country1: filteredBook?.country1,
-      floor1: filteredBook?.floor1,
-      liftAvailable1: filteredBook?.liftAvailable1,
-      address2: filteredBook?.address2,
-      postCode2: filteredBook?.postCode2,
-      city2: filteredBook?.city2,
-      country2: filteredBook?.country2,
-      floor2: filteredBook?.floor2,
-      liftAvailable2: filteredBook?.liftAvailable2,
-      firstName: filteredBook?.firstName,
-      lastName: filteredBook?.lastName,
-      email: filteredBook?.email,
-      countryCode: filteredBook?.countryCode,
-      telephone: filteredBook?.telephone,
-      bookingId: filteredBook?.bookingId,
-      propertyType: filteredBook?.propertyType,
-      numberOfMovers: filteredBook?.numberOfMovers,
-      mileage: filteredBook?.mileage,
-      volume: filteredBook?.volume,
-      duration: filteredBook?.duration,
-      moveDate: filteredBook?.moveDate,
-      movePackage: filteredBook?.movePackage,
-      quoteRef: filteredBook?.quoteRef,
-      initialPackagePrice: filteredBook?.initialPackagePrice,
-      moverName: filteredBook?.moverName,
-      moverTime: filteredBook?.moverTime,
-      moverPrice: filteredBook?.moverPrice,
-      pickPrice: filteredBook?.pickPrice,
-      moveDateFormatted: filteredBook?.moveDateFormatted,
-      dateId: filteredBook?.dateId,
-      paidPart: filteredBook?.paidPart,
-      paidFull: filteredBook?.paidFull,
-      paidPrice: filteredBook?.paidPrice,
-      paymentType: filteredBook?.paymentType,
-      cartItems: filteredBook?.cartItems,
-      stripeCartProducts: filteredBook?.cartStripeProducts,
-      stripeCartDetails: filteredBook?.cartStripeDetails,
-      extraPrice: filteredBook?.extraPrice,
+      ...completedBook,
+      // bookDate: completedBook?.date,
+      // address1: completedBook?.address1,
+      // postCode1: completedBook?.postCode1,
+      // city1: completedBook?.city1,
+      // country1: completedBook?.country1,
+      // floor1: completedBook?.floor1,
+      // liftAvailable1: completedBook?.liftAvailable1,
+      // address2: completedBook?.address2,
+      // postCode2: completedBook?.postCode2,
+      // city2: completedBook?.city2,
+      // country2: completedBook?.country2,
+      // floor2: completedBook?.floor2,
+      // liftAvailable2: completedBook?.liftAvailable2,
+      // firstName: completedBook?.firstName,
+      // lastName: completedBook?.lastName,
+      // email: completedBook?.email,
+      // countryCode: completedBook?.countryCode,
+      // telephone: completedBook?.telephone,
+      // bookingId: completedBook?.bookingId,
+      // propertyType: completedBook?.propertyType,
+      // numberOfMovers: completedBook?.numberOfMovers,
+      // mileage: completedBook?.mileage,
+      // volume: completedBook?.volume,
+      // duration: completedBook?.duration,
+      // moveDate: completedBook?.moveDate,
+      // movePackage: completedBook?.movePackage,
+      // quoteRef: completedBook?.quoteRef,
+      // initialPackagePrice: completedBook?.initialPackagePrice,
+      // moverName: completedBook?.moverName,
+      // moverTime: completedBook?.moverTime,
+      // moverPrice: completedBook?.moverPrice,
+      // pickPrice: completedBook?.pickPrice,
+      // moveDateFormatted: completedBook?.moveDateFormatted,
+      // dateId: completedBook?.dateId,
+      // paidPart: completedBook?.paidPart,
+      // paidFull: completedBook?.paidFull,
+      // paidPrice: completedBook?.paidPrice,
+      // paymentType: completedBook?.paymentType,
+      // cartItems: completedBook?.cartItems,
+      // stripeCartProducts: completedBook?.cartStripeProducts,
+      // stripeCartDetails: completedBook?.cartStripeDetails,
+      // extraPrice: completedBook?.extraPrice,
     });
-  }, [filteredBook]);
+  }, [completedBook]);
 
   const currentDate = new Date();
 
@@ -185,7 +182,7 @@ const Reservations = ({ id, progressData, prices }) => {
   // const {} = reserveDetails
 
   // console.log({ progressData, moveItems });
-  console.log({ filteredBook, reserveDetails });
+  console.log({ reserveDetails });
 
   return (
     <>
@@ -194,8 +191,8 @@ const Reservations = ({ id, progressData, prices }) => {
         <meta name="description" content="Rss removal and storage website" />
         <link rel="icon" href="/rrs_favicon.svg" />
       </Head>
-      {/* {reserveId !== "" && !completedBookingsLoading ? ( */}
-      {reserveId !== "" && !completedBookingsLoading && (
+      {/* {reserveId !== "" && !completedBookLoading ? ( */}
+      {reserveId !== "" && completedBook && !completedBookLoading && (
         <BookingLayout>
           <main className="">
             <div className="mb-[70px] lg:mb-[100px] pt-[80px] md:pt-[80px] ">
@@ -219,8 +216,8 @@ const Reservations = ({ id, progressData, prices }) => {
                         <p className="text-[40px]">👋</p>
                         <div className="">
                           <h1 className="text-2xl font-bold mb-[10px] md:mb-[0px] text-secondary">
-                            Welcome {completedBooking?.firstName}{" "}
-                            {completedBooking?.lastName},
+                            Welcome {completedBook?.firstName}{" "}
+                            {completedBook?.lastName},
                           </h1>
                           <p className="text-gray-500 font-semibold">
                             Thank you for choosing Removals & Self Storage
@@ -264,10 +261,10 @@ const Reservations = ({ id, progressData, prices }) => {
                     </div>
                     {/* payment dashboard */}
                     <div className="flex flex-col space-y-[20px] mt-[30px] mb-[30px] ">
-                      <div className="border-b-[2px] pb-[20px]">
+                      <div className="border-b-[2px] pb-[10px]">
                         <PaymentDashboard />
                       </div>
-                      {completedBooking?.moveDate &&
+                      {reserveDetails?.moveDate &&
                         isGivenDateGreaterThanCurrent && (
                           <div className="flex flex-col space-y-[10px] lg:space-y-0 lg:flex-row lg:space-x-[20px] lg:items-center border-b-[2px] pb-[20px]">
                             <div className="flex flex-col space-y-[5px]">
@@ -276,12 +273,12 @@ const Reservations = ({ id, progressData, prices }) => {
                               </p>
                               <p className="font-bold text-[15px] text-gray-500 ">
                                 {dayjs(
-                                  convertDateFormat(completedBooking?.moveDate)
+                                  convertDateFormat(reserveDetails?.moveDate)
                                 ).format("dddd, MMMM D, YYYY")}
                               </p>
                             </div>
                             <Countdown
-                              date={completedBooking?.moveDate}
+                              date={reserveDetails?.moveDate}
                               // time={moverDetails?.moverTime}
                             />
                           </div>
@@ -310,7 +307,7 @@ const Reservations = ({ id, progressData, prices }) => {
           </main>
         </BookingLayout>
       )}
-      {completedBookingsLoading && (
+      {completedBookLoading && (
         <div className="flex justify-center items-center w-full h-screen">
           <span className="loading loading-spinner loading-lg text-primary"></span>
         </div>
@@ -321,30 +318,31 @@ const Reservations = ({ id, progressData, prices }) => {
 
 export default Reservations;
 
-export async function getServerSideProps(context) {
-  const { id } = context.params; // Access the UID from the URL
-  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
-  const { data: prices } = await stripe.prices.list({
-    active: true,
-    limit: 10,
-    expand: ["data.product"],
-  });
-  // const userData = await fetchAllMoversDetailsArray();
+// export async function getServerSideProps(context) {
+//   const { id } = context.params; // Access the UID from the URL
+//   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+//   const { data: prices } = await stripe.prices.list({
+//     active: true,
+//     limit: 10,
+//     expand: ["data.product"],
+//   });
+//   // const userData = await fetchAllMoversDetailsArray();
 
-  const bookingRef = doc(db, "bookingData", id);
-  const docSnap = await getDoc(bookingRef);
+//   const bookingRef = doc(db, "bookingData", id);
+//   const docSnap = await getDoc(bookingRef);
 
-  const progressData = docSnap.data();
+//   const progressData = docSnap.data();
 
-  // console.log({ progressData });
+//   // console.log({ progressData });
 
-  return {
-    props: {
-      // userData,
-      id: id,
-      progressData,
-      prices,
-      // userData,
-    },
-  };
-}
+//   return {
+//     props: {
+//       // userData,
+//       id: id,
+//       progressData,
+
+//       prices,
+//       // userData,
+//     },
+//   };
+// }

@@ -12,7 +12,7 @@ import { BiSolidPhoneCall } from "react-icons/bi";
 import { getAllDetails } from "@/store/quoteSlice";
 import { useDispatch, useSelector } from "react-redux";
 import dayjs from "dayjs";
-import { convertDateFormat } from "@/utils/logics";
+import { convertDateFormat, formatMovePrice } from "@/utils/logics";
 import useQuote from "@/hooks/useQuote";
 import useMoveItems from "@/hooks/useMoveItems";
 
@@ -87,7 +87,8 @@ const ReserveSide = () => {
     }
   };
 
-  //   console.log(details);
+  console.log({ reserveDetails });
+
   return (
     <div className="bg-white shadow-lg rounded-[30px] py-[30px] px-[20px] md:px-[30px] w-full lg:sticky lg:top-[80px]">
       <div className="">
@@ -101,7 +102,7 @@ const ReserveSide = () => {
                 Book Date:
               </p>
               <p className="font-semibold text-[13.5px] ">
-                {reserveDetails?.bookDate}
+                {reserveDetails?.date}
               </p>
             </div>
             <div className="flex flex-col space-y-[5px]">
@@ -215,7 +216,15 @@ const ReserveSide = () => {
             )}
             <div className="flex flex-col space-y-[5px]">
               <p className="text-primary font-semibold text-[18px]">
-                Move date:
+                Move Price:
+              </p>
+              <p className="font-semibold text-[13.5px] ">
+                {formatMovePrice(reserveDetails?.moverPrice)}
+              </p>
+            </div>
+            <div className="flex flex-col space-y-[5px]">
+              <p className="text-primary font-semibold text-[18px]">
+                Move Date:
               </p>
               <p className="font-semibold text-[13.5px] ">
                 {!reserveDetails?.moveDateFormatted

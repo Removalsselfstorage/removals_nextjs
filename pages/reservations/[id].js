@@ -266,7 +266,7 @@ const Reservations = ({ id, progressData, prices }) => {
           </main>
         </BookingLayout>
       )}
-      {completedBookLoading && (
+      {reserveId === "" && completedBookLoading && (
         <div className="flex justify-center items-center w-full h-screen">
           <span className="loading loading-spinner loading-lg text-primary"></span>
         </div>

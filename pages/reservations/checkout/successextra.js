@@ -96,7 +96,7 @@ const ReservationExtraSuccess = () => {
         {
           date: getCurrentDateFormatted(),
           stage: "paid move outstanding",
-          extraPricePaid: checkoutSession?.amount_total / 100,
+          extraPricePaid: Number(checkoutSession?.amount_total / 100),
           extraStripeDetails: {
             stripeCartName: customer?.name,
             stripeCartEmail: customer?.email,
@@ -112,15 +112,11 @@ const ReservationExtraSuccess = () => {
       );
 
       // return true;
-      console.log(
-        "extra payment update was successful @ extra success page"
-      );
+      console.log("extra payment update was successful @ extra success page");
     } catch (error) {
       console.log(error);
       // return false;
-      console.log(
-        "extra payment update was unsuccessful @ extra success page"
-      );
+      console.log("extra payment update was unsuccessful @ extra success page");
     }
   };
 
@@ -184,8 +180,8 @@ const ReservationExtraSuccess = () => {
               Payment Successful
             </p>
             <p className="mt-2 text-base text-gray-500">
-              We appreciate your extra payment, we’re currently processing
-              it. So hang tight and we’ll send you confirmation very soon!
+              We appreciate your extra payment, we’re currently processing it.
+              So hang tight and we’ll send you confirmation very soon!
             </p>
 
             <dl className="mt-12 text-sm font-medium">

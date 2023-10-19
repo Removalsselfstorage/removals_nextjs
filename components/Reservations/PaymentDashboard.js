@@ -98,19 +98,24 @@ const PaymentDashboard = () => {
     moveExtraCheckout(stripeProductId, stripeExtraAmount);
   };
 
+  const paidPrice =
+    Number(reserveDetails?.paidPrice) + Number(reserveDetails?.outPrice);
+
   const outstandingPrice =
     reserveDetails?.moverPrice -
     reserveDetails?.paidPrice -
-    (reserveDetails?.outPrice ? reserveDetails?.outPrice : 0);
+    reserveDetails?.outPrice;
 
   const extraPrice =
-    reserveDetails?.extraPrice - reserveDetails?.extraPricePaid
-      ? reserveDetails?.extraPricePaid
-      : 0;
+    reserveDetails?.extraPrice - reserveDetails?.extraPricePaid;
 
   useEffect(() => {}, []);
 
-  console.log({ reserveDetails });
+  console.log({
+    reserveDetails,
+    extraPrice,
+    outstandingPrice,
+  });
 
   return (
     <div className="flex flex-col space-y-[5px]">
@@ -131,7 +136,7 @@ const PaymentDashboard = () => {
         <div className="flex flex-col px-[20px] py-[30px]">
           <div className="font-bold">Payment made</div>
           <div className="font-bold text-[30px]">
-            {formatMovePrice(reserveDetails?.paidPrice)}
+            {formatMovePrice(paidPrice)}
           </div>
           <div className="stat-actions">
             <div className="text-white font-semibold">

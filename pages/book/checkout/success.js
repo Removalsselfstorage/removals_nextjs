@@ -131,6 +131,9 @@ const ReservationCheckoutSuccess = () => {
           stage: "move checkout successful",
           completedBook: true,
           movePaymentStatus: "PAID",
+          outPrice: 0,
+          extraPrice: 0,
+          extraPricePaid: 0,
           moveStripeDetails: {
             stripeName: customer?.name,
             stripeEmail: customer?.email,

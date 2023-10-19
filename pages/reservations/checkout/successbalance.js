@@ -96,7 +96,7 @@ const ReservationBalanceSuccess = () => {
         {
           date: getCurrentDateFormatted(),
           stage: "paid move outstanding",
-          outPrice: checkoutSession?.amount_total / 100,
+          outPrice: Number(checkoutSession?.amount_total / 100),
           outStripeDetails: {
             stripeCartName: customer?.name,
             stripeCartEmail: customer?.email,

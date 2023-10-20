@@ -86,7 +86,7 @@ const MoverLogin = () => {
         login_email: "",
         login_password: "",
       });
-      setSubmitLoading(false);
+      // setSubmitLoading(false);
     });
 
     // const userData = await fetchAllMoversDetails(uid);

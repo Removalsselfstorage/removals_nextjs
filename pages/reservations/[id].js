@@ -124,7 +124,6 @@ const Reservations = ({ id, progressData, prices }) => {
     completedBook?.moveItems && resetMoveItemsFxn(completedBook?.moveItems);
     setReserveDetailsFxn({
       ...completedBook,
-      
     });
   }, [completedBook]);
 
@@ -266,7 +265,7 @@ const Reservations = ({ id, progressData, prices }) => {
           </main>
         </BookingLayout>
       )}
-      {reserveId === "" && completedBookLoading && (
+      {(reserveId === "" || completedBookLoading) && (
         <div className="flex justify-center items-center w-full h-screen">
           <span className="loading loading-spinner loading-lg text-primary"></span>
         </div>

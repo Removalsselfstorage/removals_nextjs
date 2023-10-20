@@ -25,7 +25,7 @@ import useQuote from "@/hooks/useQuote";
 
 // const Login = ({ providers, csrfToken, callbackUrl }) => {
 const ReserveLogin = ({ data }) => {
-  const { updateReserveIdFxn, reserveId,reserveDetails, router } = useQuote();
+  const { updateReserveIdFxn, reserveId, reserveDetails, router } = useQuote();
 
   // const router = useRouter();
 
@@ -76,7 +76,7 @@ const ReserveLogin = ({ data }) => {
         ...user,
         login_ref: "",
       });
-      setSubmitLoading(false);
+      // setSubmitLoading(false);
       updateReserveIdFxn(findBookingId.bookingId);
     } else if (!findBookingId) {
       setErrorMessage("Booking with this Id doesn't exist");

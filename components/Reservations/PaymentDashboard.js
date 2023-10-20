@@ -46,6 +46,20 @@ const PaymentDashboard = () => {
   const [submitLoading2, setSubmitLoading2] = useState(false);
   const [showTip, setShowTip] = useState(false);
 
+  const extraPrice =
+    (reserveDetails?.extraPrice?.length > 0 &&
+      reserveDetails?.extraPrice[reserveDetails?.extraPrice?.length - 1]) ||
+    0;
+  // const extraPrice =
+  //   ((reserveDetails?.extraPrice?.length > 0 &&
+  //     reserveDetails?.extraPrice[reserveDetails?.extraPrice?.length - 1]) ||
+  //     0) -
+  //   ((reserveDetails?.extraPricePaid?.length > 0 &&
+  //     reserveDetails?.extraPricePaid[
+  //       reserveDetails?.extraPricePaid?.length - 1
+  //     ]) ||
+  //     0);
+
   const computeProductId = () => {
     switch (reserveDetails?.movePackage) {
       case "Standard":
@@ -75,7 +89,7 @@ const PaymentDashboard = () => {
     (reserveDetails?.moverPrice - reserveDetails?.paidPrice) * 100
   );
 
-  const stripeExtraAmount = parseInt(reserveDetails?.extraPrice * 100);
+  const stripeExtraAmount = parseInt(extraPrice * 100);
 
   // useEffect(() => {
   //   setCompletedBooking(completedBook(id));
@@ -106,8 +120,12 @@ const PaymentDashboard = () => {
     reserveDetails?.paidPrice -
     reserveDetails?.outPrice;
 
-  const extraPrice =
-    reserveDetails?.extraPrice - reserveDetails?.extraPricePaid;
+  // reserveDetails?.extraPrice - reserveDetails?.extraPricePaid;
+
+  // const extraPrice = reserveDetails?.extraPrice
+  //   ? reserveDetails?.extraPrice[reserveDetails?.extraPrice?.length - 1] -
+  //     reserveDetails?.extraPricePaid[reserveDetails?.extraPricePaid?.length - 1]
+  //   : 0;
 
   useEffect(() => {}, []);
 

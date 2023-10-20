@@ -96,7 +96,14 @@ const ReservationExtraSuccess = () => {
         {
           date: getCurrentDateFormatted(),
           stage: "paid move outstanding",
-          extraPricePaid: Number(checkoutSession?.amount_total / 100),
+          // extraPricePaid: Number(checkoutSession?.amount_total / 100),
+          extraPricePaid:
+            reserveDetails?.extraPricePaid.length > 0
+              ? [
+                  ...reserveDetails?.extraPricePaid,
+                  Number(checkoutSession?.amount_total / 100),
+                ]
+              : [Number(checkoutSession?.amount_total / 100)],
           extraStripeDetails: {
             stripeCartName: customer?.name,
             stripeCartEmail: customer?.email,
@@ -106,7 +113,11 @@ const ReservationExtraSuccess = () => {
             stripeCartSubtotal: subtotal,
             stripeCartTotal: total,
           },
-          extraStripeProducts: products,
+          // extraStripeProducts: products,
+          extraStripeProducts:
+            reserveDetails?.extraPricePaid?.length > 0
+              ? [...reserveDetails?.extraStripeProducts, products]
+              : [products],
         },
         { merge: true }
       );

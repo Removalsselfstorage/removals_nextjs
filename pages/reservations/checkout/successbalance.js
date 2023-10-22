@@ -95,18 +95,19 @@ const ReservationBalanceSuccess = () => {
 
         {
           date: getCurrentDateFormatted(),
-          stage: "paid move outstanding",
-          outPrice: Number(checkoutSession?.amount_total / 100),
-          outStripeDetails: {
-            stripeCartName: customer?.name,
-            stripeCartEmail: customer?.email,
-            stripeCartCountry: customer?.address.country,
-            // stripeCartProducts: products,
-            stripeCartPaymentType: payment,
-            stripeCartSubtotal: subtotal,
-            stripeCartTotal: total,
+          stage: "paid outstanding move price",
+          outStripePayment: {
+            amount: Number(checkoutSession?.amount_total / 100),
+            date: getCurrentDateFormatted(),
+            description: "Move Outstanding Payment",
+            stripeName: customer?.name,
+            stripeEmail: customer?.email,
+            stripeCountry: customer?.address.country,
+            // stripeProducts: products,
+            stripePaymentType: payment,
+            stripeSubtotal: subtotal,
+            stripeTotal: total,
           },
-          outStripeProducts: products,
         },
         { merge: true }
       );
@@ -131,7 +132,7 @@ const ReservationBalanceSuccess = () => {
 
   const notificationParams = {
     message: `User ${reserveDetails?.firstName} ${reserveDetails?.lastName} with booking ID ${reserveDetails?.bookingId} just successfully paid the outstanding fee for ${reserveDetails?.propertyType} ${reserveDetails?.movePackage} Package with ${reserveDetails?.numberOfMovers} and Jumbo Van with a total price of ${total}.`,
-    subject: `Successful outstanding payment by user ${reserveDetails?.firstName} ${reserveDetails?.lastName}`,
+    subject: `Successful outstanding payment (${total}) by user ${reserveDetails?.firstName} ${reserveDetails?.lastName}`,
     bookLink: `https://rss-admin.vercel.app/secret-admin/users/booking/${reserveDetails?.bookingId}`,
     bookingId,
   };

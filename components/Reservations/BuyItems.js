@@ -20,8 +20,6 @@ const BuyItems = ({
   // timeValue,
   // setTimeValue,
 }) => {
- 
-
   const {
     allProducts,
     allCartProducts,
@@ -41,19 +39,15 @@ const BuyItems = ({
     router,
   } = useProductCart();
 
-  const { 
-    reserveDetails, 
-    resetBookS, reserveId, updateReserveIdFxn } =
+  const { reserveDetails, resetBookS, reserveId, updateReserveIdFxn } =
     useQuote();
 
-    const {
-      completedBookings,
-      completedBookingsLoading,
-      refetchCompletedBookings,
-      completedBook,
-    } = useBookings();
-
-
+  const {
+    completedBookings,
+    completedBookingsLoading,
+    refetchCompletedBookings,
+    completedBook,
+  } = useBookings();
 
   const bookingId = reserveDetails?.bookingId;
 
@@ -64,7 +58,7 @@ const BuyItems = ({
 
         {
           date: getCurrentDateFormatted(),
-          stage: "reservation",
+          stage: "Added Item to cart",
           cartCheckedOut: "NO",
           cartItems: allCartProducts,
         },

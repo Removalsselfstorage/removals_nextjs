@@ -95,29 +95,54 @@ const ReservationExtraSuccess = () => {
 
         {
           date: getCurrentDateFormatted(),
-          stage: "paid move outstanding",
+          stage: "paid add-ons price",
           // extraPricePaid: Number(checkoutSession?.amount_total / 100),
-          extraPricePaid:
-            reserveDetails?.extraPricePaid.length > 0
+          extraStripePayment:
+            reserveDetails?.extraStripePayment.length > 0
               ? [
-                  ...reserveDetails?.extraPricePaid,
-                  Number(checkoutSession?.amount_total / 100),
+                  ...reserveDetails?.extraStripePayment,
+                  {
+                    amount: Number(checkoutSession?.amount_total / 100),
+                    date: getCurrentDateFormatted(),
+                    description: "Add-ons Payment",
+                    stripeName: customer?.name,
+                    stripeEmail: customer?.email,
+                    stripeCountry: customer?.address.country,
+                    // stripeProducts: products,
+                    stripePaymentType: payment,
+                    stripeSubtotal: subtotal,
+                    stripeTotal: total,
+                  },
                 ]
-              : [Number(checkoutSession?.amount_total / 100)],
-          extraStripeDetails: {
-            stripeCartName: customer?.name,
-            stripeCartEmail: customer?.email,
-            stripeCartCountry: customer?.address.country,
-            // stripeCartProducts: products,
-            stripeCartPaymentType: payment,
-            stripeCartSubtotal: subtotal,
-            stripeCartTotal: total,
-          },
+              : [
+                  // Number(checkoutSession?.amount_total / 100)
+                  {
+                    amount: Number(checkoutSession?.amount_total / 100),
+                    date: getCurrentDateFormatted(),
+                    description: "Add-ons Payment",
+                    stripeName: customer?.name,
+                    stripeEmail: customer?.email,
+                    stripeCountry: customer?.address.country,
+                    // stripeProducts: products,
+                    stripePaymentType: payment,
+                    stripeSubtotal: subtotal,
+                    stripeTotal: total,
+                  },
+                ],
+          // extraStripeDetails: {
+          //   stripeCartName: customer?.name,
+          //   stripeCartEmail: customer?.email,
+          //   stripeCartCountry: customer?.address.country,
+          //   // stripeCartProducts: products,
+          //   stripeCartPaymentType: payment,
+          //   stripeCartSubtotal: subtotal,
+          //   stripeCartTotal: total,
+          // },
           // extraStripeProducts: products,
-          extraStripeProducts:
-            reserveDetails?.extraPricePaid?.length > 0
-              ? [...reserveDetails?.extraStripeProducts, products]
-              : [products],
+          // extraStripeProducts:
+          //   reserveDetails?.extraPricePaid?.length > 0
+          //     ? [...reserveDetails?.extraStripeProducts, ...products]
+          //     : [...products],
         },
         { merge: true }
       );
@@ -138,7 +163,7 @@ const ReservationExtraSuccess = () => {
 
   const notificationParams = {
     message: `User ${reserveDetails?.firstName} ${reserveDetails?.lastName} with booking ID ${reserveDetails?.bookingId} just successfully paid the extra fee for ${reserveDetails?.propertyType} ${reserveDetails?.movePackage} Package with ${reserveDetails?.numberOfMovers} and Jumbo Van with a total price of ${total}.`,
-    subject: `Successful extra payment by user ${reserveDetails?.firstName} ${reserveDetails?.lastName}`,
+    subject: `Successful extra payment (${total}) by user ${reserveDetails?.firstName} ${reserveDetails?.lastName}`,
     bookLink: `https://rss-admin.vercel.app/secret-admin/users/booking/${reserveDetails?.bookingId}`,
     bookingId,
   };
@@ -176,7 +201,21 @@ const ReservationExtraSuccess = () => {
     // resetCartFxn();
   };
 
-  console.log({ reserveDetails });
+  console.log({
+    cs: {
+      amount: Number(checkoutSession?.amount_total / 100),
+      date: getCurrentDateFormatted(),
+      description: "Add-ons Payment",
+      stripeName: customer?.name,
+      stripeEmail: customer?.email,
+      stripeCountry: customer?.address.country,
+      // stripeProducts: products,
+      stripePaymentType: payment,
+      stripeSubtotal: subtotal,
+      stripeTotal: total,
+    },
+    reserveDetails,
+  });
 
   return (
     <BookingLayout>

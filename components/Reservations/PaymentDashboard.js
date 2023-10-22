@@ -4,7 +4,7 @@ import { formatMovePrice } from "@/utils/logics";
 import React, { useEffect, useState } from "react";
 import { BiHelpCircle } from "react-icons/bi";
 
-const PaymentDashboard = () => {
+const PaymentDashboard = ({ allPayments }) => {
   const {
     setReserveDetailsFxn,
     updateReserveDetailsFxn,
@@ -47,9 +47,8 @@ const PaymentDashboard = () => {
   const [showTip, setShowTip] = useState(false);
 
   const extraPrice =
-    (reserveDetails?.extraPrice?.length > 0 &&
-      reserveDetails?.extraPrice[reserveDetails?.extraPrice?.length - 1]) ||
-    0;
+    reserveDetails?.extraPrice?.length > 0 &&
+    reserveDetails?.extraPrice[reserveDetails?.extraPrice?.length - 1]?.amount;
   // const extraPrice =
   //   ((reserveDetails?.extraPrice?.length > 0 &&
   //     reserveDetails?.extraPrice[reserveDetails?.extraPrice?.length - 1]) ||
@@ -59,6 +58,25 @@ const PaymentDashboard = () => {
   //       reserveDetails?.extraPricePaid?.length - 1
   //     ]) ||
   //     0);
+
+  const paidExtra = () => {
+    if (extraPrice !== 0 && reserveDetails?.extraStripePayment?.length > 0) {
+      if (
+        reserveDetails?.extraStripePayment[
+          reserveDetails?.extraStripePayment?.length - 1
+        ]?.amount?.toFixed(0) ===
+        reserveDetails?.extraPrice[
+          reserveDetails?.extraPrice?.length - 1
+        ]?.amount?.toFixed(0)
+      ) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  };
 
   const computeProductId = () => {
     switch (reserveDetails?.movePackage) {
@@ -86,7 +104,8 @@ const PaymentDashboard = () => {
   const stripeProductId = computeProductId();
 
   const stripeOutAmount = parseInt(
-    (reserveDetails?.moverPrice - reserveDetails?.paidPrice) * 100
+    (reserveDetails?.moverPrice - reserveDetails?.moveStripePayment?.amount) *
+      100
   );
 
   const stripeExtraAmount = parseInt(extraPrice * 100);
@@ -96,11 +115,12 @@ const PaymentDashboard = () => {
   //   setExtraPrice(completedBook(id)?.extraPrice);
   // }, [completedBookings]);
 
-  console.log({
-    stripeProductId,
-    stripeOutAmount,
-    // price: paymentDetails?.paidPrice,
-  });
+  // console.log({
+  //   reserveDetails,
+  //   // stripeProductId,
+  //   // stripeOutAmount,
+  //   // price: paymentDetails?.paidPrice,
+  // });
 
   const handleOutstanding = () => {
     setSubmitLoading(true);
@@ -113,12 +133,10 @@ const PaymentDashboard = () => {
   };
 
   const paidPrice =
-    Number(reserveDetails?.paidPrice) + Number(reserveDetails?.outPrice);
+    reserveDetails?.moveStripePayment?.amount +
+    reserveDetails?.outStripePayment?.amount;
 
-  const outstandingPrice =
-    reserveDetails?.moverPrice -
-    reserveDetails?.paidPrice -
-    reserveDetails?.outPrice;
+  const outstandingPrice = reserveDetails?.moverPrice - paidPrice;
 
   // reserveDetails?.extraPrice - reserveDetails?.extraPricePaid;
 
@@ -129,11 +147,12 @@ const PaymentDashboard = () => {
 
   useEffect(() => {}, []);
 
-  console.log({
-    reserveDetails,
-    extraPrice,
-    outstandingPrice,
-  });
+  // console.log({
+  //   pe: paidExtra(),
+  //   reserveDetails,
+  //   extraPrice,
+  //   outstandingPrice,
+  // });
 
   return (
     <div className="flex flex-col space-y-[5px]">
@@ -154,12 +173,25 @@ const PaymentDashboard = () => {
         <div className="flex flex-col px-[20px] py-[30px]">
           <div className="font-bold">Payment made</div>
           <div className="font-bold text-[30px]">
-            {formatMovePrice(paidPrice)}
+            {formatMovePrice(allPayments()?.total)}
           </div>
           <div className="stat-actions">
-            <div className="text-white font-semibold">
+            {/* <div className="text-white font-semibold">
               ({reserveDetails?.paymentType} Deposit)
-            </div>
+            </div> */}
+            {/* <p
+              onClick={() => window.my_modal_51.showModal()}
+              className="link text-white font-semibold"
+            >
+              My Payment History
+            </p> */}
+            <button
+              className=" bg-white text-black font-semibold hover:scale-[1.02] transition-all duration-300 focus:bg-white w-[200px] active:bg-white px-[10px] py-[5px] rounded-[5px]"
+              onClick={() => window.my_modal_51.showModal()}
+              // disabled={submitLoading || outstandingPrice === 0}
+            >
+              PAYMENT HISTORY
+            </button>
           </div>
         </div>
         {/*  outstanding payment */}
@@ -194,7 +226,7 @@ const PaymentDashboard = () => {
         {/* Extra payment */}
         <div className="flex flex-col px-[20px] py-[30px]">
           <div className="font-bold flex items-center space-x-[5px]">
-            <p className="">Extra Payment</p>
+            <p className="">Add-ons</p>
             <div
               className="cursor-pointer"
               onMouseEnter={() => setShowTip(true)}
@@ -204,7 +236,12 @@ const PaymentDashboard = () => {
             </div>
           </div>
           <div className="font-bold text-[30px]">
-            {formatMovePrice(extraPrice || 0)}
+            {`${
+              paidExtra()
+                ? formatMovePrice(0)
+                : formatMovePrice(extraPrice || 0)
+            }`}
+            {/* {formatMovePrice(extraPrice || 0)} */}
             {/* {reserveDetails?.moverPrice -
             reserveDetails?.paidPrice} */}
           </div>
@@ -212,12 +249,12 @@ const PaymentDashboard = () => {
             <button
               className=" bg-white hover:scale-[1.02] transition-all duration-300 focus:bg-white w-[200px] active:bg-white px-[10px] py-[5px] rounded-[5px] flex justify-center "
               onClick={handleExtra}
-              disabled={submitLoading2 || extraPrice === 0}
+              disabled={submitLoading2 || extraPrice === 0 || paidExtra()}
             >
               {/* Pay Outstanding */}
               {!submitLoading2 && (
                 <span className="text-black font-semibold text-center">
-                  PAY EXTRA
+                  {`${paidExtra() ? "PAID" : "PAY ADD-ONS"}`}
                 </span>
               )}
               {submitLoading2 && (
@@ -233,14 +270,14 @@ const PaymentDashboard = () => {
         </div>
       </div>
       <div
-        className={`flex items-center space-x-[5px] ${
+        className={`flex items-center space-x-[5px] duration-300 transition-all ${
           showTip ? "opacity-1" : "opacity-0"
         }`}
       >
         <BiHelpCircle className="font-bold text-[40px] mr-[10px] md:mr-0  md:text-[25px] text-primary" />
         <p className="text-[14px] font-semibold text-gray-500">
-          The Extra Payment depends on the amount of items picked for move that
-          exceeds the package selected.
+          The Add-ons Payment depends on the amount of items picked for move
+          that exceeds the package selected.
         </p>
       </div>
     </div>

@@ -8,6 +8,7 @@ import FeaturesScroll from "@/components/BookingPages/movers/FeaturesScroll";
 import FullRating from "@/components/Rating/FullRating";
 import MoverCard from "@/components/BookingPages/movers/MoverCard";
 import { BiLogOut, BiSave, BiSolidPhoneCall } from "react-icons/bi";
+import { LuHistory } from "react-icons/lu";
 import MoveDetails from "@/components/BookingPages/movers/MoveDetails";
 import {
   getAllDetails,
@@ -20,6 +21,7 @@ import {
   calculateMoverPrice,
   convertDateFormat,
   decreaseByPercentage,
+  formatMovePrice,
   getFirstSortedHomeMover,
   getFormattedTodayDate,
   increaseByPercentage,
@@ -56,7 +58,7 @@ import Stripe from "stripe";
 import PaymentDashboard from "@/components/Reservations/PaymentDashboard";
 import useBookings from "@/hooks/useBookings";
 
-const Reservations = ({ id, progressData, prices }) => {
+const Reservations = ({ progressData }) => {
   const {
     setReserveDetailsFxn,
     reserveDetails,
@@ -101,23 +103,43 @@ const Reservations = ({ id, progressData, prices }) => {
 
   const [clickedModalOpen, setClickedModalOpen] = useState(false);
 
-  //setBedRoom
+  const allPayments = () => {
+    let ap;
+    if (reserveDetails?.extraStripePayment?.length > 0) {
+      ap = [
+        reserveDetails?.moveStripePayment,
+        reserveDetails?.outStripePayment,
+        ...reserveDetails?.extraStripePayment,
+      ].sort((a, b) => {
+        return new Date(b.date) - new Date(a.date);
+      });
+    }
+    return {
+      ap,
+      total: ap?.reduce((acc, payment) => {
+        if (payment && typeof payment.amount === "number") {
+          return acc + payment.amount;
+        }
+        return acc;
+      }, 0),
+    };
 
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     setInitialLoading(false);
-  //   }, 5000);
-  // }, []);
+    // return totalAmount;
+  };
 
-  // useEffect(() => {
-  //   let filteredBook = completedBookings?.find((obj) => obj.id === id);
-  //   setCompletedBooking(filteredBook);
-  // }, [completedBookings]);
+  // const allPayments = [{ amount: 10 }, { amount: 20 }, { amount: 30 }];
 
   useEffect(() => {
     if (reserveId === "") {
       router.push("/reserve-login");
     }
+  }, []);
+
+  useEffect(() => {
+    if (progressData)
+      setReserveDetailsFxn({
+        ...progressData,
+      });
   }, []);
 
   useEffect(() => {
@@ -137,10 +159,24 @@ const Reservations = ({ id, progressData, prices }) => {
   // Compare the two dates
   const isGivenDateGreaterThanCurrent = givenDate > currentDate;
 
+  const closeModal = () => {
+    window.my_modal_51.close();
+  };
+
+  // const extraPay =
+  //   reserveDetails?.extraStripePayment.length > 0 &&
+  //   reserveDetails?.extraStripePayment;
+
   // const {} = reserveDetails
 
   // console.log({ progressData, moveItems });
-  console.log({ reserveDetails, reserveId });
+  console.log({
+    // sm: sumAmounts(),
+    progressData,
+    reserveDetails,
+    ap: allPayments(),
+    reserveId,
+  });
 
   return (
     <>
@@ -219,8 +255,82 @@ const Reservations = ({ id, progressData, prices }) => {
                     </div>
                     {/* payment dashboard */}
                     <div className="flex flex-col space-y-[20px] mt-[30px] mb-[30px] ">
+                      <div className="">
+                        {/* <div className="flex justify-between">
+                          <p
+                            onClick={() => window.my_modal_51.showModal()}
+                            className="link text-primary font-semibold"
+                          >
+                            My Payment History
+                          </p>
+                          <p className="link font-semibold text-primary ">
+                            My Bookings
+                          </p>
+                        </div> */}
+                        {/* modal */}
+                        <dialog
+                          id="my_modal_51"
+                          className="modal py-[20px] px-[10px]"
+                        >
+                          <form method="dialog" className="modal-box px-[20px]">
+                            <div
+                              onClick={closeModal}
+                              className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 border border-secondary text-secondary"
+                            >
+                              ✕
+                            </div>
+
+                            <div className="">
+                              <div className="w-full flex justify-center mb-[20px]">
+                                <div className="text-secondary bg-secondary/10 flex justify-center items-center w-[60px] h-[60px] rounded-full">
+                                  <LuHistory className="text-[30px] text-secondary" />
+                                </div>
+                              </div>
+
+                              <h3 className="font-bold text-[24px] text-center text-secondary mb-[20px]">
+                                Payment History
+                              </h3>
+
+                              {allPayments()?.ap?.map((ap, index) => {
+                                return (
+                                  <div className="" key={index}>
+                                    {ap?.amount !== 0 && (
+                                      <div className="flex items-start justify-between mt-[0px] border-b border-t py-[15px] px-[10px]">
+                                        <div className="flex items-center space-x-[10px] flex-[1]">
+                                          <div className="flex flex-col space-y-[0px]">
+                                            <p className="line-clamp-2 font-bold text-[20px] ">
+                                              {formatMovePrice(ap?.amount)}
+                                            </p>
+                                            <p className="line-clamp-2 text-[14px] text-gray-500">
+                                              {ap?.date}
+                                            </p>
+                                          </div>
+                                        </div>
+                                        <div className="flex items-center space-x-[20px]">
+                                          {/* <p className="line-clamp-2 font-bold text-[20px] text-primary">
+                                                        Total Price:
+                                                      </p> */}
+                                          <p className="font-bold ">
+                                            {ap?.description}
+                                          </p>
+                                        </div>
+                                      </div>
+                                    )}
+                                  </div>
+                                );
+                              })}
+                            </div>
+                          </form>
+                          <form method="dialog">
+                            {/* <button>close</button> */}
+                          </form>
+                          {/* <form method="dialog" className="modal-backdrop">
+                            <button>close</button>
+                          </form> */}
+                        </dialog>
+                      </div>
                       <div className="border-b-[2px] pb-[10px]">
-                        <PaymentDashboard />
+                        <PaymentDashboard allPayments={allPayments} />
                       </div>
                       {reserveDetails?.moveDate &&
                         isGivenDateGreaterThanCurrent && (
@@ -276,31 +386,50 @@ const Reservations = ({ id, progressData, prices }) => {
 
 export default Reservations;
 
-// export async function getServerSideProps(context) {
-//   const { id } = context.params; // Access the UID from the URL
-//   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
-//   const { data: prices } = await stripe.prices.list({
-//     active: true,
-//     limit: 10,
-//     expand: ["data.product"],
-//   });
-//   // const userData = await fetchAllMoversDetailsArray();
+export async function getServerSideProps(context) {
+  const { id } = context.params; // Access the UID from the URL
+  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+  const { data: prices } = await stripe.prices.list({
+    active: true,
+    limit: 10,
+    expand: ["data.product"],
+  });
+  // const userData = await fetchAllMoversDetailsArray();
 
-//   const bookingRef = doc(db, "bookingData", id);
-//   const docSnap = await getDoc(bookingRef);
+  const bookingRef = doc(db, "bookingData", id);
+  const docSnap = await getDoc(bookingRef);
 
-//   const progressData = docSnap.data();
+  const progressData = docSnap.data();
 
-//   // console.log({ progressData });
+  // let progressData;
 
-//   return {
-//     props: {
-//       // userData,
-//       id: id,
-//       progressData,
+  // if (!!pd) {
+  //   progressData = pd?.bookings?.filter((bk) => bk.completedBook === true);
+  // }
 
-//       prices,
-//       // userData,
-//     },
-//   };
-// }
+  // console.log({ pd });
+
+  if (typeof progressData === "undefined") {
+    return {
+      props: {
+        progressData: null,
+        // userData,
+        id: id,
+
+        prices,
+        // userData,
+      },
+    };
+  } else {
+    return {
+      props: {
+        progressData,
+        // userData,
+        id: id,
+
+        prices,
+        // userData,
+      },
+    };
+  }
+}

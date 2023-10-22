@@ -145,7 +145,7 @@ const PickUpItems = () => {
 
         {
           date: getCurrentDateFormatted(),
-          stage: "reservation",
+          stage: "Updated items to move",
           moveItems: ab?.moveItems,
         },
         { merge: true }

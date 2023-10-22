@@ -599,7 +599,7 @@ const Movers = () => {
                             )}
                           </form>
                           <form method="dialog">
-                            <button>close</button>
+                            {/* <button>close</button> */}
                           </form>
                           {/* <form method="dialog" className="modal-backdrop">
                             <button>close</button>

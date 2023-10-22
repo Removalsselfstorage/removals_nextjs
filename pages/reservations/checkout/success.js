@@ -95,7 +95,7 @@ const ReservationCheckoutSuccess = () => {
 
         {
           date: getCurrentDateFormatted(),
-          stage: "cart checkout successful",
+          stage: "Paid for checked out cart",
           cartCheckedOut: "YES",
           cartPaymentStatus: "PAID",
           cartStripeDetails: {
@@ -180,7 +180,7 @@ const ReservationCheckoutSuccess = () => {
     <BookingLayout>
       <div className="bg-white py-[20px]">
         <div className="max-w-3xl mx-auto px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
-        <div className="flex justify-center w-full">
+          <div className="flex justify-center w-full">
             <Lottie animationData={success} className="w-[200px]" />
           </div>
           <div className="max-w-xl">

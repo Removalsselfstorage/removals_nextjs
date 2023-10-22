@@ -128,13 +128,24 @@ const ReservationCheckoutSuccess = () => {
 
         {
           date: getCurrentDateFormatted(),
-          stage: "move checkout successful",
+          stage: "paid initial move price",
           completedBook: true,
           movePaymentStatus: "PAID",
-          outPrice: 0,
-          extraPrice: [],
-          extraPricePaid: [],
-          moveStripeDetails: {
+          // outPrice: 0,
+          extraPrice: [
+            {
+              amount: 0,
+              date: "",
+              description: "",
+            },
+          ],
+          // extraPricePaid: [],
+
+          // moveStripeProducts: products,
+          moveStripePayment: {
+            amount: Number(checkoutSession?.amount_total / 100),
+            date: getCurrentDateFormatted(),
+            description: "Move Initial Payment",
             stripeName: customer?.name,
             stripeEmail: customer?.email,
             stripeCountry: customer?.address.country,
@@ -143,8 +154,32 @@ const ReservationCheckoutSuccess = () => {
             stripeSubtotal: subtotal,
             stripeTotal: total,
           },
-          // moveStripeProducts: products,
-          moveStripePayments: [total],
+          outStripePayment: {
+            amount: 0,
+            date: "",
+            description: "",
+            stripeName: "",
+            stripeEmail: "",
+            stripeCountry: "",
+            // stripeProducts: products,
+            stripePaymentType: "",
+            stripeSubtotal: "",
+            stripeTotal: "",
+          },
+          extraStripePayment: [
+            {
+              amount: 0,
+              date: "",
+              description: "",
+              stripeName: "",
+              stripeEmail: "",
+              stripeCountry: "",
+              // stripeProducts: products,
+              stripePaymentType: "",
+              stripeSubtotal: "",
+              stripeTotal: "",
+            },
+          ],
         },
         { merge: true }
       );
@@ -178,7 +213,7 @@ const ReservationCheckoutSuccess = () => {
 
   const notificationParams = {
     message: `User ${personalDetails?.firstName} ${personalDetails?.lastName} with booking ID ${moveDetails?.bookingId} just successfully paid for ${moveDetails?.propertyType} ${moveDetails?.movePackage} Package with ${moveDetails?.numberOfMovers} and Jumbo Van with a total price of ₤${paymentDetails?.paidPrice} out of ₤${moverDetails?.moverPrice}.`,
-    subject: `Successful move payment by user ${personalDetails?.firstName} ${personalDetails?.lastName}`,
+    subject: `Successful move payment (${total}) by user ${personalDetails?.firstName} ${personalDetails?.lastName}`,
     bookLink: `https://rss-admin.vercel.app/secret-admin/users/booking/${moveDetails?.bookingId}`,
     bookingId,
     // page: "checkout page",

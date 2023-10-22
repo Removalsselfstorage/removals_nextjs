@@ -509,7 +509,7 @@ const PackageCard = ({
           <>
             <span>Booking</span>
             <span
-              className={`loading loading-dots loading-md ${
+              className={`loading loading-spinner loading-md ${
                 submitLoading && "text-white"
               } ${
                 preferred && !submitLoading

@@ -93,8 +93,8 @@ const ReservationCheckoutError = () => {
               Payment Cancelled
             </p>
             <p className=" text-base text-gray-500 text-center lg:px-[50px] mt-[20px]">
-              Your Outstanding payment was not successful.
-              Please return to the Dashboard and try again!
+              Your Outstanding payment was not successful. Please return to the
+              Dashboard and try again!
             </p>
           </div>
 
@@ -107,7 +107,7 @@ const ReservationCheckoutError = () => {
               {/* Return to Dashboard */}
               {!submitLoading && <span className="">Go to Dashboard</span>}
               {submitLoading && (
-                <span className="loading loading-dots loading-md text-white"></span>
+                <span className="loading loading-spinner loading-md text-white"></span>
               )}
             </button>
           </div>

@@ -526,7 +526,7 @@ const CheckoutForm = () => {
           <>
             <span>Checking Out</span>
             <span
-              className={`loading loading-dots loading-md text-white`}
+              className={`loading loading-spinner loading-md text-white`}
             ></span>
           </>
         )}
@@ -569,7 +569,7 @@ const CheckoutForm = () => {
                   <span className=""> Reservation Dashboard</span>
                 )}
                 {submitLoading2 && (
-                  <span className="loading loading-dots loading-md text-white"></span>
+                  <span className="loading loading-spinner loading-md text-white"></span>
                 )}
               </div>
             </div>

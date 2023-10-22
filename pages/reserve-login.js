@@ -152,7 +152,7 @@ const ReserveLogin = ({ data }) => {
                           <span className="">Go to Reservation</span>
                         )}
                         {submitLoading && (
-                          <span className="loading loading-dots loading-md text-white"></span>
+                          <span className="loading loading-spinner loading-md text-white"></span>
                         )}
                       </button>
                     </div>

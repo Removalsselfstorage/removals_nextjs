@@ -56,7 +56,6 @@ const EditProfile = () => {
     router,
   } = useMover();
 
-
   const userDetails = useSelector(getAllUserDetails);
 
   // const details = useSelector(getAllMoverDetails);
@@ -74,16 +73,10 @@ const EditProfile = () => {
     personalMoverDetails?.personalBio
   );
 
-  const [address, setAddress] = useState(
-    personalMoverDetails?.address
-  );
+  const [address, setAddress] = useState(personalMoverDetails?.address);
 
-  const [firstName, setFirstName] = useState(
-    personalMoverDetails?.firstName
-  );
-  const [lastName, setLastName] = useState(
-   personalMoverDetails?.lastName
-  );
+  const [firstName, setFirstName] = useState(personalMoverDetails?.firstName);
+  const [lastName, setLastName] = useState(personalMoverDetails?.lastName);
   const [email, setEmail] = useState(personalMoverDetails?.email);
   const [emailError, setEmailError] = useState(true);
   const [phone, setPhone] = useState(personalMoverDetails?.phone);
@@ -198,7 +191,7 @@ const EditProfile = () => {
         // approvalStatus: details?.personalMoverDetails?.approvalStatus,
         // rating: details?.personalMoverDetails?.rating,
         // ratingCount: details?.personalMoverDetails?.ratingCount,
-      })
+      });
 
       setSubmitSuccess(true);
 
@@ -526,7 +519,7 @@ const EditProfile = () => {
                 >
                   {!submitLoading && <span className="">Submit</span>}
                   {submitLoading && (
-                    <span className="loading loading-dots loading-md text-white"></span>
+                    <span className="loading loading-spinner loading-md text-white"></span>
                   )}
                 </button>
               </div>

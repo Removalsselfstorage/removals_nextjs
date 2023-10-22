@@ -216,7 +216,7 @@ const PaymentDashboard = ({ allPayments }) => {
                 <div className="flex items-center justify-center space-x-[5px]">
                   {/* <span className="text-black font-semibold">CHECKING OUT</span> */}
                   <span
-                    className={`loading loading-dots loading-md text-black`}
+                    className={`loading loading-spinner loading-md text-black`}
                   ></span>
                 </div>
               )}
@@ -261,7 +261,7 @@ const PaymentDashboard = ({ allPayments }) => {
                 <div className="flex items-center justify-center space-x-[5px] text-center w-full">
                   {/* <span className="text-black font-semibold">CHECKING OUT</span> */}
                   <span
-                    className={`loading loading-dots loading-md text-black text-center`}
+                    className={`loading loading-spinner loading-md text-black text-center`}
                   ></span>
                 </div>
               )}

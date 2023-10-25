@@ -433,9 +433,9 @@ const Reservations = ({ progressData }) => {
                                       <div className="flex items-start justify-between mt-[0px] border-b border-t py-[15px] px-[10px]">
                                         <div className="flex items-center space-x-[10px] flex-[1]">
                                           <div className="flex flex-col space-y-[0px]">
-                                            <p className="line-clamp-1 font-bold text-[18px] ">
-                                              {ap?.propertyType}{" "}
-                                              {ap?.movePackage} Move
+                                            <p className="line-clamp-1 font-bold text-[16px] ">
+                                              {ap?.propertyType} (
+                                              {ap?.movePackage} Move)
                                             </p>
                                             <p className="line-clamp-1 font-semibold text-[15px] ">
                                               with Mover - {ap?.moverName}{" "}

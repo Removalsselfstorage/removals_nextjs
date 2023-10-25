@@ -39,6 +39,7 @@ const ReservationBalanceSuccess = () => {
 
   const { reserveDetails } = useQuote();
   const bookingId = reserveDetails?.bookingId;
+  const quoteRef = reserveDetails?.quoteRef;
 
   const {
     query: { sessionId },
@@ -190,10 +191,10 @@ const ReservationBalanceSuccess = () => {
             </p>
 
             <dl className="mt-12 text-sm font-medium">
-              <dt className="text-gray-900 font-bold">Booking Id:</dt>
+              <dt className="text-gray-900 font-bold">Book Ref Id:</dt>
               <dd className="text-primary mt-2 text-[16px]">
                 {/* {checkoutSession?.payment_intent?.id} */}
-                {bookingId}
+                {quoteRef}
               </dd>
             </dl>
           </div>

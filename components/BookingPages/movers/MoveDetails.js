@@ -46,7 +46,7 @@ const MoveDetails = () => {
           <div className="grid md:grid-cols-3 lg:grid-cols-1 gap-y-[10px] gap-x-[10px] overflow-auto scrollbar-thin scrollbar-track-gray-200/50 scrollbar-thumb-gray-500/20 scrollbar-default h-[200px] md:h-full">
             <div className="flex flex-col space-y-[5px]">
               <p className="text-primary font-semibold text-[18px]">
-                Quote Ref:
+                Book Ref ID:
               </p>
               <p className="font-semibold text-[13.5px] ">
                 {details.moveDetails.quoteRef}

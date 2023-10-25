@@ -7,7 +7,7 @@ import useProductCart from "@/hooks/useProductCart";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "@/firebase";
 import useQuote from "@/hooks/useQuote";
-import { getCurrentDateFormatted } from "@/utils/logics";
+import { formatMovePrice, getCurrentDateFormatted } from "@/utils/logics";
 import useBookings from "@/hooks/useBookings";
 
 const BuyItems = ({
@@ -74,8 +74,33 @@ const BuyItems = ({
     }
   };
 
+  const totalPrice = () => {
+    let totalPrice = 0;
+    reserveDetails?.cartStripeProducts?.forEach((pr) => {
+      pr?.product?.forEach((pr2) => {
+        totalPrice += (pr2?.price / 100) * pr2?.quantity;
+      }); // Assuming each product has a 'price' property
+    });
+    return formatMovePrice(totalPrice);
+  };
+
+  const productAmount = () => {
+    let totalAmount = 0;
+    reserveDetails?.cartStripeProducts?.forEach((pr) => {
+      totalAmount += pr?.product?.length;
+    });
+    return totalAmount;
+  };
+
+  // const stripeCart = {
+  //   details: reserveDetails?.cartStripeDetails,
+  //   products: reserveDetails?.cartStripeProducts,
+  // };
+
+  const stripeCart = [];
+
   // const [allProducts, setAllProducts] = useState(products);
-  // console.log({ reserveDetails });
+  console.log({ tp: totalPrice(), reserveDetails });
 
   return (
     <div>
@@ -109,16 +134,58 @@ const BuyItems = ({
       </div>
 
       <div className="w-full mb-[20px]">
-        {reserveDetails?.stripeCartProducts?.length > 0 && (
-          <div className="text-secondary font-bold">Ordered Items: </div>
-        )}
-        {reserveDetails?.stripeCartProducts?.map((sp, index) => {
-          return (
-            <div className="text-[14px] font-semibold" key={index}>
-              {sp.quantity} x {sp.name},{" "}
+        {reserveDetails?.cartStripeProducts?.length > 0 && (
+          <div className="collapse bg-orange-500/10 collapse-arrow mb-[10px]">
+            <input type="checkbox" />
+            <div className="collapse-title font-semibold text-secondary flex items-center space-x-[10px] mb-[0px]">
+              <div className="text-secondary text-[18px] font-bold">
+                Ordered Items: {productAmount()}
+              </div>
             </div>
-          );
-        })}
+            <div className="collapse-content">
+              {reserveDetails?.cartStripeProducts?.map((sp, index1) => {
+                return (
+                  <div className="" key={index1}>
+                    <p className="text-[13px] mb-[10px] font-semibold">
+                      {sp.date}
+                    </p>
+                    {sp?.product?.map((ssp, index2) => {
+                      console.log({ ssp });
+                      return (
+                        <div className="text-[13px]" key={index2}>
+                          <div className="text-[13px] flex flex-col mb-[10px] space-y-[5px] md:space-y-0 md:flex-row md:justify-between md:items-center">
+                            <p className="">
+                              <span className="font-semibold">
+                                {ssp?.quantity} x
+                              </span>{" "}
+                              {ssp?.name} ----------{" "}
+                            </p>
+                            <p className="font-semibold">
+                              {(
+                                (ssp?.price / 100) *
+                                ssp?.quantity
+                              ).toLocaleString("en-GB", {
+                                style: "currency",
+                                currency: "GBP",
+                              })}
+                            </p>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                );
+              })}
+              {/* {totalPrice()} */}
+              {reserveDetails?.cartStripeProducts?.length > 0 && (
+                <div className="w-full font-semibold flex justify-end text-[15px] space-x-[10px] mt-[10px]">
+                  <p className="">Total:</p>
+                  <p className="">{totalPrice()}</p>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
       </div>
 
       <ProductRow

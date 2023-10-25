@@ -242,7 +242,7 @@ const CheckoutForm = () => {
     setSubmitLoading(true);
     updateBookS("book/checkout");
 
-    // sendBookedMail();
+    sendBookedMail();
 
     sendAllNotificationEmail();
 

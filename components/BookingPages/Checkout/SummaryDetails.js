@@ -164,7 +164,7 @@ const SummaryDetails = (
             {/* Quote ref */}
             <div className="flex flex-col space-y-[5px]">
               <p className="text-primary font-semibold text-[18px]">
-                Quote Ref:
+                Book Ref ID:
               </p>
               <p className="font-semibold text-[14px] ">
                 {details.moveDetails.quoteRef}

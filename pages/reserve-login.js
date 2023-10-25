@@ -34,7 +34,7 @@ const ReserveLogin = ({ data }) => {
   // const details = useSelector(getAllDetails);
 
   const initialValues = {
-    // login_email: "",
+    email: "",
     login_ref: "",
     success: "",
     error: "",
@@ -48,7 +48,7 @@ const ReserveLogin = ({ data }) => {
   const [errorMessage, setErrorMessage] = useState("");
   const [showError, setShowError] = useState(false);
 
-  const { login_ref, success, error } = user;
+  const { email, login_ref, success, error } = user;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -56,10 +56,10 @@ const ReserveLogin = ({ data }) => {
   };
 
   const loginValidation = Yup.object().shape({
-    // login_email: Yup.string()
-    //   .email("Please enter a valid email address")
-    //   .required("Email address is required"),
-    login_ref: Yup.string().required("Please enter a booking ID"),
+    email: Yup.string()
+      .email("Please enter a valid email address")
+      .required("Email address is required"),
+    login_ref: Yup.string().required("Booking Ref ID is required"),
     // .min(25, "Booking ID must be 25 characters")
     // .max(25, `Booking ID must be 25 characters`),
   });
@@ -67,7 +67,26 @@ const ReserveLogin = ({ data }) => {
   const signInHandler = (values, actions) => {
     setSubmitLoading(true);
 
-    const findBookingId = data.find((bk) => bk.bookingId === values.login_ref);
+    setErrorMessage("");
+
+    const findBookingId = data.find((bk) => {
+      return bk.quoteRef === values.login_ref && bk.email === values.email;
+
+      // console.log({ bq: bk.quoteRef, vr: values.login_ref });
+    });
+
+    // const findBookingEmail = data.find((bk) => {
+    //   bk.email === values.email;
+    //   console.log({ bq: bk.quoteRef, vr: values.login_ref });
+    // });
+
+    console.log({
+      data,
+      ve: values.email,
+      vr: values.login_ref,
+      findBookingId,
+      // findBookingEmail,
+    });
 
     if (findBookingId) {
       // console.log({ findBookingId });
@@ -75,17 +94,23 @@ const ReserveLogin = ({ data }) => {
       setUser({
         ...user,
         login_ref: "",
+        email: "",
       });
       // setSubmitLoading(false);
       updateReserveIdFxn(findBookingId.bookingId);
     } else if (!findBookingId) {
-      setErrorMessage("Booking with this Id doesn't exist");
+      setErrorMessage("Booking Email / Ref ID is invalid");
       setSubmitLoading(false);
+      setUser({
+        ...user,
+        login_ref: "",
+        email: "",
+      });
     }
   };
 
   //phone number validation
-  console.log({ reserveDetails, reserveId });
+  // console.log({ data, reserveDetails, reserveId });
 
   return (
     <NormalLayout>
@@ -123,18 +148,30 @@ const ReserveLogin = ({ data }) => {
               >
                 {(form) => (
                   <Form>
-                    <div className="mt-[10px]">
+                    <div className="mt-[0px]">
+                      <LoginInput
+                        type="email"
+                        name="email"
+                        // icon="email"
+                        placeholder="Enter your Booking Email"
+                        onChange={handleChange}
+                        value={user.email}
+                      />
+                    </div>
+
+                    <div className="mt-[5px]">
                       <LoginInput
                         type="text"
                         name="login_ref"
                         // icon="email"
-                        placeholder="Enter your Booking ID"
+                        placeholder="Enter your Booking Ref ID"
                         onChange={handleChange}
+                        value={user.login_ref}
                       />
                     </div>
 
                     <p className="w-full text-center text-primary mb-[5px] text-[14px]">
-                      (Booking ID can be found in the confirmation email
+                      (The Ref ID can be found in the confirmation email
                       received after booking)
                     </p>
                     {/* <div className={styles.button}>

@@ -39,6 +39,7 @@ const ReservationCheckoutSuccess = () => {
 
   const { reserveDetails } = useQuote();
   const bookingId = reserveDetails?.bookingId;
+  const quoteRef = reserveDetails?.quoteRef;
 
   const {
     query: { sessionId },
@@ -109,8 +110,14 @@ const ReservationCheckoutSuccess = () => {
           },
           cartStripeProducts:
             reserveDetails?.cartStripeProducts?.length > 0
-              ? [...reserveDetails?.cartStripeProducts, ...products]
-              : products,
+              ? [
+                  ...reserveDetails?.cartStripeProducts,
+                  {
+                    product: [...products],
+                    date: getCurrentDateFormatted(),
+                  },
+                ]
+              : [{ product: [...products], date: getCurrentDateFormatted() }],
         },
         { merge: true }
       );
@@ -194,10 +201,10 @@ const ReservationCheckoutSuccess = () => {
             </p>
 
             <dl className="mt-12 text-sm font-medium">
-              <dt className="text-gray-900 font-bold">Booking Id:</dt>
+              <dt className="text-gray-900 font-bold">Book Ref Id:</dt>
               <dd className="text-primary mt-2 text-[16px]">
                 {/* {checkoutSession?.payment_intent?.id} */}
-                {bookingId}
+                {quoteRef}
               </dd>
             </dl>
           </div>

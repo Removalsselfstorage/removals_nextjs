@@ -39,6 +39,7 @@ const ReservationExtraSuccess = () => {
 
   const { reserveDetails } = useQuote();
   const bookingId = reserveDetails?.bookingId;
+  const quoteRef = reserveDetails?.quoteRef;
 
   const {
     query: { sessionId },
@@ -230,15 +231,15 @@ const ReservationExtraSuccess = () => {
               Payment Successful
             </p>
             <p className="mt-2 text-base text-gray-500">
-              We appreciate your extra payment, we’re currently processing it.
+              We appreciate your Add-ons payment, we’re currently processing it.
               So hang tight and we’ll send you confirmation very soon!
             </p>
 
             <dl className="mt-12 text-sm font-medium">
-              <dt className="text-gray-900 font-bold">Booking Id:</dt>
+              <dt className="text-gray-900 font-bold">Book Ref Id:</dt>
               <dd className="text-primary mt-2 text-[16px]">
                 {/* {checkoutSession?.payment_intent?.id} */}
-                {bookingId}
+                {quoteRef}
               </dd>
             </dl>
           </div>

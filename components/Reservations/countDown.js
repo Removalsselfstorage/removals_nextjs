@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from "react";
+import { convertTimeTo24HourFormat } from "@/utils/logics";
 
 const Countdown = ({ date }) => {
-  const targetDate = new Date(date).getTime();
+  
+  // console.log({ startTime, ct, addedTime, td:targetDate.getTime(), currentDate });
+  
   const [countdown, setCountdown] = useState(calculateCountdown());
-
+  
   function calculateCountdown() {
     const currentDate = new Date().getTime();
-    const timeRemaining = targetDate - currentDate;
+    const timeRemaining = date - currentDate;
 
     const months = Math.floor(timeRemaining / (1000 * 60 * 60 * 24 * 30));
     const days = Math.floor(

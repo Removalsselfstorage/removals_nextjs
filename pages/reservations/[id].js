@@ -19,6 +19,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { homeMovers } from "@/dummyData/dummyData";
 import {
   calculateMoverPrice,
+  checkBookStatus,
   convertDateFormat,
   decreaseByPercentage,
   formatMovePrice,
@@ -57,6 +58,8 @@ import CartSideDrawer from "@/components/Reservations/CartSideDrawer";
 import Stripe from "stripe";
 import PaymentDashboard from "@/components/Reservations/PaymentDashboard";
 import useBookings from "@/hooks/useBookings";
+import { BsFillCalendarXFill } from "react-icons/bs";
+import { convertTimeTo24HourFormat } from "@/utils/logics";
 
 const Reservations = ({ progressData }) => {
   const {
@@ -68,12 +71,12 @@ const Reservations = ({ progressData }) => {
   } = useQuote();
 
   const {
-    // completedBookings,
-    // completedBookLoading,
-    // refetchCompletedBookings,
     completedBook,
     completedBookLoading,
     refetchCompletedBook,
+    allBookings,
+    allBookingsLoading,
+    refetchAllBookings,
   } = useBookings();
 
   const {
@@ -102,6 +105,7 @@ const Reservations = ({ progressData }) => {
   } = useMover();
 
   const [clickedModalOpen, setClickedModalOpen] = useState(false);
+  const [bookLoading, setBookLoading] = useState(false);
 
   const allPayments = () => {
     let ap;
@@ -127,20 +131,20 @@ const Reservations = ({ progressData }) => {
     // return totalAmount;
   };
 
+  const triggerBookLoading = () => {
+    setBookLoading(true);
+    setTimeout(() => {
+      setBookLoading(false);
+    }, 2000);
+  };
   // const allPayments = [{ amount: 10 }, { amount: 20 }, { amount: 30 }];
 
-  useEffect(() => {
-    if (reserveId === "") {
-      router.push("/reserve-login");
-    }
-  }, []);
-
-  useEffect(() => {
-    if (progressData)
-      setReserveDetailsFxn({
-        ...progressData,
-      });
-  }, []);
+  // useEffect(() => {
+  //   if (progressData)
+  //     setReserveDetailsFxn({
+  //       ...progressData,
+  //     });
+  // }, []);
 
   useEffect(() => {
     completedBook?.moveItems && resetMoveItemsFxn(completedBook?.moveItems);
@@ -149,19 +153,63 @@ const Reservations = ({ progressData }) => {
     });
   }, [completedBook]);
 
-  const currentDate = new Date();
+  const myBookings = allBookings?.filter(
+    (pd) => pd?.email === reserveDetails?.email
+  );
 
-  const givenDateString = dayjs(
-    convertDateFormat(reserveDetails?.moveDate)
-  ).format("dddd, MMMM D, YYYY");
-  const givenDate = new Date(givenDateString);
+  let targetDate = new Date(reserveDetails?.moveDate);
+  // Extract the start and end times from the timeRange
+
+  if (reserveDetails?.moverTime) {
+    const [startTime, endTime] = reserveDetails?.moverTime?.split(" - ") || [];
+    const ct = convertTimeTo24HourFormat(startTime);
+    targetDate.setHours(ct);
+  }
+
+  // const currentDate = new Date().getTime();
+
+  const givenDate = targetDate.getTime();
 
   // Compare the two dates
-  const isGivenDateGreaterThanCurrent = givenDate > currentDate;
+  // const isGivenDateGreaterThanCurrent = givenDate > currentDate;
+  
+  const isGivenDateGreaterThanCurrent = checkBookStatus(
+    reserveDetails?.moveDate,
+    reserveDetails?.moverTime
+  );
 
   const closeModal = () => {
     window.my_modal_51.close();
   };
+
+  const closeModal2 = () => {
+    window.my_modal_61.close();
+  };
+
+  const bookingHandler = (bookingId) => {
+    triggerBookLoading();
+    updateReserveIdFxn(bookingId);
+    refetchCompletedBook();
+    closeModal2();
+
+    router.push(`/reservations/${bookingId}`);
+
+    // window.location.reload();
+  };
+
+  useEffect(() => {
+    if (reserveId === "") {
+      router.push("/reserve-login");
+    }
+    // triggerBookLoading();
+  }, []);
+
+  useEffect(() => {
+    completedBook?.moveItems && resetMoveItemsFxn(completedBook?.moveItems);
+    setReserveDetailsFxn({
+      ...completedBook,
+    });
+  }, [completedBook]);
 
   // const extraPay =
   //   reserveDetails?.extraStripePayment.length > 0 &&
@@ -172,11 +220,16 @@ const Reservations = ({ progressData }) => {
   // console.log({ progressData, moveItems });
   console.log({
     // sm: sumAmounts(),
-    progressData,
-    reserveDetails,
-    ap: allPayments(),
-    reserveId,
+    // reserveDetails,
+    // givenDate,
+    // currentDate,
+    // progressData,
+    // reserveDetails,
+    // ap: allPayments(),
+    // reserveId,
   });
+
+  const allLoading = completedBookLoading || bookLoading;
 
   return (
     <>
@@ -186,7 +239,7 @@ const Reservations = ({ progressData }) => {
         <link rel="icon" href="/rrs_favicon.svg" />
       </Head>
       {/* {reserveId !== "" && !completedBookLoading ? ( */}
-      {reserveId !== "" && !completedBookLoading && (
+      {reserveId !== "" && !allLoading && (
         <BookingLayout>
           <main className="">
             <div className="mb-[70px] lg:mb-[100px] pt-[80px] md:pt-[80px] ">
@@ -214,7 +267,8 @@ const Reservations = ({ progressData }) => {
                             {completedBook?.lastName},
                           </h1>
                           <p className="text-gray-500 font-semibold">
-                            Thank you for choosing Removals & Self Storage
+                            {/* Thank you for choosing Removals & Self Storage */}
+                            {completedBook?.email}
                           </p>
                         </div>
                       </div>
@@ -256,18 +310,35 @@ const Reservations = ({ progressData }) => {
                     {/* payment dashboard */}
                     <div className="flex flex-col space-y-[20px] mt-[30px] mb-[30px] ">
                       <div className="">
-                        {/* <div className="flex justify-between">
-                          <p
-                            onClick={() => window.my_modal_51.showModal()}
-                            className="link text-primary font-semibold"
+                        <div className="flex justify-between">
+                          <div
+                            // onClick={() => window.my_modal_51.showModal()}
+                            className={`${
+                              isGivenDateGreaterThanCurrent
+                                ? "text-primary bg-primary/10"
+                                : "text-secondary bg-secondary/10"
+                            } font-semibold  px-[10px] rounded-[10px] py-[5px]`}
                           >
-                            My Payment History
-                          </p>
-                          <p className="link font-semibold text-primary ">
-                            My Bookings
-                          </p>
-                        </div> */}
-                        {/* modal */}
+                            Book Status:{" "}
+                            {`${
+                              isGivenDateGreaterThanCurrent
+                                ? "ONGOING"
+                                : "EXPIRED"
+                            }`}
+                          </div>
+                          <div
+                            className="flex space-x-[10px] items-center cursor-pointer"
+                            onClick={() => window.my_modal_61.showModal()}
+                          >
+                            <p className="link font-semibold text-primary ">
+                              My Bookings
+                            </p>
+                            <div className=" bg-primary rounded-full flex justify-center items-center p-[0px] text-white w-[25px] h-[25px] text-[14px]">
+                              {myBookings?.length}
+                            </div>
+                          </div>
+                        </div>
+                        {/* payment modal */}
                         <dialog
                           id="my_modal_51"
                           className="modal py-[20px] px-[10px]"
@@ -328,9 +399,106 @@ const Reservations = ({ progressData }) => {
                             <button>close</button>
                           </form> */}
                         </dialog>
+
+                        {/* bookings modal */}
+                        <dialog
+                          id="my_modal_61"
+                          className="modal py-[20px] px-[10px]"
+                        >
+                          <form method="dialog" className="modal-box px-[20px]">
+                            <div
+                              onClick={closeModal2}
+                              className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 border border-primary text-primary"
+                            >
+                              ✕
+                            </div>
+
+                            <div className="">
+                              <div className="w-full flex justify-center mb-[20px]">
+                                <div className="text-primary bg-primary/10 flex justify-center items-center w-[60px] h-[60px] rounded-full">
+                                  <LuHistory className="text-[30px] text-primary" />
+                                </div>
+                              </div>
+
+                              <h3 className="font-bold text-[24px] text-center text-primary mb-[20px]">
+                                All My Bookings
+                              </h3>
+
+                              {myBookings.map((ap, index) => {
+                                const isGivenDateGreaterThanCurrent =
+                                  checkBookStatus(ap?.moveDate, ap?.moverTime);
+                                return (
+                                  <div className="" key={index}>
+                                    {ap?.amount !== 0 && (
+                                      <div className="flex items-start justify-between mt-[0px] border-b border-t py-[15px] px-[10px]">
+                                        <div className="flex items-center space-x-[10px] flex-[1]">
+                                          <div className="flex flex-col space-y-[0px]">
+                                            <p className="line-clamp-2 font-bold text-[18px] ">
+                                              {ap?.propertyType}{" "}
+                                              {ap?.movePackage} Move
+                                            </p>
+                                            <div className="flex items-center space-x-[5px]">
+                                              <p className="line-clamp-2 text-[14px] text-gray-500">
+                                                {ap?.date}
+                                              </p>
+                                              <div
+                                                // onClick={() => window.my_modal_51.showModal()}
+                                                className={`${
+                                                  isGivenDateGreaterThanCurrent
+                                                    ? "text-primary bg-primary/10"
+                                                    : "text-secondary bg-secondary/10"
+                                                } font-semibold  px-[5px] rounded-[4px] py-[3px] text-[12px]`}
+                                              >
+                                                {`${
+                                                  isGivenDateGreaterThanCurrent
+                                                    ? "ONGOING"
+                                                    : "EXPIRED"
+                                                }`}
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <div className="flex items-center space-x-[20px]">
+                                          {/* <p className="line-clamp-2 font-bold text-[20px] text-primary">
+                                                        Total Price:
+                                                      </p> */}
+                                          <button
+                                            className="btn btn-primary "
+                                            onClick={() =>
+                                              bookingHandler(ap?.bookingId)
+                                            }
+                                            disabled={bookLoading}
+                                          >
+                                            {!bookLoading && (
+                                              <span className="">View</span>
+                                            )}
+                                            {bookLoading && (
+                                              <span className="loading loading-spinner loading-md text-white"></span>
+                                            )}
+                                          </button>
+                                        </div>
+                                      </div>
+                                    )}
+                                  </div>
+                                );
+                              })}
+                            </div>
+                          </form>
+                          <form method="dialog">
+                            {/* <button>close</button> */}
+                          </form>
+                          {/* <form method="dialog" className="modal-backdrop">
+                            <button>close</button>
+                          </form> */}
+                        </dialog>
                       </div>
                       <div className="border-b-[2px] pb-[10px]">
-                        <PaymentDashboard allPayments={allPayments} />
+                        <PaymentDashboard
+                          allPayments={allPayments}
+                          isGivenDateGreaterThanCurrent={
+                            isGivenDateGreaterThanCurrent
+                          }
+                        />
                       </div>
                       {reserveDetails?.moveDate &&
                         isGivenDateGreaterThanCurrent && (
@@ -346,36 +514,57 @@ const Reservations = ({ progressData }) => {
                               </p>
                             </div>
                             <Countdown
-                              date={reserveDetails?.moveDate}
-                              // time={moverDetails?.moverTime}
+                              date={givenDate}
+                              time={reserveDetails?.moverTime}
                             />
                           </div>
                         )}
                     </div>
 
                     {/* buy items */}
-                    <div className="border-b-[2px] pb-[0px] mb-[30px]">
-                      <BuyItems
-                        clickedModalOpen={clickedModalOpen}
-                        setClickedModalOpen={setClickedModalOpen}
-                      />
-                    </div>
+                    {isGivenDateGreaterThanCurrent && (
+                      <div className="border-b-[2px] pb-[0px] mb-[30px]">
+                        <BuyItems
+                          clickedModalOpen={clickedModalOpen}
+                          setClickedModalOpen={setClickedModalOpen}
+                        />
+                      </div>
+                    )}
 
                     {/* pick items */}
-                    <div className="mb-[30px] lg:mb-[40px]">
-                      <PickUpItems />
-                    </div>
+                    {isGivenDateGreaterThanCurrent && (
+                      <div className="mb-[30px] lg:mb-[40px]">
+                        <PickUpItems />
+                      </div>
+                    )}
+
+                    {!isGivenDateGreaterThanCurrent && (
+                      <div className="flex justify-center items-center w-full py-[50px] text-secondary">
+                        <div className="flex flex-col items-center">
+                          <BsFillCalendarXFill className="text-secondary text-[50px]" />
+                          <p className="font-bold mt-[10px]">Book Expired:</p>
+                          <p className="text-secondary ">
+                            {!reserveDetails?.moveDateFormatted
+                              ? dayjs(
+                                  convertDateFormat(reserveDetails?.moveDate)
+                                ).format("dddd, MMMM D, YYYY")
+                              : reserveDetails?.moveDateFormatted}
+                          </p>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
             </div>
-            {/* <div className="w-[20vw] h-[100%] z-[2000] absolute top-0 right-0 bg-white">
+
+            {/*<div className="w-[20vw] h-[100%] z-[2000] absolute top-0 right-0 bg-white">
               <p className="text-3xl font-bold">Side bar</p>
-          </div> */}
+            </div>*/}
           </main>
         </BookingLayout>
       )}
-      {(reserveId === "" || completedBookLoading) && (
+      {(reserveId === "" || allLoading) && (
         <div className="flex justify-center items-center w-full h-screen">
           <span className="loading loading-spinner loading-lg text-primary"></span>
         </div>

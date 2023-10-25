@@ -33,6 +33,24 @@ const useBookings = () => {
     // },
   });
 
+  const {
+    data: allBookings,
+    isLoading: allBookingsLoading,
+    refetch: refetchAllBookings,
+  } = useQuery({
+    queryKey: [queryKeys.GET_BOOKING_DATA],
+    queryFn: fetchAllBookings,
+    select: (data) => {
+      // const cs = data?.bookings?.filter((bk) => bk.completedBook === true);
+
+      // console.log({ data, completedBookings });
+      return data?.bookings;
+    },
+    // onError(err) {
+    //   errorHandler(err);
+    // },
+  });
+
   // const completedBook = (id) => {
   //   const filteredBook = completedBookings?.find((obj) => obj.id === id);
   //   console.log({ filteredBook });
@@ -45,6 +63,9 @@ const useBookings = () => {
     completedBook,
     completedBookLoading,
     refetchCompletedBook,
+    allBookings,
+    allBookingsLoading,
+    refetchAllBookings
   };
 };
 

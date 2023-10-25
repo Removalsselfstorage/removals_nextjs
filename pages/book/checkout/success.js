@@ -204,6 +204,7 @@ const ReservationCheckoutSuccess = () => {
     firstName,
     lastName,
     bookingId,
+    quoteRef,
     propertyType,
     movePackage,
     numberOfMovers,
@@ -282,6 +283,7 @@ const ReservationCheckoutSuccess = () => {
         firstName: personalDetails?.firstName,
         lastName: personalDetails?.lastName,
         bookingId: moveDetails?.bookingId,
+        quoteRef: moveDetails?.quoteRef,
         propertyType: moveDetails?.propertyType,
         movePackage: moveDetails?.movePackage,
         numberOfMovers: moveDetails?.numberOfMovers,
@@ -348,10 +350,10 @@ const ReservationCheckoutSuccess = () => {
             </p>
 
             <dl className="mt-12 text-sm font-medium">
-              <dt className="text-gray-900 font-bold">Booking Id:</dt>
+              <dt className="text-gray-900 font-bold">Booking Ref Id:</dt>
               <dd className="text-primary mt-2 text-[16px]">
                 {/* {checkoutSession?.payment_intent?.id} */}
-                {bookingId}
+                {quoteRef}
               </dd>
             </dl>
           </div>

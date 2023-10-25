@@ -105,44 +105,16 @@ const ReserveSide = () => {
                 {reserveDetails?.date}
               </p>
             </div>
-            <div className="flex flex-col space-y-[5px]">
+            {/* <div className="flex flex-col space-y-[5px]">
               <p className="text-primary font-semibold text-[18px]">Book Id:</p>
               <p className="font-semibold text-[13.5px] ">
                 {reserveDetails?.bookingId}
               </p>
-            </div>
-            {/* <div className="flex flex-col space-y-[5px]">
-              <p className="text-primary font-semibold text-[18px]">
-                Items to Move:
-              </p>
-              <div className="font-semibold text-[13.5px] ">
-                {moveItems?.living.map((mi, index) => {
-                  return (
-                    <div className="" key={index}>
-                      {mi.qty > 0 && (
-                        <p>
-                          {mi.qty} x {mi.name}
-                        </p>
-                      )}
-                    </div>
-                  );
-                })}
-                {moveItems?.bedRoom.map((mi, index) => {
-                  return (
-                    <div className="" key={index}>
-                      {mi.qty > 0 && (
-                        <p>
-                          {mi.qty} x {mi.name}
-                        </p>
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
             </div> */}
+       
             <div className="flex flex-col space-y-[5px]">
               <p className="text-primary font-semibold text-[18px]">
-                Quote Ref:
+                Book Ref ID:
               </p>
               <p className="font-semibold text-[13.5px] ">
                 {reserveDetails?.quoteRef}

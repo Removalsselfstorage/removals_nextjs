@@ -4,7 +4,7 @@ import { formatMovePrice } from "@/utils/logics";
 import React, { useEffect, useState } from "react";
 import { BiHelpCircle } from "react-icons/bi";
 
-const PaymentDashboard = ({ allPayments }) => {
+const PaymentDashboard = ({ allPayments, isGivenDateGreaterThanCurrent }) => {
   const {
     setReserveDetailsFxn,
     updateReserveDetailsFxn,
@@ -147,12 +147,12 @@ const PaymentDashboard = ({ allPayments }) => {
 
   useEffect(() => {}, []);
 
-  // console.log({
-  //   pe: paidExtra(),
-  //   reserveDetails,
-  //   extraPrice,
-  //   outstandingPrice,
-  // });
+  console.log({
+    paidPrice,
+    reserveDetails,
+    // extraPrice,
+    // outstandingPrice,
+  });
 
   return (
     <div className="flex flex-col space-y-[5px]">
@@ -171,9 +171,11 @@ const PaymentDashboard = ({ allPayments }) => {
         </div> */}
         {/* payment made */}
         <div className="flex flex-col px-[20px] py-[30px]">
-          <div className="font-bold">Payment made</div>
+          <div className="font-bold">Move Payment made</div>
           <div className="font-bold text-[30px]">
-            {formatMovePrice(allPayments()?.total)}
+            {!isGivenDateGreaterThanCurrent
+              ? "***"
+              : formatMovePrice(allPayments()?.total)}
           </div>
           <div className="stat-actions">
             {/* <div className="text-white font-semibold">
@@ -198,13 +200,19 @@ const PaymentDashboard = ({ allPayments }) => {
         <div className="flex flex-col px-[20px] py-[30px]">
           <div className="font-bold">Outstanding Payment</div>
           <div className="font-bold text-[30px]">
-            {formatMovePrice(outstandingPrice)}
+            {!isGivenDateGreaterThanCurrent
+              ? "***"
+              : formatMovePrice(outstandingPrice)}
           </div>
           <div className="stat-actions space-x-[10px]">
             <button
               className=" bg-white hover:scale-[1.02] transition-all duration-300 focus:bg-white w-[200px] active:bg-white px-[10px] py-[5px] rounded-[5px]"
               onClick={handleOutstanding}
-              disabled={submitLoading || outstandingPrice === 0}
+              disabled={
+                submitLoading ||
+                outstandingPrice === 0 ||
+                !isGivenDateGreaterThanCurrent
+              }
             >
               {/* Pay Outstanding */}
               {!submitLoading && (
@@ -237,7 +245,9 @@ const PaymentDashboard = ({ allPayments }) => {
           </div>
           <div className="font-bold text-[30px]">
             {`${
-              paidExtra()
+              !isGivenDateGreaterThanCurrent
+                ? "***"
+                : paidExtra()
                 ? formatMovePrice(0)
                 : formatMovePrice(extraPrice || 0)
             }`}
@@ -249,7 +259,12 @@ const PaymentDashboard = ({ allPayments }) => {
             <button
               className=" bg-white hover:scale-[1.02] transition-all duration-300 focus:bg-white w-[200px] active:bg-white px-[10px] py-[5px] rounded-[5px] flex justify-center "
               onClick={handleExtra}
-              disabled={submitLoading2 || extraPrice === 0 || paidExtra()}
+              disabled={
+                submitLoading2 ||
+                extraPrice === 0 ||
+                paidExtra() ||
+                !isGivenDateGreaterThanCurrent
+              }
             >
               {/* Pay Outstanding */}
               {!submitLoading2 && (

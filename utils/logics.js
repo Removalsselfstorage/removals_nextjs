@@ -1,5 +1,21 @@
 // Outputs: "Wednesday, 20 September, 2023"
 
+export const checkBookStatus = (moveDate, moverTime) => {
+  let targetDate = new Date(moveDate);
+  if (moverTime) {
+    const [startTime, endTime] =
+      moverTime?.split(" - ") || [];
+    const ct = convertTimeTo24HourFormat(startTime);
+    targetDate.setHours(ct);
+  }
+  const currentDate = new Date().getTime();
+
+  const givenDate = targetDate.getTime();
+
+  // Compare the two dates
+  return givenDate > currentDate;
+};
+
 // export function formatPrice(price) {
 //   // Check if the input is a valid number
 //   if (typeof price !== 'number') {
@@ -15,6 +31,32 @@
 //   // Use regular expressions to add thousands separator
 //   return formattedPriceWithSymbol.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
 // }
+
+export function convertTimeTo24HourFormat(time) {
+  // Use a regular expression to extract the hour and AM/PM part
+  const timeRegex = /(\d+)([ap]m)/i;
+  const match = time.match(timeRegex);
+
+  if (match) {
+    let hour = parseInt(match[1], 10);
+    const period = match[2].toLowerCase();
+
+    if (period === "pm" && hour !== 12) {
+      // Convert to 24-hour format by adding 12 to the hour
+      hour += 12;
+    } else if (period === "am" && hour === 12) {
+      // Midnight (12am) should be converted to 00
+      hour = 0;
+    }
+
+    // Format the result as a 2-digit string
+    const hourIn24HourFormat = hour.toString().padStart(2, "0");
+    return hourIn24HourFormat;
+  }
+
+  // Handle invalid input
+  return "Invalid time format";
+}
 
 export function formatPrice(price) {
   // Check if the price is a valid number

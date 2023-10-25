@@ -100,7 +100,7 @@ const BuyItems = ({
   const stripeCart = [];
 
   // const [allProducts, setAllProducts] = useState(products);
-  console.log({ tp: totalPrice(), reserveDetails });
+  console.log({ pa: productAmount(), reserveDetails });
 
   return (
     <div>
@@ -150,7 +150,7 @@ const BuyItems = ({
                       {sp.date}
                     </p>
                     {sp?.product?.map((ssp, index2) => {
-                      console.log({ ssp });
+                      // console.log({ ssp });
                       return (
                         <div className="text-[13px]" key={index2}>
                           <div className="text-[13px] flex flex-col mb-[10px] space-y-[5px] md:space-y-0 md:flex-row md:justify-between md:items-center">

@@ -12,6 +12,7 @@ import { allNotificationEmail, bookedEmail } from "@/lib/sendCustomEmail";
 import Lottie from "lottie-react";
 import success from "@/lottieJsons/success.json";
 import { initializeApp } from "firebase/app";
+import useBookings from "@/hooks/useBookings";
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
@@ -65,6 +66,19 @@ const ReservationCheckoutSuccess = () => {
     reserveId,
     router,
   } = useQuote();
+
+  // const { paidPart, paidFull, paidPrice } = paymentDetails;
+
+  const {
+    completedBook,
+    completedBookLoading,
+    refetchCompletedBook,
+    allBookings,
+    allBookingsLoading,
+    refetchAllBookings,
+  } = useBookings();
+
+  const [currentBook, setCurrentBook] = useState({});
 
   // const { paidPart, paidFull, paidPrice, paymentType } = paymentDetails;
 
@@ -129,6 +143,13 @@ const ReservationCheckoutSuccess = () => {
         {
           date: getCurrentDateFormatted(),
           stage: "paid initial move price",
+          activity: [
+            ...currentBook?.activity,
+            {
+              name: `completed ${paymentType} payment of ${total} for move`,
+              date: getCurrentDateFormatted(),
+            },
+          ],
           completedBook: true,
           movePaymentStatus: "PAID",
           // outPrice: 0,
@@ -278,6 +299,15 @@ const ReservationCheckoutSuccess = () => {
   };
 
   useEffect(() => {
+    const cb = allBookings?.find(
+      (ab) => ab.bookingId === moveDetails.bookingId
+    );
+    // setQuoteDetailsFxn(cb);
+
+    setCurrentBook(cb);
+  }, [allBookings]);
+
+  useEffect(() => {
     if (personalDetails?.firstName) {
       setDetails({
         firstName: personalDetails?.firstName,
@@ -329,7 +359,7 @@ const ReservationCheckoutSuccess = () => {
     // resetCartFxn();
   };
 
-  console.log({ timer });
+  console.log({ timer, currentBook });
   // console.log({ timer, moveDetails, paymentType, bookingId });
 
   return (
@@ -350,7 +380,7 @@ const ReservationCheckoutSuccess = () => {
             </p>
 
             <dl className="mt-12 text-sm font-medium">
-              <dt className="text-gray-900 font-bold">Booking Ref Id:</dt>
+              <dt className="text-gray-900 font-bold">Book Ref:</dt>
               <dd className="text-primary mt-2 text-[16px]">
                 {/* {checkoutSession?.payment_intent?.id} */}
                 {quoteRef}

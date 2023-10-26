@@ -17,11 +17,33 @@ import movingVan from "@/lottieJsons/movingVan.json";
 import PackageCard from "@/components/BookingPages/PackageCard";
 import { moveDesciptionsCalc } from "@/utils/moversLogic";
 import { useRouter } from "next/navigation";
+import useBookings from "@/hooks/useBookings";
+import useQuote from "@/hooks/useQuote";
 
 const MovePackage = () => {
-  const router = useRouter();
+  // const router = useRouter();
   const dispatch = useDispatch();
   const details = useSelector(getAllDetails);
+
+  const {
+    setReserveDetailsFxn,
+    reserveDetails,
+    router,
+    reserveId,
+    updateReserveIdFxn,
+    quoteDetails,
+    setQuoteDetailsFxn,
+    moveDetails,
+  } = useQuote();
+
+  const {
+    completedBook,
+    completedBookLoading,
+    refetchCompletedBook,
+    allBookings,
+    allBookingsLoading,
+    refetchAllBookings,
+  } = useBookings();
 
   const moveUrl = () => {
     switch (details.moveDetails.propertyType) {
@@ -72,6 +94,8 @@ const MovePackage = () => {
     }
   };
 
+  const [currentBook, setCurrentBook] = useState({});
+
   // const onPackageClick = async () => {
 
   // }
@@ -81,6 +105,17 @@ const MovePackage = () => {
       router.push("/");
     }
   }, []);
+
+  useEffect(() => {
+    const cb = allBookings?.find(
+      (ab) => ab.bookingId === moveDetails.bookingId
+    );
+    // setQuoteDetailsFxn(cb);
+
+    setCurrentBook(cb);
+  }, [allBookings]);
+
+  console.log({ currentBook, allBookings});
 
   return (
     <>
@@ -125,6 +160,7 @@ const MovePackage = () => {
                     title="STANDARD"
                     subTitle=""
                     price="369"
+                    currentBook={currentBook}
                     f1={
                       moveDesciptionsCalc(
                         "STANDARD",
@@ -180,6 +216,7 @@ const MovePackage = () => {
                     title="GOLD"
                     subTitle="Price per hour"
                     price="386"
+                    currentBook={currentBook}
                     f1={
                       moveDesciptionsCalc(
                         "GOLD",
@@ -242,6 +279,7 @@ const MovePackage = () => {
                     title="PREMIUM"
                     subTitle="Prices per hour"
                     price="397"
+                    currentBook={currentBook}
                     f1={
                       moveDesciptionsCalc(
                         "PREMIUM",
@@ -321,6 +359,7 @@ const MovePackage = () => {
                     title="PREMIUM PLUS"
                     subTitle=""
                     price="466"
+                    currentBook={currentBook}
                     f1={
                       moveDesciptionsCalc(
                         "PREMIUM PLUS",

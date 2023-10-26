@@ -17,10 +17,15 @@ import {
   resetMoverSideDetails,
   updateBookStage,
   resetBookStage,
+  updateActivity,
+  resetActivity,
   updateReserveId,
   setReserveDetails,
   updateReserveDetails,
   resetReserveDetails,
+  setQuoteDetails,
+  updateQuoteDetails,
+  resetQuoteDetails,
   getAllDetails,
 } from "@/store/quoteSlice";
 import { useRouter } from "next/navigation";
@@ -50,6 +55,16 @@ const useQuote = () => {
   };
   const resetReserveDetailsFxn = () => {
     dispatch(resetReserveDetails());
+  };
+
+  const setQuoteDetailsFxn = (payload) => {
+    dispatch(setQuoteDetails(payload));
+  };
+  const updateQuoteDetailsFxn = (payload) => {
+    dispatch(updateQuoteDetails(payload));
+  };
+  const resetQuoteDetailsFxn = () => {
+    dispatch(resetQuoteDetails());
   };
   const updateReserveIdFxn = (payload) => {
     dispatch(updateReserveId(payload));
@@ -102,14 +117,21 @@ const useQuote = () => {
   const updateBookS = (payload) => {
     dispatch(updateBookStage(payload));
   };
+  const updateActivityFxn = (payload) => {
+    dispatch(updateActivity(payload));
+  };
   const resetBookS = () => {
     dispatch(resetBookStage());
+  };
+  const resetActivityFxn = () => {
+    dispatch(resetActivity());
   };
 
   // console.log({ab})
 
   return {
     reserveDetails: ab?.reserveDetails,
+    quoteDetails: ab?.quoteDetails,
     reserveId: ab?.reserveId,
     serviceLocation: ab?.serviceLocation,
     personalDetails: ab?.personalDetails,
@@ -122,6 +144,12 @@ const useQuote = () => {
     setReserveDetailsFxn,
     updateReserveDetailsFxn,
     resetReserveDetailsFxn,
+    //
+    setQuoteDetailsFxn,
+    updateQuoteDetailsFxn,
+    resetQuoteDetailsFxn,
+    //
+
     updateReserveIdFxn,
     //
     updateLocationFrom,
@@ -141,6 +169,8 @@ const useQuote = () => {
     resetMoverSide,
     updateBookS,
     resetBookS,
+    updateActivityFxn,
+    resetActivityFxn,
     router,
   };
 };

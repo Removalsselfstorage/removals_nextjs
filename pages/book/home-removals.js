@@ -327,6 +327,7 @@ const CompleteHouse = ({ emails }) => {
         },
 
         stage: "book/home-removals",
+        activity: "Submitted move details in home removals page"
       };
       const result = await UploadBookingProgress1(moveObj);
 

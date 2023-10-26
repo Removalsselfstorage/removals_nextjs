@@ -146,6 +146,13 @@ const PickUpItems = () => {
         {
           date: getCurrentDateFormatted(),
           stage: "Updated items to move",
+          activity: [
+            ...reserveDetails?.activity,
+            {
+              name: `Updated items to move`,
+              date: getCurrentDateFormatted(),
+            },
+          ],
           moveItems: ab?.moveItems,
         },
         { merge: true }

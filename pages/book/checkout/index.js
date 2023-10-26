@@ -18,12 +18,52 @@ import dayjs from "dayjs";
 import { useRouter } from "next/navigation";
 import Lottie from "lottie-react";
 import movingVan from "@/lottieJsons/movingVan.json";
+import useQuote from "@/hooks/useQuote";
+import useBookings from "@/hooks/useBookings";
 
 const Checkout = () => {
+  const {
+    serviceLocation,
+    personalDetails,
+    moveDetails,
+    moverSideDetails,
+    moverDetails,
+    paymentDetails,
+    bookStage,
+    updateLocationFrom,
+    resetLocationFrom,
+    updateLocationTo,
+    resetLocationTo,
+    updatePersonal,
+    resetPersonal,
+    updateMove,
+    resetMove,
+    updateMover,
+    resetMover,
+    updatePayment,
+    resetPayment,
+    updatePickP,
+    updateMoverSide,
+    resetMoverSide,
+    updateBookS,
+    resetBookS,
+    router,
+  } = useQuote();
+
+  const {
+    completedBook,
+    completedBookLoading,
+    refetchCompletedBook,
+    allBookings,
+    allBookingsLoading,
+    refetchAllBookings,
+  } = useBookings();
+
+  const [currentBook, setCurrentBook] = useState({});
   const [showModal, setShowModal] = useState(false);
   const details = useSelector(getAllDetails);
 
-  const router = useRouter();
+  // const router = useRouter();
 
   const [payType, setPayType] = useState("");
   const [depositPart, setDepositPart] = useState(false);
@@ -32,7 +72,7 @@ const Checkout = () => {
   const [card, setCard] = useState(false);
   const [paypal, setPaypal] = useState(false);
 
-   const moveUrl = () => {
+  const moveUrl = () => {
     switch (details.moveDetails.propertyType) {
       case "Office removals":
         return "man-and-van";
@@ -91,10 +131,21 @@ const Checkout = () => {
   };
 
   useEffect(() => {
+    const cb = allBookings?.find(
+      (ab) => ab.bookingId === moveDetails.bookingId
+    );
+    // setQuoteDetailsFxn(cb);
+
+    setCurrentBook(cb);
+  }, [allBookings]);
+
+  useEffect(() => {
     if (!details.moverDetails.moverName) {
       router.push("/");
     }
   }, []);
+
+  // console.log({ currentBook });
 
   return (
     <>
@@ -158,19 +209,19 @@ const Checkout = () => {
                   {/* left section - pament form */}
                   <div className="lg:flex-[1.3] w-full">
                     <CheckoutForm
-
+                      currentBook={currentBook}
                     // scriptLoaded={scriptLoaded}
                     />
                   </div>
                   {/* right section - Move summary */}
                   <div className="lg:flex-[1] w-full mb-[30px] lg:mb-[0px]">
                     <SummaryDetails
-                      // card={card}
-                      // paypal={paypal}
-                      // depositFull={depositFull}
-                      // depositPart={depositPart}
-                      // setDepositFull={setDepositFull}
-                      // setDepositPart={setDepositPart}
+                    // card={card}
+                    // paypal={paypal}
+                    // depositFull={depositFull}
+                    // depositPart={depositPart}
+                    // setDepositFull={setDepositFull}
+                    // setDepositPart={setDepositPart}
                     />
                   </div>
                 </div>

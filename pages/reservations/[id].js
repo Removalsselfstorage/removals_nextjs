@@ -506,7 +506,7 @@ const Reservations = ({ progressData }) => {
                       {reserveDetails?.moveDate &&
                         isGivenDateGreaterThanCurrent && (
                           <div className="flex flex-col space-y-[10px] lg:space-y-0 lg:flex-row lg:space-x-[20px] lg:items-center border-b-[2px] pb-[20px]">
-                            <div className="flex flex-col space-y-[5px]">
+                            <div className="flex flex-col space-y-[3px]">
                               <p className="text-2xl font-bold mb-[0px] select-none">
                                 Move Day Countdown:
                               </p>
@@ -514,6 +514,9 @@ const Reservations = ({ progressData }) => {
                                 {dayjs(
                                   convertDateFormat(reserveDetails?.moveDate)
                                 ).format("dddd, MMMM D, YYYY")}
+                              </p>
+                              <p className="font-bold text-[15px] text-gray-500 ">
+                                ({reserveDetails?.moverTime})
                               </p>
                             </div>
                             <Countdown

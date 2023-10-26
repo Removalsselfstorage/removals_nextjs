@@ -92,9 +92,13 @@ const initialState = {
 
   bookStage: "",
 
+  activity: [],
+
   reserveId: "",
 
   reserveDetails: {},
+
+  quoteDetails: {},
 };
 
 export const quoteSlice = createSlice({
@@ -105,20 +109,32 @@ export const quoteSlice = createSlice({
       state.reserveDetails = action.payload;
       // Object.assign(state.reserveDetails, action.payload);
     },
+    setQuoteDetails: (state, action) => {
+      state.quoteDetails = action.payload;
+      // Object.assign(state.reserveDetails, action.payload);
+    },
     updateMoveItems: (state, action) => {
       Object.assign(state.reserveDetails, action.payload);
     },
+
     updateReserveDetails: (state, action) => {
       // state.serviceLocation = action.payload;
       Object.assign(state.reserveDetails, action.payload);
     },
-    // updateReserveDetails: (state, action) => {
-    //   // state.serviceLocation = action.payload;
-    //   Object.assign(state.reserveDetails, action.payload);
-    // },
+
+    updateQuoteDetails: (state, action) => {
+      // state.serviceLocation = action.payload;
+      Object.assign(state.quoteDetails, action.payload);
+    },
+
     resetReserveDetails: (state, action) => {
       state.reserveDetails = {};
     },
+
+    resetQuoteDetails: (state, action) => {
+      state.quoteDetails = {};
+    },
+
     updateLocationFromDetails: (state, action) => {
       // state.serviceLocation = action.payload;
       Object.assign(state.serviceLocation.locationFrom, action.payload);
@@ -241,11 +257,17 @@ export const quoteSlice = createSlice({
     updateBookStage: (state, action) => {
       state.bookStage = action.payload;
     },
+    updateActivity: (state, action) => {
+      state.activity = action.payload;
+    },
     updateReserveId: (state, action) => {
       state.reserveId = action.payload;
     },
     resetBookStage: (state, action) => {
       state.bookStage = "";
+    },
+    resetActivity: (state, action) => {
+      state.activity = "";
     },
   },
 });
@@ -278,8 +300,15 @@ export const {
   updateReserveDetails,
   resetReserveDetails,
 
+  setQuoteDetails,
+  updateQuoteDetails,
+  resetQuoteDetails,
+
   updateBookStage,
   resetBookStage,
+
+  updateActivity,
+  resetActivity,
 
   updateReserveId,
 } = quoteSlice.actions;

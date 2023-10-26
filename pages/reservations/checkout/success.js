@@ -97,6 +97,7 @@ const ReservationCheckoutSuccess = () => {
         {
           date: getCurrentDateFormatted(),
           stage: "Paid for checked out cart",
+
           cartCheckedOut: "YES",
           cartPaymentStatus: "PAID",
           cartStripeDetails: {
@@ -118,6 +119,13 @@ const ReservationCheckoutSuccess = () => {
                   },
                 ]
               : [{ product: [...products], date: getCurrentDateFormatted() }],
+          activity: [
+            ...reserveDetails?.activity,
+            {
+              name: `Completed payment of ${total} for cart item(s) in reservation dashboard`,
+              date: getCurrentDateFormatted(),
+            },
+          ],
         },
         { merge: true }
       );
@@ -201,7 +209,7 @@ const ReservationCheckoutSuccess = () => {
             </p>
 
             <dl className="mt-12 text-sm font-medium">
-              <dt className="text-gray-900 font-bold">Book Ref Id:</dt>
+              <dt className="text-gray-900 font-bold">Book Ref:</dt>
               <dd className="text-primary mt-2 text-[16px]">
                 {/* {checkoutSession?.payment_intent?.id} */}
                 {quoteRef}

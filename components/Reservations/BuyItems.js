@@ -59,6 +59,13 @@ const BuyItems = ({
         {
           date: getCurrentDateFormatted(),
           stage: "Added Item to cart",
+          activity: [
+            ...reserveDetails?.activity,
+            {
+              name: `Added Item(s) to cart in reservation dashboard`,
+              date: getCurrentDateFormatted(),
+            },
+          ],
           cartCheckedOut: "NO",
           cartItems: allCartProducts,
         },

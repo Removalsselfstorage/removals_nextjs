@@ -38,6 +38,7 @@ import EmailSent from "@/lottieJsons/EmailSent2.json";
 import movingVan from "@/lottieJsons/movingVan.json";
 import useQuote from "@/hooks/useQuote";
 import useMover from "@/hooks/useMover";
+import useBookings from "@/hooks/useBookings";
 
 const Movers = () => {
   const {
@@ -86,10 +87,29 @@ const Movers = () => {
     resetAllMoverD,
   } = useMover();
 
+  const {
+    completedBook,
+    completedBookLoading,
+    refetchCompletedBook,
+    allBookings,
+    allBookingsLoading,
+    refetchAllBookings,
+  } = useBookings();
+
   const [allPersonalDetails, setAllPersonalDetails] = useState([]);
   const [allCompanyDetails, setAllCompanyDetails] = useState([]);
   const [allCompanyPix, setAllCompanyPix] = useState([]);
   const [newMovers, setNewMovers] = useState([]);
+  const [currentBook, setCurrentBook] = useState({});
+
+  useEffect(() => {
+    const cb = allBookings?.find(
+      (ab) => ab.bookingId === moveDetails.bookingId
+    );
+    // setQuoteDetailsFxn(cb);
+
+    setCurrentBook(cb);
+  }, [allBookings]);
 
   useEffect(() => {
     const priceFirstDay = moveDetails?.initialPackagePrice;
@@ -145,22 +165,22 @@ const Movers = () => {
   }, []);
 
   const [scriptLoaded, setScriptLoaded] = useState(false);
-  const addPaypalScript = () => {
-    if (window.paypal) {
-      setScriptLoaded(true);
-      return;
-    }
-    const script = document.createElement("script");
-    script.src =
-      "https://www.paypal.com/sdk/js?client-id=AUjKA9gFxV187adUYdXSmLX-XQkhTp4mb9pHwovh-ICBlBFpqlbmwFH920CRsQncHmB1CObNRic2scql";
+  // const addPaypalScript = () => {
+  //   if (window.paypal) {
+  //     setScriptLoaded(true);
+  //     return;
+  //   }
+  //   const script = document.createElement("script");
+  //   script.src =
+  //     "https://www.paypal.com/sdk/js?client-id=AUjKA9gFxV187adUYdXSmLX-XQkhTp4mb9pHwovh-ICBlBFpqlbmwFH920CRsQncHmB1CObNRic2scql";
 
-    script.type = "text/javascript";
-    script.async = true;
-    script.onload = () => {
-      setScriptLoaded(true);
-    };
-    document.body.appendChild(script);
-  };
+  //   script.type = "text/javascript";
+  //   script.async = true;
+  //   script.onload = () => {
+  //     setScriptLoaded(true);
+  //   };
+  //   document.body.appendChild(script);
+  // };
 
   const [showLoader, setShowLoader] = useState(false);
   const [showLoader2, setShowLoader2] = useState(false);
@@ -191,7 +211,7 @@ const Movers = () => {
   };
 
   useEffect(() => {
-    addPaypalScript();
+    // addPaypalScript();
 
     const today2 = getFormattedTodayDate();
 
@@ -428,6 +448,8 @@ const Movers = () => {
                 setTimeValue={setTimeValue}
                 clickedModalOpen={clickedModalOpen}
                 setClickedModalOpen={setClickedModalOpen}
+                listOfMovers={listOfMovers}
+                currentBook={currentBook}
               />
               {showLoader && <Loader1 />}
               {/* {showLoader2 && <Loader1 />} */}
@@ -640,6 +662,7 @@ const Movers = () => {
                                 setClickedModalOpen={setClickedModalOpen}
                                 sendMoverPageMail={sendMoverPageMail}
                                 listOfMovers={listOfMovers}
+                                currentBook={currentBook}
                                 // timeValue={timeValue}
                                 // setTimeValue={setTimeValue}
                                 // pickPrice={pickPrice} setPickPrice={setPickPrice}
@@ -667,6 +690,7 @@ const Movers = () => {
                           showLoader2={showLoader2}
                           sendMoverPageMail={sendMoverPageMail}
                           listOfMovers={listOfMovers}
+                          currentBook={currentBook}
                           // pickPrice={pickPrice} setPickPrice={setPickPrice}
                         />
                       </div>
@@ -700,6 +724,7 @@ const Movers = () => {
                               showLoader2={showLoader2}
                               sendMoverPageMail={sendMoverPageMail}
                               listOfMovers={listOfMovers}
+                              currentBook={currentBook}
                               // pickPrice={pickPrice} setPickPrice={setPickPrice}
                             />
                           </div>

@@ -357,6 +357,7 @@ const ManAndVan = ({ emails }) => {
           initialPackagePrice: moveDetails?.initialPackagePrice,
         },
         stage: "book/man-and-van",
+        activity: "Submitted move details in man and van page",
       };
       const result = await UploadBookingProgress1(moveObj);
 

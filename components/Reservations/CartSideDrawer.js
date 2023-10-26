@@ -186,6 +186,13 @@ const CartSideDrawer = ({
         {
           date: getCurrentDateFormatted(),
           stage: "Checked out shopping cart",
+          activity: [
+            ...reserveDetails?.activity,
+            {
+              name: `Completed checkout of ${totalPrice()} for cart item(s) in reservation dashboard`,
+              date: getCurrentDateFormatted(),
+            },
+          ],
           cartItems: allCartProducts,
           cartCheckedOut: "YES",
           cartPaymentStatus: "INITIATED",

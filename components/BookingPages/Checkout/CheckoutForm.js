@@ -23,7 +23,7 @@ import getStripe from "@/lib/get-stripe";
 import axios from "axios";
 import { moveCheckout } from "@/lib/moveCheckout";
 
-const CheckoutForm = () => {
+const CheckoutForm = ({ currentBook }) => {
   const {
     serviceLocation,
     personalDetails,
@@ -259,6 +259,15 @@ const CheckoutForm = () => {
         {
           date: getCurrentDateFormatted(),
           stage: "book/checkout",
+          activity: [
+            ...currentBook.activity,
+            {
+              name: `completed ${
+                paidPart ? "20%" : paidFull ? "Full" : ""
+              } payment checkout of ${paidPrice} for move`,
+              date: getCurrentDateFormatted(),
+            },
+          ],
           // createdAt: serverTimestamp(),
           comments,
           paymentMethod: "",

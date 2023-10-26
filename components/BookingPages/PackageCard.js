@@ -44,6 +44,7 @@ const PackageCard = ({
   title,
   subTitle,
   price,
+  currentBook,
   f1,
   f2,
   f3,
@@ -282,6 +283,13 @@ const PackageCard = ({
           movePackage: convertToSentenceCase(title),
           initialPackagePrice: totalPrice(totalMileage),
           stage: "book/move-package",
+          activity: [
+            ...currentBook.activity,
+            {
+              name: `Picked ${convertToSentenceCase(title)} move package`,
+              date: getCurrentDateFormatted(),
+            },
+          ],
           // createdAt: serverTimestamp(),
         },
         { merge: true }
@@ -297,7 +305,7 @@ const PackageCard = ({
     router.push(`/book/movers`);
   };
 
-  // console.log(details)
+  console.log({ currentBook });
 
   return (
     <div

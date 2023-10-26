@@ -44,6 +44,7 @@ import Lottie from "lottie-react";
 import movingVan from "@/lottieJsons/movingVan.json";
 import useQuote from "@/hooks/useQuote";
 import useMover from "@/hooks/useMover";
+import useBookings from "@/hooks/useBookings";
 
 const Movers = ({ progressUrl, progressData, userData }) => {
   const [progressData2, setProgressdata2] = useState([]);
@@ -93,10 +94,29 @@ const Movers = ({ progressUrl, progressData, userData }) => {
     resetAllMoverD,
   } = useMover();
 
+  const {
+    completedBook,
+    completedBookLoading,
+    refetchCompletedBook,
+    allBookings,
+    allBookingsLoading,
+    refetchAllBookings,
+  } = useBookings();
+
   const [allPersonalDetails, setAllPersonalDetails] = useState([]);
   const [allCompanyDetails, setAllCompanyDetails] = useState([]);
   const [allCompanyPix, setAllCompanyPix] = useState([]);
   const [newMovers, setNewMovers] = useState([]);
+  const [currentBook, setCurrentBook] = useState({});
+
+  useEffect(() => {
+    const cb = allBookings?.find(
+      (ab) => ab.bookingId === moveDetails.bookingId
+    );
+    // setQuoteDetailsFxn(cb);
+
+    setCurrentBook(cb);
+  }, [allBookings]);
 
   useEffect(() => {
     const priceFirstDay = progressData.initialPackagePrice;
@@ -469,6 +489,8 @@ const Movers = ({ progressUrl, progressData, userData }) => {
                 setTimeValue={setTimeValue}
                 clickedModalOpen={clickedModalOpen}
                 setClickedModalOpen={setClickedModalOpen}
+                listOfMovers={listOfMovers}
+                currentBook={currentBook}
               />
               {showLoader && <Loader1 />}
               {/* {showLoader2 && <Loader1 />} */}
@@ -674,6 +696,7 @@ const Movers = ({ progressUrl, progressData, userData }) => {
                                 setClickedModalOpen={setClickedModalOpen}
                                 sendMoverPageMail={sendMoverPageMail}
                                 listOfMovers={listOfMovers}
+                                currentBook={currentBook}
                                 // timeValue={timeValue}
                                 // setTimeValue={setTimeValue}
                                 // pickPrice={pickPrice} setPickPrice={setPickPrice}
@@ -701,6 +724,7 @@ const Movers = ({ progressUrl, progressData, userData }) => {
                           showLoader2={showLoader2}
                           sendMoverPageMail={sendMoverPageMail}
                           listOfMovers={listOfMovers}
+                          currentBook={currentBook}
                           // pickPrice={pickPrice} setPickPrice={setPickPrice}
                         />
                       </div>
@@ -734,6 +758,7 @@ const Movers = ({ progressUrl, progressData, userData }) => {
                               showLoader2={showLoader2}
                               sendMoverPageMail={sendMoverPageMail}
                               listOfMovers={listOfMovers}
+                              currentBook={currentBook}
                               // pickPrice={pickPrice} setPickPrice={setPickPrice}
                             />
                           </div>
@@ -772,7 +797,7 @@ export async function getServerSideProps(context) {
 
   const progressData = docSnap.data();
 
-  console.log({ progressData });
+  // console.log({ progressData });
 
   return {
     props: {

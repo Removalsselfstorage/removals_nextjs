@@ -58,8 +58,8 @@ const ReserveLogin = ({ data }) => {
   const loginValidation = Yup.object().shape({
     email: Yup.string()
       .email("Please enter a valid email address")
-      .required("Email address is required"),
-    login_ref: Yup.string().required("Booking Ref ID is required"),
+      .required("Book Email is required"),
+    login_ref: Yup.string().required("Book Ref ID is required"),
     // .min(25, "Booking ID must be 25 characters")
     // .max(25, `Booking ID must be 25 characters`),
   });
@@ -99,7 +99,7 @@ const ReserveLogin = ({ data }) => {
       // setSubmitLoading(false);
       updateReserveIdFxn(findBookingId.bookingId);
     } else if (!findBookingId) {
-      setErrorMessage("Booking Email / Ref ID is invalid");
+      setErrorMessage("Book Email / Ref ID is invalid");
       setSubmitLoading(false);
       setUser({
         ...user,
@@ -153,7 +153,7 @@ const ReserveLogin = ({ data }) => {
                         type="email"
                         name="email"
                         // icon="email"
-                        placeholder="Enter your Booking Email"
+                        placeholder="Enter your Book Email"
                         onChange={handleChange}
                         value={user.email}
                       />
@@ -164,7 +164,7 @@ const ReserveLogin = ({ data }) => {
                         type="text"
                         name="login_ref"
                         // icon="email"
-                        placeholder="Enter your Booking Ref ID"
+                        placeholder="Enter your Book Ref"
                         onChange={handleChange}
                         value={user.login_ref}
                       />

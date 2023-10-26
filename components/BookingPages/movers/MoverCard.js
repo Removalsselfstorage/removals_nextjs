@@ -62,6 +62,7 @@ const MoverCard = ({
   setClickedModalOpen,
   sendMoverPageMail,
   listOfMovers,
+  currentBook,
 }) => {
   const {
     serviceLocation,
@@ -277,6 +278,14 @@ const MoverCard = ({
             moveDateFormatted: moverDetails?.moveDateFormatted,
             dateId: moverDetails?.dateId,
             stage: "book/movers",
+            // activity: [...currentBook.activity, `Picked mover "${name}"`],
+            activity: [
+              ...currentBook.activity,
+              {
+                name: `Picked mover "${name}"`,
+                date: getCurrentDateFormatted(),
+              },
+            ],
             // createdAt: serverTimestamp(),
           },
           { merge: true }
@@ -307,7 +316,8 @@ const MoverCard = ({
       timeValue: null,
     });
   }, []);
-  // console.log({ sl: sortedListOfMovers() });
+
+  console.log({ currentBook });
 
   return (
     <>

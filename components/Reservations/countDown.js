@@ -2,11 +2,10 @@ import React, { useState, useEffect } from "react";
 import { convertTimeTo24HourFormat } from "@/utils/logics";
 
 const Countdown = ({ date }) => {
-  
   // console.log({ startTime, ct, addedTime, td:targetDate.getTime(), currentDate });
-  
+
   const [countdown, setCountdown] = useState(calculateCountdown());
-  
+
   function calculateCountdown() {
     const currentDate = new Date().getTime();
     const timeRemaining = date - currentDate;
@@ -59,31 +58,31 @@ const Countdown = ({ date }) => {
     // </div>
     <div className="grid grid-flow-col gap-[5px] text-center auto-cols-max">
       <div className="flex flex-col p-2 bg-neutral rounded-box text-neutral-content">
-        <span className="countdown font-mono font-bold text-2xl lg:text-3xl">
+        <span className="countdown font-mono font-bold text-2xl lg:text-5xl">
           {countdown.months}
         </span>
         <span className="text-[15px]">month(s)</span>
       </div>
       <div className="flex flex-col p-2 bg-neutral rounded-box text-neutral-content">
-        <span className="countdown font-mono font-bold text-2xl lg:text-3xl">
+        <span className="countdown font-mono font-bold text-2xl lg:text-5xl">
           {countdown.days}
         </span>
         <span className="text-[15px]">day(s)</span>
       </div>
       <div className="flex flex-col p-2 bg-neutral rounded-box text-neutral-content">
-        <span className="countdown font-mono font-bold text-2xl lg:text-3xl">
+        <span className="countdown font-mono font-bold text-2xl lg:text-5xl">
           {countdown.hours}
         </span>
         <span className="text-[15px]">hour(s)</span>
       </div>
       <div className="flex flex-col p-2 bg-neutral rounded-box text-neutral-content">
-        <span className="countdown font-mono font-bold text-2xl lg:text-3xl">
+        <span className="countdown font-mono font-bold text-2xl lg:text-5xl">
           {countdown.minutes}
         </span>
         <span className="text-[15px]">min</span>
       </div>
       <div className="flex flex-col p-2 bg-neutral rounded-box text-neutral-content">
-        <span className="countdown font-mono font-bold text-2xl lg:text-3xl">
+        <span className="countdown font-mono font-bold text-2xl lg:text-5xl">
           {countdown.seconds}
         </span>
         <span className="text-[15px]">sec</span>

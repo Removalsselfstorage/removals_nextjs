@@ -97,6 +97,13 @@ const ReservationBalanceSuccess = () => {
         {
           date: getCurrentDateFormatted(),
           stage: "paid outstanding move price",
+          activity: [
+            ...reserveDetails?.activity,
+            {
+              name: `Completed outstanding payment of ${total} for move`,
+              date: getCurrentDateFormatted(),
+            },
+          ],
           outStripePayment: {
             amount: Number(checkoutSession?.amount_total / 100),
             date: getCurrentDateFormatted(),
@@ -191,7 +198,7 @@ const ReservationBalanceSuccess = () => {
             </p>
 
             <dl className="mt-12 text-sm font-medium">
-              <dt className="text-gray-900 font-bold">Book Ref Id:</dt>
+              <dt className="text-gray-900 font-bold">Book Ref:</dt>
               <dd className="text-primary mt-2 text-[16px]">
                 {/* {checkoutSession?.payment_intent?.id} */}
                 {quoteRef}

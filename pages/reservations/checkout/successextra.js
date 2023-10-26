@@ -97,6 +97,13 @@ const ReservationExtraSuccess = () => {
         {
           date: getCurrentDateFormatted(),
           stage: "paid add-ons price",
+          activity: [
+            ...reserveDetails?.activity,
+            {
+              name: `Completed payment of ${total} for add-ons`,
+              date: getCurrentDateFormatted(),
+            },
+          ],
           // extraPricePaid: Number(checkoutSession?.amount_total / 100),
           extraStripePayment:
             reserveDetails?.extraStripePayment.length > 0
@@ -236,7 +243,7 @@ const ReservationExtraSuccess = () => {
             </p>
 
             <dl className="mt-12 text-sm font-medium">
-              <dt className="text-gray-900 font-bold">Book Ref Id:</dt>
+              <dt className="text-gray-900 font-bold">Book Ref:</dt>
               <dd className="text-primary mt-2 text-[16px]">
                 {/* {checkoutSession?.payment_intent?.id} */}
                 {quoteRef}

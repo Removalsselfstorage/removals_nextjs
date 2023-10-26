@@ -2,15 +2,18 @@ import ReviewCard2 from "@/components/HomePage/OurReviews/ReviewCard2";
 import StarRating from "@/components/Rating/EditHalfStars2";
 import { reviews } from "@/dummyData/dummyData";
 import useQuote from "@/hooks/useQuote";
+import { checkoutPageEmail, pickMoverEmail2 } from "@/lib/sendCustomEmail";
 import {
   getAllDetails,
   updateMoverDetails,
   updateMoverSideDetails,
 } from "@/store/quoteSlice";
-import { changeFontWeight, changeFontWeight2 } from "@/utils/logics";
+import { changeFontWeight, changeFontWeight2, getCurrentDateFormatted } from "@/utils/logics";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
+import { doc, serverTimestamp, setDoc } from "firebase/firestore";
+import { db } from "@/firebase";
 import { FaTruckMoving } from "react-icons/fa";
 import { FiCheckCircle } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
@@ -22,6 +25,8 @@ const SideDrawer = ({
   setSelectedTime,
   clickedModalOpen,
   setClickedModalOpen,
+  listOfMovers,
+  currentBook,
   // timeValue,
   // setTimeValue,
 }) => {
@@ -92,7 +97,85 @@ const SideDrawer = ({
     });
   };
 
-  const onCheckout = () => {
+  const sortedListOfMovers = listOfMovers?.filter((lm) => lm.mover !== name);
+
+  const params = {
+    firstName: personalDetails?.firstName,
+    lastName: personalDetails?.lastName,
+    email: personalDetails?.email,
+    quoteRef: moveDetails?.quoteRef,
+    progressLink: `https://removalstorage.vercel.app/book/checkout/${moveDetails?.bookingId}`,
+    progressLink2: `https://removalstorage.vercel.app/book/movers/${moveDetails?.bookingId}`,
+    // progressLink2: `https://removalstorage.vercel.app/book/checkout`,
+    address1: serviceLocation?.locationFrom?.name,
+    address2: serviceLocation?.locationTo?.name,
+    initialPackagePrice: moveDetails?.initialPackagePrice,
+    pickPrice: moverDetails?.pickPrice,
+    propertyType: moveDetails?.propertyType,
+    numberOfMovers: moveDetails?.numberOfMovers,
+    mileage: moveDetails?.mileage,
+    volume: moveDetails?.volume,
+    duration: moveDetails?.duration,
+    moveDate: moveDetails?.moveDate,
+    movePackage: moveDetails?.movePackage,
+    moverName: moverSideDetails?.name,
+    moverPrice: moverSideDetails?.price,
+    mover1Name: sortedListOfMovers[0]?.mover,
+    mover1Price: sortedListOfMovers[0]?.price,
+    mover2Name: sortedListOfMovers[1]?.mover,
+    mover2Price: sortedListOfMovers[1]?.price,
+    mover3Name: sortedListOfMovers[2]?.mover,
+    mover3Price: sortedListOfMovers[2]?.price,
+    mover4Name: sortedListOfMovers[3]?.mover,
+    mover4Price: sortedListOfMovers[3]?.price,
+  };
+
+  const sendCheckoutPageMail = async () => {
+    try {
+      await checkoutPageEmail(personalDetails?.email, params);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const notificationParams = {
+    firstName: personalDetails?.firstName,
+    lastName: personalDetails?.lastName,
+    email: personalDetails?.email,
+    phone: personalDetails?.telephone,
+    quoteRef: moveDetails?.quoteRef,
+    address1: serviceLocation?.locationFrom?.name,
+    address2: serviceLocation?.locationTo?.name,
+    initialPackagePrice: moveDetails?.initialPackagePrice,
+    pickPrice: moverDetails?.pickPrice,
+    propertyType: moveDetails?.propertyType,
+    numberOfMovers: moveDetails?.numberOfMovers,
+    mileage: moveDetails?.mileage,
+    volume: moveDetails?.volume,
+    duration: moveDetails?.duration,
+    moveDate: moveDetails?.moveDate,
+    movePackage: moveDetails?.movePackage,
+    moverName: moverSideDetails?.name,
+    moverPrice: moverSideDetails?.price,
+    bookLink: `https://rss-admin.vercel.app/secret-admin/users/booking/${moveDetails?.bookingId}`,
+    bookingId: moveDetails?.bookingId,
+    // page: "checkout page",
+  };
+
+  const notificationEmail = [
+    { email: "ifeanyi4umeh@gmail.com" },
+    { email: "removalsselfstorage@gmail.com" },
+  ];
+
+  const sendPickMoverEmail = async () => {
+    try {
+      await pickMoverEmail2(notificationEmail, notificationParams);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const onCheckout = async () => {
     setSubmitError(true);
     if (timeValue == "") {
       setSubmitError(false);
@@ -100,7 +183,11 @@ const SideDrawer = ({
         duration: 6000,
       });
     } else {
+      toast.remove();
       setSubmitLoading(true);
+      sendCheckoutPageMail();
+      sendPickMoverEmail();
+      updateBookS("book/movers");
       updateMover({
         moverName: sideDetails?.name,
         moverTime: timeValue,
@@ -109,6 +196,44 @@ const SideDrawer = ({
         moveDateFormatted: moverDetails?.moveDateFormatted,
         dateId: moverDetails?.dateId,
       });
+
+      const bookingId = moveDetails?.bookingId;
+
+      const bookingRef = doc(db, "bookingData", bookingId);
+
+      try {
+        await setDoc(
+          bookingRef,
+
+          {
+            date: getCurrentDateFormatted(),
+            moverName: sideDetails?.name,
+            moverTime: timeValue,
+            moverPrice: sideDetails?.price,
+            pickPrice: moverDetails?.pickPrice,
+            moveDateFormatted: moverDetails?.moveDateFormatted,
+            dateId: moverDetails?.dateId,
+            stage: "book/movers",
+            // activity: [...currentBook.activity, `Picked mover "${name}"`],
+            activity: [
+              ...currentBook.activity,
+              {
+                name: `Picked mover "${sideDetails?.name}"`,
+                date: getCurrentDateFormatted(),
+              },
+            ],
+            // createdAt: serverTimestamp(),
+          },
+          { merge: true }
+        );
+        // return true;
+        console.log("booking update was successful @ movers");
+      } catch (error) {
+        console.log(error);
+        // return false;
+        console.log("booking update was unsuccessful @ movers");
+      }
+
       router.push("/book/checkout");
     }
   };
@@ -133,7 +258,7 @@ const SideDrawer = ({
   //   }
   // }, [clickedModalOpen]);
 
-  console.log(timeValue);
+  console.log({ sn: sideDetails?.name, timeValue });
 
   return (
     <div className="drawer drawer-end">

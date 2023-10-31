@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
 
-function NumberInput2({ title, count, addCount, minusCount }) {
+function NumberInput2({ title, count, addCount, minusCount, updateDateInOfficeFxn }) {
   //   const [floorCount, setFloorCount] = useState(0);
 
   return (

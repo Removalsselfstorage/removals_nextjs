@@ -87,7 +87,7 @@ const ReserveSide = () => {
     }
   };
 
-  console.log({ reserveDetails });
+  // console.log({ reserveDetails });
 
   return (
     <div className="bg-white shadow-lg rounded-[30px] py-[30px] px-[20px] md:px-[30px] w-full lg:sticky lg:top-[80px]">

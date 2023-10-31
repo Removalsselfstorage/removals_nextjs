@@ -107,7 +107,7 @@ const BuyItems = ({
   const stripeCart = [];
 
   // const [allProducts, setAllProducts] = useState(products);
-  console.log({ pa: productAmount(), reserveDetails });
+  // console.log({ pa: productAmount(), reserveDetails });
 
   return (
     <div>

@@ -9,11 +9,17 @@ import { AiFillEdit, AiOutlinePlus } from "react-icons/ai";
 import useQuote from "@/hooks/useQuote";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "@/firebase";
-import { getCurrentDateFormatted, hasQtyGreaterThanOne } from "@/utils/logics";
+import {
+  getCurrentDateFormatted,
+  hasQtyGreaterThanOne,
+  sortItems,
+  checkZeroQty,
+} from "@/utils/logics";
 import { BiHelpCircle, BiSolidBed } from "react-icons/bi";
 import { GiForkKnifeSpoon, GiOfficeChair, GiSofa } from "react-icons/gi";
 import { LuMicrowave } from "react-icons/lu";
 import { TbGardenCart } from "react-icons/tb";
+import ItemDisplay from "@/components/Reservations/ItemDisplay";
 
 const PickUpItems = () => {
   const { reserveDetails, resetBookS, router, reserveId, updateReserveIdFxn } =
@@ -29,33 +35,37 @@ const PickUpItems = () => {
     increaseQtyInBedroomFxn,
     decreaseQtyInBedroomFxn,
     addNewItemToBedroomFxn,
-
+    updateDateInBedroomFxn,
     //LIVING
     increaseQtyInLivingFxn,
     decreaseQtyInLivingFxn,
     addNewItemToLivingFxn,
-
+    updateDateInLivingFxn,
     //DINING
     increaseQtyInDiningFxn,
     decreaseQtyInDiningFxn,
     addNewItemToDiningFxn,
+    updateDateInDiningFxn,
     //KITCHEN
     increaseQtyInKitchenFxn,
     decreaseQtyInKitchenFxn,
     addNewItemToKitchenFxn,
+    updateDateInKitchenFxn,
     //OFFICE
     increaseQtyInOfficeFxn,
     decreaseQtyInOfficeFxn,
     addNewItemToOfficeFxn,
+    updateDateInOfficeFxn,
     //BATHROOM
     increaseQtyInBathRoomFxn,
     decreaseQtyInBathRoomFxn,
     addNewItemToBathRoomFxn,
+    updateDateInBathroomFxn,
     //GARDEN
     increaseQtyInGardenFxn,
     decreaseQtyInGardenFxn,
     addNewItemToGardenFxn,
-    //
+    updateDateInGardenFxn,
   } = useMoveItems();
 
   const livingRoomInitial = {
@@ -117,18 +127,25 @@ const PickUpItems = () => {
   // bedRoom
   const [bedRoomName, setBedRoomName] = useState("");
   const [bedRoomQty, setBedRoomQty] = useState(1);
+  const [bedRoomDate, setBedRoomDate] = useState("");
   const [livingName, setLivingName] = useState("");
   const [livingQty, setLivingQty] = useState(1);
+  const [livingDate, setLivingDate] = useState("");
   const [diningName, setDiningName] = useState("");
   const [diningQty, setDiningQty] = useState(1);
+  const [diningDate, setDiningDate] = useState("");
   const [kitchenName, setKitchenName] = useState("");
   const [kitchenQty, setKitchenQty] = useState(1);
+  const [kitchenDate, setKitchenDate] = useState("");
   const [officeName, setOfficeName] = useState("");
   const [officeQty, setOfficeQty] = useState(1);
+  const [officeDate, setOfficeDate] = useState("");
   const [bathRoomName, setBathRoomName] = useState("");
   const [bathRoomQty, setBathRoomQty] = useState(1);
+  const [bathRoomDate, setBathRoomDate] = useState("");
   const [gardenName, setGardenName] = useState("");
   const [gardenQty, setGardenQty] = useState(1);
+  const [gardenDate, setGardenDate] = useState("");
 
   const [submitLoading, setSubmitLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -174,12 +191,79 @@ const PickUpItems = () => {
     }
   };
 
-  // console.log({ reserveDetails, moveItems });
+  const sortedOffice = () => {
+    if (moveItems?.office.length > 0) {
+      const sort = [...moveItems?.office].sort((a, b) => {
+        return new Date(a.date) - new Date(b.date);
+      });
+      return sort;
+    }
+  };
+  const sortedLiving = () => {
+    if (moveItems?.living.length > 0) {
+      const sort = [...moveItems?.living].sort((a, b) => {
+        return new Date(a.date) - new Date(b.date);
+      });
+      return sort;
+    }
+  };
+  const sortedBedRoom = () => {
+    if (moveItems?.bedRoom.length > 0) {
+      const sort = [...moveItems?.bedRoom].sort((a, b) => {
+        return new Date(a.date) - new Date(b.date);
+      });
+      return sort;
+    }
+  };
+  const sortedDining = () => {
+    if (moveItems?.dining.length > 0) {
+      const sort = [...moveItems?.dining].sort((a, b) => {
+        return new Date(a.date) - new Date(b.date);
+      });
+      return sort;
+    }
+  };
+  const sortedkitchen = () => {
+    if (moveItems?.kitchen.length > 0) {
+      const sort = [...moveItems?.kitchen].sort((a, b) => {
+        return new Date(a.date) - new Date(b.date);
+      });
+      return sort;
+    }
+  };
+  const sortedBathRoom = () => {
+    if (moveItems?.bathRoom.length > 0) {
+      const sort = [...moveItems?.bathRoom].sort((a, b) => {
+        return new Date(a.date) - new Date(b.date);
+      });
+      return sort;
+    }
+  };
+  const sortedGarden = () => {
+    if (moveItems?.garden.length > 0) {
+      const sort = [...moveItems?.garden].sort((a, b) => {
+        return new Date(a.date) - new Date(b.date);
+      });
+      return sort;
+    }
+  };
+
+  const checkZeroQty = (array) => {
+    let check = 0;
+    array.forEach((ar) => {
+      if (ar.qty > 0) {
+        check += 1;
+      }
+    });
+    return check;
+  };
+
+  // console.log({ moveItems, co: checkZeroQty(moveItems?.office) });
 
   return (
     <div className="">
       <div className="mb-[10px] md:mb-[20px]">
-        <div className="text-2xl font-bold mb-[15px] flex flex-col space-y-[10px] lg:space-y-0 lg:flex-row lg:items-center lg:space-x-[10px]">
+        <div className="text-2xl font-bold mb-[10px] flex flex-col space-y-[10px] lg:space-y-0 lg:flex-row lg:items-center lg:space-x-[10px]">
           <p className="">What are you moving</p>
           <div
             className="flex items-center space-x-[5px]"
@@ -193,124 +277,86 @@ const PickUpItems = () => {
           </div>
         </div>
         {/* item display */}
-        <div className="text-[14px] font-semibold">
-          <div className="mb-[10px]">
-            {hasQtyGreaterThanOne(moveItems?.office) && (
-              <span className="text-secondary">Office: </span>
-            )}
-            {moveItems?.office.map((mi, index) => {
-              return (
-                <span key={index}>
-                  {mi.qty > 0 && (
-                    <span>
-                      {mi.qty} x {mi.name},{" "}
-                    </span>
-                  )}
+        <div className="text-[14px]  grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-[10px]">
+          {checkZeroQty(moveItems?.office) > 0 && (
+            <div className="mb-[0px]">
+              {hasQtyGreaterThanOne(moveItems?.office) && (
+                <span className="text-secondary font-semibold">Office: </span>
+              )}
+              <ItemDisplay
+                sortedItems={[...sortItems(moveItems?.office)] || []}
+              />
+            </div>
+          )}
+          {checkZeroQty(moveItems?.living) > 0 && (
+            <div className="mb-[0px]">
+              {hasQtyGreaterThanOne(moveItems?.living) && (
+                <span className="text-secondary font-semibold">
+                  Living Room:{" "}
                 </span>
-              );
-            })}
-          </div>
-          <div className="mb-[10px]">
-            {hasQtyGreaterThanOne(moveItems?.living) && (
-              <span className="text-secondary">Living Room: </span>
-            )}
-            {moveItems?.living.map((mi, index) => {
-              return (
-                <span key={index}>
-                  {mi.qty > 0 && (
-                    <span>
-                      {mi.qty} x {mi.name},{" "}
-                    </span>
-                  )}
+              )}
+              <ItemDisplay
+                sortedItems={[...sortItems(moveItems?.living)] || []}
+              />
+            </div>
+          )}
+          {checkZeroQty(moveItems?.bedRoom) > 0 && (
+            <div className="mb-[0px]">
+              {hasQtyGreaterThanOne(moveItems?.bedRoom) && (
+                <span className="text-secondary font-semibold">Bed Room: </span>
+              )}
+              <ItemDisplay
+                sortedItems={[...sortItems(moveItems?.bedRoom)] || []}
+              />
+            </div>
+          )}
+          {checkZeroQty(moveItems?.dining) > 0 && (
+            <div className="mb-[10px]">
+              {hasQtyGreaterThanOne(moveItems?.dining) && (
+                <span className="text-secondary font-semibold">Dining: </span>
+              )}
+              <ItemDisplay
+                sortedItems={[...sortItems(moveItems?.dining)] || []}
+              />
+            </div>
+          )}
+          {checkZeroQty(moveItems?.kitchen) > 0 && (
+            <div className="mb-[0px]">
+              {hasQtyGreaterThanOne(moveItems?.kitchen) && (
+                <span className="text-secondary font-semibold">Kitchen: </span>
+              )}
+              <ItemDisplay
+                sortedItems={[...sortItems(moveItems?.kitchen)] || []}
+              />
+            </div>
+          )}
+          {checkZeroQty(moveItems?.bathRoom) > 0 && (
+            <div className="mb-[10px]">
+              {hasQtyGreaterThanOne(moveItems?.bathRoom) && (
+                <span className="text-secondary font-semibold">
+                  Bath Room:{" "}
                 </span>
-              );
-            })}
-          </div>
-          <div className="mb-[10px]">
-            {hasQtyGreaterThanOne(moveItems?.bedRoom) && (
-              <span className="text-secondary">Bed Room: </span>
-            )}
-            {moveItems?.bedRoom.map((mi, index) => {
-              return (
-                <span key={index}>
-                  {mi.qty > 0 && (
-                    <span>
-                      {mi.qty} x {mi.name},{" "}
-                    </span>
-                  )}
-                </span>
-              );
-            })}
-          </div>
-          <div className="mb-[10px]">
-            {hasQtyGreaterThanOne(moveItems?.dining) && (
-              <span className="text-secondary">Dining: </span>
-            )}
-            {moveItems?.dining.map((mi, index) => {
-              return (
-                <span key={index}>
-                  {mi.qty > 0 && (
-                    <span>
-                      {mi.qty} x {mi.name},{" "}
-                    </span>
-                  )}
-                </span>
-              );
-            })}
-          </div>
-          <div className="mb-[10px]">
-            {hasQtyGreaterThanOne(moveItems?.kitchen) && (
-              <span className="text-secondary">Kitchen: </span>
-            )}
-            {moveItems?.kitchen.map((mi, index) => {
-              return (
-                <span key={index}>
-                  {mi.qty > 0 && (
-                    <span>
-                      {mi.qty} x {mi.name},{" "}
-                    </span>
-                  )}
-                </span>
-              );
-            })}
-          </div>
-          <div className="mb-[10px]">
-            {hasQtyGreaterThanOne(moveItems?.bathRoom) && (
-              <span className="text-secondary">Bath Room: </span>
-            )}
-            {moveItems?.bathRoom.map((mi, index) => {
-              return (
-                <span key={index}>
-                  {mi.qty > 0 && (
-                    <span>
-                      {mi.qty} x {mi.name},{" "}
-                    </span>
-                  )}
-                </span>
-              );
-            })}
-          </div>
-          <div className="mb-[10px]">
-            {hasQtyGreaterThanOne(moveItems?.garden) && (
-              <span className="text-secondary">Garden: </span>
-            )}
-            {moveItems?.garden.map((mi, index) => {
-              return (
-                <span key={index}>
-                  {mi.qty > 0 && (
-                    <span>
-                      {mi.qty} x {mi.name},{" "}
-                    </span>
-                  )}
-                </span>
-              );
-            })}
-          </div>
+              )}
+              <ItemDisplay
+                sortedItems={[...sortItems(moveItems?.bathRoom)] || []}
+              />
+            </div>
+          )}
+          {checkZeroQty(moveItems?.garden) > 0 && (
+            <div className="mb-[0px]">
+              {hasQtyGreaterThanOne(moveItems?.garden) && (
+                <span className="text-secondary font-semibold">Garden: </span>
+              )}
+              <ItemDisplay
+                sortedItems={[...sortItems(moveItems?.garden)] || []}
+              />
+            </div>
+          )}
         </div>
       </div>
 
       {/* Office */}
-      <div className="collapse bg-orange-500/10 collapse-arrow mb-[10px]">
+      <div className="collapse  bg-orange-500/10 collapse-arrow mb-[10px]">
         <input type="checkbox" />
         <div className="collapse-title font-semibold text-secondary flex items-center space-x-[10px] mb-[0px]">
           <p className="text-[18px] font-bold  ">Office</p>
@@ -348,6 +394,7 @@ const PickUpItems = () => {
                   addNewItemToOfficeFxn({
                     name: officeName,
                     qty: officeQty,
+                    date: getCurrentDateFormatted(),
                   });
                   setOfficeQty(1);
                   setOfficeName("");
@@ -400,6 +447,7 @@ const PickUpItems = () => {
                   addNewItemToLivingFxn({
                     name: livingName,
                     qty: livingQty,
+                    date: getCurrentDateFormatted(),
                   });
                   setLivingQty(1);
                   setLivingName("");
@@ -452,6 +500,7 @@ const PickUpItems = () => {
                   addNewItemToBedroomFxn({
                     name: bedRoomName,
                     qty: bedRoomQty,
+                    date: getCurrentDateFormatted(),
                   });
                   setBedRoomQty(1);
                   setBedRoomName("");
@@ -504,6 +553,7 @@ const PickUpItems = () => {
                   addNewItemToDiningFxn({
                     name: diningName,
                     qty: diningQty,
+                    date: getCurrentDateFormatted(),
                   });
                   setDiningQty(1);
                   setDiningName("");
@@ -556,6 +606,7 @@ const PickUpItems = () => {
                   addNewItemToKitchenFxn({
                     name: kitchenName,
                     qty: kitchenQty,
+                    date: getCurrentDateFormatted(),
                   });
                   setKitchenQty(1);
                   setKitchenName("");
@@ -608,6 +659,7 @@ const PickUpItems = () => {
                   addNewItemToBathRoomFxn({
                     name: bathRoomName,
                     qty: bathRoomQty,
+                    date: getCurrentDateFormatted(),
                   });
                   setBathRoomQty(1);
                   setBathRoomName("");
@@ -660,6 +712,7 @@ const PickUpItems = () => {
                   addNewItemToGardenFxn({
                     name: gardenName,
                     qty: gardenQty,
+                    date: getCurrentDateFormatted(),
                   });
                   setGardenQty(1);
                   setGardenName("");

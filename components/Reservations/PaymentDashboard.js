@@ -147,12 +147,12 @@ const PaymentDashboard = ({ allPayments, isGivenDateGreaterThanCurrent }) => {
 
   useEffect(() => {}, []);
 
-  console.log({
-    paidPrice,
-    reserveDetails,
-    // extraPrice,
-    // outstandingPrice,
-  });
+  // console.log({
+  //   paidPrice,
+  //   reserveDetails,
+  //   // extraPrice,
+  //   // outstandingPrice,
+  // });
 
   return (
     <div className="flex flex-col space-y-[5px]">

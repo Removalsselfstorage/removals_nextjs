@@ -1,5 +1,36 @@
 // Outputs: "Wednesday, 20 September, 2023"
 
+export const checkZeroQty = (array) => {
+  let check = 0;
+  array?.forEach((ar) => {
+    if (ar.qty > 0) {
+      check += 1;
+    }
+  });
+  return check;
+};
+
+export const sortItems = (array) => {
+  if (array.length > 0) {
+    const sort = [...array].sort((a, b) => {
+      const dateA = dateStringToInteger(a.date);
+      const dateB = dateStringToInteger(b.date);
+      // console.log({})
+      return dateA - dateB; //
+    });
+    return sort;
+  }
+};
+
+export function dateStringToInteger(dateString) {
+  const date = new Date(dateString);
+  if (isNaN(date)) {
+    // Handle invalid date strings
+    return null;
+  }
+  return date.getTime();
+}
+
 export const checkBookStatus = (moveDate, moverTime) => {
   let targetDate = new Date(moveDate);
   if (moverTime) {

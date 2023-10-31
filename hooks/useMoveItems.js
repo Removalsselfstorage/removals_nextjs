@@ -11,30 +11,43 @@ import {
   increaseQtyInBedroom,
   decreaseQtyInBedroom,
   addNewItemToBedroom,
+  updateDateInBedroom,
+
   // LIVING
   increaseQtyInLiving,
   decreaseQtyInLiving,
   addNewItemToLiving,
+  updateDateInLiving,
+
   // DINING
   increaseQtyInDining,
   decreaseQtyInDining,
   addNewItemToDining,
+  updateDateInDining,
+
   // KITCHEN
   increaseQtyInKitchen,
   decreaseQtyInKitchen,
   addNewItemToKitchen,
+  updateDateInKitchen,
+
   // OFFICE
   increaseQtyInOffice,
   decreaseQtyInOffice,
   addNewItemToOffice,
+  updateDateInOffice,
+
   // BATHROOM
   increaseQtyInBathRoom,
   decreaseQtyInBathRoom,
   addNewItemToBathRoom,
+  updateDateInBathroom,
+
   // GARDEN
   increaseQtyInGarden,
   decreaseQtyInGarden,
   addNewItemToGarden,
+  updateDateInGarden,
 } from "@/store/moveItemsSlice";
 
 const useMoveItems = () => {
@@ -60,6 +73,9 @@ const useMoveItems = () => {
   const addNewItemToBedroomFxn = (payload) => {
     dispatch(addNewItemToBedroom(payload));
   };
+  const updateDateInBedroomFxn = (payload) => {
+    dispatch(updateDateInBedroom(payload));
+  };
 
   // LIVING
   const increaseQtyInLivingFxn = (payload) => {
@@ -70,6 +86,9 @@ const useMoveItems = () => {
   };
   const addNewItemToLivingFxn = (payload) => {
     dispatch(addNewItemToLiving(payload));
+  };
+  const updateDateInLivingFxn = (payload) => {
+    dispatch(updateDateInLiving(payload));
   };
 
   // DINING
@@ -82,6 +101,9 @@ const useMoveItems = () => {
   const addNewItemToDiningFxn = (payload) => {
     dispatch(addNewItemToDining(payload));
   };
+  const updateDateInDiningFxn = (payload) => {
+    dispatch(updateDateInDining(payload));
+  };
 
   // KITCHEN
   const increaseQtyInKitchenFxn = (payload) => {
@@ -92,6 +114,9 @@ const useMoveItems = () => {
   };
   const addNewItemToKitchenFxn = (payload) => {
     dispatch(addNewItemToKitchen(payload));
+  };
+  const updateDateInKitchenFxn = (payload) => {
+    dispatch(updateDateInKitchen(payload));
   };
 
   // OFFICE
@@ -104,6 +129,9 @@ const useMoveItems = () => {
   const addNewItemToOfficeFxn = (payload) => {
     dispatch(addNewItemToOffice(payload));
   };
+  const updateDateInOfficeFxn = (payload) => {
+    dispatch(updateDateInOffice(payload));
+  };
 
   // BATHROOM
   const increaseQtyInBathRoomFxn = (payload) => {
@@ -115,8 +143,11 @@ const useMoveItems = () => {
   const addNewItemToBathRoomFxn = (payload) => {
     dispatch(addNewItemToBathRoom(payload));
   };
+  const updateDateInBathroomFxn = (payload) => {
+    dispatch(updateDateInBathroom(payload));
+  };
 
-  // BATHROOM
+  // GARDEN
   const increaseQtyInGardenFxn = (payload) => {
     dispatch(increaseQtyInGarden(payload));
   };
@@ -125,6 +156,9 @@ const useMoveItems = () => {
   };
   const addNewItemToGardenFxn = (payload) => {
     dispatch(addNewItemToGarden(payload));
+  };
+  const updateDateInGardenFxn = (payload) => {
+    dispatch(updateDateInGarden(payload));
   };
 
   // console.log({ ab });
@@ -139,30 +173,37 @@ const useMoveItems = () => {
     increaseQtyInBedroomFxn,
     decreaseQtyInBedroomFxn,
     addNewItemToBedroomFxn,
+    updateDateInBedroomFxn,
     //LIVING
     increaseQtyInLivingFxn,
     decreaseQtyInLivingFxn,
     addNewItemToLivingFxn,
+    updateDateInLivingFxn,
     //DINING
     increaseQtyInDiningFxn,
     decreaseQtyInDiningFxn,
     addNewItemToDiningFxn,
+    updateDateInDiningFxn,
     //KITCHEN
     increaseQtyInKitchenFxn,
     decreaseQtyInKitchenFxn,
     addNewItemToKitchenFxn,
+    updateDateInKitchenFxn,
     //OFFICE
     increaseQtyInOfficeFxn,
     decreaseQtyInOfficeFxn,
     addNewItemToOfficeFxn,
+    updateDateInOfficeFxn,
     //BATHROOM
     increaseQtyInBathRoomFxn,
     decreaseQtyInBathRoomFxn,
     addNewItemToBathRoomFxn,
+    updateDateInBathroomFxn,
     //GARDEN
     increaseQtyInGardenFxn,
     decreaseQtyInGardenFxn,
     addNewItemToGardenFxn,
+    updateDateInGardenFxn,
 
     router,
   };

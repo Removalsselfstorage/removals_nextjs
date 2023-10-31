@@ -218,16 +218,18 @@ const Reservations = ({ progressData }) => {
   // const {} = reserveDetails
 
   // console.log({ progressData, moveItems });
-  console.log({
-    // sm: sumAmounts(),
-    // reserveDetails,
-    // givenDate,
-    // currentDate,
-    // progressData,
-    // reserveDetails,
-    // ap: allPayments(),
-    // reserveId,
-  });
+  // console.log({
+  //   // sm: sumAmounts(),
+  //   // reserveDetails,
+  //   // givenDate,
+  //   // currentDate,
+  //   // progressData,
+  //   // reserveDetails,
+  //   // ap: allPayments(),
+  //   // reserveId,
+  // });
+
+  // console.log({ moveItems });
 
   const allLoading = completedBookLoading || bookLoading;
 

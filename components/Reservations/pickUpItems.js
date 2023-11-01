@@ -171,6 +171,13 @@ const PickUpItems = () => {
             },
           ],
           moveItems: ab?.moveItems,
+          moveItemsArray:
+            reserveDetails?.moveItemsArray?.length > 0
+              ? [
+                  ...reserveDetails?.moveItemsArray,
+                  { moveItems: ab?.moveItems, date: getCurrentDateFormatted() },
+                ]
+              : [{ moveItems: ab?.moveItems, date: getCurrentDateFormatted() }],
         },
         { merge: true }
       );
@@ -191,63 +198,6 @@ const PickUpItems = () => {
     }
   };
 
-  const sortedOffice = () => {
-    if (moveItems?.office.length > 0) {
-      const sort = [...moveItems?.office].sort((a, b) => {
-        return new Date(a.date) - new Date(b.date);
-      });
-      return sort;
-    }
-  };
-  const sortedLiving = () => {
-    if (moveItems?.living.length > 0) {
-      const sort = [...moveItems?.living].sort((a, b) => {
-        return new Date(a.date) - new Date(b.date);
-      });
-      return sort;
-    }
-  };
-  const sortedBedRoom = () => {
-    if (moveItems?.bedRoom.length > 0) {
-      const sort = [...moveItems?.bedRoom].sort((a, b) => {
-        return new Date(a.date) - new Date(b.date);
-      });
-      return sort;
-    }
-  };
-  const sortedDining = () => {
-    if (moveItems?.dining.length > 0) {
-      const sort = [...moveItems?.dining].sort((a, b) => {
-        return new Date(a.date) - new Date(b.date);
-      });
-      return sort;
-    }
-  };
-  const sortedkitchen = () => {
-    if (moveItems?.kitchen.length > 0) {
-      const sort = [...moveItems?.kitchen].sort((a, b) => {
-        return new Date(a.date) - new Date(b.date);
-      });
-      return sort;
-    }
-  };
-  const sortedBathRoom = () => {
-    if (moveItems?.bathRoom.length > 0) {
-      const sort = [...moveItems?.bathRoom].sort((a, b) => {
-        return new Date(a.date) - new Date(b.date);
-      });
-      return sort;
-    }
-  };
-  const sortedGarden = () => {
-    if (moveItems?.garden.length > 0) {
-      const sort = [...moveItems?.garden].sort((a, b) => {
-        return new Date(a.date) - new Date(b.date);
-      });
-      return sort;
-    }
-  };
-
   const checkZeroQty = (array) => {
     let check = 0;
     array.forEach((ar) => {
@@ -259,6 +209,7 @@ const PickUpItems = () => {
   };
 
   // console.log({ moveItems, co: checkZeroQty(moveItems?.office) });
+  console.log({ reserveDetails });
 
   return (
     <div className="">
@@ -277,11 +228,13 @@ const PickUpItems = () => {
           </div>
         </div>
         {/* item display */}
-        <div className="text-[14px]  grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-[10px]">
+        <div className="text-[14px]  grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-[10px]">
           {checkZeroQty(moveItems?.office) > 0 && (
             <div className="mb-[0px]">
               {hasQtyGreaterThanOne(moveItems?.office) && (
-                <span className="text-secondary font-semibold">Office: </span>
+                <span className="text-secondary font-bold text-[18px]">
+                  Office:{" "}
+                </span>
               )}
               <ItemDisplay
                 sortedItems={[...sortItems(moveItems?.office)] || []}
@@ -291,7 +244,7 @@ const PickUpItems = () => {
           {checkZeroQty(moveItems?.living) > 0 && (
             <div className="mb-[0px]">
               {hasQtyGreaterThanOne(moveItems?.living) && (
-                <span className="text-secondary font-semibold">
+                <span className="text-secondary font-bold text-[18px]">
                   Living Room:{" "}
                 </span>
               )}
@@ -303,7 +256,9 @@ const PickUpItems = () => {
           {checkZeroQty(moveItems?.bedRoom) > 0 && (
             <div className="mb-[0px]">
               {hasQtyGreaterThanOne(moveItems?.bedRoom) && (
-                <span className="text-secondary font-semibold">Bed Room: </span>
+                <span className="text-secondary font-bold text-[18px]">
+                  Bed Room:{" "}
+                </span>
               )}
               <ItemDisplay
                 sortedItems={[...sortItems(moveItems?.bedRoom)] || []}
@@ -313,7 +268,9 @@ const PickUpItems = () => {
           {checkZeroQty(moveItems?.dining) > 0 && (
             <div className="mb-[10px]">
               {hasQtyGreaterThanOne(moveItems?.dining) && (
-                <span className="text-secondary font-semibold">Dining: </span>
+                <span className="text-secondary font-bold text-[18px]">
+                  Dining:{" "}
+                </span>
               )}
               <ItemDisplay
                 sortedItems={[...sortItems(moveItems?.dining)] || []}
@@ -323,7 +280,9 @@ const PickUpItems = () => {
           {checkZeroQty(moveItems?.kitchen) > 0 && (
             <div className="mb-[0px]">
               {hasQtyGreaterThanOne(moveItems?.kitchen) && (
-                <span className="text-secondary font-semibold">Kitchen: </span>
+                <span className="text-secondary font-bold text-[18px]">
+                  Kitchen:{" "}
+                </span>
               )}
               <ItemDisplay
                 sortedItems={[...sortItems(moveItems?.kitchen)] || []}
@@ -333,7 +292,7 @@ const PickUpItems = () => {
           {checkZeroQty(moveItems?.bathRoom) > 0 && (
             <div className="mb-[10px]">
               {hasQtyGreaterThanOne(moveItems?.bathRoom) && (
-                <span className="text-secondary font-semibold">
+                <span className="text-secondary font-bold text-[18px]">
                   Bath Room:{" "}
                 </span>
               )}
@@ -345,7 +304,9 @@ const PickUpItems = () => {
           {checkZeroQty(moveItems?.garden) > 0 && (
             <div className="mb-[0px]">
               {hasQtyGreaterThanOne(moveItems?.garden) && (
-                <span className="text-secondary font-semibold">Garden: </span>
+                <span className="text-secondary font-bold text-[18px]">
+                  Garden:{" "}
+                </span>
               )}
               <ItemDisplay
                 sortedItems={[...sortItems(moveItems?.garden)] || []}

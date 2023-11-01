@@ -12,7 +12,7 @@ import {
   compareDate,
 } from "@/utils/logics";
 
-const ItemDisplay = ({ sortedItems }) => {
+const ItemDisplay = ({ sortedItems, showDate }) => {
   // console.log({ sortedItems, epDate });
   return (
     <>
@@ -22,16 +22,16 @@ const ItemDisplay = ({ sortedItems }) => {
           <div className={`flex space-x-[10px]`} key={index}>
             {mi.qty > 0 && (
               <p>
-                {mi.qty} x {mi.name} -
+                {mi.qty} x {mi.name}
               </p>
             )}
-            {mi.qty > 0 && (
+            {showDate && mi.qty > 0 && (
               // <p
               //   className={`${
               //     checKDate ? "text-secondary" : "text-gray-500"
               //   } text-[13px]`}
               // >
-              <p className="text-[13px] mb-[0px] text-gray-500">{mi.date}</p>
+              <p className="text-[13px] mb-[0px] text-gray-500"> - {mi.date}</p>
             )}
           </div>
         );

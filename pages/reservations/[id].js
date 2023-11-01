@@ -148,9 +148,11 @@ const Reservations = ({ progressData }) => {
 
   useEffect(() => {
     completedBook?.moveItems && resetMoveItemsFxn(completedBook?.moveItems);
-    setReserveDetailsFxn({
-      ...completedBook,
-    });
+    if (completedBook) {
+      setReserveDetailsFxn({
+        ...completedBook,
+      });
+    }
   }, [completedBook]);
 
   const myBookings = allBookings?.filter(
@@ -229,7 +231,7 @@ const Reservations = ({ progressData }) => {
   //   // reserveId,
   // });
 
-  // console.log({ moveItems });
+  console.log({ reserveDetails });
 
   const allLoading = completedBookLoading || bookLoading;
 

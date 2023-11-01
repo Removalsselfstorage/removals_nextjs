@@ -145,7 +145,7 @@ const Checkout = () => {
     }
   }, []);
 
-  // console.log({ currentBook });
+  console.log({ currentBook });
 
   return (
     <>

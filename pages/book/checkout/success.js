@@ -284,10 +284,11 @@ const ReservationCheckoutSuccess = () => {
       // setCurrentBook(cb);
       updateReserveIdFxn(cb?.bookingId);
 
+      setSuccessDetails(cb);
+
       setTimeout(() => {
         setTimer(true);
         if (timer) {
-          setSuccessDetails(cb);
           sendStripe();
           sendAllNotificationEmail();
           sendBookedMail();
@@ -295,14 +296,16 @@ const ReservationCheckoutSuccess = () => {
       }, 2000);
     }
     // setQuoteDetailsFxn(cb);
-  }, [successDetails]);
+  }, []);
 
   const handleDashboard = (event) => {
     event.preventDefault();
     setSubmitLoading(true);
     reset();
     updateReserveIdFxn(successDetails?.bookingId);
-    router.push(`/reservations/${successDetails?.bookingId}`);
+    router.push(
+      `/reservations/${moveDetails?.bookingId || successDetails?.bookingId}`
+    );
     // resetCartFxn();
   };
 

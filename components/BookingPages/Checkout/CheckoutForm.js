@@ -260,7 +260,7 @@ const CheckoutForm = ({ currentBook }) => {
           date: getCurrentDateFormatted(),
           stage: "book/checkout",
           activity: [
-            ...currentBook.activity,
+            ...currentBook?.activity,
             {
               name: `completed ${
                 paidPart ? "20%" : paidFull ? "Full" : ""
@@ -319,7 +319,7 @@ const CheckoutForm = ({ currentBook }) => {
 
   //paymentDetails.paidPrice
 
-  // console.log({ paymentDetails, moveDetails });
+  console.log({ currentBook, paidPart, paidFull });
 
   return (
     <div className="lg:sticky lg:top-[80px] bg-white shadow-lg rounded-[30px] lg:flex-[2] py-[30px] px-[30px] md:px-[50px] w-full">

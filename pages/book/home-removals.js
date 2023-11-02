@@ -123,8 +123,9 @@ const CompleteHouse = ({ emails }) => {
     const strippedNumber = inputValue.replace(/\D/g, "");
 
     // Check if the stripped number is either 10 or 11 digits long
-    const isValidPhoneNumber =
-      strippedNumber.length === 10 || strippedNumber.length === 11;
+    const isValidPhoneNumber = strippedNumber.length > 5;
+    // const isValidPhoneNumber =
+    //   strippedNumber.length === 10 || strippedNumber.length === 11;
 
     setPhone(strippedNumber);
     setPhoneError(isValidPhoneNumber);
@@ -327,7 +328,7 @@ const CompleteHouse = ({ emails }) => {
         },
 
         stage: "book/home-removals",
-        activity: "Submitted move details in home removals page"
+        activity: "Submitted move details in home removals page",
       };
       const result = await UploadBookingProgress1(moveObj);
 

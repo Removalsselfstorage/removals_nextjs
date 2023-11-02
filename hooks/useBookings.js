@@ -5,67 +5,121 @@ import { useState } from "react";
 import useQuote from "./useQuote";
 
 const useBookings = () => {
-  const {
-    setReserveDetailsFxn,
-    reserveDetails,
-    router,
-    reserveId,
-    updateReserveIdFxn,
-  } = useQuote();
+  // const {
+  //   setReserveDetailsFxn,
+  //   reserveDetails,
+  //   router,
+  //   reserveId,
+  //   updateReserveIdFxn,
+  // } = useQuote();
 
-  const {
-    data: completedBook,
-    isLoading: completedBookLoading,
-    refetch: refetchCompletedBook,
-  } = useQuery({
-    queryKey: [queryKeys.GET_BOOKING_DATA],
-    queryFn: fetchAllBookings,
-    select: (data) => {
-      const cs = data?.bookings?.filter((bk) => bk.completedBook === true);
+  // const {
+  //   data: completedBook,
+  //   isLoading: completedBookLoading,
+  //   refetch: refetchCompletedBook,
+  // } = useQuery({
+  //   queryKey: [queryKeys.GET_BOOKING_DATA],
+  //   queryFn: fetchAllBookings,
+  //   select: (data) => {
+  //     const cs = data?.bookings?.filter((bk) => bk.completedBook === true);
 
-      const filteredBook = cs?.find((obj) => obj.id === reserveId);
+  //     const filteredBook = cs?.find((obj) => obj.id === reserveId);
 
-      // console.log({ data, cs, reserveId, filteredBook });
-      return filteredBook;
-    },
-    // onError(err) {
-    //   errorHandler(err);
-    // },
-  });
+  //     // console.log({ data, cs, reserveId, filteredBook });
+  //     return filteredBook;
+  //   },
+  //   // onError(err) {
+  //   //   errorHandler(err);
+  //   // },
+  // });
+
+  // const {
+  //   data: allBookings,
+  //   isLoading: allBookingsLoading,
+  //   refetch: refetchAllBookings,
+  // } = useQuery({
+  //   queryKey: [queryKeys.GET_BOOKING_DATA],
+  //   queryFn: fetchAllBookings,
+  //   select: (data) => {
+  //     // const cs = data?.bookings?.filter((bk) => bk.completedBook === true);
+
+  //     // console.log({ data, completedBookings });
+  //     return data?.bookings;
+  //   },
+  //   // onError(err) {
+  //   //   errorHandler(err);
+  //   // },
+  // });
 
   const {
     data: allBookings,
-    isLoading: allBookingsLoading,
-    refetch: refetchAllBookings,
+    isLoading: bookingsLoading,
+    refetch: refetchBookings,
   } = useQuery({
     queryKey: [queryKeys.GET_BOOKING_DATA],
     queryFn: fetchAllBookings,
+    // refetchInterval: 5000,
     select: (data) => {
+      // console.log("Allbookings mounted");
       // const cs = data?.bookings?.filter((bk) => bk.completedBook === true);
 
       // console.log({ data, completedBookings });
-      return data?.bookings;
+      const allBooks = [...data?.bookings].sort((a, b) => {
+        return new Date(b.date) - new Date(a.date);
+      });
+
+      return allBooks;
     },
-    // onError(err) {
-    //   errorHandler(err);
-    // },
   });
 
-  // const completedBook = (id) => {
-  //   const filteredBook = completedBookings?.find((obj) => obj.id === id);
-  //   console.log({ filteredBook });
-  //   return filteredBook;
-  // };
+  const {
+    data: completedBookings,
+    isLoading: completedBookingsLoading,
+    refetch: refetchCompletedBookings,
+  } = useQuery({
+    queryKey: [queryKeys.GET_COMPLETED_BOOKING],
+    queryFn: fetchAllBookings,
+    select: (data) => {
+      // console.log("completedBookings mounted");
+      // const cs = data?.bookings?.filter((bk) => bk.completedBook === true);
+
+      // console.log({ data, completedBookings });
+      const allBooks = [...data?.bookings].sort((a, b) => {
+        return new Date(b.date) - new Date(a.date);
+      });
+
+      const filtered = allBooks?.filter((bk) => bk.completedBook === true);
+
+      return filtered;
+    },
+  });
+
+  const completedBook = (id) => {
+    // const bb = allBookings?.filter((bk) => bk.completedBook === true);
+    const filteredBook = completedBookings?.find((obj) => obj.id === id);
+
+    return filteredBook;
+  };
+
+  const allBook = (id) => {
+    const filteredBook = allBookings?.find((obj) => obj.id === id);
+    // console.log({ filteredBook });
+    return filteredBook;
+  };
 
   // console.log({ reserveId, completedBook });
 
   return {
-    completedBook,
-    completedBookLoading,
-    refetchCompletedBook,
     allBookings,
-    allBookingsLoading,
-    refetchAllBookings
+    bookingsLoading,
+    refetchBookings,
+
+    completedBookings,
+    completedBookingsLoading,
+    refetchCompletedBookings,
+
+    completedBook,
+    allBook,
   };
 };
 

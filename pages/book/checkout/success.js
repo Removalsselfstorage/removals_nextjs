@@ -5,7 +5,7 @@ import useSWR from "swr";
 import useProductCart from "@/hooks/useProductCart";
 import BookingLayout from "@/layouts/BookingLayout";
 import useQuote from "@/hooks/useQuote";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "@/firebase";
 import { getCurrentDateFormatted } from "@/utils/logics";
 import { allNotificationEmail, bookedEmail } from "@/lib/sendCustomEmail";
@@ -17,26 +17,6 @@ import useBookings from "@/hooks/useBookings";
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
 const ReservationCheckoutSuccess = () => {
-  const {
-    allProducts,
-    allCartProducts,
-
-    // All Products
-    increaseProductQtyFxn,
-    decreaseProductQtyFxn,
-    resetProductQtyFxn,
-
-    // Cart Products
-    addToCartFxn,
-    increaseQuantityFxn,
-    decreaseQuantityFxn,
-    deleteProductFxn,
-    resetCartFxn,
-    calculateTotalPriceFxn,
-
-    // router,
-  } = useProductCart();
-
   const {
     serviceLocation,
     personalDetails,
@@ -64,6 +44,8 @@ const ReservationCheckoutSuccess = () => {
     resetBookS,
     updateReserveIdFxn,
     reserveId,
+    setReserveDetailsFxn,
+    reserveDetails,
     router,
   } = useQuote();
 
@@ -78,14 +60,13 @@ const ReservationCheckoutSuccess = () => {
     refetchAllBookings,
   } = useBookings();
 
-  const [currentBook, setCurrentBook] = useState({});
+  const [successDetails, setSuccessDetails] = useState({});
+  // const [currentBook, setCurrentBook] = useState({});
 
   // const { paidPart, paidFull, paidPrice, paymentType } = paymentDetails;
 
   const [submitLoading, setSubmitLoading] = useState(false);
   const [timer, setTimer] = useState(false);
-
-  const { reserveDetails } = useQuote();
 
   const {
     query: { sessionId },
@@ -144,9 +125,15 @@ const ReservationCheckoutSuccess = () => {
           date: getCurrentDateFormatted(),
           stage: "paid initial move price",
           activity: [
-            ...currentBook?.activity,
+            ...successDetails?.activity,
             {
-              name: `completed ${paymentType} payment of ${total} for move`,
+              name: `completed ${
+                successDetails?.paidPart
+                  ? "20%"
+                  : successDetails?.paidFull
+                  ? "Full"
+                  : ""
+              } payment of ${total} for move`,
               date: getCurrentDateFormatted(),
             },
           ],
@@ -219,61 +206,47 @@ const ReservationCheckoutSuccess = () => {
     // { email: "removalsselfstorage@gmail.com" },
   ];
 
-  const [details, setDetails] = useState({});
-
-  const {
-    firstName,
-    lastName,
-    bookingId,
-    quoteRef,
-    propertyType,
-    movePackage,
-    numberOfMovers,
-    moverPrice,
-    paymentType,
-  } = details;
-
   const notificationParams = {
-    message: `User ${personalDetails?.firstName} ${personalDetails?.lastName} with booking ID ${moveDetails?.bookingId} just successfully paid for ${moveDetails?.propertyType} ${moveDetails?.movePackage} Package with ${moveDetails?.numberOfMovers} and Jumbo Van with a total price of ₤${paymentDetails?.paidPrice} out of ₤${moverDetails?.moverPrice}.`,
-    subject: `Successful move payment (${total}) by user ${personalDetails?.firstName} ${personalDetails?.lastName}`,
-    bookLink: `https://rss-admin.vercel.app/secret-admin/users/booking/${moveDetails?.bookingId}`,
-    bookingId,
+    message: `User ${successDetails?.firstName} ${successDetails?.lastName} with booking ID ${successDetails?.bookingId} just successfully paid for ${successDetails?.propertyType} ${successDetails?.movePackage} Package with ${successDetails?.numberOfMovers} and Jumbo Van with a total price of ₤${successDetails?.paidPrice} out of ₤${successDetails?.moverPrice}.`,
+    subject: `Successful move payment (${total}) by user ${successDetails?.firstName} ${successDetails?.lastName}`,
+    bookLink: `https://rss-admin.vercel.app/secret-admin/users/booking/${successDetails?.bookingId}`,
+    bookingId: successDetails?.bookingId,
     // page: "checkout page",
   };
 
   const params3 = {
-    firstName: personalDetails?.firstName,
-    lastName: personalDetails?.lastName,
-    email: personalDetails?.email,
-    quoteRef: moveDetails?.quoteRef,
-    progressLink: `https://removalstorage.vercel.app/book/checkout/${moveDetails?.bookingId}`,
+    firstName: successDetails?.firstName,
+    lastName: successDetails?.lastName,
+    email: successDetails?.email,
+    quoteRef: successDetails?.quoteRef,
+    progressLink: `https://removalstorage.vercel.app/book/checkout/${successDetails?.bookingId}`,
     // progressLink2: `https://removalstorage.vercel.app/book/checkout/${moveDetails?.bookingId}`,
     progressLink2: `https://removalstorage.vercel.app/reservations`,
-    address1: serviceLocation?.locationFrom?.name,
-    address2: serviceLocation?.locationTo?.name,
-    initialPackagePrice: moveDetails?.initialPackagePrice,
-    pickPrice: moverDetails?.pickPrice,
-    propertyType: moveDetails?.propertyType,
-    numberOfMovers: moveDetails?.numberOfMovers,
-    mileage: moveDetails?.mileage,
-    volume: moveDetails?.volume,
-    duration: moveDetails?.duration,
-    moveDate: moveDetails?.moveDate,
-    movePackage: moveDetails?.movePackage,
-    moverName: moverDetails?.moverName,
-    moverPrice: moverDetails?.moverPrice,
-    paidPrice: paymentDetails?.paidPrice,
-    paymentType: paymentDetails?.paidPrice
+    address1: successDetails?.address1,
+    address2: successDetails?.address2,
+    initialPackagePrice: successDetails?.initialPackagePrice,
+    pickPrice: successDetails?.pickPrice,
+    propertyType: successDetails?.propertyType,
+    numberOfMovers: successDetails?.numberOfMovers,
+    mileage: successDetails?.mileage,
+    volume: successDetails?.volume,
+    duration: successDetails?.duration,
+    moveDate: successDetails?.moveDate,
+    movePackage: successDetails?.movePackage,
+    moverName: successDetails?.moverName,
+    moverPrice: successDetails?.moverPrice,
+    paidPrice: successDetails?.paidPrice,
+    paymentType: successDetails?.paidPart
       ? "20%"
-      : paymentDetails?.paidFull
-      ? "full"
+      : successDetails?.paidFull
+      ? "Full"
       : "",
-    bookingId: moveDetails?.bookingId,
+    bookingId: successDetails?.bookingId,
   };
 
   const sendBookedMail = async () => {
     try {
-      await bookedEmail(personalDetails?.email, params3);
+      await bookedEmail(successDetails?.email, params3);
     } catch (error) {
       console.log(error);
     }
@@ -288,6 +261,7 @@ const ReservationCheckoutSuccess = () => {
   };
 
   const reset = () => {
+    // let check = false;
     resetLocationFrom();
     resetLocationTo();
     resetPersonal();
@@ -296,70 +270,43 @@ const ReservationCheckoutSuccess = () => {
     resetPayment();
     resetMoverSide();
     resetBookS();
+    console.log("successfully reset all", { moveDetails });
   };
 
   useEffect(() => {
-    const cb = allBookings?.find(
-      (ab) => ab.bookingId === moveDetails.bookingId
-    );
+    if (allBookings) {
+      const cb = allBookings?.find(
+        (ab) => ab.bookingId === moveDetails.bookingId
+      );
+
+      console.log({ cb });
+
+      // setCurrentBook(cb);
+      updateReserveIdFxn(cb?.bookingId);
+
+      setTimeout(() => {
+        setTimer(true);
+        if (timer) {
+          setSuccessDetails(cb);
+          sendStripe();
+          sendAllNotificationEmail();
+          sendBookedMail();
+        }
+      }, 2000);
+    }
     // setQuoteDetailsFxn(cb);
-
-    setCurrentBook(cb);
-  }, [allBookings]);
-
-  useEffect(() => {
-    if (personalDetails?.firstName) {
-      setDetails({
-        firstName: personalDetails?.firstName,
-        lastName: personalDetails?.lastName,
-        bookingId: moveDetails?.bookingId,
-        quoteRef: moveDetails?.quoteRef,
-        propertyType: moveDetails?.propertyType,
-        movePackage: moveDetails?.movePackage,
-        numberOfMovers: moveDetails?.numberOfMovers,
-        moverPrice: moverDetails?.moverPrice,
-        paymentType: paymentDetails?.paymentType,
-      });
-
-      updateReserveIdFxn(moveDetails?.bookingId);
-
-      // sendStripe();
-      // sendAllNotificationEmail();
-      // sendBookedMail();
-    }
-    setTimeout(() => {
-      setTimer(true);
-    }, 2000);
-  }, []);
-
-  const router2 = useRouter();
-
-  // useEffect(() => {
-  //   router2.beforePopState(reset);
-
-  //   return () => {
-  //     router2.beforePopState(null);
-  //   };
-  // }, []);
-
-  useEffect(() => {
-    if (timer) {
-      sendStripe();
-      sendAllNotificationEmail();
-      sendBookedMail();
-    }
-  }, [timer]);
+  }, [successDetails]);
 
   const handleDashboard = (event) => {
     event.preventDefault();
     setSubmitLoading(true);
     reset();
-    updateReserveIdFxn(bookingId);
-    router.push(`/reservations/${bookingId}`);
+    updateReserveIdFxn(successDetails?.bookingId);
+    router.push(`/reservations/${successDetails?.bookingId}`);
     // resetCartFxn();
   };
 
-  console.log({ timer, currentBook });
+  console.log({ successDetails, allBookings, moveDetails });
   // console.log({ timer, moveDetails, paymentType, bookingId });
 
   return (
@@ -383,7 +330,7 @@ const ReservationCheckoutSuccess = () => {
               <dt className="text-gray-900 font-bold">Book Ref:</dt>
               <dd className="text-primary mt-2 text-[16px]">
                 {/* {checkoutSession?.payment_intent?.id} */}
-                {quoteRef}
+                {moveDetails?.quoteRef || successDetails?.quoteRef}
               </dd>
             </dl>
           </div>
@@ -422,7 +369,16 @@ const ReservationCheckoutSuccess = () => {
                       <div className="flex ">
                         <dt className="font-medium text-gray-900">Price</dt>
                         <dd className="ml-2 text-gray-700">
-                          {paymentType} Payment
+                          {moveDetails?.paidPart
+                            ? "20%"
+                            : moveDetails?.paidFull
+                            ? "full"
+                            : "" || successDetails?.paidPart
+                            ? "20%"
+                            : successDetails?.paidFull
+                            ? "full"
+                            : ""}{" "}
+                          Payment
                         </dd>
                       </div>
                     </dl>
@@ -442,17 +398,17 @@ const ReservationCheckoutSuccess = () => {
                       Payment Information
                     </dt>
                     <dd className="mt-2 text-gray-700">
-                      <p>{payment.card.wallet}</p>
+                      <p>{payment?.card.wallet}</p>
                       <p className="font-medium">
-                        {payment.card.brand.toUpperCase()}
+                        {payment?.card.brand.toUpperCase()}
                       </p>
                       <div className="flex-auto">
                         <p className="text-gray-900">
-                          Ending with {payment.card.last4}
+                          Ending with {payment?.card.last4}
                         </p>
                         <p>
                           Expires on {payment.card.exp_month} /{" "}
-                          {payment.card.exp_year}
+                          {payment?.card.exp_year}
                         </p>
                       </div>
                     </dd>

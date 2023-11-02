@@ -200,7 +200,7 @@ const PickUpItems = () => {
 
   const checkZeroQty = (array) => {
     let check = 0;
-    array.forEach((ar) => {
+    array?.forEach((ar) => {
       if (ar.qty > 0) {
         check += 1;
       }
@@ -209,7 +209,7 @@ const PickUpItems = () => {
   };
 
   // console.log({ moveItems, co: checkZeroQty(moveItems?.office) });
-  console.log({ reserveDetails });
+  console.log({ moveItems, reserveDetails });
 
   return (
     <div className="">

@@ -140,8 +140,9 @@ const ManAndVan = ({ emails }) => {
     const strippedNumber = inputValue.replace(/\D/g, "");
 
     // Check if the stripped number is either 10 or 11 digits long
-    const isValidPhoneNumber =
-      strippedNumber.length === 10 || strippedNumber.length === 11;
+    // const isValidPhoneNumber =
+    //   strippedNumber.length === 10 || strippedNumber.length === 11;
+    const isValidPhoneNumber = strippedNumber.length > 5;
 
     setPhone(strippedNumber);
     setPhoneError(isValidPhoneNumber);

@@ -90,7 +90,7 @@ const ReserveLogin = ({ data }) => {
 
     if (findBookingId) {
       // console.log({ findBookingId });
-      router.push(`/reservations/${findBookingId.bookingId}`);
+      router.replace(`/reservations/${findBookingId.bookingId}`);
       setUser({
         ...user,
         login_ref: "",

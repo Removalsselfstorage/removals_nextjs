@@ -31,7 +31,7 @@ import {
 } from "@/utils/logics";
 import Loader1 from "@/components/loaders/loader1";
 import dayjs from "dayjs";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 import SideDrawer from "@/components/BookingPages/movers/SideDrawer";
 import { getAllMoverDetails } from "@/store/moverSlice";
 import emailjs from "@emailjs/browser";
@@ -60,23 +60,32 @@ import PaymentDashboard from "@/components/Reservations/PaymentDashboard";
 import useBookings from "@/hooks/useBookings";
 import { BsFillCalendarXFill } from "react-icons/bs";
 import { convertTimeTo24HourFormat } from "@/utils/logics";
+import { useRouter } from "next/router";
+import { fetchAllBookings } from "@/lib/fetchData2";
 
-const Reservations = ({ progressData }) => {
+const Reservations = ({ progressData, id, allBookings }) => {
   const {
     setReserveDetailsFxn,
     reserveDetails,
     router,
     reserveId,
     updateReserveIdFxn,
+    moveDetails,
   } = useQuote();
 
+  const router2 = useRouter();
+
   const {
+    // allBookings,
+    bookingsLoading,
+    refetchBookings,
+
+    completedBookings,
+    completedBookingsLoading,
+    refetchCompletedBookings,
+
     completedBook,
-    completedBookLoading,
-    refetchCompletedBook,
-    allBookings,
-    allBookingsLoading,
-    refetchAllBookings,
+    allBook,
   } = useBookings();
 
   const {
@@ -106,6 +115,7 @@ const Reservations = ({ progressData }) => {
 
   const [clickedModalOpen, setClickedModalOpen] = useState(false);
   const [bookLoading, setBookLoading] = useState(false);
+  const [completedBooking, setCompletedBooking] = useState({});
 
   const allPayments = () => {
     let ap;
@@ -147,13 +157,26 @@ const Reservations = ({ progressData }) => {
   // }, []);
 
   useEffect(() => {
-    completedBook?.moveItems && resetMoveItemsFxn(completedBook?.moveItems);
-    if (completedBook) {
-      setReserveDetailsFxn({
-        ...completedBook,
+    if (progressData) {
+      const findBookingId = progressData.find((bk) => {
+        return bk.bookingId === id;
+
+        // console.log({ bq: bk.quoteRef, vr: values.login_ref });
       });
+      if (findBookingId) {
+        findBookingId?.moveItems && resetMoveItemsFxn(findBookingId?.moveItems);
+        setReserveDetailsFxn(findBookingId);
+      }
     }
-  }, [completedBook]);
+  }, []);
+
+  // useEffect(() => {
+  //   completedBook(id)?.moveItems &&
+  //     resetMoveItemsFxn(completedBook(id)?.moveItems);
+  //   if (completedBook(id)) {
+  //     setReserveDetailsFxn(completedBook(id));
+  //   }
+  // }, [completedBookings]);
 
   const myBookings = allBookings?.filter(
     (pd) => pd?.email === reserveDetails?.email
@@ -191,10 +214,24 @@ const Reservations = ({ progressData }) => {
   const bookingHandler = (bookingId) => {
     triggerBookLoading();
     updateReserveIdFxn(bookingId);
-    refetchCompletedBook();
-    closeModal2();
+    // refetchCompletedBookings();
 
-    router.push(`/reservations/${bookingId}`);
+    const findBookingId = progressData.find((bk) => {
+      return bk.bookingId === bookingId;
+
+      // console.log({ bq: bk.quoteRef, vr: values.login_ref });
+    });
+
+    // router2.reload();
+    if (findBookingId) {
+      router.push(`/reservations/${findBookingId?.bookingId}`);
+      findBookingId?.moveItems && resetMoveItemsFxn(findBookingId?.moveItems);
+      setReserveDetailsFxn(findBookingId);
+    }
+
+    // setReserveDetailsFxn(completedBook(bookingId));
+
+    closeModal2();
 
     // window.location.reload();
   };
@@ -206,34 +243,24 @@ const Reservations = ({ progressData }) => {
     // triggerBookLoading();
   }, []);
 
-  useEffect(() => {
-    completedBook?.moveItems && resetMoveItemsFxn(completedBook?.moveItems);
-    setReserveDetailsFxn({
-      ...completedBook,
-    });
-  }, [completedBook]);
+  // useEffect(() => {
+  //   completedBook?.moveItems && resetMoveItemsFxn(completedBook?.moveItems);
+  //   setReserveDetailsFxn({
+  //     ...completedBook,
+  //   });
+  // }, [completedBook]);
 
-  // const extraPay =
-  //   reserveDetails?.extraStripePayment.length > 0 &&
-  //   reserveDetails?.extraStripePayment;
+  const allLoading = completedBookingsLoading || bookLoading;
 
-  // const {} = reserveDetails
-
-  // console.log({ progressData, moveItems });
-  // console.log({
-  //   // sm: sumAmounts(),
-  //   // reserveDetails,
-  //   // givenDate,
-  //   // currentDate,
-  //   // progressData,
-  //   // reserveDetails,
-  //   // ap: allPayments(),
-  //   // reserveId,
-  // });
-
-  console.log({ reserveDetails });
-
-  const allLoading = completedBookLoading || bookLoading;
+  console.log({
+    allBookings,
+    reserveDetails,
+    moveDetails,
+    // cb: completedBook(id),
+    id,
+    // allBookings,
+    // completedBookings,
+  });
 
   return (
     <>
@@ -267,12 +294,12 @@ const Reservations = ({ progressData }) => {
                         <p className="text-[40px]">👋</p>
                         <div className="">
                           <h1 className="text-2xl font-bold mb-[10px] md:mb-[0px] text-secondary">
-                            Welcome {completedBook?.firstName}{" "}
-                            {completedBook?.lastName},
+                            Welcome {reserveDetails?.firstName}{" "}
+                            {reserveDetails?.lastName},
                           </h1>
                           <p className="text-gray-500 font-semibold">
                             {/* Thank you for choosing Removals & Self Storage */}
-                            {completedBook?.email}
+                            {reserveDetails?.email}
                           </p>
                         </div>
                       </div>
@@ -428,7 +455,7 @@ const Reservations = ({ progressData }) => {
                                 All My Bookings
                               </h3>
 
-                              {myBookings.map((ap, index) => {
+                              {myBookings?.map((ap, index) => {
                                 const isGivenDateGreaterThanCurrent =
                                   checkBookStatus(ap?.moveDate, ap?.moverTime);
                                 return (
@@ -448,20 +475,22 @@ const Reservations = ({ progressData }) => {
                                               <p className="line-clamp-2 text-[14px] text-gray-500">
                                                 {ap?.date}
                                               </p>
-                                              <div
-                                                // onClick={() => window.my_modal_51.showModal()}
-                                                className={`${
-                                                  isGivenDateGreaterThanCurrent
-                                                    ? "text-primary bg-primary/10"
-                                                    : "text-secondary bg-secondary/10"
-                                                } font-semibold  px-[5px] rounded-[4px] py-[3px] text-[12px]`}
-                                              >
-                                                {`${
-                                                  isGivenDateGreaterThanCurrent
-                                                    ? "ONGOING"
-                                                    : "EXPIRED"
-                                                }`}
-                                              </div>
+                                              {ap?.completedBook === true && (
+                                                <div
+                                                  // onClick={() => window.my_modal_51.showModal()}
+                                                  className={`${
+                                                    isGivenDateGreaterThanCurrent
+                                                      ? "text-primary bg-primary/10"
+                                                      : "text-secondary bg-secondary/10"
+                                                  } font-semibold  px-[5px] rounded-[4px] py-[3px] text-[12px]`}
+                                                >
+                                                  {`${
+                                                    isGivenDateGreaterThanCurrent
+                                                      ? "ONGOING"
+                                                      : "EXPIRED"
+                                                  }`}
+                                                </div>
+                                              )}
                                             </div>
                                           </div>
                                         </div>
@@ -469,20 +498,22 @@ const Reservations = ({ progressData }) => {
                                           {/* <p className="line-clamp-2 font-bold text-[20px] text-primary">
                                                         Total Price:
                                                       </p> */}
-                                          <button
-                                            className="btn btn-primary "
-                                            onClick={() =>
-                                              bookingHandler(ap?.bookingId)
-                                            }
-                                            disabled={bookLoading}
-                                          >
-                                            {!bookLoading && (
-                                              <span className="">View</span>
-                                            )}
-                                            {bookLoading && (
-                                              <span className="loading loading-spinner loading-md text-white"></span>
-                                            )}
-                                          </button>
+                                          {ap?.completedBook === true && (
+                                            <button
+                                              className="btn btn-primary "
+                                              onClick={() =>
+                                                bookingHandler(ap?.bookingId)
+                                              }
+                                              disabled={bookLoading}
+                                            >
+                                              {!bookLoading && (
+                                                <span className="">View</span>
+                                              )}
+                                              {bookLoading && (
+                                                <span className="loading loading-spinner loading-md text-white"></span>
+                                              )}
+                                            </button>
+                                          )}
                                         </div>
                                       </div>
                                     )}
@@ -587,18 +618,28 @@ export default Reservations;
 
 export async function getServerSideProps(context) {
   const { id } = context.params; // Access the UID from the URL
-  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
-  const { data: prices } = await stripe.prices.list({
-    active: true,
-    limit: 10,
-    expand: ["data.product"],
-  });
+  // const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+  // const { data: prices } = await stripe.prices.list({
+  //   active: true,
+  //   limit: 10,
+  //   expand: ["data.product"],
+  // });
   // const userData = await fetchAllMoversDetailsArray();
 
-  const bookingRef = doc(db, "bookingData", id);
-  const docSnap = await getDoc(bookingRef);
+  // const bookingRef = doc(db, "bookingData", id);
+  // const docSnap = await getDoc(bookingRef);
 
-  const progressData = docSnap.data();
+  // const progressData = docSnap.data();
+
+  const bookingsData = await fetchAllBookings();
+
+  const allBookings = [...bookingsData?.bookings].sort((a, b) => {
+    return new Date(b.date) - new Date(a.date);
+  });
+
+  const completedBookings = bookingsData?.bookings?.filter(
+    (bk) => bk.completedBook === true
+  );
 
   // let progressData;
 
@@ -608,25 +649,28 @@ export async function getServerSideProps(context) {
 
   // console.log({ pd });
 
-  if (typeof progressData === "undefined") {
+  if (typeof bookingsData === "undefined") {
     return {
       props: {
         progressData: null,
+        allBookings: null,
         // userData,
-        id: id,
+        id,
 
-        prices,
+        // prices,
         // userData,
       },
     };
   } else {
     return {
       props: {
-        progressData,
-        // userData,
-        id: id,
+        progressData: completedBookings,
+        allBookings,
 
-        prices,
+        // userData,
+        id,
+
+        // prices,
         // userData,
       },
     };

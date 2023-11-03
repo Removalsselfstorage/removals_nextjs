@@ -372,6 +372,10 @@ export const moveItemsSlice = createSlice({
       state.moveItems = action.payload;
     },
 
+    resetMoveItems2: (state, action) => {
+      state.moveItems = state.moveItems;
+    },
+
     // BEDROOM
     updateQtyInBedroom: (state, action) => {
       const { itemName, newQty } = action.payload;
@@ -757,6 +761,7 @@ export const moveItemsSlice = createSlice({
 
 export const {
   resetMoveItems,
+  resetMoveItems2,
 
   // BEDROOM
   updateQtyInBedroom,

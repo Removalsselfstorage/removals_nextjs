@@ -92,6 +92,7 @@ const Reservations = ({ progressData, id, allBookings }) => {
     updateQtyInBedroomFxn,
     moveItems,
     resetMoveItemsFxn,
+    resetMoveItemsFxn2,
     //
   } = useMoveItems();
 
@@ -149,26 +150,29 @@ const Reservations = ({ progressData, id, allBookings }) => {
   };
   // const allPayments = [{ amount: 10 }, { amount: 20 }, { amount: 30 }];
 
-  // useEffect(() => {
-  //   if (progressData)
-  //     setReserveDetailsFxn({
-  //       ...progressData,
-  //     });
-  // }, []);
-
   useEffect(() => {
-    if (progressData) {
-      const findBookingId = progressData.find((bk) => {
-        return bk.bookingId === id;
-
-        // console.log({ bq: bk.quoteRef, vr: values.login_ref });
+    progressData?.moveItems
+      ? resetMoveItemsFxn(progressData?.moveItems)
+      : resetMoveItemsFxn2();
+    if (progressData)
+      setReserveDetailsFxn({
+        ...progressData,
       });
-      if (findBookingId) {
-        findBookingId?.moveItems && resetMoveItemsFxn(findBookingId?.moveItems);
-        setReserveDetailsFxn(findBookingId);
-      }
-    }
   }, []);
+
+  // useEffect(() => {
+  //   if (progressData) {
+  //     const findBookingId = progressData.find((bk) => {
+  //       return bk.bookingId === id;
+
+  //       // console.log({ bq: bk.quoteRef, vr: values.login_ref });
+  //     });
+  //     if (findBookingId) {
+  //       findBookingId?.moveItems && resetMoveItemsFxn(findBookingId?.moveItems);
+  //       setReserveDetailsFxn(findBookingId);
+  //     }
+  //   }
+  // }, []);
 
   // useEffect(() => {
   //   completedBook(id)?.moveItems &&
@@ -216,7 +220,7 @@ const Reservations = ({ progressData, id, allBookings }) => {
     updateReserveIdFxn(bookingId);
     // refetchCompletedBookings();
 
-    const findBookingId = progressData.find((bk) => {
+    const findBookingId = allBookings?.find((bk) => {
       return bk.bookingId === bookingId;
 
       // console.log({ bq: bk.quoteRef, vr: values.login_ref });
@@ -225,7 +229,9 @@ const Reservations = ({ progressData, id, allBookings }) => {
     // router2.reload();
     if (findBookingId) {
       router.push(`/reservations/${findBookingId?.bookingId}`);
-      findBookingId?.moveItems && resetMoveItemsFxn(findBookingId?.moveItems);
+      findBookingId?.moveItems
+        ? resetMoveItemsFxn(findBookingId?.moveItems)
+        : resetMoveItemsFxn2();
       setReserveDetailsFxn(findBookingId);
     }
 
@@ -253,6 +259,7 @@ const Reservations = ({ progressData, id, allBookings }) => {
   const allLoading = completedBookingsLoading || bookLoading;
 
   console.log({
+    progressData,
     allBookings,
     reserveDetails,
     moveDetails,
@@ -626,10 +633,10 @@ export async function getServerSideProps(context) {
   // });
   // const userData = await fetchAllMoversDetailsArray();
 
-  // const bookingRef = doc(db, "bookingData", id);
-  // const docSnap = await getDoc(bookingRef);
+  const bookingRef = doc(db, "bookingData", id);
+  const docSnap = await getDoc(bookingRef);
 
-  // const progressData = docSnap.data();
+  const progressData = docSnap.data();
 
   const bookingsData = await fetchAllBookings();
 
@@ -637,9 +644,9 @@ export async function getServerSideProps(context) {
     return new Date(b.date) - new Date(a.date);
   });
 
-  const completedBookings = bookingsData?.bookings?.filter(
-    (bk) => bk.completedBook === true
-  );
+  // const completedBookings = bookingsData?.bookings?.filter(
+  //   (bk) => bk.completedBook === true
+  // );
 
   // let progressData;
 
@@ -664,7 +671,7 @@ export async function getServerSideProps(context) {
   } else {
     return {
       props: {
-        progressData: completedBookings,
+        progressData: progressData,
         allBookings,
 
         // userData,

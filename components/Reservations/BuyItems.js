@@ -8,7 +8,6 @@ import { doc, setDoc } from "firebase/firestore";
 import { db } from "@/firebase";
 import useQuote from "@/hooks/useQuote";
 import { formatMovePrice, getCurrentDateFormatted } from "@/utils/logics";
-import useBookings from "@/hooks/useBookings";
 
 const BuyItems = ({
   image,
@@ -42,12 +41,7 @@ const BuyItems = ({
   const { reserveDetails, resetBookS, reserveId, updateReserveIdFxn } =
     useQuote();
 
-  const {
-    completedBookings,
-    completedBookingsLoading,
-    refetchCompletedBookings,
-    completedBook,
-  } = useBookings();
+  
 
   const bookingId = reserveDetails?.bookingId;
 

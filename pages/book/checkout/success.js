@@ -13,10 +13,11 @@ import Lottie from "lottie-react";
 import success from "@/lottieJsons/success.json";
 import { initializeApp } from "firebase/app";
 import useBookings from "@/hooks/useBookings";
+import { fetchAllBookings } from "@/lib/fetchData2";
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
-const ReservationCheckoutSuccess = () => {
+const ReservationCheckoutSuccess = ({ allBookings }) => {
   const {
     serviceLocation,
     personalDetails,
@@ -55,7 +56,7 @@ const ReservationCheckoutSuccess = () => {
     completedBook,
     completedBookLoading,
     refetchCompletedBook,
-    allBookings,
+    // allBookings,
     allBookingsLoading,
     refetchAllBookings,
   } = useBookings();
@@ -66,7 +67,7 @@ const ReservationCheckoutSuccess = () => {
   // const { paidPart, paidFull, paidPrice, paymentType } = paymentDetails;
 
   const [submitLoading, setSubmitLoading] = useState(false);
-  const [timer, setTimer] = useState(false);
+  // const [timer, setTimer] = useState(false);
 
   const {
     query: { sessionId },
@@ -116,7 +117,77 @@ const ReservationCheckoutSuccess = () => {
   //   const tax = checkoutSession?.total_details?.amount_tax;
   //   const orderNumber = checkoutSession?.payment_intent?.id
 
-  const sendStripe = async () => {
+  const notificationEmail = [
+    { email: "ifeanyi4umeh@gmail.com" },
+    // { email: "removalsselfstorage@gmail.com" },
+  ];
+
+  const reset = () => {
+    // let check = false;
+    resetLocationFrom();
+    resetLocationTo();
+    resetPersonal();
+    resetMove();
+    resetMover();
+    resetPayment();
+    resetMoverSide();
+    resetBookS();
+    console.log("successfully reset all", { moveDetails });
+  };
+
+  const cb = allBookings?.find((ab) => ab.bookingId === moveDetails.bookingId);
+
+  const params3 = {
+    firstName: cb?.firstName,
+    lastName: cb?.lastName,
+    email: cb?.email,
+    quoteRef: cb?.quoteRef,
+    progressLink: `https://removalstorage.vercel.app/book/checkout/${cb?.bookingId}`,
+    // progressLink2: `https://removalstorage.vercel.app/book/checkout/${moveDetails?.bookingId}`,
+    progressLink2: `https://removalstorage.vercel.app/reservations`,
+    address1: cb?.address1,
+    address2: cb?.address2,
+    initialPackagePrice: cb?.initialPackagePrice,
+    pickPrice: cb?.pickPrice,
+    propertyType: cb?.propertyType,
+    numberOfMovers: cb?.numberOfMovers,
+    mileage: cb?.mileage,
+    volume: cb?.volume,
+    duration: cb?.duration,
+    moveDate: cb?.moveDate,
+    movePackage: cb?.movePackage,
+    moverName: cb?.moverName,
+    moverPrice: cb?.moverPrice,
+    paidPrice: cb?.paidPrice,
+    paymentType: cb?.paidPart ? "20%" : cb?.paidFull ? "Full" : "",
+    bookingId: cb?.bookingId,
+  };
+
+  const notificationParams = {
+    message: `User ${cb?.firstName} ${cb?.lastName} with booking ID ${cb?.bookingId} just successfully paid for ${cb?.propertyType} ${cb?.movePackage} Package with ${cb?.numberOfMovers} and Jumbo Van with a total price of ₤${cb?.paidPrice} out of ₤${cb?.moverPrice}.`,
+    subject: `Successful move payment (${total}) by user ${cb?.firstName} ${cb?.lastName}`,
+    bookLink: `https://rss-admin.vercel.app/secret-admin/users/booking/${cb?.bookingId}`,
+    bookingId: cb?.bookingId,
+    // page: "checkout page",
+  };
+
+  const sendBookedMail = async () => {
+    try {
+      await bookedEmail(cb?.email, params3);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const sendAllNotificationEmail = async () => {
+    try {
+      await allNotificationEmail(notificationEmail, notificationParams);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const sendStripe2 = async () => {
     try {
       await setDoc(
         doc(db, "bookingData", moveDetails?.bookingId),
@@ -125,14 +196,10 @@ const ReservationCheckoutSuccess = () => {
           date: getCurrentDateFormatted(),
           stage: "paid initial move price",
           activity: [
-            ...successDetails?.activity,
+            ...cb?.activity,
             {
               name: `completed ${
-                successDetails?.paidPart
-                  ? "20%"
-                  : successDetails?.paidFull
-                  ? "Full"
-                  : ""
+                cb?.paidPart ? "20%" : cb?.paidFull ? "Full" : ""
               } payment of ${total} for move`,
               date: getCurrentDateFormatted(),
             },
@@ -154,13 +221,14 @@ const ReservationCheckoutSuccess = () => {
             amount: Number(checkoutSession?.amount_total / 100),
             date: getCurrentDateFormatted(),
             description: "Move Initial Payment",
-            stripeName: customer?.name,
-            stripeEmail: customer?.email,
-            stripeCountry: customer?.address.country,
+            stripeName: customer?.name && customer?.name,
+            stripeEmail: customer?.email && customer?.email,
+            stripeCountry:
+              customer?.address.country && customer?.address.country,
             // stripeProducts: products,
-            stripePaymentType: payment,
-            stripeSubtotal: subtotal,
-            stripeTotal: total,
+            stripePaymentType: payment && payment,
+            stripeSubtotal: subtotal && subtotal,
+            stripeTotal: total && total,
           },
           outStripePayment: {
             amount: 0,
@@ -201,113 +269,98 @@ const ReservationCheckoutSuccess = () => {
     }
   };
 
-  const notificationEmail = [
-    { email: "ifeanyi4umeh@gmail.com" },
-    // { email: "removalsselfstorage@gmail.com" },
-  ];
-
-  const notificationParams = {
-    message: `User ${successDetails?.firstName} ${successDetails?.lastName} with booking ID ${successDetails?.bookingId} just successfully paid for ${successDetails?.propertyType} ${successDetails?.movePackage} Package with ${successDetails?.numberOfMovers} and Jumbo Van with a total price of ₤${successDetails?.paidPrice} out of ₤${successDetails?.moverPrice}.`,
-    subject: `Successful move payment (${total}) by user ${successDetails?.firstName} ${successDetails?.lastName}`,
-    bookLink: `https://rss-admin.vercel.app/secret-admin/users/booking/${successDetails?.bookingId}`,
-    bookingId: successDetails?.bookingId,
-    // page: "checkout page",
-  };
-
-  const params3 = {
-    firstName: successDetails?.firstName,
-    lastName: successDetails?.lastName,
-    email: successDetails?.email,
-    quoteRef: successDetails?.quoteRef,
-    progressLink: `https://removalstorage.vercel.app/book/checkout/${successDetails?.bookingId}`,
-    // progressLink2: `https://removalstorage.vercel.app/book/checkout/${moveDetails?.bookingId}`,
-    progressLink2: `https://removalstorage.vercel.app/reservations`,
-    address1: successDetails?.address1,
-    address2: successDetails?.address2,
-    initialPackagePrice: successDetails?.initialPackagePrice,
-    pickPrice: successDetails?.pickPrice,
-    propertyType: successDetails?.propertyType,
-    numberOfMovers: successDetails?.numberOfMovers,
-    mileage: successDetails?.mileage,
-    volume: successDetails?.volume,
-    duration: successDetails?.duration,
-    moveDate: successDetails?.moveDate,
-    movePackage: successDetails?.movePackage,
-    moverName: successDetails?.moverName,
-    moverPrice: successDetails?.moverPrice,
-    paidPrice: successDetails?.paidPrice,
-    paymentType: successDetails?.paidPart
-      ? "20%"
-      : successDetails?.paidFull
-      ? "Full"
-      : "",
-    bookingId: successDetails?.bookingId,
-  };
-
-  const sendBookedMail = async () => {
-    try {
-      await bookedEmail(successDetails?.email, params3);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const sendAllNotificationEmail = async () => {
-    try {
-      await allNotificationEmail(notificationEmail, notificationParams);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const reset = () => {
-    // let check = false;
-    resetLocationFrom();
-    resetLocationTo();
-    resetPersonal();
-    resetMove();
-    resetMover();
-    resetPayment();
-    resetMoverSide();
-    resetBookS();
-    console.log("successfully reset all", { moveDetails });
+  const handleDashboard = () => {
+    // event.preventDefault();
+    setSubmitLoading(true);
+    updateReserveIdFxn(cb?.bookingId);
+    sendStripe2();
+    sendAllNotificationEmail();
+    sendBookedMail();
+    reset();
+    updateReserveIdFxn(successDetails?.bookingId);
+    router.push(`/reservations/${successDetails?.bookingId}`);
+    // resetCartFxn();
   };
 
   useEffect(() => {
-    if (allBookings) {
-      const cb = allBookings?.find(
-        (ab) => ab.bookingId === moveDetails.bookingId
-      );
+    const sendStripe = async () => {
+      try {
+        await setDoc(
+          doc(db, "bookingData", moveDetails?.bookingId),
 
-      console.log({ cb });
+          {
+            date: getCurrentDateFormatted(),
+            stage: "paid initial move price",
+            // activity: [
+            //   ...cb?.activity,
+            //   {
+            //     name: `completed ${
+            //       cb?.paidPart ? "20%" : cb?.paidFull ? "Full" : ""
+            //     } payment of ${total} for move`,
+            //     date: getCurrentDateFormatted(),
+            //   },
+            // ],
+            completedBook: true,
+            movePaymentStatus: "PAID",
+            // outPrice: 0,
+            extraPrice: [
+              {
+                amount: 0,
+                date: "",
+                description: "",
+              },
+            ],
+            // extraPricePaid: [],
 
-      // setCurrentBook(cb);
+            // moveStripeProducts: products,
+
+            outStripePayment: {
+              amount: 0,
+              date: "",
+              description: "",
+              stripeName: "",
+              stripeEmail: "",
+              stripeCountry: "",
+              // stripeProducts: products,
+              stripePaymentType: "",
+              stripeSubtotal: "",
+              stripeTotal: "",
+            },
+            extraStripePayment: [
+              {
+                amount: 0,
+                date: "",
+                description: "",
+                stripeName: "",
+                stripeEmail: "",
+                stripeCountry: "",
+                // stripeProducts: products,
+                stripePaymentType: "",
+                stripeSubtotal: "",
+                stripeTotal: "",
+              },
+            ],
+          },
+          { merge: true }
+        );
+
+        // return true;
+        console.log("move checkout update was successful @ Checkout success");
+      } catch (error) {
+        console.log(error);
+        // return false;
+        console.log("move checkout update was unsuccessful @ Checkout success");
+      }
+    };
+
+    sendStripe();
+
+    if (cb) {
       updateReserveIdFxn(cb?.bookingId);
 
       setSuccessDetails(cb);
-
-      setTimeout(() => {
-        setTimer(true);
-        if (timer) {
-          sendStripe();
-          sendAllNotificationEmail();
-          sendBookedMail();
-        }
-      }, 2000);
     }
-    // setQuoteDetailsFxn(cb);
   }, []);
-
-  const handleDashboard = (event) => {
-    event.preventDefault();
-    setSubmitLoading(true);
-    reset();
-    updateReserveIdFxn(successDetails?.bookingId);
-    router.push(
-      `/reservations/${moveDetails?.bookingId || successDetails?.bookingId}`
-    );
-    // resetCartFxn();
-  };
 
   console.log({ successDetails, allBookings, moveDetails });
   // console.log({ timer, moveDetails, paymentType, bookingId });
@@ -476,7 +529,7 @@ const ReservationCheckoutSuccess = () => {
           </div>
 
           <div className="w-full mt-10 flex justify-center items-center">
-            <button
+            <div
               onClick={handleDashboard}
               disabled={submitLoading}
               className="btn btn-primary btn-wide"
@@ -486,7 +539,7 @@ const ReservationCheckoutSuccess = () => {
               {submitLoading && (
                 <span className="loading loading-spinner loading-md text-white"></span>
               )}
-            </button>
+            </div>
           </div>
         </div>
       </div>
@@ -495,3 +548,64 @@ const ReservationCheckoutSuccess = () => {
 };
 
 export default ReservationCheckoutSuccess;
+
+export async function getServerSideProps(context) {
+  // const { id } = context.params; // Access the UID from the URL
+  // const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+  // const { data: prices } = await stripe.prices.list({
+  //   active: true,
+  //   limit: 10,
+  //   expand: ["data.product"],
+  // });
+  // const userData = await fetchAllMoversDetailsArray();
+
+  // const bookingRef = doc(db, "bookingData", id);
+  // const docSnap = await getDoc(bookingRef);
+
+  // const progressData = docSnap.data();
+
+  const bookingsData = await fetchAllBookings();
+
+  const allBookings = [...bookingsData?.bookings].sort((a, b) => {
+    return new Date(b.date) - new Date(a.date);
+  });
+
+  const completedBookings = bookingsData?.bookings?.filter(
+    (bk) => bk.completedBook === true
+  );
+
+  // let progressData;
+
+  // if (!!pd) {
+  //   progressData = pd?.bookings?.filter((bk) => bk.completedBook === true);
+  // }
+
+  // console.log({ pd });
+
+  if (typeof bookingsData === "undefined") {
+    return {
+      props: {
+        progressData: null,
+        allBookings: null,
+        // userData,
+        // id,
+
+        // prices,
+        // userData,
+      },
+    };
+  } else {
+    return {
+      props: {
+        progressData: completedBookings,
+        allBookings,
+
+        // userData,
+        // id,
+
+        // prices,
+        // userData,
+      },
+    };
+  }
+}

@@ -198,7 +198,7 @@ const ReserveSide = () => {
               <p className="text-primary font-semibold text-[18px]">
                 Move Date:
               </p>
-              <p className="font-semibold text-[13.5px] ">
+              <p className="font-semibold text-[13.5px]">
                 {!reserveDetails?.moveDateFormatted
                   ? dayjs(convertDateFormat(reserveDetails?.moveDate)).format(
                       "dddd, MMMM D, YYYY"

@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   getAllMoveItems,
   resetMoveItems,
+  resetMoveItems2,
 
   // BEDROOM
   updateQtyInBedroom,
@@ -58,6 +59,9 @@ const useMoveItems = () => {
 
   const resetMoveItemsFxn = (payload) => {
     dispatch(resetMoveItems(payload));
+  };
+  const resetMoveItemsFxn2 = () => {
+    dispatch(resetMoveItems());
   };
 
   // BEDROOM
@@ -167,6 +171,7 @@ const useMoveItems = () => {
     moveItems: ab?.moveItems,
 
     resetMoveItemsFxn,
+    resetMoveItemsFxn2,
 
     // BEDROOM
     updateQtyInBedroomFxn,

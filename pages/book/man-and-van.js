@@ -180,6 +180,38 @@ const ManAndVan = ({ emails }) => {
     return option;
   };
 
+  const checkPropertyType = () => {
+    switch (propertyValue) {
+      case "Man and van":
+        return true;
+        break;
+      case "Office removals":
+        return true;
+        break;
+      case "Studio flat":
+        return true;
+        break;
+      case "Furniture & Appliances":
+        return true;
+        break;
+      case "1 Bed property":
+        return false;
+        break;
+      case "2 Bed property":
+        return false;
+        break;
+      case "3 Bed property":
+        return false;
+        break;
+      case "4 Bed property":
+        return false;
+        break;
+
+      default:
+        break;
+    }
+  };
+
   const templateParams = {
     firstName,
     lastName,
@@ -242,8 +274,8 @@ const ManAndVan = ({ emails }) => {
       menValue == "Select" ||
       !durationCount ||
       !volume ||
-      !mileageValue ||
-      mileageValue == "Select" ||
+      (!checkPropertyType() && !mileageValue) ||
+      (!checkPropertyType() && mileageValue == "Select") ||
       date == "Invalid Date" ||
       !agreeTermsValue
     ) {
@@ -765,7 +797,10 @@ const ManAndVan = ({ emails }) => {
                       <div className="form-control w-full ">
                         <label className="label">
                           <span className="label-text font-semibold">
-                            Mileage<span className="text-secondary">*</span>
+                            Mileage
+                            {!checkPropertyType() && (
+                              <span className="text-secondary">*</span>
+                            )}
                           </span>
                         </label>
                         <div className="w-full">
@@ -780,7 +815,7 @@ const ManAndVan = ({ emails }) => {
                             }
                             setValue={setMileageValue}
                             errorCheck={
-                              activateError &&
+                              activateError && !checkPropertyType() &&
                               (mileageValue == "Select" || mileageValue == "")
                             }
                           />

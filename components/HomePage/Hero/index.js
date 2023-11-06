@@ -1,11 +1,30 @@
-import React from "react";
+import React, { useState } from "react";
 import HeroInputBox from "./HeroInputBox";
 import Typed from "react-typed";
 import { titleFont } from "@/utils/fonts";
 import { RiCustomerService2Fill } from "react-icons/ri";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 const Hero = () => {
+  const [submitLoading, setSubmitLoading] = useState(false);
+  const [submitLoading2, setSubmitLoading2] = useState(false);
+
+  const router = useRouter();
+
+  const submitHandle = () => {
+    // toast.remove();
+    setSubmitLoading(true);
+
+    router.push("/book/man-and-van");
+  };
+  const submitHandle2 = () => {
+    // toast.remove();
+    setSubmitLoading2(true);
+
+    router.push("/book/home-removals");
+  };
+
   return (
     <div className=" bg-base-200 ">
       <div
@@ -60,18 +79,30 @@ const Hero = () => {
                 industry’s best customer support.
               </p>
               <div className="flex space-x-[20px] mt-[20px]">
-                <Link
-                  href="/book/man-and-van"
+                <div
+                  // href="/book/man-and-van"
+                  onClick={submitHandle}
+                  // disabled={submitLoading}
                   className="btn btn-secondary btn-wide"
                 >
-                  Man and van
-                </Link>
-                <Link
-                  href="/book/home-removals"
+                  {!submitLoading && <span className="">Man and van</span>}
+                  {submitLoading && (
+                    <span className="loading loading-spinner loading-md text-white"></span>
+                  )}
+                </div>
+
+                <div
+                  // href="/book/home-removals"
+                  onClick={submitHandle2}
+                  // disabled={submitLoading2}
                   className="btn btn-secondary btn-wide"
                 >
-                  Home Removals
-                </Link>
+                  {!submitLoading2 && <span className=""> Home Removals</span>}
+                  {submitLoading2 && (
+                    <span className="loading loading-spinner loading-md text-white"></span>
+                  )}
+                </div>
+
                 {/* <a className="btn btn-secondary btn-wide">
                   Complete House Removal
                 </a> */}

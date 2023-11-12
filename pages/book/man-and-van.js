@@ -339,6 +339,7 @@ const ManAndVan = ({ emails }) => {
         });
       updateMove({
         bookingId,
+        quoteType: "online",
         propertyType: propertyValue,
         numberOfMovers: menValue,
         mileage: mileageValue,

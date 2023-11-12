@@ -61,7 +61,7 @@ const useMoveItems = () => {
     dispatch(resetMoveItems(payload));
   };
   const resetMoveItemsFxn2 = () => {
-    dispatch(resetMoveItems());
+    dispatch(resetMoveItems2());
   };
 
   // BEDROOM

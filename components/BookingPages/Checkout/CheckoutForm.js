@@ -21,7 +21,7 @@ import { db } from "@/firebase";
 import { allNotificationEmail, bookedEmail } from "@/lib/sendCustomEmail";
 import getStripe from "@/lib/get-stripe";
 import axios from "axios";
-import { moveCheckout } from "@/lib/moveCheckout";
+import { moveCheckout, quoteCheckout } from "@/lib/moveCheckout";
 
 const CheckoutForm = ({ currentBook }) => {
   const {
@@ -291,7 +291,11 @@ const CheckoutForm = ({ currentBook }) => {
       console.log("booking update was unsuccessful @ checkout");
     }
 
-    moveCheckout(stripeProductId, stripeAmount);
+    if (moveDetails?.quoteType === "online") {
+      moveCheckout(stripeProductId, stripeAmount);
+    } else {
+      quoteCheckout(stripeProductId, stripeAmount);
+    }
   };
 
   const reservationSubmit = () => {
@@ -319,7 +323,7 @@ const CheckoutForm = ({ currentBook }) => {
 
   //paymentDetails.paidPrice
 
-  console.log({ currentBook, paidPart, paidFull });
+  console.log({ moveDetails, currentBook, paidPart, paidFull });
 
   return (
     <div className="lg:sticky lg:top-[80px] bg-white shadow-lg rounded-[30px] lg:flex-[2] py-[30px] px-[30px] md:px-[50px] w-full">

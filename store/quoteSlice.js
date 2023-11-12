@@ -36,6 +36,7 @@ const initialState = {
   // moveDetails
   moveDetails: {
     bookingId: "",
+    quoteType: "",
     propertyType: "",
     numberOfMovers: "",
     mileage: "",

@@ -249,7 +249,7 @@ export async function getServerSideProps(context) {
   return {
     props: {
       // userData,
-      data: completedBookings,
+      data: completedBookings || [],
     },
   };
 }

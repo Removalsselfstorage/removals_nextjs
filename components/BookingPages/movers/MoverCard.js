@@ -30,7 +30,7 @@ import {
   getCurrentDateFormatted,
 } from "@/utils/logics";
 import { toast } from "react-hot-toast";
-import { doc, serverTimestamp, setDoc } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 import { db } from "@/firebase";
 import useQuote from "@/hooks/useQuote";
 import {

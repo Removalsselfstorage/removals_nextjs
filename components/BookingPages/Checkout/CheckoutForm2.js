@@ -21,9 +21,13 @@ import { db } from "@/firebase";
 import { allNotificationEmail, bookedEmail } from "@/lib/sendCustomEmail";
 import getStripe from "@/lib/get-stripe";
 import axios from "axios";
-import { moveCheckout, quoteCheckout } from "@/lib/moveCheckout";
+import {
+  invoiceCheckout,
+  moveCheckout,
+  quoteCheckout,
+} from "@/lib/moveCheckout";
 
-const CheckoutForm = ({ currentBook }) => {
+const CheckoutForm2 = ({ currentBook }) => {
   const {
     serviceLocation,
     personalDetails,
@@ -139,7 +143,7 @@ const CheckoutForm = ({ currentBook }) => {
     moverName: moverDetails?.moverName,
     moverPrice: moverDetails?.moverPrice,
     paidPrice: paymentDetails?.paidPrice,
-    paymentType: paidPart ? "20%" : paidFull ? "full" : "",
+    paymentType: "full",
     bookingId: moveDetails?.bookingId,
   };
 
@@ -228,7 +232,7 @@ const CheckoutForm = ({ currentBook }) => {
 
   const stripeProductId = computeProductId();
 
-  const stripeAmount = parseInt(paymentDetails?.paidPrice * 100);
+  const stripeAmount = parseInt(moverDetails?.moverPrice * 100);
 
   console.log({
     stripeProductId,
@@ -249,7 +253,7 @@ const CheckoutForm = ({ currentBook }) => {
     updatePayment({
       comment: comments,
 
-      paymentType: paidPart ? "20%" : paidFull ? "Full" : "",
+      paymentType: "Full",
     });
 
     try {
@@ -262,9 +266,7 @@ const CheckoutForm = ({ currentBook }) => {
           activity: [
             ...currentBook?.activity,
             {
-              name: `completed ${
-                paidPart ? "20%" : paidFull ? "Full" : ""
-              } payment checkout of ${paidPrice} for move`,
+              name: `completed Full payment checkout of ${paidPrice} for move`,
               date: getCurrentDateFormatted(),
             },
           ],
@@ -274,8 +276,8 @@ const CheckoutForm = ({ currentBook }) => {
           paidPart,
           paidFull,
           // completedBook: true,
-          paidPrice,
-          paymentType: paidPart ? "20%" : paidFull ? "Full" : "",
+          paidPrice: moverDetails?.moverPrice,
+          paymentType: "Full",
           moveCheckedOut: "YES",
           movePaymentStatus: "INITIATED",
         },
@@ -291,13 +293,7 @@ const CheckoutForm = ({ currentBook }) => {
       console.log("booking update was unsuccessful @ checkout");
     }
 
-    if (moveDetails?.quoteType === "online") {
-      moveCheckout(stripeProductId, stripeAmount);
-    } else if (moveDetails?.quoteType === "manual") {
-      quoteCheckout(stripeProductId, stripeAmount);
-    } else if ((moveDetails?.quoteType === "invoice")){
-      quoteCheckout(stripeProductId, stripeAmount);
-    }
+    invoiceCheckout(stripeProductId, stripeAmount);
   };
 
   const reservationSubmit = () => {
@@ -323,6 +319,14 @@ const CheckoutForm = ({ currentBook }) => {
     }, 5000);
   };
 
+  useEffect(() => {
+    updatePayment({
+      paidPart: false,
+      paidFull: true,
+      paidPrice: (moverDetails?.moverPrice * 1).toFixed(),
+    });
+  }, []);
+
   //paymentDetails.paidPrice
 
   console.log({ moveDetails, currentBook, paidPart, paidFull });
@@ -334,7 +338,7 @@ const CheckoutForm = ({ currentBook }) => {
         <h1 className="text-xl font-bold mb-[20px] px-[0px]">Payment Type*</h1>
         <div className="flex space-x-[20px] items-center">
           {/* left */}
-          <div className="mb-[0px]">
+          {/* <div className="mb-[0px]">
             <label className="label cursor-pointer flex items-center space-x-[10px] md:space-x-[10px] w-full">
               <input
                 type="radio"
@@ -377,11 +381,11 @@ const CheckoutForm = ({ currentBook }) => {
                 20% Deposit
               </p>
             </label>
-          </div>
+          </div> */}
           {/* right */}
           <div className="mb-[0px]">
             <label className="label cursor-pointer flex items-center space-x-[10px] md:space-x-[10px] w-full">
-              <input
+              {/* <input
                 type="radio"
                 name="radio-1"
                 className="radio radio-primary"
@@ -417,7 +421,7 @@ const CheckoutForm = ({ currentBook }) => {
                   }
                 }}
                 checked={paidFull}
-              />
+              /> */}
               <p className="leading-[18px] text-[15px] md:text-[16px] font-semibold mb-[0px] ">
                 Full Deposit
               </p>
@@ -601,4 +605,4 @@ const CheckoutForm = ({ currentBook }) => {
   );
 };
 
-export default CheckoutForm;
+export default CheckoutForm2;

@@ -97,10 +97,7 @@ const CheckoutForm2 = ({ currentBook }) => {
   };
 
   const activateCheckout = () => {
-    if (
-      (paymentDetails?.paidPart || paymentDetails?.paidFull) &&
-      inventConfirm
-    ) {
+    if (inventConfirm) {
       return false;
     } else return true;
   };
@@ -235,6 +232,7 @@ const CheckoutForm2 = ({ currentBook }) => {
   const stripeAmount = parseInt(moverDetails?.moverPrice * 100);
 
   console.log({
+    inventConfirm,
     stripeProductId,
     stripeAmount,
     price: paymentDetails?.paidPrice,
@@ -537,7 +535,7 @@ const CheckoutForm2 = ({ currentBook }) => {
       {/* Payment button */}
       <button
         onClick={completeCheckout}
-        disabled={activateCheckout() || submitLoading}
+        disabled={!inventConfirm || submitLoading}
         className="btn btn-secondary btn-block mb-[30px]"
       >
         {!submitLoading && <span className="">Complete Check-Out</span>}

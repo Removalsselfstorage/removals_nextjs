@@ -293,9 +293,7 @@ const CheckoutForm = ({ currentBook }) => {
 
     if (moveDetails?.quoteType === "online") {
       moveCheckout(stripeProductId, stripeAmount);
-    } else if (moveDetails?.quoteType === "manual") {
-      quoteCheckout(stripeProductId, stripeAmount);
-    } else if ((moveDetails?.quoteType === "invoice")){
+    } else if (moveDetails?.quoteType === "quote") {
       quoteCheckout(stripeProductId, stripeAmount);
     }
   };

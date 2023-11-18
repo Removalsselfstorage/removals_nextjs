@@ -278,34 +278,10 @@ const Quote = ({ progressData, quoteFeatures, quoteFeatures2 }) => {
 
   const sendQuoteHandle = async () => {
     setSubmitLoading(true);
-    // setShowError(false);
-    // setShowMessage(false);
-
-    // try {
-    //   await quoteEmail(uemail, params);
-    //   setSubmitLoading(false);
-    //   setShowMessage(true);
-    //   // resetAllQuotesFxn();
-    // } catch (error) {
-    //   setSubmitLoading(false);
-    //   setShowError(true);
-    // }
+   
   };
 
-  // const captureImage = () => {
-  //   if (componentRef.current) {
-  //     html2canvas(componentRef.current).then((canvas) => {
-  //       const imgData = canvas.toDataURL("image/png");
-  //       const link = document.createElement("a");
-  //       link.href = imgData;
-  //       // link.download = `Quote-${getCurrentDateFormatted()}`;
-  //       link.download = `Quote-${moveDetails?.quoteRef}`;
-  //       link.click();
-  //       // setImageData(imgData);
-  //       console.log({ imgData, link: link.href, imageData });
-  //     });
-  //   }
-  // };
+ 
   const captureImage = async () => {
     setSubmitLoading2(true);
     const canvas = await html2canvas(componentRef.current);

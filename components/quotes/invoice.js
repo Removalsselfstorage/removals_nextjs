@@ -45,18 +45,16 @@ import { renderToString } from "react-dom/server";
 import QuoteDetails2 from "./invoiceDetails";
 import InvoiceDetails from "./invoiceDetails";
 
-const Invoice = () => {
+const Invoice = ({ progressData, quoteFeatures, quoteFeatures2 }) => {
   const {
     resetAllQuotesFxn,
-    updateCreateTypeFxn,
-    createType,
-    quoteFeatures,
+    // quoteFeatures,
     setQuoteFeaturesFxn,
     addNewQuoteFeaturesFxn,
     updateQuoteFeatureNameFxn,
     removeQuoteFeatureFxn,
     //
-    quoteFeatures2,
+    // quoteFeatures2,
     removeQuoteFeatureFxn2,
     addNewQuoteFeaturesFxn2,
     //
@@ -88,7 +86,7 @@ const Invoice = () => {
   } = useQuote();
 
   const checkPropertyType = () => {
-    switch (moveDetails?.propertyType) {
+    switch (progressData?.propertyType) {
       case "Man and van":
         return true;
         break;
@@ -119,14 +117,44 @@ const Invoice = () => {
     }
   };
 
+  // const [_, convert, ref] = useToPng({
+  //   quality: 0.8,
+  //   onSuccess: (data) => {
+  //     const link = document.createElement("a");
+  //     link.download = "my-image-name.jpeg";
+  //     link.href = dataUrl;
+  //     link.click();
+  //   },
+  // });
+
+  // const { ref, isLoading, getSvg, getPng } = useToImage()
+
+  const [showLoader, setShowLoader] = useState(false);
+  const [showLoader2, setShowLoader2] = useState(false);
+  const [todayPick, setTodayPick] = useState(false);
+  const [selectedTime, setSelectedTime] = useState(null);
+  const [timeValue, setTimeValue] = useState("");
+  const [clickedModalOpen, setClickedModalOpen] = useState(false);
+  const [progressLoading, setProgressLoading] = useState(false);
+  const [showProgressMessage, setShowProgressMessage] = useState(false);
+  const [email, setEmail] = useState("");
+  const [submitError, setSubmitError] = useState(false);
+  const [emailError, setEmailError] = useState(true);
+  const [showSent, setShowSent] = useState(false);
+
   const [imageUpload, setImageUpload] = useState(null);
   // const [previewUrl, setPreviewUrl] = useState("");
   const [imageName, setImageName] = useState("");
+  const [activateError, setActivateError] = useState(false);
+  const [fileUploadError, setFileUploadError] = useState("");
 
   const [submitLoading, setSubmitLoading] = useState(false);
   const [submitLoading2, setSubmitLoading2] = useState(false);
   const [showMessage, setShowMessage] = useState(false);
   const [showError, setShowError] = useState(false);
+
+  const [imageData, setImageData] = useState("");
+  const [previewUrl, setPreviewUrl] = useState("");
 
   const componentRef = useRef(null);
 
@@ -134,71 +162,70 @@ const Invoice = () => {
 
   const [udate] = useState(() => trimDateFormat(date));
   const [uname] = useState(
-    () => personalDetails?.firstName + " " + personalDetails?.lastName
+    () => progressData?.firstName + " " + progressData?.lastName
   );
-  const [uemail] = useState(() => personalDetails?.email);
-  const [ubookref] = useState(() => moveDetails?.quoteRef);
-  const [uphone] = useState(() => `${personalDetails?.telephone}`);
-  const [uaddress1] = useState(() => ` ${serviceLocation?.locationFrom?.name}`);
+  const [uemail] = useState(() => progressData?.email);
+  const [ubookref] = useState(() => progressData?.quoteRef);
+  const [uphone] = useState(() => `${progressData?.telephone}`);
+  // const [uphone] = useState(
+  //   () => `${personalDetails?.countryCode} ${personalDetails?.telephone}`
+  // );
+  const [uaddress1] = useState(() => ` ${progressData?.address1}`);
   const [uaddressFloor1] = useState(
     () =>
-      `Floor (${serviceLocation?.locationFrom?.floor}) --- Lift: ${
-        serviceLocation?.locationFrom?.liftAvailable
-          ? "Available"
-          : "Not Available"
+      `Floor (${progressData?.floor1}) --- Lift: ${
+        progressData?.liftAvailable1 ? "Available" : "Not Available"
       }`
   );
-  const [uaddress2] = useState(() => `${serviceLocation?.locationTo?.name}`);
+  const [uaddress2] = useState(() => `${progressData?.address2}`);
   const [uaddressFloor2] = useState(
     () =>
-      `Floor (${serviceLocation?.locationTo?.floor}) --- Lift: ${
-        serviceLocation?.locationTo?.liftAvailable
-          ? "Available"
-          : "Not Available"
+      `Floor (${progressData?.floor2}) --- Lift: ${
+        progressData?.liftAvailable2 ? "Available" : "Not Available"
       }`
   );
-  const [uproperty] = useState(() => moveDetails?.propertyType);
-  const [umovers] = useState(() => moveDetails?.numberOfMovers);
+  const [uproperty] = useState(() => progressData?.propertyType);
+  const [umovers] = useState(() => progressData?.numberOfMovers);
   const [umileage] = useState(
     () =>
-      (moveDetails?.mileage === "Select"
+      (progressData?.mileage === "Select"
         ? "---"
-        : `${moveDetails?.mileage} miles`) ?? "---"
+        : `${progressData?.mileage} miles`) ?? "---"
   );
-  const [uvolume] = useState(() => `${moveDetails?.volume} cuft` ?? "---");
+  const [uvolume] = useState(() => `${progressData?.volume} cuft` ?? "---");
   const [uduration] = useState(() =>
-    checkPropertyType() ? `${moveDetails?.duration} hours` : "---"
+    checkPropertyType() ? `${progressData?.duration} hours` : "---"
   );
   const [umoveDate] = useState(() =>
-    trimDateFormats(moverDetails?.moveDateFormatted)
+    trimDateFormats(progressData?.moveDateFormatted)
   );
-  const [upackage] = useState(() => moveDetails?.movePackage);
-  const [utime] = useState(() => moverDetails?.moverTime);
-  const [uincludes] = useState(() => quoteFeatures);
+  // const [umoveDate] = useState(() => moverDetails?.moveDateFormatted);
+  const [upackage] = useState(() => progressData?.movePackage);
+  const [utime] = useState(() => progressData?.moverTime);
+  const [uincludes] = useState(() => progressData?.quoteIncludes);
 
-  const uincludes1 = uincludes[0]?.name ?? "---";
-  const uincludes2 = uincludes[1]?.name ?? "---";
-  const uincludes3 = uincludes[2]?.name ?? "---";
-  const uincludes4 = uincludes[3]?.name ?? "---";
-  const uincludes5 = uincludes[4]?.name ?? "---";
+  const uincludes1 = uincludes?.[0]?.name ?? "---";
+  const uincludes2 = uincludes?.[1]?.name ?? "---";
+  const uincludes3 = uincludes?.[2]?.name ?? "---";
+  const uincludes4 = uincludes?.[3]?.name ?? "---";
+  const uincludes5 = uincludes?.[4]?.name ?? "---";
 
-  const [uexcludes] = useState(() => quoteFeatures2);
+  const [uexcludes] = useState(() => progressData?.quoteExcludes);
 
-  const uexcludes1 = uexcludes[0]?.name ?? "---";
-  const uexcludes2 = uexcludes[1]?.name ?? "---";
-  const uexcludes3 = uexcludes[2]?.name ?? "---";
-  const uexcludes4 = uexcludes[3]?.name ?? "---";
-  const uexcludes5 = uexcludes[4]?.name ?? "---";
+  const uexcludes1 = uexcludes?.[0]?.name ?? "---";
+  const uexcludes2 = uexcludes?.[1]?.name ?? "---";
+  const uexcludes3 = uexcludes?.[2]?.name ?? "---";
+  const uexcludes4 = uexcludes?.[3]?.name ?? "---";
+  const uexcludes5 = uexcludes?.[4]?.name ?? "---";
   const [ucharge] = useState(
-    () => `${formatMovePrice2(Number(moverDetails?.moverPrice))}`
+    () => `${formatMovePrice2(Number(progressData?.moverPrice))}`
   );
   const [uvat] = useState(() => `${formatMovePrice2(0)}`);
   const [utotal] = useState(
-    () => `${formatMovePrice2(Number(moverDetails?.moverPrice))}`
+    () => `${formatMovePrice2(Number(progressData?.moverPrice))}`
   );
   const [ulink] = useState(
-    () =>
-      `https://removalstorage.vercel.app/book/checkout/invoice/${moveDetails?.bookingId}`
+    () => `/book/checkout/quote/${progressData?.bookingId}`
   );
 
   // console.log({
@@ -224,60 +251,36 @@ const Invoice = () => {
   //   ulink,
   // });
 
-  // console.log({ uincludes1 });
+  console.log({ uincludes1, moverDetails });
 
-  const params = {
-    udate,
-    uemail,
-    ubookref,
-    uname,
-    uphone,
-    uaddress1,
-    uaddressFloor1,
-    uaddress2,
-    uaddressFloor2,
-    uproperty,
-    umovers,
-    umileage,
-    uvolume,
-    uduration,
-    umoveDate,
-    upackage,
-    utime,
-    uincludes1,
-    uincludes2,
-    uincludes3,
-    uincludes4,
-    uincludes5,
-    uexcludes1,
-    uexcludes2,
-    uexcludes3,
-    uexcludes4,
-    uexcludes5,
-    ucharge,
-    uvat,
-    utotal,
-    ulink,
+  const uploadImg = async () => {
+    let uploadImgUrl;
+
+    if (imageName && imageUpload) {
+      const name = ubookref + new Date().getTime();
+      const imageRef = ref(storage, `quotesUpload/${name}`);
+
+      const status = await uploadBytes(imageRef, imageUpload)
+        .then((snapshot) => {
+          return snapshot;
+        })
+        .catch((error) => {
+          console.log(error);
+          return false;
+        });
+
+      if (!status) return false;
+
+      uploadImgUrl = await getDownloadURL(status.ref).then((url) => {
+        return url;
+      });
+    }
+    // setPreviewUrl(uploadImgUrl);
+    setImageData(uploadImgUrl);
   };
 
   const sendQuoteHandle = async () => {
     setSubmitLoading(true);
-    setShowError(false);
-    setShowMessage(false);
-
-    try {
-      await invoiceEmail(uemail, params);
-      setSubmitLoading(false);
-      setShowMessage(true);
-      // resetAllQuotesFxn();
-
-      // setTimeout(() => {
-      //   router.push("/secret-admin/create");
-      // }, 3000);
-    } catch (error) {
-      setSubmitLoading(false);
-      setShowError(true);
-    }
   };
 
   const captureImage = async () => {
@@ -289,11 +292,11 @@ const Invoice = () => {
     const link = document.createElement("a");
     link.href = imgData;
     // link.download = `Quote-${getCurrentDateFormatted()}`;
-    link.download = `Invoice-${ubookref} ${getCurrentDateFormatted()}`;
+    link.download = `Quote-${ubookref} ${getCurrentDateFormatted()}`;
 
     link.click();
 
-    // setImageData(imgData);
+    setImageData(imgData);
     setSubmitLoading2(false);
     // console.log({ imgData, linkname: link.name, link, imageData });
     // setImageData(canvas.toDataURL());
@@ -374,32 +377,15 @@ const Invoice = () => {
       </div>
 
       {/* submit button2 */}
-      <div className=" w-full px-[20px] lg:px-[30px] border-t-[2px] pt-[30px] mt-[50px] mb-[50px]">
-        <div className="flex flex-col md:flex-row space-y-[20px] md:space-y-0 w-full md:justify-center my-[20px] md:space-x-[20px]">
-          <button
-            // onClick={removalFormSubmit}
-            onClick={captureImage}
-            // onClick={convert}
-            disabled={submitLoading || submitLoading2}
-            className="btn btn-secondary btn-wide flex items-center space-x-[5px] h-[60px]"
-          >
-            {!submitLoading2 && <span className="">Save</span>}
-            {submitLoading2 && (
-              <span className="loading loading-spinner loading-md text-white"></span>
-            )}
-            {!submitLoading2 && (
-              <span className="">
-                <BiSave className="text-[27px]" />
-              </span>
-            )}
-          </button>
-
-          <div
+      <div className=" w-full px-[20px] lg:px-[30px] mt-[50px] mb-[50px]">
+        <div className="flex  w-full justify-center my-[20px]">
+          <Link
+            href={ulink}
             onClick={sendQuoteHandle}
-            className="btn btn-primary btn-wide flex items-center space-x-[5px] h-[60px]"
+            className="btn btn-secondary btn-wide flex items-center space-x-[5px] h-[60px]"
             disabled={submitLoading || submitLoading2}
           >
-            {!submitLoading && <span className="">Send Invoice</span>}
+            {!submitLoading && <span className="">Pay Now</span>}
             {submitLoading && (
               <span className="loading loading-spinner loading-md text-white"></span>
             )}
@@ -408,7 +394,7 @@ const Invoice = () => {
                 <IoIosSend className="text-[27px]" />
               </span>
             )}
-          </div>
+          </Link>
         </div>
       </div>
 
@@ -419,12 +405,12 @@ const Invoice = () => {
 
       {showMessage && (
         <div className="text-[14px] mt-[15px] text-center text-primary bg-primary/20 rounded-[10px] py-[10px] px-[30px]">
-          Invoice has been successfully sent
+          Quote has been successfully sent
         </div>
       )}
       {showError && (
         <div className="text-[14px] mt-[15px] text-center text-secondary bg-secondary/20 rounded-[10px] py-[10px] px-[30px]">
-          Invoice sending was unsuccessful
+          Quote sending was unsuccessful
         </div>
       )}
     </div>

@@ -401,25 +401,7 @@ const Quote = ({ progressData, quoteFeatures, quoteFeatures2 }) => {
 
       {/* submit button2 */}
       <div className=" w-full px-[20px] lg:px-[30px] mt-[50px] mb-[50px]">
-        <div className="flex flex-col md:flex-row space-y-[20px] md:space-y-0 w-full md:justify-center my-[20px] md:space-x-[20px]">
-          {/* <button
-            // onClick={removalFormSubmit}
-            onClick={captureImage}
-            // onClick={convert}
-            disabled={submitLoading || submitLoading2}
-            className="btn btn-secondary btn-wide flex items-center space-x-[5px] h-[60px]"
-          >
-            {!submitLoading2 && <span className="">Save</span>}
-            {submitLoading2 && (
-              <span className="loading loading-spinner loading-md text-white"></span>
-            )}
-            {!submitLoading2 && (
-              <span className="">
-                <BiSave className="text-[27px]" />
-              </span>
-            )}
-          </button> */}
-
+        <div className="flex  w-full justify-center my-[20px]">
           <Link
             href={ulink}
             onClick={sendQuoteHandle}

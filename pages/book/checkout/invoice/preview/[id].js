@@ -25,6 +25,7 @@ import { doc, getDoc } from "firebase/firestore";
 import { db } from "@/firebase";
 import useMoveItems from "@/hooks/useMoveItems";
 import Quote from "@/components/quotes/quote";
+import Invoice from "@/components/quotes/invoice";
 
 const Checkout = ({ progressData }) => {
   const {

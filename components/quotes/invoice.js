@@ -14,8 +14,8 @@ import { AiOutlineLeft } from "react-icons/ai";
 import { BsSendFill } from "react-icons/bs";
 import { FiEdit } from "react-icons/fi";
 import { IoIosSend } from "react-icons/io";
-import ReactDOMServer from "react-dom/server";
-import { useReactToPrint } from "react-to-print";
+// import ReactDOMServer from "react-dom/server";
+// import { useReactToPrint } from "react-to-print";
 import { useRef } from "react";
 import html2canvas from "html2canvas";
 import { invoiceEmail, quoteEmail } from "@/lib/sendCustomEmail";
@@ -34,16 +34,17 @@ import { uploadBytes, ref, getDownloadURL } from "firebase/storage";
 import { BiSave } from "react-icons/bi";
 import CustomFileInput from "../Inputs/CustomFileInput";
 // import * as htmlToImage from "html-to-image";
-import htmlToImage from "html-to-image";
+// import htmlToImage from "html-to-image";
 
-import { toPng, toJpeg, toBlob, toPixelData, toSvg } from "html-to-image";
+// import { toPng, toJpeg, toBlob, toPixelData, toSvg } from "html-to-image";
 import { useCallback } from "react";
 // import { useToPng } from "@hugocxl/react-to-image";
-import { render } from "@react-email/render";
+// import { render } from "@react-email/render";
 import QuoteDetails from "./quoteDetails";
-import { renderToString } from "react-dom/server";
+// import { renderToString } from "react-dom/server";
 import QuoteDetails2 from "./invoiceDetails";
 import InvoiceDetails from "./invoiceDetails";
+import Link from "next/link";
 
 const Invoice = ({ progressData, quoteFeatures, quoteFeatures2 }) => {
   const {
@@ -292,7 +293,7 @@ const Invoice = ({ progressData, quoteFeatures, quoteFeatures2 }) => {
     const link = document.createElement("a");
     link.href = imgData;
     // link.download = `Quote-${getCurrentDateFormatted()}`;
-    link.download = `Quote-${ubookref} ${getCurrentDateFormatted()}`;
+    link.download = `Invoice-${ubookref} ${getCurrentDateFormatted()}`;
 
     link.click();
 
@@ -358,6 +359,8 @@ const Invoice = ({ progressData, quoteFeatures, quoteFeatures2 }) => {
           umoveDate={umoveDate}
           upackage={upackage}
           utime={utime}
+          uincludes={uincludes}
+          uexcludes={uexcludes}
           uincludes1={uincludes1}
           uincludes2={uincludes2}
           uincludes3={uincludes3}
@@ -379,7 +382,7 @@ const Invoice = ({ progressData, quoteFeatures, quoteFeatures2 }) => {
       {/* submit button2 */}
       <div className=" w-full px-[20px] lg:px-[30px] mt-[50px] mb-[50px]">
         <div className="flex  w-full justify-center my-[20px]">
-          <Link
+          {/* <Link
             href={ulink}
             onClick={sendQuoteHandle}
             className="btn btn-secondary btn-wide flex items-center space-x-[5px] h-[60px]"
@@ -394,7 +397,24 @@ const Invoice = ({ progressData, quoteFeatures, quoteFeatures2 }) => {
                 <IoIosSend className="text-[27px]" />
               </span>
             )}
-          </Link>
+          </Link> */}
+          <button
+            // onClick={removalFormSubmit}
+            onClick={captureImage}
+            // onClick={convert}
+            // disabled={submitLoading || submitLoading2}
+            className="btn btn-secondary btn-wide flex items-center space-x-[5px] h-[60px]"
+          >
+            {!submitLoading2 && <span className="">Download Invoice</span>}
+            {submitLoading2 && (
+              <span className="loading loading-spinner loading-md text-white"></span>
+            )}
+            {!submitLoading2 && (
+              <span className="">
+                <BiSave className="text-[27px]" />
+              </span>
+            )}
+          </button>
         </div>
       </div>
 

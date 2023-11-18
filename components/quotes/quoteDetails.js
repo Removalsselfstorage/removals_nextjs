@@ -1,6 +1,8 @@
 import React from "react";
 
 const QuoteDetails = ({
+  uincludes,
+  uexcludes,
   udate,
   uemail,
   ubookref,
@@ -237,30 +239,24 @@ md:hidden"
       <div className="text-[18px] mt-[10px]">
         <table className="table table-md table-pin-rows table-pin-cols">
           <tbody>
-            <tr>
-              <td className="border-[1.5px] border-black bg-gray-500/10 w-[15%] font-bold">
-                Quote Includes
-              </td>
-              <td className="border-[1.5px] border-black w-[85%]">
-                {uincludes1}
-              </td>
-            </tr>
-            <tr>
-              <td className="border-[1.5px] text-gray-500/10 border-black bg-gray-500/10 w-[15%] font-bold">
-                Quote Includes
-              </td>
-              <td className="border-[1.5px] border-black w-[85%]">
-                {uincludes2}
-              </td>
-            </tr>
-            <tr>
-              <td className="border-[1.5px] text-gray-500/10 border-black bg-gray-500/10 w-[15%] font-bold">
-                Quote Includes
-              </td>
-              <td className="border-[1.5px] border-black w-[85%]">
-                {uincludes3}
-              </td>
-            </tr>
+            {uincludes?.map((ui, i) => {
+              return (
+                <tr key={i}>
+                  <td
+                    className={`${
+                      i > 0
+                        ? "text-gray-500/10 border-[1.5px] border-black bg-gray-500/10 w-[15%] font-bold"
+                        : "text-black border-[1.5px] border-black bg-gray-500/10 w-[15%] font-bold"
+                    }`}
+                  >
+                    Quote Includes
+                  </td>
+                  <td className="border-[1.5px] border-black w-[85%]">
+                    {ui.name}
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>
@@ -275,30 +271,24 @@ md:hidden"
       <div className="text-[18px] mt-[10px]">
         <table className="table table-md table-pin-rows table-pin-cols">
           <tbody>
-            <tr>
-              <td className="border-[1.5px] border-black bg-gray-500/10 w-[15%] font-bold">
-                Quote Excludes
-              </td>
-              <td className="border-[1.5px] border-black w-[85%]">
-                {uexcludes1}
-              </td>
-            </tr>
-            <tr>
-              <td className="border-[1.5px] text-gray-500/10 border-black bg-gray-500/10 w-[15%] font-bold">
-                Quote Excludes
-              </td>
-              <td className="border-[1.5px] border-black w-[85%]">
-                {uexcludes2}
-              </td>
-            </tr>
-            <tr>
-              <td className="border-[1.5px] text-gray-500/10 border-black bg-gray-500/10 w-[15%] font-bold">
-                Quote Excludes
-              </td>
-              <td className="border-[1.5px] border-black w-[85%]">
-                {uexcludes3}
-              </td>
-            </tr>
+            {uexcludes?.map((ui, i) => {
+              return (
+                <tr key={i}>
+                  <td
+                    className={`${
+                      i > 0
+                        ? "text-gray-500/10 border-[1.5px] border-black bg-gray-500/10 w-[15%] font-bold"
+                        : "text-black border-[1.5px] border-black bg-gray-500/10 w-[15%] font-bold"
+                    }`}
+                  >
+                    Quote Excludes
+                  </td>
+                  <td className="border-[1.5px] border-black w-[85%]">
+                    {ui.name}
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>

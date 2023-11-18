@@ -357,6 +357,8 @@ const Quote = ({ progressData, quoteFeatures, quoteFeatures2 }) => {
           umoveDate={umoveDate}
           upackage={upackage}
           utime={utime}
+          uincludes={uincludes}
+          uexcludes={uexcludes}
           uincludes1={uincludes1}
           uincludes2={uincludes2}
           uincludes3={uincludes3}

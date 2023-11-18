@@ -1,6 +1,7 @@
 import React from "react";
 
 const InvoiceDetails = ({
+  uincludes,
   udate,
   uemail,
   ubookref,
@@ -80,14 +81,14 @@ const InvoiceDetails = ({
         <div className="flex   text-white items-center divide-x-2">
           <div className="flex flex-col space-y-[5px] pr-[20px]">
             <p className="text-[14px] text-semibold">Book Ref.:</p>
-            <p className="text-[14px] text-semibold">Valid For:</p>
+            {/* <p className="text-[14px] text-semibold">Valid For:</p> */}
             <p className="text-[14px] text-semibold">Estimated Vol.:</p>
             <p className="text-[14px] text-semibold">Date:</p>
           </div>
 
           <div className="flex flex-col space-y-[5px] pl-[20px]">
             <p className="text-[14px] ">{ubookref}</p>
-            <p className="text-[14px]">10 days</p>
+            {/* <p className="text-[14px]">10 days</p> */}
             <p className="text-[14px]">{uvolume}</p>
             <p className="text-[14px]">{udate}</p>
           </div>
@@ -147,7 +148,7 @@ md:hidden"
       {/* move details title*/}
       <div className="bg-primary py-[10px] px-[20px]  border-[1.5px] border-primary mt-[10px]">
         <p className="text-white font-bold text-[18px] uppercase">
-          Quote Details:
+          Invoice Details:
         </p>
       </div>
 
@@ -237,30 +238,24 @@ md:hidden"
       <div className="text-[18px] mt-[10px]">
         <table className="table table-md table-pin-rows table-pin-cols">
           <tbody>
-            <tr>
-              <td className="border-[1.5px] border-black bg-gray-500/10 w-[15%] font-bold">
-                Quote Includes
-              </td>
-              <td className="border-[1.5px] border-black w-[85%]">
-                {uincludes1}
-              </td>
-            </tr>
-            <tr>
-              <td className="border-[1.5px] text-gray-500/10 border-black bg-gray-500/10 w-[15%] font-bold">
-                Quote Includes
-              </td>
-              <td className="border-[1.5px] border-black w-[85%]">
-                {uincludes2}
-              </td>
-            </tr>
-            <tr>
-              <td className="border-[1.5px] text-gray-500/10 border-black bg-gray-500/10 w-[15%] font-bold">
-                Quote Includes
-              </td>
-              <td className="border-[1.5px] border-black w-[85%]">
-                {uincludes3}
-              </td>
-            </tr>
+            {uincludes?.map((ui, i) => {
+              return (
+                <tr key={i}>
+                  <td
+                    className={`${
+                      i > 0
+                        ? "text-gray-500/10 border-[1.5px] border-black bg-gray-500/10 w-[15%] font-bold"
+                        : "text-black border-[1.5px] border-black bg-gray-500/10 w-[15%] font-bold"
+                    }`}
+                  >
+                    Item Details
+                  </td>
+                  <td className="border-[1.5px] border-black w-[85%]">
+                    {ui.name}
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>
@@ -272,7 +267,7 @@ md:hidden"
         </p>
       </div> */}
 
-      <div className="text-[18px] mt-[10px]">
+      {/* <div className="text-[18px] mt-[10px]">
         <table className="table table-md table-pin-rows table-pin-cols">
           <tbody>
             <tr>
@@ -301,12 +296,12 @@ md:hidden"
             </tr>
           </tbody>
         </table>
-      </div>
+      </div> */}
 
       {/* quote price title*/}
       <div className="bg-primary py-[10px] px-[20px] mt-[10px] border-[1.5px] border-primary">
         <p className="text-white font-bold text-[18px] uppercase">
-          Quote Price:
+          Invoice Price:
         </p>
       </div>
 
@@ -369,14 +364,14 @@ md:hidden"
         </table>
       </div>
 
-      <div className="w-full">
+      {/* <div className="w-full">
         <p className="text-[16px] w-full text-center mt-[20px]">
           <span className="font-bold">NB:</span> 20% deposit is required to
           secure your move
         </p>
-      </div>
+      </div> */}
 
-      <div className="flex flex-col md:flex-row mt-[10px] ">
+      <div className="flex flex-col md:flex-row mt-[20px] mb-[20px]">
         <div className="flex-[1] flex flex-col mt-[0px] ">
           <p className="font-bold text-[16px] w-full mt-[20px] text-center md:text-start">
             REMOVAL & SELF STORAGE
@@ -393,7 +388,7 @@ md:hidden"
             Sevenoaks: 01732 240501 | Gravesend: 01474 632503
           </p>
           <p className=" text-[13px] w-full mt-[7px] text-center md:text-start">
-            <span className="font-bold">ESSEX: </span>sildon: 01268 937401 |
+            <span className="font-bold">ESSEX: </span>Sildon: 01268 937401 |
             Chelmsford: 01425 206510
           </p>
         </div>

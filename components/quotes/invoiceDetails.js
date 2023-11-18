@@ -153,7 +153,7 @@ md:hidden"
       </div>
 
       {/* move details */}
-      <div className="text-[14px]">
+      <div className="text-[14px] hidden md:inline-block">
         <table className="table table-md table-pin-rows table-pin-cols">
           <tbody>
             <tr className="">
@@ -217,6 +217,93 @@ md:hidden"
               <td className="border-[1.5px] border-black  w-[35%]">
                 {upackage} Package
               </td>
+              <td className="border-[1.5px] border-black bg-gray-500/10 w-[15%] font-bold">
+                Move Date
+              </td>
+              <td className="border-[1.5px] border-black  w-[35%]">
+                {umoveDate} --- {utime}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div className="text-[14px] md:hidden">
+        <table className="table table-md table-pin-rows table-pin-cols">
+          <tbody>
+            <tr className="">
+              <td className="border-[1.5px] border-black bg-gray-500/10 w-[15%] font-bold">
+                Collected From
+              </td>
+              <td className="border-[1.5px] border-black   w-[35%]">
+                {uaddress1}
+              </td>
+            </tr>
+            <tr className="">
+              <td className="border-[1.5px]  border-black bg-gray-500/10 w-[15%] font-bold"></td>
+              <td className="border-[1.5px] border-black   w-[35%]">
+                {uaddressFloor1}
+              </td>
+            </tr>
+            <tr className="">
+              <td className="border-[1.5px] border-black bg-gray-500/10 w-[15%] font-bold">
+                Delivered To
+              </td>
+              <td className="border-[1.5px] border-black   w-[35%]">
+                {uaddress2}
+              </td>
+            </tr>
+            <tr className="">
+              <td className="border-[1.5px]  border-black bg-gray-500/10 w-[15%] font-bold"></td>
+              <td className="border-[1.5px] border-black   w-[35%]">
+                {uaddressFloor2}
+              </td>
+            </tr>
+            <tr className="">
+              <td className="border-[1.5px] border-black bg-gray-500/10 w-[15%] font-bold">
+                Property Type
+              </td>
+              <td className="border-[1.5px] border-black   w-[35%]">
+                {uproperty}
+              </td>
+            </tr>
+            <tr className="">
+              <td className="border-[1.5px] border-black bg-gray-500/10 w-[15%] font-bold">
+                Number of Movers
+              </td>
+              <td className="border-[1.5px] border-black   w-[35%]">
+                {umovers}
+              </td>
+            </tr>
+
+            <tr className="">
+              <td className="border-[1.5px] border-black bg-gray-500/10 w-[15%] font-bold">
+                Mileage
+              </td>
+              <td className="border-[1.5px] border-black  w-[35%]">
+                {umileage}
+              </td>
+            </tr>
+            <tr className="">
+              <td className="border-[1.5px] border-black bg-gray-500/10 w-[15%] font-bold">
+                Move Duration
+              </td>
+              <td className="border-[1.5px] border-black  w-[35%]">
+                {uduration}
+              </td>
+            </tr>
+
+            <tr className="">
+              <td className="border-[1.5px] border-black bg-gray-500/10 w-[15%] font-bold">
+                Move Package
+              </td>
+              <td className="border-[1.5px] border-black  w-[35%]">
+                {upackage} Package
+              </td>
+              
+            </tr>
+            <tr className="">
+             
               <td className="border-[1.5px] border-black bg-gray-500/10 w-[15%] font-bold">
                 Move Date
               </td>

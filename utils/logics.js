@@ -1,5 +1,116 @@
 // Outputs: "Wednesday, 20 September, 2023"
 
+export function trimPhoneFormat(phoneNumber) {
+  // Use a regular expression to match the desired format
+  const regex = /^.*?(\(\+\d+\) \d+)$/;
+
+  // Extract the matched part of the string
+  const match = phoneNumber.match(regex);
+
+  // Check if a match is found
+  if (match && match.length === 2) {
+    return match[1];
+  } else {
+    // If no match is found, return the original string
+    return phoneNumber;
+  }
+}
+
+export function formatMovePrice2(price) {
+  // Check if the price is a valid number
+  // if (typeof price !== "number") {
+  //   return "Invalid Price";
+  // }
+
+  // Create a formatter using the user's locale (e.g., en-US for US English)
+  const formatter = new Intl.NumberFormat("en-GB", {
+    style: "currency",
+    currency: "GBP", // Change this to the appropriate currency code
+    minimumFractionDigits: 2, // Ensure two decimal places
+  });
+
+  // Format the price
+  return formatter.format(Number(price));
+}
+
+export function trimDateFormat(dateString) {
+  // Extract the first 16 characters to get "Sat, 11 Nov 2023"
+  var trimmedDate = dateString.substring(0, 16);
+
+  return trimmedDate;
+}
+
+export function trimDateFormats(inputDate) {
+  // Convert the input date string to a JavaScript Date object
+  let dateObject = new Date(inputDate);
+
+  // Create an array of month names
+  let monthNames = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+
+  // Get the abbreviated day name (e.g., "Sat")
+  let dayName = dateObject.toLocaleDateString("en-US", { weekday: "short" });
+
+  // Get the day of the month (e.g., "11")
+  let dayOfMonth = dateObject.getDate();
+
+  // Get the abbreviated month name (e.g., "Nov")
+  let monthName = monthNames[dateObject.getMonth()];
+
+  // Get the year (e.g., "2023")
+  let year = dateObject.getFullYear();
+
+  // Construct the trimmed date string
+  let trimmedDate = `${dayName}, ${dayOfMonth} ${monthName} ${year}`;
+
+  return trimmedDate;
+}
+
+export function extractCountryCodeAndNumber(phoneNumber) {
+  // Use a regular expression to capture the country code and phone number
+  const regex = /\((\+\d+)\) (\d+)/;
+
+  // Extract the matched parts of the string
+  const match = phoneNumber.match(regex);
+
+  // Check if a match is found
+  if (match && match.length === 3) {
+    const countryCode = match[1];
+    const phoneNumber = match[2];
+    return `(${countryCode}) ${phoneNumber}`;
+  } else {
+    // If no match is found, return the original string
+    return phoneNumber;
+  }
+}
+
+export function extractPhoneNumber(inputString) {
+  // Find the index of the opening bracket
+  const startIndex = inputString.indexOf("(");
+
+  // Check if the opening bracket is found
+  if (startIndex !== -1) {
+    // Use substring to extract the portion from the opening bracket to the end
+    const phoneNumber = inputString.substring(startIndex);
+    return phoneNumber;
+  } else {
+    // Return a message indicating that the opening bracket was not found
+    return "Opening bracket not found in the input string.";
+  }
+}
+
 export const checkZeroQty = (array) => {
   let check = 0;
   array?.forEach((ar) => {
@@ -34,8 +145,7 @@ export function dateStringToInteger(dateString) {
 export const checkBookStatus = (moveDate, moverTime) => {
   let targetDate = new Date(moveDate);
   if (moverTime) {
-    const [startTime, endTime] =
-      moverTime?.split(" - ") || [];
+    const [startTime, endTime] = moverTime?.split(" - ") || [];
     const ct = convertTimeTo24HourFormat(startTime);
     targetDate.setHours(ct);
   }

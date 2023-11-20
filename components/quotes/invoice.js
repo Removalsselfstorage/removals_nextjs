@@ -2,6 +2,7 @@ import useQuote from "@/hooks/useQuote";
 import AdminLayout from "@/layouts/AdminLayout";
 import {
   convertDateFormat,
+  convertMoveDateFormat,
   formatMovePrice,
   formatMovePrice2,
   getCurrentDateFormatted,
@@ -197,8 +198,9 @@ const Invoice = ({ progressData, quoteFeatures, quoteFeatures2 }) => {
   const [uduration] = useState(() =>
     checkPropertyType() ? `${progressData?.duration} hours` : "---"
   );
-  const [umoveDate] = useState(() =>
-    trimDateFormats(progressData?.moveDateFormatted)
+  const [umoveDate] = useState(
+    () => convertMoveDateFormat(progressData?.moveDate)
+    // trimDateFormats(progressData?.moveDateFormatted)
   );
   // const [umoveDate] = useState(() => moverDetails?.moveDateFormatted);
   const [upackage] = useState(() => progressData?.movePackage);
@@ -252,7 +254,7 @@ const Invoice = ({ progressData, quoteFeatures, quoteFeatures2 }) => {
   //   ulink,
   // });
 
-  console.log({ uincludes1, moverDetails });
+  // console.log({ umoveDate, progressData });
 
   const uploadImg = async () => {
     let uploadImgUrl;
@@ -304,6 +306,7 @@ const Invoice = ({ progressData, quoteFeatures, quoteFeatures2 }) => {
   };
 
   console.log({
+    progressData,
     udate,
     uemail,
     ubookref,
@@ -339,49 +342,54 @@ const Invoice = ({ progressData, quoteFeatures, quoteFeatures2 }) => {
     Number(moverDetails?.moverPrice) + Number(moverDetails?.extraPrice);
 
   return (
-    <div className="">
-      <div className="" ref={componentRef}>
-        <InvoiceDetails
-          udate={udate}
-          uemail={uemail}
-          ubookref={ubookref}
-          uname={uname}
-          uphone={uphone}
-          uaddress1={uaddress1}
-          uaddressFloor1={uaddressFloor1}
-          uaddress2={uaddress2}
-          uaddressFloor2={uaddressFloor2}
-          uproperty={uproperty}
-          umovers={umovers}
-          umileage={umileage}
-          uvolume={uvolume}
-          uduration={uduration}
-          umoveDate={umoveDate}
-          upackage={upackage}
-          utime={utime}
-          uincludes={uincludes}
-          uexcludes={uexcludes}
-          uincludes1={uincludes1}
-          uincludes2={uincludes2}
-          uincludes3={uincludes3}
-          uincludes4={uincludes4}
-          uincludes5={uincludes5}
-          uexcludes1={uexcludes1}
-          uexcludes2={uexcludes2}
-          uexcludes3={uexcludes3}
-          uexcludes4={uexcludes4}
-          uexcludes5={uexcludes5}
-          ucharge={ucharge}
-          uvat={uvat}
-          utotal={utotal}
-          ulink={ulink}
-          checkPropertyType={checkPropertyType}
-        />
+    <div className=''>
+      <div className='' ref={componentRef}>
+        <div className='relative'>
+          <p className='text-secondary text-[150px] opacity-[0.15] font-extrabold absolute top-[38%] left-[15%] md:top-[38%] md:left-[35%] rotate-[-45deg]'>
+            PAID
+          </p>
+          <InvoiceDetails
+            udate={udate}
+            uemail={uemail}
+            ubookref={ubookref}
+            uname={uname}
+            uphone={uphone}
+            uaddress1={uaddress1}
+            uaddressFloor1={uaddressFloor1}
+            uaddress2={uaddress2}
+            uaddressFloor2={uaddressFloor2}
+            uproperty={uproperty}
+            umovers={umovers}
+            umileage={umileage}
+            uvolume={uvolume}
+            uduration={uduration}
+            umoveDate={umoveDate}
+            upackage={upackage}
+            utime={utime}
+            uincludes={uincludes}
+            uexcludes={uexcludes}
+            uincludes1={uincludes1}
+            uincludes2={uincludes2}
+            uincludes3={uincludes3}
+            uincludes4={uincludes4}
+            uincludes5={uincludes5}
+            uexcludes1={uexcludes1}
+            uexcludes2={uexcludes2}
+            uexcludes3={uexcludes3}
+            uexcludes4={uexcludes4}
+            uexcludes5={uexcludes5}
+            ucharge={ucharge}
+            uvat={uvat}
+            utotal={utotal}
+            ulink={ulink}
+            checkPropertyType={checkPropertyType}
+          />
+        </div>
       </div>
 
       {/* submit button2 */}
-      <div className=" w-full px-[20px] lg:px-[30px] mt-[50px] mb-[50px]">
-        <div className="flex  w-full justify-center my-[20px]">
+      <div className=' w-full px-[20px] lg:px-[30px] mt-[50px] mb-[50px]'>
+        <div className='flex  w-full justify-center my-[20px]'>
           {/* <Link
             href={ulink}
             onClick={sendQuoteHandle}
@@ -403,15 +411,15 @@ const Invoice = ({ progressData, quoteFeatures, quoteFeatures2 }) => {
             onClick={captureImage}
             // onClick={convert}
             // disabled={submitLoading || submitLoading2}
-            className="btn btn-secondary btn-wide flex items-center space-x-[5px] h-[60px]"
+            className='btn btn-secondary btn-wide flex items-center space-x-[5px] h-[60px]'
           >
-            {!submitLoading2 && <span className="">Download Invoice</span>}
+            {!submitLoading2 && <span className=''>Download Invoice</span>}
             {submitLoading2 && (
-              <span className="loading loading-spinner loading-md text-white"></span>
+              <span className='loading loading-spinner loading-md text-white'></span>
             )}
             {!submitLoading2 && (
-              <span className="">
-                <BiSave className="text-[27px]" />
+              <span className=''>
+                <BiSave className='text-[27px]' />
               </span>
             )}
           </button>
@@ -424,12 +432,12 @@ const Invoice = ({ progressData, quoteFeatures, quoteFeatures2 }) => {
       </div> */}
 
       {showMessage && (
-        <div className="text-[14px] mt-[15px] text-center text-primary bg-primary/20 rounded-[10px] py-[10px] px-[30px]">
+        <div className='text-[14px] mt-[15px] text-center text-primary bg-primary/20 rounded-[10px] py-[10px] px-[30px]'>
           Quote has been successfully sent
         </div>
       )}
       {showError && (
-        <div className="text-[14px] mt-[15px] text-center text-secondary bg-secondary/20 rounded-[10px] py-[10px] px-[30px]">
+        <div className='text-[14px] mt-[15px] text-center text-secondary bg-secondary/20 rounded-[10px] py-[10px] px-[30px]'>
           Quote sending was unsuccessful
         </div>
       )}

@@ -278,10 +278,8 @@ const Quote = ({ progressData, quoteFeatures, quoteFeatures2 }) => {
 
   const sendQuoteHandle = async () => {
     setSubmitLoading(true);
-   
   };
 
- 
   const captureImage = async () => {
     setSubmitLoading2(true);
     const canvas = await html2canvas(componentRef.current);
@@ -337,8 +335,8 @@ const Quote = ({ progressData, quoteFeatures, quoteFeatures2 }) => {
     Number(moverDetails?.moverPrice) + Number(moverDetails?.extraPrice);
 
   return (
-    <div className="">
-      <div className="" ref={componentRef}>
+    <div className=''>
+      <div className='' ref={componentRef}>
         <QuoteDetails
           udate={udate}
           uemail={uemail}
@@ -374,30 +372,32 @@ const Quote = ({ progressData, quoteFeatures, quoteFeatures2 }) => {
           utotal={utotal}
           ulink={ulink}
           checkPropertyType={checkPropertyType}
+          sendQuoteHandle={sendQuoteHandle}
+          submitLoading={submitLoading}
         />
       </div>
 
       {/* submit button2 */}
-      <div className=" w-full px-[20px] lg:px-[30px] mt-[50px] mb-[50px]">
-        <div className="flex  w-full justify-center my-[20px]">
+      {/* <div className=' w-full px-[20px] lg:px-[30px] mt-[50px] mb-[50px]'>
+        <div className='flex  w-full justify-center my-[20px]'>
           <Link
             href={ulink}
             onClick={sendQuoteHandle}
-            className="btn btn-secondary btn-wide flex items-center space-x-[5px] h-[60px]"
-            disabled={submitLoading || submitLoading2}
+            className='btn btn-secondary btn-wide flex items-center space-x-[5px] h-[60px]'
+            disabled={submitLoading}
           >
-            {!submitLoading && <span className="">Pay Now</span>}
+            {!submitLoading && <span className=''>Pay Now</span>}
             {submitLoading && (
-              <span className="loading loading-spinner loading-md text-white"></span>
+              <span className='loading loading-spinner loading-md text-white'></span>
             )}
             {!submitLoading && (
-              <span className="">
-                <IoIosSend className="text-[27px]" />
+              <span className=''>
+                <IoIosSend className='text-[27px]' />
               </span>
             )}
           </Link>
         </div>
-      </div>
+      </div> */}
 
       {/* <div className="px-[20px] md:px-[0px] text-[16px] justify-center mt-[20px] flex flex-col space-y-[10px] md:space-y-0 md:flex-row md:items-center md:space-x-[10px] mb-[10px]">
         <p className="font-bold text-secondary">Payment Link:</p>
@@ -405,12 +405,12 @@ const Quote = ({ progressData, quoteFeatures, quoteFeatures2 }) => {
       </div> */}
 
       {showMessage && (
-        <div className="text-[14px] mt-[15px] text-center text-primary bg-primary/20 rounded-[10px] py-[10px] px-[30px]">
+        <div className='text-[14px] mt-[15px] text-center text-primary bg-primary/20 rounded-[10px] py-[10px] px-[30px]'>
           Quote has been successfully sent
         </div>
       )}
       {showError && (
-        <div className="text-[14px] mt-[15px] text-center text-secondary bg-secondary/20 rounded-[10px] py-[10px] px-[30px]">
+        <div className='text-[14px] mt-[15px] text-center text-secondary bg-secondary/20 rounded-[10px] py-[10px] px-[30px]'>
           Quote sending was unsuccessful
         </div>
       )}

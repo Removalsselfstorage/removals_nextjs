@@ -1,4 +1,25 @@
-// Outputs: "Wednesday, 20 September, 2023"
+export function convertMoveDateFormat(inputDate) {
+  // Parse the input date
+  const parts = inputDate.split('/');
+  const year = parseInt(parts[0], 10);
+  const month = parseInt(parts[1], 10);
+  const day = parseInt(parts[2], 10);
+
+  // Create a Date object
+  const date = new Date(year, month - 1, day);
+
+  // Define the days of the week and months
+  const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  const months = [
+    'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+  ];
+
+  // Format the date as "Sat, 25 Nov 2023"
+  const formattedDate = `${daysOfWeek[date.getUTCDay()]}, ${date.getUTCDate()} ${months[date.getUTCMonth()]} ${date.getUTCFullYear()}`;
+
+  return formattedDate;
+}// Outputs: "Wednesday, 20 September, 2023"
 
 export function trimPhoneFormat(phoneNumber) {
   // Use a regular expression to match the desired format

@@ -25,16 +25,7 @@ import {
   updatePasswordResetError,
   updateVerificationMessage,
 } from "@/store/userSlice";
-// import { sendEmail } from "@/utils/sendEmails";
-import { activateEmailTemplate } from "@/emails/activateEmailTemplate";
-import {
-  getAllMoverDetails,
-  updateCompanyDetails,
-  updateCompanyDocs,
-  updateJustRegistered,
-  updateMoverPersonalDetails,
-  updatePersonalDetails,
-} from "@/store/moverSlice";
+
 import { fetchAllMoversDetails } from "@/lib/fetchData2";
 import {
   UploadMoverData,
@@ -43,14 +34,7 @@ import {
 import { UploadMoverDocumentation } from "@/lib/uploadMoverDocumentation";
 import { UploadMoverPersonalDetails3 } from "@/lib/uploadMoverPersonalDetails3";
 import { UploadMoverDocumentation2 } from "@/lib/uploadMoverDocumentation2";
-import { doc, setDoc } from "firebase/firestore";
-import {
-  useQuery,
-  useMutation,
-  useQueryClient,
-  QueryClient,
-  QueryClientProvider,
-} from "@tanstack/react-query";
+
 import toast, { Toaster } from "react-hot-toast";
 import useMover from "./useMover";
 
@@ -93,7 +77,7 @@ export const AuthProvider = ({ children }) => {
 
   const dispatch = useDispatch();
 
-  // const { userDetails } = useSelector(getAllUserDetails);
+  const { userDetails } = useSelector(getAllUserDetails);
 
   // console.log(userDetails);
 
@@ -108,7 +92,59 @@ export const AuthProvider = ({ children }) => {
     () =>
       onAuthStateChanged(auth, (authUser) => {
         if (authUser) {
-          dispatch(updateUserDetails(authUser));
+          const authDetails = { ...authUser };
+          const fetchDatas = async () => {
+            const userData = await fetchAllMoversDetails(authDetails.uid);
+            updateJustR(userData?.personalDetails?.justRegistered);
+            updatePersonalMover({
+              uid: userData?.personalDetails.uid,
+              firstName: userData?.personalDetails.firstName,
+              lastName: userData?.personalDetails.lastName,
+              generatedName: userData?.personalDetails.generatedName,
+              email: userData?.personalDetails.email,
+              phone: userData?.personalDetails.phone,
+              address: userData?.personalDetails.address,
+              personalBio: userData?.personalDetails.personalBio,
+              // profilePictureRaw: "",
+              profilePictureUrl: userData?.personalDetails.profileImageUrl,
+              profilePictureName: userData?.personalDetails.profilePictureName,
+              registerDate: authDetails?.metadata.creationTime,
+              lastLogin: authDetails?.metadata.lastSignInTime,
+              reviewSubmit: userData?.personalDetails.reviewSubmit,
+              acceptedTerms: userData?.personalDetails.acceptedTerms,
+              approvalStatus: userData?.personalDetails.approvalStatus,
+              rating: userData?.personalDetails.rating,
+              ratingCount: userData?.personalDetails.ratingCount,
+            });
+            updateCompanyDe({
+              companyName: userData.companyDetails.companyName,
+              generatedName: userData.companyDetails.generatedName,
+              companyNumber: userData.companyDetails.companyNumber,
+              companyAddress: userData.companyDetails.companyAddress,
+              companyBio: userData.companyDetails.companyBio,
+              // companyProfilePixRaw: userData.CompanyPix.companyProfilePixPreviewUrl,
+              // companyProfilePixRaw: "",
+              companyProfilePixUrl: userData.CompanyPix.companyProfilePixUrl,
+              companyProfilePixName: userData.CompanyPix.companyProfilePixName,
+              reviewSubmit: userData?.companyDetails.reviewSubmit,
+            });
+            updateCompanyDo({
+              regCertificateUrl: userData.RegCertificate.regCertificateUrl,
+              regCertificateName: userData.RegCertificate.regCertificateName,
+              vehInsuranceUrl: userData.VehInsurance.vehInsuranceUrl,
+              vehInsuranceName: userData.VehInsurance.vehInsuranceName,
+              pubInsuranceUrl: userData.PubInsurance.pubInsuranceUrl,
+              pubInsuranceName: userData.PubInsurance.pubInsuranceName,
+              tranInsuranceUrl: userData.TranInsurance.tranInsuranceUrl,
+              tranInsuranceName: userData.TranInsurance.tranInsuranceName,
+              drivingLicenseUrl: userData.DrivingLicense.drivingLicenseUrl,
+              drivingLicenseName: userData.DrivingLicense.drivingLicenseName,
+            });
+          };
+
+          fetchDatas();
+          dispatch(updateUserDetails(authDetails));
+          console.log({ authDetails, userDetails });
         } else {
           dispatch(updateUserDetails(null));
         }

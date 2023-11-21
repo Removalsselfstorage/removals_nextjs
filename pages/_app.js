@@ -19,8 +19,8 @@ import {
   QueryClientProvider,
 } from "@tanstack/react-query";
 import Head from "next/head";
-import "react-toastify/dist/ReactToastify.css";
-import { ToastContainer } from "react-toastify";
+// import "react-toastify/dist/ReactToastify.css";
+// import { ToastContainer } from "react-toastify";
 import toast, { ToastBar, Toaster } from "react-hot-toast";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";

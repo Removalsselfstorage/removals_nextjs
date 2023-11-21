@@ -40,10 +40,10 @@ const Appointments = () => {
           </div>
           <div className='rounded-[10px] w-full bg-secondary/5 flex flex-col space-y-[20px] md:space-y-0 md:flex-row md:justify-between  md:items-center py-[30px] px-[20px] text-[15px]'>
             <div className='flex space-x-[20px] items-center'>
-              <LuCalendarX2 className='text-secondary text-[50px] md:text-[80px]' />
+              <LuCalendarX2 className='text-secondary text-[40px] md:text-[60px]' />
               <div className='flex flex-col md:text-[18px]'>
                 <p className=''>Can't make it to your appointment?</p>
-                <p className='mt-[5px] w-full font-bold'>
+                <p className='mt-[0px] w-full font-bold'>
                   Don't reject, reschedule!
                 </p>
               </div>

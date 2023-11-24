@@ -11,7 +11,7 @@ import Link from "next/link";
 const CurrentTable = ({ moverBooks }) => {
   return (
     <div className='overflow-x-auto w-full overflow-hidden py-[30px] px-[10px] md:px-[30px]'>
-      <table className='table table-md'>
+      <table className='table table-md w-full'>
         {/* head */}
         <thead>
           <tr className='border-[2px]'>
@@ -21,6 +21,7 @@ const CurrentTable = ({ moverBooks }) => {
             <th className='text-[15px] text-black'>Move Desc.</th>
             <th className='text-[15px] text-black'>Move Date</th>
             <th className='text-[15px] text-black'>Move Time</th>
+            <th className='text-[15px] text-black'>Acceptance</th>
             <th className='text-[15px] text-black'>Status</th>
           </tr>
         </thead>
@@ -64,6 +65,7 @@ const CurrentTable = ({ moverBooks }) => {
                 </td>
                 <td className=''>{convertMoveDateFormat(mm?.moveDate)}</td>
                 <td className=''>{trimDateFormat(mm?.moverTime)}</td>
+                <td className=''>{trimDateFormat(mm?.acceptance)}</td>
                 <td
                   className={`${
                     isGivenDateGreaterThanCurrent

@@ -1,14 +1,16 @@
 // import GenerateRandomName from "@/components/generateRandomName";
 import { GenerateRandomName } from "@/components/generateRandomName";
 import { adjectives, nouns } from "@/dummyData/dummyData";
-import { db, storage } from "@/firebase";
+import { db } from "@/firebase";
 import {
   collection,
   addDoc,
   query,
   where,
   getDocs,
+  doc,
   getDoc,
+  setDoc,
 } from "firebase/firestore";
 import { uploadBytes, ref, getDownloadURL } from "firebase/storage";
 import MoverLayout from "@/layouts/MoverLayout";
@@ -62,6 +64,10 @@ const Appointments = ({ allBookings }) => {
   const [showTab, setShowTab] = useState("");
   const [moverBooks, setMoverBooks] = useState([]);
   const [currentMoverBooks, setCurrentMoverBooks] = useState([]);
+  const [currentAcceptedMoverBooks, setCurrentAcceptedMoverBooks] = useState(
+    []
+  );
+  const [currentPendingMoverBooks, setCurrentPendingMoverBooks] = useState([]);
   const [completedMoverBooks, setCompletedMoverBooks] = useState([]);
 
   useEffect(() => {
@@ -80,12 +86,51 @@ const Appointments = ({ allBookings }) => {
       return isGivenDateGreaterThanCurrent === true;
     });
 
+    const currentAcceptedMb = currentMb?.filter(
+      (bc) => bc.acceptance === "accepted"
+    );
+
+    const currentPendingMb = currentMb?.filter(
+      (bc) => bc.acceptance === "pending"
+    );
+
     setMoverBooks(mb);
     setCurrentMoverBooks(currentMb);
     setCompletedMoverBooks(completedMb);
+
+    const moverDetailsUpdate = async () => {
+      updatePersonalMover({
+        currentAcceptedMoves: currentAcceptedMb?.length,
+        currentPendingMoves: currentPendingMb?.length,
+        completedMoves: completedMb?.length,
+      });
+      // const moversRef = doc(db, "moversData", uid);
+      try {
+        await setDoc(
+          doc(db, "moversData", personalMoverDetails?.uid),
+
+          {
+            currentAcceptedMoves: currentAcceptedMb?.length,
+            currentPendingMoves: currentPendingMb?.length,
+            completedMoves: completedMb?.length,
+          },
+          { merge: true }
+        );
+
+        console.log("Mover Details update was successful @ reservation id");
+      } catch (error) {
+        console.log(error);
+        // return false;
+        console.log("Mover Details update was unsuccessful @ reservation id");
+        setSubmitLoading(false);
+      }
+    };
+
+    moverDetailsUpdate();
   }, []);
 
-  console.log({ moverBooks, allBookings, currentMoverBooks });
+  // console.log({ personalMoverDetails, moverBooks, allBookings, currentMoverBooks });
+  // console.log({ personalMoverDetails });
 
   return (
     <MoverLayout>
@@ -240,7 +285,7 @@ const Appointments = ({ allBookings }) => {
             </button>
           </div>
 
-          <div className='border rounded-tr-[30px] rounded-br-[30px] rounded-bl-[30px] overflow-x-auto w-[400px] md:w-full overflow-hidden'>
+          <div className='border rounded-tr-[30px] rounded-br-[30px] rounded-bl-[30px] overflow-x-auto w-[450px] sm:w-full overflow-hidden'>
             {showTab === "1" && <CurrentTable moverBooks={currentMoverBooks} />}
             {showTab === "2" && (
               <CompletedTable moverBooks={completedMoverBooks} />

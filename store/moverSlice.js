@@ -21,6 +21,9 @@ const initialState = {
     approvalStatus: "UNAPPROVED",
     rating: 0,
     ratingCount: 0,
+    currentAcceptedMoves: 0,
+    currentPendingMoves: 0,
+    completedMoves: 0,
   },
 
   companyDetails: {

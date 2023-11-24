@@ -115,6 +115,11 @@ export const AuthProvider = ({ children }) => {
               approvalStatus: userData?.personalDetails.approvalStatus,
               rating: userData?.personalDetails.rating,
               ratingCount: userData?.personalDetails.ratingCount,
+              currentAcceptedMoves:
+                userData?.personalDetails.currentAcceptedMoves,
+              currentPendingMoves:
+                userData?.personalDetails.currentPendingMoves,
+              completedMoves: userData?.personalDetails.completedMoves,
             });
             updateCompanyDe({
               companyName: userData.companyDetails.companyName,

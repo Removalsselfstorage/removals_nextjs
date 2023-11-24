@@ -12,13 +12,14 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { AiOutlineLeft } from "react-icons/ai";
 import { useSelector } from "react-redux";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "@/firebase";
 import MoverLayout from "@/layouts/MoverLayout";
 
 const UserDetails = ({ progressData }) => {
   //   const [progressData, setBooking] = useState({});
   const router = useRouter();
+  const [showButton, setShowButton] = useState("");
 
   //   const {
   //     completedBookings,
@@ -34,7 +35,37 @@ const UserDetails = ({ progressData }) => {
   //     setBooking(allBook(id));
   //   }, [allBookings]);
 
-    console.log({ progressData });
+  const updateAcceptance = async (value) => {
+    try {
+      await setDoc(
+        doc(db, "bookingData", progressData?.bookingId),
+
+        {
+          acceptance: value,
+        },
+        { merge: true }
+      );
+   
+      console.log("Move Acceptance update was successful @ reservation id");
+    } catch (error) {
+      console.log(error);
+      // return false;
+      console.log("Move Acceptance update was unsuccessful @ reservation id");
+      setSubmitLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (progressData?.acceptance === "pending") {
+      setShowButton("");
+    } else if (progressData?.acceptance === "accepted") {
+      setShowButton("1");
+    } else if (progressData?.acceptance === "rejected") {
+      setShowButton("2");
+    }
+  }, []);
+
+  console.log({ progressData });
 
   return (
     <MoverLayout>
@@ -411,6 +442,33 @@ const UserDetails = ({ progressData }) => {
                   </tr>
                 </tfoot>
               </table>
+            </div>
+
+            <div className='flex items-center justify-center mt-[50px] mb-[50px]'>
+              <div
+                onClick={() => {
+                  setShowButton("1");
+                  updateAcceptance("accepted");
+                }}
+                className={`${
+                  showButton === "1" && "bg-primary  border-primary text-white"
+                }  font-bold  py-[10px] px-[30px] border-[3px] hover:border-primary rounded-tl-[10px] rounded-bl-[10px] hover:bg-primary duration-300 cursor-pointer text-gray-500 hover:text-white`}
+              >
+                {showButton === "1" ? "Accepted" : "Accept"}
+              </div>
+              <div
+                onClick={() => {
+                  updateAcceptance("rejected");
+                  setShowButton("2");
+                }}
+                className={`${
+                  showButton === "2" &&
+                  "bg-secondary border-secondary text-white"
+                } font-bold py-[10px] px-[30px] border-[3px] rounded-tr-[10px] rounded-br-[10px] hover:bg-secondary hover:border-secondary duration-300 cursor-pointer text-gray-500 hover:text-white`}
+              >
+                {/* Reject */}
+                {showButton === "2" ? "Rejected" : "Reject"}
+              </div>
             </div>
           </div>
         </div>

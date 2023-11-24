@@ -122,7 +122,7 @@ const Appointments = ({ allBookings }) => {
         console.log(error);
         // return false;
         console.log("Mover Details update was unsuccessful @ reservation id");
-        setSubmitLoading(false);
+        // setSubmitLoading(false);
       }
     };
 

@@ -3,6 +3,7 @@ import useMover from "@/hooks/useMover";
 import MoverLayout from "@/layouts/MoverLayout";
 import NormalLayout from "@/layouts/NormalLayout";
 import {
+  fetchAllBookings,
   fetchAllMoversDetails,
   fetchMoverDetails3,
   fetchMoversCompanyPix,
@@ -15,7 +16,11 @@ import {
 } from "@/lib/fetchData2";
 import { getAllMoverDetails } from "@/store/moverSlice";
 import { getAllUserDetails, getAllpersonalDetails } from "@/store/userSlice";
-import { combineInitials, convertUTCToLocal } from "@/utils/logics";
+import {
+  checkBookStatus,
+  combineInitials,
+  convertUTCToLocal,
+} from "@/utils/logics";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -107,7 +112,7 @@ const sections = [
   },
 ];
 
-const Dashboard = ({  }) => {
+const Dashboard = ({ allBookings }) => {
   const {
     justRegistered,
     personalMoverDetails,
@@ -248,18 +253,38 @@ const Dashboard = ({  }) => {
     });
   }, [auth]);
 
-  // useEffect(() => {
-  //   const fetchMoverDetails = async () => {
-  //     const moverD = await fetchAllMoversDetails(uid);
-  //     setMoverData([{ ...moverD }]);
-  //   };
+  useEffect(() => {
+    const mb = allBookings?.filter(
+      (ab) => ab?.moverName === companyDetails?.generatedName
+    );
 
-  //   if (uid) {
-  //     fetchMoverDetails();
-  //   }
-  // }, []);
+    const completedMb = mb?.filter((bc) => bc.moveCarriedOut === true);
 
-  console.log({ personalMoverDetails, moverData,  });
+    const currentMb = mb?.filter((ad) => {
+      const isGivenDateGreaterThanCurrent = checkBookStatus(
+        ad?.moveDate,
+        ad?.moverTime
+      );
+      return isGivenDateGreaterThanCurrent === true;
+    });
+
+    const currentAcceptedMb = currentMb?.filter(
+      (bc) => bc.acceptance === "accepted"
+    );
+
+    const currentPendingMb = currentMb?.filter(
+      (bc) => bc.acceptance === "pending"
+    );
+
+    updatePersonalMover({
+      currentAcceptedMoves: currentAcceptedMb?.length,
+      currentPendingMoves: currentPendingMb?.length,
+      completedMoves: completedMb?.length,
+    });
+    
+  }, []);
+
+  console.log({ personalMoverDetails, moverData });
 
   return (
     <MoverLayout>
@@ -533,28 +558,32 @@ const Dashboard = ({  }) => {
 
 export default Dashboard;
 
-// export async function getServerSideProps(context) {
-//   // const bookingsData = await fetchAllBookings();
-//   // const userData = await fetchAllMoversDetails(userCredential.user.uid);
+export async function getServerSideProps(context) {
+  const bookingsData = await fetchAllBookings();
 
-//   let uid = "";
+  const filterCompleted = bookingsData?.bookings?.filter(
+    (bd) => bd.completedBook === true
+  );
 
-//   console.log({ context });
-//   // const moverD = await fetchAllMoversDetails(uid);
-//   // // const docSnap = await getDoc(bookingRef);
-//   // // const progressData = docSnap.data();
+  const allBookings = [...filterCompleted]?.sort((a, b) => {
+    return new Date(b.date) - new Date(a.date);
+  });
 
-//   if (uid) {
-//     return {
-//       props: {
-//         moverD: uid,
-//       },
-//     };
-//   } else {
-//     return {
-//       props: {
-//         moverD: {},
-//       },
-//     };
-//   }
-// }
+  // const moverBooks = allBookings?.filter((ab) => ab.name === "");
+
+  if (typeof bookingsData === "undefined") {
+    return {
+      props: {
+        // progressData: null,
+        allBookings: null,
+      },
+    };
+  } else {
+    return {
+      props: {
+        // progressData: progressData,
+        allBookings,
+      },
+    };
+  }
+}

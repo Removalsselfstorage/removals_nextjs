@@ -3,6 +3,7 @@ import AdminLayout from "@/layouts/AdminLayout";
 import { fetchAllBookings, fetchfilteredBooks } from "@/lib/fetchData2";
 // import { getfilteredBooks } from "@/store/bookingSlice";
 import {
+  checkBookStatus,
   convertMoveDateFormat,
   formatDate,
   trimDateFormat,
@@ -20,6 +21,11 @@ const UserDetails = ({ progressData }) => {
   //   const [progressData, setBooking] = useState({});
   const router = useRouter();
   const [showButton, setShowButton] = useState("");
+
+  const isGivenDateGreaterThanCurrent = checkBookStatus(
+    progressData?.moveDate,
+    progressData?.moverTime
+  );
 
   //   const {
   //     completedBookings,
@@ -45,7 +51,7 @@ const UserDetails = ({ progressData }) => {
         },
         { merge: true }
       );
-   
+
       console.log("Move Acceptance update was successful @ reservation id");
     } catch (error) {
       console.log(error);
@@ -444,32 +450,35 @@ const UserDetails = ({ progressData }) => {
               </table>
             </div>
 
-            <div className='flex items-center justify-center mt-[50px] mb-[50px]'>
-              <div
-                onClick={() => {
-                  setShowButton("1");
-                  updateAcceptance("accepted");
-                }}
-                className={`${
-                  showButton === "1" && "bg-primary  border-primary text-white"
-                }  font-bold  py-[10px] px-[30px] border-[3px] hover:border-primary rounded-tl-[10px] rounded-bl-[10px] hover:bg-primary duration-300 cursor-pointer text-gray-500 hover:text-white`}
-              >
-                {showButton === "1" ? "Accepted" : "Accept"}
+            {(!progressData?.moveCarriedOut || isGivenDateGreaterThanCurrent) && (
+              <div className='flex items-center justify-center mt-[50px] mb-[50px]'>
+                <div
+                  onClick={() => {
+                    setShowButton("1");
+                    updateAcceptance("accepted");
+                  }}
+                  className={`${
+                    showButton === "1" &&
+                    "bg-primary  border-primary text-white"
+                  }  font-bold  py-[10px] px-[30px] border-[3px] hover:border-primary rounded-tl-[10px] rounded-bl-[10px] hover:bg-primary duration-300 cursor-pointer text-gray-500 hover:text-white`}
+                >
+                  {showButton === "1" ? "Accepted" : "Accept"}
+                </div>
+                <div
+                  onClick={() => {
+                    updateAcceptance("rejected");
+                    setShowButton("2");
+                  }}
+                  className={`${
+                    showButton === "2" &&
+                    "bg-secondary border-secondary text-white"
+                  } font-bold py-[10px] px-[30px] border-[3px] rounded-tr-[10px] rounded-br-[10px] hover:bg-secondary hover:border-secondary duration-300 cursor-pointer text-gray-500 hover:text-white`}
+                >
+                  {/* Reject */}
+                  {showButton === "2" ? "Rejected" : "Reject"}
+                </div>
               </div>
-              <div
-                onClick={() => {
-                  updateAcceptance("rejected");
-                  setShowButton("2");
-                }}
-                className={`${
-                  showButton === "2" &&
-                  "bg-secondary border-secondary text-white"
-                } font-bold py-[10px] px-[30px] border-[3px] rounded-tr-[10px] rounded-br-[10px] hover:bg-secondary hover:border-secondary duration-300 cursor-pointer text-gray-500 hover:text-white`}
-              >
-                {/* Reject */}
-                {showButton === "2" ? "Rejected" : "Reject"}
-              </div>
-            </div>
+            )}
           </div>
         </div>
       )}

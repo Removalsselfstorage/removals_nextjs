@@ -533,28 +533,28 @@ const Dashboard = ({  }) => {
 
 export default Dashboard;
 
-export async function getServerSideProps(context) {
-  // const bookingsData = await fetchAllBookings();
-  // const userData = await fetchAllMoversDetails(userCredential.user.uid);
+// export async function getServerSideProps(context) {
+//   // const bookingsData = await fetchAllBookings();
+//   // const userData = await fetchAllMoversDetails(userCredential.user.uid);
 
-  let uid = "";
+//   let uid = "";
 
-  console.log({ context });
-  // const moverD = await fetchAllMoversDetails(uid);
-  // // const docSnap = await getDoc(bookingRef);
-  // // const progressData = docSnap.data();
+//   console.log({ context });
+//   // const moverD = await fetchAllMoversDetails(uid);
+//   // // const docSnap = await getDoc(bookingRef);
+//   // // const progressData = docSnap.data();
 
-  if (uid) {
-    return {
-      props: {
-        moverD: uid,
-      },
-    };
-  } else {
-    return {
-      props: {
-        moverD: {},
-      },
-    };
-  }
-}
+//   if (uid) {
+//     return {
+//       props: {
+//         moverD: uid,
+//       },
+//     };
+//   } else {
+//     return {
+//       props: {
+//         moverD: {},
+//       },
+//     };
+//   }
+// }

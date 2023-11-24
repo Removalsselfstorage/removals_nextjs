@@ -13,7 +13,11 @@ import {
 import { uploadBytes, ref, getDownloadURL } from "firebase/storage";
 import MoverLayout from "@/layouts/MoverLayout";
 import NormalLayout from "@/layouts/NormalLayout";
-import { fetchGeneratedNames, fetchMoverDetails3 } from "@/lib/fetchData2";
+import {
+  fetchAllBookings,
+  fetchGeneratedNames,
+  fetchMoverDetails3,
+} from "@/lib/fetchData2";
 import { getAllUserDetails } from "@/store/userSlice";
 import Head from "next/head";
 import { useRouter } from "next/navigation";
@@ -23,8 +27,66 @@ import { CgProfile } from "react-icons/cg";
 import { useSelector } from "react-redux";
 import { LuCalendarX2 } from "react-icons/lu";
 import { FaAngleRight } from "react-icons/fa6";
+import useMover from "@/hooks/useMover";
+import {
+  checkBookStatus,
+  convertMoveDateFormat,
+  trimDateFormat,
+  trimDateFormats,
+} from "@/utils/logics";
+import Link from "next/link";
+import CurrentTable from "@/components/Appointments/CurrentTable";
+import CompletedTable from "@/components/Appointments/CompletedTable";
+import AllTable from "@/components/Appointments/AllTable";
 
-const Appointments = () => {
+const Appointments = ({ allBookings }) => {
+  const {
+    justRegistered,
+    personalMoverDetails,
+    companyDetails,
+    companyDocs,
+    allMoverData,
+    updateJustR,
+    resetJustR,
+    updatePersonalMover,
+    resetPersonalMover,
+    updateCompanyDe,
+    resetCompanyDe,
+    updateCompanyDo,
+    resetCompanyDo,
+    updateAllMoverD,
+    resetAllMoverD,
+    router,
+  } = useMover();
+
+  const [showTab, setShowTab] = useState("");
+  const [moverBooks, setMoverBooks] = useState([]);
+  const [currentMoverBooks, setCurrentMoverBooks] = useState([]);
+  const [completedMoverBooks, setCompletedMoverBooks] = useState([]);
+
+  useEffect(() => {
+    setShowTab("1");
+    const mb = allBookings?.filter(
+      (ab) => ab?.moverName === companyDetails?.generatedName
+    );
+
+    const completedMb = mb?.filter((bc) => bc.moveCarriedOut === true);
+
+    const currentMb = mb?.filter((ad) => {
+      const isGivenDateGreaterThanCurrent = checkBookStatus(
+        ad?.moveDate,
+        ad?.moverTime
+      );
+      return isGivenDateGreaterThanCurrent === true;
+    });
+
+    setMoverBooks(mb);
+    setCurrentMoverBooks(currentMb);
+    setCompletedMoverBooks(completedMb);
+  }, []);
+
+  console.log({ moverBooks, allBookings, currentMoverBooks });
+
   return (
     <MoverLayout>
       <Head>
@@ -33,8 +95,8 @@ const Appointments = () => {
         <link rel='icon' href='/rrs_favicon.svg' />
       </Head>
 
-      <div className='py-[50px] bg-white/90 min-w-[100%] min-h-[100%]'>
-        <section className='mb-[30px] w-full px-[30px] '>
+      <div className='py-[50px] bg-white/90 min-h-[100%]'>
+        <section className='mb-[40px] w-full px-[10px] md:px-[30px] '>
           <div className='flex flex-col'>
             <p className='font-bold text-[25px] mb-[20px]'>Appointments</p>
           </div>
@@ -148,9 +210,43 @@ const Appointments = () => {
           </dialog>
         </section>
 
-        <div className='mb-[30px] mt-[100px] w-full px-[30px] flex-col items-center text-center'>
-          <p className='font-bold text-[20px]'>You have no appointments yet</p>
-          <p className=''>You have no appointments yet</p>
+        <div className='mb-[30px] w-full px-[10px] md:px-[30px] '>
+          <div className='flex items-center'>
+            <button
+              onClick={() => setShowTab("1")}
+              className={`${
+                showTab === "1" &&
+                "bg-primary/10 rounded-tl-[5px] border-primary text-primary"
+              } font-bold pb-[5px] pt-[10px] px-[20px] border-b-[3px] hover:bg-primary/10 duration-300 cursor-pointer`}
+            >
+              Current
+            </button>
+            <button
+              onClick={() => setShowTab("2")}
+              className={`${
+                showTab === "2" && "bg-primary/10  border-primary text-primary"
+              } font-bold pb-[5px] pt-[10px] px-[20px] border-b-[3px] hover:bg-primary/10 duration-300 cursor-pointer`}
+            >
+              Completed
+            </button>
+            <button
+              onClick={() => setShowTab("3")}
+              className={`${
+                showTab === "3" &&
+                "bg-primary/10 rounded-tr-[5px] border-primary text-primary"
+              } font-bold pb-[5px] pt-[10px] px-[20px] border-b-[3px] hover:bg-primary/10 duration-300 cursor-pointer`}
+            >
+              All
+            </button>
+          </div>
+
+          <div className='border rounded-tr-[30px] rounded-br-[30px] rounded-bl-[30px] overflow-x-auto w-[400px] md:w-full overflow-hidden'>
+            {showTab === "1" && <CurrentTable moverBooks={currentMoverBooks} />}
+            {showTab === "2" && (
+              <CompletedTable moverBooks={completedMoverBooks} />
+            )}
+            {showTab === "3" && <AllTable moverBooks={moverBooks} />}
+          </div>
         </div>
       </div>
     </MoverLayout>
@@ -159,12 +255,37 @@ const Appointments = () => {
 
 export default Appointments;
 
-// export async function getServerSideProps() {
-//   const names = await fetchGeneratedNames();
+export async function getServerSideProps(context) {
+  // const bookingRef = doc(db, "bookingData", id);
+  // const docSnap = await getDoc(bookingRef);
 
-//   return {
-//     props: {
-//       names,
-//     },
-//   };
-// }
+  // const progressData = docSnap.data();
+
+  const bookingsData = await fetchAllBookings();
+
+  const filterCompleted = bookingsData?.bookings?.filter(
+    (bd) => bd.completedBook === true
+  );
+
+  const allBookings = [...filterCompleted]?.sort((a, b) => {
+    return new Date(b.date) - new Date(a.date);
+  });
+
+  // const moverBooks = allBookings?.filter((ab) => ab.name === "");
+
+  if (typeof bookingsData === "undefined") {
+    return {
+      props: {
+        // progressData: null,
+        allBookings: null,
+      },
+    };
+  } else {
+    return {
+      props: {
+        // progressData: progressData,
+        allBookings,
+      },
+    };
+  }
+}

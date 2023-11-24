@@ -144,7 +144,7 @@ export const AuthProvider = ({ children }) => {
 
           fetchDatas();
           dispatch(updateUserDetails(authDetails));
-          console.log({ authDetails, userDetails });
+          // console.log({ authDetails, userDetails });
         } else {
           dispatch(updateUserDetails(null));
         }

@@ -274,6 +274,7 @@ const MoverCard = ({
             moverName: name,
             moverTime: timeValue,
             moverPrice: price,
+            acceptance: "pending",
             pickPrice: moverDetails?.pickPrice,
             moveDateFormatted: moverDetails?.moveDateFormatted,
             dateId: moverDetails?.dateId,

@@ -109,7 +109,7 @@ export default function Home() {
     }, 2000);
   }, []);
 
-  console.log({ details });
+  // console.log({ details });
 
   return (
     <>

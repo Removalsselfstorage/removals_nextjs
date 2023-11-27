@@ -66,7 +66,7 @@ const Navbar = () => {
   //   readMoversData();
   // }, []);
 
-  console.log({ users, previewUrl, moverDetails,  });
+  // console.log({ users, previewUrl, moverDetails,  });
   // console.log(users.userDetails?.email);
 
   useEffect(() => {

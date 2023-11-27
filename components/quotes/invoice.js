@@ -46,6 +46,7 @@ import QuoteDetails from "./quoteDetails";
 import QuoteDetails2 from "./invoiceDetails";
 import InvoiceDetails from "./invoiceDetails";
 import Link from "next/link";
+import dayjs from "dayjs";
 
 const Invoice = ({ progressData, quoteFeatures, quoteFeatures2 }) => {
   const {
@@ -199,7 +200,7 @@ const Invoice = ({ progressData, quoteFeatures, quoteFeatures2 }) => {
     checkPropertyType() ? `${progressData?.duration} hours` : "---"
   );
   const [umoveDate] = useState(
-    () => convertMoveDateFormat(progressData?.moveDate)
+    () => dayjs(`${progressData?.moveDate}`).format("ddd, D MMM, YYYY")
     // trimDateFormats(progressData?.moveDateFormatted)
   );
   // const [umoveDate] = useState(() => moverDetails?.moveDateFormatted);

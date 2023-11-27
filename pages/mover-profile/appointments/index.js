@@ -274,7 +274,7 @@ const Appointments = ({ allBookings }) => {
             >
               Completed
             </button>
-            <button
+            {/* <button
               onClick={() => setShowTab("3")}
               className={`${
                 showTab === "3" &&
@@ -282,7 +282,7 @@ const Appointments = ({ allBookings }) => {
               } font-bold pb-[5px] pt-[10px] px-[20px] border-b-[3px] hover:bg-primary/10 duration-300 cursor-pointer`}
             >
               All
-            </button>
+            </button> */}
           </div>
 
           <div className='border rounded-tr-[30px] rounded-br-[30px] rounded-bl-[30px] overflow-x-auto w-[450px] sm:w-full overflow-hidden'>
@@ -290,7 +290,7 @@ const Appointments = ({ allBookings }) => {
             {showTab === "2" && (
               <CompletedTable moverBooks={completedMoverBooks} />
             )}
-            {showTab === "3" && <AllTable moverBooks={moverBooks} />}
+            {/* {showTab === "3" && <AllTable moverBooks={moverBooks} />} */}
           </div>
         </div>
       </div>

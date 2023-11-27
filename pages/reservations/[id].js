@@ -273,44 +273,44 @@ const Reservations = ({ progressData, id, allBookings }) => {
     <>
       <Head>
         <title>Removals and Selfstorage - Reservations</title>
-        <meta name="description" content="Rss removal and storage website" />
-        <link rel="icon" href="/rrs_favicon.svg" />
+        <meta name='description' content='Rss removal and storage website' />
+        <link rel='icon' href='/rrs_favicon.svg' />
       </Head>
       {/* {reserveId !== "" && !completedBookLoading ? ( */}
       {reserveId !== "" && !allLoading && (
         <BookingLayout>
-          <main className="">
-            <div className="mb-[70px] lg:mb-[100px] pt-[80px] md:pt-[80px] ">
-              <div className="md:max-w-7xl mx-auto">
+          <main className=''>
+            <div className='mb-[70px] lg:mb-[100px] pt-[80px] md:pt-[80px] '>
+              <div className='md:max-w-7xl mx-auto'>
                 {/* stepper */}
                 <FeaturesScroll2 />
 
                 {/* movers list row */}
-                <div className="flex flex-col mt-[20px] space-y-[10px] lg:space-y-0 lg:flex-row lg:space-x-[10px] mx-[10px] md:mx-[20px]">
+                <div className='flex flex-col mt-[20px] space-y-[10px] lg:space-y-0 lg:flex-row lg:space-x-[10px] mx-[10px] md:mx-[20px]'>
                   {/* left section */}
-                  <div className="lg:flex-[1]  w-full">
+                  <div className='lg:flex-[1]  w-full'>
                     <ReserveSide />
                   </div>
                   {/* right section */}
-                  <div className="bg-white shadow-lg rounded-[30px] lg:flex-[3] px-[20px] py-[30px] md:px-[30px] w-full ">
+                  <div className='bg-white shadow-lg rounded-[30px] lg:flex-[3] px-[20px] py-[30px] md:px-[30px] w-full '>
                     {/* side drawer */}
                     <CartSideDrawer />
                     {/* heading */}
-                    <div className="flex flex-col   space-y-[10px] md:flex-row md:space-y-0 md:justify-between md:items-center border-b-[2px] pb-[20px]">
-                      <div className="flex items-center space-x-[15px] ">
-                        <p className="text-[40px]">👋</p>
-                        <div className="">
-                          <h1 className="text-2xl font-bold mb-[10px] md:mb-[0px] text-secondary">
+                    <div className='flex flex-col   space-y-[10px] md:flex-row md:space-y-0 md:justify-between md:items-center border-b-[2px] pb-[20px]'>
+                      <div className='flex items-center space-x-[15px] '>
+                        <p className='text-[40px]'>👋</p>
+                        <div className=''>
+                          <h1 className='text-2xl font-bold mb-[10px] md:mb-[0px] text-secondary'>
                             Welcome {reserveDetails?.firstName}{" "}
                             {reserveDetails?.lastName},
                           </h1>
-                          <p className="text-gray-500 font-semibold">
+                          <p className='text-gray-500 font-semibold'>
                             {/* Thank you for choosing Removals & Self Storage */}
                             {reserveDetails?.email}
                           </p>
                         </div>
                       </div>
-                      <div className="flex items-center space-x-[10px]">
+                      <div className='flex items-center space-x-[10px]'>
                         {/* book again button */}
                         <div
                           onClick={() => {
@@ -320,12 +320,12 @@ const Reservations = ({ progressData, id, allBookings }) => {
                             //   resetReserveDetailsFxn();
                             // }, 2000);
                           }}
-                          className="btn btn-secondary"
+                          className='btn btn-secondary'
                         >
                           {/* <span className="">
                             <BiLogOut className="text-[20px]" />
                           </span> */}
-                          <span className="">Book A New Move</span>
+                          <span className=''>Book A New Move</span>
                         </div>
                         {/* logout button */}
                         <div
@@ -336,19 +336,19 @@ const Reservations = ({ progressData, id, allBookings }) => {
                             //   resetReserveDetailsFxn();
                             // }, 2000);
                           }}
-                          className="btn btn-secondary btn-outline"
+                          className='btn btn-secondary btn-outline'
                         >
                           {/* <span className="">
                             <BiLogOut className="text-[20px]" />
                           </span> */}
-                          <span className="">Log Out</span>
+                          <span className=''>Log Out</span>
                         </div>
                       </div>
                     </div>
                     {/* payment dashboard */}
-                    <div className="flex flex-col space-y-[20px] mt-[30px] mb-[30px] ">
-                      <div className="">
-                        <div className="flex justify-between">
+                    <div className='flex flex-col space-y-[20px] mt-[30px] mb-[30px] '>
+                      <div className=''>
+                        <div className='flex justify-between'>
                           <div
                             // onClick={() => window.my_modal_51.showModal()}
                             className={`${
@@ -365,61 +365,61 @@ const Reservations = ({ progressData, id, allBookings }) => {
                             }`}
                           </div>
                           <div
-                            className="flex space-x-[10px] items-center cursor-pointer"
+                            className='flex space-x-[10px] items-center cursor-pointer'
                             onClick={() => window.my_modal_61.showModal()}
                           >
-                            <p className="link font-semibold text-primary ">
+                            <p className='link font-semibold text-primary '>
                               My Bookings
                             </p>
-                            <div className=" bg-primary rounded-full flex justify-center items-center p-[0px] text-white w-[25px] h-[25px] text-[14px]">
+                            <div className=' bg-primary rounded-full flex justify-center items-center p-[0px] text-white w-[25px] h-[25px] text-[14px]'>
                               {myBookings?.length}
                             </div>
                           </div>
                         </div>
                         {/* payment modal */}
                         <dialog
-                          id="my_modal_51"
-                          className="modal py-[20px] px-[10px]"
+                          id='my_modal_51'
+                          className='modal py-[20px] px-[10px]'
                         >
-                          <form method="dialog" className="modal-box px-[20px]">
+                          <form method='dialog' className='modal-box px-[20px]'>
                             <div
                               onClick={closeModal}
-                              className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 border border-secondary text-secondary"
+                              className='btn btn-sm btn-circle btn-ghost absolute right-2 top-2 border border-secondary text-secondary'
                             >
                               ✕
                             </div>
 
-                            <div className="">
-                              <div className="w-full flex justify-center mb-[20px]">
-                                <div className="text-secondary bg-secondary/10 flex justify-center items-center w-[60px] h-[60px] rounded-full">
-                                  <LuHistory className="text-[30px] text-secondary" />
+                            <div className=''>
+                              <div className='w-full flex justify-center mb-[20px]'>
+                                <div className='text-secondary bg-secondary/10 flex justify-center items-center w-[60px] h-[60px] rounded-full'>
+                                  <LuHistory className='text-[30px] text-secondary' />
                                 </div>
                               </div>
 
-                              <h3 className="font-bold text-[24px] text-center text-secondary mb-[20px]">
+                              <h3 className='font-bold text-[24px] text-center text-secondary mb-[20px]'>
                                 Payment History
                               </h3>
 
                               {allPayments()?.ap?.map((ap, index) => {
                                 return (
-                                  <div className="" key={index}>
+                                  <div className='' key={index}>
                                     {ap?.amount !== 0 && (
-                                      <div className="flex items-start justify-between mt-[0px] border-b border-t py-[15px] px-[10px]">
-                                        <div className="flex items-center space-x-[10px] flex-[1]">
-                                          <div className="flex flex-col space-y-[0px]">
-                                            <p className="line-clamp-2 font-bold text-[20px] ">
+                                      <div className='flex items-start justify-between mt-[0px] border-b border-t py-[15px] px-[10px]'>
+                                        <div className='flex items-center space-x-[10px] flex-[1]'>
+                                          <div className='flex flex-col space-y-[0px]'>
+                                            <p className='line-clamp-2 font-bold text-[20px] '>
                                               {formatMovePrice(ap?.amount)}
                                             </p>
-                                            <p className="line-clamp-2 text-[14px] text-gray-500">
+                                            <p className='line-clamp-2 text-[14px] text-gray-500'>
                                               {ap?.date}
                                             </p>
                                           </div>
                                         </div>
-                                        <div className="flex items-center space-x-[20px]">
+                                        <div className='flex items-center space-x-[20px]'>
                                           {/* <p className="line-clamp-2 font-bold text-[20px] text-primary">
                                                         Total Price:
                                                       </p> */}
-                                          <p className="font-bold ">
+                                          <p className='font-bold '>
                                             {ap?.description}
                                           </p>
                                         </div>
@@ -430,7 +430,7 @@ const Reservations = ({ progressData, id, allBookings }) => {
                               })}
                             </div>
                           </form>
-                          <form method="dialog">
+                          <form method='dialog'>
                             {/* <button>close</button> */}
                           </form>
                           {/* <form method="dialog" className="modal-backdrop">
@@ -440,25 +440,25 @@ const Reservations = ({ progressData, id, allBookings }) => {
 
                         {/* bookings modal */}
                         <dialog
-                          id="my_modal_61"
-                          className="modal py-[20px] px-[10px]"
+                          id='my_modal_61'
+                          className='modal py-[20px] px-[10px]'
                         >
-                          <form method="dialog" className="modal-box px-[20px]">
+                          <form method='dialog' className='modal-box px-[20px]'>
                             <div
                               onClick={closeModal2}
-                              className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 border border-primary text-primary"
+                              className='btn btn-sm btn-circle btn-ghost absolute right-2 top-2 border border-primary text-primary'
                             >
                               ✕
                             </div>
 
-                            <div className="">
-                              <div className="w-full flex justify-center mb-[20px]">
-                                <div className="text-primary bg-primary/10 flex justify-center items-center w-[60px] h-[60px] rounded-full">
-                                  <LuHistory className="text-[30px] text-primary" />
+                            <div className=''>
+                              <div className='w-full flex justify-center mb-[20px]'>
+                                <div className='text-primary bg-primary/10 flex justify-center items-center w-[60px] h-[60px] rounded-full'>
+                                  <LuHistory className='text-[30px] text-primary' />
                                 </div>
                               </div>
 
-                              <h3 className="font-bold text-[24px] text-center text-primary mb-[20px]">
+                              <h3 className='font-bold text-[24px] text-center text-primary mb-[20px]'>
                                 All My Bookings
                               </h3>
 
@@ -466,20 +466,20 @@ const Reservations = ({ progressData, id, allBookings }) => {
                                 const isGivenDateGreaterThanCurrent =
                                   checkBookStatus(ap?.moveDate, ap?.moverTime);
                                 return (
-                                  <div className="" key={index}>
+                                  <div className='' key={index}>
                                     {ap?.amount !== 0 && (
-                                      <div className="flex items-start justify-between mt-[0px] border-b border-t py-[15px] px-[10px]">
-                                        <div className="flex items-center space-x-[10px] flex-[1]">
-                                          <div className="flex flex-col space-y-[0px]">
-                                            <p className="line-clamp-1 font-bold text-[16px] ">
+                                      <div className='flex items-start justify-between mt-[0px] border-b border-t py-[15px] px-[10px]'>
+                                        <div className='flex items-center space-x-[10px] flex-[1]'>
+                                          <div className='flex flex-col space-y-[0px]'>
+                                            <p className='line-clamp-1 font-bold text-[16px] '>
                                               {ap?.propertyType} (
                                               {ap?.movePackage} Move)
                                             </p>
-                                            <p className="line-clamp-1 font-semibold text-[15px] ">
+                                            <p className='line-clamp-1 font-semibold text-[15px] '>
                                               with Mover - {ap?.moverName}{" "}
                                             </p>
-                                            <div className="flex items-center space-x-[5px]">
-                                              <p className="line-clamp-2 text-[14px] text-gray-500">
+                                            <div className='flex items-center space-x-[5px]'>
+                                              <p className='line-clamp-2 text-[14px] text-gray-500'>
                                                 {ap?.date}
                                               </p>
                                               {ap?.completedBook === true && (
@@ -501,23 +501,23 @@ const Reservations = ({ progressData, id, allBookings }) => {
                                             </div>
                                           </div>
                                         </div>
-                                        <div className="flex items-center space-x-[20px]">
+                                        <div className='flex items-center space-x-[20px]'>
                                           {/* <p className="line-clamp-2 font-bold text-[20px] text-primary">
                                                         Total Price:
                                                       </p> */}
                                           {ap?.completedBook === true && (
                                             <button
-                                              className="btn btn-primary "
+                                              className='btn btn-primary '
                                               onClick={() =>
                                                 bookingHandler(ap?.bookingId)
                                               }
                                               disabled={bookLoading}
                                             >
                                               {!bookLoading && (
-                                                <span className="">View</span>
+                                                <span className=''>View</span>
                                               )}
                                               {bookLoading && (
-                                                <span className="loading loading-spinner loading-md text-white"></span>
+                                                <span className='loading loading-spinner loading-md text-white'></span>
                                               )}
                                             </button>
                                           )}
@@ -529,7 +529,7 @@ const Reservations = ({ progressData, id, allBookings }) => {
                               })}
                             </div>
                           </form>
-                          <form method="dialog">
+                          <form method='dialog'>
                             {/* <button>close</button> */}
                           </form>
                           {/* <form method="dialog" className="modal-backdrop">
@@ -537,7 +537,7 @@ const Reservations = ({ progressData, id, allBookings }) => {
                           </form> */}
                         </dialog>
                       </div>
-                      <div className="border-b-[2px] pb-[10px]">
+                      <div className='border-b-[2px] pb-[10px]'>
                         <PaymentDashboard
                           allPayments={allPayments}
                           isGivenDateGreaterThanCurrent={
@@ -547,31 +547,28 @@ const Reservations = ({ progressData, id, allBookings }) => {
                       </div>
                       {reserveDetails?.moveDate &&
                         isGivenDateGreaterThanCurrent && (
-                          <div className="flex flex-col space-y-[10px] lg:space-y-0 lg:flex-row lg:space-x-[20px] lg:items-center border-b-[2px] pb-[20px]">
-                            <div className="flex flex-col space-y-[3px]">
-                              <p className="text-2xl font-bold mb-[0px] select-none">
-                                Move Day Countdown:
+                          <div className='flex flex-col space-y-[10px] lg:space-y-0 lg:flex-row lg:space-x-[20px] lg:items-center border-b-[2px] pb-[20px]'>
+                            <div className='flex flex-col space-y-[3px]'>
+                              <p className='text-2xl font-bold mb-[0px] select-none'>
+                                Move Countdown:
                               </p>
-                              <p className="font-bold text-[15px] text-gray-500 ">
+                              <p className='font-bold text-[15px] text-gray-500 '>
                                 {dayjs(
                                   convertDateFormat(reserveDetails?.moveDate)
                                 ).format("dddd, MMMM D, YYYY")}
                               </p>
-                              <p className="font-bold text-[15px] text-gray-500 ">
+                              <p className='font-bold text-[15px] text-gray-500 '>
                                 ({reserveDetails?.moverTime})
                               </p>
                             </div>
-                            <Countdown
-                              date={givenDate}
-                              time={reserveDetails?.moverTime}
-                            />
+                            <Countdown date={givenDate} />
                           </div>
                         )}
                     </div>
 
                     {/* buy items */}
                     {isGivenDateGreaterThanCurrent && (
-                      <div className="border-b-[2px] pb-[0px] mb-[30px]">
+                      <div className='border-b-[2px] pb-[0px] mb-[30px]'>
                         <BuyItems
                           clickedModalOpen={clickedModalOpen}
                           setClickedModalOpen={setClickedModalOpen}
@@ -581,17 +578,17 @@ const Reservations = ({ progressData, id, allBookings }) => {
 
                     {/* pick items */}
                     {isGivenDateGreaterThanCurrent && (
-                      <div className="mb-[30px] lg:mb-[40px]">
+                      <div className='mb-[30px] lg:mb-[40px]'>
                         <PickUpItems />
                       </div>
                     )}
 
                     {!isGivenDateGreaterThanCurrent && (
-                      <div className="flex justify-center items-center w-full py-[50px] text-secondary">
-                        <div className="flex flex-col items-center">
-                          <BsFillCalendarXFill className="text-secondary text-[50px]" />
-                          <p className="font-bold mt-[10px]">Book Expired:</p>
-                          <p className="text-secondary ">
+                      <div className='flex justify-center items-center w-full py-[50px] text-secondary'>
+                        <div className='flex flex-col items-center'>
+                          <BsFillCalendarXFill className='text-secondary text-[50px]' />
+                          <p className='font-bold mt-[10px]'>Book Expired:</p>
+                          <p className='text-secondary '>
                             {!reserveDetails?.moveDateFormatted
                               ? dayjs(
                                   convertDateFormat(reserveDetails?.moveDate)
@@ -613,8 +610,8 @@ const Reservations = ({ progressData, id, allBookings }) => {
         </BookingLayout>
       )}
       {(reserveId === "" || allLoading) && (
-        <div className="flex justify-center items-center w-full h-screen">
-          <span className="loading loading-spinner loading-lg text-primary"></span>
+        <div className='flex justify-center items-center w-full h-screen'>
+          <span className='loading loading-spinner loading-lg text-primary'></span>
         </div>
       )}
     </>

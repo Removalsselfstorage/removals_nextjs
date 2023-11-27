@@ -7,6 +7,7 @@ import {
   trimDateFormats,
 } from "@/utils/logics";
 import Link from "next/link";
+import dayjs from "dayjs";
 
 const CompletedTable = ({ moverBooks }) => {
   return (
@@ -63,9 +64,9 @@ const CompletedTable = ({ moverBooks }) => {
                     {mm.propertyType}
                   </Link>
                 </td>
-                <td className=''>{convertMoveDateFormat(mm?.moveDate)}</td>
+                <td className=''>{dayjs(`${mm?.moveDate}`).format("ddd, D MMMM, YYYY")}</td>
                 <td className=''>{trimDateFormat(mm?.moverTime)}</td>
-                <td className=''>{trimDateFormat(mm?.acceptance)}</td>
+                <td className=''>{mm?.acceptance}</td>
                 <td
                   className={`${
                     isGivenDateGreaterThanCurrent

@@ -1,3 +1,17 @@
+export const trimAddress = (fullAddress) => {
+  // Split the address into components
+  const addressComponents = fullAddress.split(', ');
+
+  // Remove the first component (house or street number)
+  addressComponents.shift();
+
+  // Join the remaining components to form the trimmed address
+  const trimmedAddress = addressComponents.join(', ');
+
+  return trimmedAddress;
+};
+
+
 export function convertMoveDateFormat(inputDate) {
   // Parse the input date
   const parts = inputDate.split('/');

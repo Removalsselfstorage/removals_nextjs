@@ -8,6 +8,40 @@ import GoogleSearchInput from "@/components/Inputs/GoogleSearchInput";
 import StarRating from "@/components/Rating/EditHalfStars2";
 import useQuote from "@/hooks/useQuote";
 
+const apiKey = process.env.NEXT_PUBLIC_GMAP_API_KEY;
+const mapApiJs = "https://maps.googleapis.com/maps/api/js";
+const geocodeJson = "https://maps.googleapis.com/maps/api/geocode/json";
+
+async function getPostalCode(fullAddress) {
+  try {
+    // Encode the address to be included in the API request
+    const encodedAddress = encodeURIComponent(fullAddress);
+
+    // Construct the Geocoding API request URL
+    const geocodeUrl = `${geocodeJson}?address=${encodedAddress}&key=${apiKey}`;
+
+    // Fetch the Geocoding API response
+    const response = await fetch(geocodeUrl);
+    const data = await response.json();
+
+    // Check if the response status is OK
+    if (data.status === "OK") {
+      // Extract the postal code from the first result
+      const postalCode = data.results[0]?.address_components.find((component) =>
+        component.types.includes("postal_code")
+      )?.long_name;
+
+      return postalCode;
+    } else {
+      console.error("Geocoding API request failed:", data.status);
+      return null;
+    }
+  } catch (error) {
+    console.error("Error during Geocoding API request:", error);
+    return null;
+  }
+}
+
 const HeroInputBox = () => {
   const {
     serviceLocation,
@@ -119,6 +153,15 @@ const HeroInputBox = () => {
           router.push("/book");
           break;
       }
+      // getPostalCode(address)
+      //   .then((postalCode) => {
+      //     if (postalCode) {
+      //       console.log(`Postal Code: ${postalCode}`);
+      //     } else {
+      //       console.log("Unable to retrieve postal code.");
+      //     }
+      //   })
+      //   .catch((error) => console.error("Error:", error));
     }
   };
 
@@ -129,76 +172,76 @@ const HeroInputBox = () => {
     return option;
   };
 
-  // console.log(details);
+  console.log({ addressDetails, address });
 
   return (
-    <div className="card shadow-2xl bg-base-100  text-black w-full md:w-[400px]">
-      <div className="card-body ">
-        <div className="flex flex-col items-center justify-center mb-[0px] bg-gray-200 rounded-tl-[18px] rounded-tr-[18px] mx-[-32px] mt-[-32px] pt-[20px] pb-[20px] md:px-[50px]">
-          <h3 className="text-xl font-bold text-gray-800 uppercase mb-[-10px]">
-            TRUST<span className="text-gray-500">PILOT</span>
+    <div className='card shadow-2xl bg-base-100  text-black w-full md:w-[400px]'>
+      <div className='card-body '>
+        <div className='flex flex-col items-center justify-center mb-[0px] bg-gray-200 rounded-tl-[18px] rounded-tr-[18px] mx-[-32px] mt-[-32px] pt-[20px] pb-[20px] md:px-[50px]'>
+          <h3 className='text-xl font-bold text-gray-800 uppercase mb-[-10px]'>
+            TRUST<span className='text-gray-500'>PILOT</span>
           </h3>
-          <div className="my-[12px]">
-            <StarRating rating={4.9} size="text-[20px]" />
+          <div className='my-[12px]'>
+            <StarRating rating={4.9} size='text-[20px]' />
           </div>
-          <p className="text-gray-400 text-[14px] mt-[-5px] text-center">
+          <p className='text-gray-400 text-[14px] mt-[-5px] text-center'>
             TrustScore 4.9 | 4,155 Reviews
           </p>
         </div>
-        <h3 className="text-2xl font-bold text-primary uppercase mt-[10px] text-center mb-[10px]">
+        <h3 className='text-2xl font-bold text-primary uppercase mt-[10px] text-center mb-[10px]'>
           Get a Free Quote
         </h3>
-        <div className="w-full">
-          <div className="w-full mb-[20px]">
+        <div className='w-full'>
+          <div className='w-full mb-[20px]'>
             <SelectSearch
-              placeholder="What are you moving?"
+              placeholder='What are you moving?'
               options={serviceOptions}
               isSearchable={false}
-              name="service"
+              name='service'
               // defaultValue={serviceOptions[2]}
               defaultValue={selectDefaultValue() || serviceOptions(0)}
               setValue={setSelectValue}
             />
           </div>
-          <div className="form-control mb-[20px]">
+          <div className='form-control mb-[20px]'>
             <GoogleSearchInput
-              styles="py-[10px] px-[10px]"
+              styles='py-[10px] px-[10px]'
               setAddress={setAddress}
               addressDetails={addressDetails}
               setAddressDetails={setAddressDetails}
-              placeholder="Where are you moving from?"
+              placeholder='Where are you moving from?'
               defaultValue={serviceLocation?.locationFrom?.name}
             />
           </div>
-          <div className="form-control">
+          <div className='form-control'>
             <GoogleSearchInput
-              styles="py-[10px] px-[10px]"
+              styles='py-[10px] px-[10px]'
               setAddress={setAddress2}
               addressDetails={addressDetails2}
               setAddressDetails={setAddressDetails2}
-              placeholder="Where are you moving to?"
+              placeholder='Where are you moving to?'
               defaultValue={serviceLocation?.locationTo?.name}
             />
           </div>
-          <div className="form-control mt-6">
+          <div className='form-control mt-6'>
             <button
               onClick={heroFormSubmit}
               disabled={submitLoading}
-              className="btn btn-primary flex items-center space-x-[5px]"
+              className='btn btn-primary flex items-center space-x-[5px]'
             >
-              {!submitLoading && <span className="">Get Quote</span>}
+              {!submitLoading && <span className=''>Get Quote</span>}
               {submitLoading && (
-                <span className="loading loading-spinner loading-md text-white"></span>
+                <span className='loading loading-spinner loading-md text-white'></span>
               )}
               {!submitLoading && (
-                <span className="">
-                  <FiEdit className="text-[20px]" />
+                <span className=''>
+                  <FiEdit className='text-[20px]' />
                 </span>
               )}
             </button>
           </div>
           {error && (
-            <p className="text-[14px] text-center mt-[15px] text-secondary bg-secondary/20 rounded-[10px] py-[10px] px-[30px]">
+            <p className='text-[14px] text-center mt-[15px] text-secondary bg-secondary/20 rounded-[10px] py-[10px] px-[30px]'>
               Please input all fields
             </p>
           )}

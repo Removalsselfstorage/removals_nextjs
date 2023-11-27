@@ -78,7 +78,9 @@ export const moverSlice = createSlice({
     },
 
     updatePersonalMoverDetails: (state, action) => {
-      Object.assign(state.personalMoverDetails, action.payload);
+      if (state.personalMoverDetails) {
+        Object.assign(state.personalMoverDetails, action.payload);
+      }
     },
 
     resetPersonalMoverDetails: (state, action) => {
@@ -104,7 +106,9 @@ export const moverSlice = createSlice({
     },
 
     updateCompanyDetails: (state, action) => {
-      Object.assign(state.companyDetails, action.payload);
+      if (state.companyDetails) {
+        Object.assign(state.companyDetails, action.payload);
+      }
     },
 
     resetCompanyDetails: (state, action) => {
@@ -121,7 +125,9 @@ export const moverSlice = createSlice({
     },
 
     updateCompanyDocs: (state, action) => {
-      Object.assign(state.companyDocs, action.payload);
+      if (state.companyDocs) {
+        Object.assign(state.companyDocs, action.payload);
+      }
     },
 
     resetCompanyDocs: (state, action) => {
@@ -141,7 +147,9 @@ export const moverSlice = createSlice({
     },
 
     updateAllMoverData: (state, action) => {
-      Object.assign(state.allMoverData, action.payload);
+      if (state.allMoverData) {
+        Object.assign(state.allMoverData, action.payload);
+      }
     },
 
     resetAllMoverData: (state, action) => {

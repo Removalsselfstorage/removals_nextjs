@@ -194,6 +194,7 @@ const ReservationCheckoutSuccess = ({ allBookings }) => {
 
         {
           date: getCurrentDateFormatted(),
+          bookDate: getCurrentDateFormatted(),
           stage: "paid initial move price",
           activity: [
             ...cb?.activity,
@@ -367,64 +368,64 @@ const ReservationCheckoutSuccess = ({ allBookings }) => {
 
   return (
     <BookingLayout>
-      <div className="bg-white py-[20px]">
-        <div className="max-w-3xl mx-auto px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
-          <div className="flex justify-center w-full">
-            <Lottie animationData={success} className="w-[200px]" />
+      <div className='bg-white py-[20px]'>
+        <div className='max-w-3xl mx-auto px-4 py-16 sm:px-6 sm:py-24 lg:px-8'>
+          <div className='flex justify-center w-full'>
+            <Lottie animationData={success} className='w-[200px]' />
           </div>
-          <div className="max-w-xl">
-            <h1 className="text-sm font-medium ">Payment successful</h1>
-            <p className="mt-2 text-4xl font-extrabold tracking-tight text-primary sm:text-5xl">
+          <div className='max-w-xl'>
+            <h1 className='text-sm font-medium '>Payment successful</h1>
+            <p className='mt-2 text-4xl font-extrabold tracking-tight text-primary sm:text-5xl'>
               Thanks for Booking
             </p>
-            <p className="mt-2 text-base text-gray-500">
+            <p className='mt-2 text-base text-gray-500'>
               We appreciate your book, we’re currently processing it. So hang
               tight and we’ll send you confirmation very soon!
             </p>
 
-            <dl className="mt-12 text-sm font-medium">
-              <dt className="text-gray-900 font-bold">Book Ref:</dt>
-              <dd className="text-primary mt-2 text-[16px]">
+            <dl className='mt-12 text-sm font-medium'>
+              <dt className='text-gray-900 font-bold'>Book Ref:</dt>
+              <dd className='text-primary mt-2 text-[16px]'>
                 {/* {checkoutSession?.payment_intent?.id} */}
                 {moveDetails?.quoteRef || successDetails?.quoteRef}
               </dd>
             </dl>
           </div>
 
-          <div className="mt-10 border-t border-gray-200">
-            <h2 className="mt-[20px] font-bold">Your Move Package:</h2>
+          <div className='mt-10 border-t border-gray-200'>
+            <h2 className='mt-[20px] font-bold'>Your Move Package:</h2>
 
             {/* <h3 className="sr-only">Items</h3> */}
             {products?.map((product) => (
               <div
                 key={product.id}
-                className="py-10 border-b border-gray-200 flex space-x-6"
+                className='py-10 border-b border-gray-200 flex space-x-6'
               >
                 <img
                   src={product?.images[0]}
                   alt={product.description}
-                  className="flex-none w-20 h-20 object-center object-cover bg-gray-100 rounded-lg sm:w-40 sm:h-40"
+                  className='flex-none w-20 h-20 object-center object-cover bg-gray-100 rounded-lg sm:w-40 sm:h-40'
                 />
-                <div className="flex-auto flex flex-col">
+                <div className='flex-auto flex flex-col'>
                   <div>
-                    <h4 className="font-medium text-gray-900">
+                    <h4 className='font-medium text-gray-900'>
                       <p>{product.name}</p>
                     </h4>
-                    <p className="mt-2 text-sm text-gray-600 ">
+                    <p className='mt-2 text-sm text-gray-600 '>
                       {product.description}
                     </p>
                   </div>
-                  <div className="mt-6 flex-1 flex items-end">
-                    <dl className="flex text-sm divide-x divide-gray-200 space-x-4 sm:space-x-6">
+                  <div className='mt-6 flex-1 flex items-end'>
+                    <dl className='flex text-sm divide-x divide-gray-200 space-x-4 sm:space-x-6'>
                       {/* <div className="flex">
                         <dt className="font-medium text-gray-900">Quantity</dt>
                         <dd className="ml-2 text-gray-700">
                           {product.quantity}
                         </dd>
                       </div> */}
-                      <div className="flex ">
-                        <dt className="font-medium text-gray-900">Price</dt>
-                        <dd className="ml-2 text-gray-700">
+                      <div className='flex '>
+                        <dt className='font-medium text-gray-900'>Price</dt>
+                        <dd className='ml-2 text-gray-700'>
                           {moveDetails?.paidPart
                             ? "20%"
                             : moveDetails?.paidFull
@@ -443,23 +444,23 @@ const ReservationCheckoutSuccess = ({ allBookings }) => {
               </div>
             ))}
 
-            <div className="">
-              <h3 className="sr-only">Your information</h3>
+            <div className=''>
+              <h3 className='sr-only'>Your information</h3>
 
-              <h4 className="sr-only">Payment</h4>
-              <dl className="grid grid-cols-2 gap-x-6 border-t border-gray-200 text-sm py-10">
+              <h4 className='sr-only'>Payment</h4>
+              <dl className='grid grid-cols-2 gap-x-6 border-t border-gray-200 text-sm py-10'>
                 {payment?.card && (
                   <div>
-                    <dt className="font-medium text-gray-900">
+                    <dt className='font-medium text-gray-900'>
                       Payment Information
                     </dt>
-                    <dd className="mt-2 text-gray-700">
+                    <dd className='mt-2 text-gray-700'>
                       <p>{payment?.card.wallet}</p>
-                      <p className="font-medium">
+                      <p className='font-medium'>
                         {payment?.card.brand.toUpperCase()}
                       </p>
-                      <div className="flex-auto">
-                        <p className="text-gray-900">
+                      <div className='flex-auto'>
+                        <p className='text-gray-900'>
                           Ending with {payment?.card.last4}
                         </p>
                         <p>
@@ -471,32 +472,32 @@ const ReservationCheckoutSuccess = ({ allBookings }) => {
                   </div>
                 )}
                 <div>
-                  <dt className=" text-gray-900 font-bold">Billing Info</dt>
-                  <dd className="mt-2 text-gray-700">
-                    <address className="not-italic">
-                      <span className="block">
-                        <span className="font-bold">Name:</span>{" "}
+                  <dt className=' text-gray-900 font-bold'>Billing Info</dt>
+                  <dd className='mt-2 text-gray-700'>
+                    <address className='not-italic'>
+                      <span className='block'>
+                        <span className='font-bold'>Name:</span>{" "}
                         {customer?.name}
                       </span>
-                      <span className="block">
-                        <span className="font-bold">Email:</span>{" "}
+                      <span className='block'>
+                        <span className='font-bold'>Email:</span>{" "}
                         {customer?.email}
                       </span>
                       {customer?.address.country && (
-                        <span className="block">
-                          <span className="font-bold">Country:</span>{" "}
+                        <span className='block'>
+                          <span className='font-bold'>Country:</span>{" "}
                           {customer?.address.country}
                         </span>
                       )}
 
                       {customer?.address.postal_code && (
-                        <span className="block">
-                          <span className="font-bold">Postal Code:</span>
+                        <span className='block'>
+                          <span className='font-bold'>Postal Code:</span>
                           {customer?.address.postal_code}
                         </span>
                       )}
-                      <span className="block">
-                        <span className="font-bold">Payment Type: </span>
+                      <span className='block'>
+                        <span className='font-bold'>Payment Type: </span>
                         {""}
                         {payment}
                       </span>
@@ -505,39 +506,39 @@ const ReservationCheckoutSuccess = ({ allBookings }) => {
                 </div>
               </dl>
 
-              <h3 className="sr-only">Summary</h3>
+              <h3 className='sr-only'>Summary</h3>
 
-              <dl className="space-y-6 border-t border-gray-200 text-sm pt-10">
-                <div className="flex justify-between">
-                  <dt className="font-medium text-gray-900">Subtotal</dt>
-                  <dd className="text-gray-700">{subtotal}</dd>
+              <dl className='space-y-6 border-t border-gray-200 text-sm pt-10'>
+                <div className='flex justify-between'>
+                  <dt className='font-medium text-gray-900'>Subtotal</dt>
+                  <dd className='text-gray-700'>{subtotal}</dd>
                 </div>
                 {/* <div className="flex justify-between">
                   <dt className="flex font-medium text-gray-900">Discount</dt>
                   <dd className="text-gray-700">-{discount}</dd>
                 </div> */}
-                <div className="flex justify-between">
-                  <dt className="font-medium text-gray-900">Tax</dt>
-                  <dd className="text-gray-700">{tax}</dd>
+                <div className='flex justify-between'>
+                  <dt className='font-medium text-gray-900'>Tax</dt>
+                  <dd className='text-gray-700'>{tax}</dd>
                 </div>
-                <div className="flex justify-between">
-                  <dt className="font-medium text-gray-900">Total</dt>
-                  <dd className="text-gray-900">{total}</dd>
+                <div className='flex justify-between'>
+                  <dt className='font-medium text-gray-900'>Total</dt>
+                  <dd className='text-gray-900'>{total}</dd>
                 </div>
               </dl>
             </div>
           </div>
 
-          <div className="w-full mt-10 flex justify-center items-center">
+          <div className='w-full mt-10 flex justify-center items-center'>
             <div
               onClick={handleDashboard}
               disabled={submitLoading}
-              className="btn btn-primary btn-wide"
+              className='btn btn-primary btn-wide'
             >
               {/* Return to Dashboard */}
-              {!submitLoading && <span className="">Go to Dashboard</span>}
+              {!submitLoading && <span className=''>Go to Dashboard</span>}
               {submitLoading && (
-                <span className="loading loading-spinner loading-md text-white"></span>
+                <span className='loading loading-spinner loading-md text-white'></span>
               )}
             </div>
           </div>

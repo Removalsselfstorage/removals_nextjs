@@ -59,7 +59,12 @@ const UserDetails = ({ progressData }) => {
     );
     const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
 
-    if (days === 1 || days === 0) {
+    if (
+      (months === 0 && days === 1) ||
+      (months === 0 && days === 0) ||
+      (months === 0 && days === 0 && hours === 0) ||
+      (months === 0 && days === 0 && hours === 0 && minutes === 0)
+    ) {
       return true;
     } else {
       return false;
@@ -539,25 +544,24 @@ const UserDetails = ({ progressData }) => {
                   className={`${
                     showButton === "1" &&
                     "bg-primary  border-primary text-white"
-                  }  font-bold  py-[10px] px-[30px] border-[3px] hover:border-primary rounded-tl-[10px] rounded-bl-[10px] hover:bg-primary duration-300 cursor-pointer text-gray-500 hover:text-white`}
+                  } font-bold  py-[10px] px-[30px] border-[3px] hover:border-primary rounded-tl-[10px] rounded-bl-[10px] hover:bg-primary duration-300 cursor-pointer text-gray-500 hover:text-white`}
                 >
                   {showButton === "1" ? "Accepted" : "Accept"}
                 </div>
+
                 <div>
-                  <div
-                    // onClick={() => {
-                    //   updateAcceptance("rejected");
-                    //   setShowButton("2");
-                    // }}
-                    onClick={() => window.my_modal_34.showModal()}
-                    className={`${
-                      showButton === "2" &&
-                      "bg-secondary border-secondary text-white"
-                    } font-bold py-[10px] px-[30px] border-[3px] rounded-tr-[10px] rounded-br-[10px] hover:bg-secondary hover:border-secondary duration-300 cursor-pointer text-gray-500 hover:text-white`}
-                  >
-                    {/* Reject */}
-                    {showButton === "2" ? "Rejected" : "Reject"}
-                  </div>
+                  {
+                    <div
+                      onClick={() => window.my_modal_34.showModal()}
+                      className={`${
+                        showButton === "2" &&
+                        "bg-secondary border-secondary text-white"
+                      } font-bold py-[10px] px-[30px] border-[3px] rounded-tr-[10px] rounded-br-[10px] hover:bg-secondary hover:border-secondary duration-300 cursor-pointer text-gray-500 hover:text-white`}
+                    >
+                      {/* Reject */}
+                      {showButton === "2" ? "Rejected" : "Reject"}
+                    </div>
+                  }
                   {/* modal */}
                   <dialog
                     id='my_modal_34'

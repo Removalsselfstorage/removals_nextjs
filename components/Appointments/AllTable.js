@@ -38,7 +38,7 @@ const AllTable = ({ moverBooks }) => {
                 {/* <td className=''>{trimDateFormat(mm?.date)}</td> */}
                 <td className='link'>
                   <Link
-                    href={`/mover-profile/appointments/booking/${mm?.bookingId}`}
+                    href={`/mover-profile/job-board/booking/${mm?.bookingId}`}
                     className='tooltip '
                     // data-tip={`${mm?.propertyType} - ${
                     //   mm?.movePackage
@@ -52,7 +52,7 @@ const AllTable = ({ moverBooks }) => {
                 </td>
                 <td className='link'>
                   <Link
-                    href={`/mover-profile/appointments/booking/${mm?.bookingId}`}
+                    href={`/mover-profile/job-board/booking/${mm?.bookingId}`}
                     className='tooltip '
                     // data-tip={`${mm.propertyType} - ${
                     //   mm.movePackage

@@ -6,10 +6,6 @@ const mapApiJs = "https://maps.googleapis.com/maps/api/js";
 const geocodeJson = "https://maps.googleapis.com/maps/api/geocode/json";
 import { useDispatch, useSelector } from "react-redux";
 
-const ukMapApiJs = "https://maps.googleapis.com/maps/api/js";
-const ukGeocodeJson =
-  "https://maps.googleapis.com/maps/api/geocode/json?region=GB"; // Added region parameter for the UK
-
 // load google map api js
 
 function loadAsyncScript(src) {
@@ -73,26 +69,26 @@ async function getPostalCode(fullAddress) {
     const encodedAddress = encodeURIComponent(fullAddress);
 
     // Construct the Geocoding API request URL
-    const geocodeUrl = `${ukGeocodeJson}?address=${encodedAddress}&key=${apiKey}`;
+    const geocodeUrl = `${geocodeJson}?address=${encodedAddress}&key=${apiKey}`;
 
     // Fetch the Geocoding API response
     const response = await fetch(geocodeUrl);
     const data = await response.json();
 
     // Check if the response status is OK
-    if (data.status === "OK") {
+    if (data.status === 'OK') {
       // Extract the postal code from the first result
-      const postalCode = data.results[0]?.address_components.find((component) =>
-        component.types.includes("postal_code")
+      const postalCode = data.results[0]?.address_components.find(
+        (component) => component.types.includes('postal_code')
       )?.long_name;
 
       return postalCode;
     } else {
-      console.error("Geocoding API request failed:", data.status);
+      console.error('Geocoding API request failed:', data.status);
       return null;
     }
   } catch (error) {
-    console.error("Error during Geocoding API request:", error);
+    console.error('Error during Geocoding API request:', error);
     return null;
   }
 }
@@ -114,7 +110,7 @@ const GoogleSearchInput = ({
     if (window.google) {
       return Promise.resolve();
     }
-    const src = `${ukMapApiJs}?key=${apiKey}&libraries=places&v=weekly`;
+    const src = `${mapApiJs}?key=${apiKey}&libraries=places&v=weekly`;
     return loadAsyncScript(src);
   };
 
@@ -129,12 +125,8 @@ const GoogleSearchInput = ({
   const initAutocomplete = () => {
     if (!searchInput.current) return;
 
-    // const autocomplete = new window.google.maps.places.Autocomplete(
-    //   searchInput.current
-    // );
     const autocomplete = new window.google.maps.places.Autocomplete(
-      searchInput.current,
-      { types: ["address"], componentRestrictions: { country: "GB" } } // Bias towards the UK
+      searchInput.current
     );
     autocomplete.setFields(["address_component", "geometry"]);
     autocomplete.addListener("place_changed", () =>
@@ -142,6 +134,10 @@ const GoogleSearchInput = ({
     );
     setAddress(searchInput.current.value);
   };
+
+
+
+
 
   useEffect(() => {
     initMapScript().then(() => initAutocomplete());

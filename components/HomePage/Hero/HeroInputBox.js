@@ -8,40 +8,6 @@ import GoogleSearchInput from "@/components/Inputs/GoogleSearchInput";
 import StarRating from "@/components/Rating/EditHalfStars2";
 import useQuote from "@/hooks/useQuote";
 
-const apiKey = process.env.NEXT_PUBLIC_GMAP_API_KEY;
-const mapApiJs = "https://maps.googleapis.com/maps/api/js";
-const geocodeJson = "https://maps.googleapis.com/maps/api/geocode/json";
-
-async function getPostalCode(fullAddress) {
-  try {
-    // Encode the address to be included in the API request
-    const encodedAddress = encodeURIComponent(fullAddress);
-
-    // Construct the Geocoding API request URL
-    const geocodeUrl = `${geocodeJson}?address=${encodedAddress}&key=${apiKey}`;
-
-    // Fetch the Geocoding API response
-    const response = await fetch(geocodeUrl);
-    const data = await response.json();
-
-    // Check if the response status is OK
-    if (data.status === "OK") {
-      // Extract the postal code from the first result
-      const postalCode = data.results[0]?.address_components.find((component) =>
-        component.types.includes("postal_code")
-      )?.long_name;
-
-      return postalCode;
-    } else {
-      console.error("Geocoding API request failed:", data.status);
-      return null;
-    }
-  } catch (error) {
-    console.error("Error during Geocoding API request:", error);
-    return null;
-  }
-}
-
 const HeroInputBox = () => {
   const {
     serviceLocation,
@@ -53,9 +19,13 @@ const HeroInputBox = () => {
   } = useQuote();
 
   const [address, setAddress] = useState("");
-  const [addressDetails, setAddressDetails] = useState("");
+  const [addressDetails, setAddressDetails] = useState(
+    serviceLocation?.locationFrom || {}
+  );
   const [address2, setAddress2] = useState("");
-  const [addressDetails2, setAddressDetails2] = useState("");
+  const [addressDetails2, setAddressDetails2] = useState(
+    serviceLocation?.locationTo || {}
+  );
   const [submitLoading, setSubmitLoading] = useState(false);
 
   const [selectValue, setSelectValue] = useState(
@@ -71,27 +41,17 @@ const HeroInputBox = () => {
       setSubmitLoading(true);
       updateLocationFrom({
         name: address,
-        postCode: addressDetails
-          ? addressDetails.zip
-          : serviceLocation?.locationFrom?.postCode,
-        city: addressDetails
-          ? addressDetails.city
-          : serviceLocation?.locationFrom?.city,
-        country: addressDetails
-          ? addressDetails.country
-          : serviceLocation?.locationFrom?.country,
+        postCode: addressDetails?.zip,
+        city: addressDetails?.city,
+        state: addressDetails?.state,
+        country: addressDetails?.country,
       });
       updateLocationTo({
         name: address2,
-        postCode: addressDetails2
-          ? addressDetails2.zip
-          : serviceLocation?.locationTo?.postCode,
-        city: addressDetails
-          ? addressDetails.city
-          : serviceLocation?.locationTo?.city,
-        country: addressDetails
-          ? addressDetails.country
-          : serviceLocation?.locationTo?.country,
+        postCode: addressDetails2.zip,
+        city: addressDetails2.city,
+        state: addressDetails2.state,
+        country: addressDetails2.country,
       });
       switch (selectValue) {
         case "Office removals":
@@ -172,7 +132,8 @@ const HeroInputBox = () => {
     return option;
   };
 
-  console.log({ addressDetails, address });
+  // console.log({ addressDetails, address });
+  console.log({ address, address2, addressDetails, addressDetails2 });
 
   return (
     <div className='card shadow-2xl bg-base-100  text-black w-full md:w-[400px]'>

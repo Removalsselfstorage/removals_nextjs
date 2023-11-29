@@ -76,10 +76,18 @@ const CompleteHouse = ({ emails }) => {
   const [lift2, setLift2] = useState(
     serviceLocation?.locationTo?.liftAvailable || false
   );
-  const [address, setAddress] = useState("");
-  const [addressDetails, setAddressDetails] = useState("");
-  const [address2, setAddress2] = useState("");
-  const [addressDetails2, setAddressDetails2] = useState("");
+  const [address, setAddress] = useState(
+    serviceLocation?.locationFrom?.name || ""
+  );
+  const [addressDetails, setAddressDetails] = useState(
+    serviceLocation?.locationFrom || {}
+  );
+  const [address2, setAddress2] = useState(
+    serviceLocation?.locationTo?.name || ""
+  );
+  const [addressDetails2, setAddressDetails2] = useState(
+    serviceLocation?.locationTo || {}
+  );
   const [propertyValue, setPropertyValue] = useState(
     moveDetails?.propertyType || ""
   );
@@ -124,7 +132,8 @@ const CompleteHouse = ({ emails }) => {
 
     // Check if the stripped number is either 10 or 11 digits long
     const isValidPhoneNumber =
-      strippedNumber.length === 10 || strippedNumber.length === 11;
+      // strippedNumber.length === 5 || strippedNumber.length === 11;
+      strippedNumber.length > 5;
 
     setPhone(strippedNumber);
     setPhoneError(isValidPhoneNumber);
@@ -242,29 +251,19 @@ const CompleteHouse = ({ emails }) => {
 
       updateLocationFrom({
         name: address,
-        postCode: addressDetails
-          ? addressDetails.zip
-          : serviceLocation?.locationFrom?.postCode,
-        city: addressDetails
-          ? addressDetails.city
-          : serviceLocation?.locationFrom?.city,
-        country: addressDetails
-          ? addressDetails.country
-          : serviceLocation?.locationFrom?.country,
+        postCode: addressDetails?.zip,
+        city: addressDetails?.city,
+        state: addressDetails?.state,
+        country: addressDetails?.country,
         floor: floorCount,
         liftAvailable: lift,
       });
       updateLocationTo({
         name: address2,
-        postCode: addressDetails2
-          ? addressDetails2.zip
-          : serviceLocation?.locationTo?.postCode,
-        city: addressDetails2
-          ? addressDetails2.city
-          : serviceLocation?.locationTo?.city,
-        country: addressDetails2
-          ? addressDetails2.country
-          : serviceLocation?.locationTo?.country,
+        postCode: addressDetails2.zip,
+        city: addressDetails2.city,
+        state: addressDetails2.state,
+        country: addressDetails2.country,
         floor: floorCount2,
         liftAvailable: lift2,
       }),
@@ -291,17 +290,19 @@ const CompleteHouse = ({ emails }) => {
         serviceLocation: {
           locationFrom: {
             name: address,
-            postCode: addressDetails.zip || "",
-            city: addressDetails.city || "",
-            country: addressDetails.country || "",
+            postCode: addressDetails?.zip || "",
+            city: addressDetails?.city || "",
+            state: addressDetails?.state || "",
+            country: addressDetails?.country || "",
             floor: floorCount,
             liftAvailable: lift,
           },
           locationTo: {
             name: address2,
-            postCode: addressDetails2.zip || "",
-            city: addressDetails2.city || "",
-            country: addressDetails2.country || "",
+            postCode: addressDetails2?.zip || "",
+            city: addressDetails2?.city || "",
+            state: addressDetails2?.state || "",
+            country: addressDetails2?.country || "",
             floor: floorCount2,
             liftAvailable: lift2,
           },
@@ -338,7 +339,8 @@ const CompleteHouse = ({ emails }) => {
     }
   };
 
-  console.log({ addressDetails });
+  // console.log({ addressDetails });
+  console.log({ serviceLocation, addressDetails, addressDetails2 });
 
   return (
     <BookingLayout>

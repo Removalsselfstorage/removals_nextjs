@@ -88,6 +88,8 @@ const PackageCard = ({
     router,
   } = useQuote();
 
+  console.log({serviceLocation})
+
   const {
     justRegistered,
     personalMoverDetails,

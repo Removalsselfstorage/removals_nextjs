@@ -118,7 +118,7 @@ const UserDetails = ({ progressData }) => {
     }
   }, []);
 
-  console.log({ cd: calculateCountdownDay(), progressData });
+  console.log({ cd: calculateCountdownDay(), progressData, trimAd1, trimAd2 });
 
   return (
     <MoverLayout>
@@ -448,7 +448,7 @@ const UserDetails = ({ progressData }) => {
                     </tr>
                   )}
 
-                  {calculateCountdownDay() && (
+                  {
                     <tr className='flex '>
                       <td className='font-bold flex-[0.5]'>
                         Pickup House Floor
@@ -458,9 +458,9 @@ const UserDetails = ({ progressData }) => {
                         Floor
                       </td>
                     </tr>
-                  )}
+                  }
 
-                  {calculateCountdownDay() && (
+                  {
                     <tr className='flex '>
                       <td className='font-bold flex-[0.5]'>
                         Pickup House Lift
@@ -469,7 +469,7 @@ const UserDetails = ({ progressData }) => {
                         {progressData?.liftAvailable1 ? "Yes" : "No"}
                       </td>
                     </tr>
-                  )}
+                  }
 
                   {!calculateCountdownDay() && (
                     <tr className='flex '>
@@ -499,7 +499,7 @@ const UserDetails = ({ progressData }) => {
                     </tr>
                   )}
 
-                  {calculateCountdownDay() && (
+                  {
                     <tr className='flex '>
                       <td className='font-bold flex-[0.5]'>
                         Drop-off House Floor
@@ -509,9 +509,9 @@ const UserDetails = ({ progressData }) => {
                         Floor
                       </td>
                     </tr>
-                  )}
+                  }
 
-                  {calculateCountdownDay() && (
+                  {
                     <tr className='flex '>
                       <td className='font-bold flex-[0.5]'>
                         Drop-off House Lift
@@ -520,7 +520,7 @@ const UserDetails = ({ progressData }) => {
                         {progressData?.liftAvailable2 ? "Yes" : "No"}
                       </td>
                     </tr>
-                  )}
+                  }
                 </tbody>
 
                 {/* <tfoot>

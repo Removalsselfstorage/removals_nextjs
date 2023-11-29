@@ -353,7 +353,7 @@ const MoverLayout = ({ children, data }) => {
                     </span> */}
                     {!s9 && (
                       <span className='text-[25px] mr-[10px]'>
-                        BiSolidBank{" "}
+                        <BiSolidBank />
                       </span>
                     )}
                     {s9 && (
@@ -374,7 +374,7 @@ const MoverLayout = ({ children, data }) => {
                     } flex items-center btn-dash py-[15px] px-[20px] rounded-[10px] w-full`}
                     onClick={() => {
                       setS10(true);
-                      if (router.pathname === "/mover-profile/dashboard") {
+                      if (router.pathname === "/mover-profile/reviews") {
                         setS10(false);
                       }
                     }}

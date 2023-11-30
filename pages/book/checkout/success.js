@@ -195,6 +195,7 @@ const ReservationCheckoutSuccess = ({ allBookings }) => {
         {
           date: getCurrentDateFormatted(),
           bookDate: getCurrentDateFormatted(),
+          moveCarriedOut: false,
           stage: "paid initial move price",
           activity: [
             ...cb?.activity,

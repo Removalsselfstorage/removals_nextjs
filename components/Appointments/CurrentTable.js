@@ -17,7 +17,7 @@ const CurrentTable = ({ moverBooks }) => {
         <thead>
           <tr className='border-[2px]'>
             {/* <th></th> */}
-            {/* <th className='text-[15px] text-primary'>Book Date</th> */}
+            <th className='text-[15px] text-black'>Book Date</th>
             <th className='text-[15px] text-black'>QuoteRef</th>
             <th className='text-[15px] text-black'>Move Desc.</th>
             <th className='text-[15px] text-black'>Move Date</th>
@@ -35,7 +35,8 @@ const CurrentTable = ({ moverBooks }) => {
             <tbody key={index}>
               <tr className='hover'>
                 {/* <th>{index + 1}</th> */}
-                {/* <td className=''>{trimDateFormat(mm?.date)}</td> */}
+                {/* <td className=''>{mm?.bookDate}</td> */}
+                <td className=''>{trimDateFormats(mm?.bookDate)}</td>
                 <td className='link'>
                   <Link
                     href={`/mover-profile/appointments/booking/${mm?.bookingId}`}
@@ -64,9 +65,19 @@ const CurrentTable = ({ moverBooks }) => {
                     {mm.propertyType}
                   </Link>
                 </td>
-                <td className=''>{dayjs(`${mm?.moveDate}`).format("ddd, D MMMM, YYYY")}</td>
-                <td className=''>{trimDateFormat(mm?.moverTime)}</td>
-                <td className=''>{mm?.acceptance}</td>
+                <td className=''>
+                  {dayjs(`${mm?.moveDate}`).format("ddd, D MMM, YYYY")}
+                </td>
+                <td className=''>{mm?.moverTime}</td>
+                <td
+                  className={`${
+                    mm?.acceptance === "accepted"
+                      ? "text-primary"
+                      : "text-secondary"
+                  } `}
+                >
+                  {mm?.acceptance}
+                </td>
                 <td
                   className={`${
                     isGivenDateGreaterThanCurrent

@@ -26,6 +26,7 @@ const HeroInputBox = () => {
   const [addressDetails2, setAddressDetails2] = useState(
     serviceLocation?.locationTo || {}
   );
+ 
   const [submitLoading, setSubmitLoading] = useState(false);
 
   const [selectValue, setSelectValue] = useState(

@@ -78,7 +78,9 @@ const Appointments = ({ allBookings }) => {
 
     const completedMb = mb?.filter((bc) => bc.moveCarriedOut === true);
 
-    const currentMb = mb?.filter((ad) => {
+    const cMb = mb?.filter((bc) => bc.moveCarriedOut !== true);
+
+    const currentMb = cMb?.filter((ad) => {
       const isGivenDateGreaterThanCurrent = checkBookStatus(
         ad?.moveDate,
         ad?.moverTime
@@ -126,7 +128,9 @@ const Appointments = ({ allBookings }) => {
       }
     };
 
-    moverDetailsUpdate();
+    if (personalMoverDetails?.uid) {
+      moverDetailsUpdate();
+    }
   }, []);
 
   // console.log({ personalMoverDetails, moverBooks, allBookings, currentMoverBooks });

@@ -21,12 +21,25 @@ import DatePicker2 from "@/components/DatePicker/DatePicker2";
 import dayjs from "dayjs";
 import { fetchWelcomedEmails } from "@/lib/fetchData2";
 import { db } from "@/firebase";
-import { addDoc, collection } from "firebase/firestore";
+import {
+  collection,
+  deleteDoc,
+  doc,
+  DocumentData,
+  onSnapshot,
+  setDoc,
+  addDoc,
+  serverTimestamp,
+} from "firebase/firestore";
 import {
   UploadBookingProgress,
   UploadBookingProgress1,
 } from "@/lib/uploadBookingProgress";
-import { generateRandomValues, generateSecureId } from "@/utils/logics";
+import {
+  generateRandomValues,
+  generateSecureId,
+  getCurrentDateFormatted,
+} from "@/utils/logics";
 import {
   addContact,
   sendCustomEmail,
@@ -111,6 +124,11 @@ const CompleteHouse = ({ emails }) => {
   const [submitLoading, setSubmitLoading] = useState(false);
   const [activateError, setActivateError] = useState(false);
   const [usedEmails, setUsedEmails] = useState([]);
+
+  const [zap1, setZap1] = useState(
+    serviceLocation?.locationFrom?.postCode || ""
+  );
+  const [zap2, setZap2] = useState(serviceLocation?.locationTo?.postCode || "");
 
   //   Email validation
   const handleEmailChange = (e) => {
@@ -251,7 +269,7 @@ const CompleteHouse = ({ emails }) => {
 
       updateLocationFrom({
         name: address,
-        postCode: addressDetails?.zip,
+        postCode: zap1,
         city: addressDetails?.city,
         state: addressDetails?.state,
         country: addressDetails?.country,
@@ -260,7 +278,7 @@ const CompleteHouse = ({ emails }) => {
       });
       updateLocationTo({
         name: address2,
-        postCode: addressDetails2.zip,
+        postCode: zap2,
         city: addressDetails2.city,
         state: addressDetails2.state,
         country: addressDetails2.country,
@@ -286,61 +304,85 @@ const CompleteHouse = ({ emails }) => {
         quoteRef,
       });
 
-      const moveObj = {
-        serviceLocation: {
-          locationFrom: {
-            name: address,
-            postCode: addressDetails?.zip || "",
-            city: addressDetails?.city || "",
-            state: addressDetails?.state || "",
-            country: addressDetails?.country || "",
-            floor: floorCount,
-            liftAvailable: lift,
-          },
-          locationTo: {
-            name: address2,
-            postCode: addressDetails2?.zip || "",
-            city: addressDetails2?.city || "",
-            state: addressDetails2?.state || "",
-            country: addressDetails2?.country || "",
-            floor: floorCount2,
-            liftAvailable: lift2,
-          },
-        },
-        personalDetails: {
-          firstName,
-          lastName,
-          email,
-          countryCode: phoneValue || personalDetails?.countryCode,
-          telephone: phone,
-        },
-        moveDetails: {
-          bookingId,
-          propertyType: propertyValue,
-          numberOfMovers: menValue,
-          mileage: mileageValue,
-          volume: volume,
-          duration: moveDetails?.duration,
-          moveDate: date,
-          // moveDateRaw: dateValue || "",
-          movePackage: moveDetails?.movePackage,
-          quoteRef,
-          initialPackagePrice: moveDetails?.initialPackagePrice,
-        },
+     
 
-        stage: "book/home-removals",
-        activity: "Submitted move details in home removals page",
-      };
-      const result = await UploadBookingProgress1(moveObj);
+      const bookingRef = doc(db, "bookingData", bookingId);
 
-      console.log({ bookingprogressupload: result ? "successful" : "failed" });
+      // const currentDate = new Date();
+      // const result = await UploadBookingProgress1(moveObj);
+
+      try {
+        await setDoc(
+          bookingRef,
+
+          {
+            date: getCurrentDateFormatted(),
+            address1: address,
+            postCode1: zap1,
+            city1: addressDetails?.city || "",
+            state1: addressDetails?.state || "",
+            country1: addressDetails?.country || "",
+            floor1: floorCount,
+            liftAvailable1: lift,
+            address2: address2,
+            postCode2: zap2,
+            city2: addressDetails2?.city || "",
+            state2: addressDetails2?.state || "",
+            country2: addressDetails2?.country || "",
+            floor2: floorCount2,
+            liftAvailable2: lift2,
+            firstName,
+            lastName,
+            email,
+            countryCode: phoneValue || personalDetails?.countryCode,
+            telephone: phone,
+            propertyType: propertyValue,
+            numberOfMovers: menValue,
+            mileage: mileageValue,
+            volume,
+            duration: moveDetails?.duration || "",
+            moveDate: date,
+            // moveDateRaw,
+            stage: "book/home-removals",
+            activity: [
+              {
+                name: "Submitted move details in home removals page",
+                date: getCurrentDateFormatted(),
+              },
+            ],
+            bookingId,
+            quoteRef,
+            quoteType: "online",
+            // createdAt: serverTimestamp(),
+          },
+          { merge: true }
+        );
+
+        console.log("user details update was successful @ home-removals");
+      } catch (error) {
+        console.log(error);
+        // return false;
+        console.log("user details update was unsuccessful @ home-removals");
+      }
+
+      // console.log({ bookingprogressupload: result ? "successful" : "failed" });
 
       router.push("/book/move-package");
     }
   };
 
+  useEffect(() => {
+    setZap1(serviceLocation?.locationFrom?.postCode);
+    setZap2(serviceLocation?.locationTo?.postCode);
+  }, [zap1, zap2]);
+
+  useEffect(() => {
+    setZap1(addressDetails.zip);
+    setZap2(addressDetails2.zip);
+  }, [addressDetails, addressDetails2]);
+
   // console.log({ addressDetails });
-  console.log({ serviceLocation, addressDetails, addressDetails2 });
+  console.log({ zap1, zap2, serviceLocation, addressDetails, addressDetails2 });
 
   return (
     <BookingLayout>

@@ -532,7 +532,7 @@ const UserDetails = ({ progressData }) => {
               </table>
             </div>
 
-            {(!progressData?.moveCarriedOut ||
+            {(progressData?.moveCarriedOut !== true ||
               isGivenDateGreaterThanCurrent) && (
               <div className='flex items-center justify-center mt-[50px] mb-[50px]'>
                 <div

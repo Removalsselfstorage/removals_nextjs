@@ -32,12 +32,25 @@ import { useRouter } from "next/navigation";
 import emailjs from "@emailjs/browser";
 import { fetchWelcomedEmails } from "@/lib/fetchData2";
 import { db } from "@/firebase";
-import { addDoc, collection } from "firebase/firestore";
+import {
+  collection,
+  deleteDoc,
+  doc,
+  DocumentData,
+  onSnapshot,
+  setDoc,
+  addDoc,
+  serverTimestamp,
+} from "firebase/firestore";
 import {
   UploadBookingProgress,
   UploadBookingProgress1,
 } from "@/lib/uploadBookingProgress";
-import { generateRandomValues, generateSecureId } from "@/utils/logics";
+import {
+  generateRandomValues,
+  generateSecureId,
+  getCurrentDateFormatted,
+} from "@/utils/logics";
 import { addContact, welcomeEmail } from "@/lib/sendCustomEmail";
 import useQuote from "@/hooks/useQuote";
 
@@ -85,10 +98,18 @@ const ManAndVan = ({ emails }) => {
   const [durationCount, setDurationCount] = useState(
     moveDetails?.duration || 3
   );
-  const [address, setAddress] = useState("");
-  const [addressDetails, setAddressDetails] = useState("");
-  const [address2, setAddress2] = useState("");
-  const [addressDetails2, setAddressDetails2] = useState("");
+  const [address, setAddress] = useState(
+    serviceLocation?.locationFrom?.name || ""
+  );
+  const [addressDetails, setAddressDetails] = useState(
+    serviceLocation?.locationFrom || {}
+  );
+  const [address2, setAddress2] = useState(
+    serviceLocation?.locationTo?.name || ""
+  );
+  const [addressDetails2, setAddressDetails2] = useState(
+    serviceLocation?.locationTo || {}
+  );
   const [propertyValue, setPropertyValue] = useState(
     moveDetails?.propertyType || ""
   );
@@ -112,6 +133,11 @@ const ManAndVan = ({ emails }) => {
   const [submitLoading, setSubmitLoading] = useState(false);
   const [activateError, setActivateError] = useState(false);
   const [usedEmails, setUsedEmails] = useState([]);
+
+  const [zap1, setZap1] = useState(
+    serviceLocation?.locationFrom?.postCode || ""
+  );
+  const [zap2, setZap2] = useState(serviceLocation?.locationTo?.postCode || "");
 
   const hourValue = durationCount <= 1 ? "hour" : "hours";
 
@@ -304,9 +330,7 @@ const ManAndVan = ({ emails }) => {
 
       updateLocationFrom({
         name: address,
-        postCode: addressDetails
-          ? addressDetails.zip
-          : serviceLocation?.locationFrom?.postCode,
+        postCode: zap1,
         city: addressDetails
           ? addressDetails.city
           : serviceLocation?.locationFrom?.city,
@@ -318,9 +342,7 @@ const ManAndVan = ({ emails }) => {
       });
       updateLocationTo({
         name: address2,
-        postCode: addressDetails2
-          ? addressDetails2.zip
-          : serviceLocation?.locationTo?.postCode,
+        postCode:zap2,
         city: addressDetails2
           ? addressDetails2.city
           : serviceLocation?.locationTo?.city,
@@ -351,67 +373,97 @@ const ManAndVan = ({ emails }) => {
         initialPackagePrice: durationCalculation(durationCount),
       });
 
-      const moveObj = {
-        serviceLocation: {
-          locationFrom: {
-            name: address,
-            postCode: addressDetails.zip || "",
-            city: addressDetails.city || "",
-            country: addressDetails.country || "",
-            floor: floorCount,
-            liftAvailable: lift,
-          },
-          locationTo: {
-            name: address2,
-            postCode: addressDetails2.zip || "",
-            city: addressDetails2.city || "",
-            country: addressDetails2.country || "",
-            floor: floorCount2,
-            liftAvailable: lift2,
-          },
-        },
-        personalDetails: {
-          firstName,
-          lastName,
-          email,
-          countryCode: phoneValue || personalDetails?.countryCode,
-          telephone: phone,
-        },
-        moveDetails: {
-          bookingId,
-          propertyType: propertyValue,
-          numberOfMovers: menValue,
-          mileage: mileageValue,
-          volume: volume,
-          duration: durationCount,
-          moveDate: date,
-          // moveDateRaw: dateValue || "",
-          movePackage: moveDetails?.movePackage,
-          quoteRef,
-          initialPackagePrice: moveDetails?.initialPackagePrice,
-        },
-        stage: "book/man-and-van",
-        activity: "Submitted move details in man and van page",
-      };
-      const result = await UploadBookingProgress1(moveObj);
+      const bookingRef = doc(db, "bookingData", bookingId);
 
-      console.log({ bookingprogressupload: result ? "successful" : "failed" });
+      try {
+        await setDoc(
+          bookingRef,
+
+          {
+            date: getCurrentDateFormatted(),
+            address1: address,
+            // postCode1: addressDetails.zip || "",
+            postCode1: zap1,
+            city1: addressDetails.city || "",
+            state1: addressDetails.state || "",
+            country1: addressDetails.country || "",
+            floor1: floorCount,
+            liftAvailable1: lift,
+            address2: address2,
+            // postCode2: addressDetails2.zip || "",
+            postCode2: zap2,
+            city2: addressDetails2.city || "",
+            state2: addressDetails2.state || "",
+            country2: addressDetails2.country || "",
+            floor2: floorCount2,
+            liftAvailable2: lift2,
+            firstName,
+            lastName,
+            email,
+            countryCode: phoneValue || personalDetails.countryCode,
+            telephone: phone,
+            propertyType: propertyValue,
+            numberOfMovers: menValue,
+            mileage: mileageValue,
+            volume,
+            duration: durationCount,
+            moveDate: date,
+            // moveDateRaw,
+            stage: "book/home-removals",
+            activity: [
+              {
+                name: "Submitted move details in man and van page",
+                date: getCurrentDateFormatted(),
+              },
+            ],
+            bookingId,
+            quoteRef,
+            quoteType: "online",
+            // createdAt: serverTimestamp(),
+          },
+          { merge: true }
+        );
+
+        console.log({ addressDetails, addressDetails2 });
+
+        console.log("user details update was successful @ man-and-van");
+      } catch (error) {
+        console.log(error);
+        // return false;
+        console.log("user details update was unsuccessful @ man-and-van");
+      }
+
+      // const result = await UploadBookingProgress1(moveObj);
+
+      // console.log({ bookingprogressupload: result ? "successful" : "failed" });
 
       router.push("/book/move-package");
     }
   };
 
+  useEffect(() => {
+    setZap1(serviceLocation?.locationFrom?.postCode);
+    setZap2(serviceLocation?.locationTo?.postCode);
+  }, [zap1, zap2]);
+
+  useEffect(() => {
+    setZap1(addressDetails.zip);
+    setZap2(addressDetails2.zip);
+  }, [addressDetails, addressDetails2]);
+
+  console.log({ zap1, zap2, serviceLocation, addressDetails, addressDetails2 });
+
   return (
     <BookingLayout>
       <Head>
         <title>Man & Van - Removal and Self Storage</title>
-        <meta name="description" content="Rss removal and storage website" />
-        <link rel="icon" href="/rrs_favicon.svg" />
+        <meta name='description' content='Rss removal and storage website' />
+        <link rel='icon' href='/rrs_favicon.svg' />
       </Head>
 
       <main>
-        <div className="mb-[70px] lg:mb-[100px] pt-[70px]">
-          <div className="md:max-w-7xl mx-auto">
+        <div className='mb-[70px] lg:mb-[100px] pt-[70px]'>
+          <div className='md:max-w-7xl mx-auto'>
             {/* Title */}
             {/* <div className="w-full flex justify-center py-[30px] md:py-[40px]">
               <h3
@@ -422,47 +474,47 @@ const ManAndVan = ({ emails }) => {
               </h3>
             </div> */}
             {/* stepper */}
-            <div className="w-full flex justify-center mt-[20px] mb-[50px]">
-              <ul className="steps">
-                <li className="step step-primary px-[10px] md:px-[40px] font-bold text-[14px] md:text-[16px] leading-[20px]">
+            <div className='w-full flex justify-center mt-[20px] mb-[50px]'>
+              <ul className='steps'>
+                <li className='step step-primary px-[10px] md:px-[40px] font-bold text-[14px] md:text-[16px] leading-[20px]'>
                   Move Details
                 </li>
-                <li className="step  font-bold text-[14px] md:text-[16px] leading-[25px] text-gray-300">
+                <li className='step  font-bold text-[14px] md:text-[16px] leading-[25px] text-gray-300'>
                   Move Package
                 </li>
-                <li className="step  font-bold text-[14px] md:text-[16px] leading-[25px] text-gray-300">
+                <li className='step  font-bold text-[14px] md:text-[16px] leading-[25px] text-gray-300'>
                   Choose Mover
                 </li>
-                <li className="step  font-bold text-[14px] md:text-[16px] leading-[25px] text-gray-300">
+                <li className='step  font-bold text-[14px] md:text-[16px] leading-[25px] text-gray-300'>
                   Checkout
                 </li>
               </ul>
             </div>
 
             {/* form */}
-            <div className="flex flex-col  px-[20px] lg:px-[100px] py-[30px] bg-white rounded-[20px] mx-[10px] md:mx-[100px]">
+            <div className='flex flex-col  px-[20px] lg:px-[100px] py-[30px] bg-white rounded-[20px] mx-[10px] md:mx-[100px]'>
               {/* mandatory text */}
-              <div className="flex justify-center text-secondary mb-[10px] md:mb-[20px] text-[14px] md:text-[16px]">
-                <p className="">Fields marked with * are mandatory</p>
+              <div className='flex justify-center text-secondary mb-[10px] md:mb-[20px] text-[14px] md:text-[16px]'>
+                <p className=''>Fields marked with * are mandatory</p>
               </div>
-              <div className="flex flex-col space-y-[20px]">
+              <div className='flex flex-col space-y-[20px]'>
                 {/* row 1 */}
-                <div className="flex flex-col items-center justify-center space-y-[10px] lg:space-y-0 lg:flex-row lg:items-center lg:space-x-[50px]">
+                <div className='flex flex-col items-center justify-center space-y-[10px] lg:space-y-0 lg:flex-row lg:items-center lg:space-x-[50px]'>
                   {/* left */}
-                  <div className="flex flex-[1] w-full flex-col md:flex-row md:space-x-[10px] space-y-[10px] md:space-y-0 md:justify-center">
+                  <div className='flex flex-[1] w-full flex-col md:flex-row md:space-x-[10px] space-y-[10px] md:space-y-0 md:justify-center'>
                     {/* location from */}
-                    <div className="form-control w-full ">
-                      <label className="label">
-                        <span className="label-text font-semibold">
-                          Location FROM<span className="text-secondary">*</span>
+                    <div className='form-control w-full '>
+                      <label className='label'>
+                        <span className='label-text font-semibold'>
+                          Location FROM<span className='text-secondary'>*</span>
                         </span>
                       </label>
                       <GoogleSearchInput
-                        styles="py-[10px] px-[10px]"
+                        styles='py-[10px] px-[10px]'
                         setAddress={setAddress}
                         addressDetails={addressDetails}
                         setAddressDetails={setAddressDetails}
-                        placeholder="Search location..."
+                        placeholder='Search location...'
                         defaultValue={serviceLocation?.locationFrom.name}
                         errorCheck={activateError && !address}
                       />
@@ -470,22 +522,22 @@ const ManAndVan = ({ emails }) => {
                   </div>
 
                   {/* right */}
-                  <div className="flex flex-col space-y-[5px] md:flex-row flex-[1] md:space-x-[20px] w-full">
+                  <div className='flex flex-col space-y-[5px] md:flex-row flex-[1] md:space-x-[20px] w-full'>
                     {/* floor */}
-                    <div className="flex flex-col w-full flex-[1] ">
-                      <label className="label">
-                        <span className="label-text font-semibold">
-                          Floor<span className="text-secondary">*</span>
+                    <div className='flex flex-col w-full flex-[1] '>
+                      <label className='label'>
+                        <span className='label-text font-semibold'>
+                          Floor<span className='text-secondary'>*</span>
                         </span>
                       </label>
-                      <div className="flex items-center space-x-[5px]">
+                      <div className='flex items-center space-x-[5px]'>
                         <div
                           onClick={() =>
                             floorCount >= 0 && setFloorCount((prev) => prev - 1)
                           }
-                          className="flex justify-center items-center btn btn-primary w-[50px] p-[5px] h-[50px] rounded-[5px]"
+                          className='flex justify-center items-center btn btn-primary w-[50px] p-[5px] h-[50px] rounded-[5px]'
                         >
-                          <AiOutlineMinus className="text-white font-bold text-[18px]" />
+                          <AiOutlineMinus className='text-white font-bold text-[18px]' />
                         </div>
                         <div
                           className={`${
@@ -499,29 +551,29 @@ const ManAndVan = ({ emails }) => {
                         </div>
                         <div
                           onClick={() => setFloorCount((prev) => prev + 1)}
-                          className="flex justify-center items-center btn btn-primary w-[50px] p-[5px] h-[50px] rounded-[5px]"
+                          className='flex justify-center items-center btn btn-primary w-[50px] p-[5px] h-[50px] rounded-[5px]'
                         >
-                          <AiOutlinePlus className="text-white font-bold text-[18px]" />
+                          <AiOutlinePlus className='text-white font-bold text-[18px]' />
                         </div>
                       </div>
                     </div>
                     {/* lift */}
                     {floorCount != 0 && (
-                      <div className="flex flex-col w-full flex-[2] ">
-                        <label className="label">
-                          <span className="label-text font-semibold">
+                      <div className='flex flex-col w-full flex-[2] '>
+                        <label className='label'>
+                          <span className='label-text font-semibold'>
                             Lift Available
                           </span>
                         </label>
-                        <label className="flex items-center cursor-pointer space-x-[10px]">
+                        <label className='flex items-center cursor-pointer space-x-[10px]'>
                           <input
-                            type="checkbox"
+                            type='checkbox'
                             //   checked="checked"
-                            className="checkbox checkbox-primary"
+                            className='checkbox checkbox-primary'
                             onChange={(e) => setLift(e.target.checked)}
                             checked={lift}
                           />
-                          <span className="leading-[20px] text-[13px] text-gray-400 md:text-[14px]">
+                          <span className='leading-[20px] text-[13px] text-gray-400 md:text-[14px]'>
                             Check if available
                           </span>
                         </label>
@@ -531,22 +583,22 @@ const ManAndVan = ({ emails }) => {
                 </div>
 
                 {/* row 2 */}
-                <div className="flex flex-col items-center justify-center space-y-[10px] lg:space-y-0 lg:flex-row lg:items-center lg:space-x-[50px]">
+                <div className='flex flex-col items-center justify-center space-y-[10px] lg:space-y-0 lg:flex-row lg:items-center lg:space-x-[50px]'>
                   {/* left */}
-                  <div className="flex flex-[1] w-full flex-col md:flex-row md:space-x-[10px] space-y-[10px] md:space-y-0 md:justify-center">
+                  <div className='flex flex-[1] w-full flex-col md:flex-row md:space-x-[10px] space-y-[10px] md:space-y-0 md:justify-center'>
                     {/* location from */}
-                    <div className="form-control w-full ">
-                      <label className="label">
-                        <span className="label-text font-semibold">
-                          Location TO<span className="text-secondary">*</span>
+                    <div className='form-control w-full '>
+                      <label className='label'>
+                        <span className='label-text font-semibold'>
+                          Location TO<span className='text-secondary'>*</span>
                         </span>
                       </label>
                       <GoogleSearchInput
-                        styles="py-[10px] px-[10px]"
+                        styles='py-[10px] px-[10px]'
                         setAddress={setAddress2}
                         addressDetails={addressDetails2}
                         setAddressDetails={setAddressDetails2}
-                        placeholder="Search location..."
+                        placeholder='Search location...'
                         defaultValue={serviceLocation?.locationTo?.name}
                         errorCheck={activateError && !address2}
                       />
@@ -554,23 +606,23 @@ const ManAndVan = ({ emails }) => {
                   </div>
 
                   {/* right */}
-                  <div className="flex flex-col space-y-[5px] md:flex-row flex-[1] md:space-x-[20px] w-full">
+                  <div className='flex flex-col space-y-[5px] md:flex-row flex-[1] md:space-x-[20px] w-full'>
                     {/* floor */}
-                    <div className="flex flex-col w-full flex-[1] ">
-                      <label className="label">
-                        <span className="label-text font-semibold">
-                          Floor<span className="text-secondary">*</span>
+                    <div className='flex flex-col w-full flex-[1] '>
+                      <label className='label'>
+                        <span className='label-text font-semibold'>
+                          Floor<span className='text-secondary'>*</span>
                         </span>
                       </label>
-                      <div className="flex items-center space-x-[5px]">
+                      <div className='flex items-center space-x-[5px]'>
                         <div
                           onClick={() =>
                             floorCount2 >= 0 &&
                             setFloorCount2((prev) => prev - 1)
                           }
-                          className="flex justify-center items-center btn btn-primary w-[50px] p-[5px] h-[50px] rounded-[5px]"
+                          className='flex justify-center items-center btn btn-primary w-[50px] p-[5px] h-[50px] rounded-[5px]'
                         >
-                          <AiOutlineMinus className="text-white font-bold text-[18px]" />
+                          <AiOutlineMinus className='text-white font-bold text-[18px]' />
                         </div>
                         <div
                           className={`${
@@ -584,29 +636,29 @@ const ManAndVan = ({ emails }) => {
                         </div>
                         <div
                           onClick={() => setFloorCount2((prev) => prev + 1)}
-                          className="flex justify-center items-center btn btn-primary w-[50px] p-[5px] h-[50px] rounded-[5px]"
+                          className='flex justify-center items-center btn btn-primary w-[50px] p-[5px] h-[50px] rounded-[5px]'
                         >
-                          <AiOutlinePlus className="text-white font-bold text-[18px]" />
+                          <AiOutlinePlus className='text-white font-bold text-[18px]' />
                         </div>
                       </div>
                     </div>
                     {/* lift */}
                     {floorCount2 != 0 && (
-                      <div className="flex flex-col w-full flex-[2] ">
-                        <label className="label">
-                          <span className="label-text font-semibold">
+                      <div className='flex flex-col w-full flex-[2] '>
+                        <label className='label'>
+                          <span className='label-text font-semibold'>
                             Lift Available
                           </span>
                         </label>
-                        <label className="flex items-center cursor-pointer space-x-[10px]">
+                        <label className='flex items-center cursor-pointer space-x-[10px]'>
                           <input
-                            type="checkbox"
+                            type='checkbox'
                             //   checked="checked"
-                            className="checkbox checkbox-primary"
+                            className='checkbox checkbox-primary'
                             onChange={(e) => setLift2(e.target.checked)}
                             checked={lift2}
                           />
-                          <span className="leading-[20px] text-[13px] text-gray-400 md:text-[14px]">
+                          <span className='leading-[20px] text-[13px] text-gray-400 md:text-[14px]'>
                             Check if available
                           </span>
                         </label>
@@ -615,19 +667,19 @@ const ManAndVan = ({ emails }) => {
                   </div>
                 </div>
                 {/* row 3 */}
-                <div className="flex flex-col items-center justify-center space-y-[10px] lg:space-y-0 lg:flex-row lg:items-center lg:space-x-[50px]">
+                <div className='flex flex-col items-center justify-center space-y-[10px] lg:space-y-0 lg:flex-row lg:items-center lg:space-x-[50px]'>
                   {/* left */}
-                  <div className="flex w-full flex-[1] flex-col items-center md:flex-row md:space-x-[30px] space-y-[10px] md:space-y-0 md:justify-center">
+                  <div className='flex w-full flex-[1] flex-col items-center md:flex-row md:space-x-[30px] space-y-[10px] md:space-y-0 md:justify-center'>
                     {/* first name */}
-                    <div className="form-control w-full">
-                      <label className="label">
-                        <span className="label-text font-semibold">
-                          First Name<span className="text-secondary">*</span>
+                    <div className='form-control w-full'>
+                      <label className='label'>
+                        <span className='label-text font-semibold'>
+                          First Name<span className='text-secondary'>*</span>
                         </span>
                       </label>
                       <input
-                        type="text"
-                        placeholder="First name"
+                        type='text'
+                        placeholder='First name'
                         className={`${
                           activateError && !firstName
                             ? "ring ring-secondary"
@@ -639,17 +691,17 @@ const ManAndVan = ({ emails }) => {
                     </div>
                   </div>
                   {/* right */}
-                  <div className="flex flex-[1] w-full flex-col md:flex-row md:space-x-[10px] space-y-[10px] md:space-y-0 md:justify-center">
+                  <div className='flex flex-[1] w-full flex-col md:flex-row md:space-x-[10px] space-y-[10px] md:space-y-0 md:justify-center'>
                     {/* last name */}
-                    <div className="form-control w-full ">
-                      <label className="label">
-                        <span className="label-text font-semibold">
-                          Last Name<span className="text-secondary">*</span>
+                    <div className='form-control w-full '>
+                      <label className='label'>
+                        <span className='label-text font-semibold'>
+                          Last Name<span className='text-secondary'>*</span>
                         </span>
                       </label>
                       <input
-                        type="text"
-                        placeholder="Last name"
+                        type='text'
+                        placeholder='Last name'
                         className={`${
                           activateError && !lastName
                             ? "ring ring-secondary"
@@ -663,19 +715,19 @@ const ManAndVan = ({ emails }) => {
                 </div>
 
                 {/* row 4*/}
-                <div className="flex flex-col items-center justify-center space-y-[10px] lg:space-y-0 lg:flex-row lg:items-center lg:space-x-[50px]">
+                <div className='flex flex-col items-center justify-center space-y-[10px] lg:space-y-0 lg:flex-row lg:items-center lg:space-x-[50px]'>
                   {/* left */}
-                  <div className="flex flex-[1] w-full flex-col md:flex-row md:space-x-[10px] space-y-[10px] md:space-y-0 md:justify-center">
+                  <div className='flex flex-[1] w-full flex-col md:flex-row md:space-x-[10px] space-y-[10px] md:space-y-0 md:justify-center'>
                     {/* email */}
-                    <div className="form-control w-full ">
-                      <label className="label">
-                        <span className="label-text font-semibold">
-                          Email<span className="text-secondary">*</span>
+                    <div className='form-control w-full '>
+                      <label className='label'>
+                        <span className='label-text font-semibold'>
+                          Email<span className='text-secondary'>*</span>
                         </span>
                       </label>
                       <input
-                        type="email"
-                        placeholder="Email address"
+                        type='email'
+                        placeholder='Email address'
                         className={`${
                           activateError && !email ? "ring ring-secondary" : ""
                         } input input-primary w-full h-[43px]`}
@@ -684,7 +736,7 @@ const ManAndVan = ({ emails }) => {
                         defaultValue={email}
                       />
                       {!emailError && (
-                        <p className="text-[14px] text-secondary mt-[5px]">
+                        <p className='text-[14px] text-secondary mt-[5px]'>
                           Please enter a valid email
                         </p>
                       )}
@@ -692,19 +744,19 @@ const ManAndVan = ({ emails }) => {
                   </div>
 
                   {/* right */}
-                  <div className="flex w-full flex-[1] flex-col items-center md:flex-row md:space-x-[30px] space-y-[10px] md:space-y-0 md:justify-center">
+                  <div className='flex w-full flex-[1] flex-col items-center md:flex-row md:space-x-[30px] space-y-[10px] md:space-y-0 md:justify-center'>
                     {/* country code */}
-                    <div className="flex flex-col w-full flex-[1]">
-                      <label className="label">
-                        <span className="label-text font-semibold">
-                          Country Code<span className="text-secondary">*</span>
+                    <div className='flex flex-col w-full flex-[1]'>
+                      <label className='label'>
+                        <span className='label-text font-semibold'>
+                          Country Code<span className='text-secondary'>*</span>
                         </span>
                       </label>
                       <SelectSearch
-                        placeholder="Select"
+                        placeholder='Select'
                         options={phoneCodesOptions}
                         isSearchable={true}
-                        name="service2"
+                        name='service2'
                         // defaultValue={serviceOptions[2]}
                         defaultValue={defaultPhoneValue()}
                         setValue={setPhoneValue}
@@ -712,15 +764,15 @@ const ManAndVan = ({ emails }) => {
                       />
                     </div>
                     {/* Telephone* */}
-                    <div className="form-control w-full flex-[1]">
-                      <label className="label">
-                        <span className="label-text font-semibold">
-                          Telephone<span className="text-secondary">*</span>
+                    <div className='form-control w-full flex-[1]'>
+                      <label className='label'>
+                        <span className='label-text font-semibold'>
+                          Telephone<span className='text-secondary'>*</span>
                         </span>
                       </label>
                       <input
-                        type="tel"
-                        placeholder="Telephone number"
+                        type='tel'
+                        placeholder='Telephone number'
                         className={`${
                           activateError && (!phone || !phoneError)
                             ? "ring ring-secondary"
@@ -734,19 +786,19 @@ const ManAndVan = ({ emails }) => {
                 </div>
 
                 {/* row 5 */}
-                <div className="flex flex-col items-center justify-center space-y-[10px] lg:space-y-0 lg:flex-row lg:items-center lg:space-x-[50px]">
+                <div className='flex flex-col items-center justify-center space-y-[10px] lg:space-y-0 lg:flex-row lg:items-center lg:space-x-[50px]'>
                   {/* left */}
-                  <div className="flex flex-[1] w-full flex-col md:flex-row md:space-x-[10px] space-y-[10px] md:space-y-0 md:justify-center">
+                  <div className='flex flex-[1] w-full flex-col md:flex-row md:space-x-[10px] space-y-[10px] md:space-y-0 md:justify-center'>
                     {/* property type */}
-                    <div className="flex flex-col w-full">
-                      <label className="label">
-                        <span className="label-text font-semibold">
-                          Property Type<span className="text-secondary">*</span>
+                    <div className='flex flex-col w-full'>
+                      <label className='label'>
+                        <span className='label-text font-semibold'>
+                          Property Type<span className='text-secondary'>*</span>
                         </span>
                       </label>
-                      <div className="w-full">
+                      <div className='w-full'>
                         <SelectSearch
-                          placeholder="Select"
+                          placeholder='Select'
                           options={serviceOptions3}
                           isSearchable={false}
                           //   name="service2"
@@ -764,20 +816,20 @@ const ManAndVan = ({ emails }) => {
                     </div>
                   </div>
 
-                  <div className="flex-[1] w-full flex flex-col md:flex-row md:items-center md:space-x-[20px] space-y-[10px] md:space-y-0">
+                  <div className='flex-[1] w-full flex flex-col md:flex-row md:items-center md:space-x-[20px] space-y-[10px] md:space-y-0'>
                     {/* movers */}
-                    <div className="flex w-full flex-[1] flex-col items-center md:flex-row md:space-x-[30px] space-y-[10px] md:space-y-0 md:justify-center">
+                    <div className='flex w-full flex-[1] flex-col items-center md:flex-row md:space-x-[30px] space-y-[10px] md:space-y-0 md:justify-center'>
                       {/* Number of movers */}
-                      <div className="form-control w-full ">
-                        <label className="label">
-                          <span className="label-text font-semibold">
+                      <div className='form-control w-full '>
+                        <label className='label'>
+                          <span className='label-text font-semibold'>
                             Number of Movers
-                            <span className="text-secondary">*</span>
+                            <span className='text-secondary'>*</span>
                           </span>
                         </label>
-                        <div className="w-full">
+                        <div className='w-full'>
                           <SelectSearch
-                            placeholder="Select"
+                            placeholder='Select'
                             options={menOptions}
                             isSearchable={false}
                             //   name="service3"
@@ -793,20 +845,20 @@ const ManAndVan = ({ emails }) => {
                       </div>
                     </div>
                     {/* mileage */}
-                    <div className="flex w-full flex-[1] flex-col items-center md:flex-row md:space-x-[30px] space-y-[10px] md:space-y-0 md:justify-center">
+                    <div className='flex w-full flex-[1] flex-col items-center md:flex-row md:space-x-[30px] space-y-[10px] md:space-y-0 md:justify-center'>
                       {/* mileage */}
-                      <div className="form-control w-full ">
-                        <label className="label">
-                          <span className="label-text font-semibold">
+                      <div className='form-control w-full '>
+                        <label className='label'>
+                          <span className='label-text font-semibold'>
                             Mileage
                             {!checkPropertyType() && (
-                              <span className="text-secondary">*</span>
+                              <span className='text-secondary'>*</span>
                             )}
                           </span>
                         </label>
-                        <div className="w-full">
+                        <div className='w-full'>
                           <SelectSearch
-                            placeholder="Select"
+                            placeholder='Select'
                             options={mileageOptions}
                             isSearchable={false}
                             //   name="service3"
@@ -816,7 +868,8 @@ const ManAndVan = ({ emails }) => {
                             }
                             setValue={setMileageValue}
                             errorCheck={
-                              activateError && !checkPropertyType() &&
+                              activateError &&
+                              !checkPropertyType() &&
                               (mileageValue == "Select" || mileageValue == "")
                             }
                           />
@@ -826,26 +879,26 @@ const ManAndVan = ({ emails }) => {
                   </div>
                 </div>
                 {/* row 6 */}
-                <div className="flex flex-col  justify-center space-y-[10px] lg:space-y-0 lg:flex-row lg:items-start lg:space-x-[50px]">
+                <div className='flex flex-col  justify-center space-y-[10px] lg:space-y-0 lg:flex-row lg:items-start lg:space-x-[50px]'>
                   {/* left */}
-                  <div className="flex flex-[1]">
+                  <div className='flex flex-[1]'>
                     {/* duration */}
-                    <div className="flex flex-col w-full">
-                      <div className="flex flex-col w-full">
-                        <label className="label">
-                          <span className="label-text font-semibold">
-                            Duration<span className="text-secondary">*</span>
+                    <div className='flex flex-col w-full'>
+                      <div className='flex flex-col w-full'>
+                        <label className='label'>
+                          <span className='label-text font-semibold'>
+                            Duration<span className='text-secondary'>*</span>
                           </span>
                         </label>
-                        <div className="flex items-center space-x-[5px]">
+                        <div className='flex items-center space-x-[5px]'>
                           <div
                             onClick={() =>
                               durationCount > 3 &&
                               setDurationCount((prev) => prev - 1)
                             }
-                            className="flex justify-center items-center btn btn-primary w-[45px] p-[5px] h-[45px] rounded-[5px]"
+                            className='flex justify-center items-center btn btn-primary w-[45px] p-[5px] h-[45px] rounded-[5px]'
                           >
-                            <AiOutlineMinus className="text-white font-bold text-[18px]" />
+                            <AiOutlineMinus className='text-white font-bold text-[18px]' />
                           </div>
                           <div
                             className={`${
@@ -858,33 +911,33 @@ const ManAndVan = ({ emails }) => {
                           </div>
                           <div
                             onClick={() => setDurationCount((prev) => prev + 1)}
-                            className="flex justify-center items-center btn btn-primary w-[45px] p-[5px] h-[45px] rounded-[5px]"
+                            className='flex justify-center items-center btn btn-primary w-[45px] p-[5px] h-[45px] rounded-[5px]'
                           >
-                            <AiOutlinePlus className="text-white font-bold text-[18px]" />
+                            <AiOutlinePlus className='text-white font-bold text-[18px]' />
                           </div>
                         </div>
                       </div>
-                      <p className="mt-[5px] text-[15px]">
+                      <p className='mt-[5px] text-[15px]'>
                         Minimum of 3 hours hire
                       </p>
                     </div>
                   </div>
                   {/* right */}
-                  <div className="flex flex-[1] space-x-[20px]">
-                    <div className="flex flex-[1]">
+                  <div className='flex flex-[1] space-x-[20px]'>
+                    <div className='flex flex-[1]'>
                       {/* volume */}
-                      <div className="flex flex-col w-full">
-                        <label className="label">
-                          <span className="label-text font-semibold">
+                      <div className='flex flex-col w-full'>
+                        <label className='label'>
+                          <span className='label-text font-semibold'>
                             Volume: CU/FT
-                            <span className="text-secondary">*</span>
+                            <span className='text-secondary'>*</span>
                           </span>
                         </label>
                         <input
-                          type="number"
-                          min="10"
-                          step="5"
-                          placeholder="Volume"
+                          type='number'
+                          min='10'
+                          step='5'
+                          placeholder='Volume'
                           className={`${
                             activateError && !volume
                               ? "ring ring-secondary"
@@ -895,12 +948,12 @@ const ManAndVan = ({ emails }) => {
                         />
                       </div>
                     </div>
-                    <div className="flex flex-[1]">
+                    <div className='flex flex-[1]'>
                       {/* move date*/}
-                      <div className="form-control">
-                        <label className="label">
-                          <span className="label-text font-semibold">
-                            Move Date<span className="text-secondary">*</span>
+                      <div className='form-control'>
+                        <label className='label'>
+                          <span className='label-text font-semibold'>
+                            Move Date<span className='text-secondary'>*</span>
                           </span>
                         </label>
                         <button
@@ -910,7 +963,7 @@ const ManAndVan = ({ emails }) => {
                               : ""
                           } flex justify-center items-center bg-white border-[1.4px] rounded-[8px] border-primary cursor-pointer overflow-hidden py-[4px] focus:ring-[2px] active:ring-[2px] ring-primary`}
                         >
-                          <div className="opacity-[0.9] mt-[-10px] cursor-pointer">
+                          <div className='opacity-[0.9] mt-[-10px] cursor-pointer'>
                             <BasicDatePicker
                               setDateValue={setDateValue}
                               dateValue={dateValue}
@@ -928,11 +981,11 @@ const ManAndVan = ({ emails }) => {
                 </div>
               </div>
               {/* agree to terms */}
-              <div className="flex justify-center  mt-[30px] mb-[10px] md:mb-[20px] w-full">
-                <div className="form-control ">
-                  <label className="label cursor-pointer flex justify-center space-x-[20px] w-full">
+              <div className='flex justify-center  mt-[30px] mb-[10px] md:mb-[20px] w-full'>
+                <div className='form-control '>
+                  <label className='label cursor-pointer flex justify-center space-x-[20px] w-full'>
                     <input
-                      type="checkbox"
+                      type='checkbox'
                       //   checked="checked"
                       className={`${
                         activateError && !agreeTermsValue
@@ -941,7 +994,7 @@ const ManAndVan = ({ emails }) => {
                       } checkbox checkbox-primary`}
                       onChange={(e) => setAgreeTermsValue(e.target.checked)}
                     />
-                    <span className="leading-[20px] text-[14px] md:text-[16px]">
+                    <span className='leading-[20px] text-[14px] md:text-[16px]'>
                       I agree to the terms and conditions outlined in the
                       privacy policy
                     </span>
@@ -949,25 +1002,25 @@ const ManAndVan = ({ emails }) => {
                 </div>
               </div>
               {/* submit button */}
-              <div className=" mt-6 w-full flex justify-center">
-                <div className="flex flex-col items-center justify-center">
+              <div className=' mt-6 w-full flex justify-center'>
+                <div className='flex flex-col items-center justify-center'>
                   <button
                     onClick={FormSubmit}
                     disabled={submitLoading}
-                    className="btn btn-primary btn-wide flex items-center space-x-[5px] h-[60px]"
+                    className='btn btn-primary btn-wide flex items-center space-x-[5px] h-[60px]'
                   >
-                    {!submitLoading && <span className="">Get Prices</span>}
+                    {!submitLoading && <span className=''>Get Prices</span>}
                     {submitLoading && (
-                      <span className="loading loading-spinner loading-md text-white"></span>
+                      <span className='loading loading-spinner loading-md text-white'></span>
                     )}
                     {!submitLoading && (
-                      <span className="">
-                        <FiEdit className="text-[20px]" />
+                      <span className=''>
+                        <FiEdit className='text-[20px]' />
                       </span>
                     )}
                   </button>
                   {submitError && (
-                    <div className="text-[14px] mt-[15px] text-secondary bg-secondary/20 rounded-[10px] py-[10px] px-[30px]">
+                    <div className='text-[14px] mt-[15px] text-secondary bg-secondary/20 rounded-[10px] py-[10px] px-[30px]'>
                       Please fill all mandatory fields
                     </div>
                   )}

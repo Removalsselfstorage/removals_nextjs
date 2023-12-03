@@ -33,7 +33,11 @@ const CurrentTable = ({ moverBooks }) => {
           );
           return (
             <tbody key={index}>
-              <tr className='hover'>
+              <tr className={`${
+                    mm?.acceptance === "accepted"
+                      ? "bg-primary/10"
+                      : ""
+                  } hover`}>
                 {/* <th>{index + 1}</th> */}
                 {/* <td className=''>{mm?.bookDate}</td> */}
                 <td className=''>{trimDateFormats(mm?.bookDate)}</td>

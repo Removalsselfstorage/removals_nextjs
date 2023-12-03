@@ -7,6 +7,8 @@ import {
   convertMoveDateFormat,
   convertTimeTo24HourFormat,
   formatDate,
+  formatMovePrice2,
+  getCurrentDateFormatted,
   trimAddress,
   trimDateFormat,
 } from "@/utils/logics";
@@ -20,11 +22,38 @@ import { db } from "@/firebase";
 import MoverLayout from "@/layouts/MoverLayout";
 import { BiSolidPhoneCall } from "react-icons/bi";
 import dayjs from "dayjs";
+import useMover from "@/hooks/useMover";
 
 const UserDetails2 = ({ progressData }) => {
   //   const [progressData, setBooking] = useState({});
-  const router = useRouter();
+  // const router = useRouter();
+  const {
+    justRegistered,
+    personalMoverDetails,
+    companyDetails,
+    companyDocs,
+    allMoverData,
+    updateJustR,
+    resetJustR,
+    updatePersonalMover,
+    resetPersonalMover,
+    updateCompanyDe,
+    resetCompanyDe,
+    updateCompanyDo,
+    resetCompanyDo,
+    updateAllMoverD,
+    resetAllMoverD,
+    router,
+  } = useMover();
+
+  const oldApplication = progressData?.application ?? [];
+
+  const checkApplication = oldApplication?.some(
+    (pa) => pa.mover === personalMoverDetails?.generatedName
+  );
+
   const [showButton, setShowButton] = useState("");
+  const [applied, setApplied] = useState(checkApplication);
 
   const isGivenDateGreaterThanCurrent = checkBookStatus(
     progressData?.moveDate,
@@ -59,12 +88,9 @@ const UserDetails2 = ({ progressData }) => {
     );
     const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
 
-    if (
-      (months === 0 && days === 1) ||
-      (months === 0 && days === 0) ||
-      (months === 0 && days === 0 && hours === 0) ||
-      (months === 0 && days === 0 && hours === 0 && minutes === 0)
-    ) {
+    // console.log({ months, days, hours, minutes });
+
+    if (months === 0 && days === 0) {
       return true;
     } else {
       return false;
@@ -74,37 +100,34 @@ const UserDetails2 = ({ progressData }) => {
   const trimAd1 = trimAddress(progressData?.address1);
   const trimAd2 = trimAddress(progressData?.address2);
 
-  //   const {
-  //     completedBookings,
-  //     completedBook,
-  //     allBookings,
-  //     bookingsLoading,
-  //     refetchAllBookings,
-  //     sortedBookings,
-  //     allBook,
-  //   } = useBookings();
-
-  //   useEffect(() => {
-  //     setBooking(allBook(id));
-  //   }, [allBookings]);
-
-  const updateAcceptance = async (value) => {
+  const applyHandle = async () => {
+    if (checkApplication) return;
     try {
+      setApplied(true);
+      // setTimeout(() => {
+
+      // })
       await setDoc(
         doc(db, "bookingData", progressData?.bookingId),
 
         {
-          acceptance: value,
+          application: [
+            ...oldApplication,
+            {
+              date: getCurrentDateFormatted(),
+              mover: personalMoverDetails?.generatedName,
+            },
+          ],
         },
         { merge: true }
       );
 
-      console.log("Move Acceptance update was successful @ reservation id");
+      console.log("Move Application update was successful @ reservation id");
     } catch (error) {
       console.log(error);
       // return false;
-      console.log("Move Acceptance update was unsuccessful @ reservation id");
-      setSubmitLoading(false);
+      console.log("Move Application update was unsuccessful @ reservation id");
+      // setSubmitLoading(false);
     }
   };
 
@@ -118,7 +141,9 @@ const UserDetails2 = ({ progressData }) => {
     }
   }, []);
 
-  console.log({ cd: calculateCountdownDay(), progressData, trimAd1, trimAd2 });
+  // console.log({ cd: calculateCountdownDay(), progressData, trimAd1, trimAd2 });
+  // console.log({ personalMoverDetails });
+  console.log({ progressData, checkApplication });
 
   return (
     <MoverLayout>
@@ -338,6 +363,19 @@ const UserDetails2 = ({ progressData }) => {
                   </tr>
 
                   <tr className='flex '>
+                    <td className='font-bold flex-[0.5]'>Move Price</td>
+                    <td
+                      className={`${
+                        !progressData?.movePackage && "text-secondary"
+                      } flex-[1]`}
+                    >
+                      {formatMovePrice2(
+                        (progressData?.moverPrice * 0.8).toFixed(2)
+                      )}
+                    </td>
+                  </tr>
+
+                  <tr className='flex '>
                     <td className='font-bold flex-[0.5]'>Property Type</td>
                     <td
                       className={`${
@@ -532,39 +570,38 @@ const UserDetails2 = ({ progressData }) => {
               </table>
             </div>
 
-            {(!progressData?.moveCarriedOut ||
+            {(progressData?.moveCarriedOut !== true ||
               isGivenDateGreaterThanCurrent) && (
               <div className='flex items-center justify-center mt-[50px] mb-[50px]'>
-                {/* <div
+                <div
                   onClick={() => {
-                    if (showButton === "1") return;
-                    setShowButton("1");
-                    updateAcceptance("accepted");
+                    // if (showButton === "1") return;
+                    // setShowButton("1");
+                    // updateAcceptance("accepted");
+                    applyHandle();
                   }}
                   className={`${
-                    showButton === "1" &&
-                    "bg-primary  border-primary text-white"
+                    applied && "bg-primary  border-primary text-white"
                   } font-bold  py-[10px] px-[30px] border-[3px] hover:border-primary rounded-tl-[10px] rounded-bl-[10px] hover:bg-primary duration-300 cursor-pointer text-gray-500 hover:text-white`}
                 >
-                  {showButton === "1" ? "Accepted" : "Accept"}
-                </div> */}
+                  {applied ? "Applied" : "Apply"}
+                </div>
 
                 <div>
                   {
                     <div
-                      onClick={() => window.my_modal_344.showModal()}
-                      className={`${
-                        showButton === "2" &&
-                        "bg-secondary border-secondary text-white"
-                      } font-bold py-[10px] px-[60px] border-[3px] rounded-[10px]  hover:bg-secondary hover:border-secondary duration-300 cursor-pointer text-gray-500 hover:text-white`}
+                      onClick={() => window.my_modal_34.showModal()}
+                      className={`
+                     
+                       font-bold py-[10px] px-[30px] border-[3px] rounded-tr-[10px] rounded-br-[10px] hover:bg-secondary hover:border-secondary duration-300 cursor-pointer text-gray-500 hover:text-white`}
                     >
-                      {/* {showButton === "2" ? "Rejected" : "Reject"} */}
-                      Apply
+                      {/* Reject */}
+                      {showButton === "2" ? "Unapplied" : "Unapply"}
                     </div>
                   }
                   {/* modal */}
                   <dialog
-                    id='my_modal_344'
+                    id='my_modal_34'
                     className='modal py-[20px] px-[10px]'
                   >
                     <form method='dialog' className='modal-box '>
@@ -572,7 +609,7 @@ const UserDetails2 = ({ progressData }) => {
                         ✕
                       </button>
                       <h3 className='font-bold text-lg text-primary'>
-                        Want to apply for this move?
+                        Want to cancel your application?
                       </h3>
                       <p className='py-4'>
                         Please contact us via{" "}
@@ -598,6 +635,11 @@ const UserDetails2 = ({ progressData }) => {
                     </form>
                   </dialog>
                 </div>
+              </div>
+            )}
+            {applied && (
+              <div className='text-[14px] mt-[15px] text-center text-primary bg-primary/20 rounded-[10px] py-[10px] px-[30px]'>
+                You've applied for this move
               </div>
             )}
           </div>

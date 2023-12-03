@@ -157,8 +157,9 @@ const Dashboard = ({ allBookings }) => {
     personalMoverDetails?.profilePictureUrl
   );
 
-  const [currentMoverBooks, setCurrentMoverBooks] = useState([]);
-  const [completedMoverBooks, setCompletedMoverBooks] = useState([]);
+  const [completedMoves, setCompletedMoves] = useState();
+  const [currentAcceptedMoves, setCurrentAcceptedMoves] = useState();
+  const [currentPendingMoves, setCurrentPendingMoves] = useState();
 
   // const { firstName, lastName } = moverData?.personalMoverDetails;
 
@@ -167,9 +168,9 @@ const Dashboard = ({ allBookings }) => {
   const condition2 = personalMoverDetails?.acceptedTerms;
   const firstName = personalMoverDetails?.firstName;
   const lastName = personalMoverDetails?.lastName;
-  const completedMoves = personalMoverDetails?.completedMoves;
-  const currentAcceptedMoves = personalMoverDetails?.currentAcceptedMoves;
-  const currentPendingMoves = personalMoverDetails?.currentPendingMoves;
+  // const completedMoves = personalMoverDetails?.completedMoves;
+  // const currentAcceptedMoves = personalMoverDetails?.currentAcceptedMoves;
+  // const currentPendingMoves = personalMoverDetails?.currentPendingMoves;
 
   const filterSections = () => {
     if (condition1 !== "" && condition2 === false) {
@@ -260,6 +261,8 @@ const Dashboard = ({ allBookings }) => {
 
     const completedMb = mb?.filter((bc) => bc.moveCarriedOut === true);
 
+    setCompletedMoves(completedMb?.length);
+
     const currentMb = mb?.filter((ad) => {
       const isGivenDateGreaterThanCurrent = checkBookStatus(
         ad?.moveDate,
@@ -272,16 +275,19 @@ const Dashboard = ({ allBookings }) => {
       (bc) => bc.acceptance === "accepted"
     );
 
+    setCurrentAcceptedMoves(currentAcceptedMb?.length);
+
     const currentPendingMb = currentMb?.filter(
       (bc) => bc.acceptance === "pending"
     );
 
-    updatePersonalMover({
-      currentAcceptedMoves: currentAcceptedMb?.length,
-      currentPendingMoves: currentPendingMb?.length,
-      completedMoves: completedMb?.length,
-    });
-    
+    setCurrentPendingMoves(currentPendingMb?.length);
+
+    // updatePersonalMover({
+    //   currentAcceptedMoves: currentAcceptedMb?.length,
+    //   currentPendingMoves: currentPendingMb?.length,
+    //   completedMoves: completedMb?.length,
+    // });
   }, []);
 
   console.log({ personalMoverDetails, moverData });

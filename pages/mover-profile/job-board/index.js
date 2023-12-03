@@ -17,6 +17,8 @@ import { IoReceipt } from "react-icons/io5";
 import { LuCalendarX2 } from "react-icons/lu";
 import { useSelector } from "react-redux";
 
+
+
 const JobBoard = ({ allBookings }) => {
   const {
     justRegistered,
@@ -36,6 +38,8 @@ const JobBoard = ({ allBookings }) => {
     resetAllMoverD,
     router,
   } = useMover();
+
+  // const bid = personalMoverDetails?.generatedName
 
   const [showTab, setShowTab] = useState("");
   const [moverBooks, setMoverBooks] = useState([]);

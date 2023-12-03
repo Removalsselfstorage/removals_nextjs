@@ -7,6 +7,7 @@ import {
   convertMoveDateFormat,
   convertTimeTo24HourFormat,
   formatDate,
+  formatMovePrice2,
   trimAddress,
   trimDateFormat,
 } from "@/utils/logics";
@@ -59,12 +60,9 @@ const UserDetails = ({ progressData }) => {
     );
     const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
 
-    if (
-      (months === 0 && days === 1) ||
-      (months === 0 && days === 0) ||
-      (months === 0 && days === 0 && hours === 0) ||
-      (months === 0 && days === 0 && hours === 0 && minutes === 0)
-    ) {
+    // console.log({ months, days, hours, minutes });
+
+    if (months === 0 && days === 0) {
       return true;
     } else {
       return false;
@@ -334,6 +332,19 @@ const UserDetails = ({ progressData }) => {
                         ? progressData?.movePackage
                         : "*Unavailable*"}{" "}
                       Package
+                    </td>
+                  </tr>
+
+                  <tr className='flex '>
+                    <td className='font-bold flex-[0.5]'>Move Price</td>
+                    <td
+                      className={`${
+                        !progressData?.movePackage && "text-secondary"
+                      } flex-[1]`}
+                    >
+                      {formatMovePrice2(
+                        (progressData?.moverPrice * 0.8).toFixed(2)
+                      )}
                     </td>
                   </tr>
 

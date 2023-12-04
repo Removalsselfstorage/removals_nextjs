@@ -135,15 +135,17 @@ const UserDetails = ({ progressData }) => {
                   </span>{" "}
                   by {progressData?.firstName} {progressData?.lastName}
                 </p>
-                <Link
-                  href={`/mover-profile/appointments/booking/message/${progressData?.bookingId}`}
-                  className='btn btn-primary'
-                >
-                  Message {progressData?.firstName}{" "}
-                  <span>
-                    <TbBrandWechat className='text-[30px]' />
-                  </span>
-                </Link>
+                {calculateCountdownDay() && (
+                  <Link
+                    href={`/mover-profile/appointments/booking/message/${progressData?.bookingId}`}
+                    className='btn btn-primary'
+                  >
+                    Message {progressData?.firstName}{" "}
+                    <span>
+                      <TbBrandWechat className='text-[30px]' />
+                    </span>
+                  </Link>
+                )}
               </div>
               <div
                 onClick={() => router.back()}

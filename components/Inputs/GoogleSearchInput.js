@@ -122,19 +122,35 @@ const GoogleSearchInput = ({
   const onChangeAddress = (autocomplete) => {
     const place = autocomplete.getPlace();
     setAddressDetails(extractAddress(place));
-    // console.log(place)
   };
 
-  // init autocomplete
+  // init autocomplete for address
   const initAutocomplete = () => {
     if (!searchInput.current) return;
 
-    // const autocomplete = new window.google.maps.places.Autocomplete(
-    //   searchInput.current
-    // );
     const autocomplete = new window.google.maps.places.Autocomplete(
       searchInput.current,
-      { types: ["address"], componentRestrictions: { country: "GB" } } // Bias towards the UK
+      {
+        types: ["address"],
+        componentRestrictions: { country: "GB" },
+      } // Bias towards the UK
+    );
+    autocomplete.setFields(["address_component", "geometry"]);
+    autocomplete.addListener("place_changed", () =>
+      onChangeAddress(autocomplete)
+    );
+    setAddress(searchInput.current.value);
+  };
+  // init autocomplete for postal code
+  const initAutocomplete2 = () => {
+    if (!searchInput.current) return;
+
+    const autocomplete = new window.google.maps.places.Autocomplete(
+      searchInput.current,
+      {
+        types: ["postal_code"],
+        componentRestrictions: { country: "GB" },
+      } // Bias towards the UK
     );
     autocomplete.setFields(["address_component", "geometry"]);
     autocomplete.addListener("place_changed", () =>
@@ -150,6 +166,9 @@ const GoogleSearchInput = ({
   return (
     <input
       ref={searchInput}
+      // autoCorrect="off"
+      // autoCapitalize="off"
+      // onFocus={initAutocomplete2()}
       type='text'
       placeholder={placeholder}
       className={`${

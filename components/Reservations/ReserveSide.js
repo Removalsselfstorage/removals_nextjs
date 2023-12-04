@@ -12,7 +12,7 @@ import { BiSolidPhoneCall } from "react-icons/bi";
 import { getAllDetails } from "@/store/quoteSlice";
 import { useDispatch, useSelector } from "react-redux";
 import dayjs from "dayjs";
-import { convertDateFormat, formatMovePrice } from "@/utils/logics";
+import { convertDateFormat, convertTimeTo24HourFormat, formatMovePrice } from "@/utils/logics";
 import useQuote from "@/hooks/useQuote";
 import useMoveItems from "@/hooks/useMoveItems";
 import { TbBrandWechat } from "react-icons/tb";
@@ -88,22 +88,61 @@ const ReserveSide = () => {
     }
   };
 
+  let targetDate = new Date(reserveDetails?.moveDate);
+
+  if (reserveDetails?.moverTime) {
+    const [startTime, endTime] = reserveDetails?.moverTime?.split(" - ") || [];
+    const ct = convertTimeTo24HourFormat(startTime);
+    targetDate.setHours(ct);
+  }
+
+  function calculateCountdownDay() {
+    const currentDate = new Date().getTime();
+    const timeRemaining = givenDate - currentDate;
+
+    const months = Math.floor(timeRemaining / (1000 * 60 * 60 * 24 * 30));
+    const days = Math.floor(
+      (timeRemaining % (1000 * 60 * 60 * 24 * 30)) / (1000 * 60 * 60 * 24)
+    );
+    const hours = Math.floor(
+      (timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+    );
+    const minutes = Math.floor(
+      (timeRemaining % (1000 * 60 * 60)) / (1000 * 60)
+    );
+    const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+
+    // console.log({ months, days, hours, minutes });
+
+    if (months === 0 && days === 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  // const currentDate = new Date().getTime();
+
+  const givenDate = targetDate.getTime();
+
   console.log({ reserveDetails });
 
   return (
     <div className='bg-white shadow-lg rounded-[30px] py-[30px] px-[20px] md:px-[30px] w-full lg:sticky lg:top-[80px]'>
       <div className=''>
-        <div className='flex flex-col space-y-[5px] mb-[20px]'>
-          <Link
-            href={`/reservations/message/${reserveDetails?.bookingId}`}
-            className='btn btn-primary'
-          >
-            Message Mover
-            <span>
-              <TbBrandWechat className='text-[30px]' />
-            </span>
-          </Link>
-        </div>
+        {calculateCountdownDay() && (
+          <div className='flex flex-col space-y-[5px] mb-[20px]'>
+            <Link
+              href={`/reservations/message/${reserveDetails?.bookingId}`}
+              className='btn btn-primary'
+            >
+              Message Mover
+              <span>
+                <TbBrandWechat className='text-[30px]' />
+              </span>
+            </Link>
+          </div>
+        )}
         <p className='text-2xl font-bold mb-[10px] md:mb-[20px]'>
           Book Summary
         </p>

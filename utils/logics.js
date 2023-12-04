@@ -1,3 +1,10 @@
+export function removeSpaces(sentence) {
+  // Use the replace method with a regular expression to remove spaces
+  // The regular expression /\s/g matches all whitespace characters, and 'g' is for global search (not just the first match)
+  return sentence.replace(/\s/g, '');
+}
+
+
 export const trimAddress = (fullAddress) => {
   // Split the address into components
   const addressComponents = fullAddress.split(', ');

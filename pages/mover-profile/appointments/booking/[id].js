@@ -21,6 +21,8 @@ import { db } from "@/firebase";
 import MoverLayout from "@/layouts/MoverLayout";
 import { BiSolidPhoneCall } from "react-icons/bi";
 import dayjs from "dayjs";
+import { PiChatDots } from "react-icons/pi";
+import { TbBrandWechat } from "react-icons/tb";
 
 const UserDetails = ({ progressData }) => {
   //   const [progressData, setBooking] = useState({});
@@ -125,11 +127,24 @@ const UserDetails = ({ progressData }) => {
         <div className='bg-white/90 py-[50px] w-full min-h-[100vh]'>
           <section className='mb-[30px]  px-[30px] '>
             <div className='flex flex-col space-y-[20px] md:space-y-0 md:flex-row md:items-center md:justify-between'>
-              <p className='font-bold text-[25px] mb-[0px]'>
-                Booking{" "}
-                <span className='text-primary'>#{progressData?.quoteRef}</span>{" "}
-                by {progressData?.firstName} {progressData?.lastName}
-              </p>
+              <div className='flex items-center space-x-[20px]'>
+                <p className='font-bold text-[25px] mb-[0px]'>
+                  Book{" "}
+                  <span className='text-primary'>
+                    #{progressData?.quoteRef}
+                  </span>{" "}
+                  by {progressData?.firstName} {progressData?.lastName}
+                </p>
+                <Link
+                  href={`/mover-profile/appointments/booking/message/${progressData?.bookingId}`}
+                  className='btn btn-primary'
+                >
+                  Message {progressData?.firstName}{" "}
+                  <span>
+                    <TbBrandWechat className='text-[30px]' />
+                  </span>
+                </Link>
+              </div>
               <div
                 onClick={() => router.back()}
                 className='text-primary cursor-pointer link flex items-center space-x-[10px]'

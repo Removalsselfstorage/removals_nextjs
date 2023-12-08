@@ -23,6 +23,7 @@ import { getAllUserDetails } from "@/store/userSlice";
 import { getAllMoverDetails } from "@/store/moverSlice";
 import Lottie from "lottie-react";
 import movingVan from "@/lottieJsons/movingVan.json";
+import { TbBrandWechat } from "react-icons/tb";
 
 const MoverLayout = ({ children, data }) => {
   const router = useRouter();
@@ -34,6 +35,7 @@ const MoverLayout = ({ children, data }) => {
   const [s2, setS2] = useState(false);
   const [s3, setS3] = useState(false);
   const [s4, setS4] = useState(false);
+  const [s4b, setS4b] = useState(false);
   const [s5, setS5] = useState(false);
   const [s6, setS6] = useState(false);
   const [s7, setS7] = useState(false);
@@ -176,15 +178,16 @@ const MoverLayout = ({ children, data }) => {
 
                 <li className=' my-[10px] px-[0px] w-full'>
                   <Link
-                    href='/mover-profile/inbox'
+                    href='/mover-profile/notifications'
                     className={`${
-                      router.pathname === "/mover-profile/inbox" || s4 === true
+                      router.pathname === "/mover-profile/notifications" ||
+                      s4 === true
                         ? "bg-primary/10 text-primary"
                         : ""
                     } flex items-center btn-dash py-[15px] px-[20px] rounded-[10px] w-full`}
                     onClick={() => {
                       setS4(true);
-                      if (router.pathname === "/mover-profile/inbox") {
+                      if (router.pathname === "/mover-profile/notifications") {
                         setS4(false);
                       }
                     }}
@@ -200,7 +203,38 @@ const MoverLayout = ({ children, data }) => {
                     {s4 && (
                       <span className='loading loading-spinner loading-md text-primary mr-[10px]'></span>
                     )}
-                    <p className='hidden lg:flex'>Inbox</p>
+                    <p className='hidden lg:flex'>Notifications</p>
+                  </Link>
+                </li>
+
+                <li className=' my-[10px] px-[0px] w-full'>
+                  <Link
+                    href='/mover-profile/message-admin'
+                    className={`${
+                      router.pathname === "/mover-profile/message-admin" ||
+                      s4b === true
+                        ? "bg-primary/10 text-primary"
+                        : ""
+                    } flex items-center btn-dash py-[15px] px-[20px] rounded-[10px] w-full`}
+                    onClick={() => {
+                      setS4b(true);
+                      if (router.pathname === "/mover-profile/message-admin") {
+                        setS4b(false);
+                      }
+                    }}
+                  >
+                    {/* <span className='text-[25px] mr-[10px]'>
+                      <HiOutlineInboxArrowDown />
+                    </span> */}
+                    {!s4b && (
+                      <span className='text-[25px] mr-[10px]'>
+                        <TbBrandWechat />
+                      </span>
+                    )}
+                    {s4b && (
+                      <span className='loading loading-spinner loading-md text-primary mr-[10px]'></span>
+                    )}
+                    <p className='hidden lg:flex'>Message Admin</p>
                   </Link>
                 </li>
               </ul>

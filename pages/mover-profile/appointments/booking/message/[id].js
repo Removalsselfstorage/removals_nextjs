@@ -269,7 +269,7 @@ const MessageDetails = ({ progressData }) => {
             </div>
             <form
               onSubmit={handleMessage}
-              className='absolute bottom-0 left-0 right-0 bg-gray-500/30 py-[10px] px-[20px] flex items-center justify-between'
+              className='absolute bottom-0 left-0 z-[100] right-0 bg-gray-500/30 py-[10px] px-[20px] flex items-center justify-between'
             >
               <input
                 type='text'

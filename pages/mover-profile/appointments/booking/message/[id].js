@@ -42,6 +42,7 @@ import { parse, formatDistanceToNow } from "date-fns";
 import TimeAgo from "react-timeago";
 import frenchStrings from "react-timeago/lib/language-strings/fr";
 import buildFormatter from "react-timeago/lib/formatters/buildFormatter";
+import { messageNotificationEmail } from "@/lib/sendCustomEmail";
 
 const MessageDetails = ({ progressData }) => {
   //   const [progressData, setBooking] = useState({});
@@ -62,6 +63,24 @@ const MessageDetails = ({ progressData }) => {
     const ct = convertTimeTo24HourFormat(startTime);
     targetDate.setHours(ct);
   }
+
+  const notificationParams = {
+    receiverName: `${progressData?.firstName} ${progressData?.lastName}`,
+    senderName: progressData?.moverName,
+    message: newMessage,
+    subject: `Message notification from ${progressData?.moverName}`,
+    messageLink: `https://rss-admin.vercel.app/reservations/message/${progressData?.bookingId}`,
+    messageId: progressData?.bookingId,
+    // page: "checkout page",
+  };
+
+  const sendMessageNotificationEmail = async () => {
+    try {
+      await messageNotificationEmail(progressData?.email, notificationParams);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   // const currentDate = new Date().getTime();
 
@@ -105,20 +124,6 @@ const MessageDetails = ({ progressData }) => {
     }
   };
 
-  //   const {
-  //     completedBookings,
-  //     completedBook,
-  //     allBookings,
-  //     bookingsLoading,
-  //     refetchAllBookings,
-  //     sortedBookings,
-  //     allBook,
-  //   } = useBookings();
-
-  //   useEffect(() => {
-  //     setBooking(allBook(id));
-  //   }, [allBookings]);
-
   const messageId = `${progressData?.bookingId}-${removeSpaces(
     progressData?.moverName
   )}`;
@@ -147,6 +152,8 @@ const MessageDetails = ({ progressData }) => {
         }
         // { merge: true }
       );
+
+      sendMessageNotificationEmail();
 
       console.log("Message update was successful @ message id");
     } catch (error) {

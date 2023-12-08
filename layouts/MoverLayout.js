@@ -25,6 +25,8 @@ import Lottie from "lottie-react";
 import movingVan from "@/lottieJsons/movingVan.json";
 import { TbBrandWechat } from "react-icons/tb";
 
+import { IoMdNotificationsOutline } from "react-icons/io";
+
 const MoverLayout = ({ children, data }) => {
   const router = useRouter();
   const userDetails = useSelector(getAllUserDetails);
@@ -197,7 +199,7 @@ const MoverLayout = ({ children, data }) => {
                     </span> */}
                     {!s4 && (
                       <span className='text-[25px] mr-[10px]'>
-                        <HiOutlineInboxArrowDown />
+                        <IoMdNotificationsOutline />
                       </span>
                     )}
                     {s4 && (

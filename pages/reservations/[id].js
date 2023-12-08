@@ -656,8 +656,20 @@ export async function getServerSideProps(context) {
   if (typeof bookingsData === "undefined") {
     return {
       props: {
-        progressData: null,
+        progressData: progressData,
         allBookings: null,
+        // userData,
+        id,
+
+        // prices,
+        // userData,
+      },
+    };
+  } else if (typeof progressData === "undefined") {
+    return {
+      props: {
+        progressData: null,
+        allBookings,
         // userData,
         id,
 

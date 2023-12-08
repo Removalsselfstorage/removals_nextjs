@@ -122,11 +122,9 @@ const MessageDetails2 = ({ progressData }) => {
   //     setBooking(allBook(id));
   //   }, [allBookings]);
 
-  const messageId = `${progressData?.bookingId}-${removeSpaces(
-    progressData?.moverName
-  )}`;
+  const messageId = `${progressData?.bookingId}`;
 
-  const messageRef = collection(db, "messages");
+  const messageRef = collection(db, "messages3");
 
   //   console.log({messageId})
 
@@ -145,7 +143,7 @@ const MessageDetails2 = ({ progressData }) => {
           messageId,
           user: `${progressData?.firstName} ${progressData?.lastName}`,
           userType: "user",
-          room: "mover-user",
+          room: "admin-user",
           createdAt: serverTimestamp(),
         }
         // { merge: true }
@@ -198,7 +196,7 @@ const MessageDetails2 = ({ progressData }) => {
                     <TbBrandWechat className='text-[30px] text-primary' />
                   </span>
                   <p className='font-bold text-[25px] mb-[0px]'>
-                    Chat with mover "{progressData?.moverName}"
+                    Chat with Admin
                   </p>
                 </div>
                 <div

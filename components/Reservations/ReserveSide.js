@@ -12,7 +12,11 @@ import { BiSolidPhoneCall } from "react-icons/bi";
 import { getAllDetails } from "@/store/quoteSlice";
 import { useDispatch, useSelector } from "react-redux";
 import dayjs from "dayjs";
-import { convertDateFormat, convertTimeTo24HourFormat, formatMovePrice } from "@/utils/logics";
+import {
+  convertDateFormat,
+  convertTimeTo24HourFormat,
+  formatMovePrice,
+} from "@/utils/logics";
 import useQuote from "@/hooks/useQuote";
 import useMoveItems from "@/hooks/useMoveItems";
 import { TbBrandWechat } from "react-icons/tb";
@@ -130,20 +134,36 @@ const ReserveSide = () => {
   return (
     <div className='bg-white shadow-lg rounded-[30px] py-[30px] px-[20px] md:px-[30px] w-full lg:sticky lg:top-[80px]'>
       <div className=''>
-        {calculateCountdownDay() && (
-          <div className='flex flex-col space-y-[5px] mb-[20px]'>
-            <Link
-              href={`/reservations/message/${reserveDetails?.bookingId}`}
-              className='btn btn-primary'
-            >
-              Message Mover
+        <div className=' mb-[20px]'>
+          <Link
+            href={`/reservations/message2/${reserveDetails?.bookingId}`}
+            className='btn btn-primary '
+          >
+            <div className="flex items-center space-x-[5px]">
+              <p className="">Chat Admin</p>
               <span>
-                <TbBrandWechat className='text-[30px]' />
+                <TbBrandWechat className='text-[20px]' />
               </span>
-            </Link>
-          </div>
+            </div>
+          </Link>
+        </div>
+
+        {calculateCountdownDay() && (
+          <div className=' mb-[20px]'>
+          <Link
+            href={`/reservations/message/${reserveDetails?.bookingId}`}
+            className='btn btn-secondary '
+          >
+            <div className="flex items-center space-x-[5px]">
+              <p className="">Chat Mover</p>
+              <span>
+                <TbBrandWechat className='text-[20px]' />
+              </span>
+            </div>
+          </Link>
+        </div>
         )}
-        <p className='text-2xl font-bold mb-[10px] md:mb-[20px]'>
+        <p className='text-[20px] font-bold mb-[10px] md:mb-[20px]'>
           Book Summary
         </p>
         <div className='relative'>

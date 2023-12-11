@@ -100,37 +100,6 @@ const Appointments = ({ allBookings }) => {
     setCurrentMoverBooks(currentMb);
     setCompletedMoverBooks(completedMb);
 
-    // const moverDetailsUpdate = async () => {
-    //   // updatePersonalMover({
-    //   //   currentAcceptedMoves: currentAcceptedMb?.length,
-    //   //   currentPendingMoves: currentPendingMb?.length,
-    //   //   completedMoves: completedMb?.length,
-    //   // });
-    //   // const moversRef = doc(db, "moversData", uid);
-    //   try {
-    //     await setDoc(
-    //       doc(db, "moversData", personalMoverDetails?.uid),
-
-    //       {
-    //         currentAcceptedMoves: currentAcceptedMb?.length,
-    //         currentPendingMoves: currentPendingMb?.length,
-    //         completedMoves: completedMb?.length,
-    //       },
-    //       { merge: true }
-    //     );
-
-    //     console.log("Mover Details update was successful @ reservation id");
-    //   } catch (error) {
-    //     console.log(error);
-    //     // return false;
-    //     console.log("Mover Details update was unsuccessful @ reservation id");
-    //     // setSubmitLoading(false);
-    //   }
-    // };
-
-    // if (personalMoverDetails?.uid) {
-    //   moverDetailsUpdate();
-    // }
   }, []);
 
   // console.log({ personalMoverDetails, moverBooks, allBookings, currentMoverBooks });

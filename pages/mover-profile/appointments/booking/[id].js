@@ -243,20 +243,21 @@ const UserDetails = ({ progressData }) => {
                     </td>
                   </tr>
 
-                  {calculateCountdownDay() && (
-                    <tr className='flex '>
-                      <td className='font-bold flex-[0.5]'>Last Name</td>
-                      <td
-                        className={`${
-                          !progressData?.lastName && "text-secondary"
-                        } flex-[1]`}
-                      >
-                        {progressData?.lastName
-                          ? progressData?.lastName
-                          : "*Unavailable*"}
-                      </td>
-                    </tr>
-                  )}
+                  {calculateCountdownDay() &&
+                    progressData?.acceptance === "accepted" && (
+                      <tr className='flex '>
+                        <td className='font-bold flex-[0.5]'>Last Name</td>
+                        <td
+                          className={`${
+                            !progressData?.lastName && "text-secondary"
+                          } flex-[1]`}
+                        >
+                          {progressData?.lastName
+                            ? progressData?.lastName
+                            : "*Unavailable*"}
+                        </td>
+                      </tr>
+                    )}
 
                   {/* <tr className='flex '>
                     <td className='font-bold flex-[0.5]'>Email</td>
@@ -448,7 +449,7 @@ const UserDetails = ({ progressData }) => {
                     </td>
                   </tr>
 
-                  {!calculateCountdownDay() && (
+                  {
                     <tr className='flex '>
                       <td className='font-bold flex-[0.5]'>Pickup Address</td>
                       <td
@@ -459,22 +460,23 @@ const UserDetails = ({ progressData }) => {
                         {progressData?.postCode1 || trimAd1}
                       </td>
                     </tr>
-                  )}
+                  }
 
-                  {calculateCountdownDay() && (
-                    <tr className='flex '>
-                      <td className='font-bold flex-[0.5]'>Pickup Address</td>
-                      <td
-                        className={`${
-                          !progressData?.address2 && "text-secondary"
-                        } flex-[1]`}
-                      >
-                        {progressData?.address2
-                          ? progressData?.address2
-                          : "*Unavailable*"}
-                      </td>
-                    </tr>
-                  )}
+                  {calculateCountdownDay() &&
+                    progressData?.acceptance === "accepted" && (
+                      <tr className='flex '>
+                        <td className='font-bold flex-[0.5]'>Pickup Address</td>
+                        <td
+                          className={`${
+                            !progressData?.address2 && "text-secondary"
+                          } flex-[1]`}
+                        >
+                          {progressData?.address2
+                            ? progressData?.address2
+                            : "*Unavailable*"}
+                        </td>
+                      </tr>
+                    )}
 
                   {
                     <tr className='flex '>
@@ -499,7 +501,7 @@ const UserDetails = ({ progressData }) => {
                     </tr>
                   }
 
-                  {!calculateCountdownDay() && (
+                  {
                     <tr className='flex '>
                       <td className='font-bold flex-[0.5]'>Drop-off Address</td>
                       <td
@@ -510,22 +512,25 @@ const UserDetails = ({ progressData }) => {
                         {progressData?.postCode2 || trimAd2}
                       </td>
                     </tr>
-                  )}
+                  }
 
-                  {calculateCountdownDay() && (
-                    <tr className='flex '>
-                      <td className='font-bold flex-[0.5]'>Drop-off Address</td>
-                      <td
-                        className={`${
-                          !progressData?.address1 && "text-secondary"
-                        } flex-[1]`}
-                      >
-                        {progressData?.address1
-                          ? progressData?.address1
-                          : "*Unavailable*"}
-                      </td>
-                    </tr>
-                  )}
+                  {calculateCountdownDay() &&
+                    progressData?.acceptance === "accepted" && (
+                      <tr className='flex '>
+                        <td className='font-bold flex-[0.5]'>
+                          Drop-off Address
+                        </td>
+                        <td
+                          className={`${
+                            !progressData?.address1 && "text-secondary"
+                          } flex-[1]`}
+                        >
+                          {progressData?.address1
+                            ? progressData?.address1
+                            : "*Unavailable*"}
+                        </td>
+                      </tr>
+                    )}
 
                   {
                     <tr className='flex '>

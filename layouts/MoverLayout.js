@@ -11,7 +11,7 @@ import Navbar3 from "@/components/Navbar/Navbar3";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { AiOutlineHome } from "react-icons/ai";
-import { MdWorkOutline } from "react-icons/md";
+import { MdNotificationsActive, MdWorkOutline } from "react-icons/md";
 import { FaRegCalendarAlt } from "react-icons/fa";
 import { HiOutlineInboxArrowDown } from "react-icons/hi2";
 import { HiDocumentDuplicate } from "react-icons/hi";
@@ -26,8 +26,31 @@ import movingVan from "@/lottieJsons/movingVan.json";
 import { TbBrandWechat } from "react-icons/tb";
 
 import { IoMdNotificationsOutline } from "react-icons/io";
+import useMover from "@/hooks/useMover";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "@/firebase";
 
-const MoverLayout = ({ children, data }) => {
+const MoverLayout = ({ children, data, reload }) => {
+  const {
+    justRegistered,
+    personalMoverDetails,
+    companyDetails,
+    companyDocs,
+    allMoverData,
+    updateJustR,
+    resetJustR,
+    updatePersonalMover,
+    resetPersonalMover,
+    updateCompanyDe,
+    resetCompanyDe,
+    updateCompanyDo,
+    resetCompanyDo,
+    updateAllMoverD,
+    resetAllMoverD,
+    // router,
+  } = useMover();
+
+  // const uid = personalMoverDetails?.uid;
   const router = useRouter();
   const userDetails = useSelector(getAllUserDetails);
   const [clicked, setClicked] = useState(false);
@@ -44,6 +67,9 @@ const MoverLayout = ({ children, data }) => {
   const [s8, setS8] = useState(false);
   const [s9, setS9] = useState(false);
   const [s10, setS10] = useState(false);
+
+  const [readData, setReadData] = useState([]);
+  const [unreadData, setUnreadData] = useState([]);
 
   const uid = userDetails?.userDetails?.uid;
 
@@ -77,11 +103,26 @@ const MoverLayout = ({ children, data }) => {
     }
   }, []);
 
-  // useEffect(() => {
-  //   if (!userDetails.userDetails) {
-  //     router.push("/");
-  //   }
-  // }, []);
+  useEffect(() => {
+    const getMD = async () => {
+      const bookingRef = doc(db, "moversData", uid);
+      const docSnap = await getDoc(bookingRef);
+      const moverDat = docSnap.data()?.notifications;
+      const moverData2 = docSnap.data();
+
+      const sortMoverData = [...moverDat]?.sort((a, b) => {
+        return new Date(b.date) - new Date(a.date);
+      });
+
+      const readD = sortMoverData?.filter((sm) => sm.status === "read");
+      const unreadD = sortMoverData?.filter((sm) => sm.status === "unread");
+
+      setReadData(readD);
+      setUnreadData(unreadD);
+    };
+
+    getMD();
+  }, [reload]);
 
   return (
     <div className={`${textFont.variable} font-sans `}>
@@ -198,9 +239,17 @@ const MoverLayout = ({ children, data }) => {
                       <HiOutlineInboxArrowDown />
                     </span> */}
                     {!s4 && (
-                      <span className='text-[25px] mr-[10px]'>
-                        <IoMdNotificationsOutline />
-                      </span>
+                      // <span className='text-[25px] mr-[10px]'>
+                      //   <IoMdNotificationsOutline />
+                      // </span>
+                      <div className='flex items-center relative mr-[10px]'>
+                        <span className=' mr-[10px] '>
+                          <MdNotificationsActive className='text-[30px]' />
+                        </span>
+                        <div className='absolute top-[-15px] right-[-4px]  bg-secondary rounded-full flex justify-center items-center p-[0px] text-white w-[25px] h-[25px] text-[10px]'>
+                          {unreadData?.length}
+                        </div>
+                      </div>
                     )}
                     {s4 && (
                       <span className='loading loading-spinner loading-md text-primary mr-[10px]'></span>

@@ -42,6 +42,8 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { MdWork, MdWorkHistory } from "react-icons/md";
 import { IoReceiptSharp } from "react-icons/io5";
 import { LiaUserClockSolid } from "react-icons/lia";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "@/firebase";
 
 const sections = [
   {
@@ -160,6 +162,14 @@ const Dashboard = ({ allBookings }) => {
   const [completedMoves, setCompletedMoves] = useState();
   const [currentAcceptedMoves, setCurrentAcceptedMoves] = useState();
   const [currentPendingMoves, setCurrentPendingMoves] = useState();
+
+  const [notificationData, setNotificationData] = useState([]);
+  const [readData, setReadData] = useState([]);
+  const [unreadData, setUnreadData] = useState([]);
+  // const [moverData, setMoverData] = useState({});
+  const [showTab, setShowTab] = useState("");
+  const [reload, setReload] = useState(false);
+  const [modalData, setModalData] = useState({});
 
   // const { firstName, lastName } = moverData?.personalMoverDetails;
 
@@ -283,14 +293,29 @@ const Dashboard = ({ allBookings }) => {
 
     setCurrentPendingMoves(currentPendingMb?.length);
 
-    // updatePersonalMover({
-    //   currentAcceptedMoves: currentAcceptedMb?.length,
-    //   currentPendingMoves: currentPendingMb?.length,
-    //   completedMoves: completedMb?.length,
-    // });
+    const getMD = async () => {
+      const bookingRef = doc(db, "moversData", uid);
+      const docSnap = await getDoc(bookingRef);
+      const moverDat = docSnap.data()?.notifications;
+      const moverData2 = docSnap.data();
+
+      const sortMoverData = [...moverDat]?.sort((a, b) => {
+        return new Date(b.date) - new Date(a.date);
+      });
+
+      const readD = sortMoverData?.filter((sm) => sm.status === "read");
+      const unreadD = sortMoverData?.filter((sm) => sm.status === "unread");
+
+      setReadData(readD);
+      setUnreadData(unreadD);
+      // setNotificationData(sortMoverData);
+      // setMoverData(moverData2);
+    };
+
+    getMD();
   }, []);
 
-  console.log({ personalMoverDetails, moverData });
+  console.log({ personalMoverDetails, moverData, readData, unreadData });
 
   return (
     <MoverLayout>
@@ -411,7 +436,7 @@ const Dashboard = ({ allBookings }) => {
             )}
           </section>
 
-          <div className='mt-[30px] flex flex-col md:flex-row rounded-[20px] md:items-center md:justify-between  px-[20px] py-[10px]'>
+          {/* <div className='mt-[30px] flex flex-col md:flex-row rounded-[20px] md:items-center md:justify-between  px-[20px] py-[10px]'>
             <p className='font-bold text-[20px] text-primary'>Appointments</p>
             <Link
               href='/mover-profile/appointments'
@@ -419,55 +444,108 @@ const Dashboard = ({ allBookings }) => {
             >
               <p className=''>See All</p>
             </Link>
-          </div>
+          </div> */}
 
-          <section assName='mb-[0px]'>
-            <div className='flex flex-col space-y-[10px] lg:space-y-0 lg:flex-row lg:space-x-[20px]'>
-              {/* bookings */}
-              <div className='stats shadow'>
-                <div className='stat '>
-                  <div className='stat-figure text-secondary'>
-                    <span className='text-[25px]'>
-                      <LiaUserClockSolid />
-                    </span>
+          <section className='mb-[0px]'>
+            <div className='flex flex-col space-y-[20px] lg:space-y-0 lg:flex-row lg:justify-between lg:items-center '>
+              {/* Appointment */}
+              <div className=''>
+                <p className='font-bold text-[20px] text-primary px-[20px] mb-[20px]'>
+                  Appointments
+                </p>
+
+                <div className='stats shadow'>
+                  <div className='stat '>
+                    <div className='stat-figure text-secondary hidden md:flex'>
+                      <span className='text-[25px]'>
+                        <LiaUserClockSolid />
+                      </span>
+                    </div>
+                    <div className='stat-title'>Current</div>
+                    <div className='stat-value text-secondary text-[30px]'>
+                      {currentPendingMoves}
+                    </div>
+                    <div className=' text-[14px] mt-[10px]'>
+                      <p className='text-secondary'>Pending</p>
+                    </div>
                   </div>
-                  <div className='stat-title'>Current</div>
-                  <div className='stat-value text-secondary text-[30px]'>
-                    {currentPendingMoves}
+                  <div className='stat '>
+                    <div className='stat-figure text-primary hidden md:flex'>
+                      <span className='text-[25px]'>
+                        <MdWorkHistory />
+                      </span>
+                    </div>
+                    <div className='stat-title'>Current</div>
+                    <div className='stat-value text-primary'>
+                      {currentAcceptedMoves}
+                    </div>
+                    <div className=' text-primary text-[14px] mt-[10px]'>
+                      <p className='text-primary'>Accepted</p>
+                    </div>
                   </div>
-                  <div className=' text-[14px] mt-[10px]'>
-                    <p className='text-secondary'>Pending</p>
+                  <div className='stat '>
+                    <div className='stat-figure text-primary hidden md:flex'>
+                      <span className='text-[25px]'>
+                        <MdWork />
+                      </span>
+                    </div>
+                    <div className='stat-title'>Completed</div>
+                    <div className='stat-value text-primary text-[30px]'>
+                      {completedMoves}
+                    </div>
+                    <div className=' text-primary text-[14px] mt-[10px]'>
+                      <p className='text-white'>See All</p>
+                    </div>
                   </div>
                 </div>
+              </div>
 
-                <div className='stat '>
-                  <div className='stat-figure text-primary'>
-                    <span className='text-[25px]'>
-                      <MdWorkHistory />
-                    </span>
+              {/* notifications */}
+              <div className=''>
+                <p className='font-bold text-[20px] text-primary px-[20px] mb-[20px] w-full lg:text-end'>
+                  Notifications
+                </p>
+                {/* bookings */}
+                <div className='stats shadow'>
+                  <div className='stat '>
+                    <div className='stat-figure text-secondary hidden md:flex'>
+                      <span className='text-[25px]'>
+                        <LiaUserClockSolid />
+                      </span>
+                    </div>
+                    <div className='stat-title'>Unread</div>
+                    <div className='stat-value text-secondary text-[30px]'>
+                      {unreadData?.length}
+                    </div>
+                    <Link
+                      href='/mover-profile/notifications'
+                      className=' text-[14px] mt-[10px] '
+                    >
+                      <p className='text-secondary link cursor-pointer'>
+                        Open now!
+                      </p>
+                    </Link>
                   </div>
-                  <div className='stat-title'>Current</div>
-                  <div className='stat-value text-primary'>
-                    {currentAcceptedMoves}
-                    {/* {allBookings?.length - completedBookings?.length} */}
-                  </div>
-                  <div className=' text-primary text-[14px] mt-[10px]'>
-                    <p className='text-primary'>Accepted</p>
-                  </div>
-                </div>
 
-                <div className='stat '>
-                  <div className='stat-figure text-primary'>
-                    <span className='text-[25px]'>
-                      <MdWork />
-                    </span>
-                  </div>
-                  <div className='stat-title'>Completed</div>
-                  <div className='stat-value text-primary text-[30px]'>
-                    {completedMoves}
-                  </div>
-                  <div className=' text-primary text-[14px] mt-[10px]'>
-                    <p className='text-white'>See All</p>
+                  <div className='stat '>
+                    <div className='stat-figure text-primary hidden md:flex'>
+                      <span className='text-[25px]'>
+                        <MdWorkHistory />
+                      </span>
+                    </div>
+                    <div className='stat-title'>Read</div>
+                    <div className='stat-value text-primary'>
+                      {readData?.length}
+                      {/* {allBookings?.length - completedBookings?.length} */}
+                    </div>
+                    <Link
+                      href='/mover-profile/notifications'
+                      className=' text-primary text-[14px] mt-[10px] '
+                    >
+                      <p className='text-primary link cursor-pointer'>
+                        Already opened
+                      </p>
+                    </Link>
                   </div>
                 </div>
               </div>

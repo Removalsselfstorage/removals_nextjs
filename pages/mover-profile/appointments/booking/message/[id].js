@@ -64,19 +64,28 @@ const MessageDetails = ({ progressData }) => {
     targetDate.setHours(ct);
   }
 
+  const lastMessage = messages[messages.length - 1]?.text;
+
   const notificationParams = {
     receiverName: `${progressData?.firstName} ${progressData?.lastName}`,
     senderName: progressData?.moverName,
-    message: newMessage,
+    messageSent: lastMessage,
     subject: `Message notification from ${progressData?.moverName}`,
-    messageLink: `https://rss-admin.vercel.app/reservations/message/${progressData?.bookingId}`,
-    messageId: progressData?.bookingId,
+    messageLink: `https://removalstorage.vercel.app/reservations/message/${progressData?.bookingId}`,
+    messageSentId: progressData?.bookingId,
     // page: "checkout page",
   };
 
+  const notificationEmail = [
+    { email: progressData?.email },
+    // { email: "removalsselfstorage@gmail.com" },
+  ];
+  // const notificationEmail = progressData?.email;
+
   const sendMessageNotificationEmail = async () => {
+    console.log({ pe: notificationEmail, notificationParams });
     try {
-      await messageNotificationEmail(progressData?.email, notificationParams);
+      await messageNotificationEmail(notificationEmail, notificationParams);
     } catch (error) {
       console.log(error);
     }
@@ -187,7 +196,7 @@ const MessageDetails = ({ progressData }) => {
   }, []);
 
   //   console.log({ cd: calculateCountdownDay(), progressData, trimAd1, trimAd2 });
-  console.log({ messageId, messages });
+  console.log({ lastMessage, notificationEmail, messageId, messages });
 
   return (
     <MoverLayout>

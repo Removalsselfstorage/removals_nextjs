@@ -13,11 +13,11 @@ import Lottie from "lottie-react";
 import success from "@/lottieJsons/success.json";
 import { initializeApp } from "firebase/app";
 import useBookings from "@/hooks/useBookings";
-import { fetchAllBookings } from "@/lib/fetchData2";
+import { fetchAllBookings, fetchAllMoversDetailsArray } from "@/lib/fetchData2";
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
-const ReservationCheckoutSuccess = ({ allBookings }) => {
+const ReservationCheckoutSuccess = ({ allBookings, approvedMovers }) => {
   const {
     serviceLocation,
     personalDetails,
@@ -179,6 +179,13 @@ const ReservationCheckoutSuccess = ({ allBookings }) => {
     }
   };
 
+  const findMoverUid = () => {
+    const mv = approvedMovers?.find((ap) => ap.generatedName === cb?.moverName);
+    return mv;
+  };
+
+  // const
+
   const sendAllNotificationEmail = async () => {
     try {
       await allNotificationEmail(notificationEmail, notificationParams);
@@ -276,6 +283,7 @@ const ReservationCheckoutSuccess = ({ allBookings }) => {
     setSubmitLoading(true);
     updateReserveIdFxn(cb?.bookingId);
     sendStripe2();
+
     sendAllNotificationEmail();
     sendBookedMail();
     reset();
@@ -355,7 +363,47 @@ const ReservationCheckoutSuccess = ({ allBookings }) => {
       }
     };
 
+    const updateMoverNotif = async () => {
+      const moversRef = doc(db, "moversData", findMoverUid()?.uid);
+
+      // if (cb?.moverName === newMover) return;
+
+      try {
+        await setDoc(
+          moversRef,
+
+          {
+            // approvalStatus: `${approvedAccount ? "APPROVED" : "UNAPPROVED"}`,
+            notifications: [
+              ...findMoverUid()?.notifications,
+              {
+                subject: "Picked for a move",
+                message: `Client ${cb.firstName} has picked you for a move with book Ref.: ${cb?.quoteRef}.`,
+                date: getCurrentDateFormatted(),
+                // createdAt: serverTimestamp(),
+                sender: "Removal & Self Storage",
+                status: "unread",
+              },
+            ],
+            // lastNotificationId: "",
+          },
+          { merge: true }
+        );
+
+        console.log(
+          "mover notification update was successful @ checkout successful"
+        );
+      } catch (error) {
+        console.log(error);
+        console.log(
+          "mover notification update was unsuccessful @ checkout successful"
+        );
+      }
+    };
+
     sendStripe();
+
+    updateMoverNotif();
 
     if (cb) {
       updateReserveIdFxn(cb?.bookingId);
@@ -576,6 +624,17 @@ export async function getServerSideProps(context) {
     (bk) => bk.completedBook === true
   );
 
+  const userData = await fetchAllMoversDetailsArray();
+
+  // const completedBookings = bookingsData?.bookings?.filter(
+  //   (bk) => bk.completedBook === true
+  // );
+  const movers = userData?.personalDetails;
+
+  const approvedMovers = movers?.filter(
+    (item) => item.approvalStatus === "APPROVED"
+  );
+
   // let progressData;
 
   // if (!!pd) {
@@ -589,6 +648,8 @@ export async function getServerSideProps(context) {
       props: {
         progressData: null,
         allBookings: null,
+        approvedMovers: null,
+
         // userData,
         // id,
 
@@ -601,6 +662,7 @@ export async function getServerSideProps(context) {
       props: {
         progressData: completedBookings,
         allBookings,
+        approvedMovers,
 
         // userData,
         // id,

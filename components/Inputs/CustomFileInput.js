@@ -12,6 +12,7 @@ const CustomFileInput = ({
   setImageName,
   setFileUploadError,
   fileUploadError,
+  isLoading,
   // data,
   //   handleButtonClick,
   //   handleFileInputChange,
@@ -41,7 +42,7 @@ const CustomFileInput = ({
       if (file.size <= 1024 * 1024 * 2) {
         // 1MB as an example size limit
         setImageUpload(file);
-        setImageName(file.name)
+        setImageName(file.name);
 
         // console.log(file);
         const reader = new FileReader();
@@ -68,7 +69,7 @@ const CustomFileInput = ({
   // console.log(imageUpload?.name);
 
   return (
-    <div className="w-full">
+    <div className='w-full'>
       <div
         className={`${
           activateError && (!previewUrl || fileUploadError)
@@ -78,24 +79,26 @@ const CustomFileInput = ({
       >
         <button
           onClick={handleButtonClick}
-          className="btn btn-primary border border-primary rounded-tl-[8px] rounded-bl-[8px] rounded-tr-[0px] rounded-br-[0px] h-[43px]"
+          className='btn btn-primary border border-primary rounded-tl-[8px] rounded-bl-[8px] rounded-tr-[0px] rounded-br-[0px] h-[43px]'
         >
           {/* Choose File */}
-          {previewUrl && !fileUploadError ? "Update File" : "Choose File"}
+          {!isLoading && previewUrl && !fileUploadError ? "Update File" : "Choose File"}
+          {isLoading && (
+            <span className='loading loading-spinner loading-md text-white'></span>
+          )}
         </button>
-        <p className="truncate ... px-[10px] text-[14px] w-[255px]">
+        <p className='truncate ... px-[10px] text-[14px] w-[255px]'>
           {previewUrl && !fileUploadError
             ? // ? imageUpload?.name || details.firebaseMoverDetails.profilePictureName
-            imageName
-             
+              imageName
             : "No file selected"}
         </p>
       </div>
       <input
-        type="file"
+        type='file'
         className={` file-input file-input-bordered file-input-primary  hidden`}
         // accept="image/png, image/gif, image/jpeg"
-        accept="image/png, image/jpeg, image/jpg"
+        accept='image/png, image/jpeg, image/jpg'
         onChange={handleFileInputChange}
         ref={fileInputRef}
       />

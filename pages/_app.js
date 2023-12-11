@@ -27,6 +27,7 @@ import { useRouter } from "next/router";
 import Loader1 from "@/components/loaders/loader1";
 import nProgress from "nprogress";
 import Router from "next/router";
+import "react-big-calendar/lib/css/react-big-calendar.css";
 
 let persistor = persistStore(store);
 
@@ -75,15 +76,15 @@ export default function App({ Component, pageProps: { ...pageProps } }) {
         <PersistGate loading={null} persistor={persistor}>
           <QueryClientProvider client={queryClient}>
             <AuthProvider>
-              <div className="">
+              <div className=''>
                 {/* {loading && <Loader1 />} */}
                 <Component {...pageProps} />
               </div>
               <Toaster
-                position="top-center"
+                position='top-center'
                 // reverseOrder={false}
                 gutter={8}
-                containerClassName=""
+                containerClassName=''
                 containerStyle={{}}
                 toastOptions={{
                   // Define default options

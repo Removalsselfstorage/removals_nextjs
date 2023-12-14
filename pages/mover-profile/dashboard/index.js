@@ -274,7 +274,7 @@ const Dashboard = ({ allBookings }) => {
     );
 
     setCurrentPendingMoves(currentPendingMb?.length);
-  }, [completedBookings]);
+  }, [completedBookings, singleMoversData]);
 
   useEffect(() => {
     // const moverDat = [];

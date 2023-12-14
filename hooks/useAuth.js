@@ -26,7 +26,7 @@ import {
   updateVerificationMessage,
 } from "@/store/userSlice";
 
-import { fetchAllMoversDetails } from "@/lib/fetchData2";
+import { fetchAllMoversDetails, fetchAllMoversDetails2 } from "@/lib/fetchData2";
 import {
   UploadMoverData,
   UploadMoverPersonalDetails2,

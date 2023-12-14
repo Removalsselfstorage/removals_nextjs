@@ -77,17 +77,22 @@ const MoverLogin = () => {
   const signInHandler = async (values, actions) => {
     setSubmitLoading(true);
     setShowResendMessage(false);
+    setUser({
+      ...user,
+      login_email: "",
+      login_password: "",
+    });
     dispatch(updateLoginError(null));
     dispatch(updateVerificationMessage(null));
 
-    signIn(values.login_email, values.login_password).then(() => {
-      setUser({
-        ...user,
-        login_email: "",
-        login_password: "",
-      });
-      // setSubmitLoading(false);
-    });
+    await signIn(values.login_email, values.login_password);
+    // signIn(values.login_email, values.login_password).then(() => {
+    //   setUser({
+    //     ...user,
+    //     login_email: "",
+    //     login_password: "",
+    //   });
+    // });
 
     // const userData = await fetchAllMoversDetails(uid);
 
@@ -125,29 +130,30 @@ const MoverLogin = () => {
   //     router.push("/");
   //   }
   // });
+  console.log({ submitLoading });
 
   return (
     <>
       <Head>
         <title>Removals and Selfstorage - Login</title>
-        <meta name="description" content="Rss removal and storage website" />
-        <link rel="icon" href="/rrs_favicon.svg" />
+        <meta name='description' content='Rss removal and storage website' />
+        <link rel='icon' href='/rrs_favicon.svg' />
       </Head>
       <BookingLayout>
         <main
-          className="h-[100vh] flex justify-center items-center"
+          className='h-[100vh] flex justify-center items-center'
           style={{
             backgroundImage: "url(/bg-tarvel3.png)",
             backgroundSize: "cover",
             backgroundRepeat: "no-repeat",
           }}
         >
-          <div className="card shadow-2xl bg-base-100 justify-center text-black w-full md:w-[400px] mx-[20px] px-[20px] pt-[10px] pb-[30px]">
-            <div className="card-body ">
-              <h3 className="text-2xl font-extrabold text-primary uppercase mt-[0px] mb-[20px] text-center">
+          <div className='card shadow-2xl bg-base-100 justify-center text-black w-full md:w-[400px] mx-[20px] px-[20px] pt-[10px] pb-[30px]'>
+            <div className='card-body '>
+              <h3 className='text-2xl font-extrabold text-primary uppercase mt-[0px] mb-[20px] text-center'>
                 Mover Login
               </h3>
-              <div className="w-full">
+              <div className='w-full'>
                 <Formik
                   enableReinitialize
                   initialValues={user}
@@ -158,21 +164,22 @@ const MoverLogin = () => {
                 >
                   {(form) => (
                     // <Form method="post" action="/api/auth/signin/email">
-                    <Form method="post">
+                    <Form method='post'>
                       {/* <input
                         type="hidden"
                         name="csrfToken"
                         defaultValue={csrfToken}
                       /> */}
                       {/* email */}
-                      <div className="mb-[10px]">
+                      <div className='mb-[10px]'>
                         <LoginInput
-                          type="email"
-                          name="login_email"
+                          type='email'
+                          name='login_email'
                           // icon="email"
-                          placeholder="Email Address"
+                          placeholder='Email Address'
                           onChange={handleChange}
                           value={user.login_email}
+                          disabled={submitLoading}
                         />
                       </div>
                       {/* password */}
@@ -184,52 +191,65 @@ const MoverLogin = () => {
                           onChange={handleChange}
                         />
                       </div> */}
-                      <div className="w-full flex  justify-between mb-[0px] relative">
-                        <div className="w-full ">
+                      <div className='w-full flex  justify-between mb-[0px] relative'>
+                        <div className='w-full '>
                           <LoginInput
                             type={showPassword ? "text" : "password"}
-                            name="login_password"
-                            placeholder="Password"
+                            name='login_password'
+                            placeholder='Password'
                             onChange={handleChange}
                             value={user.login_password}
+                            disabled={submitLoading}
                             // className="form-control'
                           />
                         </div>
                         <span
                           onClick={() => setShowPassword(!showPassword)}
-                          className="pl-[0px] cursor-pointer pt-[10px] absolute right-[10px]"
+                          className='pl-[0px] cursor-pointer pt-[10px] absolute right-[10px]'
                         >
                           {showPassword ? (
-                            <RiEyeCloseLine className="text-primary text-[20px]" />
+                            <RiEyeCloseLine
+                              className={`${
+                                submitLoading
+                                  ? "text-gray-400/10"
+                                  : "text-primary"
+                              } text-[20px]`}
+                            />
                           ) : (
-                            <RiEyeLine className="text-primary text-[20px]" />
+                            <RiEyeLine
+                              className={`${
+                                submitLoading
+                                  ? "text-gray-400/10"
+                                  : "text-primary"
+                              } text-[20px]`}
+                            />
                           )}
                         </span>
                       </div>
-                      <Link href="/login-reset">
-                        <p className="text-primary font-bold text-[15px] cursor-pointer">
+                      <Link href='/login-reset'>
+                        <p className='text-primary font-bold text-[15px] cursor-pointer'>
                           Forgot password?
                         </p>
                       </Link>
 
-                      <div className="form-control mt-6 mb-[10px]">
+                      <div className='form-control mt-6 mb-[10px]'>
                         <button
                           // onClick={() => {}}
-                          type="submit"
-                          className="btn btn-primary flex items-center space-x-[5px]"
+                          type='submit'
+                          className='btn btn-primary flex items-center space-x-[5px]'
                           disabled={submitLoading}
                         >
-                          {!submitLoading && <span className="">Login</span>}
+                          {!submitLoading && <span className=''>Login</span>}
                           {submitLoading && (
-                            <span className="loading loading-spinner loading-md text-white"></span>
+                            <span className='loading loading-spinner loading-md text-white'></span>
                           )}
                         </button>
                       </div>
                       {userDetails.verificationMessage && (
-                        <div className="text-center text-[15px] text-primary ">
+                        <div className='text-center text-[15px] text-primary '>
                           {userDetails.verificationMessage}{" "}
                           <span
-                            className="font-extrabold cursor-pointer "
+                            className='font-extrabold cursor-pointer '
                             onClick={() => {
                               resendLinkHandler();
                             }}
@@ -239,25 +259,25 @@ const MoverLogin = () => {
                         </div>
                       )}
                       {showResendMessage && (
-                        <div className="text-center text-[15px] text-primary  mt-[15px] bg-primary/20 rounded-[10px] py-[10px] px-[30px]">
+                        <div className='text-center text-[15px] text-primary  mt-[15px] bg-primary/20 rounded-[10px] py-[10px] px-[30px]'>
                           Email verification link sent
                         </div>
                       )}
                       {userDetails.loginError && (
-                        <div className="text-[14px] text-center mt-[15px] text-secondary bg-secondary/20 rounded-[10px] py-[10px] px-[30px]">
+                        <div className='text-[14px] text-center mt-[15px] text-secondary bg-secondary/20 rounded-[10px] py-[10px] px-[30px]'>
                           Email / password is invalid
                         </div>
                       )}
-                      <div className="mt-[20px] text-[14px] flex items-center justify-center mx-[0px]">
-                        <p className="w-[50px]">Don't have an account yet?</p>
+                      <div className='mt-[20px] text-[14px] flex items-center justify-center mx-[0px]'>
+                        <p className='w-[50px]'>Don't have an account yet?</p>
                         <Link
-                          href="/join-us"
-                          className="flex items-center space-x-[5px] cursor-pointer"
+                          href='/join-us'
+                          className='flex items-center space-x-[5px] cursor-pointer'
                         >
-                          <span className="text-primary font-bold text-[15px] cursor-pointer">
+                          <span className='text-primary font-bold text-[15px] cursor-pointer'>
                             Join Us
                           </span>
-                          <FaArrowRight className="text-primary" />
+                          <FaArrowRight className='text-primary' />
                         </Link>
                       </div>
                     </Form>

@@ -170,13 +170,11 @@ const Inbox = () => {
                         }}
                         className='flex items-center md:space-x-[20px] w-full px-[20px] md:px-[40px]'
                       >
-                        <div className='avatar placeholder hidden md:flex'>
-                          <div className='bg-secondary rounded-full w-[80px] h-[80px]'>
-                            <span className='text-5xl font-bold text-white'>
-                              {trimToFirstLetter(ms.sender)}
-                              {/* A */}
-                            </span>
-                          </div>
+                        <div className=' hidden md:flex md:justify-center md:items-center md:text-center bg-primary rounded-full w-[50px] h-[50px]'>
+                          <span className='text-2xl font-bold text-white'>
+                            {trimToFirstLetter(ms.sender)}
+                            {/* A */}
+                          </span>
                         </div>
                         <div
                           className={`  bg-secondary/5 flex items-center justify-between rounded-[20px] py-[20px] min-w-[300px] w-full my-[10px] rounded-bl-[20px] rounded-br-[20px] shadow-lg  px-[20px] md:px-[30px]`}
@@ -229,13 +227,11 @@ const Inbox = () => {
                         }}
                         className='flex items-center md:space-x-[20px] w-full px-[20px] md:px-[40px]'
                       >
-                        <div className='avatar placeholder hidden md:flex'>
-                          <div className='bg-primary rounded-full w-[80px] h-[80px]'>
-                            <span className='text-5xl font-bold text-white'>
-                              {trimToFirstLetter(ms.sender)}
-                              {/* A */}
-                            </span>
-                          </div>
+                        <div className=' hidden md:flex md:justify-center md:items-center md:text-center bg-primary rounded-full w-[50px] h-[50px]'>
+                          <span className='text-2xl font-bold text-white'>
+                            {trimToFirstLetter(ms.sender)}
+                            {/* A */}
+                          </span>
                         </div>
                         <div
                           className={`  bg-primary/5 flex items-center justify-between rounded-[20px] py-[20px] min-w-[300px] w-full my-[10px] rounded-bl-[20px] rounded-br-[20px] shadow-lg  px-[20px] md:px-[30px]`}

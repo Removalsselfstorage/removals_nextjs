@@ -117,6 +117,8 @@ const sections = [
 ];
 
 const Dashboard = ({ allBookings }) => {
+  const { personalMoverDetails, companyDetails } = useMover();
+
   const {
     // allBookings,
     // bookingsLoading,
@@ -248,7 +250,7 @@ const Dashboard = ({ allBookings }) => {
 
   useEffect(() => {
     const mb = completedBookings?.filter(
-      (ab) => ab?.moverName === singleMoversData?.companyDetails?.generatedName
+      (ab) => ab?.moverName === companyDetails?.generatedName
     );
 
     const completedMb = mb?.filter((bc) => bc.moveCarriedOut === true);
@@ -274,7 +276,7 @@ const Dashboard = ({ allBookings }) => {
     );
 
     setCurrentPendingMoves(currentPendingMb?.length);
-  }, [completedBookings, singleMoversData]);
+  }, [completedBookings]);
 
   useEffect(() => {
     // const moverDat = [];
@@ -296,7 +298,7 @@ const Dashboard = ({ allBookings }) => {
   }, [singleMoversData]);
 
   // console.log({ singleMoversData, moverData, readData, unreadData });
-  console.log({  sortedSections, userDetails });
+  console.log({ companyDetails, sortedSections, userDetails });
 
   return (
     <MoverLayout>
@@ -306,7 +308,7 @@ const Dashboard = ({ allBookings }) => {
         <link rel='icon' href='/rrs_favicon.svg' />
       </Head>
 
-      {!singleMoversDataLoading && !completedBookingsLoading && (
+      {!singleMoversDataLoading && (
         <div className='py-[50px] bg-white/80 px-[30px] w-full h-full'>
           <section className='mb-[30px]'>
             <div className='flex flex-col'>
@@ -625,7 +627,7 @@ const Dashboard = ({ allBookings }) => {
           </div>
         </div>
       )}
-      {singleMoversDataLoading && completedBookingsLoading && (
+      {singleMoversDataLoading && (
         <div className='flex justify-center items-center w-full h-screen'>
           <span className='loading loading-spinner loading-lg text-primary'></span>
         </div>

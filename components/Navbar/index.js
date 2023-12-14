@@ -21,37 +21,53 @@ import { fetchMoverDetails3 } from "@/lib/fetchData2";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import useQuote from "@/hooks/useQuote";
 import useMover from "@/hooks/useMover";
+import useMoversData from "@/hooks/useMoversData";
 // import ScrollUpMenuNav from '../ScrollUpMenuNav';
 
 const Navbar = () => {
   const { updateReserveIdFxn, reserveId, router } = useQuote();
 
-  // const {
-  //   // justRegistered,
-  //   personalMoverDetails,
-  //   companyDetails,
-  //   companyDocs,
-  //   allMoverData,
-  //   updateJustR,
-  //   resetJustR,
-  //   updatePersonalMover,
-  //   resetPersonalMover,
-  //   updateCompanyDe,
-  //   resetCompanyDe,
-  //   updateCompanyDo,
-  //   resetCompanyDo,
-  //   updateAllMoverD,
-  //   resetAllMoverD,
-  //   // router,
-  // } = useMover();
+  const {
+    // justRegistered,
+    personalMoverDetails,
+    companyDetails,
+    companyDocs,
+    allMoverData,
+    updateJustR,
+    resetJustR,
+    updatePersonalMover,
+    resetPersonalMover,
+    updateCompanyDe,
+    resetCompanyDe,
+    updateCompanyDo,
+    resetCompanyDo,
+    updateAllMoverD,
+    resetAllMoverD,
+    // router,
+  } = useMover();
+
+  const {
+    allMoversData,
+    allMoversDataLoading,
+    refetchAllMoversData,
+    singleMoversData,
+    singleMoversDataLoading,
+    refetchSingleMoversData,
+    portFolioPix,
+    // uid,
+    // router,
+  } = useMoversData();
   // const router = useRouter();
   const dispatch = useDispatch();
   const users = useSelector(getAllUserDetails);
   const moverDetails = useSelector(getAllMoverDetails);
+  const [previewUrl, setPreviewUrl] = useState(
+    singleMoversData?.personalDetails?.profileImageUrl
+  );
 
-  const firstName = moverDetails?.personalMoverDetails?.firstName;
-  const lastName = moverDetails?.personalMoverDetails?.lastName;
-  const previewUrl = moverDetails?.personalMoverDetails?.profilePictureUrl;
+  const firstName = singleMoversData?.personalDetails?.firstName;
+  const lastName = singleMoversData?.personalDetails?.lastName;
+  // const previewUrl2 = singleMoversData?.personalMoverDetails?.profilePictureUrl;
 
   const [shadow, setShadow] = useState(false);
   const [showNav, setShowNav] = useState(true);
@@ -66,8 +82,11 @@ const Navbar = () => {
   //   readMoversData();
   // }, []);
 
-  // console.log({ users, previewUrl, moverDetails,  });
+  // console.log({ moverDetails, personalMoverDetails });
   // console.log(users.userDetails?.email);
+  useEffect(() => {
+    setPreviewUrl(singleMoversData?.personalDetails?.profileImageUrl);
+  }, [singleMoversData]);
 
   useEffect(() => {
     const handleShadow = () => {
@@ -318,23 +337,16 @@ const Navbar = () => {
                   {users?.userDetails?.emailVerified && (
                     <ul className='  px-1 text-[16px] hidden lg:flex '>
                       <li className='dropdown  dropdown-end'>
-                        {previewUrl ? (
-                          <label className='avatar cursor-pointer' tabIndex={0}>
-                            <div className='w-[40px] rounded-full  border-primary border-[3px]'>
-                              <img src={previewUrl || "/userPlaceholder.png"} />
-                            </div>
-                          </label>
-                        ) : (
-                          <label
-                            tabIndex={0}
-                            className='flex items-center cursor-pointer justify-center bg-primary h-[40px] w-[40px] hover:bg-primary/60 rounded-full'
-                          >
-                            <p className='text-white font-bold '>
-                              {/* {trimToFirstLetter(users.userDetails?.email)} */}
-                              {combineInitials(firstName, lastName)}
-                            </p>
-                          </label>
-                        )}
+                        <label className='avatar cursor-pointer' tabIndex={0}>
+                          <div className='w-[40px] rounded-full  border-primary border-[3px]'>
+                            {!singleMoversDataLoading && (
+                              <img src={previewUrl} />
+                            )}
+                            {singleMoversDataLoading && (
+                              <img src={"/userPlaceholder.png"} />
+                            )}
+                          </div>
+                        </label>
 
                         <ul
                           tabIndex={0}

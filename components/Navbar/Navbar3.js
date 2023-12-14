@@ -57,7 +57,7 @@ const Navbar3 = ({ unreadData, readData }) => {
   //   moverDetails?.personalDetails.lastName;
   const firstName = singleMoversData?.personalDetails?.firstName;
   const lastName = singleMoversData?.personalDetails?.lastName;
-  const previewUrl2 = singleMoversData?.personalMoverDetails?.profilePictureUrl;
+  // const previewUrl2 = singleMoversData?.personalMoverDetails?.profilePictureUrl;
 
   useEffect(() => {
     setPreviewUrl(singleMoversData?.personalDetails?.profileImageUrl);

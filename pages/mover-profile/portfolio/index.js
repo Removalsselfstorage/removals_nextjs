@@ -51,8 +51,15 @@ import useMoversData from "@/hooks/useMoversData";
 import { UploadMoverPortfolioPix } from "@/lib/uploadMoverPortfolioPix";
 
 const Portfolio = () => {
-  const { allMoversData, allMoversDataLoading, refetchAllMoversData } =
-    useMoversData();
+  const {
+    allMoversData,
+    allMoversDataLoading,
+    refetchAllMoversData,
+    singleMoversData,
+    singleMoversDataLoading,
+    refetchSingleMoversData,
+    portFolioPix,
+  } = useMoversData();
 
   const router = useRouter();
   const userDetails = useSelector(getAllUserDetails);
@@ -77,8 +84,12 @@ const Portfolio = () => {
   //   const [companyProfilePixname, setCompanyProfilePixname] = useState("");
 
   const [portfolioPixUpload1, setPortfolioPixUpload1] = useState("");
-  const [portfolioPixUploadUrl1, setPortfolioPixUploadUrl1] = useState("");
-  const [portfolioPixUploadName1, setPortfolioPixUploadName1] = useState("");
+  const [portfolioPixUploadUrl1, setPortfolioPixUploadUrl1] = useState(
+    portFolioPix?.portfolio1?.portfolioPixUploadUrl1
+  );
+  const [portfolioPixUploadName1, setPortfolioPixUploadName1] = useState(
+    portFolioPix?.portfolio1?.portfolioPixUploadName1
+  );
 
   const [portfolioPixUpload2, setPortfolioPixUpload2] = useState("");
   const [portfolioPixUploadUrl2, setPortfolioPixUploadUrl2] = useState("");
@@ -165,7 +176,7 @@ const Portfolio = () => {
 
       setReload((prev) => !prev);
 
-      console.log(result);
+      // console.log(result);
 
       setSubmitSuccess(true);
 
@@ -178,73 +189,59 @@ const Portfolio = () => {
 
   useEffect(() => {
     if (!!allMoversData) {
-      //   const allPD = allMoversData?.allPersonalDetails;
-      //   const allCD = allMoversData?.allCompanyDetails;
-      //   const allCDCP = allMoversData?.allCompanyPix;
-      //   const allCDRC = allMoversData?.allCompanyDocs?.regCertificates;
-      //   const allCDVI = allMoversData?.allCompanyDocs?.vehInsurances;
-      //   const allCDPI = allMoversData?.allCompanyDocs?.pubInsurances;
-      //   const allCDTI = allMoversData?.allCompanyDocs?.tranInsurances;
-      //   const allCDDL = allMoversData?.allCompanyDocs?.drivingLicenses;
-      const allPP1 = allMoversData?.allPortfolioPix?.portfolioPix1;
-      const allPP2 = allMoversData?.allPortfolioPix?.portfolioPix2;
-      const allPP3 = allMoversData?.allPortfolioPix?.portfolioPix3;
-      const allPP4 = allMoversData?.allPortfolioPix?.portfolioPix4;
-      const allPP5 = allMoversData?.allPortfolioPix?.portfolioPix5;
-      const allPP6 = allMoversData?.allPortfolioPix?.portfolioPix6;
+      setPortfolioPixUploadName1(
+        portFolioPix?.portfolio1?.portfolioPixUploadName1
+      );
+      setPortfolioPixUploadUrl1(
+        portFolioPix?.portfolio1?.portfolioPixUploadUrl1
+      );
 
-      const pd1 = function filterPersonalDetails() {
-        return allPP1?.find((obj) => obj.uid === uid);
-      };
-      const pd2 = function filterPersonalDetails() {
-        return allPP2?.find((obj) => obj.uid === uid);
-      };
-      const pd3 = function filterPersonalDetails() {
-        return allPP3?.find((obj) => obj.uid === uid);
-      };
-      const pd4 = function filterPersonalDetails() {
-        return allPP4?.find((obj) => obj.uid === uid);
-      };
-      const pd5 = function filterPersonalDetails() {
-        return allPP5?.find((obj) => obj.uid === uid);
-      };
-      const pd6 = function filterPersonalDetails() {
-        return allPP6?.find((obj) => obj.uid === uid);
-      };
+      setPortfolioPixUploadName2(
+        portFolioPix?.portfolio2?.portfolioPixUploadName2
+      );
+      setPortfolioPixUploadUrl2(
+        portFolioPix?.portfolio2?.portfolioPixUploadUrl2
+      );
 
-      setPortfolioPixUploadName1(pd1()?.portfolioPixUploadName1);
-      setPortfolioPixUploadUrl1(pd1()?.portfolioPixUploadUrl1);
+      setPortfolioPixUploadName3(
+        portFolioPix?.portfolio3?.portfolioPixUploadName3
+      );
+      setPortfolioPixUploadUrl3(
+        portFolioPix?.portfolio3?.portfolioPixUploadUrl3
+      );
 
-      console.log({ pd1: pd1() });
-      setPortfolioPixUploadName2(pd2()?.portfolioPixUploadName2);
-      setPortfolioPixUploadUrl2(pd2()?.portfolioPixUploadUrl2);
-      // setFilteredCD(pd);
+      setPortfolioPixUploadName4(
+        portFolioPix?.portfolio4?.portfolioPixUploadName4
+      );
+      setPortfolioPixUploadUrl4(
+        portFolioPix?.portfolio4?.portfolioPixUploadUrl4
+      );
 
-      setPortfolioPixUploadName3(pd3()?.portfolioPixUploadName3);
-      setPortfolioPixUploadUrl3(pd3()?.portfolioPixUploadUrl3);
+      setPortfolioPixUploadName5(
+        portFolioPix?.portfolio5?.portfolioPixUploadName5
+      );
+      setPortfolioPixUploadUrl5(
+        portFolioPix?.portfolio5?.portfolioPixUploadUrl5
+      );
 
-      setPortfolioPixUploadName4(pd4()?.portfolioPixUploadName4);
-      setPortfolioPixUploadUrl4(pd4()?.portfolioPixUploadUrl4);
-
-      setPortfolioPixUploadName5(pd5()?.portfolioPixUploadName5);
-      setPortfolioPixUploadUrl5(pd5()?.portfolioPixUploadUrl5);
-
-      setPortfolioPixUploadName6(pd6()?.portfolioPixUploadName6);
-      setPortfolioPixUploadUrl6(pd6()?.portfolioPixUploadUrl6);
-
-      //   setReload((prev) => !prev);
+      setPortfolioPixUploadName6(
+        portFolioPix?.portfolio6?.portfolioPixUploadName6
+      );
+      setPortfolioPixUploadUrl6(
+        portFolioPix?.portfolio6?.portfolioPixUploadUrl6
+      );
     }
   }, [allMoversData]);
 
-  //   console.log({ allMoversData, reload });
-  console.log({
-    portfolioPixUpload1,
-    portfolioPixUploadUrl1,
-    portfolioPixUploadName1,
-    portfolioPixUploadUrl2,
-    portfolioPixUploadUrl6,
-    portfolioPixUploadName6,
-  });
+  console.log({ singleMoversData, portFolioPix, portfolioPixUploadUrl1 });
+  // console.log({
+  //   portfolioPixUpload1,
+  //   portfolioPixUploadUrl1,
+  //   portfolioPixUploadName1,
+  //   portfolioPixUploadUrl2,
+  //   portfolioPixUploadUrl6,
+  //   portfolioPixUploadName6,
+  // });
 
   return (
     <MoverLayout>
@@ -266,7 +263,7 @@ const Portfolio = () => {
             </div>
           </section>
 
-          {(submitSuccess || details.companyDetails.reviewSubmit) && (
+          {(submitSuccess || details?.companyDetails?.reviewSubmit) && (
             <section className='mb-[30px] px-[0px] '>
               <div className='flex items-center bg-primary/10 rounded-[10px] px-[20px] py-[15px] space-x-[20px]'>
                 <IoMdNotificationsOutline className='text-primary text-[40px]' />

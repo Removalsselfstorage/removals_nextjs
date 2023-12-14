@@ -44,6 +44,8 @@ import { IoReceiptSharp } from "react-icons/io5";
 import { LiaUserClockSolid } from "react-icons/lia";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "@/firebase";
+import useMoversData from "@/hooks/useMoversData";
+import useBookings from "@/hooks/useBookings";
 
 const sections = [
   {
@@ -116,23 +118,29 @@ const sections = [
 
 const Dashboard = ({ allBookings }) => {
   const {
-    justRegistered,
-    personalMoverDetails,
-    companyDetails,
-    companyDocs,
-    allMoverData,
-    updateJustR,
-    resetJustR,
-    updatePersonalMover,
-    resetPersonalMover,
-    updateCompanyDe,
-    resetCompanyDe,
-    updateCompanyDo,
-    resetCompanyDo,
-    updateAllMoverD,
-    resetAllMoverD,
+    // allBookings,
+    // bookingsLoading,
+    // refetchBookings,
+
+    completedBookings,
+    completedBookingsLoading,
+    refetchCompletedBookings,
+
+    completedBook,
+    allBook,
+  } = useBookings();
+
+  const {
+    allMoversData,
+    allMoversDataLoading,
+    refetchAllMoversData,
+    singleMoversData,
+    singleMoversDataLoading,
+    refetchSingleMoversData,
+    portFolioPix,
+    uid,
     router,
-  } = useMover();
+  } = useMoversData();
 
   // const router = useRouter();
   // const dispatch = useDispatch();
@@ -156,7 +164,7 @@ const Dashboard = ({ allBookings }) => {
   const [moverData, setMoverData] = useState([]);
 
   const [previewUrl, setPreviewUrl] = useState(
-    personalMoverDetails?.profilePictureUrl
+    singleMoversData?.personalDetails?.profileImageUrl
   );
 
   const [completedMoves, setCompletedMoves] = useState();
@@ -171,23 +179,27 @@ const Dashboard = ({ allBookings }) => {
   const [reload, setReload] = useState(false);
   const [modalData, setModalData] = useState({});
 
-  // const { firstName, lastName } = moverData?.personalMoverDetails;
+  // const { firstName, lastName } = moverData?.singleMoversData;
 
-  const uid = personalMoverDetails?.uid;
-  const condition1 = personalMoverDetails?.profilePictureUrl;
-  const condition2 = personalMoverDetails?.acceptedTerms;
-  const firstName = personalMoverDetails?.firstName;
-  const lastName = personalMoverDetails?.lastName;
-  // const completedMoves = personalMoverDetails?.completedMoves;
-  // const currentAcceptedMoves = personalMoverDetails?.currentAcceptedMoves;
-  // const currentPendingMoves = personalMoverDetails?.currentPendingMoves;
+  // const uid = singleMoversData?.uid;
+  const condition1 = singleMoversData?.personalDetails?.profileImageUrl;
+  const condition2 = singleMoversData?.personalDetails?.acceptedTerms;
+  const firstName = singleMoversData?.personalDetails?.firstName;
+  const lastName = singleMoversData?.personalDetails?.lastName;
+  // const completedMoves = singleMoversData?.completedMoves;
+  // const currentAcceptedMoves = singleMoversData?.currentAcceptedMoves;
+  // const currentPendingMoves = singleMoversData?.currentPendingMoves;
 
   const filterSections = () => {
-    const excludedTitles = ["Complete Documentation Process", "Add a Profile Picture!", "Accept our Terms & Policies!"];
-    
+    const excludedTitles = [
+      "Complete Documentation Process",
+      "Add a Profile Picture!",
+      "Accept our Terms & Policies!",
+    ];
+
     const filteredSections = sections.filter((section) => {
       const isExcluded = excludedTitles.includes(section.title);
-      
+
       if (condition1 !== "" && condition2 === false) {
         return !isExcluded;
       } else if (condition1 !== "") {
@@ -200,10 +212,10 @@ const Dashboard = ({ allBookings }) => {
         return true;
       }
     });
-  
+
     return filteredSections;
   };
-  
+
   const sortedSections = filterSections();
   const [sectionData, setSectionData] = useState(sortedSections);
 
@@ -216,8 +228,6 @@ const Dashboard = ({ allBookings }) => {
   const handleIndexChange = (newIndex) => {
     setIndex(newIndex);
   };
-
-
 
   const auth = getAuth();
 
@@ -237,8 +247,8 @@ const Dashboard = ({ allBookings }) => {
   }, [auth]);
 
   useEffect(() => {
-    const mb = allBookings?.filter(
-      (ab) => ab?.moverName === companyDetails?.generatedName
+    const mb = completedBookings?.filter(
+      (ab) => ab?.moverName === singleMoversData?.companyDetails?.generatedName
     );
 
     const completedMb = mb?.filter((bc) => bc.moveCarriedOut === true);
@@ -264,31 +274,29 @@ const Dashboard = ({ allBookings }) => {
     );
 
     setCurrentPendingMoves(currentPendingMb?.length);
+  }, [completedBookings]);
 
-    const getMD = async () => {
-      const bookingRef = doc(db, "moversData", uid);
-      const docSnap = await getDoc(bookingRef);
-      const moverDat = docSnap.data()?.notifications;
-      const moverData2 = docSnap.data();
+  useEffect(() => {
+    // const moverDat = [];
+    const moverDat = singleMoversData?.personalDetails?.notifications;
 
-      const sortMoverData = [...moverDat]?.sort((a, b) => {
-        return new Date(b.date) - new Date(a.date);
-      });
+    const sortMoverData =
+      moverDat?.length > 0
+        ? [...moverDat]?.sort((a, b) => {
+            return new Date(b.date) - new Date(a.date);
+          })
+        : [];
 
-      const readD = sortMoverData?.filter((sm) => sm.status === "read");
-      const unreadD = sortMoverData?.filter((sm) => sm.status === "unread");
+    const readD = sortMoverData?.filter((sm) => sm.status === "read");
+    const unreadD = sortMoverData?.filter((sm) => sm.status === "unread");
 
-      setReadData(readD);
-      setUnreadData(unreadD);
-      // setNotificationData(sortMoverData);
-      // setMoverData(moverData2);
-    };
+    setReadData(readD);
+    setUnreadData(unreadD);
+    setPreviewUrl(singleMoversData?.personalDetails?.profileImageUrl);
+  }, [singleMoversData]);
 
-    getMD();
-  }, []);
-
-  // console.log({ personalMoverDetails, moverData, readData, unreadData });
-  console.log({ sortedSections });
+  // console.log({ singleMoversData, moverData, readData, unreadData });
+  console.log({  sortedSections, userDetails });
 
   return (
     <MoverLayout>
@@ -298,17 +306,28 @@ const Dashboard = ({ allBookings }) => {
         <link rel='icon' href='/rrs_favicon.svg' />
       </Head>
 
-      {
+      {!singleMoversDataLoading && !completedBookingsLoading && (
         <div className='py-[50px] bg-white/80 px-[30px] w-full h-full'>
           <section className='mb-[30px]'>
             <div className='flex flex-col'>
               <p className='font-bold text-[25px] mb-[20px]'>Dashboard</p>
               <div className='flex flex-col space-y-[20px] lg:space-y-0 lg:flex-row lg:space-x-[50px] lg:justify-between'>
                 <div className='flex items-center space-x-[20px] md:space-x-[30px]'>
-                  {previewUrl ? (
+                  <div className='avatar '>
+                    <div className='w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2'>
+                      {!singleMoversDataLoading && <img src={previewUrl} />}
+                      {singleMoversDataLoading && (
+                        <img src={"/userPlaceholder.png"} />
+                      )}
+                    </div>
+                  </div>
+                  {/* {previewUrl ? (
                     <div className='avatar '>
                       <div className='w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2'>
-                        <img src={previewUrl} />
+                        {!singleMoversDataLoading && <img src={previewUrl} />}
+                        {singleMoversDataLoading && (
+                          <img src={"/userPlaceholder.png"} />
+                        )}
                       </div>
                     </div>
                   ) : (
@@ -319,7 +338,7 @@ const Dashboard = ({ allBookings }) => {
                         </span>
                       </div>
                     </div>
-                  )}
+                  )} */}
                   <div className='flex flex-col md:space-y-[5px] justify-center'>
                     <div className='flex items-stretch space-x-[10px]'>
                       <p className='flex items-center text-[17px]'>Welcome,</p>
@@ -345,7 +364,7 @@ const Dashboard = ({ allBookings }) => {
                       Mover Username:
                     </p>
                     <p className=' font-semibold'>
-                      {personalMoverDetails?.generatedName}
+                      {singleMoversData?.companyDetails?.generatedName}
                     </p>
                   </div>
                   {/* mover rating */}
@@ -379,7 +398,8 @@ const Dashboard = ({ allBookings }) => {
           </section>
 
           <section className='mb-[30px]'>
-            {personalMoverDetails?.approvalStatus === "UNAPPROVED" && (
+            {singleMoversData?.personalDetails?.approvalStatus ===
+              "UNAPPROVED" && (
               <div className='flex items-center bg-secondary/10 rounded-[10px] px-[20px] py-[15px] space-x-[20px]'>
                 <IoMdNotificationsOutline className='text-secondary text-[40px]' />
                 <div className='flex flex-col'>
@@ -393,7 +413,8 @@ const Dashboard = ({ allBookings }) => {
                 </div>
               </div>
             )}
-            {personalMoverDetails?.approvalStatus === "APPROVED" && (
+            {singleMoversData?.personalDetails?.approvalStatus ===
+              "APPROVED" && (
               <div className='flex items-center bg-primary/10 rounded-[10px] px-[20px] py-[15px] space-x-[20px]'>
                 <IoMdNotificationsOutline className='text-primary text-[40px]' />
                 <div className='flex flex-col'>
@@ -531,7 +552,7 @@ const Dashboard = ({ allBookings }) => {
               Set up your profile
             </p>
             <p className=''>
-              {sections.length  - (sortedSections?.length)} out of{" "}
+              {sections.length - sortedSections?.length} out of{" "}
               {sections.length} completed
             </p>
           </div>
@@ -603,44 +624,43 @@ const Dashboard = ({ allBookings }) => {
             })}
           </div>
         </div>
-      }
-      {/* {moverData?.length > 0 && (
+      )}
+      {singleMoversDataLoading && completedBookingsLoading && (
         <div className='flex justify-center items-center w-full h-screen'>
           <span className='loading loading-spinner loading-lg text-primary'></span>
         </div>
-      )} */}
+      )}
     </MoverLayout>
   );
 };
 
 export default Dashboard;
 
-export async function getServerSideProps(context) {
-  const bookingsData = await fetchAllBookings();
+// export async function getServerSideProps(context) {
+//   const bookingsData = await fetchAllBookings();
 
-  const filterCompleted = bookingsData?.bookings?.filter(
-    (bd) => bd.completedBook === true
-  );
+//   const filterCompleted = bookingsData?.bookings?.filter(
+//     (bd) => bd.completedBook === true
+//   );
 
-  const allBookings = [...filterCompleted]?.sort((a, b) => {
-    return new Date(b.date) - new Date(a.date);
-  });
+//   const allBookings = [...filterCompleted]?.sort((a, b) => {
+//     return new Date(b.date) - new Date(a.date);
+//   });
 
-  // const moverBooks = allBookings?.filter((ab) => ab.name === "");
+//   // const moverBooks = allBookings?.filter((ab) => ab.name === "");
 
-  if (typeof bookingsData === "undefined") {
-    return {
-      props: {
-        // progressData: null,
-        allBookings: null,
-      },
-    };
-  } else {
-    return {
-      props: {
-        // progressData: progressData,
-        allBookings,
-      },
-    };
-  }
-}
+//   if (typeof bookingsData === "undefined") {
+//     return {
+//       props: {
+//         // progressData: null,
+//         allBookings2: null,
+//       },
+//     };
+//   } else {
+//     return {
+//       props: {
+//         allBookings,
+//       },
+//     };
+//   }
+// }

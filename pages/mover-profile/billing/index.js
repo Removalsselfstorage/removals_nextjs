@@ -299,7 +299,7 @@ const Billing = ({ allBookings }) => {
                       <div className='form-control w-full'>
                         <label className='label'>
                           <span className='label-text font-semibold'>
-                            Bank name
+                            Bank Name
                             <span className='text-secondary'>*</span>{" "}
                             {/* <span className='text-gray-500 font-normal'>
                               (including all middle names)

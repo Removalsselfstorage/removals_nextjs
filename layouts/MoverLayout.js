@@ -29,29 +29,43 @@ import { IoMdNotificationsOutline } from "react-icons/io";
 import useMover from "@/hooks/useMover";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "@/firebase";
+import useMoversData from "@/hooks/useMoversData";
 
 const MoverLayout = ({ children, data, reload }) => {
+  const router = useRouter();
+  // const {
+  //   justRegistered,
+  //   personalMoverDetails,
+  //   companyDetails,
+  //   companyDocs,
+  //   allMoverData,
+  //   updateJustR,
+  //   resetJustR,
+  //   updatePersonalMover,
+  //   resetPersonalMover,
+  //   updateCompanyDe,
+  //   resetCompanyDe,
+  //   updateCompanyDo,
+  //   resetCompanyDo,
+  //   updateAllMoverD,
+  //   resetAllMoverD,
+  //   // router,
+  // } = useMover();
+
   const {
-    justRegistered,
-    personalMoverDetails,
-    companyDetails,
-    companyDocs,
-    allMoverData,
-    updateJustR,
-    resetJustR,
-    updatePersonalMover,
-    resetPersonalMover,
-    updateCompanyDe,
-    resetCompanyDe,
-    updateCompanyDo,
-    resetCompanyDo,
-    updateAllMoverD,
-    resetAllMoverD,
-    // router,
-  } = useMover();
+    allMoversData,
+    allMoversDataLoading,
+    refetchAllMoversData,
+    singleMoversData,
+    singleMoversDataLoading,
+    refetchSingleMoversData,
+    portFolioPix,
+    uid,
+    router: router2,
+  } = useMoversData();
 
   // const uid = personalMoverDetails?.uid;
-  const router = useRouter();
+  // const router = useRouter();
   const userDetails = useSelector(getAllUserDetails);
   const [clicked, setClicked] = useState(false);
   const details = useSelector(getAllMoverDetails);
@@ -72,7 +86,7 @@ const MoverLayout = ({ children, data, reload }) => {
   const [readData, setReadData] = useState([]);
   const [unreadData, setUnreadData] = useState([]);
 
-  const uid = userDetails?.userDetails?.uid;
+  // const uid = userDetails?.userDetails?.uid;
 
   const showLoader = () => {
     setClicked(true);
@@ -104,32 +118,49 @@ const MoverLayout = ({ children, data, reload }) => {
     }
   }, []);
 
+  // useEffect(() => {
+  //   const getMD = async () => {
+  //     const bookingRef = doc(db, "moversData", uid);
+  //     const docSnap = await getDoc(bookingRef);
+  //     const moverDat = docSnap.data()?.notifications;
+  //     const moverData2 = docSnap.data();
+
+  //     const sortMoverData = [...moverDat]?.sort((a, b) => {
+  //       return new Date(b.date) - new Date(a.date);
+  //     });
+
+  //     const readD = sortMoverData?.filter((sm) => sm.status === "read");
+  //     const unreadD = sortMoverData?.filter((sm) => sm.status === "unread");
+
+  //     setReadData(readD);
+  //     setUnreadData(unreadD);
+  //   };
+
+  //   getMD();
+  // }, [reload]);
+
   useEffect(() => {
-    const getMD = async () => {
-      const bookingRef = doc(db, "moversData", uid);
-      const docSnap = await getDoc(bookingRef);
-      const moverDat = docSnap.data()?.notifications;
-      const moverData2 = docSnap.data();
+    const moverDat = singleMoversData?.personalDetails?.notifications;
 
-      const sortMoverData = [...moverDat]?.sort((a, b) => {
-        return new Date(b.date) - new Date(a.date);
-      });
+    const sortMoverData =
+      moverDat?.length > 0
+        ? [...moverDat]?.sort((a, b) => {
+            return new Date(b.date) - new Date(a.date);
+          })
+        : [];
 
-      const readD = sortMoverData?.filter((sm) => sm.status === "read");
-      const unreadD = sortMoverData?.filter((sm) => sm.status === "unread");
+    const readD = sortMoverData?.filter((sm) => sm.status === "read");
+    const unreadD = sortMoverData?.filter((sm) => sm.status === "unread");
 
-      setReadData(readD);
-      setUnreadData(unreadD);
-    };
-
-    getMD();
-  }, [reload]);
+    setReadData(readD);
+    setUnreadData(unreadD);
+  }, [singleMoversData]);
 
   return (
     <div className={`${textFont.variable} font-sans `}>
       {userDetails.userDetails && details.justRegistered === false && (
         <>
-          <Navbar3 />
+          <Navbar3 readData={readData} unreadData={unreadData} />
           <div className='flex bg-base-200  pt-[50px]   lg:pt-[50px] '>
             <aside className=' hidden md:flex md:flex-[0.4] lg:flex-[0.4] border border-r-[2px] md:flex-col lg:w-[300px] '>
               <ul className='   pt-[30px] pb-[10px]  shadow-xl bg-base-100 text-[16px] px-[10px] border-b'>

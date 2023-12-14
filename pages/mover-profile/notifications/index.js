@@ -15,10 +15,23 @@ import { GiTrophyCup } from "react-icons/gi";
 import { MdNotificationsActive } from "react-icons/md";
 import { combineInitials, trimToFirstLetter } from "@/utils/logics";
 import { IoIosAlert } from "react-icons/io";
+import useMoversData from "@/hooks/useMoversData";
 
 const Inbox = () => {
-  const router = useRouter();
+  // const router = useRouter();
   const userDetails = useSelector(getAllUserDetails);
+
+  const {
+    allMoversData,
+    allMoversDataLoading,
+    refetchAllMoversData,
+    singleMoversData,
+    singleMoversDataLoading,
+    refetchSingleMoversData,
+    // portFolioPix,
+    uid,
+    router,
+  } = useMoversData();
 
   const [notificationData, setNotificationData] = useState([]);
   const [readData, setReadData] = useState([]);
@@ -27,27 +40,6 @@ const Inbox = () => {
   const [showTab, setShowTab] = useState("");
   const [reload, setReload] = useState(false);
   const [modalData, setModalData] = useState({});
-
-  const {
-    justRegistered,
-    personalMoverDetails,
-    companyDetails,
-    companyDocs,
-    allMoverData,
-    updateJustR,
-    resetJustR,
-    updatePersonalMover,
-    resetPersonalMover,
-    updateCompanyDe,
-    resetCompanyDe,
-    updateCompanyDo,
-    resetCompanyDo,
-    updateAllMoverD,
-    resetAllMoverD,
-    // router,
-  } = useMover();
-
-  const uid = personalMoverDetails?.uid;
 
   const filterOutNotification = () => {
     moverData?.notifications?.filter((md) => md);
@@ -86,7 +78,9 @@ const Inbox = () => {
         { merge: true }
       );
 
-      setReload(true);
+      refetchSingleMoversData();
+
+      // setReload(true);
 
       console.log("mover notification update was successful @ notification");
     } catch (error) {
@@ -100,29 +94,23 @@ const Inbox = () => {
   }, []);
 
   useEffect(() => {
-    const getMD = async () => {
-      const bookingRef = doc(db, "moversData", uid);
-      const docSnap = await getDoc(bookingRef);
-      const moverDat = docSnap.data()?.notifications;
-      const moverData2 = docSnap.data();
+    // const moverDat = [];
+    const moverDat = singleMoversData?.personalDetails?.notifications;
 
-      const sortMoverData = [...moverDat]?.sort((a, b) => {
-        return new Date(b.date) - new Date(a.date);
-      });
+    const sortMoverData = [...moverDat]?.sort((a, b) => {
+      return new Date(b.date) - new Date(a.date);
+    });
 
-      const readD = sortMoverData?.filter((sm) => sm.status === "read");
-      const unreadD = sortMoverData?.filter((sm) => sm.status === "unread");
+    const readD = sortMoverData?.filter((sm) => sm.status === "read");
+    const unreadD = sortMoverData?.filter((sm) => sm.status === "unread");
 
-      setReadData(readD);
-      setUnreadData(unreadD);
-      setNotificationData(sortMoverData);
-      setMoverData(moverData2);
-    };
+    setReadData(readD);
+    setUnreadData(unreadD);
+    setNotificationData(sortMoverData);
+    setMoverData(singleMoversData);
+  }, [singleMoversData]);
 
-    getMD();
-  }, [reload]);
-
-  console.log({ moverData, notificationData, modalData });
+  // console.log({ moverData, notificationData, modalData });
 
   return (
     <MoverLayout reload={reload}>

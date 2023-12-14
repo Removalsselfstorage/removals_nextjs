@@ -1,7 +1,9 @@
 import AllTable from "@/components/Appointments/AllTable";
 import CompletedTable from "@/components/Appointments/CompletedTable";
 import CurrentTable from "@/components/Appointments/CurrentTable";
+import useBookings from "@/hooks/useBookings";
 import useMover from "@/hooks/useMover";
+import useMoversData from "@/hooks/useMoversData";
 import MoverLayout from "@/layouts/MoverLayout";
 import NormalLayout from "@/layouts/NormalLayout";
 import { fetchAllBookings } from "@/lib/fetchData2";
@@ -19,25 +21,33 @@ import { useSelector } from "react-redux";
 
 
 
-const JobBoard = ({ allBookings }) => {
+const JobBoard = ({  }) => {
+  
+
   const {
-    justRegistered,
-    personalMoverDetails,
-    companyDetails,
-    companyDocs,
-    allMoverData,
-    updateJustR,
-    resetJustR,
-    updatePersonalMover,
-    resetPersonalMover,
-    updateCompanyDe,
-    resetCompanyDe,
-    updateCompanyDo,
-    resetCompanyDo,
-    updateAllMoverD,
-    resetAllMoverD,
+    // allBookings,
+    // bookingsLoading,
+    // refetchBookings,
+
+    completedBookings,
+    completedBookingsLoading,
+    refetchCompletedBookings,
+
+    completedBook,
+    allBook,
+  } = useBookings();
+
+  const {
+    allMoversData,
+    allMoversDataLoading,
+    refetchAllMoversData,
+    singleMoversData,
+    singleMoversDataLoading,
+    refetchSingleMoversData,
+    portFolioPix,
+    uid,
     router,
-  } = useMover();
+  } = useMoversData();
 
   // const bid = personalMoverDetails?.generatedName
 
@@ -59,7 +69,7 @@ const JobBoard = ({ allBookings }) => {
 
     // const completedMb = mb?.filter((bc) => bc.moveCarriedOut === true);
 
-    const smartMb = allBookings?.filter(
+    const smartMb = completedBookings?.filter(
       (bc) => bc.moverName === "Smart Booking" && bc.acceptance === "pending"
     );
 
@@ -84,8 +94,8 @@ const JobBoard = ({ allBookings }) => {
     // setCompletedMoverBooks(completedMb);
     setSmartBooks(currentSmartMb);
 
-    console.log({ allBookings, smartMb, currentSmartMb, smartBooks });
-  }, [allBookings]);
+    console.log({ smartMb, currentSmartMb, smartBooks });
+  }, [completedBookings]);
 
   return (
     <MoverLayout>
@@ -255,37 +265,37 @@ const JobBoard = ({ allBookings }) => {
 
 export default JobBoard;
 
-export async function getServerSideProps(context) {
-  // const bookingRef = doc(db, "bookingData", id);
-  // const docSnap = await getDoc(bookingRef);
+// export async function getServerSideProps(context) {
+//   // const bookingRef = doc(db, "bookingData", id);
+//   // const docSnap = await getDoc(bookingRef);
 
-  // const progressData = docSnap.data();
+//   // const progressData = docSnap.data();
 
-  const bookingsData = await fetchAllBookings();
+//   const bookingsData = await fetchAllBookings();
 
-  const filterCompleted = bookingsData?.bookings?.filter(
-    (bd) => bd.completedBook === true
-  );
+//   const filterCompleted = bookingsData?.bookings?.filter(
+//     (bd) => bd.completedBook === true
+//   );
 
-  const allBookings = [...filterCompleted]?.sort((a, b) => {
-    return new Date(b.date) - new Date(a.date);
-  });
+//   const allBookings = [...filterCompleted]?.sort((a, b) => {
+//     return new Date(b.date) - new Date(a.date);
+//   });
 
-  // const moverBooks = allBookings?.filter((ab) => ab.name === "");
+//   // const moverBooks = allBookings?.filter((ab) => ab.name === "");
 
-  if (typeof bookingsData === "undefined") {
-    return {
-      props: {
-        // progressData: null,
-        allBookings: null,
-      },
-    };
-  } else {
-    return {
-      props: {
-        // progressData: progressData,
-        allBookings,
-      },
-    };
-  }
-}
+//   if (typeof bookingsData === "undefined") {
+//     return {
+//       props: {
+//         // progressData: null,
+//         allBookings: null,
+//       },
+//     };
+//   } else {
+//     return {
+//       props: {
+//         // progressData: progressData,
+//         allBookings,
+//       },
+//     };
+//   }
+// }

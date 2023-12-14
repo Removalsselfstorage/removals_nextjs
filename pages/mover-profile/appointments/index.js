@@ -40,26 +40,34 @@ import Link from "next/link";
 import CurrentTable from "@/components/Appointments/CurrentTable";
 import CompletedTable from "@/components/Appointments/CompletedTable";
 import AllTable from "@/components/Appointments/AllTable";
+import useBookings from "@/hooks/useBookings";
+import useMoversData from "@/hooks/useMoversData";
 
 const Appointments = ({ allBookings }) => {
   const {
-    justRegistered,
-    personalMoverDetails,
-    companyDetails,
-    companyDocs,
-    allMoverData,
-    updateJustR,
-    resetJustR,
-    updatePersonalMover,
-    resetPersonalMover,
-    updateCompanyDe,
-    resetCompanyDe,
-    updateCompanyDo,
-    resetCompanyDo,
-    updateAllMoverD,
-    resetAllMoverD,
+    // allBookings,
+    // bookingsLoading,
+    // refetchBookings,
+
+    completedBookings,
+    completedBookingsLoading,
+    refetchCompletedBookings,
+
+    completedBook,
+    allBook,
+  } = useBookings();
+
+  const {
+    allMoversData,
+    allMoversDataLoading,
+    refetchAllMoversData,
+    singleMoversData,
+    singleMoversDataLoading,
+    refetchSingleMoversData,
+    portFolioPix,
+    uid,
     router,
-  } = useMover();
+  } = useMoversData();
 
   const [showTab, setShowTab] = useState("");
   const [moverBooks, setMoverBooks] = useState([]);
@@ -72,8 +80,8 @@ const Appointments = ({ allBookings }) => {
 
   useEffect(() => {
     setShowTab("1");
-    const mb = allBookings?.filter(
-      (ab) => ab?.moverName === companyDetails?.generatedName
+    const mb = completedBookings?.filter(
+      (ab) => ab?.moverName === singleMoversData?.companyDetails?.generatedName
     );
 
     const completedMb = mb?.filter((bc) => bc.moveCarriedOut === true);
@@ -99,7 +107,6 @@ const Appointments = ({ allBookings }) => {
     setMoverBooks(mb);
     setCurrentMoverBooks(currentMb);
     setCompletedMoverBooks(completedMb);
-
   }, []);
 
   // console.log({ personalMoverDetails, moverBooks, allBookings, currentMoverBooks });
@@ -273,37 +280,37 @@ const Appointments = ({ allBookings }) => {
 
 export default Appointments;
 
-export async function getServerSideProps(context) {
-  // const bookingRef = doc(db, "bookingData", id);
-  // const docSnap = await getDoc(bookingRef);
+// export async function getServerSideProps(context) {
+//   // const bookingRef = doc(db, "bookingData", id);
+//   // const docSnap = await getDoc(bookingRef);
 
-  // const progressData = docSnap.data();
+//   // const progressData = docSnap.data();
 
-  const bookingsData = await fetchAllBookings();
+//   const bookingsData = await fetchAllBookings();
 
-  const filterCompleted = bookingsData?.bookings?.filter(
-    (bd) => bd.completedBook === true
-  );
+//   const filterCompleted = bookingsData?.bookings?.filter(
+//     (bd) => bd.completedBook === true
+//   );
 
-  const allBookings = [...filterCompleted]?.sort((a, b) => {
-    return new Date(b.date) - new Date(a.date);
-  });
+//   const allBookings = [...filterCompleted]?.sort((a, b) => {
+//     return new Date(b.date) - new Date(a.date);
+//   });
 
-  // const moverBooks = allBookings?.filter((ab) => ab.name === "");
+//   // const moverBooks = allBookings?.filter((ab) => ab.name === "");
 
-  if (typeof bookingsData === "undefined") {
-    return {
-      props: {
-        // progressData: null,
-        allBookings: null,
-      },
-    };
-  } else {
-    return {
-      props: {
-        // progressData: progressData,
-        allBookings,
-      },
-    };
-  }
-}
+//   if (typeof bookingsData === "undefined") {
+//     return {
+//       props: {
+//         // progressData: null,
+//         allBookings: null,
+//       },
+//     };
+//   } else {
+//     return {
+//       props: {
+//         // progressData: progressData,
+//         allBookings,
+//       },
+//     };
+//   }
+// }

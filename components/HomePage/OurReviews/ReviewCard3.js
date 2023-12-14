@@ -3,7 +3,7 @@ import FullRating from "@/components/Rating/FullRating";
 import { truncateTexts } from "@/utils/truncateText";
 import React from "react";
 
-const ReviewCard = ({ name, location, date, rating, comment }) => {
+const ReviewCard3 = ({ name, location, date, rating, comment }) => {
   function spliceFirstLetter(sentence) {
     if (sentence.length === 0) {
       return sentence;
@@ -38,4 +38,4 @@ const ReviewCard = ({ name, location, date, rating, comment }) => {
   );
 };
 
-export default ReviewCard;
+export default ReviewCard3;

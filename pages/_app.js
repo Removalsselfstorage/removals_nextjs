@@ -27,7 +27,9 @@ import { useRouter } from "next/router";
 import Loader1 from "@/components/loaders/loader1";
 import nProgress from "nprogress";
 import Router from "next/router";
-import "react-big-calendar/lib/css/react-big-calendar.css";
+import "react-datetime/css/react-datetime.css";
+// import "react-big-calendar/lib/css/react-big-calendar.css";
+// import 'schedulely/dist/index.css';
 
 let persistor = persistStore(store);
 

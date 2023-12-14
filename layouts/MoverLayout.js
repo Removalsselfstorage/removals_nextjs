@@ -11,7 +11,7 @@ import Navbar3 from "@/components/Navbar/Navbar3";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { AiOutlineHome } from "react-icons/ai";
-import { MdNotificationsActive, MdWorkOutline } from "react-icons/md";
+import { MdNotificationsActive, MdPolicy, MdWorkOutline } from "react-icons/md";
 import { FaRegCalendarAlt } from "react-icons/fa";
 import { HiOutlineInboxArrowDown } from "react-icons/hi2";
 import { HiDocumentDuplicate } from "react-icons/hi";
@@ -67,6 +67,7 @@ const MoverLayout = ({ children, data, reload }) => {
   const [s8, setS8] = useState(false);
   const [s9, setS9] = useState(false);
   const [s10, setS10] = useState(false);
+  const [s11, setS11] = useState(false);
 
   const [readData, setReadData] = useState([]);
   const [unreadData, setUnreadData] = useState([]);
@@ -476,6 +477,37 @@ const MoverLayout = ({ children, data, reload }) => {
                       <span className='loading loading-spinner loading-md text-primary mr-[10px]'></span>
                     )}
                     <p className='hidden lg:flex'>Reviews</p>
+                  </Link>
+                </li>
+
+                <li className=' my-[10px] px-[0px] w-full'>
+                  <Link
+                    href='/mover-profile/policies'
+                    className={`${
+                      router.pathname === "/mover-profile/policies" ||
+                      s11 === true
+                        ? "bg-primary/10 text-primary"
+                        : ""
+                    } flex items-center btn-dash py-[15px] px-[20px] rounded-[10px] w-full`}
+                    onClick={() => {
+                      setS11(true);
+                      if (router.pathname === "/mover-profile/policies") {
+                        setS11(false);
+                      }
+                    }}
+                  >
+                    {/* <span className='text-[25px] mr-[11px]'>
+                      <TfiComments />
+                    </span> */}
+                    {!s11 && (
+                      <span className='text-[25px] mr-[10px]'>
+                        <MdPolicy />
+                      </span>
+                    )}
+                    {s11 && (
+                      <span className='loading loading-spinner loading-md text-primary mr-[10px]'></span>
+                    )}
+                    <p className='hidden lg:flex'>Terms & Policies</p>
                   </Link>
                 </li>
               </ul>

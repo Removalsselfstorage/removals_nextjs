@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@aldabil/react-scheduler": "^2.7.26",
     "@emailjs/browser": "^3.11.0",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
@@ -16,6 +17,9 @@
     "@fortawesome/fontawesome-svg-core": "^6.4.0",
     "@fortawesome/free-regular-svg-icons": "^6.4.0",
     "@fortawesome/free-solid-svg-icons": "^6.4.0",
+    "@fullcalendar/core": "^6.1.10",
+    "@fullcalendar/daygrid": "^6.1.10",
+    "@fullcalendar/react": "^6.1.10",
     "@mui/icons-material": "^5.11.16",
     "@mui/material": "^5.13.6",
     "@mui/x-date-pickers": "^6.9.1",
@@ -48,8 +52,9 @@
     "nprogress": "^0.2.0",
     "postcss": "8.4.24",
     "react": "18.2.0",
-    "react-big-calendar": "^1.8.5",
+    "react-calendar-scheduler": "^2.0.8",
     "react-datepicker": "^4.16.0",
+    "react-datetime": "^3.2.0",
     "react-dom": "18.2.0",
     "react-hot-toast": "^2.4.1",
     "react-icons": "^4.10.1",

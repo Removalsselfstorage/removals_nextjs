@@ -76,7 +76,7 @@ const sections = [
     icon: <FaRegEdit className='text-white text-[30px]' />,
     buttonTitle: "Read Terms & Policies",
     navNumber: 2,
-    link: "terms-and-policies",
+    link: "policies",
     required: true,
   },
   {
@@ -183,69 +183,41 @@ const Dashboard = ({ allBookings }) => {
   // const currentPendingMoves = personalMoverDetails?.currentPendingMoves;
 
   const filterSections = () => {
-    if (condition1 !== "" && condition2 === false) {
-      const newSections = sections.filter((section) => {
-        return (
-          section.title !== "Complete Documentation Process" &&
-          section.title !== "Add a Profile Picture!"
-          // section.title !== "Accept our Terms & Policies!"
-        );
-      });
-      return newSections;
-    } else if (condition1 !== "") {
-      const newSections = sections.filter((section) => {
-        return (
-          section.title !== "Complete Documentation Process" &&
-          section.title !== "Add a Profile Picture!"
-          // section.title !== "Accept our Terms & Policies!"
-        );
-      });
-      return newSections;
-    } else if (condition1 !== "" && condition2 === true) {
-      const newSections = sections.filter((section) => {
-        return (
-          section.title !== "Complete Documentation Process" &&
-          section.title !== "Add a Profile Picture!" &&
-          section.title !== "Accept our Terms & Policies!"
-        );
-      });
-      return newSections;
-    } else if (condition2 === true) {
-      const newSections = sections.filter((section) => {
-        return (
-          // section.title !== "Complete Documentation Process" &&
-          // section.title !== "Add a Profile Picture!"
-          section.title !== "Accept our Terms & Policies!"
-        );
-      });
-      return newSections;
-    } else {
-      return sections;
-    }
+    const excludedTitles = ["Complete Documentation Process", "Add a Profile Picture!", "Accept our Terms & Policies!"];
+    
+    const filteredSections = sections.filter((section) => {
+      const isExcluded = excludedTitles.includes(section.title);
+      
+      if (condition1 !== "" && condition2 === false) {
+        return !isExcluded;
+      } else if (condition1 !== "") {
+        return !isExcluded;
+      } else if (condition1 !== "" && condition2 === true) {
+        return !isExcluded;
+      } else if (condition2 === true) {
+        return !isExcluded || section.title === "Accept our Terms & Policies!";
+      } else {
+        return true;
+      }
+    });
+  
+    return filteredSections;
   };
+  
   const sortedSections = filterSections();
-
   const [sectionData, setSectionData] = useState(sortedSections);
 
   useEffect(() => {
     const lastIndex = sectionData?.length - 1;
-    if (index < 0) {
-      setIndex(lastIndex);
-    }
-    if (index > lastIndex) {
-      setIndex(0);
-    }
+    if (index < 0) setIndex(lastIndex);
+    if (index > lastIndex) setIndex(0);
   }, [index, sectionData]);
 
-  // useEffect(() => {
-  //   let slider = setInterval(() => {
-  //     setIndex(index + 1);
-  //   }, 5000);
-  //   return () => {
-  //     clearInterval(slider);
-  //   };
-  // }, [index]);
-  // console.log(userDetails);
+  const handleIndexChange = (newIndex) => {
+    setIndex(newIndex);
+  };
+
+
 
   const auth = getAuth();
 
@@ -315,7 +287,8 @@ const Dashboard = ({ allBookings }) => {
     getMD();
   }, []);
 
-  console.log({ personalMoverDetails, moverData, readData, unreadData });
+  // console.log({ personalMoverDetails, moverData, readData, unreadData });
+  console.log({ sortedSections });
 
   return (
     <MoverLayout>
@@ -558,8 +531,8 @@ const Dashboard = ({ allBookings }) => {
               Set up your profile
             </p>
             <p className=''>
-              {sections.length + 1 - (sortedSections?.length + 1)} out of{" "}
-              {sections.length + 1} completed
+              {sections.length  - (sortedSections?.length)} out of{" "}
+              {sections.length} completed
             </p>
           </div>
 
@@ -608,7 +581,7 @@ const Dashboard = ({ allBookings }) => {
                           <BiChevronLeft className='text-[25px]' />
                         </div>
                         <p className='mx-[10px]'>
-                          {sectionIndex + 1} / {sortedSections.length + 1}
+                          {sectionIndex + 1} / {sortedSections.length}
                         </p>
                         <div
                           className='cursor-pointer bg-secondary/20 rounded-full'

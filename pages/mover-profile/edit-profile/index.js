@@ -272,7 +272,21 @@ const EditProfile = () => {
                   <div className='flex flex-col space-y-[20px] md:space-y-0 md:flex-row md:space-x-[50px] lg:flex-col lg:space-y-[20px] lg:md:space-x-[0px]'>
                     <div className='flex flex-col lg:flex-[1] w-full'>
                       <div className='w-full'>
-                        {previewUrl && !fileUploadError ? (
+                          <div className='w-[90px] h-[90px] rounded-full ring ring-primary ring-offset-base-100 ring-offset-2'>
+                            {!singleMoversDataLoading && (
+                              <img
+                                src={previewUrl}
+                                className='rounded-full w-[90px] h-[90px]'
+                              />
+                            )}
+                            {singleMoversDataLoading && (
+                              <img
+                                src={"/userPlaceholder.png"}
+                                className='rounded-full w-[90px] h-[90px]'
+                              />
+                            )}
+                          </div>
+                        {/* {previewUrl && !fileUploadError ? (
                           <div className='avatar '>
                             <div className='w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2'>
                               <img src={previewUrl} />
@@ -286,7 +300,7 @@ const EditProfile = () => {
                               </span>
                             </div>
                           </div>
-                        )}
+                        )} */}
                       </div>
                       <div className='flex flex-col mt-[10px] w-full'>
                         <p className=' font-bold  mb-[10px]'>

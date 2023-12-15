@@ -315,13 +315,19 @@ const Dashboard = ({ allBookings }) => {
               <p className='font-bold text-[25px] mb-[20px]'>Dashboard</p>
               <div className='flex flex-col space-y-[20px] lg:space-y-0 lg:flex-row lg:space-x-[50px] lg:justify-between'>
                 <div className='flex items-center space-x-[20px] md:space-x-[30px]'>
-                  <div className='avatar '>
-                    <div className='w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2'>
-                      {!singleMoversDataLoading && <img src={previewUrl} />}
-                      {singleMoversDataLoading && (
-                        <img src={"/userPlaceholder.png"} />
-                      )}
-                    </div>
+                  <div className='w-[90px] h-[90px] rounded-full ring ring-primary ring-offset-base-100 ring-offset-2'>
+                    {!singleMoversDataLoading && (
+                      <img
+                        src={previewUrl}
+                        className='rounded-full w-[90px] h-[90px]'
+                      />
+                    )}
+                    {singleMoversDataLoading && (
+                      <img
+                        src={"/userPlaceholder.png"}
+                        className='rounded-full w-[90px] h-[90px]'
+                      />
+                    )}
                   </div>
                   {/* {previewUrl ? (
                     <div className='avatar '>

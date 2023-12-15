@@ -105,7 +105,7 @@ const JobBoard = ({  }) => {
         <link rel='icon' href='/rrs_favicon.svg' />
       </Head>
 
-      <div className='py-[50px] bg-white/90 min-h-[100%]'>
+      {!completedBookingsLoading && <div className='py-[50px] bg-white/90 min-h-[100%]'>
         <section className='mb-[40px] w-full px-[10px] md:px-[30px] '>
           <div className='flex flex-col'>
             <p className='font-bold text-[25px] mb-[20px]'>Job Board</p>
@@ -258,7 +258,13 @@ const JobBoard = ({  }) => {
             {<AllTable moverBooks={smartBooks} />}
           </div>
         </div>
-      </div>
+      </div>}
+
+      {completedBookingsLoading && (
+        <div className='flex justify-center items-center w-full h-screen'>
+          <span className='loading loading-spinner loading-lg text-primary'></span>
+        </div>
+      )}
     </MoverLayout>
   );
 };

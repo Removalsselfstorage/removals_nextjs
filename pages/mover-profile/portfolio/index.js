@@ -59,9 +59,11 @@ const Portfolio = () => {
     singleMoversDataLoading,
     refetchSingleMoversData,
     portFolioPix,
+    uid,
+    router,
   } = useMoversData();
 
-  const router = useRouter();
+  // const router = useRouter();
   const userDetails = useSelector(getAllUserDetails);
 
   const dispatch = useDispatch();
@@ -84,12 +86,8 @@ const Portfolio = () => {
   //   const [companyProfilePixname, setCompanyProfilePixname] = useState("");
 
   const [portfolioPixUpload1, setPortfolioPixUpload1] = useState("");
-  const [portfolioPixUploadUrl1, setPortfolioPixUploadUrl1] = useState(
-    portFolioPix?.portfolio1?.portfolioPixUploadUrl1
-  );
-  const [portfolioPixUploadName1, setPortfolioPixUploadName1] = useState(
-    portFolioPix?.portfolio1?.portfolioPixUploadName1
-  );
+  const [portfolioPixUploadUrl1, setPortfolioPixUploadUrl1] = useState("");
+  const [portfolioPixUploadName1, setPortfolioPixUploadName1] = useState("");
 
   const [portfolioPixUpload2, setPortfolioPixUpload2] = useState("");
   const [portfolioPixUploadUrl2, setPortfolioPixUploadUrl2] = useState("");
@@ -124,7 +122,7 @@ const Portfolio = () => {
   const [fileUploadError5, setFileUploadError5] = useState("");
   const [fileUploadError6, setFileUploadError6] = useState("");
 
-  const uid = userDetails.userDetails?.uid;
+  // const uid = userDetails.userDetails?.uid;
 
   const documentFormSubmit = async () => {
     setActivateError(true);
@@ -188,52 +186,50 @@ const Portfolio = () => {
   };
 
   useEffect(() => {
-    if (!!allMoversData) {
-      setPortfolioPixUploadName1(
-        portFolioPix?.portfolio1?.portfolioPixUploadName1
-      );
-      setPortfolioPixUploadUrl1(
-        portFolioPix?.portfolio1?.portfolioPixUploadUrl1
-      );
+    setPortfolioPixUploadName1(
+      singleMoversData?.portfolioPix1?.portfolioPixUploadName1
+    );
+    setPortfolioPixUploadUrl1(
+      singleMoversData?.portfolioPix1?.portfolioPixUploadUrl1
+    );
 
-      setPortfolioPixUploadName2(
-        portFolioPix?.portfolio2?.portfolioPixUploadName2
-      );
-      setPortfolioPixUploadUrl2(
-        portFolioPix?.portfolio2?.portfolioPixUploadUrl2
-      );
+    setPortfolioPixUploadName2(
+      singleMoversData?.portfolioPix2?.portfolioPixUploadName2
+    );
+    setPortfolioPixUploadUrl2(
+      singleMoversData?.portfolioPix2?.portfolioPixUploadUrl2
+    );
 
-      setPortfolioPixUploadName3(
-        portFolioPix?.portfolio3?.portfolioPixUploadName3
-      );
-      setPortfolioPixUploadUrl3(
-        portFolioPix?.portfolio3?.portfolioPixUploadUrl3
-      );
+    setPortfolioPixUploadName3(
+      singleMoversData?.portfolioPix3?.portfolioPixUploadName3
+    );
+    setPortfolioPixUploadUrl3(
+      singleMoversData?.portfolioPix3?.portfolioPixUploadUrl3
+    );
 
-      setPortfolioPixUploadName4(
-        portFolioPix?.portfolio4?.portfolioPixUploadName4
-      );
-      setPortfolioPixUploadUrl4(
-        portFolioPix?.portfolio4?.portfolioPixUploadUrl4
-      );
+    setPortfolioPixUploadName4(
+      singleMoversData?.portfolioPix4?.portfolioPixUploadName4
+    );
+    setPortfolioPixUploadUrl4(
+      singleMoversData?.portfolioPix4?.portfolioPixUploadUrl4
+    );
 
-      setPortfolioPixUploadName5(
-        portFolioPix?.portfolio5?.portfolioPixUploadName5
-      );
-      setPortfolioPixUploadUrl5(
-        portFolioPix?.portfolio5?.portfolioPixUploadUrl5
-      );
+    setPortfolioPixUploadName5(
+      singleMoversData?.portfolioPix5?.portfolioPixUploadName5
+    );
+    setPortfolioPixUploadUrl5(
+      singleMoversData?.portfolioPix5?.portfolioPixUploadUrl5
+    );
 
-      setPortfolioPixUploadName6(
-        portFolioPix?.portfolio6?.portfolioPixUploadName6
-      );
-      setPortfolioPixUploadUrl6(
-        portFolioPix?.portfolio6?.portfolioPixUploadUrl6
-      );
-    }
-  }, [allMoversData]);
+    setPortfolioPixUploadName6(
+      singleMoversData?.portfolioPix6?.portfolioPixUploadName6
+    );
+    setPortfolioPixUploadUrl6(
+      singleMoversData?.portfolioPix6?.portfolioPixUploadUrl6
+    );
+  }, [singleMoversData]);
 
-  console.log({ singleMoversData, portFolioPix, portfolioPixUploadUrl1 });
+  console.log({ singleMoversData });
   // console.log({
   //   portfolioPixUpload1,
   //   portfolioPixUploadUrl1,
@@ -251,7 +247,7 @@ const Portfolio = () => {
         <link rel='icon' href='/rrs_favicon.svg' />
       </Head>
 
-      <main>
+      {!singleMoversDataLoading && (
         <div className='bg-white/90 py-[50px] px-[30px]'>
           <section className='mb-[30px]  px-[0px] '>
             <div className='flex flex-col'>
@@ -638,7 +634,12 @@ const Portfolio = () => {
             </div>
           </div>
         </div>
-      </main>
+      )}
+      {singleMoversDataLoading && (
+        <div className='flex justify-center items-center w-full h-screen'>
+          <span className='loading loading-spinner loading-lg text-primary'></span>
+        </div>
+      )}
     </MoverLayout>
   );
 };

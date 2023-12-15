@@ -110,7 +110,7 @@ const useMoversData = () => {
     },
   });
 
-  console.log({ singleMoversData });
+  // console.log({ singleMoversData });
 
   return {
     allMoversData,

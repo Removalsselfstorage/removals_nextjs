@@ -11,6 +11,7 @@ import { useSelector } from "react-redux";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "@/firebase";
 import { FaArrowDownLong } from "react-icons/fa6";
+import useMoversData from "@/hooks/useMoversData";
 
 const TermsAndPolicies = () => {
   // const router = useRouter();
@@ -32,8 +33,20 @@ const TermsAndPolicies = () => {
     resetCompanyDo,
     updateAllMoverD,
     resetAllMoverD,
-    router,
+    // router,
   } = useMover();
+
+  const {
+    allMoversData,
+    allMoversDataLoading,
+    refetchAllMoversData,
+    singleMoversData,
+    singleMoversDataLoading,
+    refetchSingleMoversData,
+    portFolioPix,
+    uid,
+    router,
+  } = useMoversData();
 
   // const checkAccepted = oldApplication?.some(
   //   (pa) => pa.mover === personalMoverDetails?.generatedName
@@ -43,9 +56,9 @@ const TermsAndPolicies = () => {
   const [accept, setAccept] = useState(null);
   const [reload, setReload] = useState(false);
 
-  const firstName = personalMoverDetails?.firstName;
-  const lastName = personalMoverDetails?.lastName;
-  const uid = personalMoverDetails?.uid;
+  const firstName = singleMoversData?.personalDetails?.firstName;
+  const lastName = singleMoversData?.personalDetails?.lastName;
+  // const uid = personalMoverDetails?.uid;
 
   const updateMoverAcceptance = async () => {
     const moversRef = doc(db, "moversData", uid);
@@ -69,7 +82,7 @@ const TermsAndPolicies = () => {
         { merge: true }
       );
 
-      setReload(true);
+      refetchSingleMoversData();
 
       console.log("mover term acceptance update was successful @ policies");
     } catch (error) {
@@ -79,31 +92,8 @@ const TermsAndPolicies = () => {
   };
 
   useEffect(() => {
-    const getMD = async () => {
-      const bookingRef = doc(db, "moversData", uid);
-      const docSnap = await getDoc(bookingRef);
-      const moverDat = docSnap.data();
-
-      console.log({ moverDat });
-
-      setAccept(moverDat?.acceptedTerms);
-      // const moverData2 = docSnap.data();
-
-      // const sortMoverData = [...moverDat]?.sort((a, b) => {
-      //   return new Date(b.date) - new Date(a.date);
-      // });
-
-      // const readD = sortMoverData?.filter((sm) => sm.status === "read");
-      // const unreadD = sortMoverData?.filter((sm) => sm.status === "unread");
-
-      // setReadData(readD);
-      // setUnreadData(unreadD);
-      // setNotificationData(sortMoverData);
-      // setMoverData(moverData2);
-    };
-
-    getMD();
-  }, [reload]);
+    setAccept(singleMoversData?.personalDetails?.acceptedTerms);
+  }, [singleMoversData]);
 
   useEffect(() => {
     if (!userDetails.userDetails) {
@@ -121,7 +111,7 @@ const TermsAndPolicies = () => {
         <link rel='icon' href='/rrs_favicon.svg' />
       </Head>
 
-      <main>
+      {!singleMoversDataLoading && (
         <div className='bg-white/90 pt-[50px] pb-[50px] px-[30px] min-h-[100vh]'>
           <section className='mb-[30px]  px-[0px] '>
             <div className='flex flex-col'>
@@ -403,7 +393,12 @@ const TermsAndPolicies = () => {
             </div>
           </div>
         </div>
-      </main>
+      )}
+      {singleMoversDataLoading && (
+        <div className='flex justify-center items-center w-full h-screen'>
+          <span className='loading loading-spinner loading-lg text-primary'></span>
+        </div>
+      )}
     </MoverLayout>
   );
 };

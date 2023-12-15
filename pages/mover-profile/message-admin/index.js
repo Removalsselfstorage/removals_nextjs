@@ -81,8 +81,8 @@ const Inbox = () => {
   const [messages, setMessages] = useState([]);
   // const [userData, setUserData] = useState([]);
 
-  const [filteredPD, setFilteredPD] = useState({});
-  const [filteredCD, setFilteredCD] = useState({});
+  // const [filteredPD, setFilteredPD] = useState({});
+  // const [filteredCD, setFilteredCD] = useState({});
 
   const messagesContainerRef = useRef(null);
 

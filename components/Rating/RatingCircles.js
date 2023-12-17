@@ -2,7 +2,7 @@ import React from "react";
 
 const RatingCircles = ({ reviewCount, setReviewCount }) => {
   return (
-    <div className='grid grid-cols-8 md:grid-cols-11 gap-x-[5px]'>
+    <div className='grid grid-cols-6 sm:grid-cols-8 md:grid-cols-11 gap-x-[5px] gap-y-[15px] w-[400px] md:w-[500px]'>
       <div
         onClick={() => {
           setReviewCount(0);

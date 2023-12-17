@@ -1,7 +1,15 @@
 import ReviewCard2 from "@/components/HomePage/OurReviews/ReviewCard2";
 import StarRating from "@/components/Rating/EditHalfStars2";
 import { reviews } from "@/dummyData/dummyData";
-import { doc, setDoc } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  onSnapshot,
+  query,
+  serverTimestamp,
+  setDoc,
+  where,
+} from "firebase/firestore";
 import { db } from "@/firebase";
 import useQuote from "@/hooks/useQuote";
 import {
@@ -14,11 +22,13 @@ import {
   changeFontWeight2,
   convertDateFormat,
   getCurrentDateFormatted,
+  getLastTwoWords,
+  getRatingGrade,
 } from "@/utils/logics";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
-import { FaArrowRight, FaTruckMoving } from "react-icons/fa";
+import { FaArrowRight, FaThumbsUp, FaTruckMoving } from "react-icons/fa";
 import { FiCheckCircle } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
 import NumberInput from "./numberInput";
@@ -33,6 +43,8 @@ import { allNotificationEmail, cartCheckOutEmail } from "@/lib/sendCustomEmail";
 import { IoIosWarning } from "react-icons/io";
 import dayjs from "dayjs";
 import RatingCircles from "../Rating/RatingCircles";
+import { BiHelpCircle } from "react-icons/bi";
+import { PiHandsPrayingFill } from "react-icons/pi";
 
 const CartSideDrawer = ({
   image,
@@ -43,13 +55,23 @@ const CartSideDrawer = ({
   setClickedModalOpen,
   isGivenDateGreaterThanCurrent,
   showReview,
+  approvedMovers,
   // timeValue,
   // setTimeValue,
 }) => {
-  const [submitError, setSubmitError] = useState(true);
+  const { reserveDetails, resetBookS, reserveId, updateReserveIdFxn } =
+    useQuote();
+
+  const [reviews2, setReviews2] = useState([]);
+  const [submitError, setSubmitError] = useState(false);
+  const [submitSuccess, setSubmitSuccess] = useState(false);
   const [submitLoading, setSubmitLoading] = useState(false);
-  const [comments, setComments] = useState("");
-  const [reviewCount, setReviewCount] = useState(0);
+  const [comments, setComments] = useState(
+    reserveDetails?.reviewDetails?.review ?? ""
+  );
+  const [reviewCount, setReviewCount] = useState(
+    reserveDetails?.reviewDetails?.rating ?? -1
+  );
   // const [submitLoading, setSubmitLoading] = useState(false);
   const [submitLoading2, setSubmitLoading2] = useState(false);
 
@@ -73,8 +95,14 @@ const CartSideDrawer = ({
     router,
   } = useProductCart();
 
-  const { reserveDetails, resetBookS, reserveId, updateReserveIdFxn } =
-    useQuote();
+  function calculateAverageRating(reviews) {
+    const totalRating = reviews.reduce(
+      (sum, review) => sum + review.reviewDetails.rating,
+      0
+    );
+    const averageRating = totalRating / reviews.length;
+    return averageRating;
+  }
 
   const bioMaxLength = 200;
   const handleComment = (e) => {
@@ -143,6 +171,15 @@ const CartSideDrawer = ({
 
   const bookingId = reserveDetails?.bookingId;
 
+  const reviewRef = collection(db, "bookingData");
+
+  const reviewAverage = (calculateAverageRating(reviews2) + reviewCount)/2;
+
+  
+  // const revAvg= (reviewAverage + reviewCount) / 2
+
+  const reviewGrade = reviewAverage ? getRatingGrade(reviewAverage) : "Poor";
+
   const handleCart = async () => {
     try {
       await setDoc(
@@ -174,6 +211,89 @@ const CartSideDrawer = ({
     }
   };
 
+  const trimmedAddress1 = getLastTwoWords(reserveDetails?.address1);
+  const trimmedAddress2 = getLastTwoWords(reserveDetails?.address2);
+
+  const checkMoverUid = () => {
+    const pm = approvedMovers.find(
+      (am) => am.generatedName === reserveDetails.moverName
+    );
+
+    return pm.uid;
+  };
+
+  const moverUid = checkMoverUid()
+
+  const handleReview = async () => {
+    const moversRef = doc(db, "moversData", moverUid);
+
+    setSubmitError(false);
+    setSubmitSuccess(false);
+    if (!comments || reviewCount === -1) {
+      setSubmitError(true);
+      return;
+    } else {
+      try {
+        setSubmitLoading2(true);
+        await setDoc(
+          doc(db, "bookingData", bookingId),
+
+          {
+            date: getCurrentDateFormatted(),
+            stage: "Submitted Review",
+            activity: [
+              ...reserveDetails?.activity,
+              {
+                name: `Submitted review after move`,
+                date: getCurrentDateFormatted(),
+              },
+            ],
+
+            reviewDetails: {
+              name: `${reserveDetails?.firstName} ${reserveDetails?.lastName}`,
+              review: comments,
+              rating: reviewCount,
+              date: getCurrentDateFormatted(),
+              moverName: `${reserveDetails?.moverName}`,
+              moveItem: `${reserveDetails?.propertyType}`,
+              address1: trimmedAddress1,
+              address2: trimmedAddress2,
+              // createdAt: serverTimestamp(),
+            },
+          },
+          { merge: true }
+        );
+
+        await setDoc(
+          moversRef,
+
+          {
+            reviewAverage,
+            reviewGrade,
+            reviewCount: reviews2?.length,
+            reviews: reviews2,
+          },
+          { merge: true }
+        );
+
+        setSubmitLoading2(false);
+
+        setSubmitSuccess(true);
+
+        // return true;
+        console.log(
+          "review submission was successful @ user dashboard sidebar"
+        );
+      } catch (error) {
+        console.log(error);
+        // return false;
+        console.log(
+          "review submission was unsuccessful @ user dashboard sidebar"
+        );
+      }
+    }
+  };
+
   const handleCheckout = (event) => {
     event.preventDefault();
     setSubmitLoading(true);
@@ -183,7 +303,29 @@ const CartSideDrawer = ({
     // resetCartFxn();
   };
 
-  console.log({ reserveDetails });
+  useEffect(() => {
+    // const queryMessages = query(reviewRef);
+    const queryMessages = query(
+      reviewRef,
+      where("moverName", "==", reserveDetails?.moverName)
+      // orderBy("createdAt", "asc")
+    );
+    const unsubscribe = onSnapshot(queryMessages, (snapshot) => {
+      let rev = [];
+      snapshot.forEach((doc) => {
+        rev.push({ ...doc.data(), id: doc.id });
+      });
+      // const completedMb = rev?.filter((bc) => bc.completedBook === true);
+      const reviewedM = rev?.filter((bc) => bc.reviewDetails != undefined);
+      // const completedMb = rev?.filter((bc) => bc.moveCarriedOut === true);
+      setReviews2(reviewedM);
+      // console.log({ reviewedM, personalMoverDetails, reviews2 });
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  // console.log({ reserveDetails, approvedMovers, checkMoverUid: checkMoverUid() });
 
   return (
     <div className='drawer drawer-end'>
@@ -342,58 +484,6 @@ const CartSideDrawer = ({
                 </div>
               </div>
 
-              {/* {allCartProducts?.map((cp, index) => {
-              return (
-                <div
-                  key={cp?.id}
-                  className="flex flex-col space-y-[5px] border-b py-[15px] px-[10px]"
-                >
-                  <div className="flex items-center justify-between ">
-                    <div className="flex items-center space-x-[10px] flex-[1]">
-                      <img
-                        src={cp?.image}
-                        // alt={name}
-                        className="w-[100px] h-[100px] object-contain select-none "
-                      />
-                      <p className="text-[14px] line-clamp-2 ">{cp?.name}</p>
-                    </div>
-                    <div className="flex flex-col items-center ml-[30px]">
-                      <p className="font-semibold text-[14px]">
-                        {cp?.qty} x £{cp?.price}
-                      </p>
-                      <p className="font-bold text-[20px]">
-                        £{Number(cp?.qty * cp?.price)?.toFixed(2)}
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <div
-                      className="flex items-center space-x-[10px] flex-[1] text-secondary cursor-pointer"
-                      onClick={() => deleteProductFxn(cp?.id)}
-                    >
-                      <p className="text-[14px] line-clamp-2 font-bold ">
-                        REMOVE
-                      </p>
-                      <span className="text-[25px]">
-                        <RiDeleteBin2Line />
-                      </span>
-                    </div>
-                    <div className="flex items-center">
-                      <NumberInputPackaging
-                        count={cp?.qty}
-                        minusCount={() => {
-                          decreaseQuantityFxn(cp);
-                        }}
-                        addCount={() => {
-                          increaseQuantityFxn(cp);
-                        }}
-                      />
-                    </div>
-                  </div>
-                </div>
-              );
-            })} */}
-
               {true && (
                 <div className=''>
                   <div className='flex flex-col space-y-[0px]'>
@@ -433,7 +523,7 @@ const CartSideDrawer = ({
                   </div>
 
                   <div className='mt-[30px] md:mt-[30px]'>
-                    <div className='flex items-center space-x-[10px] mb-[10px]'>
+                    <div className='flex items-center space-x-[10px] mb-[15px]'>
                       <h1 className='text-[18px] font-bold mb-[0px] px-[0px]'>
                         Leave a star rating
                       </h1>
@@ -443,18 +533,67 @@ const CartSideDrawer = ({
                       reviewCount={reviewCount}
                       setReviewCount={setReviewCount}
                     />
+
+                    <div
+                      className='flex items-center space-x-[5px] mt-[20px]'
+                      // className="tooltip cursor-pointer"
+                      // data-tip="Please always submit after adding items"
+                    >
+                      <IoIosWarning className='font-bold text-[25px] text-secondary' />
+                      <p className='text-[14px] text-black font-semibold'>
+                        <span className='font-bold'>NB:</span> Review submission
+                        will only be active after move is completed.
+                      </p>
+                    </div>
+
+                    <div className='w-full flex justify-center mt-[30px] '>
+                      <button
+                        // disabled={
+                        //   submitLoading2 || isGivenDateGreaterThanCurrent
+                        // }
+                        onClick={handleReview}
+                        className='btn btn-secondary btn-wide  '
+                      >
+                        {!submitLoading2 && (
+                          <span className=''>Submit Review</span>
+                        )}
+                        {submitLoading2 && (
+                          <span className='loading loading-spinner loading-md text-white'></span>
+                        )}
+                      </button>
+                    </div>
+                    {submitError && (
+                      <div className='w-full flex justify-center mt-[10px] '>
+                        <div className='flex items-center space-x-[5px] mt-[0px]'>
+                          <PiHandsPrayingFill className='font-bold text-[25px] text-secondary' />
+                          <p className='text-[14px] text-secondary font-semibold'>
+                            Please help us with a comment and review.
+                          </p>
+                        </div>
+                      </div>
+                    )}
+                    {submitSuccess && (
+                      <div className='w-full flex justify-center mt-[10px] '>
+                        <div className='flex items-center space-x-[5px] mt-[0px]'>
+                          <FaThumbsUp className='font-bold text-[25px] text-primary' />
+                          <p className='text-[14px] text-primary font-semibold'>
+                            Thank you for dropping your review
+                          </p>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
               )}
 
-              {false && (
+              {/* {false && (
                 <div className='flex flex-col items-center justify-center w-full min-h-[80vh]'>
                   <div className='text-[50px] mb-[10px] text-secondary'>
                     <IoIosWarning />
                   </div>
                   <p className='text-[18px]'>Move not yet carried out!</p>
                 </div>
-              )}
+              )} */}
             </div>
           )}
         </div>

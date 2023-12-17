@@ -135,7 +135,6 @@ const Billing = ({ allBookings }) => {
     setAccountName(singleMoversData?.personalDetails?.accountName);
     setSortCode(singleMoversData?.personalDetails?.sortCode);
     setAccountNumber(singleMoversData?.personalDetails?.accountNumber);
-
     // getMD();
   }, [singleMoversData]);
   // console.log({ router: router.pathname });

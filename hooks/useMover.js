@@ -58,7 +58,7 @@ const useMover = () => {
     dispatch(resetAllMoverData());
   };
 
-  console.log({ ab });
+  // console.log({ ab });
 
   return {
     justRegistered: ab?.justRegistered,

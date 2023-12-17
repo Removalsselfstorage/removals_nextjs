@@ -369,7 +369,7 @@ const Dashboard = ({ allBookings }) => {
                   {/* mover name */}
                   <div className='flex items-center border border-primary px-[10px] py-[5px] rounded-[10px] space-x-[15px] md:space-x-[5px]  space-y-[0px] lg:space-y-[0px] lg:flex-row lg:items-center mb-[5px] sm:mb-[7px] lg:mb-[7px] text-[15px]'>
                     <p className='text-primary font-semibold  md:text-[18px] md:font-extrabold'>
-                      Mover Username:
+                      Username:
                     </p>
                     <p className=' font-semibold'>
                       {singleMoversData?.companyDetails?.generatedName}
@@ -378,13 +378,22 @@ const Dashboard = ({ allBookings }) => {
                   {/* mover rating */}
                   <div className='flex items-center border border-primary px-[10px] py-[5px] rounded-[10px] space-x-[15px] md:space-x-[5px]  space-y-[0px] lg:space-y-[0px] lg:flex-row lg:items-center mb-[5px] sm:mb-[7px] lg:mb-[7px] text-[15px]'>
                     <p className='text-primary font-semibold  md:text-[18px] md:font-extrabold'>
-                      Mover Rating:
+                      Rating:
                     </p>
                     <div className='flex items-center  space-x-[10px] mt-[0px] text-[15px]'>
-                      <p className='font-semibold'>0 / 5.0</p>
+                      <p className='font-semibold text-[15px] md:text-[18px]'>
+                        {singleMoversData?.personalDetails?.reviewAverage.toFixed(
+                          1
+                        ) ?? 0}{" "}
+                        / 5.0
+                      </p>
                       {/* <FullRating small value={rating} color="text-secondary" /> */}
                       <StarRating
-                        rating={0}
+                        rating={
+                          singleMoversData?.personalDetails?.reviewAverage.toFixed(
+                            1
+                          ) ?? 0
+                        }
                         size='text-secondary text-[16px]'
                       />
                       {/* <p className="">{`- (0 Reviews)`}</p> */}
@@ -395,7 +404,7 @@ const Dashboard = ({ allBookings }) => {
                   <div className='flex items-center border border-primary px-[10px] py-[5px] rounded-[10px] space-x-[15px] md:space-x-[5px]  sm:items-start  space-y-[0px] lg:space-y-[0px] lg:flex-row lg:items-center mb-[5px] sm:mb-[7px] lg:mb-[7px] text-[15px]'>
                     <div className='flex items-center space-x-[5px]'>
                       <p className='text-primary font-semibold  md:text-[18px] md:font-extrabold'>
-                        Mover Hires:
+                        Hires:
                       </p>
                     </div>
                     <p className=' font-semibold'>{completedMoves} Hire(s)</p>

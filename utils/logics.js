@@ -1,3 +1,70 @@
+export function convertDateFormatNoTime(inputDate) {
+  // Create a new Date object from the input date string
+  const dateObject = new Date(inputDate);
+
+  // Options for formatting the output date
+  const options = { day: 'numeric', month: 'long', year: 'numeric' };
+
+  // Format the date using the options
+  const formattedDate = dateObject.toLocaleDateString('en-US', options);
+
+  return formattedDate;
+}
+
+
+
+export function getRatingGrade(rating) {
+  if (rating >= 0 && rating < 1) {
+    return "Poor";
+  } else if (rating >= 1 && rating < 2) {
+    return "Fair";
+  } else if (rating >= 2 && rating < 3) {
+    return "Average";
+  } else if (rating >= 3 && rating < 4) {
+    return "Good";
+  } else if (rating >= 4 && rating < 5) {
+    return "Very Good";
+  } else if (rating === 5) {
+    return "Excellent";
+  } else {
+    return "Invalid Rating";
+  }
+}
+
+export function calculateAverageRating(reviews) {
+  const totalRating = reviews.reduce((sum, review) => sum + review.reviewDetails.rating, 0);
+  const averageRating = totalRating / reviews.length;
+  return averageRating;
+}
+
+
+export function getLastTwoWords2(address) {
+  // Split the address into an array of words
+  const words = address.split(/\s+/);
+
+  // Get the last two words
+  const lastTwoWords = words.slice(-2);
+
+  // Join the last two words with a comma
+  const result = lastTwoWords.join(', ');
+
+  return result;
+}
+
+export function getLastTwoWords(address) {
+  // Split the address into an array of words
+  const words = address.split(/\s+/);
+
+  // Get the last two words
+  const lastTwoWords = words.slice(-2);
+
+  // Join the last two words back into a string
+  const result = lastTwoWords.join(' ');
+
+  return result;
+}
+
+
 export function removeSpaces(sentence) {
   // Use the replace method with a regular expression to remove spaces
   // The regular expression /\s/g matches all whitespace characters, and 'g' is for global search (not just the first match)

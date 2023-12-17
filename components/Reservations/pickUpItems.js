@@ -21,7 +21,7 @@ import { LuMicrowave } from "react-icons/lu";
 import { TbGardenCart } from "react-icons/tb";
 import ItemDisplay from "@/components/Reservations/ItemDisplay";
 
-const PickUpItems = () => {
+const PickUpItems = ({ isGivenDateGreaterThanCurrent }) => {
   const { reserveDetails, resetBookS, router, reserveId, updateReserveIdFxn } =
     useQuote();
 
@@ -212,502 +212,523 @@ const PickUpItems = () => {
   console.log({ moveItems, reserveDetails });
 
   return (
-    <div className="">
-      <div className="mb-[10px] md:mb-[20px]">
-        <div className="text-2xl font-bold mb-[10px] flex flex-col space-y-[10px] lg:space-y-0 lg:flex-row lg:items-center lg:space-x-[10px]">
-          <p className="">What are you moving</p>
-          <div
-            className="flex items-center space-x-[5px]"
-            // className="tooltip cursor-pointer"
-            // data-tip="Please always submit after adding items"
-          >
-            <BiHelpCircle className="font-bold text-[25px] text-secondary" />
-            <p className="text-[14px] text-secondary font-semibold">
-              Please always submit after you're done adding items
-            </p>
-          </div>
+    <div className=''>
+      <div className='mb-[10px] md:mb-[20px]'>
+        <div className='text-2xl font-bold mb-[10px] flex flex-col space-y-[10px] lg:space-y-0 lg:flex-row lg:items-center lg:space-x-[10px]'>
+          {isGivenDateGreaterThanCurrent && (
+            <p className=''>What are you moving</p>
+          )}
+          {!isGivenDateGreaterThanCurrent &&
+            (checkZeroQty(moveItems?.office) > 0 ||
+              checkZeroQty(moveItems?.living) > 0 ||
+              checkZeroQty(moveItems?.bedRoom) > 0 ||
+              checkZeroQty(moveItems?.dining) > 0 ||
+              checkZeroQty(moveItems?.kitchen) > 0 ||
+              checkZeroQty(moveItems?.bathRoom) > 0 ||
+              checkZeroQty(moveItems?.garden) > 0) && (
+              <p className=''>What you moved</p>
+            )}
+
+          {isGivenDateGreaterThanCurrent && (
+            <div
+              className='flex items-center space-x-[5px]'
+              // className="tooltip cursor-pointer"
+              // data-tip="Please always submit after adding items"
+            >
+              <BiHelpCircle className='font-bold text-[25px] text-secondary' />
+              <p className='text-[14px] text-secondary font-semibold'>
+                Please always submit after you're done adding items
+              </p>
+            </div>
+          )}
         </div>
         {/* item display */}
-        <div className="text-[14px]  grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-[10px]">
-          {checkZeroQty(moveItems?.office) > 0 && (
-            <div className="mb-[0px]">
-              {hasQtyGreaterThanOne(moveItems?.office) && (
-                <span className="text-secondary font-bold text-[18px]">
-                  Office:{" "}
-                </span>
-              )}
-              <ItemDisplay
-                sortedItems={[...sortItems(moveItems?.office)] || []}
-              />
-            </div>
-          )}
-          {checkZeroQty(moveItems?.living) > 0 && (
-            <div className="mb-[0px]">
-              {hasQtyGreaterThanOne(moveItems?.living) && (
-                <span className="text-secondary font-bold text-[18px]">
-                  Living Room:{" "}
-                </span>
-              )}
-              <ItemDisplay
-                sortedItems={[...sortItems(moveItems?.living)] || []}
-              />
-            </div>
-          )}
-          {checkZeroQty(moveItems?.bedRoom) > 0 && (
-            <div className="mb-[0px]">
-              {hasQtyGreaterThanOne(moveItems?.bedRoom) && (
-                <span className="text-secondary font-bold text-[18px]">
-                  Bed Room:{" "}
-                </span>
-              )}
-              <ItemDisplay
-                sortedItems={[...sortItems(moveItems?.bedRoom)] || []}
-              />
-            </div>
-          )}
-          {checkZeroQty(moveItems?.dining) > 0 && (
-            <div className="mb-[10px]">
-              {hasQtyGreaterThanOne(moveItems?.dining) && (
-                <span className="text-secondary font-bold text-[18px]">
-                  Dining:{" "}
-                </span>
-              )}
-              <ItemDisplay
-                sortedItems={[...sortItems(moveItems?.dining)] || []}
-              />
-            </div>
-          )}
-          {checkZeroQty(moveItems?.kitchen) > 0 && (
-            <div className="mb-[0px]">
-              {hasQtyGreaterThanOne(moveItems?.kitchen) && (
-                <span className="text-secondary font-bold text-[18px]">
-                  Kitchen:{" "}
-                </span>
-              )}
-              <ItemDisplay
-                sortedItems={[...sortItems(moveItems?.kitchen)] || []}
-              />
-            </div>
-          )}
-          {checkZeroQty(moveItems?.bathRoom) > 0 && (
-            <div className="mb-[10px]">
-              {hasQtyGreaterThanOne(moveItems?.bathRoom) && (
-                <span className="text-secondary font-bold text-[18px]">
-                  Bath Room:{" "}
-                </span>
-              )}
-              <ItemDisplay
-                sortedItems={[...sortItems(moveItems?.bathRoom)] || []}
-              />
-            </div>
-          )}
-          {checkZeroQty(moveItems?.garden) > 0 && (
-            <div className="mb-[0px]">
-              {hasQtyGreaterThanOne(moveItems?.garden) && (
-                <span className="text-secondary font-bold text-[18px]">
-                  Garden:{" "}
-                </span>
-              )}
-              <ItemDisplay
-                sortedItems={[...sortItems(moveItems?.garden)] || []}
-              />
-            </div>
-          )}
-        </div>
+        {(
+          <div className='text-[14px]  grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-[10px]'>
+            {checkZeroQty(moveItems?.office) > 0 && (
+              <div className='mb-[0px]'>
+                {hasQtyGreaterThanOne(moveItems?.office) && (
+                  <span className='text-secondary font-bold text-[18px]'>
+                    Office:{" "}
+                  </span>
+                )}
+                <ItemDisplay
+                  sortedItems={[...sortItems(moveItems?.office)] || []}
+                />
+              </div>
+            )}
+            {checkZeroQty(moveItems?.living) > 0 && (
+              <div className='mb-[0px]'>
+                {hasQtyGreaterThanOne(moveItems?.living) && (
+                  <span className='text-secondary font-bold text-[18px]'>
+                    Living Room:{" "}
+                  </span>
+                )}
+                <ItemDisplay
+                  sortedItems={[...sortItems(moveItems?.living)] || []}
+                />
+              </div>
+            )}
+            {checkZeroQty(moveItems?.bedRoom) > 0 && (
+              <div className='mb-[0px]'>
+                {hasQtyGreaterThanOne(moveItems?.bedRoom) && (
+                  <span className='text-secondary font-bold text-[18px]'>
+                    Bed Room:{" "}
+                  </span>
+                )}
+                <ItemDisplay
+                  sortedItems={[...sortItems(moveItems?.bedRoom)] || []}
+                />
+              </div>
+            )}
+            {checkZeroQty(moveItems?.dining) > 0 && (
+              <div className='mb-[10px]'>
+                {hasQtyGreaterThanOne(moveItems?.dining) && (
+                  <span className='text-secondary font-bold text-[18px]'>
+                    Dining:{" "}
+                  </span>
+                )}
+                <ItemDisplay
+                  sortedItems={[...sortItems(moveItems?.dining)] || []}
+                />
+              </div>
+            )}
+            {checkZeroQty(moveItems?.kitchen) > 0 && (
+              <div className='mb-[0px]'>
+                {hasQtyGreaterThanOne(moveItems?.kitchen) && (
+                  <span className='text-secondary font-bold text-[18px]'>
+                    Kitchen:{" "}
+                  </span>
+                )}
+                <ItemDisplay
+                  sortedItems={[...sortItems(moveItems?.kitchen)] || []}
+                />
+              </div>
+            )}
+            {checkZeroQty(moveItems?.bathRoom) > 0 && (
+              <div className='mb-[10px]'>
+                {hasQtyGreaterThanOne(moveItems?.bathRoom) && (
+                  <span className='text-secondary font-bold text-[18px]'>
+                    Bath Room:{" "}
+                  </span>
+                )}
+                <ItemDisplay
+                  sortedItems={[...sortItems(moveItems?.bathRoom)] || []}
+                />
+              </div>
+            )}
+            {checkZeroQty(moveItems?.garden) > 0 && (
+              <div className='mb-[0px]'>
+                {hasQtyGreaterThanOne(moveItems?.garden) && (
+                  <span className='text-secondary font-bold text-[18px]'>
+                    Garden:{" "}
+                  </span>
+                )}
+                <ItemDisplay
+                  sortedItems={[...sortItems(moveItems?.garden)] || []}
+                />
+              </div>
+            )}
+          </div>
+        )}
       </div>
 
-      {/* Office */}
-      <div className="collapse  bg-orange-500/10 collapse-arrow mb-[10px]">
-        <input type="checkbox" />
-        <div className="collapse-title font-semibold text-secondary flex items-center space-x-[10px] mb-[0px]">
-          <p className="text-[18px] font-bold  ">Office</p>
-          <GiOfficeChair className="font-bold text-[25px]" />
-        </div>
-        <div className="collapse-content">
-          <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-[10px]">
-            {moveItems?.office.map((bd, index) => {
-              return (
-                <div key={index} className="form-control w-full">
-                  <NumberInput2
-                    title={bd?.name}
-                    count={bd?.qty}
-                    minusCount={decreaseQtyInOfficeFxn}
-                    addCount={increaseQtyInOfficeFxn}
+      {isGivenDateGreaterThanCurrent && (
+        <>
+          {/* Office */}
+          <div className='collapse  bg-orange-500/10 collapse-arrow mb-[10px]'>
+            <input type='checkbox' />
+            <div className='collapse-title font-semibold text-secondary flex items-center space-x-[10px] mb-[0px]'>
+              <p className='text-[18px] font-bold  '>Office</p>
+              <GiOfficeChair className='font-bold text-[25px]' />
+            </div>
+            <div className='collapse-content'>
+              <div className='grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-[10px]'>
+                {moveItems?.office.map((bd, index) => {
+                  return (
+                    <div key={index} className='form-control w-full'>
+                      <NumberInput2
+                        title={bd?.name}
+                        count={bd?.qty}
+                        minusCount={decreaseQtyInOfficeFxn}
+                        addCount={increaseQtyInOfficeFxn}
+                      />
+                    </div>
+                  );
+                })}
+                <div className='flex items-center space-x-[20px]'>
+                  <NumberInput3
+                    count={officeQty}
+                    addCount={() => {
+                      setOfficeQty((prev) => prev + 1);
+                    }}
+                    minusCount={() => {
+                      setOfficeQty((prev) => prev - 1);
+                    }}
+                    setText={setOfficeName}
+                    text={officeName}
                   />
+                  <div
+                    //   onClick={() => setFloorCount((prev) => prev + 1)}
+                    onClick={() => {
+                      if(!officeName) return
+                      addNewItemToOfficeFxn({
+                        name: officeName,
+                        qty: officeQty,
+                        date: getCurrentDateFormatted(),
+                      });
+                      setOfficeQty(1);
+                      setOfficeName("");
+                    }}
+                    className='flex justify-center items-center  bg-gray-400 cursor-pointer hover:bg-gray-500 w-[30px] p-[5px] h-[30px] rounded-[5px]'
+                  >
+                    <AiFillEdit className='text-white font-bold text-[14px]' />
+                  </div>
                 </div>
-              );
-            })}
-            <div className="flex items-center space-x-[20px]">
-              <NumberInput3
-                count={officeQty}
-                addCount={() => {
-                  setOfficeQty((prev) => prev + 1);
-                }}
-                minusCount={() => {
-                  setOfficeQty((prev) => prev - 1);
-                }}
-                setText={setOfficeName}
-                text={officeName}
-              />
-              <div
-                //   onClick={() => setFloorCount((prev) => prev + 1)}
-                onClick={() => {
-                  addNewItemToOfficeFxn({
-                    name: officeName,
-                    qty: officeQty,
-                    date: getCurrentDateFormatted(),
-                  });
-                  setOfficeQty(1);
-                  setOfficeName("");
-                }}
-                className="flex justify-center items-center  bg-gray-400 cursor-pointer hover:bg-gray-500 w-[30px] p-[5px] h-[30px] rounded-[5px]"
-              >
-                <AiFillEdit className="text-white font-bold text-[14px]" />
               </div>
             </div>
           </div>
-        </div>
-      </div>
-
-      {/* Living */}
-      <div className="collapse bg-orange-500/10 collapse-arrow mb-[10px]">
-        <input type="checkbox" />
-        <div className="collapse-title font-semibold text-secondary flex items-center space-x-[10px] mb-[0px]">
-          <p className="text-[18px] font-bold  ">Living Room</p>
-          <GiSofa className="font-bold text-[25px]" />
-        </div>
-        <div className="collapse-content">
-          <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-[10px]">
-            {moveItems?.living.map((bd, index) => {
-              return (
-                <div key={index} className="form-control w-full">
-                  <NumberInput2
-                    title={bd?.name}
-                    count={bd?.qty}
-                    minusCount={decreaseQtyInLivingFxn}
-                    addCount={increaseQtyInLivingFxn}
+          {/* Living */}
+          <div className='collapse bg-orange-500/10 collapse-arrow mb-[10px]'>
+            <input type='checkbox' />
+            <div className='collapse-title font-semibold text-secondary flex items-center space-x-[10px] mb-[0px]'>
+              <p className='text-[18px] font-bold  '>Living Room</p>
+              <GiSofa className='font-bold text-[25px]' />
+            </div>
+            <div className='collapse-content'>
+              <div className='grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-[10px]'>
+                {moveItems?.living.map((bd, index) => {
+                  return (
+                    <div key={index} className='form-control w-full'>
+                      <NumberInput2
+                        title={bd?.name}
+                        count={bd?.qty}
+                        minusCount={decreaseQtyInLivingFxn}
+                        addCount={increaseQtyInLivingFxn}
+                      />
+                    </div>
+                  );
+                })}
+                <div className='flex items-center space-x-[20px]'>
+                  <NumberInput3
+                    count={livingQty}
+                    addCount={() => {
+                      setLivingQty((prev) => prev + 1);
+                    }}
+                    minusCount={() => {
+                      setLivingQty((prev) => prev - 1);
+                    }}
+                    setText={setLivingName}
+                    text={livingName}
                   />
+                  <div
+                    //   onClick={() => setFloorCount((prev) => prev + 1)}
+                    onClick={() => {
+                      if(!livingName) return
+                      addNewItemToLivingFxn({
+                        name: livingName,
+                        qty: livingQty,
+                        date: getCurrentDateFormatted(),
+                      });
+                      setLivingQty(1);
+                      setLivingName("");
+                    }}
+                    className='flex justify-center items-center  bg-gray-400 cursor-pointer hover:bg-gray-500 w-[30px] p-[5px] h-[30px] rounded-[5px]'
+                  >
+                    <AiFillEdit className='text-white font-bold text-[14px]' />
+                  </div>
                 </div>
-              );
-            })}
-            <div className="flex items-center space-x-[20px]">
-              <NumberInput3
-                count={livingQty}
-                addCount={() => {
-                  setLivingQty((prev) => prev + 1);
-                }}
-                minusCount={() => {
-                  setLivingQty((prev) => prev - 1);
-                }}
-                setText={setLivingName}
-                text={livingName}
-              />
-              <div
-                //   onClick={() => setFloorCount((prev) => prev + 1)}
-                onClick={() => {
-                  addNewItemToLivingFxn({
-                    name: livingName,
-                    qty: livingQty,
-                    date: getCurrentDateFormatted(),
-                  });
-                  setLivingQty(1);
-                  setLivingName("");
-                }}
-                className="flex justify-center items-center  bg-gray-400 cursor-pointer hover:bg-gray-500 w-[30px] p-[5px] h-[30px] rounded-[5px]"
-              >
-                <AiFillEdit className="text-white font-bold text-[14px]" />
               </div>
             </div>
           </div>
-        </div>
-      </div>
-
-      {/* Bed Room */}
-      <div className="collapse bg-orange-500/10 collapse-arrow mb-[10px]">
-        <input type="checkbox" />
-        <div className="collapse-title font-semibold text-secondary flex items-center space-x-[10px] mb-[0px]">
-          <p className="text-[18px] font-bold  ">Bed Room</p>
-          <BiSolidBed className="font-bold text-[25px]" />
-        </div>
-        <div className="collapse-content">
-          <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-[10px]">
-            {moveItems?.bedRoom.map((bd, index) => {
-              return (
-                <div key={index} className="form-control w-full">
-                  <NumberInput2
-                    title={bd?.name}
-                    count={bd?.qty}
-                    minusCount={decreaseQtyInBedroomFxn}
-                    addCount={increaseQtyInBedroomFxn}
+          {/* Bed Room */}
+          <div className='collapse bg-orange-500/10 collapse-arrow mb-[10px]'>
+            <input type='checkbox' />
+            <div className='collapse-title font-semibold text-secondary flex items-center space-x-[10px] mb-[0px]'>
+              <p className='text-[18px] font-bold  '>Bed Room</p>
+              <BiSolidBed className='font-bold text-[25px]' />
+            </div>
+            <div className='collapse-content'>
+              <div className='grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-[10px]'>
+                {moveItems?.bedRoom.map((bd, index) => {
+                  return (
+                    <div key={index} className='form-control w-full'>
+                      <NumberInput2
+                        title={bd?.name}
+                        count={bd?.qty}
+                        minusCount={decreaseQtyInBedroomFxn}
+                        addCount={increaseQtyInBedroomFxn}
+                      />
+                    </div>
+                  );
+                })}
+                <div className='flex items-center space-x-[20px]'>
+                  <NumberInput3
+                    count={bedRoomQty}
+                    addCount={() => {
+                      setBedRoomQty((prev) => prev + 1);
+                    }}
+                    minusCount={() => {
+                      setBedRoomQty((prev) => prev - 1);
+                    }}
+                    setText={setBedRoomName}
+                    text={bedRoomName}
                   />
+                  <div
+                    //   onClick={() => setFloorCount((prev) => prev + 1)}
+                    onClick={() => {
+                      if(!bedRoomName) return
+                      addNewItemToBedroomFxn({
+                        name: bedRoomName,
+                        qty: bedRoomQty,
+                        date: getCurrentDateFormatted(),
+                      });
+                      setBedRoomQty(1);
+                      setBedRoomName("");
+                    }}
+                    className='flex justify-center items-center  bg-gray-400 cursor-pointer hover:bg-gray-500 w-[30px] p-[5px] h-[30px] rounded-[5px]'
+                  >
+                    <AiFillEdit className='text-white font-bold text-[14px]' />
+                  </div>
                 </div>
-              );
-            })}
-            <div className="flex items-center space-x-[20px]">
-              <NumberInput3
-                count={bedRoomQty}
-                addCount={() => {
-                  setBedRoomQty((prev) => prev + 1);
-                }}
-                minusCount={() => {
-                  setBedRoomQty((prev) => prev - 1);
-                }}
-                setText={setBedRoomName}
-                text={bedRoomName}
-              />
-              <div
-                //   onClick={() => setFloorCount((prev) => prev + 1)}
-                onClick={() => {
-                  addNewItemToBedroomFxn({
-                    name: bedRoomName,
-                    qty: bedRoomQty,
-                    date: getCurrentDateFormatted(),
-                  });
-                  setBedRoomQty(1);
-                  setBedRoomName("");
-                }}
-                className="flex justify-center items-center  bg-gray-400 cursor-pointer hover:bg-gray-500 w-[30px] p-[5px] h-[30px] rounded-[5px]"
-              >
-                <AiFillEdit className="text-white font-bold text-[14px]" />
               </div>
             </div>
           </div>
-        </div>
-      </div>
-
-      {/* Dining */}
-      <div className="collapse bg-orange-500/10 collapse-arrow mb-[10px]">
-        <input type="checkbox" />
-        <div className="collapse-title font-semibold text-secondary flex items-center space-x-[10px] mb-[0px]">
-          <p className="text-[18px] font-bold  ">Dining</p>
-          <GiForkKnifeSpoon className="font-bold text-[25px]" />
-        </div>
-        <div className="collapse-content">
-          <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-[10px]">
-            {moveItems?.dining.map((bd, index) => {
-              return (
-                <div key={index} className="form-control w-full">
-                  <NumberInput2
-                    title={bd?.name}
-                    count={bd?.qty}
-                    minusCount={decreaseQtyInDiningFxn}
-                    addCount={increaseQtyInDiningFxn}
+          {/* Dining */}
+          <div className='collapse bg-orange-500/10 collapse-arrow mb-[10px]'>
+            <input type='checkbox' />
+            <div className='collapse-title font-semibold text-secondary flex items-center space-x-[10px] mb-[0px]'>
+              <p className='text-[18px] font-bold  '>Dining</p>
+              <GiForkKnifeSpoon className='font-bold text-[25px]' />
+            </div>
+            <div className='collapse-content'>
+              <div className='grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-[10px]'>
+                {moveItems?.dining.map((bd, index) => {
+                  return (
+                    <div key={index} className='form-control w-full'>
+                      <NumberInput2
+                        title={bd?.name}
+                        count={bd?.qty}
+                        minusCount={decreaseQtyInDiningFxn}
+                        addCount={increaseQtyInDiningFxn}
+                      />
+                    </div>
+                  );
+                })}
+                <div className='flex items-center space-x-[20px]'>
+                  <NumberInput3
+                    count={diningQty}
+                    addCount={() => {
+                      setDiningQty((prev) => prev + 1);
+                    }}
+                    minusCount={() => {
+                      setDiningQty((prev) => prev - 1);
+                    }}
+                    setText={setDiningName}
+                    text={diningName}
                   />
+                  <div
+                    //   onClick={() => setFloorCount((prev) => prev + 1)}
+                    onClick={() => {
+                      if(!diningName) return
+                      addNewItemToDiningFxn({
+                        name: diningName,
+                        qty: diningQty,
+                        date: getCurrentDateFormatted(),
+                      });
+                      setDiningQty(1);
+                      setDiningName("");
+                    }}
+                    className='flex justify-center items-center  bg-gray-400 cursor-pointer hover:bg-gray-500 w-[30px] p-[5px] h-[30px] rounded-[5px]'
+                  >
+                    <AiFillEdit className='text-white font-bold text-[14px]' />
+                  </div>
                 </div>
-              );
-            })}
-            <div className="flex items-center space-x-[20px]">
-              <NumberInput3
-                count={diningQty}
-                addCount={() => {
-                  setDiningQty((prev) => prev + 1);
-                }}
-                minusCount={() => {
-                  setDiningQty((prev) => prev - 1);
-                }}
-                setText={setDiningName}
-                text={diningName}
-              />
-              <div
-                //   onClick={() => setFloorCount((prev) => prev + 1)}
-                onClick={() => {
-                  addNewItemToDiningFxn({
-                    name: diningName,
-                    qty: diningQty,
-                    date: getCurrentDateFormatted(),
-                  });
-                  setDiningQty(1);
-                  setDiningName("");
-                }}
-                className="flex justify-center items-center  bg-gray-400 cursor-pointer hover:bg-gray-500 w-[30px] p-[5px] h-[30px] rounded-[5px]"
-              >
-                <AiFillEdit className="text-white font-bold text-[14px]" />
               </div>
             </div>
           </div>
-        </div>
-      </div>
-
-      {/* Kitchen */}
-      <div className="collapse bg-orange-500/10 collapse-arrow mb-[10px]">
-        <input type="checkbox" />
-        <div className="collapse-title font-semibold text-secondary flex items-center space-x-[10px] mb-[0px]">
-          <p className="text-[18px] font-bold  ">Kitchen</p>
-          <LuMicrowave className="font-bold text-[25px]" />
-        </div>
-        <div className="collapse-content">
-          <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-[10px]">
-            {moveItems?.kitchen.map((bd, index) => {
-              return (
-                <div key={index} className="form-control w-full">
-                  <NumberInput2
-                    title={bd?.name}
-                    count={bd?.qty}
-                    minusCount={decreaseQtyInKitchenFxn}
-                    addCount={increaseQtyInKitchenFxn}
+          {/* Kitchen */}
+          <div className='collapse bg-orange-500/10 collapse-arrow mb-[10px]'>
+            <input type='checkbox' />
+            <div className='collapse-title font-semibold text-secondary flex items-center space-x-[10px] mb-[0px]'>
+              <p className='text-[18px] font-bold  '>Kitchen</p>
+              <LuMicrowave className='font-bold text-[25px]' />
+            </div>
+            <div className='collapse-content'>
+              <div className='grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-[10px]'>
+                {moveItems?.kitchen.map((bd, index) => {
+                  return (
+                    <div key={index} className='form-control w-full'>
+                      <NumberInput2
+                        title={bd?.name}
+                        count={bd?.qty}
+                        minusCount={decreaseQtyInKitchenFxn}
+                        addCount={increaseQtyInKitchenFxn}
+                      />
+                    </div>
+                  );
+                })}
+                <div className='flex items-center space-x-[20px]'>
+                  <NumberInput3
+                    count={kitchenQty}
+                    addCount={() => {
+                      setKitchenQty((prev) => prev + 1);
+                    }}
+                    minusCount={() => {
+                      setKitchenQty((prev) => prev - 1);
+                    }}
+                    setText={setKitchenName}
+                    text={kitchenName}
                   />
+                  <div
+                    //   onClick={() => setFloorCount((prev) => prev + 1)}
+                    onClick={() => {
+                      if(!kitchenName) return
+                      addNewItemToKitchenFxn({
+                        name: kitchenName,
+                        qty: kitchenQty,
+                        date: getCurrentDateFormatted(),
+                      });
+                      setKitchenQty(1);
+                      setKitchenName("");
+                    }}
+                    className='flex justify-center items-center  bg-gray-400 cursor-pointer hover:bg-gray-500 w-[30px] p-[5px] h-[30px] rounded-[5px]'
+                  >
+                    <AiFillEdit className='text-white font-bold text-[14px]' />
+                  </div>
                 </div>
-              );
-            })}
-            <div className="flex items-center space-x-[20px]">
-              <NumberInput3
-                count={kitchenQty}
-                addCount={() => {
-                  setKitchenQty((prev) => prev + 1);
-                }}
-                minusCount={() => {
-                  setKitchenQty((prev) => prev - 1);
-                }}
-                setText={setKitchenName}
-                text={kitchenName}
-              />
-              <div
-                //   onClick={() => setFloorCount((prev) => prev + 1)}
-                onClick={() => {
-                  addNewItemToKitchenFxn({
-                    name: kitchenName,
-                    qty: kitchenQty,
-                    date: getCurrentDateFormatted(),
-                  });
-                  setKitchenQty(1);
-                  setKitchenName("");
-                }}
-                className="flex justify-center items-center  bg-gray-400 cursor-pointer hover:bg-gray-500 w-[30px] p-[5px] h-[30px] rounded-[5px]"
-              >
-                <AiFillEdit className="text-white font-bold text-[14px]" />
               </div>
             </div>
           </div>
-        </div>
-      </div>
-
-      {/* Bathroom */}
-      <div className="collapse bg-orange-500/10 collapse-arrow mb-[10px]">
-        <input type="checkbox" />
-        <div className="collapse-title font-semibold text-secondary flex items-center space-x-[10px] mb-[0px]">
-          <p className="text-[18px] font-bold  ">Bathroom</p>
-          <FaBath className="font-bold text-[25px]" />
-        </div>
-        <div className="collapse-content">
-          <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-[10px]">
-            {moveItems?.bathRoom.map((bd, index) => {
-              return (
-                <div key={index} className="form-control w-full">
-                  <NumberInput2
-                    title={bd?.name}
-                    count={bd?.qty}
-                    minusCount={decreaseQtyInBathRoomFxn}
-                    addCount={increaseQtyInBathRoomFxn}
+          {/* Bathroom */}
+          <div className='collapse bg-orange-500/10 collapse-arrow mb-[10px]'>
+            <input type='checkbox' />
+            <div className='collapse-title font-semibold text-secondary flex items-center space-x-[10px] mb-[0px]'>
+              <p className='text-[18px] font-bold  '>Bathroom</p>
+              <FaBath className='font-bold text-[25px]' />
+            </div>
+            <div className='collapse-content'>
+              <div className='grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-[10px]'>
+                {moveItems?.bathRoom.map((bd, index) => {
+                  return (
+                    <div key={index} className='form-control w-full'>
+                      <NumberInput2
+                        title={bd?.name}
+                        count={bd?.qty}
+                        minusCount={decreaseQtyInBathRoomFxn}
+                        addCount={increaseQtyInBathRoomFxn}
+                      />
+                    </div>
+                  );
+                })}
+                <div className='flex items-center space-x-[20px]'>
+                  <NumberInput3
+                    count={bathRoomQty}
+                    addCount={() => {
+                      setBathRoomQty((prev) => prev + 1);
+                    }}
+                    minusCount={() => {
+                      setBathRoomQty((prev) => prev - 1);
+                    }}
+                    setText={setBathRoomName}
+                    text={bathRoomName}
                   />
+                  <div
+                    //   onClick={() => setFloorCount((prev) => prev + 1)}
+                    onClick={() => {
+                      if(!bathRoomName) return
+                      addNewItemToBathRoomFxn({
+                        name: bathRoomName,
+                        qty: bathRoomQty,
+                        date: getCurrentDateFormatted(),
+                      });
+                      setBathRoomQty(1);
+                      setBathRoomName("");
+                    }}
+                    className='flex justify-center items-center  bg-gray-400 cursor-pointer hover:bg-gray-500 w-[30px] p-[5px] h-[30px] rounded-[5px]'
+                  >
+                    <AiFillEdit className='text-white font-bold text-[14px]' />
+                  </div>
                 </div>
-              );
-            })}
-            <div className="flex items-center space-x-[20px]">
-              <NumberInput3
-                count={bathRoomQty}
-                addCount={() => {
-                  setBathRoomQty((prev) => prev + 1);
-                }}
-                minusCount={() => {
-                  setBathRoomQty((prev) => prev - 1);
-                }}
-                setText={setBathRoomName}
-                text={bathRoomName}
-              />
-              <div
-                //   onClick={() => setFloorCount((prev) => prev + 1)}
-                onClick={() => {
-                  addNewItemToBathRoomFxn({
-                    name: bathRoomName,
-                    qty: bathRoomQty,
-                    date: getCurrentDateFormatted(),
-                  });
-                  setBathRoomQty(1);
-                  setBathRoomName("");
-                }}
-                className="flex justify-center items-center  bg-gray-400 cursor-pointer hover:bg-gray-500 w-[30px] p-[5px] h-[30px] rounded-[5px]"
-              >
-                <AiFillEdit className="text-white font-bold text-[14px]" />
               </div>
             </div>
           </div>
-        </div>
-      </div>
-
-      {/* Garden */}
-      <div className="collapse bg-orange-500/10 collapse-arrow mb-[20px]">
-        <input type="checkbox" />
-        <div className="collapse-title font-semibold text-secondary flex items-center space-x-[10px] mb-[0px]">
-          <p className="text-[18px] font-bold  ">Garden</p>
-          <TbGardenCart className="font-bold text-[25px]" />
-        </div>
-        <div className="collapse-content">
-          <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-[10px]">
-            {moveItems?.garden.map((bd, index) => {
-              return (
-                <div key={index} className="form-control w-full">
-                  <NumberInput2
-                    title={bd?.name}
-                    count={bd?.qty}
-                    minusCount={decreaseQtyInGardenFxn}
-                    addCount={increaseQtyInGardenFxn}
+          {/* Garden */}
+          <div className='collapse bg-orange-500/10 collapse-arrow mb-[20px]'>
+            <input type='checkbox' />
+            <div className='collapse-title font-semibold text-secondary flex items-center space-x-[10px] mb-[0px]'>
+              <p className='text-[18px] font-bold  '>Garden</p>
+              <TbGardenCart className='font-bold text-[25px]' />
+            </div>
+            <div className='collapse-content'>
+              <div className='grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-[10px]'>
+                {moveItems?.garden.map((bd, index) => {
+                  return (
+                    <div key={index} className='form-control w-full'>
+                      <NumberInput2
+                        title={bd?.name}
+                        count={bd?.qty}
+                        minusCount={decreaseQtyInGardenFxn}
+                        addCount={increaseQtyInGardenFxn}
+                      />
+                    </div>
+                  );
+                })}
+                <div className='flex items-center space-x-[20px]'>
+                  <NumberInput3
+                    count={gardenQty}
+                    addCount={() => {
+                      setGardenQty((prev) => prev + 1);
+                    }}
+                    minusCount={() => {
+                      setGardenQty((prev) => prev - 1);
+                    }}
+                    setText={setGardenName}
+                    text={gardenName}
                   />
+                  <div
+                    //   onClick={() => setFloorCount((prev) => prev + 1)}
+                    onClick={() => {
+                      if(!gardenName) return
+                      addNewItemToGardenFxn({
+                        name: gardenName,
+                        qty: gardenQty,
+                        date: getCurrentDateFormatted(),
+                      });
+                      setGardenQty(1);
+                      setGardenName("");
+                    }}
+                    className='flex justify-center items-center  bg-gray-400 cursor-pointer hover:bg-gray-500 w-[30px] p-[5px] h-[30px] rounded-[5px]'
+                  >
+                    <AiFillEdit className='text-white font-bold text-[14px]' />
+                  </div>
                 </div>
-              );
-            })}
-            <div className="flex items-center space-x-[20px]">
-              <NumberInput3
-                count={gardenQty}
-                addCount={() => {
-                  setGardenQty((prev) => prev + 1);
-                }}
-                minusCount={() => {
-                  setGardenQty((prev) => prev - 1);
-                }}
-                setText={setGardenName}
-                text={gardenName}
-              />
-              <div
-                //   onClick={() => setFloorCount((prev) => prev + 1)}
-                onClick={() => {
-                  addNewItemToGardenFxn({
-                    name: gardenName,
-                    qty: gardenQty,
-                    date: getCurrentDateFormatted(),
-                  });
-                  setGardenQty(1);
-                  setGardenName("");
-                }}
-                className="flex justify-center items-center  bg-gray-400 cursor-pointer hover:bg-gray-500 w-[30px] p-[5px] h-[30px] rounded-[5px]"
-              >
-                <AiFillEdit className="text-white font-bold text-[14px]" />
               </div>
             </div>
           </div>
-        </div>
-      </div>
-
-      {/* submit */}
-      <div className="w-full">
-        <div
-          onClick={submitList}
-          className={`${
-            submitted
-              ? "btn  btn-wide btn-primary"
-              : "btn  btn-wide btn-secondary"
-          }`}
-          disabled={submitLoading}
-        >
-          {!submitLoading && (
-            <span className="">{`${
-              submitted ? "Items Updated" : "Submit Items"
-            }`}</span>
-          )}
-          {submitLoading && (
-            <span className="loading loading-spinner loading-md text-white"></span>
-          )}
-        </div>
-      </div>
+          {/* submit */}
+          <div className='w-full'>
+            <div
+              onClick={submitList}
+              className={`${
+                submitted
+                  ? "btn  btn-wide btn-primary"
+                  : "btn  btn-wide btn-secondary"
+              }`}
+              disabled={submitLoading}
+            >
+              {!submitLoading && (
+                <span className=''>{`${
+                  submitted ? "Items Updated" : "Submit Items"
+                }`}</span>
+              )}
+              {submitLoading && (
+                <span className='loading loading-spinner loading-md text-white'></span>
+              )}
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 };

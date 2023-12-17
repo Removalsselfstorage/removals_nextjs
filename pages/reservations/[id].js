@@ -62,6 +62,7 @@ import { BsFillCalendarXFill } from "react-icons/bs";
 import { convertTimeTo24HourFormat } from "@/utils/logics";
 import { useRouter } from "next/router";
 import { fetchAllBookings } from "@/lib/fetchData2";
+import TimeAgo from "react-timeago";
 
 const Reservations = ({ progressData, id, allBookings }) => {
   const {
@@ -116,6 +117,7 @@ const Reservations = ({ progressData, id, allBookings }) => {
 
   const [clickedModalOpen, setClickedModalOpen] = useState(false);
   const [bookLoading, setBookLoading] = useState(false);
+  const [showReview, setShowReview] = useState(false);
   const [completedBooking, setCompletedBooking] = useState({});
 
   const allPayments = () => {
@@ -202,10 +204,13 @@ const Reservations = ({ progressData, id, allBookings }) => {
   // Compare the two dates
   // const isGivenDateGreaterThanCurrent = givenDate > currentDate;
 
+  // const isGivenDateGreaterThanCurrent = false;
   const isGivenDateGreaterThanCurrent = checkBookStatus(
     reserveDetails?.moveDate,
     reserveDetails?.moverTime
   );
+
+  const dateObject = targetDate;
 
   const closeModal = () => {
     window.my_modal_51.close();
@@ -258,16 +263,17 @@ const Reservations = ({ progressData, id, allBookings }) => {
 
   const allLoading = completedBookingsLoading || bookLoading;
 
-  console.log({
-    progressData,
-    allBookings,
-    reserveDetails,
-    moveDetails,
-    // cb: completedBook(id),
-    id,
-    // allBookings,
-    // completedBookings,
-  });
+  // console.log({
+  //   progressData,
+  //   allBookings,
+  //   reserveDetails,
+  //   moveDetails,
+  //   // cb: completedBook(id),
+  //   id,
+  //   // allBookings,
+  //   // completedBookings,
+  // });
+  console.log({ showReview });
 
   return (
     <>
@@ -294,7 +300,12 @@ const Reservations = ({ progressData, id, allBookings }) => {
                   {/* right section */}
                   <div className='bg-white shadow-lg rounded-[30px] lg:flex-[3] px-[20px] py-[30px] md:px-[30px] w-full '>
                     {/* side drawer */}
-                    <CartSideDrawer />
+                    <CartSideDrawer
+                      isGivenDateGreaterThanCurrent={
+                        isGivenDateGreaterThanCurrent
+                      }
+                      showReview={showReview}
+                    />
                     {/* heading */}
                     <div className='flex flex-col   space-y-[10px] md:flex-row md:space-y-0 md:justify-between md:items-center border-b-[2px] pb-[20px]'>
                       <div className='flex items-center space-x-[15px] '>
@@ -545,41 +556,81 @@ const Reservations = ({ progressData, id, allBookings }) => {
                           }
                         />
                       </div>
-                      {reserveDetails?.moveDate &&
-                        isGivenDateGreaterThanCurrent && (
-                          <div className='flex flex-col space-y-[10px] lg:space-y-0 lg:flex-row lg:space-x-[20px] lg:items-center border-b-[2px] pb-[20px]'>
+                      {reserveDetails?.moveDate && (
+                        <div className='flex flex-col space-y-[10px] lg:space-y-0 lg:flex-row lg:justify-between border-b-[2px] pb-[20px]'>
+                          <div className='flex flex-col space-y-[10px] lg:space-y-0 lg:flex-row lg:space-x-[20px] lg:items-center '>
                             <div className='flex flex-col space-y-[3px]'>
                               <p className='text-2xl font-bold mb-[0px] select-none'>
-                                Move Countdown:
+                                {isGivenDateGreaterThanCurrent
+                                  ? "Move Countdown:"
+                                  : "Move Completed"}
                               </p>
-                              <p className='font-bold text-[15px] text-gray-500 '>
-                                {dayjs(
-                                  convertDateFormat(reserveDetails?.moveDate)
-                                ).format("dddd, MMMM D, YYYY")}
-                              </p>
-                              <p className='font-bold text-[15px] text-gray-500 '>
-                                ({reserveDetails?.moverTime})
-                              </p>
+                              {isGivenDateGreaterThanCurrent ? (
+                                <div className=''>
+                                  <p className='font-bold text-[14px] text-gray-500 '>
+                                    {dayjs(
+                                      convertDateFormat(
+                                        reserveDetails?.moveDate
+                                      )
+                                    ).format("dddd, MMMM D, YYYY")}
+                                  </p>
+                                  <p className='font-bold text-[14px] text-gray-500 '>
+                                    ({reserveDetails?.moverTime})
+                                  </p>
+                                </div>
+                              ) : (
+                                <TimeAgo
+                                  date={dateObject}
+                                  // formatter={formatter}
+                                />
+                              )}
                             </div>
-                            <Countdown date={givenDate} />
+                            {isGivenDateGreaterThanCurrent && (
+                              <Countdown date={givenDate} />
+                            )}
                           </div>
-                        )}
+                          <div className='flex flex-col space-y-[5px]'>
+                            <label
+                              htmlFor='my_drawer_44'
+                              className='btn btn-secondary drawer-button'
+                              onClick={() => {
+                                setShowReview(true);
+                              }}
+                            >
+                              Review Mover
+                            </label>
+                            {isGivenDateGreaterThanCurrent && (
+                              <p className='text-[14px] text-gray-500 font-semibold'>
+                                Once move is completed
+                              </p>
+                            )}
+                          </div>
+                        </div>
+                      )}
                     </div>
 
                     {/* buy items */}
-                    {isGivenDateGreaterThanCurrent && (
+                    {true && (
                       <div className='border-b-[2px] pb-[0px] mb-[30px]'>
                         <BuyItems
                           clickedModalOpen={clickedModalOpen}
                           setClickedModalOpen={setClickedModalOpen}
+                          isGivenDateGreaterThanCurrent={
+                            isGivenDateGreaterThanCurrent
+                          }
+                          setShowReview={setShowReview}
                         />
                       </div>
                     )}
 
                     {/* pick items */}
-                    {isGivenDateGreaterThanCurrent && (
+                    {true && (
                       <div className='mb-[30px] lg:mb-[40px]'>
-                        <PickUpItems />
+                        <PickUpItems
+                          isGivenDateGreaterThanCurrent={
+                            isGivenDateGreaterThanCurrent
+                          }
+                        />
                       </div>
                     )}
 

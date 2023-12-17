@@ -156,6 +156,7 @@ const ReserveLogin = ({ data }) => {
                         placeholder="Enter your Book Email"
                         onChange={handleChange}
                         value={user.email}
+                        disabled={submitLoading}
                       />
                     </div>
 
@@ -167,6 +168,7 @@ const ReserveLogin = ({ data }) => {
                         placeholder="Enter your Book Ref"
                         onChange={handleChange}
                         value={user.login_ref}
+                        disabled={submitLoading}
                       />
                     </div>
 

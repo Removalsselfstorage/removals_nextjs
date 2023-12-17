@@ -64,7 +64,7 @@ import { useRouter } from "next/router";
 import { fetchAllBookings, fetchAllMoversDetailsArray } from "@/lib/fetchData2";
 import TimeAgo from "react-timeago";
 
-const Reservations = ({ progressData, id, allBookings, approvedMovers }) => {
+const Reservations = ({ progressData, id, allBookings,  }) => {
   const {
     setReserveDetailsFxn,
     reserveDetails,
@@ -305,7 +305,7 @@ const Reservations = ({ progressData, id, allBookings, approvedMovers }) => {
                         isGivenDateGreaterThanCurrent
                       }
                       showReview={showReview}
-                      approvedMovers={approvedMovers}
+                      // approvedMovers={approvedMovers}
                     />
                     {/* heading */}
                     <div className='flex flex-col   space-y-[10px] md:flex-row md:space-y-0 md:justify-between md:items-center border-b-[2px] pb-[20px]'>
@@ -693,16 +693,19 @@ export async function getServerSideProps(context) {
     return new Date(b.date) - new Date(a.date);
   });
 
-  const userData = await fetchAllMoversDetailsArray();
+  // const userData = await fetchAllMoversDetailsArray();
 
   // const completedBookings = bookingsData?.bookings?.filter(
   //   (bk) => bk.completedBook === true
   // );
-  const movers = userData?.personalDetails;
 
-  const approvedMovers = movers?.filter(
-    (item) => item.approvalStatus === "APPROVED"
-  );
+  // const movers = userData?.personalDetails;
+
+  // const approvedMovers = movers?.filter(
+  //   (item) => item.approvalStatus === "APPROVED"
+  // );
+
+
   // const completedBookings = bookingsData?.bookings?.filter(
   //   (bk) => bk.completedBook === true
   // );
@@ -722,7 +725,7 @@ export async function getServerSideProps(context) {
         allBookings: null,
         // userData,
         id,
-        approvedMovers: null,
+        // approvedMovers: null,
 
         // prices,
         // userData,
@@ -735,7 +738,7 @@ export async function getServerSideProps(context) {
         allBookings,
         // userData,
         id,
-        approvedMovers,
+        // approvedMovers,
 
         // prices,
         // userData,
@@ -749,7 +752,7 @@ export async function getServerSideProps(context) {
 
         // userData,
         id,
-        approvedMovers,
+        // approvedMovers,
 
         // prices,
         // userData,

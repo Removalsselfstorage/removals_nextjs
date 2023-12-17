@@ -55,7 +55,7 @@ const CartSideDrawer = ({
   setClickedModalOpen,
   isGivenDateGreaterThanCurrent,
   showReview,
-  approvedMovers,
+  // approvedMovers,
   // timeValue,
   // setTimeValue,
 }) => {
@@ -214,15 +214,15 @@ const CartSideDrawer = ({
   const trimmedAddress1 = getLastTwoWords(reserveDetails?.address1);
   const trimmedAddress2 = getLastTwoWords(reserveDetails?.address2);
 
-  const checkMoverUid = () => {
-    const pm = approvedMovers.find(
-      (am) => am.generatedName === reserveDetails.moverName
-    );
+  // const checkMoverUid = () => {
+  //   const pm = approvedMovers.find(
+  //     (am) => am.generatedName === reserveDetails.moverName
+  //   );
 
-    return pm.uid;
-  };
+  //   return pm.uid;
+  // };
 
-  const moverUid = checkMoverUid()
+  // const moverUid = checkMoverUid()
 
   const handleReview = async () => {
     const moversRef = doc(db, "moversData", moverUid);
@@ -264,17 +264,17 @@ const CartSideDrawer = ({
           { merge: true }
         );
 
-        await setDoc(
-          moversRef,
+        // await setDoc(
+        //   moversRef,
 
-          {
-            reviewAverage,
-            reviewGrade,
-            reviewCount: reviews2?.length,
-            reviews: reviews2,
-          },
-          { merge: true }
-        );
+        //   {
+        //     reviewAverage,
+        //     reviewGrade,
+        //     reviewCount: reviews2?.length,
+        //     reviews: reviews2,
+        //   },
+        //   { merge: true }
+        // );
 
         setSubmitLoading2(false);
 

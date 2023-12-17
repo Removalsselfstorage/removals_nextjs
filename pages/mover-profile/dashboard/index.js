@@ -20,6 +20,7 @@ import {
   checkBookStatus,
   combineInitials,
   convertUTCToLocal,
+  getRatingGrade,
 } from "@/utils/logics";
 import Head from "next/head";
 import Link from "next/link";
@@ -42,7 +43,14 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { MdWork, MdWorkHistory } from "react-icons/md";
 import { IoReceiptSharp } from "react-icons/io5";
 import { LiaUserClockSolid } from "react-icons/lia";
-import { doc, getDoc } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDoc,
+  onSnapshot,
+  query,
+  where,
+} from "firebase/firestore";
 import { db } from "@/firebase";
 import useMoversData from "@/hooks/useMoversData";
 import useBookings from "@/hooks/useBookings";
@@ -181,6 +189,17 @@ const Dashboard = ({ allBookings }) => {
   const [reload, setReload] = useState(false);
   const [modalData, setModalData] = useState({});
 
+  const [reviews2, setReviews2] = useState([]);
+
+  function calculateAverageRating(reviews) {
+    const totalRating = reviews.reduce(
+      (sum, review) => sum + review.reviewDetails.rating,
+      0
+    );
+    const averageRating = totalRating / reviews.length;
+    return averageRating;
+  }
+
   // const { firstName, lastName } = moverData?.singleMoversData;
 
   // const uid = singleMoversData?.uid;
@@ -297,6 +316,34 @@ const Dashboard = ({ allBookings }) => {
     setPreviewUrl(singleMoversData?.personalDetails?.profileImageUrl);
   }, [singleMoversData]);
 
+  const reviewRef = collection(db, "bookingData");
+
+  useEffect(() => {
+    // const queryMessages = query(reviewRef);
+    const queryMessages = query(
+      reviewRef,
+      where("moverName", "==", personalMoverDetails?.generatedName)
+      // orderBy("createdAt", "asc")
+    );
+    const unsubscribe = onSnapshot(queryMessages, (snapshot) => {
+      let rev = [];
+      snapshot.forEach((doc) => {
+        rev.push({ ...doc.data(), id: doc.id });
+      });
+      // const completedMb = rev?.filter((bc) => bc.completedBook === true);
+      const reviewedM = rev?.filter((bc) => bc.reviewDetails != undefined);
+      // const completedMb = rev?.filter((bc) => bc.moveCarriedOut === true);
+      setReviews2(reviewedM);
+      // console.log({ reviewedM, personalMoverDetails, reviews2 });
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  const reviewAverage = calculateAverageRating(reviews2) ?? 0;
+
+  const reviewGrade = reviewAverage ? getRatingGrade(reviewAverage) : "Good";
+
   // console.log({ singleMoversData, moverData, readData, unreadData });
   console.log({ companyDetails, sortedSections, userDetails });
 
@@ -382,7 +429,7 @@ const Dashboard = ({ allBookings }) => {
                     </p>
                     <div className='flex items-center  space-x-[10px] mt-[0px] text-[15px]'>
                       <p className='font-semibold text-[15px] md:text-[18px]'>
-                        {singleMoversData?.personalDetails?.reviewAverage.toFixed(
+                        {reviewAverage.toFixed(
                           1
                         ) ?? 0}{" "}
                         / 5.0
@@ -390,7 +437,7 @@ const Dashboard = ({ allBookings }) => {
                       {/* <FullRating small value={rating} color="text-secondary" /> */}
                       <StarRating
                         rating={
-                          singleMoversData?.personalDetails?.reviewAverage.toFixed(
+                          reviewAverage.toFixed(
                             1
                           ) ?? 0
                         }

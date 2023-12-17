@@ -173,12 +173,12 @@ const CartSideDrawer = ({
 
   const reviewRef = collection(db, "bookingData");
 
-  const reviewAverage = (calculateAverageRating(reviews2) + reviewCount)/2;
+  // const reviewAverage = (calculateAverageRating(reviews2) + reviewCount)/2;
 
   
   // const revAvg= (reviewAverage + reviewCount) / 2
 
-  const reviewGrade = reviewAverage ? getRatingGrade(reviewAverage) : "Poor";
+  // const reviewGrade = reviewAverage ? getRatingGrade(reviewAverage) : "Poor";
 
   const handleCart = async () => {
     try {
@@ -225,7 +225,7 @@ const CartSideDrawer = ({
   // const moverUid = checkMoverUid()
 
   const handleReview = async () => {
-    const moversRef = doc(db, "moversData", moverUid);
+    // const moversRef = doc(db, "moversData", moverUid);
 
     setSubmitError(false);
     setSubmitSuccess(false);

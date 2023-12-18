@@ -1,17 +1,33 @@
+export function combineProfiles(...profiles) {
+  const combinedProfiles = [];
+
+  // Iterate through the first profile
+  profiles[0].forEach((item1) => {
+    // Find corresponding items in other profiles based on id
+    const combinedObject = profiles.slice(1).reduce((result, profile) => {
+      const item = profile.find((p) => p.id === item1.id);
+      return { ...result, ...(item || {}) };
+    }, item1);
+
+    // Add the combined object to the result array
+    combinedProfiles.push(combinedObject);
+  });
+
+  return combinedProfiles;
+}
+
 export function convertDateFormatNoTime(inputDate) {
   // Create a new Date object from the input date string
   const dateObject = new Date(inputDate);
 
   // Options for formatting the output date
-  const options = { day: 'numeric', month: 'long', year: 'numeric' };
+  const options = { day: "numeric", month: "long", year: "numeric" };
 
   // Format the date using the options
-  const formattedDate = dateObject.toLocaleDateString('en-US', options);
+  const formattedDate = dateObject.toLocaleDateString("en-US", options);
 
   return formattedDate;
 }
-
-
 
 export function getRatingGrade(rating) {
   if (rating >= 0 && rating < 1) {
@@ -32,11 +48,13 @@ export function getRatingGrade(rating) {
 }
 
 export function calculateAverageRating(reviews) {
-  const totalRating = reviews.reduce((sum, review) => sum + review.reviewDetails.rating, 0);
+  const totalRating = reviews.reduce(
+    (sum, review) => sum + review.reviewDetails.rating,
+    0
+  );
   const averageRating = totalRating / reviews.length;
   return averageRating;
 }
-
 
 export function getLastTwoWords2(address) {
   // Split the address into an array of words
@@ -46,7 +64,7 @@ export function getLastTwoWords2(address) {
   const lastTwoWords = words.slice(-2);
 
   // Join the last two words with a comma
-  const result = lastTwoWords.join(', ');
+  const result = lastTwoWords.join(", ");
 
   return result;
 }
@@ -59,36 +77,33 @@ export function getLastTwoWords(address) {
   const lastTwoWords = words.slice(-2);
 
   // Join the last two words back into a string
-  const result = lastTwoWords.join(' ');
+  const result = lastTwoWords.join(" ");
 
   return result;
 }
 
-
 export function removeSpaces(sentence) {
   // Use the replace method with a regular expression to remove spaces
   // The regular expression /\s/g matches all whitespace characters, and 'g' is for global search (not just the first match)
-  return sentence.replace(/\s/g, '');
+  return sentence.replace(/\s/g, "");
 }
-
 
 export const trimAddress = (fullAddress) => {
   // Split the address into components
-  const addressComponents = fullAddress.split(', ');
+  const addressComponents = fullAddress.split(", ");
 
   // Remove the first component (house or street number)
   addressComponents.shift();
 
   // Join the remaining components to form the trimmed address
-  const trimmedAddress = addressComponents.join(', ');
+  const trimmedAddress = addressComponents.join(", ");
 
   return trimmedAddress;
 };
 
-
 export function convertMoveDateFormat(inputDate) {
   // Parse the input date
-  const parts = inputDate.split('/');
+  const parts = inputDate.split("/");
   const year = parseInt(parts[0], 10);
   const month = parseInt(parts[1], 10);
   const day = parseInt(parts[2], 10);
@@ -97,17 +112,31 @@ export function convertMoveDateFormat(inputDate) {
   const date = new Date(year, month - 1, day);
 
   // Define the days of the week and months
-  const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   const months = [
-    'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
   ];
 
   // Format the date as "Sat, 25 Nov 2023"
-  const formattedDate = `${daysOfWeek[date.getUTCDay()]}, ${date.getUTCDate()} ${months[date.getUTCMonth()]} ${date.getUTCFullYear()}`;
+  const formattedDate = `${
+    daysOfWeek[date.getUTCDay()]
+  }, ${date.getUTCDate()} ${
+    months[date.getUTCMonth()]
+  } ${date.getUTCFullYear()}`;
 
   return formattedDate;
-}// Outputs: "Wednesday, 20 September, 2023"
+} // Outputs: "Wednesday, 20 September, 2023"
 
 export function trimPhoneFormat(phoneNumber) {
   // Use a regular expression to match the desired format
@@ -1208,26 +1237,26 @@ export function calculateMoverPrice(
   return price;
 }
 
-export function changeFontWeight(sentence, targetPhrase) {
-  // Find the starting index of the target phrase in the sentence
-  const startIndex = sentence?.indexOf(targetPhrase);
+// export function changeFontWeight(sentence, targetPhrase) {
+//   // Find the starting index of the target phrase in the sentence
+//   const startIndex = sentence?.indexOf(targetPhrase);
 
-  // If the target phrase is not found, return the original sentence
-  if (startIndex === -1) {
-    console.error("Target phrase not found");
-    return sentence;
-  }
+//   // If the target phrase is not found, return the original sentence
+//   if (startIndex === -1) {
+//     console.error("Target phrase not found");
+//     return sentence;
+//   }
 
-  // Build the modified sentence
+//   // Build the modified sentence
 
-  return (
-    <>
-      {sentence?.slice(0, startIndex)}{" "}
-      <span className="font-bold">{targetPhrase}</span>
-      {sentence?.slice(startIndex + targetPhrase.length)}
-    </>
-  );
-}
+//   return (
+//     <>
+//       {sentence?.slice(0, startIndex)}{" "}
+//       <span className="font-bold">{targetPhrase}</span>
+//       {sentence?.slice(startIndex + targetPhrase.length)}
+//     </>
+//   );
+// }
 
 export function changeFontWeight2(sentence, targetPhrase) {
   // Initialize the modified sentence
@@ -1242,7 +1271,7 @@ export function changeFontWeight2(sentence, targetPhrase) {
     modifiedSentence = (
       <>
         {modifiedSentence?.slice(0, startIndex)}
-        <span className="font-bold">{targetPhrase}</span>
+        <span className='font-bold'>{targetPhrase}</span>
         {modifiedSentence?.slice(startIndex + targetPhrase.length)}
       </>
     );

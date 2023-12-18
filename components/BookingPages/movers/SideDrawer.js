@@ -8,7 +8,11 @@ import {
   updateMoverDetails,
   updateMoverSideDetails,
 } from "@/store/quoteSlice";
-import { changeFontWeight, changeFontWeight2, getCurrentDateFormatted } from "@/utils/logics";
+import {
+  changeFontWeight,
+  changeFontWeight2,
+  getCurrentDateFormatted,
+} from "@/utils/logics";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
@@ -258,78 +262,79 @@ const SideDrawer = ({
   //   }
   // }, [clickedModalOpen]);
 
-  console.log({ sn: sideDetails?.name, timeValue });
+  // console.log({ sn: sideDetails?.name, timeValue });
 
   return (
-    <div className="drawer drawer-end">
-      <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
-      <div className="drawer-side z-[99999] h-[100vh]">
-        <label htmlFor="my-drawer-4" className="drawer-overlay"></label>
-        <div className="p-4 w-80 md:w-[40vw]  bg-white text-base-content">
-          <div className="flex flex-col  overflow-auto-y">
+    <div className='drawer drawer-end'>
+      <input id='my-drawer-4' type='checkbox' className='drawer-toggle' />
+      <div className='drawer-side z-[99999] h-[100vh]'>
+        <label htmlFor='my-drawer-4' className='drawer-overlay'></label>
+        <div className='p-4 w-[80vw] md:w-[50vw]  bg-white text-base-content'>
+          <div className='flex flex-col  overflow-auto-y'>
             {/* row 1 */}
-            <div className="flex flex-col xl:flex-row xl:items-center xl:space-x-[10px] mb-[20px] xl:mb-[0px] xl:py-[10px]">
+            <div className='flex flex-col xl:flex-row xl:items-center xl:space-x-[10px] mb-[20px] xl:mb-[0px] xl:py-[10px]'>
               {/* image */}
-              <div className="py-[10px] px-[10px]">
+              <div className='py-[10px] px-[10px]'>
                 <img
                   src={sideDetails?.image}
-                  alt=""
-                  className="h-[150px]  w-[300px] lg:w-[200px] object-cover md:h-[180px] lg:h-[140px] rounded-[30px]"
+                  alt=''
+                  className='h-[150px]  w-[300px] lg:w-[200px] object-cover md:h-[180px] lg:h-[140px] rounded-[30px]'
                 />
               </div>
               {/* mover details */}
-              <div className="flex flex-col w-full flex-[2] mx-[10px] xl:mx-[0px]">
+              <div className='flex flex-col w-full flex-[2] mx-[10px] xl:mx-[0px]'>
                 {/* mover name */}
-                <div className="flex items-center justify-between w-full pr-[20px] mb-[5px] sm:mb-[7px]">
-                  <h2 className="text-primary font-semibold text-[20px] ">
+                <div className='flex items-center justify-between w-full pr-[20px] mb-[5px] sm:mb-[7px]'>
+                  <h2 className='text-primary font-semibold text-[20px] '>
                     {moverName}
                   </h2>
                 </div>
 
                 {/* registered since */}
-                <div className="flex items-center space-x-[15px] md:space-x-[5px]  sm:items-start  space-y-[0px] lg:space-y-[0px] lg:flex-row lg:items-center mb-[5px] sm:mb-[7px] lg:mb-[7px] text-[15px]">
-                  <p className="text-primary font-semibold">
+                <div className='flex items-center space-x-[15px] md:space-x-[5px]  sm:items-start  space-y-[0px] lg:space-y-[0px] lg:flex-row lg:items-center mb-[5px] sm:mb-[7px] lg:mb-[7px] text-[15px]'>
+                  <p className='text-primary font-semibold'>
                     Registered since:
                   </p>
-                  <p className="">12/06/2023</p>
+                  <p className=''>12/06/2023</p>
                 </div>
 
                 {/* rating / reviews */}
-                <div className="flex flex-col lg:flex-row lg:items-center space-y-[5px] lg:space-y-0 lg:space-x-[10px] mt-[0px] text-[15px] mb-[7px]">
-                  <div className="flex items-center space-x-[10px] mt-[0px] text-[15px]">
-                    <p className="font-semibold">{sideDetails?.rating}</p>
+                <div className='flex flex-col lg:flex-row lg:items-center space-y-[5px] lg:space-y-0 lg:space-x-[10px] mt-[0px] text-[15px] mb-[7px]'>
+                  <div className='flex items-center space-x-[10px] mt-[0px] text-[15px]'>
+                    <p className='font-semibold'>{sideDetails?.rating}</p>
                     {/* <FullRating small value={rating} color="text-secondary" /> */}
                     <StarRating
                       rating={sideDetails?.rating}
-                      size="text-secondary text-[16px]"
+                      size='text-secondary text-[16px]'
                     />
-                    <p className="">{`- (${sideDetails?.reviewCount} Reviews)`}</p>
+                    <p className=''>{`- (${sideDetails?.reviewCount} Reviews)`}</p>
                   </div>
                 </div>
                 {/* package type */}
-                <div className="flex justify-center items-center py-[3px] px-[10px] bg-secondary/20 rounded-[10px] max-w-[200px]">
-                  <p className="text-secondary font-semibold text-[15px]">
+                <div className='flex justify-center items-center py-[3px] px-[10px] bg-secondary/20 rounded-[10px] max-w-[200px]'>
+                  <p className='text-secondary font-semibold text-[15px]'>
                     {moveDetails?.movePackage} Package
                   </p>
                 </div>
               </div>
             </div>
             {/* loading area */}
-            <div className="flex mx-[10px] md:mx-[20px] items-center space-x-[15px] md:space-x-[5px]  sm:items-start  space-y-[0px] lg:space-y-[0px] lg:flex-row lg:items-center mb-[5px] sm:mb-[7px] lg:mb-[7px] text-[15px]">
-              <div className="flex items-center space-x-[5px]">
-                <FaTruckMoving className="text-[20px] text-primary" />
-                <p className="text-primary font-semibold hidden lg:block">
+            <div className='flex mx-[10px] md:mx-[20px] items-center space-x-[15px] md:space-x-[5px]  sm:items-start  space-y-[0px] lg:space-y-[0px] lg:flex-row lg:items-center mb-[5px] sm:mb-[7px] lg:mb-[7px] text-[15px]'>
+              <div className='flex items-center space-x-[5px]'>
+                <FaTruckMoving className='text-[20px] text-primary' />
+                <p className='text-primary font-semibold hidden lg:block'>
                   Load area:
                 </p>
               </div>
-              <p className="link link-hover ">{sideDetails?.loadArea}</p>
+              <p className='link link-hover '>{sideDetails?.loadArea}</p>
             </div>
             {/* row 2 */}
-            <div className=" mx-[10px] md:mx-[20px]">
+            <div className=' mx-[10px] md:mx-[20px]'>
               <p className={`${isExpanded ? "" : "line-clamp-3"} text-[15px] `}>
-                {changeFontWeight(textDescription, moverName, "bold")}{" "}
+                {/* {changeFontWeight(textDescription, moverName, "bold")}{" "} */}
+                {textDescription}{" "}
                 <span
-                  className="text-secondary hover:underline text-[15px] font-semibold cursor-pointer"
+                  className='text-secondary hover:underline text-[15px] font-semibold cursor-pointer'
                   onClick={() => {
                     setIsExpanded(!isExpanded);
                   }}
@@ -350,16 +355,16 @@ const SideDrawer = ({
             </div>
 
             {/* row 4 */}
-            <div className=" mx-[10px] md:mx-[20px] mt-[20px]">
-              <p className="font-bold md:text-[20px] text-primary">Included</p>
-              <ul className=" mt-[5px] md:mt-[10px] text-start text-[14px] lg:text-[15px] w-full">
-                <li className="  py-[3px] flex items-center">
+            <div className=' mx-[10px] md:mx-[20px] mt-[20px]'>
+              <p className='font-bold md:text-[20px] text-primary'>Included</p>
+              <ul className=' mt-[5px] md:mt-[10px] text-start text-[14px] lg:text-[15px] w-full'>
+                <li className='  py-[3px] flex items-center'>
                   <span className={`text-secondary mr-[5px] `}>
                     <FiCheckCircle />
                   </span>
                   Customers can travel with the drivers
                 </li>
-                <li className=" py-[3px] flex items-center">
+                <li className=' py-[3px] flex items-center'>
                   <span className={`text-secondary mr-[5px] `}>
                     <FiCheckCircle />
                   </span>
@@ -369,50 +374,50 @@ const SideDrawer = ({
             </div>
 
             {/* row 5 */}
-            <div className=" mx-[10px] md:mx-[20px] mt-[20px] pb-[20px] border-b">
-              <p className="font-bold md:text-[20px] text-primary mb-[10px]">
+            <div className=' mx-[10px] md:mx-[20px] mt-[20px] pb-[20px] border-b'>
+              <p className='font-bold md:text-[20px] text-primary mb-[10px]'>
                 Reviews
               </p>
 
-              <div className="flex flex-col space-y-[20px] lg:flex-row lg:space-y-[0px]  lg:space-x-[40px]">
+              <div className='flex flex-col space-y-[20px] lg:flex-row lg:space-y-[0px]  lg:space-x-[40px]'>
                 {/* overall review */}
-                <div className="flex flex-col ">
-                  <div className="flex flex-col  mt-[0px] text-[15px]">
-                    <p className="font-semibold text-[22px] mb-[5px]">
+                <div className='flex flex-col '>
+                  <div className='flex flex-col  mt-[0px] text-[15px]'>
+                    <p className='font-semibold text-[22px] mb-[5px]'>
                       {sideDetails?.rating} / 5.0
                     </p>
                     {/* <FullRating small value={rating} color="text-secondary" /> */}
                     <StarRating
                       rating={sideDetails?.rating}
-                      size="text-secondary text-[16px]"
+                      size='text-secondary text-[16px]'
                     />
-                    <p className="mt-[5px]">{`(${sideDetails?.reviewCount}) Reviews`}</p>
+                    <p className='mt-[5px]'>{`(${sideDetails?.reviewCount}) Reviews`}</p>
                   </div>
                 </div>
                 {/* other review values */}
-                <div className="flex flex-col text-[15px]">
-                  <div className="flex-col flex mb-[10px]">
-                    <p className="mb-[5px]">Positive Feedback</p>
+                <div className='flex flex-col text-[15px]'>
+                  <div className='flex-col flex mb-[10px]'>
+                    <p className='mb-[5px]'>Positive Feedback</p>
                     <progress
-                      className="progress progress-secondary w-56"
-                      value="90"
-                      max="100"
+                      className='progress progress-secondary w-56'
+                      value='90'
+                      max='100'
                     ></progress>
                   </div>
-                  <div className="flex-col flex mb-[10px]">
-                    <p className="mb-[5px]">Neutral Feedback</p>
+                  <div className='flex-col flex mb-[10px]'>
+                    <p className='mb-[5px]'>Neutral Feedback</p>
                     <progress
-                      className="progress progress-secondary w-56"
-                      value="50"
-                      max="100"
+                      className='progress progress-secondary w-56'
+                      value='50'
+                      max='100'
                     ></progress>
                   </div>
-                  <div className="flex-col flex mb-[10px]">
-                    <p className="mb-[5px]">Negative Feedback</p>
+                  <div className='flex-col flex mb-[10px]'>
+                    <p className='mb-[5px]'>Negative Feedback</p>
                     <progress
-                      className="progress progress-secondary w-56"
-                      value="0"
-                      max="100"
+                      className='progress progress-secondary w-56'
+                      value='0'
+                      max='100'
                     ></progress>
                   </div>
                 </div>
@@ -420,10 +425,10 @@ const SideDrawer = ({
             </div>
 
             {/* reviews comments */}
-            <div className="">
+            <div className=''>
               {reviews.slice(0, 3).map((review, index) => {
                 return (
-                  <div className="py-[10px]" key={review.id}>
+                  <div className='py-[10px]' key={review.id}>
                     <ReviewCard2
                       name={review.name}
                       location={review.location}
@@ -441,15 +446,15 @@ const SideDrawer = ({
               className={`flex  flex-col space-y-[20px] lg:space-y-0 lg:flex-row lg:items-start mx-[10px] md:mx-[20px] mt-[20px] md:justify-between`}
             >
               {/* time + instruction */}
-              <div className="flex flex-col">
+              <div className='flex flex-col'>
                 {/* time */}
-                <div className="grid grid-cols-2 justify-center gap-x-[10px] gap-y-[10px] xl:grid-cols-4 w-auto xl:w-[450px]">
+                <div className='grid grid-cols-2 justify-center gap-x-[10px] gap-y-[10px] xl:grid-cols-4 w-auto xl:w-[450px]'>
                   {allTime.map((tm, index) => {
                     let isActive = tm.id == moverSideDetails?.selectedTime;
                     return (
                       <div
                         key={index}
-                        className="flex items-center text-[15px]"
+                        className='flex items-center text-[15px]'
                       >
                         <div
                           onClick={() => onTimeHandle(tm.id, tm.time)}
@@ -466,8 +471,8 @@ const SideDrawer = ({
                   })}
                 </div>
                 {/* instruction */}
-                <div className="flex w-full justify-center md:justify-start">
-                  <p className="mt-[7px] text-gray-500 text-[14px]">
+                <div className='flex w-full justify-center md:justify-start'>
+                  <p className='mt-[7px] text-gray-500 text-[14px]'>
                     Choose convenient pick-up time
                   </p>
                 </div>
@@ -475,19 +480,19 @@ const SideDrawer = ({
             </div>
           </div>
           {/* check out */}
-          <div className="flex flex-col items-center justify-center mt-[30px] mb-[20px]">
+          <div className='flex flex-col items-center justify-center mt-[30px] mb-[20px]'>
             <button
               disabled={submitLoading}
               onClick={onCheckout}
-              className="btn btn-primary w-full lg:w-[150px]"
+              className='btn btn-primary w-full lg:w-[150px]'
             >
-              {!submitLoading && <span className="">Check Out</span>}
+              {!submitLoading && <span className=''>Check Out</span>}
               {submitLoading && (
-                <span className="loading loading-spinner loading-md text-white"></span>
+                <span className='loading loading-spinner loading-md text-white'></span>
               )}
             </button>
             {!submitError && (
-              <p className="text-[14px] text-secondary mt-[5px]">
+              <p className='text-[14px] text-secondary mt-[5px]'>
                 Please choose time
               </p>
             )}

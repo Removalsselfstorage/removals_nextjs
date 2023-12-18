@@ -18,6 +18,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { homeMovers } from "@/dummyData/dummyData";
 import {
   calculateMoverPrice,
+  combineProfiles,
   convertDateFormat,
   decreaseByPercentage,
   getFirstSortedHomeMover,
@@ -39,6 +40,9 @@ import movingVan from "@/lottieJsons/movingVan.json";
 import useQuote from "@/hooks/useQuote";
 import useMover from "@/hooks/useMover";
 import useBookings from "@/hooks/useBookings";
+import useMoversData from "@/hooks/useMoversData";
+import { collection, onSnapshot, query, where } from "firebase/firestore";
+import { db } from "@/firebase";
 
 const Movers = () => {
   const {
@@ -87,6 +91,20 @@ const Movers = () => {
     resetAllMoverD,
   } = useMover();
 
+  // const {
+  //   allMoversData,
+  //   allMoversDataLoading,
+  //   refetchAllMoversData,
+  //   // singleMoversData,
+  //   // singleMoversDataLoading,
+  //   // refetchSingleMoversData,
+  //   // portFolioPix,
+  //   // uid,
+  //   // router,
+  // } = useMoversData();
+
+  // console.log({ allMoversData });
+
   const {
     completedBook,
     completedBookLoading,
@@ -100,7 +118,144 @@ const Movers = () => {
   const [allCompanyDetails, setAllCompanyDetails] = useState([]);
   const [allCompanyPix, setAllCompanyPix] = useState([]);
   const [newMovers, setNewMovers] = useState([]);
+  const [newMovers2, setNewMovers2] = useState([]);
+  const [newMoversList1, setNewMoversList1] = useState([]);
+  const [newMoversList2, setNewMoversList2] = useState([]);
+  const [newMoversList3, setNewMoversList3] = useState([]);
+  const [newMoversList4, setNewMoversList4] = useState([]);
+  const [newMoversList5, setNewMoversList5] = useState([]);
+  const [newMoversList6, setNewMoversList6] = useState([]);
+  const [newMoversList7, setNewMoversList7] = useState([]);
+  const [newMoversList8, setNewMoversList8] = useState([]);
+  const [newMoversList9, setNewMoversList9] = useState([]);
   const [currentBook, setCurrentBook] = useState({});
+
+  const moversRef1 = collection(db, "moversData");
+  const moversRef2 = collection(db, "moversDetails");
+  const moversRef3 = collection(db, "moversCompanyPix");
+  const moversRef4 = collection(db, "moversPortfolio1");
+  const moversRef5 = collection(db, "moversPortfolio2");
+  const moversRef6 = collection(db, "moversPortfolio3");
+  const moversRef7 = collection(db, "moversPortfolio4");
+  const moversRef8 = collection(db, "moversPortfolio5");
+  const moversRef9 = collection(db, "moversPortfolio6");
+
+  useEffect(() => {
+    const queryMovers1 = query(moversRef1);
+    const queryMovers2 = query(moversRef2);
+    const queryMovers3 = query(moversRef3);
+    const queryMovers4 = query(moversRef4);
+    const queryMovers5 = query(moversRef5);
+    const queryMovers6 = query(moversRef6);
+    const queryMovers7 = query(moversRef7);
+    const queryMovers8 = query(moversRef8);
+    const queryMovers9 = query(moversRef9);
+    const unsubscribe1 = onSnapshot(queryMovers1, (snapshot) => {
+      let rev = [];
+      snapshot.forEach((doc) => {
+        rev.push({ ...doc.data(), id: doc.id });
+      });
+      setNewMoversList1(rev);
+    });
+
+    const unsubscribe2 = onSnapshot(queryMovers2, (snapshot) => {
+      let rev = [];
+      snapshot.forEach((doc) => {
+        rev.push({ ...doc.data(), id: doc.id });
+      });
+      setNewMoversList2(rev);
+    });
+
+    const unsubscribe3 = onSnapshot(queryMovers3, (snapshot) => {
+      let rev = [];
+      snapshot.forEach((doc) => {
+        rev.push({ ...doc.data(), id: doc.id });
+      });
+      // const approvedM = rev?.filter((bc) => bc.reviewDetails != undefined);
+      setNewMoversList3(rev);
+    });
+
+    const unsubscribe4 = onSnapshot(queryMovers4, (snapshot) => {
+      let rev = [];
+      snapshot.forEach((doc) => {
+        rev.push({ ...doc.data(), id: doc.id });
+      });
+      // const approvedM = rev?.filter((bc) => bc.reviewDetails != undefined);
+      setNewMoversList4(rev);
+    });
+
+    const unsubscribe5 = onSnapshot(queryMovers5, (snapshot) => {
+      let rev = [];
+      snapshot.forEach((doc) => {
+        rev.push({ ...doc.data(), id: doc.id });
+      });
+      // const approvedM = rev?.filter((bc) => bc.reviewDetails != undefined);
+      setNewMoversList5(rev);
+    });
+
+    const unsubscribe6 = onSnapshot(queryMovers6, (snapshot) => {
+      let rev = [];
+      snapshot.forEach((doc) => {
+        rev.push({ ...doc.data(), id: doc.id });
+      });
+      // const approvedM = rev?.filter((bc) => bc.reviewDetails != undefined);
+      setNewMoversList6(rev);
+    });
+
+    const unsubscribe7 = onSnapshot(queryMovers7, (snapshot) => {
+      let rev = [];
+      snapshot.forEach((doc) => {
+        rev.push({ ...doc.data(), id: doc.id });
+      });
+      // const approvedM = rev?.filter((bc) => bc.reviewDetails != undefined);
+      setNewMoversList7(rev);
+    });
+
+    const unsubscribe8 = onSnapshot(queryMovers8, (snapshot) => {
+      let rev = [];
+      snapshot.forEach((doc) => {
+        rev.push({ ...doc.data(), id: doc.id });
+      });
+      // const approvedM = rev?.filter((bc) => bc.reviewDetails != undefined);
+      setNewMoversList8(rev);
+    });
+
+    const unsubscribe9 = onSnapshot(queryMovers9, (snapshot) => {
+      let rev = [];
+      snapshot.forEach((doc) => {
+        rev.push({ ...doc.data(), id: doc.id });
+      });
+      // const approvedM = rev?.filter((bc) => bc.reviewDetails != undefined);
+      setNewMoversList9(rev);
+    });
+
+    return () => {
+      unsubscribe1();
+      unsubscribe2();
+      unsubscribe3();
+      unsubscribe4();
+      unsubscribe5();
+      unsubscribe6();
+      unsubscribe7();
+      unsubscribe8();
+      unsubscribe9();
+    };
+  }, []);
+
+  useEffect(() => {
+    const all = combineProfiles(
+      newMoversList1,
+      newMoversList2,
+      newMoversList3,
+      newMoversList4,
+      newMoversList5,
+      newMoversList6,
+      newMoversList7,
+      newMoversList8,
+      newMoversList9
+    );
+    setNewMovers2(all);
+  }, [newMoversList1, newMoversList2, newMoversList3]);
 
   useEffect(() => {
     const cb = allBookings?.find(
@@ -136,6 +291,10 @@ const Movers = () => {
 
     updatePickP(priceFirstDay);
 
+    // const allPersonalDetails = newMoversList1?.allPersonalDetails;
+    // const allCompanyDetails = newMoversList2?.allCompanyDetails;
+    // const allCompanyPix = newMoversList3?.allCompanyPix;
+
     const allPersonalDetails = allMoverData?.allPersonalDetails;
     const allCompanyDetails = allMoverData?.allCompanyDetails;
     const allCompanyPix = allMoverData?.allCompanyPix;
@@ -154,7 +313,7 @@ const Movers = () => {
       approved: pd.approvalStatus,
     }));
 
-    const filteredNewMov = newMov.filter(
+    const filteredNewMov = newMov?.filter(
       (item) => item.approved === "APPROVED"
     );
 
@@ -196,9 +355,21 @@ const Movers = () => {
   const [activateError, setActivateError] = useState(false);
   const [showSent, setShowSent] = useState(false);
 
-  const firstCard = getFirstSortedHomeMover(newMovers);
+  // const
 
-  const otherCards = sortHomeMoversAndExcludeHighest(newMovers);
+  // const firstCard = getFirstSortedHomeMover(newMoversList1);
+  const firstCard = newMovers2.filter(
+    (nm) => nm.position === "first" && nm.approvalStatus === "APPROVED"
+  );
+  const otherCards = newMovers2
+    .filter(
+      (nm) => nm.position === "others" && nm.approvalStatus === "APPROVED"
+    )
+    .sort((a, b) => {
+      return b.score - a.score;
+    });
+
+  // const otherCards = sortHomeMoversAndExcludeHighest(newMoversList1);
 
   const handleEmailChange = (e) => {
     // const inputValue = e.target.value;
@@ -230,38 +401,58 @@ const Movers = () => {
     }
   }, []);
 
-  const PP = moverDetails?.pickPrice;
+  // const PP = moverDetails?.pickPrice;
 
-  // useEffect(() => {
-  //   window.addEventListener("beforeunload", handleBeforeUnload);
+  let movPrice = Number(moverDetails?.pickPrice);
 
-  //   return () => {
-  //     window.removeEventListener("beforeunload", handleBeforeUnload);
-  //   };
-  // }, []);
-
-  // const handleBeforeUnload = (e) => {
-  //   You can add custom code here to prompt the user before leaving the page.
-  //   alert("Please don't go");
-  //   // For example:
-  //   e.preventDefault();
-  //   e.returnValue = ""; // This is necessary for some older browsers.
-  // };
   const otherMovers = otherCards.map((om, index) => {
+    let percentageIncrement = 15;
+    let price = 0;
+    price = (movPrice + (movPrice * percentageIncrement) / 100).toFixed(2);
+    // Increment the percentage for the next iteration
+    if (index > 0) {
+      percentageIncrement += 5;
+      price = (movPrice + (movPrice * percentageIncrement) / 100).toFixed(2);
+    }
+
     // const key = `mover${3 + index}`;
     return {
-      mover: om?.name,
-      price: calculateMoverPrice(
-        moverDetails?.pickPrice,
-        om?.score,
-        0.052
-      ).toFixed(),
+      mover: om?.generatedName,
+      price: price.toString(),
+      // price: calculateMoverPrice(
+      //   movPrice,
+      //   om?.score,
+      //   0.052
+      // ).toFixed(),
+    };
+  });
+
+  const otherMovers2 = otherCards.map((om, index) => {
+    let percentageIncrement = 15;
+    let price = 0;
+    price = (movPrice + (movPrice * percentageIncrement) / 100).toFixed(2);
+    // Increment the percentage for the next iteration
+    if (index > 0) {
+      percentageIncrement += 5;
+      price = (movPrice + (movPrice * percentageIncrement) / 100).toFixed(2);
+    }
+
+    // const key = `mover${3 + index}`;
+    return {
+      ...om,
+      price,
+      // price: calculateMoverPrice(
+      //   movPrice,
+      //   om?.score,
+      //   0.052
+      // ).toFixed(),
     };
   });
 
   const listOfMovers = [
     {
-      mover: firstCard?.name,
+      mover: firstCard[0]?.generatedName,
+      // ...firstCard[0],
       price: moverDetails?.pickPrice,
     },
     {
@@ -269,6 +460,18 @@ const Movers = () => {
       price: (moverDetails?.pickPrice * 0.79).toFixed(),
     },
     ...otherMovers,
+  ];
+
+  const listOfMovers2 = [
+    {
+      ...firstCard[0],
+      price: moverDetails?.pickPrice,
+    },
+    {
+      generatedName: "Smart Booking",
+      price: (moverDetails?.pickPrice * 0.79).toFixed(),
+    },
+    ...otherMovers2,
   ];
 
   const params2 = {
@@ -288,13 +491,13 @@ const Movers = () => {
     duration: moveDetails?.duration,
     moveDate: moveDetails?.moveDate,
     movePackage: moveDetails?.movePackage,
-    mover1Name: listOfMovers[0]?.mover,
+    mover1Name: listOfMovers[0]?.generatedName,
     mover1Price: listOfMovers[0]?.price,
-    mover2Name: listOfMovers[1]?.mover,
+    mover2Name: listOfMovers[1]?.generatedName,
     mover2Price: listOfMovers[1]?.price,
-    mover3Name: listOfMovers[2]?.mover,
+    mover3Name: listOfMovers[2]?.generatedName,
     mover3Price: listOfMovers[2]?.price,
-    mover4Name: listOfMovers[3]?.mover,
+    mover4Name: listOfMovers[3]?.generatedName,
     mover4Price: listOfMovers[3]?.price,
   };
 
@@ -421,10 +624,29 @@ const Movers = () => {
   useEffect(() => {
     // setTimeout(() => {
     // }, 10000);
-    if (newMovers.length > 0) {
+    if (newMovers2.length > 0) {
       sendMoverPageMail();
     }
-  }, [newMovers]);
+  }, [newMovers2]);
+
+  console.log({
+    newMovers2,
+    firstCard,
+    otherCards,
+    otherMovers,
+    otherMovers2,
+    mp: moverDetails?.pickPrice,
+    listOfMovers,
+    // newMoversList1,
+    // newMoversList2,
+    // newMoversList3,
+    // newMoversList4,
+    // newMoversList5,
+    // newMoversList6,
+    // newMoversList7,
+    // newMoversList8,
+    // newMoversList9,
+  });
 
   // console.log({ listOfMovers, params2 });
 
@@ -432,14 +654,14 @@ const Movers = () => {
     <>
       <Head>
         <title>Movers - Removals and Selfstorage</title>
-        <meta name="description" content="Rss removal and storage website" />
-        <link rel="icon" href="/rrs_favicon.svg" />
+        <meta name='description' content='Rss removal and storage website' />
+        <link rel='icon' href='/rrs_favicon.svg' />
       </Head>
 
       {moveDetails?.initialPackagePrice ? (
         <BookingLayout>
-          <main className="">
-            <div className="mb-[70px] lg:mb-[100px] pt-[80px] md:pt-[80px] ">
+          <main className=''>
+            <div className='mb-[70px] lg:mb-[100px] pt-[80px] md:pt-[80px] '>
               <SideDrawer
                 showLoader2={showLoader2}
                 selectedTime={selectedTime}
@@ -448,20 +670,20 @@ const Movers = () => {
                 setTimeValue={setTimeValue}
                 clickedModalOpen={clickedModalOpen}
                 setClickedModalOpen={setClickedModalOpen}
-                listOfMovers={listOfMovers}
+                listOfMovers={listOfMovers2}
                 currentBook={currentBook}
               />
               {showLoader && <Loader1 />}
               {/* {showLoader2 && <Loader1 />} */}
-              <div className="md:max-w-7xl mx-auto">
+              <div className='md:max-w-7xl mx-auto'>
                 {/* stepper */}
-                <div className="w-full flex justify-center mb-[20px]">
-                  <ul className="steps">
+                <div className='w-full flex justify-center mb-[20px]'>
+                  <ul className='steps'>
                     <li
                       onClick={() => {
                         router.push(`/book/${moveUrl()}`);
                       }}
-                      className="step step-primary px-[50px] font-bold text-[14px] md:text-[16px] leading-[20px] cursor-pointer"
+                      className='step step-primary px-[50px] font-bold text-[14px] md:text-[16px] leading-[20px] cursor-pointer'
                     >
                       Move Details
                     </li>
@@ -469,14 +691,14 @@ const Movers = () => {
                       onClick={() => {
                         router.push(`/book/move-package`);
                       }}
-                      className="step step-primary font-bold text-[14px] md:text-[16px] leading-[25px] cursor-pointer"
+                      className='step step-primary font-bold text-[14px] md:text-[16px] leading-[25px] cursor-pointer'
                     >
                       Move Package
                     </li>
-                    <li className="step step-primary font-bold text-[14px] md:text-[16px] leading-[25px] ">
+                    <li className='step step-primary font-bold text-[14px] md:text-[16px] leading-[25px] '>
                       Choose Mover
                     </li>
-                    <li className="step  font-bold text-[14px] md:text-[16px] leading-[25px] text-gray-300">
+                    <li className='step  font-bold text-[14px] md:text-[16px] leading-[25px] text-gray-300'>
                       Checkout
                     </li>
                   </ul>
@@ -490,30 +712,32 @@ const Movers = () => {
                   setTodayPick={setTodayPick}
                 />
                 {/* movers list row */}
-                <div className="flex flex-col space-y-[10px] lg:space-y-0 lg:flex-row lg:space-x-[10px] mx-[10px] md:mx-[20px]">
+                <div className='flex flex-col space-y-[10px] lg:space-y-0 lg:flex-row lg:space-x-[10px] mx-[10px] md:mx-[20px]'>
                   {/* left section */}
-                  <div className="lg:flex-[1]  w-full">
+                  <div className='lg:flex-[1]  w-full'>
                     <MoveDetails />
                   </div>
                   {/* right section */}
-                  <div className="bg-white shadow-lg rounded-[30px] lg:flex-[3] py-[30px] md:px-[30px] w-full">
+                  <div className='bg-white shadow-lg rounded-[30px] lg:flex-[3] py-[30px] md:px-[30px] w-full'>
                     {!showLoader ? (
-                      <div className="flex flex-col space-y-[10px]  md:space-y-0 md:flex-row md:items-center md:justify-between mb-[40px] px-[20px]">
-                        <h1 className="text-2xl font-bold mb-[0px] ">
-                          <span className="text-primary">
+                      <div className='flex flex-col space-y-[10px]  md:space-y-0 md:flex-row md:items-center md:justify-between mb-[40px] px-[20px]'>
+                        <h1 className='text-2xl font-bold mb-[0px] '>
+                          <span className='text-primary'>
                             {todayPick
                               ? "Movers are unavailable for hire today"
-                              : `You've been matched with ${newMovers.length} verified movers`}
+                              : `You've been matched with ${
+                                  firstCard?.length + otherCards?.length
+                                } verified movers`}
                             .{/* {homeMovers.length} verified movers. */}
                           </span>
                         </h1>
 
                         <div
                           onClick={() => window.my_modal_1.showModal()}
-                          className="flex justify-center items-center space-x-[10px] border rounded-[10px] border-primary px-[10px] py-[10px] text-primary font-bold cursor-pointer"
+                          className='flex justify-center items-center space-x-[10px] border rounded-[10px] border-primary px-[10px] py-[10px] text-primary font-bold cursor-pointer'
                         >
-                          <BiSave className="text-[24px]" />
-                          <p className="whitespace-nowrap">Save Quote</p>
+                          <BiSave className='text-[24px]' />
+                          <p className='whitespace-nowrap'>Save Quote</p>
                         </div>
 
                         {/* <button onClick={notify} className="btn btn-primary">
@@ -522,65 +746,65 @@ const Movers = () => {
 
                         {/* modal */}
                         <dialog
-                          id="my_modal_1"
-                          className="modal py-[20px] px-[10px]"
+                          id='my_modal_1'
+                          className='modal py-[20px] px-[10px]'
                         >
-                          <form method="dialog" className="modal-box px-[20px]">
+                          <form method='dialog' className='modal-box px-[20px]'>
                             <div
                               onClick={closeModal}
-                              className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 border border-primary text-primary"
+                              className='btn btn-sm btn-circle btn-ghost absolute right-2 top-2 border border-primary text-primary'
                             >
                               ✕
                             </div>
 
                             {!showProgressMessage && (
-                              <div className="">
-                                <div className="w-full flex justify-center mb-[20px]">
-                                  <div className="text-secondary bg-secondary/10 flex justify-center items-center w-[60px] h-[60px] rounded-full">
-                                    <BiSave className="text-[30px] " />
+                              <div className=''>
+                                <div className='w-full flex justify-center mb-[20px]'>
+                                  <div className='text-secondary bg-secondary/10 flex justify-center items-center w-[60px] h-[60px] rounded-full'>
+                                    <BiSave className='text-[30px] ' />
                                   </div>
                                 </div>
 
-                                <h3 className="font-bold text-[24px] text-primary text-center">
+                                <h3 className='font-bold text-[24px] text-primary text-center'>
                                   Save your quote!
                                 </h3>
 
-                                <p className="py-4 text-center text-primary px-[30px]">
+                                <p className='py-4 text-center text-primary px-[30px]'>
                                   Need more time to decide? Save your progress
                                   and continue booking right where you left off.
                                 </p>
-                                <div className="px-[30px] ">
+                                <div className='px-[30px] '>
                                   <input
-                                    type="email"
-                                    placeholder="Email address"
+                                    type='email'
+                                    placeholder='Email address'
                                     className={` input input-primary w-full h-[43px] `}
                                     onChange={handleEmailChange}
                                     value={email}
                                   />
-                                  <div className="w-full text-center">
+                                  <div className='w-full text-center'>
                                     {!emailError && activateError && (
-                                      <div className="text-[14px] text-secondary mt-[10px] bg-secondary/20 rounded-[10px] py-[10px] px-[20px]">
+                                      <div className='text-[14px] text-secondary mt-[10px] bg-secondary/20 rounded-[10px] py-[10px] px-[20px]'>
                                         Please enter a valid email
                                       </div>
                                     )}
                                   </div>
                                 </div>
-                                <div className="flex w-full justify-center my-[20px]">
+                                <div className='flex w-full justify-center my-[20px]'>
                                   <div
                                     onClick={sendProgressMail}
-                                    type="submit"
-                                    className="btn btn-secondary flex items-center space-x-[5px]"
+                                    type='submit'
+                                    className='btn btn-secondary flex items-center space-x-[5px]'
                                     disabled={progressLoading}
                                   >
                                     {!progressLoading && (
-                                      <span className="">Send Progress</span>
+                                      <span className=''>Send Progress</span>
                                     )}
                                     {progressLoading && (
                                       <>
-                                        <span className="">
+                                        <span className=''>
                                           Sending Progress
                                         </span>
-                                        <span className="loading loading-spinner loading-md text-white"></span>
+                                        <span className='loading loading-spinner loading-md text-white'></span>
                                       </>
                                     )}
                                   </div>
@@ -589,29 +813,29 @@ const Movers = () => {
                             )}
 
                             {showProgressMessage && showSent && (
-                              <div className="py-[50px]">
-                                <div className="flex justify-center w-full">
+                              <div className='py-[50px]'>
+                                <div className='flex justify-center w-full'>
                                   <Lottie
                                     animationData={EmailSent}
-                                    className="w-[200px]"
+                                    className='w-[200px]'
                                   />
                                 </div>
                                 <h3
                                   onClick={() => window.my_modal_1.close()}
-                                  className="font-bold text-[24px] mt-[10px] text-primary text-center"
+                                  className='font-bold text-[24px] mt-[10px] text-primary text-center'
                                 >
                                   Progress Link sent
                                 </h3>
-                                <p className="py-4 text-center text-primary px-[30px]">
+                                <p className='py-4 text-center text-primary px-[30px]'>
                                   Continue booking with link sent to the email
                                   provided.
                                 </p>
                                 {/* button */}
-                                <div className="flex w-full justify-center my-[20px]">
+                                <div className='flex w-full justify-center my-[20px]'>
                                   <div
                                     onClick={closeModal}
-                                    type="submit"
-                                    className="btn btn-secondary btn-wide flex items-center space-x-[5px]"
+                                    type='submit'
+                                    className='btn btn-secondary btn-wide flex items-center space-x-[5px]'
                                     // disabled={progressLoading}
                                   >
                                     Close
@@ -620,7 +844,7 @@ const Movers = () => {
                               </div>
                             )}
                           </form>
-                          <form method="dialog">
+                          <form method='dialog'>
                             {/* <button>close</button> */}
                           </form>
                           {/* <form method="dialog" className="modal-backdrop">
@@ -629,7 +853,7 @@ const Movers = () => {
                         </dialog>
                       </div>
                     ) : (
-                      <h1 className="text-2xl font-bold mb-[30px] px-[20px]">
+                      <h1 className='text-2xl font-bold mb-[30px] px-[20px]'>
                         Matching Movers ...
                       </h1>
                     )}
@@ -639,23 +863,26 @@ const Movers = () => {
                         if (index === 0) {
                           return (
                             <div
-                              className="mx-[10px] flex-col space-y-[20px]"
+                              className='mx-[10px] flex-col space-y-[20px]'
                               key={index}
                             >
                               {/* mover 1 */}
                               <MoverCard
-                                image={firstCard?.imageUrl}
-                                name={firstCard?.name}
-                                phone={firstCard?.phone}
-                                email={firstCard?.email}
-                                loadArea={firstCard?.loadArea}
-                                rating={firstCard?.rating}
-                                reviewCount={firstCard?.reviewCount}
+                                image={firstCard[0]?.companyProfilePixUrl}
+                                name={firstCard[0]?.generatedName}
+                                phone={firstCard[0]?.phone}
+                                email={firstCard[0]?.email}
+                                // loadArea={firstCard[0]?.loadArea}
+                                loadHeight={firstCard[0]?.loadHeight}
+                                loadLength={firstCard[0]?.loadLength}
+                                loadWidth={firstCard[0]?.loadWidth}
+                                rating={firstCard[0]?.reviewAverage ?? 0}
+                                reviewCount={firstCard[0]?.reviews?.length}
                                 price={moverDetails?.pickPrice}
                                 // price={priceThirdDay}
-                                hiresCount={firstCard?.hireCount}
-                                description={firstCard?.companyDescription}
-                                score={firstCard?.score}
+                                hiresCount={firstCard[0]?.completedMoves}
+                                description={firstCard[0]?.companyBio}
+                                score={firstCard[0]?.score}
                                 setShowLoader2={setShowLoader2}
                                 showLoader2={showLoader2}
                                 clickedModalOpen={clickedModalOpen}
@@ -672,11 +899,11 @@ const Movers = () => {
                         }
                       })}
                     {!showLoader && !todayPick && (
-                      <div className="mx-[10px] flex-col space-y-[20px]">
+                      <div className='mx-[10px] flex-col space-y-[20px]'>
                         <MoverCard
                           bookSmart
-                          image=""
-                          name="Smart Booking"
+                          image=''
+                          name='Smart Booking'
                           phone={firstCard?.phone}
                           email={firstCard?.email}
                           loadArea={firstCard?.loadArea}
@@ -700,7 +927,7 @@ const Movers = () => {
                       otherCards.map((mv, index) => {
                         return (
                           <div
-                            className="mx-[10px] flex-col space-y-[20px]"
+                            className='mx-[10px] flex-col space-y-[20px]'
                             key={index}
                           >
                             {/* mover 2 */}
@@ -740,9 +967,9 @@ const Movers = () => {
           </main>
         </BookingLayout>
       ) : (
-        <div className="flex items-center justify-center h-[100vh] ">
-          <div className="flex justify-center w-full">
-            <Lottie animationData={movingVan} className="w-[400px]" />
+        <div className='flex items-center justify-center h-[100vh] '>
+          <div className='flex justify-center w-full'>
+            <Lottie animationData={movingVan} className='w-[400px]' />
           </div>
           {/* <span className="h-full loading loading-bars text-primary w-[40px] lg:w-[60px]"></span> */}
         </div>

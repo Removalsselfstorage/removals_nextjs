@@ -274,12 +274,20 @@ const MoverLayout = ({ children, data, reload }) => {
                       // <span className='text-[25px] mr-[10px]'>
                       //   <IoMdNotificationsOutline />
                       // </span>
-                      <div className='flex items-center relative mr-[10px]'>
-                        <span className=' mr-[10px] '>
-                          <MdNotificationsActive className='text-[30px]' />
-                        </span>
-                        <div className='absolute top-[-15px] right-[-4px]  bg-secondary rounded-full flex justify-center items-center p-[0px] text-white w-[25px] h-[25px] text-[10px]'>
+                      // <div className='flex items-center relative mr-[10px] '>
+                      //   <span className='mr-[10px] animate-pulse'>
+                      //     <MdNotificationsActive className='text-[30px]' />
+                      //   </span>
+                      //   <div className='absolute top-[-15px] right-[-4px]  bg-secondary rounded-full flex justify-center items-center p-[0px] text-white w-[25px] h-[25px] text-[10px]'>
+                      //     {unreadData?.length}
+                      //   </div>
+                      // </div>
+                      <div className='indicator mr-[10px]'>
+                        <span className='animate-ping indicator-item badge badge-primary bg-secondary rounded-full flex justify-center items-center text-white w-[25px] h-[25px] text-[10px]'>
                           {unreadData?.length}
+                        </span>
+                        <div className='grid w-32 h-32 bg-base-300 place-items-center'>
+                          <MdNotificationsActive className='text-[30px]' />
                         </div>
                       </div>
                     )}

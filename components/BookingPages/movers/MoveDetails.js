@@ -35,7 +35,7 @@ const MoveDetails = () => {
     }
   };
 
-  console.log(details);
+  // console.log(details);
   return (
     <div className="bg-white shadow-lg rounded-[30px] py-[30px] px-[20px] md:px-[30px] w-full lg:sticky lg:top-[80px]">
       <div className="">

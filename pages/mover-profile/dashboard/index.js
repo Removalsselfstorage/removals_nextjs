@@ -91,34 +91,23 @@ const sections = [
   },
   {
     id: 3,
-    title: "Attract more Customers!",
-    subText:
-      "Add reviews from your previous jobs. They appear on your profile as reviews and get you more customers.",
-    icon: <TfiComments className='text-white text-[30px]' />,
-    buttonTitle: "Add Reviews",
-    navNumber: 3,
-    link: "reviews",
-    required: false,
-  },
-  {
-    id: 4,
     title: "Show off your work!",
     subText:
-      "Upload a portfolio of work samples and other imagery that provide an overview of your abilities and qualifications.",
+      "Upload 6 portfolio images of work samples or other imagery that provide an overview of your previous moves.",
     icon: <BsImages className='text-white text-[30px]' />,
     buttonTitle: "Upload Portfolio",
-    navNumber: 4,
+    navNumber: 3,
     link: "portfolio",
     required: false,
   },
   {
-    id: 5,
+    id: 4,
     title: "Enter Bank Account Details",
     subText:
-      "Your payment will be deposited directly into your Bank Account every Monday at 6pm, and subject to the job being completed.",
+      "Correctly update your bank details for payments. Which is done after completed move is confirmed.",
     icon: <BiSolidBank className='text-white text-[30px]' />,
     buttonTitle: "Add Bank Account",
-    navNumber: 5,
+    navNumber: 4,
     link: "billing",
     required: false,
   },
@@ -200,45 +189,92 @@ const Dashboard = ({ allBookings }) => {
     return averageRating;
   }
 
+  const filterSections = (conditions, sections) => {
+    return sections?.filter((section, index) => !conditions[index]);
+  };
+
   // const { firstName, lastName } = moverData?.singleMoversData;
 
   // const uid = singleMoversData?.uid;
-  const condition1 = singleMoversData?.personalDetails?.profileImageUrl;
-  const condition2 = singleMoversData?.personalDetails?.acceptedTerms;
+  const condition1 = !!singleMoversData?.personalDetails?.profileImageUrl;
+  const condition2 =
+    !!singleMoversData?.companyDetails?.companyAddress &&
+    !!singleMoversData?.companyDetails?.companyBio &&
+    !!singleMoversData?.companyDetails?.companyName &&
+    !!singleMoversData?.companyDetails?.companyNumber &&
+    !!singleMoversData?.companyDetails?.loadHeight &&
+    !!singleMoversData?.companyDetails?.loadLength &&
+    !!singleMoversData?.companyDetails?.loadWidth &&
+    !!singleMoversData?.CompanyPix?.companyProfilePixUrl &&
+    !!singleMoversData?.DrivingLicense?.drivingLicenseUrl &&
+    !!singleMoversData?.PubInsurance?.pubInsuranceUrl &&
+    !!singleMoversData?.RegCertificate?.regCertificateUrl &&
+    !!singleMoversData?.TranInsurance?.tranInsuranceUrl &&
+    !!singleMoversData?.VehInsurance?.vehInsuranceUrl;
+  const condition3 = singleMoversData?.personalDetails?.acceptedTerms;
+
+  const condition4 =
+    !!singleMoversData?.portfolioPix1?.portfolioPixUploadUrl1 &&
+    !!singleMoversData?.portfolioPix2?.portfolioPixUploadUrl2 &&
+    !!singleMoversData?.portfolioPix3?.portfolioPixUploadUrl3 &&
+    !!singleMoversData?.portfolioPix4?.portfolioPixUploadUrl4 &&
+    !!singleMoversData?.portfolioPix5?.portfolioPixUploadUrl5 &&
+    !!singleMoversData?.portfolioPix6?.portfolioPixUploadUrl6;
+  const condition5 =
+    !!singleMoversData?.personalDetails?.bankName &&
+    !!singleMoversData?.personalDetails?.accountName &&
+    !!singleMoversData?.personalDetails?.accountNumber &&
+    !!singleMoversData?.personalDetails?.sortCode;
+
   const firstName = singleMoversData?.personalDetails?.firstName;
   const lastName = singleMoversData?.personalDetails?.lastName;
   // const completedMoves = singleMoversData?.completedMoves;
   // const currentAcceptedMoves = singleMoversData?.currentAcceptedMoves;
   // const currentPendingMoves = singleMoversData?.currentPendingMoves;
 
-  const filterSections = () => {
-    const excludedTitles = [
-      "Complete Documentation Process",
-      "Add a Profile Picture!",
-      "Accept our Terms & Policies!",
-    ];
+  // const filterSections = () => {
+  //   const excludedTitles = [
+  //     "Add a Profile Picture!",
+  //     "Accept our Terms & Policies!",
+  //     "Complete Documentation Process",
+  //     "Enter Bank Account Details",
+  //     "Show off your work!",
+  //   ];
 
-    const filteredSections = sections.filter((section) => {
-      const isExcluded = excludedTitles.includes(section.title);
+  //   const filteredSections = sections.filter((section) => {
+  //     const isExcluded = excludedTitles.includes(section.title);
 
-      if (condition1 !== "" && condition2 === false) {
-        return !isExcluded;
-      } else if (condition1 !== "") {
-        return !isExcluded;
-      } else if (condition1 !== "" && condition2 === true) {
-        return !isExcluded;
-      } else if (condition2 === true) {
-        return !isExcluded || section.title === "Accept our Terms & Policies!";
-      } else {
-        return true;
-      }
-    });
+  //     if (condition1 !== false && condition2 === false) {
+  //       return !isExcluded;
+  //     } else if (condition1 !== "") {
+  //       return !isExcluded;
+  //     } else if (condition1 !== "" && condition2 === true) {
+  //       return !isExcluded;
+  //     } else if (condition2 === true) {
+  //       return !isExcluded || section.title === "Accept our Terms & Policies!";
+  //     } else {
+  //       return true;
+  //     }
+  //   });
 
-    return filteredSections;
-  };
+  //   return filteredSections;
+  // };
+  const conditions = [
+    condition1,
+    condition2,
+    condition3,
+    condition4,
+    condition5,
+  ];
 
-  const sortedSections = filterSections();
+  const filteredSections = filterSections(conditions, sections);
+
+  const sortedSections = filteredSections;
   const [sectionData, setSectionData] = useState(sortedSections);
+
+  useEffect(() => {
+    setSectionData(sortedSections);
+  }, [singleMoversData]);
 
   useEffect(() => {
     const lastIndex = sectionData?.length - 1;
@@ -340,12 +376,21 @@ const Dashboard = ({ allBookings }) => {
     return () => unsubscribe();
   }, []);
 
-  const reviewAverage = calculateAverageRating(reviews2) ?? 0;
+  const reviewAverage =
+    reviews2?.length > 0 ? calculateAverageRating(reviews2) : 0;
 
   const reviewGrade = reviewAverage ? getRatingGrade(reviewAverage) : "Good";
 
   // console.log({ singleMoversData, moverData, readData, unreadData });
-  console.log({ companyDetails, sortedSections, userDetails });
+  console.log({
+    sectionData,
+    singleMoversData,
+    condition1,
+    condition2,
+    condition3,
+    condition4,
+    condition5,
+  });
 
   return (
     <MoverLayout>
@@ -362,7 +407,7 @@ const Dashboard = ({ allBookings }) => {
               <p className='font-bold text-[25px] mb-[20px]'>Dashboard</p>
               <div className='flex flex-col space-y-[20px] lg:space-y-0 lg:flex-row lg:space-x-[50px] lg:justify-between'>
                 <div className='flex items-center space-x-[20px] md:space-x-[30px]'>
-                  <div className='w-[90px] h-[90px] rounded-full ring ring-primary ring-offset-base-100 ring-offset-2'>
+                  <div className='w-[90px] h-[90px] rounded-full ring ring-primary ring-offset-base-100 ring-offset-3'>
                     {!singleMoversDataLoading && (
                       <img
                         src={previewUrl}
@@ -415,7 +460,7 @@ const Dashboard = ({ allBookings }) => {
                 <div className='flex flex-col'>
                   {/* mover name */}
                   <div className='flex items-center border border-primary px-[10px] py-[5px] rounded-[10px] space-x-[15px] md:space-x-[5px]  space-y-[0px] lg:space-y-[0px] lg:flex-row lg:items-center mb-[5px] sm:mb-[7px] lg:mb-[7px] text-[15px]'>
-                    <p className='text-primary font-semibold  md:text-[18px] md:font-extrabold'>
+                    <p className='text-primary font-semibold  md:font-extrabold'>
                       Username:
                     </p>
                     <p className=' font-semibold'>
@@ -424,23 +469,16 @@ const Dashboard = ({ allBookings }) => {
                   </div>
                   {/* mover rating */}
                   <div className='flex items-center border border-primary px-[10px] py-[5px] rounded-[10px] space-x-[15px] md:space-x-[5px]  space-y-[0px] lg:space-y-[0px] lg:flex-row lg:items-center mb-[5px] sm:mb-[7px] lg:mb-[7px] text-[15px]'>
-                    <p className='text-primary font-semibold  md:text-[18px] md:font-extrabold'>
+                    <p className='text-primary font-semibold  md:font-extrabold'>
                       Rating:
                     </p>
                     <div className='flex items-center  space-x-[10px] mt-[0px] text-[15px]'>
-                      <p className='font-semibold text-[15px] md:text-[18px]'>
-                        {reviewAverage.toFixed(
-                          1
-                        ) ?? 0}{" "}
-                        / 5.0
+                      <p className='font-semibold text-[15px]'>
+                        {reviewAverage.toFixed(1) ?? 0} / 5.0
                       </p>
                       {/* <FullRating small value={rating} color="text-secondary" /> */}
                       <StarRating
-                        rating={
-                          reviewAverage.toFixed(
-                            1
-                          ) ?? 0
-                        }
+                        rating={reviewAverage.toFixed(1) ?? 0}
                         size='text-secondary text-[16px]'
                       />
                       {/* <p className="">{`- (0 Reviews)`}</p> */}
@@ -450,7 +488,7 @@ const Dashboard = ({ allBookings }) => {
                   {/* mover name */}
                   <div className='flex items-center border border-primary px-[10px] py-[5px] rounded-[10px] space-x-[15px] md:space-x-[5px]  sm:items-start  space-y-[0px] lg:space-y-[0px] lg:flex-row lg:items-center mb-[5px] sm:mb-[7px] lg:mb-[7px] text-[15px]'>
                     <div className='flex items-center space-x-[5px]'>
-                      <p className='text-primary font-semibold  md:text-[18px] md:font-extrabold'>
+                      <p className='text-primary font-semibold   md:font-extrabold'>
                         Hires:
                       </p>
                     </div>

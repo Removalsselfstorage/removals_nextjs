@@ -68,6 +68,9 @@ const Documentations = () => {
   const dispatch = useDispatch();
   const details = useSelector(getAllMoverDetails);
 
+  const [loadHeight, setLoadHeight] = useState("");
+  const [loadLength, setLoadLength] = useState("");
+  const [loadWidth, setLoadWidth] = useState("");
   const [companyBio, setCompanyBio] = useState("");
   const [companyName, setCompanyName] = useState("");
   const [companyNumber, setCompanyNumber] = useState("");
@@ -155,6 +158,9 @@ const Documentations = () => {
     setSubmitError(false);
 
     if (
+      !loadHeight ||
+      !loadLength ||
+      !loadWidth ||
       !companyAddress ||
       !companyName ||
       !companyBio ||
@@ -185,6 +191,9 @@ const Documentations = () => {
       const dlName = drivingLicenseUpload?.name;
 
       const moveObj = {
+        loadHeight,
+        loadLength,
+        loadWidth,
         companyName,
         companyNumber,
         generatedName: details.companyDetails.generatedName,
@@ -217,41 +226,6 @@ const Documentations = () => {
       refetchSingleMoversData();
       // console.log(result);
 
-      dispatch(
-        updateCompanyDetails({
-          companyName,
-          generatedName: details.companyDetails.generatedName,
-          companyNumber,
-          companyAddress,
-          companyBio,
-          // companyProfilePixRaw: companyProfilePix,
-          companyProfilePixUrl: companyProfilePixurl,
-          companyProfilePixName: companyProfilePixname,
-          reviewSubmit: true,
-        })
-      );
-
-      dispatch(
-        updateCompanyDocs({
-          // regCertificateRaw: regCertificateUpload,
-          regCertificateUrl: regCertificateUploadurl,
-          regCertificateName: regCertificateUploadname,
-          // vehInsuranceRaw: vehInsuranceUpload,
-          vehInsuranceUrl: vehInsuranceUploadurl,
-          vehInsuranceName: vehInsuranceUploadname,
-          // pubInsuranceRaw: pubInsuranceUpload,
-          pubInsuranceUrl: pubInsuranceUploadurl,
-          pubInsuranceName: pubInsuranceUploadname,
-          // tranInsuranceRaw: tranInsuranceUpload,
-          tranInsuranceUrl: tranInsuranceUploadurl,
-          tranInsuranceName: tranInsuranceUploadname,
-          // drivingLicenseRaw: drivingLicenseUpload,
-          drivingLicenseUrl: drivingLicenseUploadurl,
-          drivingLicenseName: drivingLicenseUploadname,
-          reviewSubmit: true,
-        })
-      );
-
       setSubmitSuccess(true);
 
       setSubmitLoading(false);
@@ -262,6 +236,9 @@ const Documentations = () => {
   };
 
   useEffect(() => {
+    setLoadHeight(singleMoversData?.companyDetails?.loadHeight);
+    setLoadLength(singleMoversData?.companyDetails?.loadLength);
+    setLoadWidth(singleMoversData?.companyDetails?.loadWidth);
     setCompanyBio(singleMoversData?.companyDetails?.companyBio);
     setCompanyName(singleMoversData?.companyDetails?.companyName);
     setCompanyNumber(singleMoversData?.companyDetails?.companyNumber);
@@ -345,7 +322,7 @@ const Documentations = () => {
                 {/* first name */}
                 <div className='form-control w-full'>
                   <label className='label'>
-                    <span className='label-text font-semibold'>
+                    <span className='text-[16px] font-semibold'>
                       Company Name
                       <span className='text-secondary'>*</span>
                     </span>
@@ -366,7 +343,7 @@ const Documentations = () => {
                 {/* Telephone* */}
                 <div className='form-control w-full flex-[1]'>
                   <label className='label'>
-                    <span className='label-text font-semibold'>
+                    <span className='text-[16px] font-semibold'>
                       Company Telephone
                       <span className='text-secondary'>*</span>
                     </span>
@@ -393,7 +370,7 @@ const Documentations = () => {
             {/* address */}
             <div className='form-control w-full mb-[30px]'>
               <label className='label '>
-                <span className='label-text font-semibold text-[16px]'>
+                <span className='text-[16px] font-semibold'>
                   Company Address<span className='text-secondary'>*</span>
                 </span>
               </label>
@@ -407,9 +384,9 @@ const Documentations = () => {
               ></textarea>
             </div>
             {/* Company Bio */}
-            <div className='form-control w-full'>
+            <div className='form-control w-full  mb-[20px]'>
               <div className=' '>
-                <span className='label-text font-semibold text-[16px]'>
+                <span className='font-semibold text-[16px]'>
                   Company Bio<span className='text-secondary'>*</span>
                 </span>
               </div>
@@ -430,6 +407,78 @@ const Documentations = () => {
                 {companyBio?.length} / {bioMaxLength} Characters
               </p>
             </div>
+
+            {/* Load Area */}
+            <div className='flex flex-col  mb-[30px] justify-center space-y-[10px] lg:space-y-0 lg:flex-row lg:items-center lg:space-x-[50px]'>
+              {/* left */}
+              <div className='flex-[1]'>
+                {/* Load Height */}
+                <div className='flex flex-col w-full'>
+                  <label className='label'>
+                    <span className=' font-semibold text-[16px]'>
+                      Vehicle Load Height (m){" "}
+                      <span className='text-secondary'>*</span>
+                    </span>
+                  </label>
+                  <input
+                    type='number'
+                    min='1'
+                    step='0.1'
+                    placeholder='Load Height'
+                    className={`${
+                      activateError && !loadHeight ? "ring ring-secondary" : ""
+                    } input input-primary w-full h-[43px]`}
+                    onChange={(e) => setLoadHeight(e.target.value)}
+                    defaultValue={loadHeight}
+                  />
+                </div>
+              </div>
+              <div className='flex-[1]'>
+                {/* Load Height */}
+                <div className='flex flex-col w-full'>
+                  <label className='label'>
+                    <span className='text-[16px] font-semibold'>
+                      Vehicle Load Length (m){" "}
+                      <span className='text-secondary'>*</span>
+                    </span>
+                  </label>
+                  <input
+                    type='number'
+                    min='1'
+                    step='0.1'
+                    placeholder='Load Length'
+                    className={`${
+                      activateError && !loadLength ? "ring ring-secondary" : ""
+                    } input input-primary w-full h-[43px]`}
+                    onChange={(e) => setLoadLength(e.target.value)}
+                    defaultValue={loadLength}
+                  />
+                </div>
+              </div>
+              <div className='flex-[1]'>
+                {/* Load Height */}
+                <div className='flex flex-col w-full'>
+                  <label className='label'>
+                    <span className='text-[16px] font-semibold'>
+                      Vehicle Load Width (m){" "}
+                      <span className='text-secondary'>*</span>
+                    </span>
+                  </label>
+                  <input
+                    type='number'
+                    min='1'
+                    step='0.1'
+                    placeholder='Load Width'
+                    className={`${
+                      activateError && !loadWidth ? "ring ring-secondary" : ""
+                    } input input-primary w-full h-[43px]`}
+                    onChange={(e) => setLoadWidth(e.target.value)}
+                    defaultValue={loadWidth}
+                  />
+                </div>
+              </div>
+            </div>
+
             {/* mandatory text */}
             <div className='flex flex-col w-full items-center  mb-[40px] mt-[0px]'>
               <p className=' text-gray-400  text-[14px] mt-[10px]'>

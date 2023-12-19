@@ -1,3 +1,13 @@
+export function calculateAverageRating2(reviews) {
+  const totalRating = reviews.reduce(
+    (sum, review) => sum + review.reviewDetails.rating,
+    0
+  );
+  const averageRating = totalRating / reviews.length;
+  return averageRating;
+}
+
+
 export function combineProfiles(...profiles) {
   const combinedProfiles = [];
 

@@ -1,6 +1,6 @@
 import ReviewCard2 from "@/components/HomePage/OurReviews/ReviewCard2";
 import StarRating from "@/components/Rating/EditHalfStars2";
-import { reviews } from "@/dummyData/dummyData";
+// import { reviews } from "@/dummyData/dummyData";
 import useQuote from "@/hooks/useQuote";
 import { checkoutPageEmail, pickMoverEmail2 } from "@/lib/sendCustomEmail";
 import {
@@ -9,14 +9,24 @@ import {
   updateMoverSideDetails,
 } from "@/store/quoteSlice";
 import {
+  calculateAverageRating2,
   changeFontWeight,
   changeFontWeight2,
   getCurrentDateFormatted,
+  getRatingGrade,
 } from "@/utils/logics";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
-import { doc, serverTimestamp, setDoc } from "firebase/firestore";
+import {
+  doc,
+  serverTimestamp,
+  setDoc,
+  collection,
+  onSnapshot,
+  query,
+  where,
+} from "firebase/firestore";
 import { db } from "@/firebase";
 import { FaTruckMoving } from "react-icons/fa";
 import { FiCheckCircle } from "react-icons/fi";
@@ -71,6 +81,17 @@ const SideDrawer = ({
   const [submitError, setSubmitError] = useState(true);
   const [submitLoading, setSubmitLoading] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
+
+  const [reviews2, setReviews2] = useState([]);
+
+  const reviewRef = collection(db, "bookingData");
+
+  const textDescription = sideDetails?.description;
+  const moverName = sideDetails?.name;
+
+  const reviews = sideDetails?.details?.reviews ?? [];
+
+ 
 
   useEffect(() => {
     setSideDetails(moverSideDetails);
@@ -242,9 +263,6 @@ const SideDrawer = ({
     }
   };
 
-  const textDescription = sideDetails?.description;
-  const moverName = sideDetails?.name;
-
   // const modalContentRef = useRef(null);
 
   useEffect(() => {
@@ -262,7 +280,7 @@ const SideDrawer = ({
   //   }
   // }, [clickedModalOpen]);
 
-  // console.log({ sn: sideDetails?.name, timeValue });
+  console.log({ sideDetails, reviews });
 
   return (
     <div className='drawer drawer-end'>
@@ -295,7 +313,9 @@ const SideDrawer = ({
                   <p className='text-primary font-semibold'>
                     Registered since:
                   </p>
-                  <p className=''>12/06/2023</p>
+                  <p className='text-[14px] md:text-[15px]'>
+                    {sideDetails?.details?.registerDate}
+                  </p>
                 </div>
 
                 {/* rating / reviews */}
@@ -307,7 +327,7 @@ const SideDrawer = ({
                       rating={sideDetails?.rating}
                       size='text-secondary text-[16px]'
                     />
-                    <p className=''>{`- (${sideDetails?.reviewCount} Reviews)`}</p>
+                    <p className=''>{`- (${reviews2?.length} Reviews)`}</p>
                   </div>
                 </div>
                 {/* package type */}
@@ -382,20 +402,22 @@ const SideDrawer = ({
               <div className='flex flex-col space-y-[20px] lg:flex-row lg:space-y-[0px]  lg:space-x-[40px]'>
                 {/* overall review */}
                 <div className='flex flex-col '>
-                  <div className='flex flex-col  mt-[0px] text-[15px]'>
+                  <div className='flex space-x-[30px] mt-[0px] text-[15px]'>
                     <p className='font-semibold text-[22px] mb-[5px]'>
-                      {sideDetails?.rating} / 5.0
+                      {Number(sideDetails?.rating).toFixed(1)} / 5.0
                     </p>
                     {/* <FullRating small value={rating} color="text-secondary" /> */}
-                    <StarRating
-                      rating={sideDetails?.rating}
-                      size='text-secondary text-[16px]'
-                    />
-                    <p className='mt-[5px]'>{`(${sideDetails?.reviewCount}) Reviews`}</p>
+                    <div className=''>
+                      <StarRating
+                        rating={sideDetails?.rating}
+                        size='text-secondary text-[16px]'
+                      />
+                      <p className='mt-[5px]'>{`(${sideDetails?.reviewCount}) Reviews`}</p>
+                    </div>
                   </div>
                 </div>
                 {/* other review values */}
-                <div className='flex flex-col text-[15px]'>
+                {/* <div className='flex flex-col text-[15px]'>
                   <div className='flex-col flex mb-[10px]'>
                     <p className='mb-[5px]'>Positive Feedback</p>
                     <progress
@@ -420,21 +442,22 @@ const SideDrawer = ({
                       max='100'
                     ></progress>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
 
             {/* reviews comments */}
             <div className=''>
-              {reviews.slice(0, 3).map((review, index) => {
+              {/* {reviews.slice(0, 3).map((review, index) => { */}
+              {reviews?.map((review, index) => {
                 return (
-                  <div className='py-[10px]' key={review.id}>
+                  <div className='py-[10px]' key={review?.reviewDetails?.date}>
                     <ReviewCard2
-                      name={review.name}
-                      location={review.location}
-                      date={review.date}
-                      rating={review.rating}
-                      comment={review.comment}
+                      name={review?.reviewDetails?.name}
+                      location={review?.reviewDetails?.address1}
+                      date={review?.reviewDetails?.date}
+                      rating={review?.reviewDetails?.rating}
+                      comment={review?.reviewDetails?.review}
                     />
                   </div>
                 );

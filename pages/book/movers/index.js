@@ -324,22 +324,6 @@ const Movers = () => {
   }, []);
 
   const [scriptLoaded, setScriptLoaded] = useState(false);
-  // const addPaypalScript = () => {
-  //   if (window.paypal) {
-  //     setScriptLoaded(true);
-  //     return;
-  //   }
-  //   const script = document.createElement("script");
-  //   script.src =
-  //     "https://www.paypal.com/sdk/js?client-id=AUjKA9gFxV187adUYdXSmLX-XQkhTp4mb9pHwovh-ICBlBFpqlbmwFH920CRsQncHmB1CObNRic2scql";
-
-  //   script.type = "text/javascript";
-  //   script.async = true;
-  //   script.onload = () => {
-  //     setScriptLoaded(true);
-  //   };
-  //   document.body.appendChild(script);
-  // };
 
   const [showLoader, setShowLoader] = useState(false);
   const [showLoader2, setShowLoader2] = useState(false);
@@ -883,12 +867,13 @@ const Movers = () => {
                                 hiresCount={firstCard[0]?.completedMoves}
                                 description={firstCard[0]?.companyBio}
                                 score={firstCard[0]?.score}
+                                details={firstCard[0]}
                                 setShowLoader2={setShowLoader2}
                                 showLoader2={showLoader2}
                                 clickedModalOpen={clickedModalOpen}
                                 setClickedModalOpen={setClickedModalOpen}
                                 sendMoverPageMail={sendMoverPageMail}
-                                listOfMovers={listOfMovers}
+                                listOfMovers={listOfMovers2}
                                 currentBook={currentBook}
                                 // timeValue={timeValue}
                                 // setTimeValue={setTimeValue}
@@ -916,7 +901,7 @@ const Movers = () => {
                           setShowLoader2={setShowLoader2}
                           showLoader2={showLoader2}
                           sendMoverPageMail={sendMoverPageMail}
-                          listOfMovers={listOfMovers}
+                          listOfMovers={listOfMovers2}
                           currentBook={currentBook}
                           // pickPrice={pickPrice} setPickPrice={setPickPrice}
                         />
@@ -924,7 +909,7 @@ const Movers = () => {
                     )}
                     {!showLoader &&
                       !todayPick &&
-                      otherCards.map((mv, index) => {
+                      otherMovers2.map((mv, index) => {
                         return (
                           <div
                             className='mx-[10px] flex-col space-y-[20px]'
@@ -932,25 +917,25 @@ const Movers = () => {
                           >
                             {/* mover 2 */}
                             <MoverCard
-                              image={mv?.imageUrl}
-                              name={mv?.name}
+                              image={mv?.companyProfilePixUrl}
+                              name={mv?.generatedName}
                               phone={mv?.phone}
                               email={mv?.email}
-                              loadArea={mv?.loadArea}
-                              rating={mv?.rating}
-                              reviewCount={mv?.reviewCount}
-                              price={calculateMoverPrice(
-                                moverDetails?.pickPrice,
-                                mv?.score,
-                                0.052
-                              ).toFixed()}
-                              hiresCount={mv?.hireCount}
-                              description={mv?.companyDescription}
+                              loadHeight={mv?.loadHeight}
+                              loadLength={mv?.loadLength}
+                              loadWidth={mv?.loadWidth}
+                              rating={mv?.reviewAverage ?? 0}
+                              reviewCount={mv?.reviews?.length ?? 0}
+                              price={Number(mv?.price).toFixed()}
+                              // price={priceThirdDay}
+                              hiresCount={mv?.completedMoves}
+                              description={mv?.companyBio}
                               score={mv?.score}
+                              details={mv}
                               setShowLoader2={setShowLoader2}
                               showLoader2={showLoader2}
                               sendMoverPageMail={sendMoverPageMail}
-                              listOfMovers={listOfMovers}
+                              listOfMovers={listOfMovers2}
                               currentBook={currentBook}
                               // pickPrice={pickPrice} setPickPrice={setPickPrice}
                             />

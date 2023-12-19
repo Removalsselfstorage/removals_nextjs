@@ -9,7 +9,7 @@ import useMoversData from "@/hooks/useMoversData";
 import MoverLayout from "@/layouts/MoverLayout";
 import NormalLayout from "@/layouts/NormalLayout";
 import { getAllUserDetails } from "@/store/userSlice";
-import { convertDateFormatNoTime, getRatingGrade } from "@/utils/logics";
+import { calculateAverageRating, calculateAverageRating2, convertDateFormatNoTime, getRatingGrade } from "@/utils/logics";
 import { collection, onSnapshot, query, where } from "firebase/firestore";
 import Head from "next/head";
 import { useRouter } from "next/navigation";
@@ -36,14 +36,7 @@ const Reviews = () => {
   const { personalMoverDetails, companyDetails } = useMover();
   const [reviews2, setReviews2] = useState([]);
 
-  function calculateAverageRating(reviews) {
-    const totalRating = reviews.reduce(
-      (sum, review) => sum + review.reviewDetails.rating,
-      0
-    );
-    const averageRating = totalRating / reviews.length;
-    return averageRating;
-  }
+ 
 
   const reviewRef = collection(db, "bookingData");
 
@@ -69,7 +62,7 @@ const Reviews = () => {
     return () => unsubscribe();
   }, []);
 
-  const reviewAverage = calculateAverageRating(reviews2) ?? 0;
+  const reviewAverage = calculateAverageRating2(reviews2) ?? 0;
 
   const reviewGrade = reviewAverage ? getRatingGrade(reviewAverage) : "Good";
 

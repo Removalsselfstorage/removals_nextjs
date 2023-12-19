@@ -24,13 +24,23 @@ import {
 import StarRating from "@/components/Rating/EditHalfStars2";
 import { useRouter } from "next/navigation";
 import {
+  calculateAverageRating2,
   convertToFloatOrRound,
   convertToFloatWithOneDecimal,
   formatMovePrice,
   getCurrentDateFormatted,
+  getRatingGrade,
 } from "@/utils/logics";
 import { toast } from "react-hot-toast";
-import { doc, setDoc } from "firebase/firestore";
+import {
+  doc,
+  serverTimestamp,
+  setDoc,
+  collection,
+  onSnapshot,
+  query,
+  where,
+} from "firebase/firestore";
 import { db } from "@/firebase";
 import useQuote from "@/hooks/useQuote";
 import {
@@ -61,6 +71,7 @@ const MoverCard = ({
   setShowLoader2,
   showLoader2,
   score,
+  details,
   clickedModalOpen,
   setClickedModalOpen,
   sendMoverPageMail,
@@ -114,6 +125,7 @@ const MoverCard = ({
       description,
       selectedTime,
       timeValue,
+      details: details,
     });
   };
 
@@ -134,6 +146,40 @@ const MoverCard = ({
   const [submitError, setSubmitError] = useState(true);
   const [submitLoading, setSubmitLoading] = useState(false);
   const [sideBarOpened, setSideBarOpened] = useState(false);
+
+  const [reviews2, setReviews2] = useState([]);
+
+  const reviewRef = collection(db, "bookingData");
+
+  const uname = name ?? "man";
+
+  useEffect(() => {
+    // const queryMessages = query(reviewRef);
+    const queryMessages = query(
+      reviewRef,
+      where("moverName", "==", uname)
+      // orderBy("createdAt", "asc")
+    );
+    const unsubscribe = onSnapshot(queryMessages, (snapshot) => {
+      let rev = [];
+      snapshot.forEach((doc) => {
+        rev.push({ ...doc.data(), id: doc.id });
+      });
+      // const completedMb = rev?.filter((bc) => bc.completedBook === true);
+      const reviewedM = rev?.filter((bc) => bc.reviewDetails != undefined);
+      // const completedMb = rev?.filter((bc) => bc.moveCarriedOut === true);
+      setReviews2(reviewedM);
+      // console.log({ reviewedM, personalMoverDetails, reviews2 });
+    });
+
+    return () => unsubscribe();
+  }, [uname]);
+
+  console.log({ reviews2, uname });
+
+  const reviewAverage = calculateAverageRating2(reviews2) ?? 0;
+
+  const reviewGrade = reviewAverage ? getRatingGrade(reviewAverage) : "Good";
 
   const allTime = [
     { id: "7am - 9am", time: "7am - 9am" },
@@ -374,9 +420,11 @@ const MoverCard = ({
                         Load area:
                       </p>
                     </div>
-                    <p className='link link-hover font-semibold'>
-                      H - {loadHeight}m, L - {loadHeight}m, W - {loadWidth}m
-                    </p>
+                    {loadHeight && loadLength && loadWidth && (
+                      <p className='link link-hover font-semibold'>
+                        H - {loadHeight}m, L - {loadLength}m, W - {loadWidth}m
+                      </p>
+                    )}
                   </div>
                   {/* rating / reviews */}
                   <div className='flex flex-col lg:flex-row lg:items-center space-y-[5px] lg:space-y-0 lg:space-x-[10px] mt-[0px] text-[15px] mb-[7px]'>
@@ -387,7 +435,9 @@ const MoverCard = ({
                         rating={rating}
                         size='text-secondary text-[16px]'
                       />
-                      <p className=''>{`- (${reviewCount} Reviews)`}</p>
+                      <p className=''>{`- (${
+                        reviews2?.length ?? 0
+                      } Reviews)`}</p>
                     </div>
                     {/* <div className="flex items-center space-x-[10px] mt-[0px] text-[15px]">
                   <p className="link link-hover text-primary font-semibold mt-[5px] md:mt-[0px] ">

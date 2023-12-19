@@ -82,16 +82,14 @@ const SideDrawer = ({
   const [submitLoading, setSubmitLoading] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
 
-  const [reviews2, setReviews2] = useState([]);
+  // const [reviews2, setReviews2] = useState([]);
 
-  const reviewRef = collection(db, "bookingData");
+  // const reviewRef = collection(db, "bookingData");
 
   const textDescription = sideDetails?.description;
   const moverName = sideDetails?.name;
 
-  const reviews = sideDetails?.details?.reviews ?? [];
-
- 
+  const reviews = sideDetails?.reviews2 ?? [];
 
   useEffect(() => {
     setSideDetails(moverSideDetails);
@@ -263,6 +261,8 @@ const SideDrawer = ({
     }
   };
 
+  const reviewAvg = isNaN(sideDetails?.reviewAverage) ? 0 : Number(sideDetails?.reviewAverage).toFixed(1);
+
   // const modalContentRef = useRef(null);
 
   useEffect(() => {
@@ -321,13 +321,15 @@ const SideDrawer = ({
                 {/* rating / reviews */}
                 <div className='flex flex-col lg:flex-row lg:items-center space-y-[5px] lg:space-y-0 lg:space-x-[10px] mt-[0px] text-[15px] mb-[7px]'>
                   <div className='flex items-center space-x-[10px] mt-[0px] text-[15px]'>
-                    <p className='font-semibold'>{sideDetails?.rating}</p>
+                    <p className='font-semibold'>
+                      {reviewAvg}
+                    </p>
                     {/* <FullRating small value={rating} color="text-secondary" /> */}
                     <StarRating
-                      rating={sideDetails?.rating}
+                      rating={reviewAvg}
                       size='text-secondary text-[16px]'
                     />
-                    <p className=''>{`- (${reviews2?.length} Reviews)`}</p>
+                    <p className=''>{`- (${sideDetails?.reviews2?.length} Reviews)`}</p>
                   </div>
                 </div>
                 {/* package type */}
@@ -404,15 +406,15 @@ const SideDrawer = ({
                 <div className='flex flex-col '>
                   <div className='flex space-x-[30px] mt-[0px] text-[15px]'>
                     <p className='font-semibold text-[22px] mb-[5px]'>
-                      {Number(sideDetails?.rating).toFixed(1)} / 5.0
+                      {reviewAvg} / 5.0
                     </p>
                     {/* <FullRating small value={rating} color="text-secondary" /> */}
                     <div className=''>
                       <StarRating
-                        rating={sideDetails?.rating}
+                        rating={reviewAvg}
                         size='text-secondary text-[16px]'
                       />
-                      <p className='mt-[5px]'>{`(${sideDetails?.reviewCount}) Reviews`}</p>
+                      <p className='mt-[5px]'>{`(${sideDetails?.reviews2?.length}) Reviews`}</p>
                     </div>
                   </div>
                 </div>
@@ -449,7 +451,7 @@ const SideDrawer = ({
             {/* reviews comments */}
             <div className=''>
               {/* {reviews.slice(0, 3).map((review, index) => { */}
-              {reviews?.map((review, index) => {
+              {sideDetails?.reviews2?.map((review, index) => {
                 return (
                   <div className='py-[10px]' key={review?.reviewDetails?.date}>
                     <ReviewCard2

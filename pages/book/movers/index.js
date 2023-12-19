@@ -703,7 +703,7 @@ const Movers = () => {
                   </div>
                   {/* right section */}
                   <div className='bg-white shadow-lg rounded-[30px] lg:flex-[3] py-[30px] md:px-[30px] w-full'>
-                    {!showLoader ? (
+                    {!showLoader && newMovers2?.length > 0 ? (
                       <div className='flex flex-col space-y-[10px]  md:space-y-0 md:flex-row md:items-center md:justify-between mb-[40px] px-[20px]'>
                         <h1 className='text-2xl font-bold mb-[0px] '>
                           <span className='text-primary'>
@@ -841,49 +841,48 @@ const Movers = () => {
                         Matching Movers ...
                       </h1>
                     )}
-                    {!showLoader &&
-                      !todayPick &&
-                      newMovers.map((mv, index) => {
-                        if (index === 0) {
-                          return (
-                            <div
-                              className='mx-[10px] flex-col space-y-[20px]'
-                              key={index}
-                            >
-                              {/* mover 1 */}
-                              <MoverCard
-                                image={firstCard[0]?.companyProfilePixUrl}
-                                name={firstCard[0]?.generatedName}
-                                phone={firstCard[0]?.phone}
-                                email={firstCard[0]?.email}
-                                // loadArea={firstCard[0]?.loadArea}
-                                loadHeight={firstCard[0]?.loadHeight}
-                                loadLength={firstCard[0]?.loadLength}
-                                loadWidth={firstCard[0]?.loadWidth}
-                                rating={firstCard[0]?.reviewAverage ?? 0}
-                                reviewCount={firstCard[0]?.reviews?.length}
-                                price={moverDetails?.pickPrice}
-                                // price={priceThirdDay}
-                                hiresCount={firstCard[0]?.completedMoves}
-                                description={firstCard[0]?.companyBio}
-                                score={firstCard[0]?.score}
-                                details={firstCard[0]}
-                                setShowLoader2={setShowLoader2}
-                                showLoader2={showLoader2}
-                                clickedModalOpen={clickedModalOpen}
-                                setClickedModalOpen={setClickedModalOpen}
-                                sendMoverPageMail={sendMoverPageMail}
-                                listOfMovers={listOfMovers2}
-                                currentBook={currentBook}
-                                // timeValue={timeValue}
-                                // setTimeValue={setTimeValue}
-                                // pickPrice={pickPrice} setPickPrice={setPickPrice}
-                              />
-                            </div>
-                          );
-                        }
-                      })}
-                    {!showLoader && !todayPick && (
+                    {/* {newMovers2?.length === 0 && (
+                      <h1 className='text-2xl font-bold mb-[30px] px-[20px]'>
+                        Matching Movers ...
+                      </h1>
+                    )} */}
+                    {!showLoader && newMovers2?.length > 0 && !todayPick && (
+                      <div
+                        className='mx-[10px] flex-col space-y-[20px]'
+                        // key={index}
+                      >
+                        {/* mover 1 */}
+                        <MoverCard
+                          image={firstCard[0]?.companyProfilePixUrl}
+                          name={firstCard[0]?.generatedName}
+                          phone={firstCard[0]?.phone}
+                          email={firstCard[0]?.email}
+                          // loadArea={firstCard[0]?.loadArea}
+                          loadHeight={firstCard[0]?.loadHeight}
+                          loadLength={firstCard[0]?.loadLength}
+                          loadWidth={firstCard[0]?.loadWidth}
+                          rating={firstCard[0]?.reviewAverage ?? 0}
+                          reviewCount={firstCard[0]?.reviews?.length}
+                          price={moverDetails?.pickPrice}
+                          // price={priceThirdDay}
+                          hiresCount={firstCard[0]?.completedMoves}
+                          description={firstCard[0]?.companyBio}
+                          score={firstCard[0]?.score}
+                          details={firstCard[0]}
+                          setShowLoader2={setShowLoader2}
+                          showLoader2={showLoader2}
+                          clickedModalOpen={clickedModalOpen}
+                          setClickedModalOpen={setClickedModalOpen}
+                          sendMoverPageMail={sendMoverPageMail}
+                          listOfMovers={listOfMovers2}
+                          currentBook={currentBook}
+                          // timeValue={timeValue}
+                          // setTimeValue={setTimeValue}
+                          // pickPrice={pickPrice} setPickPrice={setPickPrice}
+                        />
+                      </div>
+                    )}
+                    {!showLoader && newMovers2?.length > 0 && !todayPick && (
                       <div className='mx-[10px] flex-col space-y-[20px]'>
                         <MoverCard
                           bookSmart
@@ -908,6 +907,7 @@ const Movers = () => {
                       </div>
                     )}
                     {!showLoader &&
+                      newMovers2?.length > 0 &&
                       !todayPick &&
                       otherMovers2.map((mv, index) => {
                         return (

@@ -235,12 +235,12 @@ export const quoteSlice = createSlice({
       state.moverDetails.pickPrice = action.payload;
     },
 
-    updateMoverSideDetails: (state, action) => {
-      state.moverSideDetails = action.payload
-    },
     // updateMoverSideDetails: (state, action) => {
-    //   Object.assign(state.moverSideDetails, action.payload);
+    //   state.moverSideDetails = action.payload
     // },
+    updateMoverSideDetails: (state, action) => {
+      Object.assign(state.moverSideDetails, action.payload);
+    },
 
     resetMoverSideDetails: (state, action) => {
       state.paymentDetails = {

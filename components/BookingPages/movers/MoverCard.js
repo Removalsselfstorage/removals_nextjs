@@ -106,29 +106,6 @@ const MoverCard = ({
     router,
   } = useQuote();
 
-  const sideBarDispatch = () => {
-    setTimeout(() => {
-      setShowLoader2(true);
-    }, 0);
-    setTimeout(() => {
-      setShowLoader2(false);
-    }, 500);
-    // setClickedModalOpen((prev)=>!prev);
-    updateMoverSide({
-      image,
-      name,
-      loadArea,
-      rating,
-      reviewCount,
-      price,
-      hiresCount,
-      description,
-      selectedTime,
-      timeValue,
-      details: details,
-    });
-  };
-
   const priceFirstDay = moveDetails?.initialPackagePrice;
   const priceSecondDay = (priceFirstDay * 0.559).toFixed(); //74
   const priceThirdDay = (priceFirstDay * 0.495).toFixed(); //107
@@ -153,6 +130,36 @@ const MoverCard = ({
 
   const uname = name ?? "man";
 
+  const reviewAverage = calculateAverageRating2(reviews2) ?? 0;
+
+  const reviewGrade = reviewAverage ? getRatingGrade(reviewAverage) : "Good";
+
+  const sideBarDispatch = () => {
+    setTimeout(() => {
+      setShowLoader2(true);
+    }, 0);
+    setTimeout(() => {
+      setShowLoader2(false);
+    }, 500);
+    // setClickedModalOpen((prev)=>!prev);
+    updateMoverSide({
+      image,
+      name,
+      loadArea,
+      rating,
+      reviewCount,
+      price,
+      hiresCount,
+      description,
+      selectedTime,
+      timeValue,
+      details: details,
+      reviews2,
+      reviewAverage,
+      reviewGrade,
+    });
+  };
+
   useEffect(() => {
     // const queryMessages = query(reviewRef);
     const queryMessages = query(
@@ -176,10 +183,6 @@ const MoverCard = ({
   }, [uname]);
 
   console.log({ reviews2, uname });
-
-  const reviewAverage = calculateAverageRating2(reviews2) ?? 0;
-
-  const reviewGrade = reviewAverage ? getRatingGrade(reviewAverage) : "Good";
 
   const allTime = [
     { id: "7am - 9am", time: "7am - 9am" },

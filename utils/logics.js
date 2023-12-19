@@ -4,6 +4,7 @@ export function calculateAverageRating2(reviews) {
     0
   );
   const averageRating = totalRating / reviews.length;
+  // console.log({averageRating})
   return averageRating;
 }
 

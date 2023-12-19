@@ -182,8 +182,6 @@ const MoverCard = ({
     return () => unsubscribe();
   }, [uname]);
 
-  console.log({ reviews2, uname });
-
   const allTime = [
     { id: "7am - 9am", time: "7am - 9am" },
     { id: "9am - 12am", time: "9am - 12am" },
@@ -370,7 +368,10 @@ const MoverCard = ({
     });
   }, []);
 
+  const reviewAvg = isNaN(reviewAverage) ? 0 : Number(reviewAverage).toFixed(1);
+
   // console.log({ currentBook });
+  console.log({ reviews2, uname, reviewAverage, reviewAvg });
 
   return (
     <>
@@ -432,15 +433,15 @@ const MoverCard = ({
                   {/* rating / reviews */}
                   <div className='flex flex-col lg:flex-row lg:items-center space-y-[5px] lg:space-y-0 lg:space-x-[10px] mt-[0px] text-[15px] mb-[7px]'>
                     <div className='flex items-center space-x-[10px] mt-[0px] text-[15px]'>
-                      <p className='font-semibold'>{rating?.toFixed(1)}</p>
+                      <p className='font-semibold'>{reviewAvg}</p>
                       {/* <FullRating small value={rating} color="text-secondary" /> */}
                       <StarRating
-                        rating={rating}
+                        rating={reviewAvg}
                         size='text-secondary text-[16px]'
                       />
                       <p className=''>{`- (${
                         reviews2?.length ?? 0
-                      } Reviews)`}</p>
+                      } Review(s))`}</p>
                     </div>
                     {/* <div className="flex items-center space-x-[10px] mt-[0px] text-[15px]">
                   <p className="link link-hover text-primary font-semibold mt-[5px] md:mt-[0px] ">
@@ -495,7 +496,7 @@ const MoverCard = ({
                   <div className='flex  flex-col items-center justify-center space-y-[3px] lg:space-y-0 lg:flex-row md:space-x-[10px] md:items-center md:justify-center bg-primary/10 py-[5px] px-[10px] md:px-[30px] xl:px-[20px] rounded-[10px] xl:mt-[10px]'>
                     <MdWork className='text-[20px] text-primary' />
                     <p className='text-primary text-[14px] leading-[16px]'>
-                      {hiresCount} hires
+                      {hiresCount ?? 0} hire(s)
                     </p>
                   </div>
                 )}

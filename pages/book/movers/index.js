@@ -865,7 +865,7 @@ const Movers = () => {
                           reviewCount={firstCard[0]?.reviews?.length}
                           price={moverDetails?.pickPrice}
                           // price={priceThirdDay}
-                          hiresCount={firstCard[0]?.completedMoves}
+                          hiresCount={firstCard[0]?.completedMoves ?? 0}
                           description={firstCard[0]?.companyBio}
                           score={firstCard[0]?.score}
                           details={firstCard[0]}
@@ -928,7 +928,7 @@ const Movers = () => {
                               reviewCount={mv?.reviews?.length ?? 0}
                               price={Number(mv?.price).toFixed()}
                               // price={priceThirdDay}
-                              hiresCount={mv?.completedMoves}
+                              hiresCount={mv?.completedMoves ?? 0}
                               description={mv?.companyBio}
                               score={mv?.score}
                               details={mv}

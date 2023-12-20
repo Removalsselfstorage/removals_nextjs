@@ -23,7 +23,7 @@ const ImagePortfolio = ({ sideDetails }) => {
       <div className='grid grid-cols-2 lg:grid-cols-3 gap-[10px]'>
         {sideDetails?.details?.portfolioPixUploadUrl1 && (
           <div
-            className='flex-[1] cursor-pointer hover:ring-[2px] ring-primary duration-200 rounded-[20px] hover:scale-[1.03]'
+            className='flex-[1] cursor-pointer hover:ring-[3px] ring-primary duration-200 rounded-[20px] hover:scale-[1.03]'
             onClick={() => {
               setPortImage(sideDetails?.details?.portfolioPixUploadUrl1);
               window.my_modal_319.showModal();
@@ -35,7 +35,7 @@ const ImagePortfolio = ({ sideDetails }) => {
                   ? sideDetails?.details?.portfolioPixUploadUrl1
                   : "/van-placeholder.svg"
               }
-              className='w-full h-[150px] rounded-[20px] object-contain border'
+              className='w-full h-[150px] rounded-[20px] object-contain  border-[2px]'
               alt=''
             />
           </div>
@@ -43,7 +43,7 @@ const ImagePortfolio = ({ sideDetails }) => {
 
         {sideDetails?.details?.portfolioPixUploadUrl2 && (
           <div
-            className='flex-[1] cursor-pointer hover:ring-[2px] ring-primary duration-200 rounded-[20px] hover:scale-[1.03]'
+            className='flex-[1] cursor-pointer hover:ring-[3px] ring-primary duration-200 rounded-[20px] hover:scale-[1.03]'
             onClick={() => {
               setPortImage(sideDetails?.details?.portfolioPixUploadUrl2);
               window.my_modal_319.showModal();
@@ -55,7 +55,7 @@ const ImagePortfolio = ({ sideDetails }) => {
                   ? sideDetails?.details?.portfolioPixUploadUrl2
                   : "/van-placeholder.svg"
               }
-              className='w-full h-[150px] rounded-[20px] object-contain border'
+              className='w-full h-[150px] rounded-[20px] object-contain border-[2px]'
               alt=''
             />
           </div>
@@ -63,7 +63,7 @@ const ImagePortfolio = ({ sideDetails }) => {
 
         {sideDetails?.details?.portfolioPixUploadUrl3 && (
           <div
-            className='flex-[1] cursor-pointer hover:ring-[2px] ring-primary duration-200 rounded-[20px] hover:scale-[1.03]'
+            className='flex-[1] cursor-pointer hover:ring-[3px] ring-primary duration-200 rounded-[20px] hover:scale-[1.03]'
             onClick={() => {
               setPortImage(sideDetails?.details?.portfolioPixUploadUrl3);
               window.my_modal_319.showModal();
@@ -75,7 +75,7 @@ const ImagePortfolio = ({ sideDetails }) => {
                   ? sideDetails?.details?.portfolioPixUploadUrl3
                   : "/van-placeholder.svg"
               }
-              className='w-full h-[150px] rounded-[20px] object-contain border'
+              className='w-full h-[150px] rounded-[20px] object-contain border-[2px]'
               alt=''
             />
           </div>
@@ -83,7 +83,7 @@ const ImagePortfolio = ({ sideDetails }) => {
 
         {sideDetails?.details?.portfolioPixUploadUrl4 && (
           <div
-            className='flex-[1] cursor-pointer hover:ring-[2px] ring-primary duration-200 rounded-[20px] hover:scale-[1.03]'
+            className='flex-[1] cursor-pointer hover:ring-[3px] ring-primary duration-200 rounded-[20px] hover:scale-[1.03]'
             onClick={() => {
               setPortImage(sideDetails?.details?.portfolioPixUploadUrl4);
               window.my_modal_319.showModal();
@@ -95,7 +95,7 @@ const ImagePortfolio = ({ sideDetails }) => {
                   ? sideDetails?.details?.portfolioPixUploadUrl4
                   : "/van-placeholder.svg"
               }
-              className='w-full h-[150px] rounded-[20px] object-contain border'
+              className='w-full h-[150px] rounded-[20px] object-contain border-[2px]'
               alt=''
             />
           </div>
@@ -103,7 +103,7 @@ const ImagePortfolio = ({ sideDetails }) => {
 
         {sideDetails?.details?.portfolioPixUploadUrl5 && (
           <div
-            className='flex-[1] cursor-pointer hover:ring-[2px] ring-primary duration-200 rounded-[20px] hover:scale-[1.03]'
+            className='flex-[1] cursor-pointer hover:ring-[3px] ring-primary duration-200 rounded-[20px] hover:scale-[1.03]'
             onClick={() => {
               setPortImage(sideDetails?.details?.portfolioPixUploadUrl5);
               window.my_modal_319.showModal();
@@ -115,7 +115,7 @@ const ImagePortfolio = ({ sideDetails }) => {
                   ? sideDetails?.details?.portfolioPixUploadUrl5
                   : "/van-placeholder.svg"
               }
-              className='w-full h-[150px] rounded-[20px] object-contain border'
+              className='w-full h-[150px] rounded-[20px] object-contain border-[2px]'
               alt=''
             />
           </div>
@@ -123,7 +123,7 @@ const ImagePortfolio = ({ sideDetails }) => {
 
         {sideDetails?.details?.portfolioPixUploadUrl6 && (
           <div
-            className='flex-[1] cursor-pointer hover:ring-[2px] ring-primary duration-200 rounded-[20px] hover:scale-[1.03]'
+            className='flex-[1] cursor-pointer hover:ring-[3px] ring-primary duration-200 rounded-[20px] hover:scale-[1.03]'
             onClick={() => {
               setPortImage(sideDetails?.details?.portfolioPixUploadUrl6);
               window.my_modal_319.showModal();
@@ -135,7 +135,7 @@ const ImagePortfolio = ({ sideDetails }) => {
                   ? sideDetails?.details?.portfolioPixUploadUrl6
                   : "/van-placeholder.svg"
               }
-              className='w-full h-[150px] rounded-[20px] object-contain border'
+              className='w-full h-[150px] rounded-[20px] object-contain border-[2px]'
               alt=''
             />
           </div>
@@ -156,7 +156,7 @@ const ImagePortfolio = ({ sideDetails }) => {
                 //   objectFit: "cover",
                 //   borderRadius: "20px",
                 // }}
-                className='h-[75vh] object-contain rounded-[20px] border'
+                className='h-[75vh] object-contain rounded-[20px] border-[2px]'
                 alt=''
               />
             </div>
@@ -164,15 +164,15 @@ const ImagePortfolio = ({ sideDetails }) => {
               {sideDetails?.details?.portfolioPixUploadUrl1 && (
                 <div
                   className={`${
-                    portImage1 === portImage ? "ring-[2px]" : ""
-                  } cursor-pointer hover:ring-[2px] ring-primary duration-200 rounded-[10px] hover:scale-[1.03]`}
+                    portImage1 === portImage ? "ring-[3px]" : ""
+                  } cursor-pointer hover:ring-[3px] ring-primary duration-200 rounded-[10px] hover:scale-[1.03]`}
                   onClick={() => {
                     setPortImage(sideDetails?.details?.portfolioPixUploadUrl1);
                   }}
                 >
                   <img
                     src={portImage1 ? portImage1 : "/van-placeholder.svg"}
-                    className='h-[60px] w-[60px] lg:h-[70px] lg:w-[70px] rounded-[10px] object-cover border'
+                    className='h-[60px] w-[60px] lg:h-[70px] lg:w-[70px] rounded-[10px] object-cover border-[2px]'
                     alt=''
                   />
                 </div>
@@ -180,15 +180,15 @@ const ImagePortfolio = ({ sideDetails }) => {
               {sideDetails?.details?.portfolioPixUploadUrl2 && (
                 <div
                   className={`${
-                    portImage2 === portImage ? "ring-[2px]" : ""
-                  } cursor-pointer hover:ring-[2px] ring-primary duration-200 rounded-[10px] hover:scale-[1.0]`}
+                    portImage2 === portImage ? "ring-[3px]" : ""
+                  } cursor-pointer hover:ring-[3px] ring-primary duration-200 rounded-[10px] hover:scale-[1.0]`}
                   onClick={() => {
                     setPortImage(sideDetails?.details?.portfolioPixUploadUrl2);
                   }}
                 >
                   <img
                     src={portImage2 ? portImage2 : "/van-placeholder.svg"}
-                    className='h-[60px] w-[60px] lg:h-[70px] lg:w-[70px] rounded-[10px] object-cover border'
+                    className='h-[60px] w-[60px] lg:h-[70px] lg:w-[70px] rounded-[10px] object-cover border-[2px]'
                     alt=''
                   />
                 </div>
@@ -196,15 +196,15 @@ const ImagePortfolio = ({ sideDetails }) => {
               {sideDetails?.details?.portfolioPixUploadUrl3 && (
                 <div
                   className={`${
-                    portImage3 === portImage ? "ring-[2px]" : ""
-                  } cursor-pointer hover:ring-[2px] ring-primary duration-200 rounded-[10px] hover:scale-[1.03]`}
+                    portImage3 === portImage ? "ring-[3px]" : ""
+                  } cursor-pointer hover:ring-[3px] ring-primary duration-200 rounded-[10px] hover:scale-[1.03]`}
                   onClick={() => {
                     setPortImage(sideDetails?.details?.portfolioPixUploadUrl3);
                   }}
                 >
                   <img
                     src={portImage3 ? portImage3 : "/van-placeholder.svg"}
-                    className='h-[60px] w-[60px] lg:h-[70px] lg:w-[70px] rounded-[10px] object-cover border'
+                    className='h-[60px] w-[60px] lg:h-[70px] lg:w-[70px] rounded-[10px] object-cover border-[2px]'
                     alt=''
                   />
                 </div>
@@ -213,15 +213,15 @@ const ImagePortfolio = ({ sideDetails }) => {
               {sideDetails?.details?.portfolioPixUploadUrl4 && (
                 <div
                   className={`${
-                    portImage4 === portImage ? "ring-[2px]" : ""
-                  } cursor-pointer hover:ring-[2px] ring-primary duration-200 rounded-[10px] hover:scale-[1.03]`}
+                    portImage4 === portImage ? "ring-[3px]" : ""
+                  } cursor-pointer hover:ring-[3px] ring-primary duration-200 rounded-[10px] hover:scale-[1.03]`}
                   onClick={() => {
                     setPortImage(sideDetails?.details?.portfolioPixUploadUrl4);
                   }}
                 >
                   <img
                     src={portImage4 ? portImage4 : "/van-placeholder.svg"}
-                    className='h-[60px] w-[60px] lg:h-[70px] lg:w-[70px] rounded-[10px] object-cover border'
+                    className='h-[60px] w-[60px] lg:h-[70px] lg:w-[70px] rounded-[10px] object-cover border-[2px]'
                     alt=''
                   />
                 </div>
@@ -230,15 +230,15 @@ const ImagePortfolio = ({ sideDetails }) => {
               {sideDetails?.details?.portfolioPixUploadUrl5 && (
                 <div
                   className={`${
-                    portImage5 === portImage ? "ring-[2px]" : ""
-                  } cursor-pointer hover:ring-[2px] ring-primary duration-200 rounded-[10px] hover:scale-[1.03]`}
+                    portImage5 === portImage ? "ring-[3px]" : ""
+                  } cursor-pointer hover:ring-[3px] ring-primary duration-200 rounded-[10px] hover:scale-[1.03]`}
                   onClick={() => {
                     setPortImage(sideDetails?.details?.portfolioPixUploadUrl5);
                   }}
                 >
                   <img
                     src={portImage5 ? portImage5 : "/van-placeholder.svg"}
-                    className='h-[60px] w-[60px] lg:h-[70px] lg:w-[70px] rounded-[10px] object-cover border'
+                    className='h-[60px] w-[60px] lg:h-[70px] lg:w-[70px] rounded-[10px] object-cover border-[2px]'
                     alt=''
                   />
                 </div>
@@ -247,15 +247,15 @@ const ImagePortfolio = ({ sideDetails }) => {
               {sideDetails?.details?.portfolioPixUploadUrl6 && (
                 <div
                   className={`${
-                    portImage6 === portImage ? "ring-[2px]" : ""
-                  } cursor-pointer hover:ring-[2px] ring-primary duration-200 rounded-[10px] hover:scale-[1.03]`}
+                    portImage6 === portImage ? "ring-[3px]" : ""
+                  } cursor-pointer hover:ring-[3px] ring-primary duration-200 rounded-[10px] hover:scale-[1.03]`}
                   onClick={() => {
                     setPortImage(sideDetails?.details?.portfolioPixUploadUrl6);
                   }}
                 >
                   <img
                     src={portImage6 ? portImage6 : "/van-placeholder.svg"}
-                    className='h-[60px] w-[60px] lg:h-[70px] lg:w-[70px] rounded-[10px] object-cover border'
+                    className='h-[60px] w-[60px] lg:h-[70px] lg:w-[70px] rounded-[10px] object-cover border-[2px]'
                     alt=''
                   />
                 </div>

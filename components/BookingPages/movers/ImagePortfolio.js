@@ -16,7 +16,7 @@ const ImagePortfolio = ({ sideDetails }) => {
     setPortImage4(sideDetails?.details?.portfolioPixUploadUrl4);
     setPortImage5(sideDetails?.details?.portfolioPixUploadUrl5);
     setPortImage6(sideDetails?.details?.portfolioPixUploadUrl6);
-  }, []);
+  }, [portImage]);
 
   return (
     <div className=''>

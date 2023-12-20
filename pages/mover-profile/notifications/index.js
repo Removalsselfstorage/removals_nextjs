@@ -41,18 +41,18 @@ const Inbox = () => {
   const [reload, setReload] = useState(false);
   const [modalData, setModalData] = useState({});
 
-  const filterOutNotification = () => {
-    moverData?.notifications?.filter((md) => md);
-  };
+  // const filterOutNotification = () => {
+  //   moverData?.notifications?.filter((md) => md);
+  // };
 
   const updateMoverNotif = async (data) => {
     const moversRef = doc(db, "moversData", uid);
 
     if (data?.status === "read") return;
 
-    const newMoveData = moverData?.notifications?.filter(
-      (md) => md.date !== data.date
-    );
+    // const newMoveData = notificationData
+    const newMoveData =
+      notificationData?.filter((md) => md.id != data.id) ?? [];
 
     console.log({ newMoveData });
 
@@ -66,11 +66,12 @@ const Inbox = () => {
             ...newMoveData,
             {
               subject: data?.subject,
-              date: data?.date,
               message: data?.message,
+              date: data?.date,
               // createdAt: serverTimestamp(),
               sender: data?.sender,
               status: "read",
+              id: data?.id,
             },
           ],
           // lastNotificationId: "",
@@ -98,11 +99,11 @@ const Inbox = () => {
     const moverDat = singleMoversData?.personalDetails?.notifications;
 
     const sortMoverData =
-    moverDat?.length > 0
-      ? [...moverDat]?.sort((a, b) => {
-          return new Date(b.date) - new Date(a.date);
-        })
-      : [];
+      moverDat?.length > 0
+        ? [...moverDat]?.sort((a, b) => {
+            return new Date(b.date) - new Date(a.date);
+          })
+        : [];
 
     const readD = sortMoverData?.filter((sm) => sm.status === "read");
     const unreadD = sortMoverData?.filter((sm) => sm.status === "unread");
@@ -113,7 +114,7 @@ const Inbox = () => {
     setMoverData(singleMoversData);
   }, [singleMoversData]);
 
-  // console.log({ moverData, notificationData, modalData });
+  console.log({ moverData, notificationData, modalData });
 
   return (
     <MoverLayout reload={reload}>
@@ -223,7 +224,7 @@ const Inbox = () => {
                     return (
                       <div
                         className={`w-full flex flex-col cursor-pointer hover:scale-[1.02] duration-300`}
-                        key={ms.date}
+                        key={ms.id}
                       >
                         <div
                           onClick={() => {

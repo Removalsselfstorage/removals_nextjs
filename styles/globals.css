@@ -3,6 +3,8 @@
 @tailwind components;
 @tailwind utilities;
 
+/* @import '~react-image-gallery/styles/css/image-gallery.css'; */
+
 /* import "react-toastify/dist/ReactToastify.css"; */
 
 /* import '@fortawesome/fontawesome-free/css/all.css'; */

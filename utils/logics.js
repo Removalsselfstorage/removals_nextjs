@@ -1,3 +1,8 @@
+export const lettersCount = (text) => {
+  return text?.replace(/[^a-zA-Z]/g, "")?.length;
+};
+
+
 export function calculateAverageRating2(reviews) {
   const totalRating = reviews.reduce(
     (sum, review) => sum + review.reviewDetails.rating,

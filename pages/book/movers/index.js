@@ -130,6 +130,8 @@ const Movers = () => {
   const [newMoversList9, setNewMoversList9] = useState([]);
   const [currentBook, setCurrentBook] = useState({});
 
+  
+
   const moversRef1 = collection(db, "moversData");
   const moversRef2 = collection(db, "moversDetails");
   const moversRef3 = collection(db, "moversCompanyPix");
@@ -876,8 +878,10 @@ const Movers = () => {
                           sendMoverPageMail={sendMoverPageMail}
                           listOfMovers={listOfMovers2}
                           currentBook={currentBook}
-                          // timeValue={timeValue}
-                          // setTimeValue={setTimeValue}
+                          timeValue={timeValue}
+                          setTimeValue={setTimeValue}
+                          selectedTime={selectedTime}
+                          setSelectedTime={setSelectedTime}
                           // pickPrice={pickPrice} setPickPrice={setPickPrice}
                         />
                       </div>
@@ -902,6 +906,10 @@ const Movers = () => {
                           sendMoverPageMail={sendMoverPageMail}
                           listOfMovers={listOfMovers2}
                           currentBook={currentBook}
+                          timeValue={timeValue}
+                          setTimeValue={setTimeValue}
+                          selectedTime={selectedTime}
+                          setSelectedTime={setSelectedTime}
                           // pickPrice={pickPrice} setPickPrice={setPickPrice}
                         />
                       </div>
@@ -937,6 +945,10 @@ const Movers = () => {
                               sendMoverPageMail={sendMoverPageMail}
                               listOfMovers={listOfMovers2}
                               currentBook={currentBook}
+                              timeValue={timeValue}
+                              setTimeValue={setTimeValue}
+                              selectedTime={selectedTime}
+                              setSelectedTime={setSelectedTime}
                               // pickPrice={pickPrice} setPickPrice={setPickPrice}
                             />
                           </div>

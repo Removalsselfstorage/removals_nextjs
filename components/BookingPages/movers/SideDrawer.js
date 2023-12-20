@@ -14,6 +14,7 @@ import {
   changeFontWeight2,
   getCurrentDateFormatted,
   getRatingGrade,
+  lettersCount,
 } from "@/utils/logics";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
@@ -31,6 +32,9 @@ import { db } from "@/firebase";
 import { FaTruckMoving } from "react-icons/fa";
 import { FiCheckCircle } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
+// import ImageGallery from "react-image-gallery";
+import { HiBanknotes } from "react-icons/hi2";
+import ImagePortfolio from "./ImagePortfolio";
 
 const SideDrawer = ({
   image,
@@ -78,9 +82,11 @@ const SideDrawer = ({
   //   details.moverSideDetails.selectedTime
   // );
   const [timeValue, setTimeValue] = useState("");
+  const [timeValue2, setTimeValue2] = useState("");
   const [submitError, setSubmitError] = useState(true);
   const [submitLoading, setSubmitLoading] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
+  const [portImage, setPortImage] = useState("");
 
   // const [reviews2, setReviews2] = useState([]);
 
@@ -96,15 +102,16 @@ const SideDrawer = ({
   }, [showLoader2]);
 
   const allTime = [
-    { id: "7am - 9am", time: "7am - 9am" },
-    { id: "9am - 12am", time: "9am - 12am" },
-    { id: "12pm - 3pm", time: "12pm - 3pm" },
-    { id: "3pm - 5pm", time: "3pm - 5pm" },
+    { id: "7am - 9am", time: "7am - 9am", id2: "7am - 9am" + moverName },
+    { id: "9am - 12am", time: "9am - 12am", id2: "9am - 12am" + moverName },
+    { id: "12pm - 3pm", time: "12pm - 3pm", id2: "12pm - 3pm" + moverName },
+    { id: "3pm - 5pm", time: "3pm - 5pm", id2: "3pm - 5pm" + moverName },
   ];
 
   const onTimeHandle = (id, time) => {
-    setSelectedTime(null);
+    setSelectedTime(id);
     setTimeValue(time);
+    setTimeValue2(moverName);
     updateMoverSide({
       image: moverSideDetails?.image,
       name: moverSideDetails?.name,
@@ -200,11 +207,11 @@ const SideDrawer = ({
 
   const onCheckout = async () => {
     setSubmitError(true);
-    if (timeValue == "") {
+    if (timeValue2 != moverName) {
       setSubmitError(false);
-      toast.error(`Please pick a move time`, {
-        duration: 6000,
-      });
+      // toast.error(`Please pick a move time`, {
+      //   duration: 6000,
+      // });
     } else {
       toast.remove();
       setSubmitLoading(true);
@@ -261,7 +268,9 @@ const SideDrawer = ({
     }
   };
 
-  const reviewAvg = isNaN(sideDetails?.reviewAverage) ? 0 : Number(sideDetails?.reviewAverage).toFixed(1);
+  const reviewAvg = isNaN(sideDetails?.reviewAverage)
+    ? 0
+    : Number(sideDetails?.reviewAverage).toFixed(1);
 
   // const modalContentRef = useRef(null);
 
@@ -279,15 +288,16 @@ const SideDrawer = ({
   //     modalContentRef.current.scrollTop = 0;
   //   }
   // }, [clickedModalOpen]);
+  const checkTextLength = lettersCount(textDescription);
 
-  console.log({ sideDetails, reviews });
+  console.log({ checkTextLength, sideDetails, reviews });
 
   return (
-    <div className='drawer drawer-end'>
+    <div className='drawer drawer-end '>
       <input id='my-drawer-4' type='checkbox' className='drawer-toggle' />
-      <div className='drawer-side z-[99999] h-[100vh]'>
+      <div className='drawer-side z-[99999] '>
         <label htmlFor='my-drawer-4' className='drawer-overlay'></label>
-        <div className='p-4 w-[80vw] md:w-[50vw]  bg-white text-base-content'>
+        <div className='p-4 w-[80vw] md:w-[50vw] h-[100vh] overflow-auto  bg-white text-base-content scrollbar-thin scrollbar-track-gray-200/50 scrollbar-thumb-gray-500/20 scrollbar-default'>
           <div className='flex flex-col  overflow-auto-y'>
             {/* row 1 */}
             <div className='flex flex-col xl:flex-row xl:items-center xl:space-x-[10px] mb-[20px] xl:mb-[0px] xl:py-[10px]'>
@@ -307,7 +317,6 @@ const SideDrawer = ({
                     {moverName}
                   </h2>
                 </div>
-
                 {/* registered since */}
                 <div className='flex items-center space-x-[15px] md:space-x-[5px]  sm:items-start  space-y-[0px] lg:space-y-[0px] lg:flex-row lg:items-center mb-[5px] sm:mb-[7px] lg:mb-[7px] text-[15px]'>
                   <p className='text-primary font-semibold'>
@@ -317,13 +326,10 @@ const SideDrawer = ({
                     {sideDetails?.details?.registerDate}
                   </p>
                 </div>
-
                 {/* rating / reviews */}
                 <div className='flex flex-col lg:flex-row lg:items-center space-y-[5px] lg:space-y-0 lg:space-x-[10px] mt-[0px] text-[15px] mb-[7px]'>
                   <div className='flex items-center space-x-[10px] mt-[0px] text-[15px]'>
-                    <p className='font-semibold'>
-                      {reviewAvg}
-                    </p>
+                    <p className='font-semibold'>{reviewAvg}</p>
                     {/* <FullRating small value={rating} color="text-secondary" /> */}
                     <StarRating
                       rating={reviewAvg}
@@ -341,41 +347,52 @@ const SideDrawer = ({
               </div>
             </div>
             {/* loading area */}
-            <div className='flex mx-[10px] md:mx-[20px] items-center space-x-[15px] md:space-x-[5px]  sm:items-start  space-y-[0px] lg:space-y-[0px] lg:flex-row lg:items-center mb-[5px] sm:mb-[7px] lg:mb-[7px] text-[15px]'>
-              <div className='flex items-center space-x-[5px]'>
-                <FaTruckMoving className='text-[20px] text-primary' />
-                <p className='text-primary font-semibold hidden lg:block'>
-                  Load area:
-                </p>
-              </div>
-              <p className='link link-hover '>{sideDetails?.loadArea}</p>
-            </div>
+            {sideDetails?.details?.loadHeight &&
+              sideDetails?.details?.loadLength &&
+              sideDetails?.details?.loadWidth && (
+                <div className='mx-[10px] md:mx-[20px] flex items-center space-x-[15px] md:space-x-[5px]  sm:items-start  space-y-[0px] lg:space-y-[0px] lg:flex-row lg:items-center mb-[5px] sm:mb-[7px] lg:mb-[7px] text-[15px]'>
+                  <div className='flex items-center space-x-[5px]'>
+                    <FaTruckMoving className='text-[20px] text-primary' />
+                    <p className='text-primary font-semibold hidden md:block'>
+                      Load area:
+                    </p>
+                  </div>
+                  <p className='link link-hover font-semibold'>
+                    H - {sideDetails?.details?.loadHeight}m, L -{" "}
+                    {sideDetails?.details?.loadLength}m, W -{" "}
+                    {sideDetails?.details?.loadWidth}m
+                  </p>
+                </div>
+              )}
             {/* row 2 */}
             <div className=' mx-[10px] md:mx-[20px]'>
               <p className={`${isExpanded ? "" : "line-clamp-3"} text-[15px] `}>
                 {/* {changeFontWeight(textDescription, moverName, "bold")}{" "} */}
                 {textDescription}{" "}
+                {/* <span
+                    className={`${
+                      isExpanded ? "flex" : "hidden"
+                    } text-secondary hover:underline text-[15px] font-semibold cursor-pointer`}
+                    onClick={() => {
+                      setIsExpanded(!isExpanded);
+                    }}
+                  >
+                    {isExpanded ? "Read less" : "Read more"}
+                  </span> */}
+              </p>
+              {checkTextLength > 200 && (
                 <span
-                  className='text-secondary hover:underline text-[15px] font-semibold cursor-pointer'
+                  className={`
+      
+                  text-secondary hover:underline text-[15px] font-semibold cursor-pointer`}
                   onClick={() => {
                     setIsExpanded(!isExpanded);
                   }}
                 >
                   {isExpanded ? "Read less" : "Read more"}
                 </span>
-              </p>
-              <span
-                className={`${
-                  isExpanded ? "hidden" : "flex"
-                } text-secondary hover:underline text-[15px] font-semibold cursor-pointer`}
-                onClick={() => {
-                  setIsExpanded(!isExpanded);
-                }}
-              >
-                {isExpanded ? "Read less" : "Read more"}
-              </span>
+              )}
             </div>
-
             {/* row 4 */}
             <div className=' mx-[10px] md:mx-[20px] mt-[20px]'>
               <p className='font-bold md:text-[20px] text-primary'>Included</p>
@@ -395,12 +412,24 @@ const SideDrawer = ({
               </ul>
             </div>
 
+            {(sideDetails?.details?.portfolioPixUploadUrl1 ||
+              sideDetails?.details?.portfolioPixUploadUrl2 ||
+              sideDetails?.details?.portfolioPixUploadUrl3 ||
+              sideDetails?.details?.portfolioPixUploadUrl4 ||
+              sideDetails?.details?.portfolioPixUploadUrl5 ||
+              sideDetails?.details?.portfolioPixUploadUrl6) && (
+                <div className=' mx-[10px] md:mx-[20px] mt-[20px]'>
+                  <p className='font-bold md:text-[20px] text-primary mb-[5px] md:mb-[10px]'>
+                    Portfolio
+                  </p>
+                  <ImagePortfolio sideDetails={sideDetails} />
+                </div>
+              )}
             {/* row 5 */}
             <div className=' mx-[10px] md:mx-[20px] mt-[20px] pb-[20px] border-b'>
               <p className='font-bold md:text-[20px] text-primary mb-[10px]'>
                 Reviews
               </p>
-
               <div className='flex flex-col space-y-[20px] lg:flex-row lg:space-y-[0px]  lg:space-x-[40px]'>
                 {/* overall review */}
                 <div className='flex flex-col '>
@@ -420,34 +449,33 @@ const SideDrawer = ({
                 </div>
                 {/* other review values */}
                 {/* <div className='flex flex-col text-[15px]'>
-                  <div className='flex-col flex mb-[10px]'>
-                    <p className='mb-[5px]'>Positive Feedback</p>
-                    <progress
-                      className='progress progress-secondary w-56'
-                      value='90'
-                      max='100'
-                    ></progress>
-                  </div>
-                  <div className='flex-col flex mb-[10px]'>
-                    <p className='mb-[5px]'>Neutral Feedback</p>
-                    <progress
-                      className='progress progress-secondary w-56'
-                      value='50'
-                      max='100'
-                    ></progress>
-                  </div>
-                  <div className='flex-col flex mb-[10px]'>
-                    <p className='mb-[5px]'>Negative Feedback</p>
-                    <progress
-                      className='progress progress-secondary w-56'
-                      value='0'
-                      max='100'
-                    ></progress>
-                  </div>
-                </div> */}
+                    <div className='flex-col flex mb-[10px]'>
+                      <p className='mb-[5px]'>Positive Feedback</p>
+                      <progress
+                        className='progress progress-secondary w-56'
+                        value='90'
+                        max='100'
+                      ></progress>
+                    </div>
+                    <div className='flex-col flex mb-[10px]'>
+                      <p className='mb-[5px]'>Neutral Feedback</p>
+                      <progress
+                        className='progress progress-secondary w-56'
+                        value='50'
+                        max='100'
+                      ></progress>
+                    </div>
+                    <div className='flex-col flex mb-[10px]'>
+                      <p className='mb-[5px]'>Negative Feedback</p>
+                      <progress
+                        className='progress progress-secondary w-56'
+                        value='0'
+                        max='100'
+                      ></progress>
+                    </div>
+                  </div> */}
               </div>
             </div>
-
             {/* reviews comments */}
             <div className=''>
               {/* {reviews.slice(0, 3).map((review, index) => { */}
@@ -465,7 +493,6 @@ const SideDrawer = ({
                 );
               })}
             </div>
-
             {/* row 6 */}
             <div
               className={`flex  flex-col space-y-[20px] lg:space-y-0 lg:flex-row lg:items-start mx-[10px] md:mx-[20px] mt-[20px] md:justify-between`}
@@ -475,14 +502,14 @@ const SideDrawer = ({
                 {/* time */}
                 <div className='grid grid-cols-2 justify-center gap-x-[10px] gap-y-[10px] xl:grid-cols-4 w-auto xl:w-[450px]'>
                   {allTime.map((tm, index) => {
-                    let isActive = tm.id == moverSideDetails?.selectedTime;
+                    let isActive = tm.id2 == moverSideDetails?.selectedTime;
                     return (
                       <div
                         key={index}
                         className='flex items-center text-[15px]'
                       >
                         <div
-                          onClick={() => onTimeHandle(tm.id, tm.time)}
+                          onClick={() => onTimeHandle(tm.id2, tm.time)}
                           className={`${
                             isActive
                               ? "bg-secondary text-white border-secondary"

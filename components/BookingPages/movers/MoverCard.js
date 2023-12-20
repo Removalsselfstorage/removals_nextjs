@@ -77,6 +77,10 @@ const MoverCard = ({
   sendMoverPageMail,
   listOfMovers,
   currentBook,
+  // timeValue,
+  // setTimeValue,
+  selectedTime,
+  setSelectedTime,
 }) => {
   const {
     serviceLocation,
@@ -113,8 +117,9 @@ const MoverCard = ({
   const priceSundays = (priceFirstDay * 0.441).toFixed(); //8
   const priceOtherDays = (priceFirstDay * 0.33).toFixed();
 
-  const [selectedTime, setSelectedTime] = useState(null);
+  // const [selectedTime, setSelectedTime] = useState(null);
   const [timeValue, setTimeValue] = useState("");
+  const [timeValue2, setTimeValue2] = useState("");
   const [moverName, setMoverName] = useState("");
   const [moverPrice, setMoverPrice] = useState("");
   const [showMore, setShowMore] = useState(true);
@@ -183,10 +188,10 @@ const MoverCard = ({
   }, [uname]);
 
   const allTime = [
-    { id: "7am - 9am", time: "7am - 9am" },
-    { id: "9am - 12am", time: "9am - 12am" },
-    { id: "12pm - 3pm", time: "12pm - 3pm" },
-    { id: "3pm - 5pm", time: "3pm - 5pm" },
+    { id: "7am - 9am", time: "7am - 9am", id2: "7am - 9am" + name },
+    { id: "9am - 12am", time: "9am - 12am", id2: "9am - 12am" + name },
+    { id: "12pm - 3pm", time: "12pm - 3pm", id2: "12pm - 3pm" + name },
+    { id: "3pm - 5pm", time: "3pm - 5pm", id2: "3pm - 5pm" + name },
   ];
 
   const onTimeHandle = (id, time) => {
@@ -205,6 +210,7 @@ const MoverCard = ({
       timeValue: time,
     });
     setTimeValue(time);
+    setTimeValue2(name);
   };
 
   const sortedListOfMovers = listOfMovers?.filter((lm) => lm.mover !== name);
@@ -288,7 +294,7 @@ const MoverCard = ({
 
   const onCheckout = async () => {
     setSubmitError(true);
-    if (timeValue == "") {
+    if (timeValue2 != name) {
       setSubmitError(false);
       toast.error(`Please pick a move time`, {
         duration: 6000,
@@ -417,19 +423,19 @@ const MoverCard = ({
                   </div>
 
                   {/* loading area */}
-                  <div className='flex items-center space-x-[15px] md:space-x-[5px]  sm:items-start  space-y-[0px] lg:space-y-[0px] lg:flex-row lg:items-center mb-[5px] sm:mb-[7px] lg:mb-[7px] text-[15px]'>
-                    <div className='flex items-center space-x-[5px]'>
-                      <FaTruckMoving className='text-[20px] text-primary' />
-                      <p className='text-primary font-semibold hidden md:block'>
-                        Load area:
-                      </p>
-                    </div>
-                    {loadHeight && loadLength && loadWidth && (
+                  {loadHeight && loadLength && loadWidth && (
+                    <div className='flex items-center space-x-[15px] md:space-x-[5px]  sm:items-start  space-y-[0px] lg:space-y-[0px] lg:flex-row lg:items-center mb-[5px] sm:mb-[7px] lg:mb-[7px] text-[15px]'>
+                      <div className='flex items-center space-x-[5px]'>
+                        <FaTruckMoving className='text-[20px] text-primary' />
+                        <p className='text-primary font-semibold hidden md:block'>
+                          Load area:
+                        </p>
+                      </div>
                       <p className='link link-hover font-semibold'>
                         H - {loadHeight}m, L - {loadLength}m, W - {loadWidth}m
                       </p>
-                    )}
-                  </div>
+                    </div>
+                  )}
                   {/* rating / reviews */}
                   <div className='flex flex-col lg:flex-row lg:items-center space-y-[5px] lg:space-y-0 lg:space-x-[10px] mt-[0px] text-[15px] mb-[7px]'>
                     <div className='flex items-center space-x-[10px] mt-[0px] text-[15px]'>
@@ -540,7 +546,9 @@ const MoverCard = ({
               <div className='grid grid-cols-2 justify-center gap-x-[10px] gap-y-[10px] sm:grid-cols-4 w-auto md:w-[450px]'>
                 {allTime.map((tm, index) => {
                   // let isActive;
-                  let isActive = tm.id == selectedTime;
+                  let isActive = tm.id2 == selectedTime;
+
+                  // const ids = tm.id + name;
                   // if (name == details.moverSideDetails.name) {
                   //   isActive = tm.id == details.moverSideDetails.selectedTime2;
                   // } else {
@@ -550,7 +558,7 @@ const MoverCard = ({
                   return (
                     <div key={index} className='flex items-center text-[15px]'>
                       <div
-                        onClick={() => onTimeHandle(tm.id, tm.time)}
+                        onClick={() => onTimeHandle(tm.id2, tm.time)}
                         className={`${
                           isActive
                             ? "bg-secondary text-white border-secondary"

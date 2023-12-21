@@ -130,8 +130,6 @@ const Movers = () => {
   const [newMoversList9, setNewMoversList9] = useState([]);
   const [currentBook, setCurrentBook] = useState({});
 
-  
-
   const moversRef1 = collection(db, "moversData");
   const moversRef2 = collection(db, "moversDetails");
   const moversRef3 = collection(db, "moversCompanyPix");
@@ -414,24 +412,12 @@ const Movers = () => {
   });
 
   const otherMovers2 = otherCards.map((om, index) => {
-    let percentageIncrement = 15;
-    let price = 0;
-    price = (movPrice + (movPrice * percentageIncrement) / 100).toFixed(2);
-    // Increment the percentage for the next iteration
-    if (index > 0) {
-      percentageIncrement += 5;
-      price = (movPrice + (movPrice * percentageIncrement) / 100).toFixed(2);
-    }
+    let percentageIncrement = index === 0 ? 15 : 15 + 5 * (index + 1 - 1);
+    let price = (movPrice + (movPrice * percentageIncrement) / 100).toFixed(2);
 
-    // const key = `mover${3 + index}`;
     return {
       ...om,
       price,
-      // price: calculateMoverPrice(
-      //   movPrice,
-      //   om?.score,
-      //   0.052
-      // ).toFixed(),
     };
   });
 

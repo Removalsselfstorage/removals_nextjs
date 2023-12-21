@@ -87,13 +87,13 @@ export function getLastTwoWords2(address) {
 
 export function getLastTwoWords(address) {
   // Split the address into an array of words
-  const words = address.split(/\s+/);
+  const words = address?.split(/\s+/);
 
   // Get the last two words
-  const lastTwoWords = words.slice(-2);
+  const lastTwoWords = words?.slice(-2);
 
   // Join the last two words back into a string
-  const result = lastTwoWords.join(" ");
+  const result = lastTwoWords?.join(" ");
 
   return result;
 }

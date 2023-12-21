@@ -55,6 +55,7 @@ const CartSideDrawer = ({
   setClickedModalOpen,
   isGivenDateGreaterThanCurrent,
   showReview,
+  progressData,
   // approvedMovers,
   // timeValue,
   // setTimeValue,
@@ -307,7 +308,7 @@ const CartSideDrawer = ({
     // const queryMessages = query(reviewRef);
     const queryMessages = query(
       reviewRef,
-      where("moverName", "==", reserveDetails?.moverName)
+      where("moverName", "==", progressData?.moverName)
       // orderBy("createdAt", "asc")
     );
     const unsubscribe = onSnapshot(queryMessages, (snapshot) => {
@@ -325,7 +326,7 @@ const CartSideDrawer = ({
     return () => unsubscribe();
   }, []);
 
-  // console.log({ reserveDetails, approvedMovers, checkMoverUid: checkMoverUid() });
+  console.log({ progressData, reserveDetails, });
 
   return (
     <div className='drawer drawer-end'>

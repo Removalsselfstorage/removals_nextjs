@@ -305,6 +305,7 @@ const Reservations = ({ progressData, id, allBookings,  }) => {
                         isGivenDateGreaterThanCurrent
                       }
                       showReview={showReview}
+                      progressData={progressData}
                       // approvedMovers={approvedMovers}
                     />
                     {/* heading */}

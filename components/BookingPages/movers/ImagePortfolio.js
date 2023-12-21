@@ -23,7 +23,7 @@ const ImagePortfolio = ({ sideDetails }) => {
       <div className='grid grid-cols-2 lg:grid-cols-3 gap-[10px]'>
         {sideDetails?.details?.portfolioPixUploadUrl1 && (
           <div
-            className='flex-[1] cursor-pointer hover:ring-[3px] ring-primary duration-200 rounded-[20px] hover:scale-[1.03]'
+            className='flex-[1] cursor-zoom-in hover:ring-[3px] ring-primary duration-200 rounded-[20px] hover:scale-[1.03]'
             onClick={() => {
               setPortImage(sideDetails?.details?.portfolioPixUploadUrl1);
               window.my_modal_319.showModal();
@@ -43,7 +43,7 @@ const ImagePortfolio = ({ sideDetails }) => {
 
         {sideDetails?.details?.portfolioPixUploadUrl2 && (
           <div
-            className='flex-[1] cursor-pointer hover:ring-[3px] ring-primary duration-200 rounded-[20px] hover:scale-[1.03]'
+            className='flex-[1] cursor-zoom-in hover:ring-[3px] ring-primary duration-200 rounded-[20px] hover:scale-[1.03]'
             onClick={() => {
               setPortImage(sideDetails?.details?.portfolioPixUploadUrl2);
               window.my_modal_319.showModal();
@@ -63,7 +63,7 @@ const ImagePortfolio = ({ sideDetails }) => {
 
         {sideDetails?.details?.portfolioPixUploadUrl3 && (
           <div
-            className='flex-[1] cursor-pointer hover:ring-[3px] ring-primary duration-200 rounded-[20px] hover:scale-[1.03]'
+            className='flex-[1] cursor-zoom-in hover:ring-[3px] ring-primary duration-200 rounded-[20px] hover:scale-[1.03]'
             onClick={() => {
               setPortImage(sideDetails?.details?.portfolioPixUploadUrl3);
               window.my_modal_319.showModal();
@@ -83,7 +83,7 @@ const ImagePortfolio = ({ sideDetails }) => {
 
         {sideDetails?.details?.portfolioPixUploadUrl4 && (
           <div
-            className='flex-[1] cursor-pointer hover:ring-[3px] ring-primary duration-200 rounded-[20px] hover:scale-[1.03]'
+            className='flex-[1] cursor-zoom-in hover:ring-[3px] ring-primary duration-200 rounded-[20px] hover:scale-[1.03]'
             onClick={() => {
               setPortImage(sideDetails?.details?.portfolioPixUploadUrl4);
               window.my_modal_319.showModal();
@@ -103,7 +103,7 @@ const ImagePortfolio = ({ sideDetails }) => {
 
         {sideDetails?.details?.portfolioPixUploadUrl5 && (
           <div
-            className='flex-[1] cursor-pointer hover:ring-[3px] ring-primary duration-200 rounded-[20px] hover:scale-[1.03]'
+            className='flex-[1] cursor-zoom-in hover:ring-[3px] ring-primary duration-200 rounded-[20px] hover:scale-[1.03]'
             onClick={() => {
               setPortImage(sideDetails?.details?.portfolioPixUploadUrl5);
               window.my_modal_319.showModal();
@@ -123,7 +123,7 @@ const ImagePortfolio = ({ sideDetails }) => {
 
         {sideDetails?.details?.portfolioPixUploadUrl6 && (
           <div
-            className='flex-[1] cursor-pointer hover:ring-[3px] ring-primary duration-200 rounded-[20px] hover:scale-[1.03]'
+            className='flex-[1] cursor-zoom-in hover:ring-[3px] ring-primary duration-200 rounded-[20px] hover:scale-[1.03]'
             onClick={() => {
               setPortImage(sideDetails?.details?.portfolioPixUploadUrl6);
               window.my_modal_319.showModal();

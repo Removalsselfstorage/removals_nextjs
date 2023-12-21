@@ -229,7 +229,7 @@ const SummaryDetails2 = (
             <div className="flex flex-col space-y-[5px]">
               <p className="text-primary font-semibold text-[18px]">Volume:</p>
               <p className="font-semibold text-[14px] ">
-                {details.moveDetails.volume} CU/FT
+                {details.moveDetails.volume} (CU/FT)
               </p>
             </div>
             {/* duration */}

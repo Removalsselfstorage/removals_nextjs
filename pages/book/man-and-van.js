@@ -342,7 +342,7 @@ const ManAndVan = ({ emails }) => {
       });
       updateLocationTo({
         name: address2,
-        postCode:zap2,
+        postCode: zap2,
         city: addressDetails2
           ? addressDetails2.city
           : serviceLocation?.locationTo?.city,
@@ -850,7 +850,7 @@ const ManAndVan = ({ emails }) => {
                       <div className='form-control w-full '>
                         <label className='label'>
                           <span className='label-text font-semibold'>
-                            Mileage
+                            Mileage (miles)
                             {!checkPropertyType() && (
                               <span className='text-secondary'>*</span>
                             )}
@@ -929,7 +929,7 @@ const ManAndVan = ({ emails }) => {
                       <div className='flex flex-col w-full'>
                         <label className='label'>
                           <span className='label-text font-semibold'>
-                            Volume: CU/FT
+                            Volume: (CU/FT)
                             <span className='text-secondary'>*</span>
                           </span>
                         </label>

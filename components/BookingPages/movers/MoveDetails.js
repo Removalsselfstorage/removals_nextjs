@@ -102,7 +102,7 @@ const MoveDetails = () => {
             <div className="flex flex-col space-y-[5px]">
               <p className="text-primary font-semibold text-[18px]">Volume:</p>
               <p className="font-semibold text-[13.5px] ">
-                {details.moveDetails.volume} CU/FT
+                {details.moveDetails.volume} (CU/FT)
               </p>
             </div>
             {checkDuration() && (

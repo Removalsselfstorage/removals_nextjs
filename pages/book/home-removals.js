@@ -786,7 +786,7 @@ const CompleteHouse = ({ emails }) => {
                     <div className='flex flex-col w-full'>
                       <label className='label'>
                         <span className='label-text font-semibold'>
-                          Volume: CU/FT<span className='text-secondary'>*</span>
+                          Volume: (CU/FT)<span className='text-secondary'>*</span>
                         </span>
                       </label>
                       <input
@@ -808,7 +808,7 @@ const CompleteHouse = ({ emails }) => {
                     <div className='form-control w-full '>
                       <label className='label'>
                         <span className='label-text font-semibold'>
-                          Mileage<span className='text-secondary'>*</span>
+                          Mileage (miles)<span className='text-secondary'>*</span>
                         </span>
                       </label>
                       <div className='w-full'>

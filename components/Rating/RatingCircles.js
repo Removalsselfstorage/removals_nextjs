@@ -3,7 +3,7 @@ import React from "react";
 const RatingCircles = ({ reviewCount, setReviewCount }) => {
   return (
     <div className='grid grid-cols-6 sm:grid-cols-8 md:grid-cols-11 gap-x-[5px] gap-y-[15px] w-[400px] md:w-[500px]'>
-      <div
+      {/* <div
         onClick={() => {
           setReviewCount(0);
         }}
@@ -18,8 +18,8 @@ const RatingCircles = ({ reviewCount, setReviewCount }) => {
         >
           0
         </p>
-      </div>
-      <div
+      </div> */}
+      {/* <div
         onClick={() => {
           setReviewCount(0.5);
         }}
@@ -34,7 +34,7 @@ const RatingCircles = ({ reviewCount, setReviewCount }) => {
         >
           0.5
         </p>
-      </div>
+      </div> */}
       <div
         onClick={() => {
           setReviewCount(1);
@@ -184,5 +184,3 @@ const RatingCircles = ({ reviewCount, setReviewCount }) => {
 };
 
 export default RatingCircles;
-
-

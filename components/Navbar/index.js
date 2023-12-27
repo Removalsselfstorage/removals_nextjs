@@ -25,7 +25,9 @@ import useMoversData from "@/hooks/useMoversData";
 // import ScrollUpMenuNav from '../ScrollUpMenuNav';
 
 const Navbar = () => {
-  const { updateReserveIdFxn, reserveId, router } = useQuote();
+  const { updateReserveIdFxn, reserveId } = useQuote();
+
+  const router = useRouter();
 
   const {
     // justRegistered,

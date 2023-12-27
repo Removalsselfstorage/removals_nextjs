@@ -19,12 +19,7 @@ const HomeRemovalsHero = () => {
           >
             Home Removals
           </h1>
-          {/* <p className="py-[20px] max-w-[550px] lg:max-w-[670px] text-[16px] lg:text-[18px] hidden md:flex mb-[50px] text-center">
-            A stress-free move day is just a few clicks away. We’ve got you
-            covered with easier-than-ever booking, flexible service options,
-            friendly and experienced movers, competitive pricing, and the
-            industry’s best customer support.
-          </p> */}
+       
         </div>
       </div>
     </div>

@@ -59,7 +59,7 @@ const LocationHero = ({ formattedCity }) => {
                 <div
                   // href="/book/man-and-van"
                   onClick={submitHandle}
-                  // disabled={submitLoading}
+                  disabled={submitLoading || submitLoading2}
                   className='btn btn-secondary md:btn-wide'
                 >
                   {!submitLoading && <span className=''>Man and van</span>}
@@ -71,7 +71,7 @@ const LocationHero = ({ formattedCity }) => {
                 <div
                   // href="/book/home-removals"
                   onClick={submitHandle2}
-                  // disabled={submitLoading2}
+                  disabled={submitLoading2 || submitLoading}
                   className='btn btn-secondary md:btn-wide'
                 >
                   {!submitLoading2 && <span className=''> Home Removals</span>}

@@ -6,6 +6,14 @@ import { RiCustomerService2Fill } from "react-icons/ri";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import HeroInputBox from "./HeroInputBox";
+import { motion } from "framer-motion";
+import {
+  heroVariant,
+  appearVariant,
+  downVariant,
+  downVariant2,
+  downVariant3,
+} from "@/variants";
 
 const LocationHero = ({ formattedCity }) => {
   const [submitLoading, setSubmitLoading] = useState(false);
@@ -44,18 +52,31 @@ const LocationHero = ({ formattedCity }) => {
           {/* Hero Text */}
           <div className=' flex lg:flex-col md:justify-between h-full md:flex-[0.5] lg:flex-[0.3]'>
             <div className='text-center lg:text-left md:pr-[0px]'>
-              <h1
+              <motion.h1
+                variants={downVariant}
+                initial='start'
+                animate='end'
                 className={`${titleFont.variable} font-sans2 text-3xl lg:text-5xl font-bold mb-[10px]`}
               >
                 {formattedCity?.sub} Removals
-              </h1>
-              <p className='py-[20px] max-w-[550px] lg:max-w-[670px] text-[14px] lg:text-[17px] mb-[0px] md:mb-[30px]'>
+              </motion.h1>
+              <motion.p
+                variants={downVariant3}
+                initial='start'
+                animate='end'
+                className='py-[20px] max-w-[550px] lg:max-w-[670px] text-[14px] lg:text-[17px] mb-[0px] md:mb-[30px]'
+              >
                 Save up-to 33% Moving with Transport Executive in{" "}
                 {formattedCity?.sub}, {formattedCity?.city}. We’ve got you
                 covered with easier-than-ever booking, flexible service options,
                 friendly and experienced movers.
-              </p>
-              <div className='flex space-x-[20px] mt-[20px] justify-center md:justify-start'>
+              </motion.p>
+              <motion.div
+                variants={downVariant3}
+                initial='start'
+                animate='end'
+                className='flex space-x-[20px] mt-[20px] justify-center md:justify-start'
+              >
                 <div
                   // href="/book/man-and-van"
                   onClick={submitHandle}
@@ -79,14 +100,19 @@ const LocationHero = ({ formattedCity }) => {
                     <span className='loading loading-spinner loading-md text-white'></span>
                   )}
                 </div>
-              </div>
+              </motion.div>
             </div>
           </div>
           {/* Hero inputs */}
-          <div className='md:flex-[1] lg:flex-[1]'>
+          <motion.div
+            variants={heroVariant}
+            initial='start'
+            animate='end'
+            className='md:flex-[1] lg:flex-[1]'
+          >
             {/* <HeroInputBox /> */}
             <img src='/van.png' alt='' className='' />
-          </div>
+          </motion.div>
         </div>
       </div>
     </div>

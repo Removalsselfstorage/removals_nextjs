@@ -1,6 +1,15 @@
 import React from "react";
 import NormalLayout from "@/layouts/NormalLayout";
 import Head from "next/head";
+import LocationHero from "@/components/Locations/Hero";
+import Features2 from "@/components/Locations/Features";
+import OurServices from "@/components/HomePage/OurServices";
+import HowItWorks from "@/components/HomePage/HowItWorks";
+import WhyChooseUs from "@/components/HomePage/WhyChooseUs";
+import AboutUs from "@/components/HomePage/AboutUs";
+import OurReviews from "@/components/HomePage/OurReviews";
+import FeaturedCompanies from "@/components/HomePage/FeatureCompanies";
+import FAQ from "@/components/HomePage/FAQ";
 
 const Locate = ({ url }) => {
   function formatAndSeparateString(inputString) {
@@ -11,9 +20,9 @@ const Locate = ({ url }) => {
     const formattedCity = words[0]
       .replace(/-/g, " ")
       .replace(/\b\w/g, (c) => c.toUpperCase());
-    const formattedSub = words[1] && words[1]
-      .replace(/-/g, " ")
-      .replace(/\b\w/g, (c) => c.toUpperCase());
+    const formattedSub =
+      words[1] &&
+      words[1].replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
 
     // Create and return an object with "city" and "sub" keys
     const resultObject = {
@@ -26,8 +35,6 @@ const Locate = ({ url }) => {
 
   const formattedCity = formatAndSeparateString(url);
 
-  console.log({ formattedCity });
-
   return (
     <>
       <Head>
@@ -36,9 +43,17 @@ const Locate = ({ url }) => {
         <link rel='icon' href='/rrs_favicon.svg' />
       </Head>
       <NormalLayout>
-        <p className='mt-[200px]'>
-          Slug location - {formattedCity?.city} - {formattedCity?.sub}
-        </p>
+        <div className='w-full  border-t-[2px]   border-black mt-[100px]  md:mt-[70px] lg:mt-[100px]'></div>
+        <LocationHero formattedCity={formattedCity} />
+
+        <Features2 formattedCity={formattedCity} />
+        <OurServices />
+        <HowItWorks />
+        <WhyChooseUs />
+        <AboutUs />
+        <OurReviews />
+        <FeaturedCompanies />
+        <FAQ />
       </NormalLayout>
     </>
   );

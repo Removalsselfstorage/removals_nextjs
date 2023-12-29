@@ -141,6 +141,8 @@ const Dashboard = ({ allBookings }) => {
     router,
   } = useMoversData();
 
+  const photoUrl = personalMoverDetails?.profilePictureUrl;
+
   // const router = useRouter();
   // const dispatch = useDispatch();
   const userDetails = useSelector(getAllUserDetails);
@@ -416,7 +418,7 @@ const Dashboard = ({ allBookings }) => {
                     )}
                     {singleMoversDataLoading && (
                       <img
-                        src={"/userPlaceholder.png"}
+                        src={photoUrl}
                         className='rounded-full w-[90px] h-[90px]'
                       />
                     )}

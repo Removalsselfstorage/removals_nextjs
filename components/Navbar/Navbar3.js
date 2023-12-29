@@ -25,6 +25,7 @@ import {
 } from "@/store/moverSlice";
 import { fetchMoverDetails3 } from "@/lib/fetchData2";
 import useMoversData from "@/hooks/useMoversData";
+import useMover from "@/hooks/useMover";
 
 const Navbar3 = ({ unreadData, readData }) => {
   const {
@@ -38,6 +39,14 @@ const Navbar3 = ({ unreadData, readData }) => {
     uid,
     router,
   } = useMoversData();
+
+  const {
+    // justRegistered,
+    personalMoverDetails,
+    companyDetails,
+  } = useMover();
+
+  const photoUrl = personalMoverDetails?.profilePictureUrl;
 
   const [previewUrl, setPreviewUrl] = useState(
     singleMoversData?.personalDetails?.profileImageUrl
@@ -117,7 +126,8 @@ const Navbar3 = ({ unreadData, readData }) => {
                                 <img src={previewUrl} />
                               )}
                               {singleMoversDataLoading && (
-                                <img src={"/userPlaceholder.png"} />
+                                // <img src={"/userPlaceholder.png"} />
+                                <img src={photoUrl} />
                               )}
                             </div>
                           </label>

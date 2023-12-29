@@ -76,6 +76,9 @@ const Navbar = () => {
   const { user, logout, loading } = useAuth();
 
   const uid = users?.userDetails?.uid;
+
+  const photoUrl = personalMoverDetails?.profilePictureUrl;
+
   // const readMoversData = async () => {
   //   const res = await fetchMoverDetails3(uid);
   //   dispatch(updateFirebaseMoverDetails(res));
@@ -113,6 +116,8 @@ const Navbar = () => {
     };
     window.addEventListener("scroll", showNavbar);
   }, [showNav]);
+
+  console.log({ personalMoverDetails });
 
   return (
     <>
@@ -345,7 +350,7 @@ const Navbar = () => {
                               <img src={previewUrl} />
                             )}
                             {singleMoversDataLoading && (
-                              <img src={"/userPlaceholder.png"} />
+                              <img src={photoUrl} />
                             )}
                           </div>
                         </label>

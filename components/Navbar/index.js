@@ -162,6 +162,10 @@ const Navbar = () => {
                 <Link href='/contact-us' className='link link-hover '>
                   Contact Us
                 </Link>
+                <p className=''>|</p>
+                <Link href='/reviews' className='link link-hover '>
+                  Reviews
+                </Link>
                 {/* <p className="">|</p>
                 <p className="link link-hover"> Blog</p> */}
               </div>

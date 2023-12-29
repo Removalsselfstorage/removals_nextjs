@@ -2,7 +2,8 @@ import NormalLayout from "@/layouts/NormalLayout";
 import React from "react";
 import Head from "next/head";
 import Link from "next/link";
-import { GoogleMap, Marker } from "react-google-maps"
+import Image from "next/image";
+import { GoogleMap, Marker } from "react-google-maps";
 
 const index = () => {
   return (
@@ -29,12 +30,15 @@ const index = () => {
                   get right on it.
                 </h2>
                 <div className='flex items-center justify-center lg:justify-start mt-[20px] w-full space-x-[20px]'>
-                  <div className={"btn btn-primary md:btn-wide"}>
+                  <a
+                    href='tel:07869116203'
+                    className={"btn btn-secondary md:btn-wide"}
+                  >
                     Help Center
-                  </div>
+                  </a>
                   <Link
                     href='/book'
-                    className={"btn md:btn-wide btn-primary btn-outline"}
+                    className={"btn md:btn-wide btn-secondary btn-outline"}
                   >
                     Book a move
                   </Link>
@@ -45,7 +49,10 @@ const index = () => {
             <div className='lg:flex-[1] order-1  lg:order-2 lg:flex  px-[20px] md:px-[0] justify-center md:hover:rotate-[5deg] duration-200'>
               <img
                 src='/customer.jpg'
-                alt='Album'
+                alt='Customer_agent'
+                // width={fit}
+                // layout="fill"
+                // objectFit="cover"
                 className='rounded-tl-[100px] rounded-br-[100px]'
               />
             </div>

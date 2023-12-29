@@ -426,7 +426,7 @@ const Locations = () => {
         </div>
       </NormalLayout>
     </>
-  );
+  )
 };
 
 export default Locations;

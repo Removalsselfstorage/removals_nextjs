@@ -77,7 +77,8 @@ const Navbar = () => {
 
   const uid = users?.userDetails?.uid;
 
-  const photoUrl = personalMoverDetails?.profilePictureUrl;
+  const photoUrl =
+    personalMoverDetails?.profilePictureUrl || "/userPlaceholder.png";
 
   // const readMoversData = async () => {
   //   const res = await fetchMoverDetails3(uid);
@@ -152,11 +153,15 @@ const Navbar = () => {
                 </div>
               </div>
               <div className='lg:flex items-center  space-x-[10px] hidden pr-[10px]'>
-                <p className='link link-hover '>Moving Tips</p>
+                {/* <p className='link link-hover '>Moving Tips</p>
+                <p className=''>|</p> */}
+                <Link href='/about-us' className='link link-hover '>
+                  About Us
+                </Link>
                 <p className=''>|</p>
-                <p className='link link-hover '>About Us</p>
-                <p className=''>|</p>
-                <p className='link link-hover '>Contact Us</p>
+                <Link href='/contact-us' className='link link-hover '>
+                  Contact Us
+                </Link>
                 {/* <p className="">|</p>
                 <p className="link link-hover"> Blog</p> */}
               </div>
@@ -349,9 +354,7 @@ const Navbar = () => {
                             {!singleMoversDataLoading && (
                               <img src={previewUrl} />
                             )}
-                            {singleMoversDataLoading && (
-                              <img src={photoUrl} />
-                            )}
+                            {singleMoversDataLoading && <img src={photoUrl} />}
                           </div>
                         </label>
 

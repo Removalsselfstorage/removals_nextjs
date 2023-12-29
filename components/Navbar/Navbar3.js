@@ -46,7 +46,7 @@ const Navbar3 = ({ unreadData, readData }) => {
     companyDetails,
   } = useMover();
 
-  const photoUrl = personalMoverDetails?.profilePictureUrl;
+  const photoUrl = personalMoverDetails?.profilePictureUrl || "/userPlaceholder.png";
 
   const [previewUrl, setPreviewUrl] = useState(
     singleMoversData?.personalDetails?.profileImageUrl

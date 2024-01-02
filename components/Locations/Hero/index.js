@@ -105,7 +105,7 @@ const LocationHero = ({ formattedCity }) => {
           </div>
           {/* Hero inputs */}
           <motion.div
-            variants={heroVariant}
+            variants={appearVariant}
             initial='start'
             animate='end'
             className='md:flex-[1] lg:flex-[1]'

@@ -39,7 +39,7 @@ const LocationHero = ({ formattedCity }) => {
   return (
     <div className=' bg-[#f8f8f8]'>
       <div
-        className='hero min-h-[80vh] md:min-h-[80vh] lg:min-h-[80vh] 2xl:min-h-[80vh] '
+        className='hero  md:min-h-[70vh] lg:min-h-[70vh] 2xl:min-h-[70vh] '
         // style={{ backgroundImage: "url(/road.png)" }}
         style={{
           backgroundImage: "url(/bg-tarvel4.png)",
@@ -48,33 +48,33 @@ const LocationHero = ({ formattedCity }) => {
         }}
       >
         {/* <div className='hero-overlay bg-black/70 '></div> */}
-        <div className='hero-content flex-col  lg:flex-row md:space-x-[0px] space-y-[0px] md:px-[50px] md:max-w-7xl mx-auto pt-[70px] lg:pt-[10px]'>
+        <div className='hero-content flex-col  lg:flex-row lg:space-x-[50px] space-y-[0px] md:px-[50px] md:max-w-7xl mx-auto pt-[70px] lg:pt-[10px]'>
           {/* Hero Text */}
           <div className=' flex lg:flex-col md:justify-between h-full md:flex-[0.5] lg:flex-[0.3]'>
             <div className='text-center lg:text-left md:pr-[0px]'>
-              <motion.h1
-                variants={downVariant}
-                initial='start'
-                animate='end'
+              <h1
+                // variants={downVariant}
+                // initial='start'
+                // animate='end'
                 className={`${titleFont.variable} font-sans2 text-3xl lg:text-5xl font-bold mb-[10px]`}
               >
                 {formattedCity?.sub} Removals
-              </motion.h1>
-              <motion.p
-                variants={downVariant3}
-                initial='start'
-                animate='end'
+              </h1>
+              <p
+                // variants={downVariant3}
+                // initial='start'
+                // animate='end'
                 className='py-[20px] max-w-[550px] lg:max-w-[670px] text-[14px] lg:text-[17px] mb-[0px] md:mb-[30px]'
               >
                 Save up-to 33% Moving with Transport Executive in{" "}
                 {formattedCity?.sub}, {formattedCity?.city}. We’ve got you
                 covered with easier-than-ever booking, flexible service options,
                 friendly and experienced movers.
-              </motion.p>
-              <motion.div
-                variants={downVariant3}
-                initial='start'
-                animate='end'
+              </p>
+              <div
+                // variants={downVariant3}
+                // initial='start'
+                // animate='end'
                 className='flex space-x-[20px] mt-[20px] justify-center md:justify-start'
               >
                 <div
@@ -100,19 +100,19 @@ const LocationHero = ({ formattedCity }) => {
                     <span className='loading loading-spinner loading-md text-white'></span>
                   )}
                 </div>
-              </motion.div>
+              </div>
             </div>
           </div>
           {/* Hero inputs */}
-          <motion.div
-            variants={appearVariant}
-            initial='start'
-            animate='end'
-            className='md:flex-[1] lg:flex-[1]'
+          <div
+            // variants={appearVariant}
+            // initial='start'
+            // animate='end'
+            className='md:flex-[1] lg:flex-[1] hidden lg:flex'
           >
             {/* <HeroInputBox /> */}
-            <img src='/van.png' alt='' className='' />
-          </motion.div>
+            <img src='/vans.png' alt='' className='' />
+          </div>
         </div>
       </div>
     </div>

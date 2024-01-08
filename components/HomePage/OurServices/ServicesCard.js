@@ -11,6 +11,7 @@ const ServicesCard = ({
   f3,
   f4,
   link,
+  linkText
 }) => {
   return (
     <div className="card min-w-[300px] bg-base-100 shadow-lg hover:shadow-2xl hover:scale-[1.02] duration-200">
@@ -27,8 +28,8 @@ const ServicesCard = ({
           <li className="">{f3}</li>
           <li className="">{f4}</li>
         </ul>
-        <Link href={`/book/${link}`}>
-          <button className="btn btn-primary mt-[10px]">Get Quote</button>
+        <Link href={`${link}`}>
+          <button className="btn btn-primary mt-[10px]">{linkText}</button>
         </Link>
       </div>
     </div>

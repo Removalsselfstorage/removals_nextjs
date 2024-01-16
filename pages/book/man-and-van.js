@@ -92,15 +92,19 @@ const ManAndVan = ({ emails }) => {
   const [lift, setLift] = useState(
     serviceLocation?.locationFrom?.liftAvailable || false
   );
+
   const [lift2, setLift2] = useState(
     serviceLocation?.locationTo?.liftAvailable || false
   );
+
   const [durationCount, setDurationCount] = useState(
     moveDetails?.duration || 3
   );
+
   const [address, setAddress] = useState(
     serviceLocation?.locationFrom?.name || ""
   );
+  
   const [addressDetails, setAddressDetails] = useState(
     serviceLocation?.locationFrom || {}
   );
@@ -980,6 +984,7 @@ const ManAndVan = ({ emails }) => {
                   </div>
                 </div>
               </div>
+
               {/* agree to terms */}
               <div className='flex justify-center  mt-[30px] mb-[10px] md:mb-[20px] w-full'>
                 <div className='form-control '>

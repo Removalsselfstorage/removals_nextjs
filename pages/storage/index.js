@@ -1,17 +1,81 @@
 import NormalLayout from "@/layouts/NormalLayout";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Head from "next/head";
 import { titleFont } from "@/utils/fonts";
 import Container from "@/components/Storage/Container";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import StorageSize from "@/components/Storage/StorageSize";
+import Payment from "@/components/Storage/Payment";
+import {
+  countries2,
+  phoneCodesOptionsRefactored,
+  phoneCodesOptionsRefactored2,
+} from "@/dummyData/dummyData";
+import { containerOptions, storageReason } from "@/dummyData/inputData";
+import dayjs from "dayjs";
 
 const Storage = () => {
   const [activeCont, setActiveCont] = useState("cont1");
+  const [stage, setStage] = useState("");
   const [submitStatus, setSubmitStatus] = useState("initial");
+  const [submitStatus2, setSubmitStatus2] = useState("initial");
   const [duration, setDuration] = useState(1);
   const [quantity, setQuantity] = useState(1);
-  const [price, setPrice] = useState(1);
+  const [price, setPrice] = useState(0);
   const [submitLoading, setSubmitLoading] = useState(false);
   const [activateError, setActivateError] = useState(false);
+  const [activateError2, setActivateError2] = useState(false);
+  const [firstName, setFirstName] = useState("");
+  const [fullName, setFullName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [schoolName, setSchoolName] = useState("");
+  const [schoolWebsite, setSchoolWebsite] = useState("");
+  const [schoolEmail, setSchoolEmail] = useState("");
+  const [address, setAddress] = useState("");
+  const [addressDetails, setAddressDetails] = useState({});
+  const [schoolCity, setSchoolCity] = useState("");
+  const [schoolLogo, setSchoolLogo] = useState(null);
+  const [schoolLogoUrl, setSchoolLogoUrl] = useState("");
+  const [schoolLogoName, setSchoolLogoName] = useState("");
+  const [phoneValue, setPhoneValue] = useState("Nigeria (+234)");
+  const [phone, setPhone] = useState("");
+  const [phoneError, setPhoneError] = useState(true);
+  const [email, setEmail] = useState("");
+  const [emailError, setEmailError] = useState(true);
+  const [emailError2, setEmailError2] = useState(true);
+  const [storageReasonOption, setStorageReasonOption] = useState("");
+  const [containerAmount, setContainerAmount] = useState("1");
+  const [containerSize, setContainerSize] = useState("");
+  const [dateValue, setDateValue] = useState("");
+  const [durationCount, setDurationCount] = useState(1);
+  const [formattedDate, setFormattedDate] = useState("");
+  const [agreeTerms, setAgreeTerms] = useState(false);
+
+  const router = useRouter();
+
+  const { query } = router;
+
+  //Date
+  const date = dayjs(dateValue).format(" YYYY/MM/DD ");
+
+  const date2 = dayjs(dateValue).format("dddd, MMMM D, YYYY");
+
+  const defaultStorageReason = () => {
+    const option = storageReason.filter(
+      (opt) => opt.value === storageReasonOption
+    );
+    return option;
+  };
+
+  const weekValue = durationCount <= 1 ? "week" : "weeks";
+
+  const defaultContainerAmount = () => {
+    const option = containerOptions.filter(
+      (opt) => opt.value === containerAmount
+    );
+    return option;
+  };
 
   const handleDurationChange = (e) => {
     const inputValue = e.target.value;
@@ -34,6 +98,123 @@ const Storage = () => {
     }
   };
 
+  const handlePhoneNumberChange = (event) => {
+    const inputValue = event?.target?.value;
+
+    // Remove any non-digit characters from the input
+    const strippedNumber = inputValue?.replace(/\D/g, "");
+
+    // Check if the stripped number is either 10 or 11 digits long
+    const isValidPhoneNumber =
+      // strippedNumber.length === 5 || strippedNumber.length === 11;
+      strippedNumber?.length > 5;
+
+    setPhone(strippedNumber);
+    setPhoneError(isValidPhoneNumber);
+  };
+
+  const defaultPhoneValue = () => {
+    const option = countries2.filter((opt) => opt.value == "Nigeria (+234)");
+    return option;
+  };
+
+  const handleEmailChange = (e) => {
+    // const inputValue = e.target.value;
+    setEmail(e.target.value);
+
+    // Regular expression to validate email format
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    // setIsValid(emailPattern.test(inputValue));
+    setEmailError(emailPattern.test(e.target.value));
+  };
+
+  const paymentSubmit = () => {
+    setActivateError(true);
+    // setSubmitStatus("loading");
+    if (
+      !fullName ||
+      !address ||
+      !email ||
+      !phone ||
+      !storageReasonOption ||
+      !containerAmount ||
+      !dateValue ||
+      // !paymentMode ||
+      !emailError
+    ) {
+      // setSubmitError(true);
+      setSubmitStatus("error");
+      // toast.error(`Please fill all fields`);
+    } else {
+      // toast.remove();
+      // setSubmitError(false);
+      setActivateError(false);
+      setSubmitStatus("success");
+      // setStage("payment");
+      window.my_modal_64.showModal();
+
+      // router.push({
+      //   pathname: "/signup",
+      //   query: { plan: `${query?.plan}`, stage: "payment" },
+      // });
+
+      // setStage("you");
+    }
+  };
+
+  const paymentSubmit2 = () => {
+    setActivateError(true);
+    // setSubmitStatus("loading");
+    if (
+      !agreeTerms 
+    
+    ) {
+      // setSubmitError(true);
+      setSubmitStatus2("error");
+      // toast.error(`Please fill all fields`);
+    } else {
+      // toast.remove();
+      // setSubmitError(false);
+      setActivateError2(false);
+      setSubmitStatus2("loading");
+      setSubmitStatus2("success");
+      // setStage("payment");
+      // window.my_modal_64.showModal();
+
+      // router.push({
+      //   pathname: "/signup",
+      //   query: { plan: `${query?.plan}`, stage: "payment" },
+      // });
+
+      // setStage("you");
+    }
+  };
+
+  useEffect(() => {
+    if (query?.stage === "payment" && !containerSize) {
+      router.push({
+        pathname: "/storage",
+        // query: { plan: `initial`, stage: "about_school" },
+      });
+    }
+  }, []);
+
+  console.log({
+    fullName,
+    email,
+    address,
+    addressDetails,
+    phone,
+    storageReasonOption,
+    containerAmount,
+    containerSize,
+    durationCount,
+    dateValue,
+    date,
+    date2,
+    price,
+  });
+
   return (
     <>
       <Head>
@@ -45,177 +226,124 @@ const Storage = () => {
       <NormalLayout>
         <div className='bg-base-200 mt-[50px]  md:mt-[0px] md:pt-[70px] lg:pt-[100px]'>
           <div className='md:max-w-7xl mx-auto'>
+            {/* stepper */}
+            <div className='w-full flex justify-center pt-[60px] pb-[0px] '>
+              <ul className='steps'>
+                <li
+                  className={`step step-primary px-[10px] md:px-[40px] font-bold text-[14px] md:text-[16px] leading-[20px]`}
+                >
+                  Storage Details
+                </li>
+                <li
+                  className={`step ${
+                    query?.stage === "payment"
+                      ? "step-primary"
+                      : query?.stage === "payment"
+                      ? "step-primary"
+                      : "text-gray-300"
+                  }  font-bold text-[14px] md:text-[16px] leading-[25px] `}
+                >
+                  Payment
+                </li>
+                {/* <li
+                  className={`step ${
+                    query?.stage === "payment"
+                      ? "step-primary"
+                      : "text-gray-300"
+                  }  font-bold text-[14px] md:text-[16px] leading-[25px] `}
+                >
+                  Payment
+                </li> */}
+              </ul>
+            </div>
+
             {/* Title */}
-            <div className='w-full flex justify-center py-[50px]'>
-              {/* <h3 className="text-4xl font-extrabold">Our Services</h3> */}
+            {/* <div className='w-full flex justify-center mt-[50px] mb-[50px] pt-[0px] pb-[0px]'>
               <h3
                 className={`${titleFont.variable} font-sans2 text-3xl lg:text-4xl font-extrabold flex-col items-center justify-center`}
               >
-                <p className=''>Container Selector</p>{" "}
+                <p className=''>Choose your space</p>{" "}
                 <div className='w-full bg-primary/20 h-[20px] mt-[-12px] '></div>
               </h3>
-            </div>
-            {/* selector */}
-            <div className='flex flex-wrap items-center px-[0px]  mx-[10px] md:mx-[100px]'>
-              {/* selector 1 */}
-              <div
-                onClick={() => {
-                  setActiveCont("cont1");
-                  setDuration(1);
-                  setQuantity(1);
-                }}
-                className={`${
-                  activeCont === "cont1"
-                    ? "bg-white border-t border-r border-l text-primary"
-                    : "border-t border-b border-r border-l text-black"
-                } flex flex-col items-center justify-center cursor-pointer hover:text-primary bg-primary/5  border-primary/30  space-y-[5px] px-[20px] py-[20px] flex-[1]`}
-              >
-                <p className='font-bold'>35 Square Feet</p>
-                <p className={` font-semibold`}>Container</p>
-              </div>
-              {/* selector 2 */}
-              <div
-                onClick={() => {
-                  setActiveCont("cont2");
-                  setDuration(1);
-                  setQuantity(1);
-                }}
-                className={`${
-                  activeCont === "cont2"
-                    ? "bg-white border-t border-r border-l text-primary"
-                    : "border-t border-b border-r border-l text-black"
-                } flex flex-col items-center justify-center cursor-pointer hover:text-primary bg-primary/5  border-primary/30  space-y-[5px] px-[20px] py-[20px] flex-[1]`}
-              >
-                <p className='font-bold'>70 Square Feet</p>
-                <p className={` font-semibold`}>Container</p>
-              </div>
-              {/* selector 3 */}
-              <div
-                onClick={() => {
-                  setActiveCont("cont3");
-                  setDuration(1);
-                  setQuantity(1);
-                }}
-                className={`${
-                  activeCont === "cont3"
-                    ? "bg-white border-t border-r border-l text-primary "
-                    : "border-t border-b border-r border-l text-black"
-                } flex flex-col items-center justify-center cursor-pointer hover:text-primary bg-primary/5  border-primary/30  space-y-[5px] px-[20px] py-[20px] flex-[1]`}
-              >
-                <p className='font-bold'>105 Square Feet</p>
-                <p className={` font-semibold`}>Container</p>
-              </div>
-              {/* selector 4 */}
-              <div
-                onClick={() => {
-                  setActiveCont("cont4");
-                  setDuration(1);
-                  setQuantity(1);
-                }}
-                className={`${
-                  activeCont === "cont4"
-                    ? "bg-white border-t border-r border-l text-primary "
-                    : "border-t border-b border-r border-l text-black"
-                } flex flex-col items-center justify-center cursor-pointer hover:text-primary bg-primary/5  border-primary/30  space-y-[5px] px-[20px] py-[20px] flex-[1]`}
-              >
-                <p className='font-bold'>140 Square Feet</p>
-                <p className={` font-semibold`}>Container</p>
-              </div>
-              {/* selector 5 */}
-              <div
-                onClick={() => {
-                  setActiveCont("cont5");
-                  setDuration(1);
-                  setQuantity(1);
-                }}
-                className={`${
-                  activeCont === "cont5"
-                    ? "bg-white border-t border-r border-l text-primary "
-                    : "border-t border-b border-r border-l text-black"
-                } flex flex-col items-center justify-center cursor-pointer hover:text-primary bg-primary/5  border-primary/30  space-y-[5px] px-[20px] py-[20px] flex-[1]`}
-              >
-                <p className='font-bold'>160 Square Feet</p>
-                <p className={` font-semibold`}>Container</p>
-              </div>
-            </div>
-            {/* body */}
-            <div className='px-[20px] lg:px-[100px] mb-[50px] py-[30px] bg-white rounded-bl-[20px] rounded-br-[20px] mx-[10px] md:mx-[100px]'>
-              {/* container 1 */}
-              {activeCont === "cont1" && (
-                <Container
-                  title='35 Square feet Container'
-                  price={17.49}
-                  rate='17.49'
+            </div> */}
+
+            <div className='mt-[50px] mb-[40px]'>
+              {!query?.stage && (
+                <StorageSize
+                  setActiveCont={setActiveCont}
+                  activeCont={activeCont}
+                  setDuration={setDuration}
+                  setQuantity={setQuantity}
                   duration={duration}
                   quantity={quantity}
-                  dimension='250 Cubic Feet , H7’6″ x W5′ x D7′ , 7
-                  Cubic Metres , 3.25 Square Metres'
-                  note='This Container will accommodate the content of a 1 Bed Flat /
-                  50 Boxes or Transit Van.'
                   handleDurationChange={handleDurationChange}
                   handleDurationChange2={handleDurationChange2}
                   submitStatus={submitStatus}
+                  stage={stage}
+                  setStage={setStage}
+                  containerSize={containerSize}
+                  setContainerSize={setContainerSize}
+                  price2={price}
+                  setPrice={setPrice}
+                  // setStage={setStage}
                 />
               )}
-              {/* container 2 */}
-              {activeCont === "cont2" && (
-                <Container
-                  title='70 Square feet Container'
-                  price={24.75}
-                  rate='24.75'
-                  duration={duration}
-                  quantity={quantity}
-                  dimension='250 Cubic Feet x 2, H7’6″ x W5′ x D7′ x 2, 7 Cubic Metres x 2, 3.25 Square Metres x 2'
-                  note='This Container will accommodate the content of a 2 Bed Flat / 120 Boxes or LWB Transit Van.'
-                  handleDurationChange={handleDurationChange}
-                  handleDurationChange2={handleDurationChange2}
+
+              {query?.stage === "payment" && (
+                <Payment
+                  activateError={activateError}
+                  activateError2={activateError2}
+                  fullName={fullName}
+                  setFullName={setFullName}
+                  firstName={firstName}
+                  setFirstName={setFirstName}
+                  setLastName={setLastName}
+                  lastName={lastName}
+                  email={email}
+                  emailError={emailError}
+                  handleEmailChange={handleEmailChange}
+                  phoneCodesOptionsRefactored={phoneCodesOptionsRefactored}
+                  phoneCodesOptionsRefactored2={phoneCodesOptionsRefactored2}
+                  defaultPhoneValue={defaultPhoneValue}
+                  phone={phone}
+                  setPhone={setPhone}
+                  phoneError={phoneError}
+                  handlePhoneNumberChange={handlePhoneNumberChange}
+                  setPhoneValue={setPhoneValue}
+                  stage={stage}
+                  setStage={setStage}
+                  address={address}
+                  setAddress={setAddress}
+                  addressDetails={addressDetails}
+                  setAddressDetails={setAddressDetails}
+                  defaultStorageReason={defaultStorageReason}
+                  storageReasonOption={storageReasonOption}
+                  setStorageReasonOption={setStorageReasonOption}
+                  defaultContainerAmount={defaultContainerAmount}
+                  containerAmount={containerAmount}
+                  setContainerAmount={setContainerAmount}
+                  dateValue={dateValue}
+                  setDateValue={setDateValue}
+                  durationCount={durationCount}
+                  setDurationCount={setDurationCount}
+                  weekValue={weekValue}
+                  paymentSubmit={paymentSubmit}
+                  paymentSubmit2={paymentSubmit2}
+                  date={date}
+                  date2={date2}
+                  setActivateError={setActivateError}
+                  setActivateError2={setActivateError2}
                   submitStatus={submitStatus}
-                />
-              )}
-              {/* container 3 */}
-              {activeCont === "cont3" && (
-                <Container
-                  title='105 Square feet Container'
-                  price={46.49}
-                  rate='46.49'
-                  duration={duration}
-                  quantity={quantity}
-                  dimension='750 Cubic Feet x 3, H7’6″ x W5′ x D7′ x 3, 7 Cubic Metres x 3, 3.25 Square Metres x 3'
-                  note='This Container will accommodate the content of a Two Bed house / 120 Boxes or a little over Luton Van.'
-                  handleDurationChange={handleDurationChange}
-                  handleDurationChange2={handleDurationChange2}
-                  submitStatus={submitStatus}
-                />
-              )}
-              {/* container 4 */}
-              {activeCont === "cont4" && (
-                <Container
-                  title='140 Square feet Container'
-                  price={60.25}
-                  rate='60.25'
-                  duration={duration}
-                  quantity={quantity}
-                  dimension='1000 Cubic Feet x 4, H7’6″ x W5′ x D7′ x 4, 7 Cubic Metres x 4, 3.25 Square Metres x 4'
-                  note='This Container will accommodate the content of a 2 to 3 Bed house / 180 Boxes or a little over Luton Van.'
-                  handleDurationChange={handleDurationChange}
-                  handleDurationChange2={handleDurationChange2}
-                  submitStatus={submitStatus}
-                />
-              )}
-              {/* container 5 */}
-              {activeCont === "cont5" && (
-                <Container
-                  title='160 Square feet / 20 feet Container'
-                  price={72.75}
-                  rate='72.75'
-                  duration={duration}
-                  quantity={quantity}
-                  dimension='1100 Cubic Feet, H78′ x W8′ x D20′, H2.59m x W2.44m x D6.06m, 32.85 Cubic Metres, 13.93 Square Metres'
-                  note='1 x 20ft Container is equalled 3 Bed House - 300 Boxes - 7.5 Tonne Truck
-                  .'
-                  handleDurationChange={handleDurationChange}
-                  handleDurationChange2={handleDurationChange2}
-                  submitStatus={submitStatus}
+                  setSubmitStatus={setSubmitStatus}
+                  submitStatus2={submitStatus2}
+                  setSubmitStatus2={setSubmitStatus2}
+                  containerSize={containerSize}
+                  setContainerSize={setContainerSize}
+                  price={price}
+                  setPrice={setPrice}
+                  agreeTerms={agreeTerms}
+                  setAgreeTerms={setAgreeTerms}
+                  // setAddressDetails={setAddressDetails}
                 />
               )}
             </div>

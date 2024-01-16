@@ -118,7 +118,7 @@ const Navbar = () => {
     window.addEventListener("scroll", showNavbar);
   }, [showNav]);
 
-  console.log({ personalMoverDetails });
+  // console.log({ personalMoverDetails });
 
   return (
     <>

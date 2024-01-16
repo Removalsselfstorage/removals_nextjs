@@ -22,6 +22,23 @@ export const serviceOptions2 = [
   { value: "4 Bed property", label: "4 Bed property" },
 ];
 
+export const containerOptions = [
+  { value: "1", label: "1 Container" },
+  { value: "2", label: "2 Container" },
+  { value: "3", label: "3 Container" },
+  { value: "4", label: "4 Container" },
+  { value: "5", label: "5 Container" },
+];
+
+export const storageReason = [
+  { value: "Moving", label: "Moving" },
+  { value: "Decluttering", label: "Decluttering" },
+  { value: "Home improvement", label: "Home improvement" },
+  { value: "Change in circumstances", label: "Change in circumstances" },
+  { value: "Traveling", label: "Traveling" },
+  { value: "Other", label: "Other" },
+];
+
 export const serviceOptions3 = [
   { value: "Select", label: "Select" },
   { value: "Man and van", label: "Man and van" },

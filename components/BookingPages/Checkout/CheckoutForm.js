@@ -180,45 +180,45 @@ const CheckoutForm = ({ currentBook }) => {
 
   const bookingRef = doc(db, "bookingData", bookingId);
 
-  const computePriceId = () => {
-    switch (moveDetails?.movePackage) {
-      case "Standard":
-        return "price_1O1VVhA4LmEvtWCnWuQno1NU";
-        break;
+  // const computePriceId = () => {
+  //   switch (moveDetails?.movePackage) {
+  //     case "Standard":
+  //       return "price_1O1VVhA4LmEvtWCnWuQno1NU";
+  //       break;
 
-      case "Gold":
-        return "price_1O1VWrA4LmEvtWCnAJCO7fUY";
-        break;
+  //     case "Gold":
+  //       return "price_1O1VWrA4LmEvtWCnAJCO7fUY";
+  //       break;
 
-      case "Premium":
-        return "price_1O1VXKA4LmEvtWCnNCaYJQyG";
-        break;
+  //     case "Premium":
+  //       return "price_1O1VXKA4LmEvtWCnNCaYJQyG";
+  //       break;
 
-      case "Premium plus":
-        return "price_1O1VYAA4LmEvtWCnXFzwlz8L";
-        break;
+  //     case "Premium plus":
+  //       return "price_1O1VYAA4LmEvtWCnXFzwlz8L";
+  //       break;
 
-      default:
-        break;
-    }
-  };
+  //     default:
+  //       break;
+  //   }
+  // };
 
   const computeProductId = () => {
     switch (moveDetails?.movePackage) {
       case "Standard":
-        return "prod_Op9phPa4F3ONn6";
+        return "prod_POPusLAAFFnRbH";
         break;
 
       case "Gold":
-        return "prod_Op9qBpiza2aiHw";
+        return "prod_POPsmf3NPL7bH0";
         break;
 
       case "Premium":
-        return "prod_Op9ri9qUNjyaMp";
+        return "prod_POPr8CvDDIssjJ";
         break;
 
       case "Premium plus":
-        return "prod_Op9rYIKw1kPhzB";
+        return "prod_POPov6EMMJTV0n";
         break;
 
       default:
@@ -233,7 +233,7 @@ const CheckoutForm = ({ currentBook }) => {
   console.log({
     stripeProductId,
     stripeAmount,
-    price: paymentDetails?.paidPrice,
+    // price: paymentDetails?.paidPrice,
   });
 
   const completeCheckout = async () => {
@@ -326,18 +326,18 @@ const CheckoutForm = ({ currentBook }) => {
   console.log({ moveDetails, currentBook, paidPart, paidFull });
 
   return (
-    <div className="lg:sticky lg:top-[80px] bg-white shadow-lg rounded-[30px] lg:flex-[2] py-[30px] px-[30px] md:px-[50px] w-full">
+    <div className='lg:sticky lg:top-[80px] bg-white shadow-lg rounded-[30px] lg:flex-[2] py-[30px] px-[30px] md:px-[50px] w-full'>
       {/*50% payment row */}
-      <div className="mt-[0px] ">
-        <h1 className="text-xl font-bold mb-[20px] px-[0px]">Payment Type*</h1>
-        <div className="flex space-x-[20px] items-center">
+      <div className='mt-[0px] '>
+        <h1 className='text-xl font-bold mb-[20px] px-[0px]'>Payment Type*</h1>
+        <div className='flex space-x-[20px] items-center'>
           {/* left */}
-          <div className="mb-[0px]">
-            <label className="label cursor-pointer flex items-center space-x-[10px] md:space-x-[10px] w-full">
+          <div className='mb-[0px]'>
+            <label className='label cursor-pointer flex items-center space-x-[10px] md:space-x-[10px] w-full'>
               <input
-                type="radio"
-                name="radio-1"
-                className="radio radio-primary"
+                type='radio'
+                name='radio-1'
+                className='radio radio-primary'
                 onChange={async (e) => {
                   updatePayment({
                     paidPart: e.target.checked,
@@ -371,18 +371,18 @@ const CheckoutForm = ({ currentBook }) => {
                 }}
                 checked={paidPart}
               />
-              <p className="leading-[18px] text-[15px] md:text-[16px] font-semibold mb-[0px] ">
+              <p className='leading-[18px] text-[15px] md:text-[16px] font-semibold mb-[0px] '>
                 20% Deposit
               </p>
             </label>
           </div>
           {/* right */}
-          <div className="mb-[0px]">
-            <label className="label cursor-pointer flex items-center space-x-[10px] md:space-x-[10px] w-full">
+          <div className='mb-[0px]'>
+            <label className='label cursor-pointer flex items-center space-x-[10px] md:space-x-[10px] w-full'>
               <input
-                type="radio"
-                name="radio-1"
-                className="radio radio-primary"
+                type='radio'
+                name='radio-1'
+                className='radio radio-primary'
                 onChange={async (e) => {
                   updatePayment({
                     paidPart: false,
@@ -416,7 +416,7 @@ const CheckoutForm = ({ currentBook }) => {
                 }}
                 checked={paidFull}
               />
-              <p className="leading-[18px] text-[15px] md:text-[16px] font-semibold mb-[0px] ">
+              <p className='leading-[18px] text-[15px] md:text-[16px] font-semibold mb-[0px] '>
                 Full Deposit
               </p>
             </label>
@@ -424,13 +424,13 @@ const CheckoutForm = ({ currentBook }) => {
         </div>
       </div>
       {/* price section */}
-      <div className="lg:hidden">
-        <div className="flex justify-between mb-[10px] md:mb-[10px] border-t border-black/30 pt-[20px] mt-[20px]">
-          <h2 className="text-[18px] font-semibold text-primary ">
+      <div className='lg:hidden'>
+        <div className='flex justify-between mb-[10px] md:mb-[10px] border-t border-black/30 pt-[20px] mt-[20px]'>
+          <h2 className='text-[18px] font-semibold text-primary '>
             Mover Price:
           </h2>
-          <div className="flex flex-col items-end">
-            <h2 className="text-[16px] font-bold ">
+          <div className='flex flex-col items-end'>
+            <h2 className='text-[16px] font-bold '>
               ₤ {moverDetails?.moverPrice}
             </h2>
             {/* <p className="text-[12px] text-gray-500">VAT included</p> */}
@@ -439,33 +439,33 @@ const CheckoutForm = ({ currentBook }) => {
       </div>
 
       {/* payment method */}
-      <div className="lg:hidden">
-        <div className="flex justify-between mb-[10px] md:mb-[10px]  pt-[0px]">
-          <h2 className="text-[18px] font-semibold text-primary">
+      <div className='lg:hidden'>
+        <div className='flex justify-between mb-[10px] md:mb-[10px]  pt-[0px]'>
+          <h2 className='text-[18px] font-semibold text-primary'>
             Payment Method:
           </h2>
-          <div className="flex flex-col items-end">
-            {paidPart && <h2 className="text-[16px] font-bold ">20%</h2>}
-            {paidFull && <h2 className="text-[16px] font-bold ">100%</h2>}
+          <div className='flex flex-col items-end'>
+            {paidPart && <h2 className='text-[16px] font-bold '>20%</h2>}
+            {paidFull && <h2 className='text-[16px] font-bold '>100%</h2>}
             {!paidFull && !paidPart && (
-              <h2 className="text-[16px] font-bold ">--</h2>
+              <h2 className='text-[16px] font-bold '>--</h2>
             )}
           </div>
         </div>
       </div>
 
       {/* final price */}
-      <div className="lg:hidden">
-        <div className="flex justify-between mb-[10px] md:mb-[20px] border-t border-b border-black/30 pt-[20px] pb-[20px]">
-          <h2 className="text-primary font-semibold text-[18px]">
+      <div className='lg:hidden'>
+        <div className='flex justify-between mb-[10px] md:mb-[20px] border-t border-b border-black/30 pt-[20px] pb-[20px]'>
+          <h2 className='text-primary font-semibold text-[18px]'>
             Final Price:
           </h2>
-          <div className="flex flex-col items-end">
+          <div className='flex flex-col items-end'>
             {paidPrice && (
-              <h2 className="text-[25px] font-bold ">₤ {paidPrice}</h2>
+              <h2 className='text-[25px] font-bold '>₤ {paidPrice}</h2>
             )}
 
-            {!paidPrice && <h2 className="text-[25px] font-bold ">--</h2>}
+            {!paidPrice && <h2 className='text-[25px] font-bold '>--</h2>}
           </div>
         </div>
       </div>
@@ -491,36 +491,36 @@ const CheckoutForm = ({ currentBook }) => {
       </div> */}
 
       {/* comment row */}
-      <div className="mt-[30px] md:mt-[30px]">
-        <h1 className="text-xl font-bold mb-[20px] px-[0px]">
+      <div className='mt-[30px] md:mt-[30px]'>
+        <h1 className='text-xl font-bold mb-[20px] px-[0px]'>
           Leave a comment
         </h1>
         {/* row 1 */}
-        <div className="w-full">
+        <div className='w-full'>
           <textarea
-            className="textarea w-full textarea-primary min-h-[150px] max-h-[200px]"
-            placeholder="(eg. mention if you want to travel with the van). Please do not list items here."
+            className='textarea w-full textarea-primary min-h-[150px] max-h-[200px]'
+            placeholder='(eg. mention if you want to travel with the van). Please do not list items here.'
             onChange={handleComment}
             value={comments}
             // disabled={personalBio.length >= bioMaxLength}
             onKeyDown={handleKeyDown}
           ></textarea>
-          <p className="text-gray-500 mb-[10px] text-[15px] mt-[5px]">
+          <p className='text-gray-500 mb-[10px] text-[15px] mt-[5px]'>
             {comments.length} / {bioMaxLength} Characters
           </p>
         </div>
       </div>
       {/* acknowledge inventory check */}
-      <div className="flex mt-[10px] mb-[10px] md:mb-[20px] w-full">
-        <div className="form-control ">
-          <label className="label cursor-pointer flex justify-center space-x-[20px] w-full">
+      <div className='flex mt-[10px] mb-[10px] md:mb-[20px] w-full'>
+        <div className='form-control '>
+          <label className='label cursor-pointer flex justify-center space-x-[20px] w-full'>
             <input
-              type="checkbox"
+              type='checkbox'
               //   checked="checked"
-              className="checkbox checkbox-primary"
+              className='checkbox checkbox-primary'
               onChange={(e) => setInventConfirm(e.target.checked)}
             />
-            <span className="leading-[20px] text-[14px] md:text-[15px]">
+            <span className='leading-[20px] text-[14px] md:text-[15px]'>
               You acknwoledge that your inventory is accurate and will contact
               us to add further items <b>(prices may change)</b>
             </span>
@@ -532,9 +532,9 @@ const CheckoutForm = ({ currentBook }) => {
       <button
         onClick={completeCheckout}
         disabled={activateCheckout() || submitLoading}
-        className="btn btn-secondary btn-block mb-[30px]"
+        className='btn btn-secondary btn-block mb-[30px]'
       >
-        {!submitLoading && <span className="">Complete Check-Out</span>}
+        {!submitLoading && <span className=''>Complete Check-Out</span>}
         {submitLoading && (
           <>
             <span>Checking Out</span>
@@ -546,49 +546,49 @@ const CheckoutForm = ({ currentBook }) => {
       </button>
 
       {/* modal */}
-      <dialog id="my_modal_13" className="modal py-[20px] px-[10px]">
-        <form method="dialog" className="modal-box px-[20px]">
+      <dialog id='my_modal_13' className='modal py-[20px] px-[10px]'>
+        <form method='dialog' className='modal-box px-[20px]'>
           <div
             onClick={closeModal}
-            className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 border border-primary text-primary"
+            className='btn btn-sm btn-circle btn-ghost absolute right-2 top-2 border border-primary text-primary'
           >
             ✕
           </div>
 
-          <div className="py-[50px]">
-            <div className="flex justify-center w-full">
-              <Lottie animationData={success} className="w-[200px]" />
+          <div className='py-[50px]'>
+            <div className='flex justify-center w-full'>
+              <Lottie animationData={success} className='w-[200px]' />
             </div>
             <h3
               onClick={() => window.my_modal_13.close()}
-              className="font-bold text-[24px] mt-[10px] text-primary text-center"
+              className='font-bold text-[24px] mt-[10px] text-primary text-center'
             >
               Congratulations
             </h3>
-            <p className="py-4 text-center text-primary px-[30px]">
+            <p className='py-4 text-center text-primary px-[30px]'>
               Your checkout process is completed. Go to reservations page to see
               booking details.
             </p>
             {/* button */}
-            <div className="flex w-full justify-center my-[20px]">
+            <div className='flex w-full justify-center my-[20px]'>
               <div
                 onClick={reservationSubmit}
                 disabled={submitLoading2}
-                type="submit"
-                className="btn btn-secondary btn-wide flex items-center space-x-[5px]"
+                type='submit'
+                className='btn btn-secondary btn-wide flex items-center space-x-[5px]'
                 // disabled={progressLoading}
               >
                 {!submitLoading2 && (
-                  <span className=""> Reservation Dashboard</span>
+                  <span className=''> Reservation Dashboard</span>
                 )}
                 {submitLoading2 && (
-                  <span className="loading loading-spinner loading-md text-white"></span>
+                  <span className='loading loading-spinner loading-md text-white'></span>
                 )}
               </div>
             </div>
           </div>
         </form>
-        <form method="dialog">
+        <form method='dialog'>
           <button>close</button>
         </form>
         {/* <form method="dialog" className="modal-backdrop">

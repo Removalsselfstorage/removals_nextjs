@@ -446,6 +446,18 @@ export function generateSecureId(length = 25) {
   return secureId;
 }
 
+export function generateStorageId(length = 15) {
+  const characters = "abcdefghijklmnopqrstuvwxyz0123456789";
+  let secureId = "";
+
+  for (let i = 0; i < length; i++) {
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    secureId += characters.charAt(randomIndex);
+  }
+
+  return secureId;
+}
+
 // Example usage:
 const secureId = generateSecureId();
 // console.log(secureId);
@@ -534,6 +546,20 @@ export function generateRandomValues() {
     "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
   const length = 8;
   let randomValue = "rs";
+
+  for (let i = 0; i < length - 2; i++) {
+    const randomIndex = Math.floor(Math.random() * allowedChars.length);
+    randomValue += allowedChars[randomIndex];
+  }
+
+  return randomValue;
+}
+
+export function generateStorageRef() {
+  const allowedChars =
+    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  const length = 8;
+  let randomValue = "rss";
 
   for (let i = 0; i < length - 2; i++) {
     const randomIndex = Math.floor(Math.random() * allowedChars.length);

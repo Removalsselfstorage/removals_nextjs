@@ -22,10 +22,13 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import useQuote from "@/hooks/useQuote";
 import useMover from "@/hooks/useMover";
 import useMoversData from "@/hooks/useMoversData";
+import useLocalStorage from "use-local-storage";
 // import ScrollUpMenuNav from '../ScrollUpMenuNav';
 
 const Navbar = () => {
   const { updateReserveIdFxn, reserveId } = useQuote();
+
+  const [storageId, setStorageId] = useLocalStorage("name", "");
 
   const router = useRouter();
 
@@ -118,7 +121,7 @@ const Navbar = () => {
     window.addEventListener("scroll", showNavbar);
   }, [showNav]);
 
-  // console.log({ personalMoverDetails });
+  console.log({ storageId });
 
   return (
     <>
@@ -282,6 +285,100 @@ const Navbar = () => {
                         </li> */}
                       </ul>
                     </li>
+
+                    <li className='dropdown dropdown-hover dropdown-end group'>
+                      <label
+                        tabIndex={0}
+                        className='flex items-center font-semibold hover:text-primary'
+                      >
+                        <p className=''>Reservations</p>
+                        <span className='group-hover:rotate-180 duration-100 ml-[5px]'>
+                          <BsChevronDown />
+                        </span>
+                      </label>
+                      <ul
+                        tabIndex={0}
+                        className='dropdown-content border-t-[5px] border-primary z-[1] flex flex-col space-y-[15px] py-[20px] shadow-xl bg-base-100 rounded-box w-[250px] text-[16px] px-[20px]'
+                      >
+                        <li>
+                          {!users?.userDetails?.emailVerified && (
+                            <Link
+                              href={`${
+                                reserveId === ""
+                                  ? "/reserve-login"
+                                  : `/reservations/${reserveId}`
+                              }`}
+                              className={`${
+                                router.pathname === "/reserve-login"
+                                  ? "text-primary"
+                                  : ""
+                              } font-semibold hover:text-primary w-full`}
+                            >
+                              Move Reservation
+                            </Link>
+                          )}
+                          {users?.userDetails?.emailVerified && (
+                            <Link
+                              // href={`/mover-profile/dashboard/${uid}`}
+                              href={`/mover-profile/dashboard`}
+                              className={`${
+                                router.pathname === "/mover-profile/dashboard"
+                                  ? " text-primary"
+                                  : ""
+                              } font-semibold hover:text-primary w-full`}
+                            >
+                              My Move Dashboard
+                            </Link>
+                          )}
+                        </li>
+
+                        <li className='w-full'>
+                          {!storageId && (
+                            <div
+                              // href={`${
+                              //   !storageId
+                              //     ? "/storage-login"
+                              //     : `storage/reservations/${storageId}`
+                              // }`}
+                              onClick={
+                                ()=>{
+                                  // router.push()
+                                  !storageId
+                                  ? router.push("/storage-login")
+                                  : router.push(`storage/reservations/${storageId}`)
+                                }
+                              }
+                              className={`${
+                                router.pathname === "/storage/reservations"
+                                  ? " text-primary"
+                                  : ""
+                              } font-semibold hover:text-primary w-full cursor-pointer`}
+                            >
+                              <p className='w-full'>Storage Reservation</p>
+                            </div>
+                          )}
+                          {storageId && (
+                            <div
+                              // href={`storage/reservations/${storageId}}`}
+                              onClick={
+                                ()=>{
+                                  // router.push()
+                                  router.push(`storage/reservations/${storageId}`)
+                                }
+                              }
+                              className={`${
+                                router.pathname === "/storage/reservations"
+                                  ? " text-primary"
+                                  : ""
+                              } font-semibold hover:text-primary w-full cursor-pointer`}
+                            >
+                              <p className='w-full'>My Storage Dashboard</p>
+                            </div>
+                          )}
+                        </li>
+                      </ul>
+                    </li>
+
                     <li className=''>
                       <Link
                         href='/locations'
@@ -293,43 +390,6 @@ const Navbar = () => {
                       >
                         Locations
                       </Link>
-                    </li>
-                    <li>
-                      {!users?.userDetails?.emailVerified && (
-                        // <Link href="/reserve-login" className="btn-nav">
-                        //   My Reservation
-                        // </Link>
-                        <Link
-                          href={`${
-                            reserveId === ""
-                              ? "/reserve-login"
-                              : `/reservations/${reserveId}`
-                          }`}
-                          className={`${
-                            router.pathname === "/reserve-login"
-                              ? "border-b-[5px] border-primary text-primary"
-                              : ""
-                          } btn-navs`}
-                        >
-                          My Reservation
-                        </Link>
-                      )}
-                      {users?.userDetails?.emailVerified && (
-                        // <Link href="/mover-profile" className="btn-nav">
-                        //   My Dashboard
-                        // </Link>
-                        <Link
-                          // href={`/mover-profile/dashboard/${uid}`}
-                          href={`/mover-profile/dashboard`}
-                          className={`${
-                            router.pathname === "/mover-profile/dashboard"
-                              ? "border-b-[5px] border-primary text-primary"
-                              : ""
-                          } btn-navs`}
-                        >
-                          My Dashboard
-                        </Link>
-                      )}
                     </li>
                   </ul>
                 </div>

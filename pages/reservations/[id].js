@@ -282,6 +282,7 @@ const Reservations = ({ progressData, id, allBookings,  }) => {
         <meta name='description' content='Rss removal and storage website' />
         <link rel='icon' href='/rrs_favicon.svg' />
       </Head>
+      
       {/* {reserveId !== "" && !completedBookLoading ? ( */}
       {reserveId !== "" && !allLoading && (
         <BookingLayout>

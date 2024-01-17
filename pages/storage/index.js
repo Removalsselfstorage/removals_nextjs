@@ -1,5 +1,5 @@
 import NormalLayout from "@/layouts/NormalLayout";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Head from "next/head";
 import { titleFont } from "@/utils/fonts";
 import Container from "@/components/Storage/Container";
@@ -14,6 +14,17 @@ import {
 } from "@/dummyData/dummyData";
 import { containerOptions, storageReason } from "@/dummyData/inputData";
 import dayjs from "dayjs";
+import {
+  generateSecureId,
+  generateStorageRef,
+  getCurrentDateFormatted,
+} from "@/utils/logics";
+import Success from "@/components/Storage/Success";
+import Error from "@/components/Storage/Error";
+import { storageCheckout } from "@/lib/moveCheckout";
+import { db } from "@/firebase";
+import { doc, serverTimestamp, setDoc } from "firebase/firestore";
+import useLocalStorage from "use-local-storage";
 
 const Storage = () => {
   const [activeCont, setActiveCont] = useState("cont1");
@@ -51,6 +62,9 @@ const Storage = () => {
   const [durationCount, setDurationCount] = useState(1);
   const [formattedDate, setFormattedDate] = useState("");
   const [agreeTerms, setAgreeTerms] = useState(false);
+  const [bookId] = useState(() => generateSecureId());
+  const [bookRef] = useState(() => generateStorageRef());
+
 
   const router = useRouter();
 
@@ -128,6 +142,63 @@ const Storage = () => {
     setEmailError(emailPattern.test(e.target.value));
   };
 
+  const computeProductId = () => {
+    switch (containerSize) {
+      case "25 Square Feet Container":
+        return "prod_POJqc7exePO3ov";
+        break;
+
+      case "50 Square Feet Container":
+        return "prod_POJwId6MTNOcsg";
+        break;
+
+      case "75 Square Feet Container":
+        return "prod_POJx0rcCppy8mC";
+        break;
+
+      case "100 Square Feet Container":
+        return "prod_POJyqZzB3llWri";
+        break;
+
+      case "150 Square Feet Container":
+        return "prod_POJzK1JPh9PS4g";
+        break;
+
+      case "200 Square Feet Container":
+        return "prod_POK0eIvVFqoC28";
+        break;
+
+      case "250 Square Feet Container":
+        return "prod_POK0n8o1WtvakQ";
+        break;
+
+      case "300 Square Feet Container":
+        return "prod_POK1U1kJnRSG1t";
+        break;
+
+      default:
+        break;
+    }
+  };
+
+  const totalPrice = price * durationCount * Number(containerAmount);
+
+  const stripeProductId = computeProductId();
+  const stripeAmount = parseInt((totalPrice * 0.2).toFixed(2) * 100);
+
+  console.log({
+    stripeProductId,
+    stripeAmount,
+    price,
+    // price: paymentDetails?.paidPrice,
+  });
+
+  const storageRef = doc(db, "storageData", bookId);
+
+  const [storageId, setStorageId] = useLocalStorage("name", "");
+
+  
+
   const paymentSubmit = () => {
     setActivateError(true);
     // setSubmitStatus("loading");
@@ -162,13 +233,10 @@ const Storage = () => {
     }
   };
 
-  const paymentSubmit2 = () => {
+  const paymentSubmit2 = async () => {
     setActivateError(true);
     // setSubmitStatus("loading");
-    if (
-      !agreeTerms 
-    
-    ) {
+    if (!agreeTerms) {
       // setSubmitError(true);
       setSubmitStatus2("error");
       // toast.error(`Please fill all fields`);
@@ -177,7 +245,57 @@ const Storage = () => {
       // setSubmitError(false);
       setActivateError2(false);
       setSubmitStatus2("loading");
-      setSubmitStatus2("success");
+
+      setStorageId(bookId)
+
+      try {
+        await setDoc(
+          storageRef,
+
+          {
+            date: getCurrentDateFormatted(),
+            fullName,
+            email,
+            phone,
+            address,
+            city: addressDetails?.city,
+            state: addressDetails?.state,
+            country: addressDetails?.country,
+            zip: addressDetails?.zip,
+            storageReasonOption,
+            containerAmount,
+            containerSize,
+            containerPrice: price,
+            totalPrice,
+            paidPrice: (totalPrice * 0.2).toFixed(2),
+            durationCount,
+            date,
+            date2,
+            bookId,
+            bookRef,
+            agreeTerms,
+          },
+          { merge: true }
+        );
+
+        // window.my_modal_13.showModal();
+        // return true;
+        console.log("storage update was successful @ checkout");
+      } catch (error) {
+        console.log(error);
+        // return false;
+        console.log("storage update was unsuccessful @ checkout");
+      }
+
+      await storageCheckout(stripeProductId, stripeAmount);
+
+      // setSubmitStatus2("success");
+
+      // router.push({
+      //   pathname: "/storage",
+      //   query: { status: `success`, host: `${bookId}` },
+      // });
+
       // setStage("payment");
       // window.my_modal_64.showModal();
 
@@ -189,6 +307,11 @@ const Storage = () => {
       // setStage("you");
     }
   };
+
+  // const bookId = generateSecureId();
+  // useMemo(() => first, [second])
+
+  // const bookRef = generateStorageRef();
 
   useEffect(() => {
     if (query?.stage === "payment" && !containerSize) {
@@ -213,6 +336,10 @@ const Storage = () => {
     date,
     date2,
     price,
+    bookId,
+    bookRef,
+    agreeTerms,
+    // date: getCurrentDateFormatted(),
   });
 
   return (
@@ -227,25 +354,26 @@ const Storage = () => {
         <div className='bg-base-200 mt-[50px]  md:mt-[0px] md:pt-[70px] lg:pt-[100px]'>
           <div className='md:max-w-7xl mx-auto'>
             {/* stepper */}
-            <div className='w-full flex justify-center pt-[60px] pb-[0px] '>
-              <ul className='steps'>
-                <li
-                  className={`step step-primary px-[10px] md:px-[40px] font-bold text-[14px] md:text-[16px] leading-[20px]`}
-                >
-                  Storage Details
-                </li>
-                <li
-                  className={`step ${
-                    query?.stage === "payment"
-                      ? "step-primary"
-                      : query?.stage === "payment"
-                      ? "step-primary"
-                      : "text-gray-300"
-                  }  font-bold text-[14px] md:text-[16px] leading-[25px] `}
-                >
-                  Payment
-                </li>
-                {/* <li
+            {!query?.status && (
+              <div className='w-full flex justify-center pt-[60px] pb-[0px] '>
+                <ul className='steps'>
+                  <li
+                    className={`step step-primary px-[10px] md:px-[40px] font-bold text-[14px] md:text-[16px] leading-[20px]`}
+                  >
+                    Storage Details
+                  </li>
+                  <li
+                    className={`step ${
+                      query?.stage === "payment"
+                        ? "step-primary"
+                        : query?.stage === "payment"
+                        ? "step-primary"
+                        : "text-gray-300"
+                    }  font-bold text-[14px] md:text-[16px] leading-[25px] `}
+                  >
+                    Payment
+                  </li>
+                  {/* <li
                   className={`step ${
                     query?.stage === "payment"
                       ? "step-primary"
@@ -254,8 +382,9 @@ const Storage = () => {
                 >
                   Payment
                 </li> */}
-              </ul>
-            </div>
+                </ul>
+              </div>
+            )}
 
             {/* Title */}
             {/* <div className='w-full flex justify-center mt-[50px] mb-[50px] pt-[0px] pb-[0px]'>
@@ -268,7 +397,7 @@ const Storage = () => {
             </div> */}
 
             <div className='mt-[50px] mb-[40px]'>
-              {!query?.stage && (
+              {!query?.stage && !query?.status && (
                 <StorageSize
                   setActiveCont={setActiveCont}
                   activeCont={activeCont}
@@ -343,9 +472,14 @@ const Storage = () => {
                   setPrice={setPrice}
                   agreeTerms={agreeTerms}
                   setAgreeTerms={setAgreeTerms}
+                  bookId={bookId}
+                  bookRef={bookRef}
                   // setAddressDetails={setAddressDetails}
                 />
               )}
+
+              {query?.status?.includes("success") && <Success />}
+              {query?.status?.includes("error") && <Error />}
             </div>
           </div>
         </div>

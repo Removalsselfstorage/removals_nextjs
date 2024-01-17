@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -65,18 +65,31 @@ const Payment = ({
   price,
   agreeTerms,
   setAgreeTerms,
+  bookRef,
 }) => {
+  
   const router = useRouter();
   const { query } = router;
 
+  const [openModal, setOpenModal] = useState(false);
+
   const closeModal = () => {
     window.my_modal_64.close();
+    setOpenModal(false);
     // setTimeout(() => {
     //   setShowProgressMessage(false);
     //   setShowSent(false);
     //   // setEmail("");
     // }, 500);
   };
+
+  const modalContentRef = useRef(null);
+
+  useEffect(() => {
+    if (modalContentRef.current) {
+      modalContentRef.current.scrollTop = 0;
+    }
+  }, [openModal]);
 
   const totalPrice = price * durationCount * Number(containerAmount);
 
@@ -333,7 +346,8 @@ const Payment = ({
         <dialog id='my_modal_64' className='modal py-[20px] px-[10px]'>
           <form
             method='dialog'
-            className='modal-box px-[20px] w-11/12 max-w-5xl'
+            className='modal-box px-[20px] w-11/12 max-w-5xl relative'
+            ref={modalContentRef}
           >
             <div
               onClick={closeModal}
@@ -473,6 +487,24 @@ const Payment = ({
                   <div className='form-control w-full '>
                     <label className='label px-[0]'>
                       <span className='label-text font-semibold text-primary'>
+                        Storage Ref ID
+                      </span>
+                    </label>
+                    <p className='font-semibold'>
+                      {bookRef ? bookRef : "***********"}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* row 4*/}
+              <div className='flex flex-col mb-[20px] lg:mb-[30px] items-center justify-center space-y-[10px] lg:space-y-0 lg:flex-row lg:items-start lg:px-[50px] border-b-[2px] pb-[30px] lg:space-x-[50px]'>
+                {/* left */}
+                <div className='flex flex-[1] w-full flex-col md:flex-row md:space-x-[10px] space-y-[10px] md:space-y-0 md:justify-center '>
+                  {/* email */}
+                  <div className='form-control w-full '>
+                    <label className='label px-[0]'>
+                      <span className='label-text font-semibold text-primary'>
                         Total Price
                       </span>
                     </label>
@@ -481,15 +513,52 @@ const Payment = ({
                     </p>
                   </div>
                 </div>
+
+                {/* right */}
+                <div className='flex flex-[1] w-full flex-col md:flex-row md:space-x-[10px] space-y-[10px] md:space-y-0 md:justify-center '>
+                  {/* email */}
+                  <div className='form-control w-full '>
+                    <label className='label px-[0]'>
+                      <span className='label-text font-semibold text-primary'>
+                        Initial 20% Deposit
+                      </span>
+                    </label>
+                    <p className='font-semibold text-[18px]'>
+                      £{totalPrice ? (totalPrice * 0.2).toFixed(2) : "***"}
+                    </p>
+                  </div>
+                </div>
+
+                {/* right */}
+                <div className='flex flex-[1] w-full flex-col md:flex-row md:space-x-[10px] space-y-[10px] md:space-y-0 md:justify-center '>
+                  {/* email */}
+                  {/* <div className='form-control w-full '>
+                    <label className='label px-[0]'>
+                      <span className='label-text font-semibold text-primary'>
+                        Total Price
+                      </span>
+                    </label>
+                    <p className='font-semibold text-[18px]'>
+                      £{totalPrice ? totalPrice.toFixed(2) : "***"}
+                    </p>
+                  </div> */}
+                </div>
               </div>
 
-{/* Agree to terms */}
+              <p className=' mb-[20px] text-secondary  text-[14px] w-full md:px-[50px] lg:px-[80px] text-center'>
+                <span className='font-semibold'> NB: </span> A 20% deposit of
+                the total price is required to be paid; inorder to secure the
+                storage. While the balance will be made at the storage point of
+                contact.
+              </p>
+
+              {/* Agree to terms */}
               <div className='flex justify-center  mt-[30px] mb-[10px] md:mb-[20px]  w-full'>
                 <div className='form-control '>
                   <label className='label cursor-pointer flex justify-center space-x-[20px] w-full'>
                     <input
                       type='checkbox'
-                      //   checked="checked"
+                      checked={agreeTerms}
                       className={`${
                         activateError2 && !agreeTerms
                           ? "ring ring-secondary"
@@ -498,8 +567,7 @@ const Payment = ({
                       onChange={(e) => setAgreeTerms(e.target.checked)}
                     />
                     <span className='leading-[20px] text-[14px] md:text-[16px]'>
-                      I agree to the terms and conditions outlined in the
-                      privacy policy
+                      I agree to the terms and conditions
                     </span>
                   </label>
                 </div>
@@ -511,20 +579,33 @@ const Payment = ({
                 </div>
               )}
 
-              <div className='flex w-full justify-center my-[50px]'>
+              <div className='flex w-full justify-center my-[50px] space-x-[10px]'>
                 <div
-                  onClick={paymentSubmit2}
-                //   type='submit'
-                  className='btn btn-secondary btn-wide flex items-center space-x-[5px]'
+                  onClick={closeModal}
+                  //   type='submit'
+                  className='btn btn-secondary btn-outline md:btn-wide flex items-center space-x-[5px]'
                   disabled={submitStatus2 === "loading"}
                 >
-                  {<span className=''>Pay Now</span>}
-                  {submitStatus2 === "loading" && (
+                  {<span className=''>Close</span>}
+                  {/* {submitStatus2 === "loading" && (
                       <>
-                        {/* <span className=''>Sending Progress</span> */}
                         <span className='loading loading-spinner loading-md text-white'></span>
                       </>
-                    )}
+                    )} */}
+                </div>
+                <div
+                  onClick={paymentSubmit2}
+                  //   type='submit'
+                  className='btn btn-secondary md:btn-wide flex items-center space-x-[5px]'
+                  disabled={submitStatus2 === "loading"}
+                >
+                  {submitStatus2 !== "loading" && <span className=''>Pay Now</span>}
+                  {submitStatus2 === "loading" && (
+                    <>
+                      {/* <span className=''>Sending Progress</span> */}
+                      <span className='loading loading-spinner loading-md text-white'></span>
+                    </>
+                  )}
                 </div>
               </div>
             </div>
@@ -561,6 +642,7 @@ const Payment = ({
               <button
                 onClick={() => {
                   //   window.my_modal_64.showModal()
+                  setOpenModal(true);
                   paymentSubmit();
                 }}
                 // disabled={submitLoading}

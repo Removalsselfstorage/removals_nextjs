@@ -114,7 +114,7 @@ const StorageReservation = ({ progressData, id, allBookings }) => {
                           </h1>
                           <p className='text-gray-500 font-semibold'>
                             {/* Thank you for choosing Removals & Self Storage */}
-                            {progressData?.email}
+                            {progressData?.email} 
                           </p>
                         </div>
                       </div>

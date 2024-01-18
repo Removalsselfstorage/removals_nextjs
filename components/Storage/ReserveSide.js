@@ -116,10 +116,10 @@ const ReserveSide = ({ progressData }) => {
 
             <div className='flex flex-col space-y-[5px]'>
               <p className='text-primary font-semibold text-[16px]'>
-                Storage Price:
+                Storage Total Price:
               </p>
               <p className='font-semibold text-[13.5px] '>
-                {formatMovePrice(progressData?.containerPrice)}
+                {formatMovePrice(progressData?.totalPrice)}
               </p>
             </div>
           </div>

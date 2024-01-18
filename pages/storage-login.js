@@ -185,7 +185,7 @@ const StorageLogin = ({ data }) => {
                         // onClick={() => {}}
                         type='submit'
                         disabled={submitLoading}
-                        className='btn btn-primary flex items-center space-x-[5px]'
+                        className='btn btn-secondary flex items-center space-x-[5px]'
                       >
                         {!submitLoading && (
                           <span className=''>Login</span>
@@ -207,10 +207,10 @@ const StorageLogin = ({ data }) => {
                         href='/book'
                         className='flex items-center space-x-[5px] cursor-pointer'
                       >
-                        <span className='text-primary font-bold text-[15px] cursor-pointer'>
+                        <span className='text-secondary font-bold text-[15px] cursor-pointer'>
                           Book Now
                         </span>
-                        <FaArrowRight className='text-primary' />
+                        <FaArrowRight className='text-secondary' />
                       </Link>
                     </div>
                     {/* <div className={styles.account}>

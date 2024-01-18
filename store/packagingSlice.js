@@ -58,7 +58,8 @@ const initialState = {
     },
     {
       id: 7,
-      stripe_id: "price_1OZe5YHTmsPQv11MxXsbLHxC",
+      stripe_id: "price_1OZycqHTmsPQv11Ma0Tj0OCs",
+      // stripe_id: "price_1OZe5YHTmsPQv11MxXsbLHxC",
       image:
         "https://www.globepackaging.co.uk/images/ProLoc%20low%20noise%20tape%20BROWN%20for%20use.jpg",
       name: "Rolls ProLoc Low Noise Brown Packing Tape 48mm x 66M",

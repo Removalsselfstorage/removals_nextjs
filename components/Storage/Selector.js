@@ -64,7 +64,7 @@ const Selector = ({ setActiveCont, activeCont, setDuration, setQuantity }) => {
               } flex flex-col items-center justify-center cursor-pointer hover:text-primary bg-primary/5 w-[200px] h-[100px]  border-primary/30 text-center space-y-[5px] px-[20px] py-[20px] shrink-[0]`}
             >
               <p className='font-bold'>{sd?.name1}</p>
-              <p className={` font-semibold`}>Container</p>
+              <p className={` font-semibold`}>Storage</p>
             </div>
           );
         })}

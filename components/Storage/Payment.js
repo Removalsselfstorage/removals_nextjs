@@ -66,8 +66,10 @@ const Payment = ({
   agreeTerms,
   setAgreeTerms,
   bookRef,
+  discount,
+  setDiscount,
+  totalPrice,
 }) => {
-  
   const router = useRouter();
   const { query } = router;
 
@@ -91,7 +93,8 @@ const Payment = ({
     }
   }, [openModal]);
 
-  const totalPrice = price * durationCount * Number(containerAmount);
+  // const totalPrice = calculateStoragePrice() * Number(containerAmount);
+  // const totalPrice = price * durationCount * Number(containerAmount);
 
   return (
     <div className=''>
@@ -299,11 +302,26 @@ const Payment = ({
                     <AiOutlinePlus className='text-white font-bold text-[18px]' />
                   </div>
                 </div>
+                <p className='text-[14px] mt-[20px]'>
+                  <span className='font-semibold'>NB:</span> The selected
+                  storage rate is{" "}
+                  <span className='font-semibold text-secondary'>
+                    ${discount}/week
+                  </span>{" "}
+                  for the first 8 weeks, then{" "}
+                  <span className='font-semibold text-secondary'>
+                    ${price}/week
+                  </span>{" "}
+                  afterwards.
+                </p>
+                {/* <p className="text-[14px] mt-[10px]">Enjoy a special rate of $10 per week for the first 8 weeks of storage, and thereafter, the weekly rate is $20.</p> */}
               </div>
             </div>
           </div>
           {/* right */}
           <div className='flex flex-[1] space-x-[20px]'>
+            
+
             <div className='flex flex-[1]'>
               {/* move date*/}
               <div className='form-control'>
@@ -331,6 +349,25 @@ const Payment = ({
                 {/* <div className="bg-white border rounded-[8px] border-primary">
                           <BasicDatePicker />
                         </div> */}
+              </div>
+            </div>
+
+            <div className='flex flex-[1]'>
+              {/* move date*/}
+              <div className='form-control w-full'>
+                <label className='label'>
+                  <span className='label-text font-semibold'>Total Price</span>
+                </label>
+                <div
+                  // type='number'
+                  // placeholder='e.g John Doe'
+                  className={`border-[1px] input rounded-[8px] border-primary flex justify-start items-center w-full h-[43px] text-primary font-semibold`}
+                  // onChange={(e) => setFullName(e.target.value)}
+                  // readOnly
+                  // value={totalPrice.toFixed(2)}
+                >
+                  £{totalPrice.toFixed(2)}
+                  </div>
               </div>
             </div>
           </div>
@@ -599,7 +636,9 @@ const Payment = ({
                   className='btn btn-secondary md:btn-wide flex items-center space-x-[5px]'
                   disabled={submitStatus2 === "loading"}
                 >
-                  {submitStatus2 !== "loading" && <span className=''>Pay Now</span>}
+                  {submitStatus2 !== "loading" && (
+                    <span className=''>Pay Now</span>
+                  )}
                   {submitStatus2 === "loading" && (
                     <>
                       {/* <span className=''>Sending Progress</span> */}

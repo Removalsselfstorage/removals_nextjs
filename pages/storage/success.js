@@ -336,19 +336,7 @@ const ReservationCheckoutSuccess = ({ allBookings, approvedMovers }) => {
 export default ReservationCheckoutSuccess;
 
 export async function getServerSideProps(context) {
-  // const { id } = context.params; // Access the UID from the URL
-  // const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
-  // const { data: prices } = await stripe.prices.list({
-  //   active: true,
-  //   limit: 10,
-  //   expand: ["data.product"],
-  // });
-  // const userData = await fetchAllMoversDetailsArray();
-
-  // const bookingRef = doc(db, "bookingData", id);
-  // const docSnap = await getDoc(bookingRef);
-
-  // const progressData = docSnap.data();
+  
 
   const bookingsData = await fetchAllBookings();
 
@@ -370,14 +358,6 @@ export async function getServerSideProps(context) {
   const approvedMovers = movers?.filter(
     (item) => item.approvalStatus === "APPROVED"
   );
-
-  // let progressData;
-
-  // if (!!pd) {
-  //   progressData = pd?.bookings?.filter((bk) => bk.completedBook === true);
-  // }
-
-  // console.log({ pd });
 
   if (typeof bookingsData === "undefined") {
     return {

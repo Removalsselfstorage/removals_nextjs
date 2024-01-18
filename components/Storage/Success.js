@@ -7,6 +7,8 @@ import { useRouter } from "next/router";
 const Success = ({ handleDashboard }) => {
   const router = useRouter();
 
+  const [submitStatus, setSubmitStatus] = useState(false);
+
   return (
     <>
       <div className='flex justify-center w-full mb-[20px]'>
@@ -41,13 +43,20 @@ const Success = ({ handleDashboard }) => {
         <div
           //   href='https://schoolmatesdemo.vercel.app/'
           onClick={() => {
+            setSubmitStatus(true);
             handleDashboard();
           }}
           //   disabled={submitLoading}
           className='btn btn-secondary btn-wide'
         >
           {/* Return to Dashboard */}
-          {<span className=''>Go to Dashboard</span>}
+          {!submitStatus && <span className=''>Go to Dashboard</span>}
+          {submitStatus && (
+            <>
+              {/* <span className=''>Sending Progress</span> */}
+              <span className='loading loading-spinner loading-md text-white'></span>
+            </>
+          )}
         </div>
       </div>
     </>

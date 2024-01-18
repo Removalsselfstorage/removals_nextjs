@@ -19,6 +19,8 @@ const StorageSize = ({
   setContainerSize,
   price2,
   setPrice,
+  discount,
+setDiscount,
 }) => {
   return (
     <div className=''>
@@ -56,6 +58,9 @@ const StorageSize = ({
                   setContainerSize={setContainerSize}
                   price2={price2}
                   setPrice={setPrice}
+                  discount={discount}
+                  setDiscount={setDiscount}
+                  discountValue={sd?.discount}
                 />
               )}
             </>

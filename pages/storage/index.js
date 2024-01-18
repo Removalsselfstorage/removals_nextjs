@@ -60,11 +60,11 @@ const Storage = () => {
   const [containerSize, setContainerSize] = useState("");
   const [dateValue, setDateValue] = useState("");
   const [durationCount, setDurationCount] = useState(1);
+  const [discount, setDiscount] = useState(0);
   const [formattedDate, setFormattedDate] = useState("");
   const [agreeTerms, setAgreeTerms] = useState(false);
   const [bookId] = useState(() => generateSecureId());
   const [bookRef] = useState(() => generateStorageRef());
-
 
   const router = useRouter();
 
@@ -144,35 +144,35 @@ const Storage = () => {
 
   const computeProductId = () => {
     switch (containerSize) {
-      case "25 Square Feet Container":
+      case "25 Square Feet Storage":
         return "prod_POJqc7exePO3ov";
         break;
 
-      case "50 Square Feet Container":
+      case "50 Square Feet Storage":
         return "prod_POJwId6MTNOcsg";
         break;
 
-      case "75 Square Feet Container":
+      case "75 Square Feet Storage":
         return "prod_POJx0rcCppy8mC";
         break;
 
-      case "100 Square Feet Container":
+      case "100 Square Feet Storage":
         return "prod_POJyqZzB3llWri";
         break;
 
-      case "150 Square Feet Container":
+      case "150 Square Feet Storage":
         return "prod_POJzK1JPh9PS4g";
         break;
 
-      case "200 Square Feet Container":
+      case "200 Square Feet Storage":
         return "prod_POK0eIvVFqoC28";
         break;
 
-      case "250 Square Feet Container":
+      case "250 Square Feet Storage":
         return "prod_POK0n8o1WtvakQ";
         break;
 
-      case "300 Square Feet Container":
+      case "300 Square Feet Storage":
         return "prod_POK1U1kJnRSG1t";
         break;
 
@@ -181,7 +181,24 @@ const Storage = () => {
     }
   };
 
-  const totalPrice = price * durationCount * Number(containerAmount);
+  function calculateStoragePrice() {
+    const initialRate = discount;
+    const standardRate = price;
+    const discountedWeeks = 8;
+
+    if (durationCount <= discountedWeeks) {
+      return durationCount * initialRate;
+    } else {
+      const discountedPrice = discountedWeeks * initialRate;
+      const remainingWeeks = durationCount - discountedWeeks;
+      const standardPrice = remainingWeeks * standardRate;
+      return discountedPrice + standardPrice;
+    }
+  }
+
+  const totalPrice = calculateStoragePrice() * Number(containerAmount);
+
+  // const totalPrice = price * durationCount * Number(containerAmount);
 
   const stripeProductId = computeProductId();
   const stripeAmount = parseInt((totalPrice * 0.2).toFixed(2) * 100);
@@ -196,8 +213,6 @@ const Storage = () => {
   const storageRef = doc(db, "storageData", bookId);
 
   const [storageId, setStorageId] = useLocalStorage("name", "");
-
-  
 
   const paymentSubmit = () => {
     setActivateError(true);
@@ -246,7 +261,7 @@ const Storage = () => {
       setActivateError2(false);
       setSubmitStatus2("loading");
 
-      setStorageId(bookId)
+      setStorageId(bookId);
 
       try {
         await setDoc(
@@ -267,6 +282,7 @@ const Storage = () => {
             containerSize,
             containerPrice: price,
             totalPrice,
+            discount,
             paidPrice: (totalPrice * 0.2).toFixed(2),
             durationCount,
             date,
@@ -339,6 +355,8 @@ const Storage = () => {
     bookId,
     bookRef,
     agreeTerms,
+    discount,
+    totalPrice,
     // date: getCurrentDateFormatted(),
   });
 
@@ -414,6 +432,8 @@ const Storage = () => {
                   setContainerSize={setContainerSize}
                   price2={price}
                   setPrice={setPrice}
+                  discount={discount}
+                  setDiscount={setDiscount}
                   // setStage={setStage}
                 />
               )}
@@ -474,6 +494,9 @@ const Storage = () => {
                   setAgreeTerms={setAgreeTerms}
                   bookId={bookId}
                   bookRef={bookRef}
+                  discount={discount}
+                  setDiscount={setDiscount}
+                  totalPrice={totalPrice}
                   // setAddressDetails={setAddressDetails}
                 />
               )}

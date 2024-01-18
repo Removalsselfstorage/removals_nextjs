@@ -22,6 +22,9 @@ const Container = ({
   price,
   price2,
   setPrice,
+  discount,
+setDiscount,
+discountValue,
 }) => {
   const router = useRouter();
   const { query } = router;
@@ -37,7 +40,8 @@ const Container = ({
         <div className='flex flex-col flex-[1]'>
           <p className='font-bold text-[18px] mb-[7px] text-primary'>{title}</p>
           <p className='font-bold text-[24px] mb-[10px] text-primary'>
-            £{(duration * price * quantity).toFixed(2)} / week
+            £{discountValue.toFixed(2)} / week
+            {/* £{(duration * price * quantity).toFixed(2)} / week */}
           </p>
           {/* <p className='font-semibold mb-[20px]'>( £{rate} / Week )</p> */}
           <p className=' mb-[20px]'>
@@ -48,35 +52,7 @@ const Container = ({
             {/* <span className='font-semibold'> NB: </span> */}
             <span className=''>{note}</span>
           </p>
-          {/* <div className='flex flex-col space-y-[10px] md:flex-row md:items-center md:space-y-0 md:space-x-[20px]'>
-            <div className='flex items-center space-x-[10px]'>
-              <p className=' font-semibold'>Quantity</p>
-              <input
-                type='number'
-                min='1'
-                step='1'
-                placeholder='Quantity of container'
-                className={`input input-primary w-[100px] h-[43px]`}
-                onChange={(e) => handleDurationChange2(e)}
-                value={quantity}
-              />
-            </div>
-            <div className='flex items-center space-x-[10px]'>
-              <p className=' font-semibold'>
-                Duration{" "}
-                <span className='text-[15px] font-medium'>(Wk(s))</span>
-              </p>
-              <input
-                type='number'
-                min='1'
-                step='1'
-                placeholder='Number of weeks'
-                className={`input input-primary w-[100px] h-[43px]`}
-                onChange={(e) => handleDurationChange(e)}
-                value={duration}
-              />
-            </div>
-          </div> */}
+          
           {/* submit button*/}
           <div className=' mt-6 w-full '>
             <div className='flex flex-col '>
@@ -98,6 +74,7 @@ const Container = ({
                   onClick={() => {
                     setContainerSize(title);
                     setPrice(price);
+                    setDiscount(discountValue)
                     router.push({
                       pathname: "/storage",
                       query: { stage: "payment" },

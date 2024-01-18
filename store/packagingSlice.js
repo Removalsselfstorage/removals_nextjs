@@ -4,7 +4,7 @@ const initialState = {
   allProducts: [
     {
       id: 1,
-      stripe_id: "price_1Nzkn8A4LmEvtWCnLgF2FaSs",
+      stripe_id: "price_1OZe9WHTmsPQv11MlEKsjdzR",
       image:
         "https://www.globepackaging.co.uk/images/Large%20Wardrobe%20Box%20Hanging%20Garment%20Carrier%20Moving%20Clothes.jpg",
       name: `Standard Large Size Double Wall Wardrobe Removal Boxes 20"x19"x38"`,
@@ -13,7 +13,7 @@ const initialState = {
     },
     {
       id: 2,
-      stripe_id: "price_1NzkoAA4LmEvtWCn8SymUqKp",
+      stripe_id: "price_1OZe93HTmsPQv11M1jtNmDd3",
       image:
         "https://www.globepackaging.co.uk/images/Removal%20kit%20no%201%20GP%20site.jpg",
       name: "House Moving Removal Kit No 1 (Cardboard Boxes + Materials)",
@@ -22,7 +22,7 @@ const initialState = {
     },
     {
       id: 3,
-      stripe_id: "price_1NzkrqA4LmEvtWCnId8BAN5Z",
+      stripe_id: "price_1OZe8LHTmsPQv11MnaBst0ai",
       image:
         "https://lirp.cdn-website.com/5499e577/dms3rep/multi/opt/6-640w.jpg",
       name: `Double Wall Medium Storage Packing Boxes 18"x12"x12"`,
@@ -31,7 +31,7 @@ const initialState = {
     },
     {
       id: 4,
-      stripe_id: "price_1NzksaA4LmEvtWCnXOxXcRuP",
+      stripe_id: "price_1OZe7HHTmsPQv11MRCu0Peg1",
       image:
         "https://www.globepackaging.co.uk/images/Small%20bubble%20wrap%20PRODUCT%20PIC%20globe%20packaging.jpg",
       name: "Roll of Small Bubble Wrap 300mm x 100M",
@@ -40,7 +40,7 @@ const initialState = {
     },
     {
       id: 5,
-      stripe_id: "price_1NzktYA4LmEvtWCnEcZw9gTq",
+      stripe_id: "price_1OZe6lHTmsPQv11MGdkH5z6j",
       image:
         "https://www.globepackaging.co.uk/images/Mattress%20cover%20latest%20site.jpg",
       name: "Heavy Duty King Size Mattress Removal Poly Cover Bag",
@@ -49,7 +49,7 @@ const initialState = {
     },
     {
       id: 6,
-      stripe_id: "price_1Nzku1A4LmEvtWCnQP4hyIPg",
+      stripe_id: "price_1OZe61HTmsPQv11MlIOtzaV9",
       image:
         "https://www.globepackaging.co.uk/images/sofa%20cover%20latest%20SITE%20RS.jpg",
       name: "Heavy Duty Four Seat Sofa Removal Poly Cover Storage Bag",
@@ -58,7 +58,7 @@ const initialState = {
     },
     {
       id: 7,
-      stripe_id: "price_1NzkuYA4LmEvtWCnS2q0RSdQ",
+      stripe_id: "price_1OZe5YHTmsPQv11MxXsbLHxC",
       image:
         "https://www.globepackaging.co.uk/images/ProLoc%20low%20noise%20tape%20BROWN%20for%20use.jpg",
       name: "Rolls ProLoc Low Noise Brown Packing Tape 48mm x 66M",
@@ -67,7 +67,7 @@ const initialState = {
     },
     {
       id: 8,
-      stripe_id: "price_1Nzkv9A4LmEvtWCnJk2t4Vm1",
+      stripe_id: "price_1OZe4xHTmsPQv11MOLx1An98",
       image:
         "https://www.globepackaging.co.uk/images/Fragile%20tape%20site.jpg",
       name: "Rolls Of FRAGILE Low Noise Printed Packing Tape 48mm x 66M",

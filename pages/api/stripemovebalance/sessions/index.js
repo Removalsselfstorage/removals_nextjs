@@ -19,7 +19,8 @@ const handler = async (req, res) => {
       const session = await stripe.checkout.sessions.create({
         line_items: lineItems,
         mode: "payment",
-        payment_method_types: ["card", "paypal"],
+        payment_method_types: ["card"],
+        // payment_method_types: ["card", "paypal"],
         submit_type: "book",
         success_url: `${req.headers.origin}/reservations/checkout/successbalance?sessionId={CHECKOUT_SESSION_ID}`,
         cancel_url: `${req.headers.origin}/reservations/checkout/errorbalance`,

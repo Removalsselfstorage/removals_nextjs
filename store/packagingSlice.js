@@ -63,7 +63,8 @@ const initialState = {
       image:
         "https://www.globepackaging.co.uk/images/ProLoc%20low%20noise%20tape%20BROWN%20for%20use.jpg",
       name: "Rolls ProLoc Low Noise Brown Packing Tape 48mm x 66M",
-      price: "2.99",
+      price: "1.00",
+      // price: "2.99",
       qty: 1,
     },
     {

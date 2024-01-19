@@ -1,7 +1,45 @@
+export function addWeeksToDate(originalDate, formattedValue, weeksToAdd) {
+  // Parse the original date
+  const [year, month, day] = originalDate?.split("/")?.map(Number);
+  const currentDate = new Date(year, month - 1, day); // Note: month is zero-based
+
+  // Calculate the new date by adding weeks
+  const newDate = new Date(
+    currentDate.getTime() + weeksToAdd * 7 * 24 * 60 * 60 * 1000
+  );
+
+  // Format the new date
+  const newFormattedValue = newDate?.toLocaleDateString("en-US", {
+    weekday: "long",
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  });
+
+  return {
+    newDate, // Return in "YYYY-MM-DD" format
+    // newDate: newDate?.toISOString()?.split("T")[0], // Return in "YYYY-MM-DD" format
+    newFormattedValue,
+  };
+}
+
+export function convertToSqFt(inputString) {
+  // Use a regular expression to extract the numeric value
+  const numericValue = inputString.match(/\d+/);
+
+  // Check if a numeric value is found
+  if (numericValue) {
+    // Append "Sq Ft" to the numeric value and return
+    return numericValue[0] + " Sq Ft";
+  } else {
+    // Return an error message or handle the case where no numeric value is found
+    return "Invalid input, no numeric value found";
+  }
+}
+
 export const lettersCount = (text) => {
   return text?.replace(/[^a-zA-Z]/g, "")?.length;
 };
-
 
 export function calculateAverageRating2(reviews) {
   const totalRating = reviews.reduce(
@@ -12,7 +50,6 @@ export function calculateAverageRating2(reviews) {
   // console.log({averageRating})
   return averageRating;
 }
-
 
 export function combineProfiles(...profiles) {
   const combinedProfiles = [];
@@ -303,6 +340,17 @@ export const checkBookStatus = (moveDate, moverTime) => {
     const ct = convertTimeTo24HourFormat(startTime);
     targetDate.setHours(ct);
   }
+  const currentDate = new Date().getTime();
+
+  const givenDate = targetDate.getTime();
+
+  // Compare the two dates
+  return givenDate > currentDate;
+};
+
+export const checkBookStatus2 = (moveDate, moverTime) => {
+  let targetDate = new Date(moveDate);
+
   const currentDate = new Date().getTime();
 
   const givenDate = targetDate.getTime();

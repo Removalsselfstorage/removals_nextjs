@@ -4,7 +4,7 @@ import { formatMovePrice } from "@/utils/logics";
 import React, { useEffect, useState } from "react";
 import { BiHelpCircle } from "react-icons/bi";
 
-const PaymentDashboard = ({ allPayments, isGivenDateGreaterThanCurrent }) => {
+const PaymentDashboard = ({ allPayments,  isGivenDateGreaterThanCurrent }) => {
   const {
     setReserveDetailsFxn,
     updateReserveDetailsFxn,

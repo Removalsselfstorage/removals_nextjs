@@ -71,7 +71,7 @@ const Storage = () => {
   const { query } = router;
 
   //Date
-  const date = dayjs(dateValue).format(" YYYY/MM/DD ");
+  const date = dayjs(dateValue).format("YYYY/MM/DD");
 
   const date2 = dayjs(dateValue).format("dddd, MMMM D, YYYY");
 

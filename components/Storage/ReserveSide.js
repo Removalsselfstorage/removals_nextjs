@@ -64,13 +64,40 @@ const ReserveSide = ({ progressData }) => {
   // console.log({ progressData });
 
   return (
-    <div className='bg-white shadow-lg rounded-[30px] py-[30px] px-[20px] md:px-[30px] w-full lg:sticky lg:top-[80px]'>
+    <div className='bg-white lg:min-h-[80vh] shadow-lg rounded-[30px] py-[30px] px-[20px] md:px-[30px] w-full lg:sticky lg:top-[80px]'>
       <div className=''>
         <p className='text-[20px] font-bold mb-[10px] md:mb-[20px]'>
           Storage Summary
         </p>
-        <div className='relative'>
+        <div className='relative h-full'>
           <div className='grid md:grid-cols-3 lg:grid-cols-1 gap-y-[10px] gap-x-[10px] overflow-auto scrollbar-thin scrollbar-track-gray-200/50 scrollbar-thumb-gray-500/20 scrollbar-default h-[200px] md:h-full'>
+            <div className='flex flex-col space-y-[5px]'>
+              <p className='text-primary font-semibold text-[16px]'>
+                Name:
+              </p>
+              <p className='font-semibold text-[13.5px] '>
+                {progressData?.fullName}
+              </p>
+            </div>
+
+            <div className='flex flex-col space-y-[5px]'>
+              <p className='text-primary font-semibold text-[16px]'>
+                Phone Number:
+              </p>
+              <p className='font-semibold text-[13.5px] '>
+                {progressData?.phone}
+              </p>
+            </div>
+
+            <div className='flex flex-col space-y-[5px]'>
+              <p className='text-primary font-semibold text-[16px]'>
+                Home Address:
+              </p>
+              <p className='font-semibold text-[13.5px] '>
+                {progressData?.address}
+              </p>
+            </div>
+
             <div className='flex flex-col space-y-[5px]'>
               <p className='text-primary font-semibold text-[16px]'>
                 Storage Start Date:

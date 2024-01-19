@@ -206,19 +206,23 @@ const CheckoutForm = ({ currentBook }) => {
   const computeProductId = () => {
     switch (moveDetails?.movePackage) {
       case "Standard":
-        return "prod_POPusLAAFFnRbH";
+        // return "prod_POPusLAAFFnRbH";
+        return "prod_PPEeeyQP8FPvY1";
         break;
 
       case "Gold":
-        return "prod_POPsmf3NPL7bH0";
+        // return "prod_POPsmf3NPL7bH0";
+        return "prod_PPEefKSsXywBWo";
         break;
 
       case "Premium":
-        return "prod_POPr8CvDDIssjJ";
+        // return "prod_POPr8CvDDIssjJ";
+        return "prod_PPEdIEVlOOJZ28";
         break;
 
       case "Premium plus":
-        return "prod_POPov6EMMJTV0n";
+        // return "prod_POPov6EMMJTV0n";
+        return "prod_PPEdNuqILaKyZY";
         break;
 
       default:

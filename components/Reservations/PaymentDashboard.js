@@ -81,19 +81,23 @@ const PaymentDashboard = ({ allPayments,  isGivenDateGreaterThanCurrent }) => {
   const computeProductId = () => {
     switch (reserveDetails?.movePackage) {
       case "Standard":
-        return "prod_Op9phPa4F3ONn6";
+        // return "prod_POPusLAAFFnRbH";
+        return "prod_PPEeeyQP8FPvY1";
         break;
 
       case "Gold":
-        return "prod_Op9qBpiza2aiHw";
+        // return "prod_POPsmf3NPL7bH0";
+        return "prod_PPEefKSsXywBWo";
         break;
 
       case "Premium":
-        return "prod_Op9ri9qUNjyaMp";
+        // return "prod_POPr8CvDDIssjJ";
+        return "prod_PPEdIEVlOOJZ28";
         break;
 
       case "Premium plus":
-        return "prod_Op9rYIKw1kPhzB";
+        // return "prod_POPov6EMMJTV0n";
+        return "prod_PPEdNuqILaKyZY";
         break;
 
       default:

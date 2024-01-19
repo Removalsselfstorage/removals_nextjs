@@ -145,35 +145,43 @@ const Storage = () => {
   const computeProductId = () => {
     switch (containerSize) {
       case "25 Square Feet Storage":
-        return "prod_POJqc7exePO3ov";
+        // return "prod_POJqc7exePO3ov";
+        return "prod_PPEXkAPzo4aon9";
         break;
 
       case "50 Square Feet Storage":
-        return "prod_POJwId6MTNOcsg";
+        // return "prod_POJwId6MTNOcsg";
+        return "prod_PPEYubd1DZePlz";
         break;
 
       case "75 Square Feet Storage":
-        return "prod_POJx0rcCppy8mC";
+        // return "prod_POJx0rcCppy8mC";
+        return "prod_PPEZ8oZ4FXoS19";
         break;
 
       case "100 Square Feet Storage":
-        return "prod_POJyqZzB3llWri";
+        // return "prod_POJyqZzB3llWri";
+        return "prod_PPEcR9uRhSY8AZ";
         break;
 
       case "150 Square Feet Storage":
-        return "prod_POJzK1JPh9PS4g";
+        // return "prod_POJzK1JPh9PS4g";
+        return "prod_PPEcD4MfsxmEpZ";
         break;
 
       case "200 Square Feet Storage":
-        return "prod_POK0eIvVFqoC28";
+        // return "prod_POK0eIvVFqoC28";
+        return "prod_PPEd8yLodqwtdG";
         break;
 
       case "250 Square Feet Storage":
-        return "prod_POK0n8o1WtvakQ";
+        // return "prod_POK0n8o1WtvakQ";
+        return "prod_PPEdaSfhfv0N0C";
         break;
 
       case "300 Square Feet Storage":
-        return "prod_POK1U1kJnRSG1t";
+        // return "prod_POK1U1kJnRSG1t";
+        return "prod_PPEdR263qeMF3t";
         break;
 
       default:

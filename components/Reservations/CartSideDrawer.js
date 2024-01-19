@@ -45,6 +45,7 @@ import dayjs from "dayjs";
 import RatingCircles from "../Rating/RatingCircles";
 import { BiHelpCircle } from "react-icons/bi";
 import { PiHandsPrayingFill } from "react-icons/pi";
+import { truncateCenter } from "evergreen-ui";
 
 const CartSideDrawer = ({
   image,
@@ -157,6 +158,8 @@ const CartSideDrawer = ({
   };
 
   const [checked, setChecked] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState("initial");
+  const [submitMessage, setSubmitMessage] = useState("");
 
   function handleClick() {
     setChecked(!checked);
@@ -176,7 +179,6 @@ const CartSideDrawer = ({
 
   // const reviewAverage = (calculateAverageRating(reviews2) + reviewCount)/2;
 
-  
   // const revAvg= (reviewAverage + reviewCount) / 2
 
   // const reviewGrade = reviewAverage ? getRatingGrade(reviewAverage) : "Poor";
@@ -296,11 +298,19 @@ const CartSideDrawer = ({
   };
 
   const handleCheckout = (event) => {
-    event.preventDefault();
+    // event.preventDefault();
     setSubmitLoading(true);
-    packagingCheckout(allCartProducts);
-    handleCart();
+    setSubmitStatus("loading");
     sendAllNotificationEmail();
+    handleCart();
+    try {
+      packagingCheckout(allCartProducts);
+      setSubmitStatus("success");
+    } catch (error) {
+      setSubmitStatus("error");
+      setSubmitMessage(error);
+      console.log(error);
+    }
     // resetCartFxn();
   };
 
@@ -326,7 +336,7 @@ const CartSideDrawer = ({
     return () => unsubscribe();
   }, []);
 
-  console.log({ progressData, reserveDetails, });
+  console.log({ progressData, reserveDetails, allCartProducts });
 
   return (
     <div className='drawer drawer-end'>
@@ -439,19 +449,21 @@ const CartSideDrawer = ({
                 <div className='flex flex-col space-y-[10px] items-center'>
                   <div className='flex flex-col space-y-[10px] md:space-y-0 md:flex-row  md:items-center md:space-x-[20px] justify-center mt-[30px] mb-[20px]'>
                     <button
-                      disabled={submitLoading}
+                      disabled={submitStatus === "loading"}
                       onClick={() => resetCartFxn()}
                       className='btn btn-primary btn-outline xl:btn-wide  '
                     >
                       Clear All Cart
                     </button>
                     <button
-                      disabled={submitLoading}
-                      onClick={handleCheckout}
+                      disabled={submitStatus === "loading"}
+                      onClick={() => handleCheckout()}
                       className='btn btn-primary xl:btn-wide  '
                     >
-                      {!submitLoading && <span className=''>Check Out</span>}
-                      {submitLoading && (
+                      {submitStatus !== "loading" && (
+                        <span className=''>Check Out</span>
+                      )}
+                      {submitStatus === "loading" && (
                         <span className='loading loading-spinner loading-md text-white'></span>
                       )}
                     </button>
@@ -467,6 +479,12 @@ const CartSideDrawer = ({
                       <FaArrowRight />
                     </span>
                   </div>
+
+                  {submitStatus === "error" && (
+                    <div className='text-[14px] mt-[15px] text-secondary bg-secondary/20 rounded-[10px] py-[10px] px-[30px] w-full text-center'>
+                      {submitMessage} hello
+                    </div>
+                  )}
                 </div>
               )}
             </div>

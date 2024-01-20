@@ -8,16 +8,16 @@ import NormalLayout from "@/layouts/NormalLayout";
 import Head from "next/head";
 import React from "react";
 
-const HomeRemovals = () => {
+const ManVan = () => {
   return (
     <NormalLayout>
       <Head>
-        <title>Removals and Selfstorage - Home Removals Services</title>
+        <title>Removals and Selfstorage - Man and Van Services</title>
         <meta name="description" content="Rss removal and storage website" />
         <link rel="icon" href="/rrs_favicon.svg" />
       </Head>
       <main className="">
-        <HomeRemovalsHero title="Home Removals" img="hero_homeremovals.jpg" />
+        <HomeRemovalsHero title="Man and van" img="manvan.jpg" />
         <Features />
         <HowItWorks />
         <WhyHomeRemovals />
@@ -26,4 +26,4 @@ const HomeRemovals = () => {
   );
 };
 
-export default HomeRemovals;
+export default ManVan;

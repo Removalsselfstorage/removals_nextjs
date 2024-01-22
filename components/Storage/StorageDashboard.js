@@ -185,13 +185,13 @@ const StorageDashboard = ({ progressData, isGivenDateGreaterThanCurrent }) => {
         <div className='flex flex-col px-[20px] py-[30px]'>
           <div className='font-bold flex items-center space-x-[5px]'>
             <p className=''>Outstanding Payment</p>
-            <div
+            {/* <div
               className='cursor-pointer'
               onMouseEnter={() => setShowTip(true)}
               onMouseLeave={() => setShowTip(false)}
             >
               <BiHelpCircle className={`"font-bold text-[25px] text-white"`} />
-            </div>
+            </div> */}
           </div>
           <div className='font-bold text-[30px]'>
             {formatMovePrice(progressData?.totalPrice)}
@@ -200,14 +200,14 @@ const StorageDashboard = ({ progressData, isGivenDateGreaterThanCurrent }) => {
         </div>
       </div>
       <div
-        className={`flex items-center space-x-[5px] duration-300 transition-all ${
-          showTip ? "opacity-1" : "opacity-0"
-        }`}
+        className={`flex items-center space-x-[5px]`}
+        // className={`flex items-center space-x-[5px] duration-300 transition-all ${
+        //   showTip ? "opacity-1" : "opacity-0"
+        // }`}
       >
-        <BiHelpCircle className='font-bold text-[40px] mr-[10px] md:mr-0 md:text-[25px] text-secondary' />
+        {/* <BiHelpCircle className='font-bold text-[40px] mr-[10px] md:mr-0 md:text-[25px] text-secondary' /> */}
         <p className='text-[14px] font-semibold text-secondary'>
-          The Outstanding Payment will be made physically at the point of moving
-          in the items to be stored.
+        <span className="font-bold">NB:</span> On the day you move into our storage, direct dedit will be setup to collect any outstanding payment.
         </p>
       </div>
     </div>

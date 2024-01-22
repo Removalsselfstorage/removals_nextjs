@@ -102,7 +102,7 @@ const BuyItems = ({
   const stripeCart = [];
 
   // const [allProducts, setAllProducts] = useState(products);
-  // console.log({ pa: productAmount(), reserveDetails });
+  console.log({  reserveDetails });
 
   return (
     <div>
@@ -137,7 +137,7 @@ const BuyItems = ({
         </div>
       )}
 
-      {!isGivenDateGreaterThanCurrent && (
+      {true && (
         <div className='w-full mb-[20px]'>
           {reserveDetails?.cartStripeProducts?.length > 0 && (
             <div className='collapse bg-orange-500/10 collapse-arrow mb-[10px]'>

@@ -59,7 +59,7 @@ const Storage = () => {
   const [containerAmount, setContainerAmount] = useState("1");
   const [containerSize, setContainerSize] = useState("");
   const [dateValue, setDateValue] = useState("");
-  const [durationCount, setDurationCount] = useState(1);
+  const [durationCount, setDurationCount] = useState(8);
   const [discount, setDiscount] = useState(0);
   const [formattedDate, setFormattedDate] = useState("");
   const [agreeTerms, setAgreeTerms] = useState(false);
@@ -200,16 +200,31 @@ const Storage = () => {
       const discountedPrice = discountedWeeks * initialRate;
       const remainingWeeks = durationCount - discountedWeeks;
       const standardPrice = remainingWeeks * standardRate;
-      return discountedPrice + standardPrice;
+      return (discountedPrice + standardPrice) * Number(containerAmount);
     }
   }
 
-  const totalPrice = calculateStoragePrice() * Number(containerAmount);
+  function calInitialDeposit() {
+    const initialRate = discount;
+    const standardRate = price;
+    const discountedWeeks = 8;
+
+    if (durationCount <= discountedWeeks) {
+      return durationCount * initialRate;
+    } else {
+      const discountedPrice = discountedWeeks * initialRate;
+    
+      return discountedPrice * Number(containerAmount);
+    }
+  }
+
+  const totalPrice = calculateStoragePrice();
+  const initialPrice = calInitialDeposit();
 
   // const totalPrice = price * durationCount * Number(containerAmount);
 
   const stripeProductId = computeProductId();
-  const stripeAmount = parseInt((totalPrice * 0.2).toFixed(2) * 100);
+  const stripeAmount = parseInt((initialPrice).toFixed(2) * 100);
 
   console.log({
     stripeProductId,
@@ -291,7 +306,7 @@ const Storage = () => {
             containerPrice: price,
             totalPrice,
             discount,
-            paidPrice: (totalPrice * 0.2).toFixed(2),
+            paidPrice: (initialPrice).toFixed(2),
             durationCount,
             date,
             date2,
@@ -505,6 +520,7 @@ const Storage = () => {
                   discount={discount}
                   setDiscount={setDiscount}
                   totalPrice={totalPrice}
+                  initialPrice={initialPrice}
                   // setAddressDetails={setAddressDetails}
                 />
               )}

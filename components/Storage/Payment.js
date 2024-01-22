@@ -69,6 +69,7 @@ const Payment = ({
   discount,
   setDiscount,
   totalPrice,
+  initialPrice,
 }) => {
   const router = useRouter();
   const { query } = router;
@@ -280,7 +281,7 @@ const Payment = ({
                 <div className='flex items-center space-x-[5px]'>
                   <div
                     onClick={() =>
-                      durationCount > 1 && setDurationCount((prev) => prev - 1)
+                      durationCount > 8 && setDurationCount((prev) => prev - 1)
                     }
                     className='flex justify-center items-center btn btn-primary w-[45px] p-[5px] h-[45px] rounded-[5px]'
                   >
@@ -306,11 +307,11 @@ const Payment = ({
                   <span className='font-semibold'>NB:</span> The selected
                   storage rate is{" "}
                   <span className='font-semibold text-secondary'>
-                    ${discount}/week
+                    £{discount}/week
                   </span>{" "}
                   for the first 8 weeks, then{" "}
                   <span className='font-semibold text-secondary'>
-                    ${price}/week
+                    £{price}/week
                   </span>{" "}
                   afterwards.
                 </p>
@@ -320,8 +321,6 @@ const Payment = ({
           </div>
           {/* right */}
           <div className='flex flex-[1] space-x-[20px]'>
-            
-
             <div className='flex flex-[1]'>
               {/* move date*/}
               <div className='form-control'>
@@ -367,7 +366,7 @@ const Payment = ({
                   // value={totalPrice.toFixed(2)}
                 >
                   £{totalPrice.toFixed(2)}
-                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -557,11 +556,12 @@ const Payment = ({
                   <div className='form-control w-full '>
                     <label className='label px-[0]'>
                       <span className='label-text font-semibold text-primary'>
-                        Initial 20% Deposit
+                        Initial Deposit
                       </span>
                     </label>
                     <p className='font-semibold text-[18px]'>
-                      £{totalPrice ? (totalPrice * 0.2).toFixed(2) : "***"}
+                      £{initialPrice ? initialPrice.toFixed(2) : "***"}
+                      {/* £{totalPrice ? (totalPrice * 0.2).toFixed(2) : "***"} */}
                     </p>
                   </div>
                 </div>
@@ -583,11 +583,16 @@ const Payment = ({
               </div>
 
               <p className=' mb-[20px] text-secondary  text-[14px] w-full md:px-[50px] lg:px-[80px] text-center'>
+                <span className='font-semibold'> NB: </span> An initial payment
+                for the first 8 weeks is required, which covers for a one
+                month's rent and a one month deposit.
+              </p>
+              {/* <p className=' mb-[20px] text-secondary  text-[14px] w-full md:px-[50px] lg:px-[80px] text-center'>
                 <span className='font-semibold'> NB: </span> A 20% deposit of
                 the total price is required to be paid; inorder to secure the
                 storage. While the balance will be made at the storage point of
                 contact.
-              </p>
+              </p> */}
 
               {/* Agree to terms */}
               <div className='flex justify-center  mt-[30px] mb-[10px] md:mb-[20px]  w-full'>

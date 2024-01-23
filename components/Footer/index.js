@@ -64,10 +64,10 @@ const Footer = () => {
         {/* column 2 */}
         <div>
           <span className='footer-title'>Services</span>
-          <a className='link link-hover'>Home Removals</a>
-          <a className='link link-hover my-[5px]'>Man and Van</a>
-          <a className='link link-hover'>Storage & Self Storage</a>
-          <a className='link link-hover my-[5px]'>Handy man / Packing</a>
+          <Link href='/services/home-removals' className='link link-hover'>Home Removals</Link>
+          <Link href='/services/man-and-van' className='link link-hover my-[5px]'>Man and Van</Link>
+          <Link href='/services/storage' className='link link-hover'>Storage & Self Storage</Link>
+          <Link href='/services/handy-man-packing' className='link link-hover my-[5px]'>Handy man / Packing</Link>
         </div>
 
         {/* column 3 */}

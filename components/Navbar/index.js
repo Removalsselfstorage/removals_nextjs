@@ -270,9 +270,9 @@ const Navbar = () => {
                         </li> */}
                         <li>
                           <Link
-                            href='/services/hand-packing'
+                            href='/services/handy-man-packing'
                             className={`${
-                              router.pathname === "/services/packing"
+                              router.pathname === "/services/handy-man-packing"
                                 ? " text-primary"
                                 : ""
                             } font-semibold hover:text-primary`}

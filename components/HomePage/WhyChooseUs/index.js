@@ -1,7 +1,7 @@
 import { titleFont } from '@/utils/fonts';
 import React from 'react';
 
-const WhyChooseUs = () => {
+const WhyChooseUs = ({ }) => {
   return (
     <div className="mb-[30px] lg:mb-[50px]">
       <div className="md:max-w-7xl mx-auto">

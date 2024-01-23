@@ -53,7 +53,7 @@ const OurServices = () => {
             f3='₤65 for 100 Square Feet'
             f4='₤75 for 150 Square Feet'
             link='/storage'
-            linkText='Rent Now'
+            linkText='Get Quote'
           />
           <ServicesCard
             image='/svg/hand_packing.svg'
@@ -65,7 +65,7 @@ const OurServices = () => {
             f3='₤190 Two Bed Flat/House'
             f4='₤225 Three Bed Flat/House'
             link='/packing'
-            linkText='Rent Now'
+            linkText='Get Quote'
           />
         </div>
       </div>

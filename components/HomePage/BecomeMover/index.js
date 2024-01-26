@@ -18,7 +18,7 @@ const BecomeMover = () => {
               <div className=''>
                 {/* <div className='hero-overlay'></div> */}
                 <img
-                  src='/driver.png'
+                  src='/driver2.png'
                   alt=''
                   className='w-[500px] h-[300px] md:w-fit md:h-[400px] object-contain'
                 />

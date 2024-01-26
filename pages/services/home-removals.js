@@ -1,3 +1,4 @@
+import BecomeMover from "@/components/HomePage/BecomeMover";
 import FeaturedCompanies from "@/components/HomePage/FeatureCompanies";
 import Features from "@/components/HomePage/Features";
 import Hero from "@/components/HomePage/Hero";
@@ -49,6 +50,7 @@ const HomeRemovals = () => {
         />
         <OurReviews />
         <FeaturedCompanies />
+        <BecomeMover />
         <FAQ data={faqData2}/>
       </main>
     </NormalLayout>

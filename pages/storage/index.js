@@ -291,7 +291,7 @@ const Storage = () => {
           storageRef,
 
           {
-            date: getCurrentDateFormatted(),
+            bookDate: getCurrentDateFormatted(),
             fullName,
             email,
             phone,

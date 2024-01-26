@@ -23,6 +23,7 @@ import Link from "next/link";
 import EmailSent from "@/lottieJsons/EmailSent2.json";
 import Lottie from "lottie-react";
 import movingVan from "@/lottieJsons/movingVan.json";
+import BecomeMover from "@/components/HomePage/BecomeMover";
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -190,6 +191,7 @@ export default function Home() {
             <AboutUs />
             <OurReviews />
             <FeaturedCompanies />
+            <BecomeMover />
             <FAQ />
           </main>
         </NormalLayout>

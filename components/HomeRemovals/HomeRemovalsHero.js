@@ -31,7 +31,7 @@ const HomeRemovalsHero = ({ title, img, subtitle, link, btnText }) => {
         className='hero min-h-[70vh] md:min-h-[70vh] lg:min-h-[70vh] 2xl:min-h-[70vh] bg-black/80'
         style={{ backgroundImage: `url(/${img})` }}
       >
-        <div className='hero-overlay bg-black/70 '></div>
+        <div className='hero-overlay bg-black/75 '></div>
         <div className='flex flex-col text-white items-center'>
           <h1
             className={`${titleFont.variable} font-sans2 text-center text-3xl lg:text-5xl font-bold mb-[10px] mt-[30px] md:mt-0 px-[20px]`}

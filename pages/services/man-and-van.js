@@ -12,6 +12,7 @@ import FAQ from "@/components/ServicesSection/FAQ";
 import Head from "next/head";
 import React from "react";
 import { faqData3 } from "@/dummyData/FaqData";
+import BecomeMover from "@/components/HomePage/BecomeMover";
 
 const ManVan = () => {
   return (
@@ -48,6 +49,7 @@ const ManVan = () => {
         />
         <OurReviews />
         <FeaturedCompanies />
+        <BecomeMover />
         <FAQ data={faqData3} />
       </main>
     </NormalLayout>

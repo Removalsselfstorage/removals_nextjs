@@ -27,7 +27,9 @@ const BecomeMover = () => {
           </div>
           {/* text */}
           <div className='flex-[1] flex flex-col max-w-[600px] space-y-[30px] px-[30px]'>
-            <h2 className='text-[20px] lg:text-[30px] font-bold'>Become a Mover</h2>
+            <h2 className='text-[25px] lg:text-[30px] font-bold'>
+              Become a Mover
+            </h2>
             <p className='text-[16px] lg:text-[17px]'>
               We are always looking to partner with more top-rated, committed
               professionals. If you are looking to grow your business and have a

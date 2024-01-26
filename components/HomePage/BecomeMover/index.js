@@ -16,7 +16,6 @@ const BecomeMover = () => {
           <div className='flex-[0.5] flex px-[20px] md:px-[0px] md:justify-end'>
             <div className='rounded-lg overflow-hidden cursor-pointer relative group'>
               <div className=''>
-                {/* <div className='hero-overlay'></div> */}
                 <img
                   src='/driver2.png'
                   alt=''

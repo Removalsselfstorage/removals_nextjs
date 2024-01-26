@@ -53,8 +53,8 @@ const MoverLogin = () => {
   const uid = userDetails.userDetails?.uid;
 
   // const [field, meta] = useField(props);
-  const { signIn, signUp, resendEmailVerification } = useAuth();
-  const [loading, setLoading] = useState(false);
+  const { signIn, signUp, loading, resendEmailVerification } = useAuth();
+  // const [loading, setLoading] = useState(false);
   const [user, setUser] = useState(initialValues);
   const [showPassword, setShowPassword] = useState(false);
   const [submitLoading, setSubmitLoading] = useState(false);
@@ -85,7 +85,14 @@ const MoverLogin = () => {
     dispatch(updateLoginError(null));
     dispatch(updateVerificationMessage(null));
 
-    await signIn(values.login_email, values.login_password);
+    try {
+      await signIn(values.login_email, values.login_password);
+     
+      setSubmitLoading(false);
+    } catch (error) {
+      setSubmitLoading(false);
+      console.log(error);
+    }
     // signIn(values.login_email, values.login_password).then(() => {
     //   setUser({
     //     ...user,
@@ -130,7 +137,7 @@ const MoverLogin = () => {
   //     router.push("/");
   //   }
   // });
-  console.log({ submitLoading });
+  console.log({ loading });
 
   return (
     <>
@@ -179,7 +186,7 @@ const MoverLogin = () => {
                           placeholder='Email Address'
                           onChange={handleChange}
                           value={user.login_email}
-                          disabled={submitLoading}
+                          disabled={loading}
                         />
                       </div>
                       {/* password */}
@@ -199,7 +206,7 @@ const MoverLogin = () => {
                             placeholder='Password'
                             onChange={handleChange}
                             value={user.login_password}
-                            disabled={submitLoading}
+                            disabled={loading}
                             // className="form-control'
                           />
                         </div>
@@ -210,7 +217,7 @@ const MoverLogin = () => {
                           {showPassword ? (
                             <RiEyeCloseLine
                               className={`${
-                                submitLoading
+                                loading
                                   ? "text-gray-400/10"
                                   : "text-primary"
                               } text-[20px]`}
@@ -218,7 +225,7 @@ const MoverLogin = () => {
                           ) : (
                             <RiEyeLine
                               className={`${
-                                submitLoading
+                                loading
                                   ? "text-gray-400/10"
                                   : "text-primary"
                               } text-[20px]`}
@@ -237,10 +244,10 @@ const MoverLogin = () => {
                           // onClick={() => {}}
                           type='submit'
                           className='btn btn-primary flex items-center space-x-[5px]'
-                          disabled={submitLoading}
+                          disabled={loading}
                         >
-                          {!submitLoading && <span className=''>Login</span>}
-                          {submitLoading && (
+                          {!loading && <span className=''>Login</span>}
+                          {loading && (
                             <span className='loading loading-spinner loading-md text-white'></span>
                           )}
                         </button>

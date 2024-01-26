@@ -21,34 +21,25 @@ const JoinUs = () => {
   // const details = useSelector(getAllDetails);
   const userDetails = useSelector(getAllUserDetails);
 
-  useEffect(() => {
-    if (userDetails.userDetails) {
-      router.push("/");
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (userDetails.userDetails) {
+  //     router.push("/");
+  //   }
+  // }, []);
 
   return (
     <NormalLayout>
       <Head>
         <title>Removals and Selfstorage - Register</title>
-        <meta name="description" content="Rss removal and storage website" />
-        <link rel="icon" href="/rrs_favicon.svg" />
+        <meta name='description' content='Rss removal and storage website' />
+        <link rel='icon' href='/rrs_favicon.svg' />
       </Head>
 
-      {!userDetails.userDetails ? (
-        <main>
-          <JoinUsHero />
-          <MoverFeatures />
-          <JoinUsFAQ />
-        </main>
-      ) : (
-        <div className="flex items-center justify-center h-[100vh] ">
-          <div className="flex justify-center w-full">
-            <Lottie animationData={movingVan} className="w-[400px]" />
-          </div>
-          {/* <span className="h-full loading loading-bars text-primary w-[40px] lg:w-[60px]"></span> */}
-        </div>
-      )}
+      <main>
+        <JoinUsHero />
+        <MoverFeatures />
+        <JoinUsFAQ />
+      </main>
     </NormalLayout>
   );
 };

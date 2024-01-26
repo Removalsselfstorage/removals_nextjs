@@ -26,7 +26,10 @@ import {
   updateVerificationMessage,
 } from "@/store/userSlice";
 
-import { fetchAllMoversDetails, fetchAllMoversDetails2 } from "@/lib/fetchData2";
+import {
+  fetchAllMoversDetails,
+  fetchAllMoversDetails2,
+} from "@/lib/fetchData2";
 import {
   UploadMoverData,
   UploadMoverPersonalDetails2,
@@ -369,6 +372,8 @@ export const AuthProvider = ({ children }) => {
         }
       } else {
         setUser(userCredential.user);
+
+        setLoading(false);
 
         // toast.error(`Please verify your email to login.`, {
         //   duration: 6000,

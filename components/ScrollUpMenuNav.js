@@ -37,7 +37,7 @@ const ScrollUpMenuNav = () => {
         onClick={scrollToTop}
         className={
           isVisible
-            ? 'lg:flex cursor-pointer fixed flex-col z-50 right-[20px] bottom-[20px] md:right-0 xs:mr-[20px] md:mr-[40px] duration-300 opacity-[80%]'
+            ? 'lg:flex cursor-pointer fixed flex-col z-50 right-[20px] bottom-[30px] md:right-0 xs:mr-[20px] md:mr-[40px] duration-300 opacity-[80%]'
             : 'lg:flex fixed flex-col z-50 right-[20px] bottom-[20px] md:right-0 xs:mr-[20px] md:mr-[40px] opacity-[0%] duration-300'
         }
       >

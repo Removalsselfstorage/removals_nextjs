@@ -72,9 +72,10 @@ export default function App({ Component, pageProps: { ...pageProps } }) {
 
   return (
     <>
-      {/* <Head>
+      <Head>
         <link rel="icon" href="/rrs_favicon.svg" />
-      </Head> */}
+        <script src="//code.jivosite.com/widget/xi69gjm5J6" async></script>
+      </Head>
 
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>

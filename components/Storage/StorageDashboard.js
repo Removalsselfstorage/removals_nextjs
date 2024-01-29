@@ -4,8 +4,6 @@ import { convertToSqFt, formatMovePrice } from "@/utils/logics";
 import React, { useEffect, useState } from "react";
 import { BiHelpCircle } from "react-icons/bi";
 
-
-
 const StorageDashboard = ({ progressData, isGivenDateGreaterThanCurrent }) => {
   const {
     setReserveDetailsFxn,
@@ -124,8 +122,6 @@ const StorageDashboard = ({ progressData, isGivenDateGreaterThanCurrent }) => {
   //   // price: paymentDetails?.paidPrice,
   // });
 
- 
-
   const handleExtra = () => {
     setSubmitLoading2(!submitLoading2);
     moveExtraCheckout(stripeProductId, stripeExtraAmount);
@@ -194,7 +190,9 @@ const StorageDashboard = ({ progressData, isGivenDateGreaterThanCurrent }) => {
             </div> */}
           </div>
           <div className='font-bold text-[30px]'>
-            {formatMovePrice(progressData?.totalPrice)}
+            {formatMovePrice(
+              progressData?.totalPrice - progressData?.paidPrice
+            )}
           </div>
           <div className='stat-actions space-x-[10px]'></div>
         </div>
@@ -207,7 +205,9 @@ const StorageDashboard = ({ progressData, isGivenDateGreaterThanCurrent }) => {
       >
         {/* <BiHelpCircle className='font-bold text-[40px] mr-[10px] md:mr-0 md:text-[25px] text-secondary' /> */}
         <p className='text-[14px] font-semibold text-secondary'>
-        <span className="font-bold">NB:</span> On the day you move into our storage, direct dedit will be setup to collect any outstanding payment.
+          <span className='font-bold'>NB:</span> On the day you move into our
+          storage, direct dedit will be setup to collect any outstanding
+          payment.
         </p>
       </div>
     </div>

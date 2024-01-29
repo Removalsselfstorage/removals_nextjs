@@ -1,6 +1,8 @@
 export function addWeeksToDate(originalDate, formattedValue, weeksToAdd) {
   // Parse the original date
-  const [year, month, day] = originalDate?.split("/")?.map(Number);
+  const val = originalDate ?? ""
+
+  const [year, month, day] = val?.split("/")?.map(Number);
   const currentDate = new Date(year, month - 1, day); // Note: month is zero-based
 
   // Calculate the new date by adding weeks
